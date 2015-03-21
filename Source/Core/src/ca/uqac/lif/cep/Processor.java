@@ -41,6 +41,10 @@ public abstract class Processor
 	protected Vector<Pullable> m_inputPullables;
 	
 	protected Vector<Pushable> m_outputPushables;
+	
+	protected static int s_uniqueIdCounter = 0;
+	
+	protected int m_uniqueId;
 
 	/**
 	 * Initializes a processor
@@ -52,7 +56,25 @@ public abstract class Processor
 		super();
 		m_inputArity = in_arity;
 		m_outputArity = out_arity;
+		m_uniqueId = s_uniqueIdCounter++;
 		reset();
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return m_uniqueId;
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (!(o instanceof Processor))
+		{
+			return false;
+		}
+		Processor p = (Processor) o;
+		return m_uniqueId == p.m_uniqueId;
 	}
 	
 	/**

@@ -17,13 +17,159 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 public class GroupProcessor extends Processor
 {
-	protected Processor m_start;
+	protected Set<Processor> m_processors = null;
+
+	protected Vector<Pushable> m_inputPushables = null;
+
+	protected Vector<Pullable> m_outputPullables = null;
 	
-	protected Processor m_end;
+	protected Map<Integer,ProcessorAssociation> m_inputPullableAssociations;
 	
+	protected Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
+
+	public GroupProcessor(int in_arity, int out_arity)
+	{
+		super(in_arity, out_arity);
+		m_processors = new HashSet<Processor>();
+		m_inputPushables = new Vector<Pushable>();
+		m_outputPullables = new Vector<Pullable>();
+		m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
+		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
+	}
+	
+	protected static class ProcessorAssociation
+	{
+		int m_outputNumber;
+		Processor m_processor;
+		
+		ProcessorAssociation(int number, Processor p)
+		{
+			m_outputNumber = number;
+			m_processor = p;
+		}
+	}
+	
+
+	@Override
+	public void reset()
+	{
+		// Reset all processors inside the group
+		if (m_processors != null)
+		{
+			for (Processor p : m_processors)
+			{
+				p.reset();
+			}
+		}
+	}
+
+	/**
+	 * Adds a processor to the group
+	 * @param p
+	 */
+	public void addProcessor(Processor p)
+	{
+		m_processors.add(p);
+	}
+	
+	/**
+	 * Declares that the <i>-th input of the group is linked to the
+	 * <i>j</i>-th input of processor p
+	 * @param i
+	 * @param p
+	 * @param j
+	 */
+	public void associateInput(int i, Processor p, int j)
+	{
+		setPushableInput(i, p.getPushableInput(j));
+		setPullableInputAssociation(i, p, j);
+	}
+	
+	/**
+	 * Declares that the <i>-th output of the group is linked to the
+	 * <i>j</i>-th output of processor p
+	 * @param i
+	 * @param p
+	 * @param j
+	 */
+	public void associateOutput(int i, Processor p, int j)
+	{
+		setPullableOutput(i, p.getPullableOutput(j));
+		setPushableOutputAssociation(i, p, j);
+	}
+
+	@Override
+	public final Pushable getPushableInput(int index)
+	{
+		return m_inputPushables.get(index);
+	}
+
+	@Override
+	public final Pullable getPullableOutput(int index)
+	{
+		return m_outputPullables.get(index);
+	}
+	
+	@Override
+	public final void setPullableInput(int i, Pullable p)
+	{
+		ProcessorAssociation a = m_inputPullableAssociations.get(i);
+		a.m_processor.setPullableInput(a.m_outputNumber, p);
+	}
+
+	public final void setPushableOutputAssociation(int i, Processor p, int j)
+	{
+		m_outputPushableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
+	}
+	
+	@Override
+	public final void setPushableOutput(int i, Pushable p)
+	{
+		ProcessorAssociation a = m_outputPushableAssociations.get(i);
+		a.m_processor.setPushableOutput(a.m_outputNumber, p);
+	}
+
+	public final void setPullableInputAssociation(int i, Processor p, int j)
+	{
+		m_inputPullableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
+	}
+
+	public final void setPushableInput(int i, Pushable p)
+	{
+		if (i == m_inputPushables.size())
+		{
+			m_inputPushables.add(p);
+		}
+		else
+		{
+			m_inputPushables.set(i, p);
+		}
+	}
+
+	public final void setPullableOutput(int i, Pullable p)
+	{
+		if (i == m_outputPullables.size())
+		{
+			m_outputPullables.add(p);
+		}
+		else
+		{
+			m_outputPullables.set(i, p);	
+		}		
+	}
+
+	@Override
+	public final Pushable getPushableOutput(int index)
+	{
+		return m_outputPushables.get(index);
+	}
 
 }

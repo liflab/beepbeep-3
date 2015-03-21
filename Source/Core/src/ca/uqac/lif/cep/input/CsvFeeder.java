@@ -17,6 +17,13 @@
  */
 package ca.uqac.lif.cep.input;
 
+/**
+ * Creates a feed of events from comma-separated string chunks.
+ * Note that the input feed must have a trailing comma for all elements,
+ * including the last. 
+ * @author sylvain
+ *
+ */
 public class CsvFeeder extends TokenFeeder
 {
 	public CsvFeeder()

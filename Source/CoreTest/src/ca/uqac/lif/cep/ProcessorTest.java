@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.math.Addition;
+import ca.uqac.lif.cep.math.Incrementer;
 import ca.uqac.lif.cep.math.IsEven;
 import ca.uqac.lif.cep.math.Sum;
 
@@ -383,6 +384,196 @@ public class ProcessorTest
 		if (recv == null || recv.intValue() != 6)
 		{
 			fail("Expected 6, got " + recv);
+		}
+	}
+	
+	@Test
+	public void testGroupPush1()
+	{
+		// Create the group
+		Function add = new Function(new Addition(2));
+		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
+		add_plus_10.addProcessor(add);
+		add_plus_10.associateInput(0, add, 0);
+		add_plus_10.associateInput(1, add, 1);
+		add_plus_10.associateOutput(0, add, 0);
+		
+		// Connect the group to two sources and one sink
+		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(4);
+		l_input1.add(6);
+		QueueSource input1 = new QueueSource(l_input1, 1);
+		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		l_input2.add(1);
+		l_input2.add(2);
+		l_input2.add(3);
+		l_input2.add(4);
+		QueueSource input2 = new QueueSource(l_input2, 1);
+		Connector.connect(input1, input2, add_plus_10);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(add_plus_10, sink);
+		Number recv, expected;
+		
+		// Run
+		input1.push();
+		input2.push();
+		expected = 3;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 5;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 7;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 10;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+	}
+	
+	@Test
+	public void testGroupPull1()
+	{
+		// Create the group
+		Function add = new Function(new Addition(2));
+		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
+		add_plus_10.addProcessor(add);
+		add_plus_10.associateInput(0, add, 0);
+		add_plus_10.associateInput(1, add, 1);
+		add_plus_10.associateOutput(0, add, 0);
+		
+		// Connect the group to two sources and one sink
+		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(4);
+		l_input1.add(6);
+		QueueSource input1 = new QueueSource(l_input1, 1);
+		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		l_input2.add(1);
+		l_input2.add(2);
+		l_input2.add(3);
+		l_input2.add(4);
+		QueueSource input2 = new QueueSource(l_input2, 1);
+		Connector.connect(input1, input2, add_plus_10);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(add_plus_10, sink);
+		Number recv, expected;
+		
+		// Run
+		sink.pull();
+		expected = 3;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		sink.pull();
+		expected = 5;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		sink.pull();
+		expected = 7;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		sink.pull();
+		expected = 10;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+	}
+	
+	@Test
+	public void testGroupPush2()
+	{
+		// Create the group
+		Function add = new Function(new Addition(2));
+		Incrementer inc = new Incrementer(10);
+		Connector.connect(inc, add, 0, 0);
+		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
+		add_plus_10.addProcessor(add);
+		add_plus_10.associateInput(0, inc, 0);
+		add_plus_10.associateInput(1, add, 1);
+		add_plus_10.associateOutput(0, add, 0);
+		
+		// Connect the group to two sources and one sink
+		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(4);
+		l_input1.add(6);
+		QueueSource input1 = new QueueSource(l_input1, 1);
+		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		l_input2.add(1);
+		l_input2.add(2);
+		l_input2.add(3);
+		l_input2.add(4);
+		QueueSource input2 = new QueueSource(l_input2, 1);
+		Connector.connect(input1, input2, add_plus_10);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(add_plus_10, sink);
+		Number recv, expected;
+		
+		// Run
+		input1.push();
+		input2.push();
+		expected = 13;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 15;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 17;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 20;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
 		}
 	}
 
