@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.math.Addition;
+import ca.uqac.lif.cep.math.IsEven;
 
 public class ProcessorTest
 {
@@ -375,8 +376,52 @@ public class ProcessorTest
 		if (recv != null)
 		{
 			fail("Expected null, got " + recv);
+		}	
+	}
+	
+	@Test
+	public void testFilter2()
+	{
+		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(4);
+		l_input1.add(6);
+		QueueSource input1 = new QueueSource(l_input1, 1);
+		Fork fork = new Fork(2);
+		Connector.connect(input1, fork);
+		Filter filter = new Filter();
+		Connector.connect(fork, filter, 0, 0);
+		Function even = new Function(new IsEven());
+		Connector.connect(fork, even, 1, 0);
+		Connector.connect(even, filter, 0, 1);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(filter, sink);
+		Number recv;
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 2
+		if (recv == null || recv.intValue() != 2)
+		{
+			fail("Expected 2, got " + recv);
 		}
-		
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // null
+		if (recv != null)
+		{
+			fail("Expected null, got " + recv);
+		}
+		input1.push();
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 4
+		if (recv == null || recv.intValue() != 4)
+		{
+			fail("Expected 4, got " + recv);
+		}
+		recv = (Number) sink.remove().firstElement(); // 6
+		if (recv == null || recv.intValue() != 6)
+		{
+			fail("Expected 6, got " + recv);
+		}
 	}
 
 }
