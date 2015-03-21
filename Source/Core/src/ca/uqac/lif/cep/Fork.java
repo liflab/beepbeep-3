@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Queue;
 import java.util.Vector;
 
 /**
@@ -32,7 +33,7 @@ public class Fork extends SingleProcessor
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
 		int arity = getOutputArity();
 		Vector<Object> out = new Vector<Object>(arity);
@@ -44,7 +45,7 @@ public class Fork extends SingleProcessor
 				out.add(o);
 			}
 		}
-		return out;
+		return wrapVector(out);
 	}
 
 }

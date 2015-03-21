@@ -50,14 +50,14 @@ public class QueueSink extends Sink
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
 		for (int i = 0; i < m_queues.size(); i++)
 		{
 			Queue<Object> q = m_queues.get(i);
 			q.add(inputs.get(i));
 		}
-		return new Vector<Object>();
+		return wrapVector(new Vector<Object>());
 	}
 	
 	public Queue<Object> getQueue(int i)

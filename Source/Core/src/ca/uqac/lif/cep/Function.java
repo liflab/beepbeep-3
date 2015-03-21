@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Queue;
 import java.util.Vector;
 
 public class Function extends SingleProcessor
@@ -33,9 +34,9 @@ public class Function extends SingleProcessor
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
-		return m_compute.compute(inputs);
+		return wrapVector(m_compute.compute(inputs));
 	}
 
 }

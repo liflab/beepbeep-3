@@ -19,6 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Vector;
 
 /**
@@ -98,7 +99,7 @@ public class Window extends SingleProcessor
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
 		// Add the inputs to each window
 		boolean windows_ok = true;
@@ -133,7 +134,7 @@ public class Window extends SingleProcessor
 				out = m_sink.remove();
 			}
 		}
-		return out;
+		return wrapVector(out);
 	}
 	
 	/**

@@ -15,55 +15,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.input;
 
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
 
-public class TimeDecimate extends SingleProcessor
+import ca.uqac.lif.cep.SingleProcessor;
+
+public class TokenFeeder extends SingleProcessor
 {
-	/**
-	 * Interval of time
-	 */
-	protected final long m_interval;
-	
-	/**
-	 * The system time when the last event was output
-	 */
-	protected long m_timeLastSent;
-	
-	public TimeDecimate(long interval)
+	public TokenFeeder()
 	{
 		super(1, 1);
-		m_interval = interval;
-		m_timeLastSent = -1;
-	}
-	
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_timeLastSent = -1;
 	}
 
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
-		Vector<Object> out = null;
-		if (m_timeLastSent < 0)
-		{
-			out = inputs;
-		}
-		else
-		{
-			long current_time = System.nanoTime();
-			long time_dif = current_time - m_timeLastSent;
-			if (time_dif >= m_interval)
-			{
-				out = inputs;
-			}
-		}
-		return wrapVector(out);
+		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
+		return out;
 	}
 
 }

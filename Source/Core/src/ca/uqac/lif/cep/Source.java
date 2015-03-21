@@ -17,11 +17,12 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Queue;
 import java.util.Vector;
 
 public abstract class Source extends SingleProcessor
 {
-	Source(int out_arity)
+	public Source(int out_arity)
 	{
 		super(0, out_arity);
 	}
@@ -31,15 +32,21 @@ public abstract class Source extends SingleProcessor
 	 */
 	public final void push()
 	{
-		Vector<Object> output = compute(null);
-		if (output == null)
+		Queue<Vector<Object>> output = compute(null);
+		if (output == null || output.isEmpty())
 		{
 			return;
 		}
-		for (int i = 0; i < output.size(); i++)
+		for (Vector<Object> evt : output)
 		{
-			Pushable p = m_outputPushables.get(i);
-			p.push(output.get(i));
+			if (evt != null && !evt.isEmpty())
+			{
+				for (int i = 0; i < output.size(); i++)
+				{
+					Pushable p = m_outputPushables.get(i);
+					p.push(evt.get(i));
+				}
+			}
 		}
 	}
 }

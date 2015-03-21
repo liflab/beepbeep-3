@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Queue;
 import java.util.Vector;
 
 public class Incrementer extends SingleProcessor
@@ -30,7 +31,7 @@ public class Incrementer extends SingleProcessor
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
 		Vector<Object> outputs = new Vector<Object>();
 		for (Object in : inputs)
@@ -42,7 +43,7 @@ public class Incrementer extends SingleProcessor
 				outputs.add(n);
 			}
 		}
-		return outputs;
+		return wrapVector(outputs);
 	}
 
 }

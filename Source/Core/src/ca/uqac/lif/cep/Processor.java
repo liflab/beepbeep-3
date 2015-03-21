@@ -47,7 +47,7 @@ public abstract class Processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
 	 */
-	Processor(int in_arity, int out_arity)
+	public Processor(int in_arity, int out_arity)
 	{
 		super();
 		m_inputArity = in_arity;

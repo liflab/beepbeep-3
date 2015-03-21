@@ -49,7 +49,7 @@ public class QueueSource extends Source
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
 		Vector<Object> output = new Vector<Object>();
 		Object event = m_events.get(m_index);
@@ -58,6 +58,6 @@ public class QueueSource extends Source
 		{
 			output.add(event);
 		}
-		return output;
+		return wrapVector(output);
 	}
 }

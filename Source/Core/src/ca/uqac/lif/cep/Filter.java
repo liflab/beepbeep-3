@@ -17,17 +17,13 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Queue;
 import java.util.Vector;
 
 /**
  * Discards events from an input trace based on a selection criterion.
- * <ul>
- * <li>The processor takes as arguments another processor &phi;</li>
- * <li>It evaluates &phi; on the trace that starts at event 0; it returns that
- *   event if the first event returned by &phi; returns TRUE</li>
- * <li>Same process on the trace that starts at event 1...</li>
- * <li>...and so on</li> 
- * </ul>
+ * The processor takes as input two events simultaneously; it outputs
+ * the first if the second is true.
  * @author sylvain
  *
  */
@@ -39,7 +35,7 @@ public class Filter extends SingleProcessor
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
 		Object o = inputs.firstElement();
 		Vector<Object> out = new Vector<Object>();
@@ -48,8 +44,7 @@ public class Filter extends SingleProcessor
 		{
 			out.add(o);
 		}
-		return out;
-		
+		return wrapVector(out);
 	}
 
 }

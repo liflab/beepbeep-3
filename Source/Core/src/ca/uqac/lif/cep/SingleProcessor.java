@@ -30,7 +30,7 @@ public abstract class SingleProcessor extends Processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
 	 */
-	SingleProcessor(int in_arity, int out_arity)
+	public SingleProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
 		m_inputPullables = new Vector<Pullable>(m_inputArity);
@@ -114,12 +114,13 @@ public abstract class SingleProcessor extends Processor
 	}
 
 	/**
-	 * Computes an output event from its input events
+	 * Computes one or more output events from its input events
 	 * @param inputs A vector of input events; its length corresponds to the
 	 *   processor's input arity
-	 * @return A vector of output events, or null if no event could be produced
+	 * @return A queue of vectors of output events, or null
+	 *   if no event could be produced
 	 */
-	protected abstract Vector<Object> compute(Vector<Object> inputs);
+	protected abstract Queue<Vector<Object>> compute(Vector<Object> inputs);
 
 	protected class InputPushable implements Pushable
 	{
@@ -158,14 +159,20 @@ public abstract class SingleProcessor extends Processor
 				inputs.add(ob);
 			}
 			// Compute output event
-			Vector<Object> outs = compute(inputs);
+			Queue<Vector<Object>> outs = compute(inputs);
 			if (outs != null && !outs.isEmpty())
 			{
-				assert outs.size() >= m_outputPushables.size();
-				for (int i = 0; i < m_outputPushables.size(); i++)
+				for (Vector<Object> evt : outs)
 				{
-					Pushable p = m_outputPushables.get(i);
-					p.push(outs.get(i));
+					if (evt != null && !evt.isEmpty())
+					{
+						assert evt.size() >= m_outputPushables.size();
+						for (int i = 0; i < m_outputPushables.size(); i++)
+						{
+							Pushable p = m_outputPushables.get(i);
+							p.push(evt.get(i));
+						}
+					}
 				}
 			}
 		}
@@ -251,17 +258,28 @@ public abstract class SingleProcessor extends Processor
 					inputs.add(o);
 				}
 				// Compute output event(s)
-				Vector<Object> computed = compute(inputs);
+				Queue<Vector<Object>> computed = compute(inputs);
+				NextStatus status_to_return = NextStatus.NO;
 				if (computed != null && !computed.isEmpty())
 				{
 					// We computed an output event; add it to the output queue
 					// and answer YES
-					for (int i = 0; i < m_outputArity; i++)
+					for (Vector<Object> evt : computed)
 					{
-						Queue<Object> queue = m_outputQueues.get(i);
-						queue.add(computed.get(i));
+						if (evt != null && !evt.isEmpty())
+						{
+							for (int i = 0; i < m_outputArity; i++)
+							{
+								Queue<Object> queue = m_outputQueues.get(i);
+								queue.add(evt.get(i));
+							}
+							status_to_return = NextStatus.YES;
+						}
 					}
-					return NextStatus.YES;
+					if (status_to_return == NextStatus.YES)
+					{
+						return NextStatus.YES;
+					}
 				}
 				// Otherwise, try the whole thing again
 			}
@@ -302,19 +320,45 @@ public abstract class SingleProcessor extends Processor
 				inputs.add(o);
 			}
 			// Compute output event(s)
-			Vector<Object> computed = compute(inputs);
+			NextStatus status_to_return = NextStatus.MAYBE;
+			Queue<Vector<Object>> computed = compute(inputs);
 			if (computed != null && !computed.isEmpty())
 			{
-				// We computed an output event; add it to the output queue
-				// and answer YES
-				for (int i = 0; i < m_outputArity; i++)
+				for (Vector<Object> evt : computed)
 				{
-					Queue<Object> queue = m_outputQueues.get(i);
-					queue.add(computed.get(i));
+					if (evt != null && !evt.isEmpty())
+					{
+						// We computed an output event; add it to the output queue
+						// and answer YES
+						for (int i = 0; i < m_outputArity; i++)
+						{
+							Queue<Object> queue = m_outputQueues.get(i);
+							queue.add(evt.get(i));
+						}
+						status_to_return = NextStatus.YES;
+					}
 				}
-				return NextStatus.YES;
 			}
-			return NextStatus.MAYBE;
+			return status_to_return;
 		}
 	}
+	
+	protected static final Queue<Vector<Object>> wrapVector(Vector<Object> v)
+	{
+		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
+		out.add(v);
+		return out;
+	}
+	
+	protected static final Queue<Vector<Object>> wrapObject(Object o)
+	{
+		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
+		Vector<Object> v = new Vector<Object>();
+		v.add(o);
+		out.add(v);
+		return out;
+	}
+
+	
+	
 }

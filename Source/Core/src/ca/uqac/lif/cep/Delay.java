@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Queue;
 import java.util.Vector;
 
 public class Delay extends SingleProcessor
@@ -45,12 +46,12 @@ public class Delay extends SingleProcessor
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
 		m_eventsReceived++;
 		if (m_eventsReceived > m_delay)
 		{
-			return inputs;
+			return wrapVector(inputs);
 		}
 		return null;
 	}
