@@ -23,17 +23,67 @@ import java.util.Vector;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
-public class TokenFeeder extends SingleProcessor
+public abstract class TokenFeeder extends SingleProcessor
 {
+	protected StringBuilder m_bufferedContents;
+
+	protected String m_separatorBegin;
+	protected String m_separatorEnd;
+
 	public TokenFeeder()
 	{
 		super(1, 1);
+		m_bufferedContents = new StringBuilder();
 	}
 
+	protected abstract Object createTokenFromInput(String token);
+
+	/**
+	 * Analyzes the current contents of the buffer; extracts a complete token
+	 * from it, if any is present
+	 * @param to_fill Will be filled with the contents of the next token
+	 */
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
+		for (Object o : inputs)
+		{
+			if (o instanceof String)
+			{
+				String s = (String) o;
+				m_bufferedContents.append(s);
+			}
+		}
 		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
+		String s = m_bufferedContents.toString();
+		while (!s.isEmpty())
+		{
+			int index = s.indexOf(m_separatorEnd);
+			if (index < 0)
+			{
+				return out;
+			}
+			int index2 = s.indexOf(m_separatorBegin);
+			if (index2 > index)
+				index2 = 0;
+			if (index2 < 0)
+				break;
+			String s_out = s.substring(index2, index + m_separatorEnd.length());
+			//m_bufferedContents.delete(index2, index + m_separatorEnd.length());
+			m_bufferedContents.delete(0, index + m_separatorEnd.length());
+			Object token = createTokenFromInput(s_out);
+			if (token != null)
+			{
+				Vector<Object> to_fill = new Vector<Object>();
+				to_fill.add(token);
+				out.add(to_fill);
+			}
+			else
+			{
+				break;
+			}
+			s = m_bufferedContents.toString();
+		}
 		return out;
 	}
 
