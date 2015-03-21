@@ -9,12 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Filter;
 import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.Function;
 import ca.uqac.lif.cep.Mutator;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.QueueSink;
 import ca.uqac.lif.cep.QueueSource;
+import ca.uqac.lif.cep.Window;
 
 public class MathTest
 {
@@ -156,6 +158,37 @@ public class MathTest
 		} 
 	}
 	
+	@Test
+	public void testStatisticalMomentPush1()
+	{
+		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(2);
+		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSink sink = new QueueSink(1);
+		setupStatisticalMoment(input1, sink, 1);
+		Number recv;
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 2
+		if (recv == null || Math.abs(recv.floatValue() - 2) > 0.0001)
+		{
+			fail("Expected 2, got " + recv);
+		}
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 2
+		if (recv == null || Math.abs(recv.floatValue() - 2.5) > 0.0001)
+		{
+			fail("Expected 2.5, got " + recv);
+		}
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 2
+		if (recv == null || Math.abs(recv.floatValue() - 2.33333) > 0.0001)
+		{
+			fail("Expected 2.33, got " + recv);
+		} 
+	}
+	
 	protected static void setupStatisticalMoment(Processor source, Processor sink, int n)
 	{
 		Fork fork = new Fork(2);
@@ -163,9 +196,12 @@ public class MathTest
 		Sum sum_left = new Sum(1);
 		{
 			// Left part: sum of x^n
-			QueueSource exponent = new QueueSource(n, 1);
+			Fork fork2 = new Fork(2);
+			Connector.connect(fork, fork2, 0, 0);
+			Mutator exponent = new Mutator(1, n);
+			Connector.connect(fork2, exponent, 0, 0);
 			Function pow = new Function(new Power());
-			Connector.connect(fork, pow, 0, 0);
+			Connector.connect(fork2, pow, 1, 0);
 			Connector.connect(exponent, pow, 0, 1);
 			Connector.connect(pow, sum_left);
 		}
@@ -179,6 +215,90 @@ public class MathTest
 		Function div = new Function(new Division());
 		Connector.connect(sum_left, sum_right, div);
 		Connector.connect(div, sink);
+	}
+	
+	protected static void setupSumIfGreater(Processor source, Processor sink)
+	{
+		Window win = new Window(new Sum(1), 2);
+		Connector.connect(source, win);
+		Fork fork = new Fork(3);
+		Connector.connect(win, fork);
+		Function greater = new Function(new IsGreaterThan());
+		Mutator five = new Mutator(1, 5);
+		Connector.connect(fork, five, 0, 0);
+		Connector.connect(fork, greater, 1, 0);
+		Connector.connect(five, greater, 0, 1);
+		Filter fil = new Filter();
+		Connector.connect(fork, fil, 2, 0);
+		Connector.connect(greater, fil, 0, 1);
+		Connector.connect(fil, sink);
+	}
+
+	@Test
+	public void testSumIfGreaterPush()
+	{
+		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(4);
+		l_input1.add(0);
+		l_input1.add(6);
+		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSink sink = new QueueSink(1);
+		setupSumIfGreater(input1, sink);
+		Number recv;
+		input1.push();
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 2+3=5, null
+		if (recv != null)
+		{
+			fail("Expected null, got " + recv);
+		}
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 3+4=7
+		if (recv == null || recv.intValue() != 7)
+		{
+			fail("Expected 7, got " + recv);
+		}
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 4+0=4, null
+		if (recv != null)
+		{
+			fail("Expected null, got " + recv);
+		}
+		input1.push();
+		recv = (Number) sink.remove().firstElement(); // 0+6=6
+		if (recv == null || recv.intValue() != 6)
+		{
+			fail("Expected 6, got " + recv);
+		}
+	}
+	
+	@Test
+	public void testSumIfGreaterPullHard()
+	{
+		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(4);
+		l_input1.add(0);
+		l_input1.add(6);
+		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSink sink = new QueueSink(1);
+		setupSumIfGreater(input1, sink);
+		Number recv;
+		sink.pullHard();
+		recv = (Number) sink.remove().firstElement(); // 3+4=7
+		if (recv == null || recv.intValue() != 7)
+		{
+			fail("Expected 7, got " + recv);
+		}
+		sink.pullHard();
+		recv = (Number) sink.remove().firstElement(); // 0+6=6
+		if (recv == null || recv.intValue() != 6)
+		{
+			fail("Expected 6, got " + recv);
+		}
 	}
 
 }
