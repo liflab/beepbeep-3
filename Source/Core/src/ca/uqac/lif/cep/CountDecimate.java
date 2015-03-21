@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public class CountDecimate extends Processor
+public class CountDecimate extends SingleProcessor
 {
 	/**
 	 * The decimation interval

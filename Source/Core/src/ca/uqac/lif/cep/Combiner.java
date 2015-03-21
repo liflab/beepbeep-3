@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public abstract class Combiner extends Processor
+public abstract class Combiner extends SingleProcessor
 {
 	protected Vector<Object> m_total;
 	

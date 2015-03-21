@@ -15,34 +15,28 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.math;
 
 import java.util.Vector;
 
-public class Freeze extends SingleProcessor
+public class Power extends NaryComputable
 {
-	protected Vector<Object> m_output;
-	
-	public Freeze()
+	public Power()
 	{
-		super(1, 1);
-	}
-	
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_output = null;
+		super(2);
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Vector<Object> computeNumerical(Vector<Number> inputs)
 	{
-		if (m_output == null)
+		Vector<Object> out = new Vector<Object>();
+		if (inputs.size() >= 2)
 		{
-			m_output = inputs;
+			Number x = inputs.firstElement();
+			Number n = inputs.lastElement();
+			out.add(Math.pow(x.doubleValue(), n.doubleValue()));
 		}
-		return m_output;
+		return out;
 	}
 
 }

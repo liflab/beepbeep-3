@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public class Delay extends Processor
+public class Delay extends SingleProcessor
 {
 	/**
 	 * How many events to ignore at the beginning of the trace

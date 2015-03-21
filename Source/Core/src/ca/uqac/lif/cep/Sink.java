@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public abstract class Sink extends Processor
+public abstract class Sink extends SingleProcessor
 {
 	public Sink(int in_arity)
 	{
@@ -36,6 +36,20 @@ public abstract class Sink extends Processor
 		{
 			Pullable p = m_inputPullables.get(i);
 			inputs.add(p.pull());
+		}
+		compute(inputs);
+	}
+	
+	/**
+	 * Tells the sink to pull events from the pipeline
+	 */
+	public final void pullHard()
+	{
+		Vector<Object> inputs = new Vector<Object>(getInputArity());
+		for (int i = 0; i < getInputArity(); i++)
+		{
+			Pullable p = m_inputPullables.get(i);
+			inputs.add(p.pullHard());
 		}
 		compute(inputs);
 	}

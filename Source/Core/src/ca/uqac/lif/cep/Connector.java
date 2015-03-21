@@ -33,7 +33,7 @@ public class Connector
 	 * @param i The output number of the first processor
 	 * @param j The input number of the second processor
 	 */
-	public static void connect(Processor p1, Processor p2, int i, int j)
+	public static void connect(SingleProcessor p1, SingleProcessor p2, int i, int j)
 	{
 		// Pull
 		Pullable p1_out = p1.getPullableOutput(i);
@@ -49,7 +49,7 @@ public class Connector
 	 * @param p1 The first processor
 	 * @param p2 The second processor
 	 */
-	public static void connect(Processor p1, Processor p2)
+	public static void connect(SingleProcessor p1, SingleProcessor p2)
 	{
 		int arity = p1.getOutputArity();
 		for (int i = 0; i < arity; i++)
@@ -64,7 +64,7 @@ public class Connector
 	 * @param p1 The first processor
 	 * @param p2 The second processor
 	 */
-	public static void connect(Processor p1, Processor p2, Processor p3)
+	public static void connect(SingleProcessor p1, SingleProcessor p2, SingleProcessor p3)
 	{
 		connect(p1, p3, 0, 0);
 		connect(p2, p3, 0, 1);

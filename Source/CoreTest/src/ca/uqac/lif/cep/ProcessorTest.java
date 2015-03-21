@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.math.Addition;
 import ca.uqac.lif.cep.math.IsEven;
+import ca.uqac.lif.cep.math.Sum;
 
 public class ProcessorTest
 {
@@ -145,6 +146,28 @@ public class ProcessorTest
 			fail("Expected 3 on fourth pull, got " + recv);
 		}
 	}
+	
+	@Test
+	public void testWindowPull2()
+	{
+		Number recv;
+		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
+		Window wp = new Window(new Sum(1), 3);
+		Connector.connect(cs, wp);
+		Pullable p = wp.getPullableOutput(0);
+		// We pull hard: get output on first call
+		recv = (Number) p.pullHard();
+		if (recv == null || recv.intValue() != 3)
+		{
+			fail("Expected 3 on first pull, got " + recv);
+		}
+		recv = (Number) p.pullHard();
+		if (recv == null || recv.intValue() != 3)
+		{
+			fail("Expected 3 on second pull, got " + recv);
+		}
+	}
+
 	
 	@Test
 	public void testWindowPush1()

@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public class Function extends Processor
+public class Function extends SingleProcessor
 {
 	/**
 	 * The object responsible for the computation

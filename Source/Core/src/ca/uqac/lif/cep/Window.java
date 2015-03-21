@@ -35,7 +35,7 @@ import java.util.Vector;
  * @author sylvain
  *
  */
-public class Window extends Processor
+public class Window extends SingleProcessor
 {
 	/**
 	 * The window's width
@@ -45,7 +45,7 @@ public class Window extends Processor
 	/**
 	 * The internal processor
 	 */
-	protected Processor m_processor = null;
+	protected SingleProcessor m_processor = null;
 	
 	/**
 	 * The internal processor's input pushables
@@ -62,7 +62,7 @@ public class Window extends Processor
 	 */
 	protected Vector<List<Object>> m_window;
 	
-	public Window(Processor in_processor, int width)
+	public Window(SingleProcessor in_processor, int width)
 	{
 		super(in_processor.getInputArity(), in_processor.getOutputArity());
 		m_width = width;

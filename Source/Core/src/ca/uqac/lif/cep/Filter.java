@@ -31,7 +31,7 @@ import java.util.Vector;
  * @author sylvain
  *
  */
-public class Filter extends Processor
+public class Filter extends SingleProcessor
 {
 	public Filter()
 	{

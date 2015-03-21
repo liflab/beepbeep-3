@@ -24,7 +24,7 @@ import java.util.Vector;
  * @author sylvain
  *
  */
-public class Passthrough extends Processor
+public class Passthrough extends SingleProcessor
 {
 	public Passthrough(int arity)
 	{

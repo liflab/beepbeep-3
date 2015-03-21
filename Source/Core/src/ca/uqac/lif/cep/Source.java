@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public abstract class Source extends Processor
+public abstract class Source extends SingleProcessor
 {
 	Source(int out_arity)
 	{

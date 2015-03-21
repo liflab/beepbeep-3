@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public class Mutator extends Processor
+public class Mutator extends SingleProcessor
 {
 	/**
 	 * The output event to send

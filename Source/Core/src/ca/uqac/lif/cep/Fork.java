@@ -24,7 +24,7 @@ import java.util.Vector;
  * @author sylvain
  *
  */
-public class Fork extends Processor
+public class Fork extends SingleProcessor
 {
 	public Fork(int out_arity)
 	{

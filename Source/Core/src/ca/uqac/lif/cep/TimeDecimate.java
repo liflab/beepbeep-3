@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public class TimeDecimate extends Processor
+public class TimeDecimate extends SingleProcessor
 {
 	/**
 	 * Interval of time

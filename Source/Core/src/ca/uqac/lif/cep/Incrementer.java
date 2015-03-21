@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public class Incrementer extends Processor
+public class Incrementer extends SingleProcessor
 {
 	protected final float m_increment;
 	
