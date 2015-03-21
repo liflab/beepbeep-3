@@ -17,7 +17,13 @@
  */
 package ca.uqac.lif.cep;
 
-public interface Pushable
+import java.util.Vector;
+
+public interface Computable
 {
-	public void push(Object o);
+	public Vector<Object> compute(Vector<Object> inputs);
+	
+	public int getInputArity();
+	
+	public int getOutputArity();
 }

@@ -17,47 +17,39 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.Queue;
 import java.util.Vector;
 
-public class QueueSource extends Source
+/**
+ * Discards events from an input trace based on a selection criterion.
+ * <ul>
+ * <li>The processor takes as arguments another processor &phi;</li>
+ * <li>It evaluates &phi; on the trace that starts at event 0; it returns that
+ *   event if the first event returned by &phi; returns TRUE</li>
+ * <li>Same process on the trace that starts at event 1...</li>
+ * <li>...and so on</li> 
+ * </ul>
+ * @author sylvain
+ *
+ */
+public class Filter extends Processor
 {
-	/**
-	 * The events to repeat endlessly
-	 */
-	protected final Vector<Object> m_events;
-	
-	/**
-	 * The index of the next event to produce
-	 */
-	protected int m_index;
-	
-	public QueueSource(Object o, int arity)
+	public Filter()
 	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.add(o);
-		m_index = 0;
-	}
-	
-	public QueueSource(Queue<Object> o, int arity)
-	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.addAll(o);
-		m_index = 0;
+		super(2, 1);
 	}
 
 	@Override
 	protected Vector<Object> compute(Vector<Object> inputs)
 	{
-		Vector<Object> output = new Vector<Object>();
-		Object event = m_events.get(m_index);
-		m_index = (m_index + 1) % m_events.size();
-		for (int i = 0; i < getOutputArity(); i++)
+		Object o = inputs.firstElement();
+		Vector<Object> out = new Vector<Object>();
+		boolean b = (Boolean) inputs.lastElement();
+		if (b)
 		{
-			output.add(event);
+			out.add(o);
 		}
-		return output;
+		return out;
+		
 	}
+
 }

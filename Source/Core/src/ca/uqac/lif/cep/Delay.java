@@ -17,47 +17,42 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.Queue;
 import java.util.Vector;
 
-public class QueueSource extends Source
+public class Delay extends Processor
 {
 	/**
-	 * The events to repeat endlessly
+	 * How many events to ignore at the beginning of the trace
 	 */
-	protected final Vector<Object> m_events;
+	protected final int m_delay;
 	
 	/**
-	 * The index of the next event to produce
+	 * The number of events received so far
 	 */
-	protected int m_index;
+	protected int m_eventsReceived;
 	
-	public QueueSource(Object o, int arity)
+	public Delay(int delay)
 	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.add(o);
-		m_index = 0;
+		super(1, 1);
+		m_delay = delay;
 	}
 	
-	public QueueSource(Queue<Object> o, int arity)
+	@Override
+	public void reset()
 	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.addAll(o);
-		m_index = 0;
+		super.reset();
+		m_eventsReceived = 0;
 	}
 
 	@Override
 	protected Vector<Object> compute(Vector<Object> inputs)
 	{
-		Vector<Object> output = new Vector<Object>();
-		Object event = m_events.get(m_index);
-		m_index = (m_index + 1) % m_events.size();
-		for (int i = 0; i < getOutputArity(); i++)
+		m_eventsReceived++;
+		if (m_eventsReceived > m_delay)
 		{
-			output.add(event);
+			return inputs;
 		}
-		return output;
+		return null;
 	}
+
 }

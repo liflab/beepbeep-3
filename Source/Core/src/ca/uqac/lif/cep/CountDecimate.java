@@ -17,47 +17,44 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.Queue;
 import java.util.Vector;
 
-public class QueueSource extends Source
+public class CountDecimate extends Processor
 {
 	/**
-	 * The events to repeat endlessly
+	 * The decimation interval
 	 */
-	protected final Vector<Object> m_events;
+	protected final int m_interval;
 	
 	/**
-	 * The index of the next event to produce
+	 * Index of last event received
 	 */
-	protected int m_index;
+	protected int m_current;
 	
-	public QueueSource(Object o, int arity)
+	public CountDecimate(int interval)
 	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.add(o);
-		m_index = 0;
+		super(1, 1);
+		m_interval = interval;
+		m_current = 0;
 	}
 	
-	public QueueSource(Queue<Object> o, int arity)
+	@Override
+	public void reset()
 	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.addAll(o);
-		m_index = 0;
+		super.reset();
+		m_current = 0;
 	}
 
 	@Override
 	protected Vector<Object> compute(Vector<Object> inputs)
 	{
-		Vector<Object> output = new Vector<Object>();
-		Object event = m_events.get(m_index);
-		m_index = (m_index + 1) % m_events.size();
-		for (int i = 0; i < getOutputArity(); i++)
+		Vector<Object> out = null;
+		if (m_current == 0)
 		{
-			output.add(event);
+			out = inputs;
 		}
-		return output;
+		m_current = (m_current + 1) % m_interval;
+		return out;
 	}
+
 }

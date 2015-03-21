@@ -17,47 +17,25 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.Queue;
 import java.util.Vector;
 
-public class QueueSource extends Source
+public class Function extends Processor
 {
 	/**
-	 * The events to repeat endlessly
+	 * The object responsible for the computation
 	 */
-	protected final Vector<Object> m_events;
+	protected final Computable m_compute;
 	
-	/**
-	 * The index of the next event to produce
-	 */
-	protected int m_index;
-	
-	public QueueSource(Object o, int arity)
+	public Function(Computable comp)
 	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.add(o);
-		m_index = 0;
-	}
-	
-	public QueueSource(Queue<Object> o, int arity)
-	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.addAll(o);
-		m_index = 0;
+		super(comp.getInputArity(), comp.getOutputArity());
+		m_compute = comp;
 	}
 
 	@Override
 	protected Vector<Object> compute(Vector<Object> inputs)
 	{
-		Vector<Object> output = new Vector<Object>();
-		Object event = m_events.get(m_index);
-		m_index = (m_index + 1) % m_events.size();
-		for (int i = 0; i < getOutputArity(); i++)
-		{
-			output.add(event);
-		}
-		return output;
+		return m_compute.compute(inputs);
 	}
+
 }

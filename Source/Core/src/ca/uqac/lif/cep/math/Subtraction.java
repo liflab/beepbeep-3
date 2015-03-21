@@ -15,49 +15,30 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.math;
 
-import java.util.Queue;
 import java.util.Vector;
 
-public class QueueSource extends Source
+public class Subtraction extends NaryComputable
 {
-	/**
-	 * The events to repeat endlessly
-	 */
-	protected final Vector<Object> m_events;
-	
-	/**
-	 * The index of the next event to produce
-	 */
-	protected int m_index;
-	
-	public QueueSource(Object o, int arity)
+	public Subtraction()
 	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.add(o);
-		m_index = 0;
-	}
-	
-	public QueueSource(Queue<Object> o, int arity)
-	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.addAll(o);
-		m_index = 0;
+		super(2);
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	protected Vector<Object> computeNumerical(Vector<Number> inputs)
 	{
-		Vector<Object> output = new Vector<Object>();
-		Object event = m_events.get(m_index);
-		m_index = (m_index + 1) % m_events.size();
-		for (int i = 0; i < getOutputArity(); i++)
+		Vector<Object> out = new Vector<Object>();
+		float diff = 0;
+		if (inputs.size() >= 2)
 		{
-			output.add(event);
+			Number n1 = inputs.firstElement();
+			Number n2 = inputs.lastElement();
+			diff = n2.floatValue() - n1.floatValue();
 		}
-		return output;
+		out.add(diff);
+		return out;
 	}
+
 }

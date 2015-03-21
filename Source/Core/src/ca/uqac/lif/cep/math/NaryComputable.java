@@ -15,49 +15,52 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.math;
 
-import java.util.Queue;
 import java.util.Vector;
 
-public class QueueSource extends Source
+import ca.uqac.lif.cep.Computable;
+
+public abstract class NaryComputable implements Computable
 {
-	/**
-	 * The events to repeat endlessly
-	 */
-	protected final Vector<Object> m_events;
+	protected final int m_inputArity;
 	
-	/**
-	 * The index of the next event to produce
-	 */
-	protected int m_index;
-	
-	public QueueSource(Object o, int arity)
+	public NaryComputable(int arity)
 	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.add(o);
-		m_index = 0;
-	}
-	
-	public QueueSource(Queue<Object> o, int arity)
-	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.addAll(o);
-		m_index = 0;
+		super();
+		m_inputArity = arity;
 	}
 
 	@Override
-	protected Vector<Object> compute(Vector<Object> inputs)
+	public final int getInputArity()
 	{
-		Vector<Object> output = new Vector<Object>();
-		Object event = m_events.get(m_index);
-		m_index = (m_index + 1) % m_events.size();
-		for (int i = 0; i < getOutputArity(); i++)
-		{
-			output.add(event);
-		}
-		return output;
+		return m_inputArity;
 	}
+
+	@Override
+	public final int getOutputArity()
+	{
+		return 1;
+	}
+	
+	@Override
+	public final Vector<Object> compute(Vector<Object> inputs)
+	{
+		Vector<Number> numbers = new Vector<Number>();
+		for (Object o : inputs)
+		{
+			if (o instanceof Number)
+			{
+				numbers.add((Number) o);
+			}
+			else
+			{
+				numbers.add(0);
+			}
+		}
+		return computeNumerical(numbers);
+	}
+	
+	protected abstract Vector<Object> computeNumerical(Vector<Number> inputs);
+
 }

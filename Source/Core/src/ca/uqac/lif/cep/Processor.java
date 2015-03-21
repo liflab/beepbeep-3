@@ -1,3 +1,20 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2015 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep;
 
 import java.util.LinkedList;
@@ -36,6 +53,8 @@ public abstract class Processor
 		super();
 		m_inputArity = in_arity;
 		m_outputArity = out_arity;
+		m_inputPullables = new Vector<Pullable>(m_inputArity);
+		m_outputPushables = new Vector<Pushable>(m_outputArity);
 		reset();
 	}
 	
@@ -88,7 +107,6 @@ public abstract class Processor
 	
 	protected final void initializeInput()
 	{
-		m_inputPullables = new Vector<Pullable>(m_inputArity);
 		m_inputQueues = new Vector<Queue<Object>>();
 		for (int i = 0; i < m_inputArity; i++)
 		{
@@ -98,13 +116,11 @@ public abstract class Processor
 	
 	protected final void initializeOutput()
 	{
-		m_outputPushables = new Vector<Pushable>(m_outputArity);
 		m_outputQueues = new Vector<Queue<Object>>();
 		for (int i = 0; i < m_outputArity; i++)
 		{
 			m_outputQueues.add(new LinkedList<Object>());
 		}
-
 	}
 	
 	/**
@@ -179,11 +195,14 @@ public abstract class Processor
 			}
 			// Compute output event
 			Vector<Object> outs = compute(inputs);
-			assert outs.size() >= m_outputPushables.size();
-			for (int i = 0; i < m_outputPushables.size(); i++)
+			if (outs != null && !outs.isEmpty())
 			{
-				Pushable p = m_outputPushables.get(i);
-				p.push(outs.get(i));
+				assert outs.size() >= m_outputPushables.size();
+				for (int i = 0; i < m_outputPushables.size(); i++)
+				{
+					Pushable p = m_outputPushables.get(i);
+					p.push(outs.get(i));
+				}
 			}
 		}
 	}
@@ -249,7 +268,7 @@ public abstract class Processor
 			}
 			// Compute output event(s)
 			Vector<Object> computed = compute(inputs);
-			if (computed.isEmpty())
+			if (computed == null || computed.isEmpty())
 			{
 				return false;
 			}
