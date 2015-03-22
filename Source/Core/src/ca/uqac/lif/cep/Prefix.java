@@ -15,35 +15,42 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep;
 
+import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-public class Power extends NaryComputable
+public class Prefix extends Delay
 {
-	public Power()
+	public Prefix()
 	{
-		super(2);
+		super();
 	}
-
-	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
+	
+	public Prefix(int k)
 	{
-		Vector<Object> out = new Vector<Object>();
-		if (inputs.size() >= 2)
+		super(k);
+	}
+	
+	@Override
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	{
+		m_eventsReceived++;
+		if (m_eventsReceived < m_delay)
 		{
-			Number x = inputs.firstElement();
-			Number n = inputs.lastElement();
-			out.add(Math.pow(x.doubleValue(), n.doubleValue()));
+			return wrapVector(inputs);
 		}
-		return out;
+		return null;
 	}
 	
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		stack.push(new Power());
+		Processor p = (Processor) stack.pop();
+		Number interval = (Number) stack.pop();
+		Prefix out = new Prefix(interval.intValue());
+		Connector.connect(p, out);
+		stack.push(out);
 	}
-
 }

@@ -20,6 +20,7 @@ package ca.uqac.lif.cep;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 /**
@@ -46,7 +47,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The internal processor
 	 */
-	protected SingleProcessor m_processor = null;
+	protected Processor m_processor = null;
 	
 	/**
 	 * The internal processor's input pushables
@@ -63,7 +64,12 @@ public class Window extends SingleProcessor
 	 */
 	protected Vector<List<Object>> m_window;
 	
-	public Window(SingleProcessor in_processor, int width)
+	public Window()
+	{
+		super();
+	}
+	
+	public Window(Processor in_processor, int width)
 	{
 		super(in_processor.getInputArity(), in_processor.getOutputArity());
 		m_width = width;
@@ -159,6 +165,15 @@ public class Window extends SingleProcessor
 		{
 			q.remove(0);
 		}
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		Number width = (Number) stack.pop();
+		Processor p = (Processor) stack.pop();
+		Window out = new Window(p, width.intValue());
+		stack.push(out);
 	}
 
 }

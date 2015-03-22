@@ -32,6 +32,11 @@ public class Delay extends SingleProcessor
 	 */
 	protected int m_eventsReceived;
 	
+	public Delay()
+	{
+		this(0);
+	}
+	
 	public Delay(int delay)
 	{
 		super(1, 1);

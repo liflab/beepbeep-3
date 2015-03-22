@@ -17,7 +17,10 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 public class Function extends SingleProcessor
@@ -26,6 +29,12 @@ public class Function extends SingleProcessor
 	 * The object responsible for the computation
 	 */
 	protected final Computable m_compute;
+	
+	public Function()
+	{
+		super();
+		m_compute = null;
+	}
 	
 	public Function(Computable comp)
 	{
@@ -38,5 +47,45 @@ public class Function extends SingleProcessor
 	{
 		return wrapVector(m_compute.compute(inputs));
 	}
-
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		// Principle: pop processors from the stack and count them,
+		// until we pop the Computable. The computable tells us how
+		// many processors we need to pop based on its input arity. This
+		// way, we can deal with prefix n-ary and infix binary functions
+		// at the same time.
+		List<Processor> inputs = new LinkedList<Processor>();
+		int num_popped = 0;
+		int arity = Computable.s_maxInputArity;
+		Computable c = null;
+		do
+		{
+			Object o = stack.pop();
+			if (o instanceof Processor)
+			{
+				num_popped++;
+				inputs.add((Processor) o);
+			}
+			else if (o instanceof Computable)
+			{
+				c = (Computable) o;
+				arity = c.getInputArity();
+			}
+			else
+			{
+				// This should not happen
+				assert false;
+			}
+		} while (num_popped < arity);
+		// Instantiate the processor and connect it to its input traces
+		Function out = new Function(c);
+		for (int i = 0; i < inputs.size(); i++)
+		{
+			Processor p = inputs.get(i);
+			Connector.connect(p, out, 0, i);
+		}
+		stack.push(out);
+	}
 }

@@ -18,9 +18,10 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
-public abstract class Processor
+public abstract class Processor implements Buildable
 {
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires
@@ -45,6 +46,13 @@ public abstract class Processor
 	protected static int s_uniqueIdCounter = 0;
 	
 	protected int m_uniqueId;
+	
+	public Processor()
+	{
+		super();
+		m_inputArity = 0;
+		m_outputArity = 0;
+	}
 
 	/**
 	 * Initializes a processor
@@ -93,6 +101,12 @@ public abstract class Processor
 	public abstract void setPushableOutput(int i, Pushable p);
 	
 	public abstract Pushable getPushableOutput(int index);
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		// Do nothing
+	}
 	
 	/**
 	 * Returns the processor's input arity

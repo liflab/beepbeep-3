@@ -24,7 +24,11 @@ import java.util.Vector;
 public abstract class SingleProcessor extends Processor
 {
 
-
+	public SingleProcessor()
+	{
+		super();
+	}
+	
 	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity

@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.math;
 
+import java.util.Stack;
 import java.util.Vector;
 
 public class IsEven extends NaryComputable
@@ -47,6 +48,12 @@ public class IsEven extends NaryComputable
 			}
 		}
 		return out;
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		stack.push(new IsEven());
 	}
 
 }

@@ -15,35 +15,17 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep;
 
 import java.util.Stack;
-import java.util.Vector;
 
-public class Power extends NaryComputable
+/**
+ * A Buildable object can be instantiated by interacting with a stack
+ * of other objects.
+ * @author sylvain
+ *
+ */
+public interface Buildable
 {
-	public Power()
-	{
-		super(2);
-	}
-
-	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
-	{
-		Vector<Object> out = new Vector<Object>();
-		if (inputs.size() >= 2)
-		{
-			Number x = inputs.firstElement();
-			Number n = inputs.lastElement();
-			out.add(Math.pow(x.doubleValue(), n.doubleValue()));
-		}
-		return out;
-	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		stack.push(new Power());
-	}
-
+	public void build(Stack<Object> stack);
 }

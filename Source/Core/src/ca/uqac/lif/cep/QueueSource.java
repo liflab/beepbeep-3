@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 public class QueueSource extends Source
@@ -31,6 +32,13 @@ public class QueueSource extends Source
 	 * The index of the next event to produce
 	 */
 	protected int m_index;
+	
+	public QueueSource()
+	{
+		super();
+		m_events = new Vector<Object>();
+		m_index = 0;
+	}
 	
 	public QueueSource(Object o, int arity)
 	{
@@ -59,5 +67,13 @@ public class QueueSource extends Source
 			output.add(event);
 		}
 		return wrapVector(output);
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		Object o = stack.pop();
+		QueueSource out = new QueueSource(o, 1);
+		stack.push(out);
 	}
 }

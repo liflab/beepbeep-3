@@ -17,10 +17,16 @@
  */
 package ca.uqac.lif.cep.math;
 
+import java.util.Stack;
 import java.util.Vector;
 
 public class Addition extends NaryComputable
 {
+	public Addition()
+	{
+		super(2);
+	}
+	
 	public Addition(int arity)
 	{
 		super(arity);
@@ -40,6 +46,12 @@ public class Addition extends NaryComputable
 		}
 		out.add(sum);
 		return out;
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		stack.push(new Addition(2));
 	}
 
 }

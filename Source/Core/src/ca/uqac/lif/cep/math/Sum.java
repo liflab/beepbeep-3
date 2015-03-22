@@ -17,42 +17,54 @@
  */
 package ca.uqac.lif.cep.math;
 
+import java.util.Stack;
 import java.util.Vector;
 
-import ca.uqac.lif.cep.Combiner;
+import ca.uqac.lif.cep.Combinable;
 
-public class Sum extends Combiner
+public class Sum implements Combinable
 {
-	public Sum(int arity)
+	public Sum()
 	{
-		super(arity, arity);
+		super();
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		Sum out = new Sum();
+		stack.push(out);
 	}
 
 	@Override
-	protected Vector<Object> initialize()
+	public Vector<Object> initialize()
 	{
-		int o_arity = getOutputArity();
-		Vector<Object> out = new Vector<Object>(o_arity);
-		for (int i = 0; i < o_arity; i++)
-		{
-			out.add(0);
-		}
-		return out;
+		Vector<Object> ob = new Vector<Object>();
+		ob.add(0);
+		return ob;
 	}
 
 	@Override
-	protected Vector<Object> combine(Vector<Object> inputs, Vector<Object> total)
+	public Vector<Object> combine(Vector<Object> inputs, Vector<Object> total)
 	{
-		int o_arity = getOutputArity();
-		Vector<Object> out = new Vector<Object>(o_arity);
-		for (int i = 0; i < o_arity; i++)
-		{
-			Number n1 = (Number) inputs.get(i);
-			Number n2 = (Number) total.get(i);
-			out.add(n1.floatValue() + n2.floatValue());
-		}
-		return out;
-		
+		Vector<Object> ob = new Vector<Object>();
+		Number n1 = (Number) total.firstElement();
+		Number n2 = (Number) inputs.firstElement();
+		Number n3 = n1.floatValue() + n2.floatValue();
+		ob.add(n3);
+		return ob;
+	}
+
+	@Override
+	public int getInputArity()
+	{
+		return 1;
+	}
+
+	@Override
+	public int getOutputArity()
+	{
+		return 1;
 	}
 
 }

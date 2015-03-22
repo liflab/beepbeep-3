@@ -15,35 +15,17 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep;
 
-import java.util.Stack;
 import java.util.Vector;
 
-public class Power extends NaryComputable
+public interface Combinable extends Buildable
 {
-	public Power()
-	{
-		super(2);
-	}
-
-	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
-	{
-		Vector<Object> out = new Vector<Object>();
-		if (inputs.size() >= 2)
-		{
-			Number x = inputs.firstElement();
-			Number n = inputs.lastElement();
-			out.add(Math.pow(x.doubleValue(), n.doubleValue()));
-		}
-		return out;
-	}
+	public Vector<Object> initialize();
 	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		stack.push(new Power());
-	}
-
+	public Vector<Object> combine(Vector<Object> inputs, Vector<Object> total);
+	
+	public int getInputArity();
+	
+	public int getOutputArity();
 }

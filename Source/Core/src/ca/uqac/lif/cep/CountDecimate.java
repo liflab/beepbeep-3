@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 public class CountDecimate extends SingleProcessor
@@ -31,6 +32,11 @@ public class CountDecimate extends SingleProcessor
 	 * Index of last event received
 	 */
 	protected int m_current;
+	
+	public CountDecimate()
+	{
+		this(1);
+	}
 	
 	public CountDecimate(int interval)
 	{
@@ -56,6 +62,16 @@ public class CountDecimate extends SingleProcessor
 		}
 		m_current = (m_current + 1) % m_interval;
 		return wrapVector(out);
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		Processor p = (Processor) stack.pop();
+		Number interval = (Number) stack.pop();
+		CountDecimate out = new CountDecimate(interval.intValue());
+		Connector.connect(p, out);
+		stack.push(out);
 	}
 
 }

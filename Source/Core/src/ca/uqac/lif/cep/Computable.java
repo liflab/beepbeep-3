@@ -19,8 +19,13 @@ package ca.uqac.lif.cep;
 
 import java.util.Vector;
 
-public interface Computable
+public interface Computable extends Buildable
 {
+	/**
+	 * The maximum input arity that a computable can have
+	 */
+	public static int s_maxInputArity = 10;
+	
 	public Vector<Object> compute(Vector<Object> inputs);
 	
 	public int getInputArity();

@@ -21,6 +21,11 @@ import java.util.Vector;
 
 public abstract class Sink extends SingleProcessor
 {
+	public Sink()
+	{
+		this(0);
+	}
+	
 	public Sink(int in_arity)
 	{
 		super(in_arity, 0);

@@ -17,33 +17,12 @@
  */
 package ca.uqac.lif.cep.math;
 
-import java.util.Stack;
-import java.util.Vector;
+import ca.uqac.lif.cep.Combiner;
 
-public class Power extends NaryComputable
+public class CumulativeSum extends Combiner
 {
-	public Power()
+	public CumulativeSum()
 	{
-		super(2);
+		super(new Sum());
 	}
-
-	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
-	{
-		Vector<Object> out = new Vector<Object>();
-		if (inputs.size() >= 2)
-		{
-			Number x = inputs.firstElement();
-			Number n = inputs.lastElement();
-			out.add(Math.pow(x.doubleValue(), n.doubleValue()));
-		}
-		return out;
-	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		stack.push(new Power());
-	}
-
 }

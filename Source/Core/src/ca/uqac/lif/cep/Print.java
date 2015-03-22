@@ -21,49 +21,66 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-public class Combiner extends SingleProcessor
+import ca.uqac.lif.util.AnsiPrinter;
+
+public class Print extends Sink
 {
-	protected Vector<Object> m_total = null;
+	/**
+	 * The stream to print to
+	 */
+	protected AnsiPrinter m_out;
 	
-	protected Combinable m_combinable = null;
-	
-	public Combiner()
+	public Print()
 	{
-		super();
+		this(0, new AnsiPrinter(System.out));
 	}
 	
-	public Combiner(Combinable combinable)
+	public Print(int in_arity, AnsiPrinter out)
 	{
-		super(combinable.getInputArity(), combinable.getOutputArity());
-		m_combinable = combinable;
-		m_total = m_combinable.initialize();
-	}
-	
-	@Override
-	public void reset()
-	{
-		super.reset();
-		if (m_combinable != null)
-		{
-			m_total = m_combinable.initialize();
-		}
+		super(in_arity);
+		m_out = out;
 	}
 
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
-		m_total = m_combinable.combine(inputs, m_total);
-		return wrapVector(m_total);
+		if (inputs == null || inputs.isEmpty())
+		{
+			return null;
+		}
+		Object o = inputs.firstElement();
+		if (o != null)
+		{
+			m_out.setForegroundColor(AnsiPrinter.Color.LIGHT_GRAY);
+			prettyPrint(o);
+			m_out.setForegroundColor(AnsiPrinter.Color.RED);
+			m_out.print(",");
+		}
+		return wrapVector(new Vector<Object>());
 	}
 	
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		Combinable com = (Combinable) stack.pop();
 		Processor p = (Processor) stack.pop();
-		Combiner out = new Combiner(com);
+		Print out = new Print(1, new AnsiPrinter(System.out));
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-
+	
+	protected void prettyPrint(Object o)
+	{
+		if (o instanceof Number)
+		{
+			prettyPrint((Number) o);
+		}
+	}
+	
+	protected void prettyPrint(Number n)
+	{
+		if (n.intValue() == n.floatValue())
+		{
+			m_out.print(n.intValue());
+		}
+	}
 }

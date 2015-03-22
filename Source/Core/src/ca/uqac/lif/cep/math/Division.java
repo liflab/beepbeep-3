@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.math;
 
+import java.util.Stack;
 import java.util.Vector;
 
 public class Division extends NaryComputable
@@ -39,6 +40,12 @@ public class Division extends NaryComputable
 		}
 		out.add(diff);
 		return out;
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		stack.push(new Division());
 	}
 
 }
