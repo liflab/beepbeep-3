@@ -86,6 +86,15 @@ public abstract class Processor implements Buildable
 	}
 	
 	/**
+	 * Fetches the processor instance's unique ID
+	 * @return The ID
+	 */
+	public int getId()
+	{
+		return m_uniqueId;
+	}
+	
+	/**
 	 * Resets the processor. This has for effect of flushing the contents
 	 * of all input and output event queues. If the processor has an internal
 	 * state, this also resets this state to its "initial" settings.

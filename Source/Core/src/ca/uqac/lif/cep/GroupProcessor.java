@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import ca.uqac.lif.bullwinkle.BnfRule;
+
 public class GroupProcessor extends Processor
 {
 	protected Set<Processor> m_processors = null;
@@ -34,6 +36,10 @@ public class GroupProcessor extends Processor
 	protected Map<Integer,ProcessorAssociation> m_inputPullableAssociations;
 	
 	protected Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
+	
+	protected String m_ruleName;
+	
+	protected BnfRule m_rule;
 
 	public GroupProcessor(int in_arity, int out_arity)
 	{
@@ -43,6 +49,21 @@ public class GroupProcessor extends Processor
 		m_outputPullables = new Vector<Pullable>();
 		m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
 		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
+	}
+	
+	public void setRuleName(String rule_name)
+	{
+		m_ruleName = rule_name;
+	}
+	
+	public String getRuleName()
+	{
+		return m_ruleName;
+	}
+	
+	public BnfRule getRule()
+	{
+		return m_rule;
 	}
 	
 	protected static class ProcessorAssociation

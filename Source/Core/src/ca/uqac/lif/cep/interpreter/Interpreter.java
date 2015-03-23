@@ -23,9 +23,11 @@ import java.util.Stack;
 
 import ca.uqac.lif.bullwinkle.BnfParser;
 import ca.uqac.lif.bullwinkle.BnfParser.InvalidGrammarException;
+import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.bullwinkle.ParseNodeVisitor;
 import ca.uqac.lif.cep.Buildable;
+import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.util.EmptyException;
 import ca.uqac.lif.util.PackageFileReader;
 
@@ -48,6 +50,11 @@ public class Interpreter implements ParseNodeVisitor
 	protected Stack<Object> m_nodes;
 
 	/**
+	 * User-defined processors
+	 */
+	protected Map<String,GroupProcessor> m_processorDefinitions;
+
+	/**
 	 * Associations between the name of a production rule and
 	 * the processor whose syntax it defines
 	 */
@@ -62,6 +69,7 @@ public class Interpreter implements ParseNodeVisitor
 		m_parser = initializeParser();
 		m_nodes = new Stack<Object>();
 		m_associations = new HashMap<String, String>();
+		m_processorDefinitions = new HashMap<String,GroupProcessor>();
 		setBuiltinAssociations();
 	}
 
@@ -77,7 +85,7 @@ public class Interpreter implements ParseNodeVisitor
 		addAssociation("<p_prefix>", "ca.uqac.lif.cep.Prefix");
 		addAssociation("<p_print>", "ca.uqac.lif.cep.Print");
 		addAssociation("<p_window>", "ca.uqac.lif.cep.Window");
-		
+
 		// Math
 		addAssociation("<f_addition>", "ca.uqac.lif.cep.math.Addition");
 		addAssociation("<f_subtraction>", "ca.uqac.lif.cep.math.Subtraction");
@@ -180,7 +188,7 @@ public class Interpreter implements ParseNodeVisitor
 			}
 		}
 	}
-	
+
 	public void setDebugMode(boolean b)
 	{
 		m_parser.setDebugMode(b);
@@ -226,17 +234,16 @@ public class Interpreter implements ParseNodeVisitor
 		}
 	}
 
-	protected static boolean isBuildable(Class<?> c)
+	public void addProcessorDefinition(GroupProcessor pd)
 	{
-		Class<?>[] ints = c.getInterfaces();
-		for (Class<?> k : ints)
-		{
-			if (k.getName().compareTo("ca.uqac.lif.cep.Buildable") == 0)
-			{
-				return true;
-			}
-		}
-		return false;
+		// Add rules to the parser
+		String rule_name = "USERDEFPROC" + pd.getId(); // So that each definition is unique
+		pd.setRuleName(rule_name);
+		BnfRule rule = pd.getRule();
+		m_parser.addRule(rule);
+		m_parser.addCaseToRule("<userdef_proc>", "<" + rule_name + ">");
+		// Add definition
+		m_processorDefinitions.put(rule_name, pd);
 	}
 
 	@Override
