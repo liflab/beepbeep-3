@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.math.Addition;
+import ca.uqac.lif.cep.math.CumulativeSum;
 import ca.uqac.lif.cep.math.Incrementer;
 import ca.uqac.lif.cep.math.IsEven;
-import ca.uqac.lif.cep.math.Sum;
 
 public class ProcessorTest
 {
@@ -61,7 +61,7 @@ public class ProcessorTest
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new Sum(1), 3);
+		Window wp = new Window(new CumulativeSum(), 3);
 		Connector.connect(cs, wp);
 		Pullable p = wp.getPullableOutput(0);
 		// We must pull three times to get the first output
@@ -92,7 +92,7 @@ public class ProcessorTest
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new Sum(1), 3);
+		Window wp = new Window(new CumulativeSum(), 3);
 		Connector.connect(cs, wp);
 		Pullable p = wp.getPullableOutput(0);
 		// We pull hard: get output on first call
@@ -114,7 +114,7 @@ public class ProcessorTest
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new Sum(1), 3);
+		Window wp = new Window(new CumulativeSum(), 3);
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cs, wp);
 		Connector.connect(wp, qs);
@@ -150,7 +150,7 @@ public class ProcessorTest
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1, 1);
-		Sum count = new Sum(1);
+		CumulativeSum count = new CumulativeSum();
 		Connector.connect(ones, count);
 		CountDecimate decim = new CountDecimate(2);
 		Connector.connect(count, decim);
@@ -199,7 +199,7 @@ public class ProcessorTest
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1, 1);
-		Sum count = new Sum(1);
+		CumulativeSum count = new CumulativeSum();
 		Connector.connect(ones, count);
 		CountDecimate decim = new CountDecimate(2);
 		Connector.connect(count, decim);

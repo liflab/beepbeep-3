@@ -30,7 +30,7 @@ public class MathTest
 	public void testSumPush()
 	{
 		QueueSource cp = new QueueSource(1, 1);
-		Sum cs = new Sum(1);
+		CumulativeSum cs = new CumulativeSum();
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, cs);
 		Connector.connect(cs, qs);
@@ -60,7 +60,7 @@ public class MathTest
 	public void testSumPull()
 	{
 		QueueSource cp = new QueueSource(1, 1);
-		Sum cs = new Sum(1);
+		CumulativeSum cs = new CumulativeSum();
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, cs);
 		Connector.connect(cs, qs);
@@ -193,7 +193,7 @@ public class MathTest
 	{
 		Fork fork = new Fork(2);
 		Connector.connect(source, fork);
-		Sum sum_left = new Sum(1);
+		CumulativeSum sum_left = new CumulativeSum();
 		{
 			// Left part: sum of x^n
 			Fork fork2 = new Fork(2);
@@ -205,7 +205,7 @@ public class MathTest
 			Connector.connect(exponent, pow, 0, 1);
 			Connector.connect(pow, sum_left);
 		}
-		Sum sum_right = new Sum(1);
+		CumulativeSum sum_right = new CumulativeSum();
 		{
 			// Right part: sum of 1
 			Mutator one = new Mutator(1, 1);
@@ -219,7 +219,7 @@ public class MathTest
 	
 	protected static void setupSumIfGreater(Processor source, Processor sink)
 	{
-		Window win = new Window(new Sum(1), 2);
+		Window win = new Window(new CumulativeSum(), 2);
 		Connector.connect(source, win);
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
