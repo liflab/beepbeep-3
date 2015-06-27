@@ -25,7 +25,7 @@ public class InputTest
 	@Test
 	public void testCsvFeeder() throws IOException
 	{
-		String file_contents = PackageFileReader.readPackageFile(this, "resource/test1.csv");
+		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.csv");
 		InputStream stream = StringUtils.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
 		CsvFeeder csv = new CsvFeeder();

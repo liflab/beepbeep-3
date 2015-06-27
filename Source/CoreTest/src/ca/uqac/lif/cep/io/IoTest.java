@@ -24,7 +24,7 @@ public class IoTest
 	@Test
 	public void testStreamReaderPush1() throws FileNotFoundException
 	{
-		String file_contents = PackageFileReader.readPackageFile(this, "resource/test1.txt");
+		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
 		QueueSink sink = new QueueSink(1);
