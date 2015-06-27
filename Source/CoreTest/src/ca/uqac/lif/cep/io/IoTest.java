@@ -2,15 +2,16 @@ package ca.uqac.lif.cep.io;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.QueueSink;
+import ca.uqac.lif.util.PackageFileReader;
+import ca.uqac.lif.util.StringUtils;
 
 public class IoTest
 {
@@ -23,21 +24,16 @@ public class IoTest
 	@Test
 	public void testStreamReaderPush1() throws FileNotFoundException
 	{
-		StreamReader sr = new StreamReader(new FileInputStream(new File("src/ca/uqac/lif/cep/io/resource/test1.txt")));
+		String file_contents = PackageFileReader.readPackageFile(this, "resource/test1.txt");
+		InputStream stream = StringUtils.toInputStream(file_contents);
+		StreamReader sr = new StreamReader(stream);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(sr, sink);
 		sr.push();
 		String recv = (String) sink.getQueue(0).remove();
-		if (recv == null)
-		{
-			fail("Expected string, got null");
-		}
+		assertNotNull(recv);
 		recv = recv.trim();
-		int len = recv.length();
-		if (len != 35)
-		{
-			fail("String has wrong length (" + len + ")");
-		}
+		assertEquals(35, recv.length());
 	}
 	
 }

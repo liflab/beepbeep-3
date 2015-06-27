@@ -17,6 +17,9 @@
  */
 package ca.uqac.lif.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 public class StringUtils
 {
   /**
@@ -87,6 +90,17 @@ public class StringUtils
       out.append(p).append(line).append("\n");
     }
     return out.toString();    
+  }
+  
+  /**
+   * Converts a string into an input stream
+   * @param s The string to read from
+   * @return The input stream with the contents of the string
+   */
+  public static InputStream toInputStream(String s)
+  {
+	  InputStream stream = new ByteArrayInputStream(s.getBytes());
+	  return stream;
   }
   
 }
