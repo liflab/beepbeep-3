@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 public class Delay extends SingleProcessor
@@ -59,6 +60,16 @@ public class Delay extends SingleProcessor
 			return wrapVector(inputs);
 		}
 		return null;
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		Processor p = (Processor) stack.pop();
+		Number delay = (Number) stack.pop();
+		Delay out = new Delay(delay.intValue());
+		Connector.connect(p, out);
+		stack.push(out);
 	}
 
 }

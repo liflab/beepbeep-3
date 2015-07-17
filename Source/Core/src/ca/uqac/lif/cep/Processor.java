@@ -112,10 +112,10 @@ public abstract class Processor implements Buildable
 	public abstract Pushable getPushableOutput(int index);
 	
 	@Override
-	public void build(Stack<Object> stack)
-	{
+	public abstract void build(Stack<Object> stack);
+	//{
 		// Do nothing
-	}
+	//}
 	
 	/**
 	 * Returns the processor's input arity

@@ -1,0 +1,5 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+<eml_select>,ca.uqac.lif.cep.eml.tuples.Select

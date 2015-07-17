@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.math;
 
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 import ca.uqac.lif.cep.SingleProcessor;
@@ -46,6 +47,13 @@ public class Incrementer extends SingleProcessor
 			}
 		}
 		return wrapVector(outputs);
+	}
+
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		// TODO
+		// Anyway, this processor is not in the grammar at the moment
 	}
 
 }

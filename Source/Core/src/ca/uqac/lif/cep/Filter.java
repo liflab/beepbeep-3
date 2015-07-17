@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 /**
@@ -45,6 +46,12 @@ public class Filter extends SingleProcessor
 			out.add(o);
 		}
 		return wrapVector(out);
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		// TODO
 	}
 
 }

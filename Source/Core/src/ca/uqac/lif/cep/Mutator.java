@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 public class Mutator extends SingleProcessor
@@ -44,6 +45,12 @@ public class Mutator extends SingleProcessor
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
 		return wrapVector(m_output);
+	}
+
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		// TODO
 	}
 
 }

@@ -37,7 +37,7 @@ public class Interpreter implements ParseNodeVisitor
 	 * Location of the file containing the grammar. This path is
 	 * relative to the location of the <tt>Interpreter</tt> class
 	 */
-	protected static String s_grammarFile = "eSQL.bnf";
+	protected static String s_grammarFile = "epl.bnf";
 
 	/**
 	 * The parser used to read expressions
@@ -71,6 +71,28 @@ public class Interpreter implements ParseNodeVisitor
 		m_associations = new HashMap<String, String>();
 		m_processorDefinitions = new HashMap<String,GroupProcessor>();
 		setBuiltinAssociations();
+	}
+	
+	/**
+	 * Extends the interpreter's grammar with new definitions
+	 * @param ext The grammar extension to add to the interpreter
+	 */
+	public void extendGrammar(GrammarExtension ext)
+	{
+		// Adds the associations
+		Map<String,String> associations = ext.getAssociations();
+		m_associations.putAll(associations);
+		// Adds the productions
+		String productions = ext.getGrammar();
+		try
+		{
+			m_parser.setGrammar(productions);
+		}
+		catch (InvalidGrammarException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void setBuiltinAssociations()

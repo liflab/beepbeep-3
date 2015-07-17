@@ -1,0 +1,44 @@
+# -----------------------------------------
+# Grammar for BeepBeep 3; edit at your own risk!
+#
+# This is an EML (Event Manipulation Language) where events are
+# associative maps from names to primitive types (number, strings).
+# This grammar works in tandem with the EPL (Event Processing
+# Language) grammar.
+# -----------------------------------------
+
+# Primitive types
+
+<eml_boolean>            := true | false ;
+<eml_number>             := ^\d+;
+<eml_string>             := ^".*?";
+<eml_constant>           := <eml_number> | <eml_boolean> | <eml_string> ;
+
+
+<eml_expr>               := <eml_constant> | <unary_fct_sym> ( <eml_expr> )
+                            | ( <eml_expr> ) <binary_fct_sym> ( <eml_expr> ) ;
+<eml_expr_q>             := <eml_expr> | <eml_proc_name> . <eml_att_name>
+                            | <eml_att_name> ;
+
+# "SELECT" statement
+
+<eml_select>             := SELECT <eml_expr_q_list> FROM <eml_proc_list> ;
+<eml_expr_q_list>        := 
+
+# Built-in functions
+
+<unary_fct_sym>      := <f_negation> ;
+<binary_fct_sym>     := <f_addition> | <f_subtraction> | <f_power> ;
+<f_negation>         := NOT ;
+<f_addition>         := + ;
+<f_subtraction>      := - ;
+<f_power>            := TO THE ;
+
+# Built-in combiners
+
+<c_combine>          := <c_sum> ;
+<c_sum>              := SUM ;
+
+# Constant processors
+
+<eml_constant>         := <number> | <eml_string> ;

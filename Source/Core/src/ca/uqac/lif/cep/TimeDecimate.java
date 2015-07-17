@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 public class TimeDecimate extends SingleProcessor
@@ -64,6 +65,16 @@ public class TimeDecimate extends SingleProcessor
 			}
 		}
 		return wrapVector(out);
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		Processor p = (Processor) stack.pop();
+		Number interval = (Number) stack.pop();
+		TimeDecimate out = new TimeDecimate(interval.intValue());
+		Connector.connect(p, out);
+		stack.push(out);
 	}
 
 }

@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Vector;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
@@ -192,5 +193,12 @@ public class GroupProcessor extends Processor
 	{
 		return m_outputPushables.get(index);
 	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		// TODO
+	}
+
 
 }

@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 
 import ca.uqac.lif.cep.Source;
@@ -177,5 +178,12 @@ public class StreamReader extends Source
 			// runs to end (gracefully)
 		}
 		return wrapVector(out);
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		// TODO
+		// Anyway, this processor is not in the grammar at the moment
 	}
 }

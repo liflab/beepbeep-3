@@ -1,5 +1,9 @@
 # -----------------------------------------
 # Grammar for BeepBeep 3; edit at your own risk!
+#
+# This is the EPL part of the language (Event Processing Language).
+# Working with BeepBeep 3 also requires the inclusion of at least
+# one grammar for the EML (Event Manipulation Language).
 # -----------------------------------------
 
 # Top production rule
@@ -9,15 +13,13 @@
 # Types
 
 <number>             := ^\d+;
-<string>             := ^".*?";
 <boolean>            := TRUE | FALSE ;
 <var_name>           := ^\$[\w\d]+;
 
 # Built-in processors
 
 <processor>          := <p_freeze> | <p_window> | <p_decimate> | <p_prefix> 
-                        | <p_function> | <p_combiner> | <p_print>
-                        | <userdef_proc> | <p_constant> | <var_name> ;
+                        | <p_print> | <userdef_proc> | <eml_expr> | <var_name> ;
 <p_freeze>           := FREEZE <processor> ;
 <p_window>           := ( <processor> ) ON A WINDOW OF <number> ;
 <p_decimate>         := EVERY <number> <number_suffix> OF ( <processor> ) ;
@@ -25,28 +27,7 @@
 <p_prefix>           := <number> OF ( <processor> ) ;
 <p_combiner>         := COMBINE ( <processor> ) WITH <c_combine> ;
 <p_print>            := PRINT ( <processor> ) ;
-<p_function>         := <unary_fct_sym> ( <processor> )
-                        | ( <processor> ) <binary_fct_sym> ( <processor> ) ;
 
-# Built-in functions
-
-<unary_fct_sym>      := <f_negation> ;
-<binary_fct_sym>     := <f_addition> | <f_subtraction> | <f_power> ;
-<f_negation>         := NOT ;
-<f_addition>         := + ;
-<f_subtraction>      := - ;
-<f_power>            := TO THE ;
-
-# Built-in combiners
-
-<c_combine>          := <c_sum> ;
-<c_sum>              := SUM ;
-
-# Constant processors
-
-<p_constant>         := <p_number> | <p_string> ;
-<p_number>           := <number> ;
-<p_string>           := <string> ;
 
 # Definition of a new processor
 
