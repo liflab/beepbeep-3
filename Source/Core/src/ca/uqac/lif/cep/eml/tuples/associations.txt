@@ -2,4 +2,10 @@
 # Class associations for the EML
 # -----------------------------------------
 
+<eml_number>,ca.uqac.lif.cep.eml.tuples.EmlNumber
 <eml_select>,ca.uqac.lif.cep.eml.tuples.Select
+<eml_proc_def_as>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionAs
+<eml_proc_def_plain>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionPlain
+<eml_proc_list>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionList
+<eml_expr_q_list>,ca.uqac.lif.cep.eml.tuples.QualifiedAttributeList
+<eml_att_name>,ca.uqac.lif.cep.eml.tuples.AttributeName

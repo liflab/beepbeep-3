@@ -17,17 +17,35 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Queue;
 import java.util.Stack;
+import java.util.Vector;
 
 import ca.uqac.lif.cep.Buildable;
+import ca.uqac.lif.cep.SingleProcessor;
 
-public class Select implements Buildable
+public class Select extends SingleProcessor
 {
+	public Select()
+	{
+		super();
+	}
 
 	@Override
 	public void build(Stack<Object> stack)
 	{
+		Object o = stack.peek();
+		
+		stack.pop(); // SELECT
+		Object first_elem = stack.peek();
+		
+	}
+
+	@Override
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	{
 		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

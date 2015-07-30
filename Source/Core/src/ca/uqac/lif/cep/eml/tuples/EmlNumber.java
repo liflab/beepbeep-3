@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.eml.numbers;
+package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.LinkedList;
 import java.util.Queue;
