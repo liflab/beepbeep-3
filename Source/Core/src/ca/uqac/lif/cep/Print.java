@@ -62,7 +62,10 @@ public class Print extends Sink
 	@Override
 	public void build(Stack<Object> stack)
 	{
+		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // PRINT
 		Print out = new Print(1, new AnsiPrinter(System.out));
 		Connector.connect(p, out);
 		stack.push(out);

@@ -36,4 +36,12 @@ public class ProcessorDefinitionPlain extends ProcessorDefinitionAs
 		m_processor = proc;
 		stack.push(this);
 	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append(m_processor);
+		return out.toString();
+	}
 }

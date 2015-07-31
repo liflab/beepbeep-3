@@ -21,24 +21,39 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.SingleProcessor;
 
 public class Select extends SingleProcessor
 {
+	/**
+	 * The list of processors appearing in the "FROM" part
+	 * of the statement
+	 */
+	protected ProcessorDefinitionList m_processors;
+	
+	/**
+	 * The list of attribute expressions appearing in the "SELECT"
+	 * part of the statement
+	 */
+	protected AttributeList m_attributeList;
+	
 	public Select()
 	{
 		super();
+		m_processors = null;
+		m_attributeList = null;
 	}
 
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		Object o = stack.peek();
-		
+		ProcessorDefinitionList pdl = (ProcessorDefinitionList) stack.pop(); 
+		stack.pop(); // FROM
+		AttributeList al = (AttributeList) stack.pop();
 		stack.pop(); // SELECT
-		Object first_elem = stack.peek();
-		
+		m_processors = pdl;
+		m_attributeList = al;
+		stack.push(this);
 	}
 
 	@Override
@@ -47,5 +62,13 @@ public class Select extends SingleProcessor
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append("SELECT ").append(m_attributeList)
+			.append(" FROM ").append(m_processors);
+		return out.toString();
+	}
 }

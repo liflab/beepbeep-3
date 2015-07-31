@@ -67,8 +67,13 @@ public class CountDecimate extends SingleProcessor
 	@Override
 	public void build(Stack<Object> stack)
 	{
+		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
+		stack.pop(); // )
+		stack.pop(); // OF
+		stack.pop(); // TH
 		Number interval = (Number) stack.pop();
+		stack.pop(); // EVERY
 		CountDecimate out = new CountDecimate(interval.intValue());
 		Connector.connect(p, out);
 		stack.push(out);

@@ -55,4 +55,12 @@ public class ProcessorDefinitionAs extends ProcessorDefinition
 		m_processor = proc;
 		stack.push(this);
 	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append(m_processor).append(" AS ").append(m_processorName);
+		return out.toString();
+	}
 }

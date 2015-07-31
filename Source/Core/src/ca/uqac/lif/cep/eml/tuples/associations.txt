@@ -25,5 +25,21 @@
 
 # List of named attributes
 
-<eml_expr_q_list>,ca.uqac.lif.cep.eml.tuples.QualifiedAttributeList
+<eml_att_def_plain>,ca.uqac.lif.cep.eml.tuples.AttributeDefinitionPlain
+<eml_att_def_as>,ca.uqac.lif.cep.eml.tuples.AttributeDefinitionAs
+<eml_att_def>,ca.uqac.lif.cep.eml.tuples.AttributeDefinition
+<eml_att_list>,ca.uqac.lif.cep.eml.tuples.AttributeList
+
+# Attribute expressions
+
+<eml_att_expr>,ca.uqac.lif.cep.eml.tuples.AttributeExpression
 <eml_att_name>,ca.uqac.lif.cep.eml.tuples.AttributeName
+<eml_att_name_q>,ca.uqac.lif.cep.eml.tuples.AttributeNameQualified
+<eml_att_name_plain>,ca.uqac.lif.cep.eml.tuples.AttributeNamePlain
+<eml_att_expr_const>,ca.uqac.lif.cep.eml.tuples.ConstantExpression
+<eml_att_expr_number>,ca.uqac.lif.cep.eml.tuples.NumberExpression
+<eml_att_expr_string>,ca.uqac.lif.cep.eml.tuples.StringExpression
+
+# Binary operators
+
+<eml_addition>,ca.uqac.lif.cep.eml.tuples.Addition

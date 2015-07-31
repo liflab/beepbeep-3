@@ -15,43 +15,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Queue;
-import java.util.Stack;
-import java.util.Vector;
-
-public class Prefix extends Delay
+public class Addition extends BinaryExpression
 {
-	public Prefix()
-	{
-		super();
-	}
-	
-	public Prefix(int k)
-	{
-		super(k);
-	}
-	
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	public Object evaluate()
 	{
-		m_eventsReceived++;
-		if (m_eventsReceived < m_delay)
+		if (m_left instanceof NumberExpression && m_right instanceof NumberExpression)
 		{
-			return wrapVector(inputs);
+			EmlNumber n_left = ((NumberExpression) m_left).m_number;
+			EmlNumber n_right = ((NumberExpression) m_right).m_number;
+			NumberExpression out = new NumberExpression();
+			out.m_number = new EmlNumber(n_left.numberValue().floatValue() + n_right.numberValue().floatValue());
+			return out;
 		}
 		return null;
-	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // OF
-		Number interval = (Number) stack.pop();
-		Prefix out = new Prefix(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
 	}
 }

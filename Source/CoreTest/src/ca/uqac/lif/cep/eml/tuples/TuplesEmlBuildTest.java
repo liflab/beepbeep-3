@@ -39,7 +39,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testExtensionProcList1() throws ParseException
+	public void testProcList1() throws ParseException
 	{
 		String expression = "0";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -48,7 +48,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testExtensionProcList2() throws ParseException
+	public void testProcList2() throws ParseException
 	{
 		String expression = "0, 1";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -57,7 +57,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testExtensionProcList3() throws ParseException
+	public void testProcList3() throws ParseException
 	{
 		String expression = "0 AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -66,7 +66,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testExtensionProcList3b() throws ParseException
+	public void testProcList3b() throws ParseException
 	{
 		String expression = "(0) AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -75,11 +75,75 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testExtensionProcList4() throws ParseException
+	public void testProcList4() throws ParseException
 	{
 		String expression = "0 AS matrace, 1 AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
 		assertTrue(result instanceof ProcessorDefinitionList);
 		assertEquals(2, ((ProcessorDefinitionList) result).m_definitions.size());
+	}
+	
+	@Test
+	public void testAttributeExpression1() throws ParseException
+	{
+		String expression = "0";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_att_expr>");
+		assertTrue(result instanceof AttributeExpression);
+	}
+	
+	@Test
+	public void testAttributeExpression2() throws ParseException
+	{
+		String expression = "0";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_att_expr>");
+		assertTrue(result instanceof NumberExpression);
+	}
+	
+	@Test
+	public void testAttributeExpression3() throws ParseException
+	{
+		String expression = "(0) + (0)";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_att_expr>");
+		assertTrue(result instanceof Addition);
+	}
+	
+	@Test
+	public void testAttributeExpression4() throws ParseException
+	{
+		String expression = "t.p";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_att_expr>");
+		assertTrue(result instanceof AttributeNameQualified);
+	}
+	
+	@Test
+	public void testAttributeList1() throws ParseException
+	{
+		String expression = "t.p, t.p";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_att_list>");
+		assertTrue(result instanceof AttributeList);
+	}
+	
+	@Test
+	public void testAttributeList2() throws ParseException
+	{
+		String expression = "t.p, t.p AS q";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_att_list>");
+		assertTrue(result instanceof AttributeList);
+	}
+	
+	@Test
+	public void testAttributeList3() throws ParseException
+	{
+		String expression = "(t.p) + (2) AS w, t.p AS q";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_att_list>");
+		assertTrue(result instanceof AttributeList);
+	}
+	
+	@Test
+	public void testSelect1() throws ParseException
+	{
+		String expression = "SELECT (t.p) + (2) AS w, t.p AS q FROM 0";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_select>");
+		assertTrue(result instanceof Select);
 	}
 }

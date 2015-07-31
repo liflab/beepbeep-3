@@ -17,10 +17,7 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class EmlNumber extends EmlConstant
 {
@@ -53,14 +50,15 @@ public class EmlNumber extends EmlConstant
 		Object o = stack.pop();
 		stack.push(new EmlNumber((Number) o));
 	}
-
+	
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	public String toString()
 	{
-		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
-		Vector<Object> element = new Vector<Object>();
-		element.addElement(this);
-		out.add(element);
-		return out;
+		if (m_number.floatValue() % 1 == 0)
+		{
+			// Display as integer
+			return Integer.toString(m_number.intValue());
+		}
+		return m_number.toString();
 	}
 }

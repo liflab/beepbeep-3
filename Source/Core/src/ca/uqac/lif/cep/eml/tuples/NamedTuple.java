@@ -50,9 +50,7 @@ public class NamedTuple extends Tuple implements Map<String, Object>
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		Object top = stack.peek();
-		
-		
+		// TODO
 	}
 	
 	/* From this point on, these are merely delegate methods

@@ -23,35 +23,35 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Buildable;
 
-public class ProcessorDefinitionList implements Buildable
+public class AttributeList implements Buildable 
 {
-	List<ProcessorDefinition> m_definitions;
+	List<AttributeDefinition> m_attributes;
 	
-	public ProcessorDefinitionList()
+	public AttributeList()
 	{
 		super();
-		m_definitions = new LinkedList<ProcessorDefinition>();
+		m_attributes = new LinkedList<AttributeDefinition>();
 	}
 
 	@Override
 	public void build(Stack<Object> stack)
 	{
 		Object top = stack.peek();
-		if (top instanceof ProcessorDefinitionList)
+		if (top instanceof AttributeList)
 		{
-			ProcessorDefinitionList pdl = (ProcessorDefinitionList) stack.pop();
+			AttributeList al = (AttributeList) stack.pop();
 			if (!stack.isEmpty())
 			{
 				stack.pop(); // ,
-				ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-				m_definitions.add(def);
+				AttributeDefinition def = (AttributeDefinition) stack.pop();
+				m_attributes.add(def);
 			}
-			m_definitions.addAll(pdl.m_definitions);
+			m_attributes.addAll(al.m_attributes);
 		}
 		else
 		{
-			ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-			m_definitions.add(def);
+			AttributeDefinition def = (AttributeDefinition) stack.pop();
+			m_attributes.add(def);
 		}
 		stack.push(this);
 	}
@@ -61,7 +61,7 @@ public class ProcessorDefinitionList implements Buildable
 	{
 		StringBuilder out = new StringBuilder();
 		boolean first = true;
-		for (ProcessorDefinition def : m_definitions)
+		for (AttributeDefinition def : m_attributes)
 		{
 			if (!first)
 			{

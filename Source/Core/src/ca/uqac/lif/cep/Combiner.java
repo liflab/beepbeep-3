@@ -60,7 +60,11 @@ public class Combiner extends SingleProcessor
 	public void build(Stack<Object> stack)
 	{
 		Combinable com = (Combinable) stack.pop();
+		stack.pop(); // WITH
+		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // COMBINE
 		Combiner out = new Combiner(com);
 		Connector.connect(p, out);
 		stack.push(out);

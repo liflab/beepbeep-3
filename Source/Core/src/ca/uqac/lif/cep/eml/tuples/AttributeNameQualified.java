@@ -17,59 +17,44 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
-
-public class ProcessorDefinitionList implements Buildable
+public class AttributeNameQualified extends AttributeName
 {
-	List<ProcessorDefinition> m_definitions;
+	protected String m_traceName;
 	
-	public ProcessorDefinitionList()
+	protected String m_attributeName;
+	
+	public AttributeNameQualified()
 	{
 		super();
-		m_definitions = new LinkedList<ProcessorDefinition>();
+		m_traceName = "";
+		m_attributeName = "";
 	}
 
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		Object top = stack.peek();
-		if (top instanceof ProcessorDefinitionList)
-		{
-			ProcessorDefinitionList pdl = (ProcessorDefinitionList) stack.pop();
-			if (!stack.isEmpty())
-			{
-				stack.pop(); // ,
-				ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-				m_definitions.add(def);
-			}
-			m_definitions.addAll(pdl.m_definitions);
-		}
-		else
-		{
-			ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-			m_definitions.add(def);
-		}
+		EmlString att_name = (EmlString) stack.pop();
+		stack.pop(); // dot
+		EmlString trace_name = (EmlString) stack.pop();
+		m_traceName = trace_name.stringValue();
+		m_attributeName = att_name.stringValue();
 		stack.push(this);
+	}
+
+	@Override
+	public Object evaluate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@Override
 	public String toString()
 	{
 		StringBuilder out = new StringBuilder();
-		boolean first = true;
-		for (ProcessorDefinition def : m_definitions)
-		{
-			if (!first)
-			{
-				out.append(", ");
-			}
-			first = false;
-			out.append(def);
-		}
+		out.append(m_traceName).append(".").append(m_attributeName);
 		return out.toString();
 	}
+
 }

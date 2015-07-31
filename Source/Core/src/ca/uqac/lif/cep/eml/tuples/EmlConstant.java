@@ -17,6 +17,9 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Queue;
+import java.util.Vector;
+
 import ca.uqac.lif.cep.SingleProcessor;
 
 public abstract class EmlConstant extends SingleProcessor
@@ -24,5 +27,12 @@ public abstract class EmlConstant extends SingleProcessor
 	public EmlConstant()
 	{
 		super(0, 1);
+	}
+	
+	@Override
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

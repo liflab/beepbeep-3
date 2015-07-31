@@ -15,43 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Queue;
-import java.util.Stack;
-import java.util.Vector;
+import ca.uqac.lif.cep.Buildable;
 
-public class Prefix extends Delay
+public abstract class AttributeDefinition implements Buildable
 {
-	public Prefix()
-	{
-		super();
-	}
-	
-	public Prefix(int k)
-	{
-		super(k);
-	}
-	
-	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
-	{
-		m_eventsReceived++;
-		if (m_eventsReceived < m_delay)
-		{
-			return wrapVector(inputs);
-		}
-		return null;
-	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // OF
-		Number interval = (Number) stack.pop();
-		Prefix out = new Prefix(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
-	}
+
 }

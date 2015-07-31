@@ -12,7 +12,7 @@
 <eml_boolean>            := true | false ;
 <eml_number>             := ^\d+;
 <eml_string>             := ^".*?";
-<eml_plain_string>       := ^\w[\d\w]*;
+<eml_plain_string>       := ^[a-zA-Z]\w*;
 
 # Constant processor
 
@@ -40,16 +40,19 @@
 <eml_att_def_as>         := <eml_att_expr> AS <eml_plain_string> ;
 <eml_att_def>            := <eml_att_def_as> | <eml_att_def_plain> ;
 <eml_att_list>           := <eml_att_def> , <eml_att_list> | <eml_att_def> ;
-<eml_att_name>           := <eml_att_name_q> | <eml_att_name_plain>  ;
-<eml_att_name_q>         := <eml_plain_string> . <eml_plain_string> ;
-<eml_att_name_plain>     := <eml_plain_string> ;
 
 # Attribute expressions
 
-<eml_att_expr>           := ( <eml_att_expr> ) <eml_binaryop> ( <eml_att_expr> )
-                            | <eml_att_name> | <eml_constant> ;
+<eml_att_expr>           := <eml_att_name> | <eml_att_expr_const> 
+                            | <eml_att_expr_binary> ;
+<eml_att_name>           := <eml_att_name_q> | <eml_att_name_plain>  ;
+<eml_att_name_q>         := <eml_plain_string> . <eml_plain_string> ;
+<eml_att_name_plain>     := <eml_plain_string> ;
+<eml_att_expr_const>     := <eml_att_expr_number> | <eml_att_expr_string> ;
+<eml_att_expr_number>    := <eml_number> ;
+<eml_att_expr_string>    := <eml_string> ;
 
 # Binary operators
 
-<eml_binaryop>           := <eml_add> ;
-<eml_add>                := plus ;
+<eml_att_expr_binary>    := <eml_addition> ;
+<eml_addition>           := ( <eml_att_expr> ) + ( <eml_att_expr> ) ;

@@ -17,42 +17,28 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
-
-public class ProcessorDefinitionList implements Buildable
+public class AttributeDefinitionAs extends AttributeDefinition
 {
-	List<ProcessorDefinition> m_definitions;
+	protected String m_aliasName;
 	
-	public ProcessorDefinitionList()
+	protected AttributeExpression m_expression;
+	
+	public AttributeDefinitionAs()
 	{
 		super();
-		m_definitions = new LinkedList<ProcessorDefinition>();
+		m_aliasName = "";
+		m_expression = null;
 	}
 
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		Object top = stack.peek();
-		if (top instanceof ProcessorDefinitionList)
-		{
-			ProcessorDefinitionList pdl = (ProcessorDefinitionList) stack.pop();
-			if (!stack.isEmpty())
-			{
-				stack.pop(); // ,
-				ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-				m_definitions.add(def);
-			}
-			m_definitions.addAll(pdl.m_definitions);
-		}
-		else
-		{
-			ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-			m_definitions.add(def);
-		}
+		EmlString alias_name = (EmlString) stack.pop();
+		stack.pop(); // AS
+		m_expression = (AttributeExpression) stack.pop();
+		m_aliasName = alias_name.stringValue();
 		stack.push(this);
 	}
 	
@@ -60,16 +46,7 @@ public class ProcessorDefinitionList implements Buildable
 	public String toString()
 	{
 		StringBuilder out = new StringBuilder();
-		boolean first = true;
-		for (ProcessorDefinition def : m_definitions)
-		{
-			if (!first)
-			{
-				out.append(", ");
-			}
-			first = false;
-			out.append(def);
-		}
+		out.append(m_expression).append(" AS ").append(m_aliasName);
 		return out.toString();
 	}
 }

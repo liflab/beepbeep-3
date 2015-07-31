@@ -17,10 +17,7 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class EmlString extends EmlConstant
 {
@@ -46,16 +43,20 @@ public class EmlString extends EmlConstant
 	public void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
-		stack.push(new EmlString((String) o));
+		if (o instanceof String)
+		{
+			stack.push(new EmlString((String) o));
+		}
+		else if (o instanceof Number)
+		{
+			stack.push(new EmlString(o.toString()));
+		}
+		
 	}
-
+	
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	public String toString()
 	{
-		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
-		Vector<Object> element = new Vector<Object>();
-		element.addElement(this);
-		out.add(element);
-		return out;
+		return m_string.toString();
 	}
 }

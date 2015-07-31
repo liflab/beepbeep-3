@@ -78,9 +78,17 @@ public class TuplesEmlGrammarTest
 	}
 	
 	@Test
-	public void testExtension4() throws ParseException
+	public void testExtension4a() throws ParseException
 	{
-		String expression = "SELECT 0 AS att FROM 0 AS t1";
+		String expression = "SELECT q FROM 0 AS t1";
+		ParseNode result = shouldParse(expression, "<eml_select>");
+		assertEquals("<eml_select>", result.getValue());
+	}
+	
+	@Test
+	public void testExtension4b() throws ParseException
+	{
+		String expression = "SELECT q AS att FROM 0 AS t1";
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
@@ -111,7 +119,7 @@ public class TuplesEmlGrammarTest
 	@Test
 	public void testExtension8() throws ParseException
 	{
-		String expression = "SELECT (0) plus (1) AS att, 1 AS att2 FROM 0 AS t1";
+		String expression = "SELECT (0) + (1) AS att, 1 AS att2 FROM 0 AS t1";
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
@@ -146,6 +154,14 @@ public class TuplesEmlGrammarTest
 		String expression = "SELECT p FROM SELECT q FROM 0";
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
+	}
+	
+	@Test
+	public void testExtension13() throws ParseException
+	{
+		String expression = "0";
+		ParseNode result = shouldParse(expression, "<eml_att_expr>");
+		assertEquals("<eml_att_expr>", result.getValue());
 	}
 	
 	protected ParseNode shouldParse(String expression, String start_symbol) throws ParseException

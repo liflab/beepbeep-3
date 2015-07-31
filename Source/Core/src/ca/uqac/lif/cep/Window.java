@@ -171,7 +171,13 @@ public class Window extends SingleProcessor
 	public void build(Stack<Object> stack)
 	{
 		Number width = (Number) stack.pop();
+		stack.pop(); // OF
+		stack.pop(); // WINDOW
+		stack.pop(); // A
+		stack.pop(); // ON
+		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
+		stack.pop(); // )
 		Window out = new Window(p, width.intValue());
 		stack.push(out);
 	}
