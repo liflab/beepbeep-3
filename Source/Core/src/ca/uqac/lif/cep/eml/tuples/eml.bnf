@@ -12,7 +12,7 @@
 <eml_boolean>            := true | false ;
 <eml_number>             := ^\d+;
 <eml_string>             := ^".*?";
-<eml_plain_string>       := ^[^\\s]+;
+<eml_plain_string>       := ^[\d\w]+;
 
 # Constant processor
 
