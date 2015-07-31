@@ -12,7 +12,7 @@
 <eml_boolean>            := true | false ;
 <eml_number>             := ^\d+;
 <eml_string>             := ^".*?";
-<eml_plain_string>       := ^[\d\w]+;
+<eml_plain_string>       := ^\w[\d\w]*;
 
 # Constant processor
 
@@ -21,18 +21,35 @@
 # Top-level EML symbols
 
 <eml_expr>               := <eml_constant> | <eml_select> ;
-<eml_expr_q>             := <eml_att_name> ; 
-
-#<eml_expr> | <eml_proc_name> . <eml_att_name>
-                            #| <eml_att_name> ;
 
 # "SELECT" statement
 
-<eml_select>             := SELECT <eml_expr_q_list> FROM <eml_proc_list> ;
-<eml_expr_q_list>        := <eml_expr_q> , <eml_expr_q_list> | <eml_expr_q> ;
-<eml_proc_def_plain>     := <processor> ;
-<eml_proc_def_as>        := <processor> AS <eml_plain_string> | <processor> ;
+<eml_select>             := SELECT <eml_att_list> FROM <eml_proc_list> ;
+
+# List of named processors
+
+<eml_proc_def_plain>     := ( <processor> ) | <processor> ;
+<eml_proc_def_as>        := ( <processor> ) AS <eml_plain_string>
+                            | <processor> AS <eml_plain_string> ;
 <eml_proc_def>           := <eml_proc_def_as> | <eml_proc_def_plain> ;
 <eml_proc_list>          := <eml_proc_def> , <eml_proc_list> | <eml_proc_def> ;
 
-<eml_att_name>           := <eml_plain_string> ;
+# List of named attributes
+
+<eml_att_def_plain>      := <eml_att_expr> ;
+<eml_att_def_as>         := <eml_att_expr> AS <eml_plain_string> ;
+<eml_att_def>            := <eml_att_def_as> | <eml_att_def_plain> ;
+<eml_att_list>           := <eml_att_def> , <eml_att_list> | <eml_att_def> ;
+<eml_att_name>           := <eml_att_name_q> | <eml_att_name_plain>  ;
+<eml_att_name_q>         := <eml_plain_string> . <eml_plain_string> ;
+<eml_att_name_plain>     := <eml_plain_string> ;
+
+# Attribute expressions
+
+<eml_att_expr>           := ( <eml_att_expr> ) <eml_binaryop> ( <eml_att_expr> )
+                            | <eml_att_name> | <eml_constant> ;
+
+# Binary operators
+
+<eml_binaryop>           := <eml_add> ;
+<eml_add>                := plus ;
