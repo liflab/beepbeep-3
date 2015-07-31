@@ -205,8 +205,8 @@ public class Interpreter implements ParseNodeVisitor
 				{
 					// Remove quotes if any
 					node_name = node_name.replaceAll("\"", "");
-					m_nodes.push(node_name);
 				}
+				m_nodes.push(node_name);
 			}
 		}
 	}
@@ -294,6 +294,12 @@ public class Interpreter implements ParseNodeVisitor
 			throw new ParseException("Error: the BNF parser returned null");
 		}
 		//return null;    
+	}
+	
+	public Object parseLanguage(String property, String start_symbol) throws ParseException
+	{
+		m_parser.setStartRule(start_symbol);
+		return parseLanguage(property);
 	}
 
 	protected Object parseStatement(ParseNode root)

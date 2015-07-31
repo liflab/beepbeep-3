@@ -17,9 +17,45 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import ca.uqac.lif.cep.Buildable;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.Vector;
 
-public abstract class ProcessorDefinition implements Buildable
+public class EmlString extends EmlConstant
 {
+	protected String m_string;
+	
+	public EmlString()
+	{
+		super();
+	}
+	
+	public EmlString(String s)
+	{
+		this();
+		m_string = s;
+	}
 
+	public String stringValue()
+	{
+		return m_string;
+	}
+
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		Object o = stack.pop();
+		stack.push(new EmlString((String) o));
+	}
+
+	@Override
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	{
+		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
+		Vector<Object> element = new Vector<Object>();
+		element.addElement(this);
+		out.add(element);
+		return out;
+	}
 }

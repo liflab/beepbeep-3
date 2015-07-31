@@ -2,10 +2,28 @@
 # Class associations for the EML
 # -----------------------------------------
 
+# Primitive types
+
 <eml_number>,ca.uqac.lif.cep.eml.tuples.EmlNumber
+<eml_string>,ca.uqac.lif.cep.eml.tuples.EmlString
+<eml_plain_string>,ca.uqac.lif.cep.eml.tuples.EmlPlainString
+
+# Constant processor
+
+<eml_constant>,ca.uqac.lif.cep.eml.tuples.EmlConstant
+
+# "SELECT" statement
+
 <eml_select>,ca.uqac.lif.cep.eml.tuples.Select
-<eml_proc_def_as>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionAs
+
+# List of named processors
+
 <eml_proc_def_plain>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionPlain
+<eml_proc_def_as>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionAs
+<eml_proc_def>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinition
 <eml_proc_list>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionList
+
+# List of named attributes
+
 <eml_expr_q_list>,ca.uqac.lif.cep.eml.tuples.QualifiedAttributeList
 <eml_att_name>,ca.uqac.lif.cep.eml.tuples.AttributeName

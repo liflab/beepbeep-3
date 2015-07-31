@@ -17,9 +17,12 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import ca.uqac.lif.cep.Buildable;
+import ca.uqac.lif.cep.SingleProcessor;
 
-public abstract class ProcessorDefinition implements Buildable
+public abstract class EmlConstant extends SingleProcessor
 {
-
+	public EmlConstant()
+	{
+		super(0, 1);
+	}
 }

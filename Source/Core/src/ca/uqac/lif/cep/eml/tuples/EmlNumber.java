@@ -22,15 +22,13 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-import ca.uqac.lif.cep.SingleProcessor;
-
-public class EmlNumber extends SingleProcessor
+public class EmlNumber extends EmlConstant
 {
 	protected Number m_number;
 	
 	public EmlNumber()
 	{
-		super(0, 1);
+		super();
 	}
 	
 	public EmlNumber(Number n)
@@ -53,10 +51,7 @@ public class EmlNumber extends SingleProcessor
 	public void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
-		if (o instanceof Number)
-		{
-			stack.push(new EmlNumber((Number) o));
-		}
+		stack.push(new EmlNumber((Number) o));
 	}
 
 	@Override
