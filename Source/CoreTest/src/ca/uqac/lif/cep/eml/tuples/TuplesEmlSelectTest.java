@@ -19,13 +19,20 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import static org.junit.Assert.*;
 
+import java.io.InputStream;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.QueueSink;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.io.StreamReader;
+import ca.uqac.lif.util.PackageFileReader;
+import ca.uqac.lif.util.StringUtils;
 
 public class TuplesEmlSelectTest
 {
@@ -107,7 +114,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect6() throws ParseException
 	{
-		Object processor = m_interpreter.parseLanguage("SELECT u.z AS w FROM 1 AS t, 2 AS u");
+		Object processor = m_interpreter.parseLanguage("SELECT u.z AS w FROM 01 AS t, 2 AS u");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -117,4 +124,145 @@ public class TuplesEmlSelectTest
 		assertEquals(1, tup.keySet().size());
 		assertEquals(2, ((EmlNumber) tup.get("w")).numberValue().intValue());
 	}
+	
+	@Test
+	public void testSelect7() throws ParseException
+	{
+		Object processor = m_interpreter.parseLanguage("SELECT u.z AS w, (t.z) + (3) AS v FROM 1 AS t, 2 AS u");
+		assertTrue(processor instanceof Select);
+		Select s = (Select) processor;
+		Pullable p = s.getPullableOutput(0);
+		Object answer = p.pull();
+		assertTrue(answer instanceof NamedTuple);
+		NamedTuple tup = (NamedTuple) answer;
+		assertEquals(2, tup.keySet().size());
+		assertEquals(4, ((EmlNumber) tup.get("v")).numberValue().intValue());
+	}
+	
+	@Test
+	public void testSelect8() throws ParseException
+	{
+		Object processor = m_interpreter.parseLanguage("SELECT a AS a, (b) + (3) AS n FROM 1");
+		assertTrue(processor instanceof Select);
+		Select s = (Select) processor;
+		{
+			// We unplug the constant trace "1" and replace it by the token feeder
+			// as input for the SELECT statement
+			String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/tuples1.csv");
+			InputStream stream = StringUtils.toInputStream(file_contents);
+			StreamReader sr = new StreamReader(stream);
+			TupleFeeder tf = new TupleFeeder();
+			Connector.connect(sr, tf);
+			Connector.connect(tf, s);
+		}
+		Pullable p = s.getPullableOutput(0);
+		{
+			// Get first tuple
+			Object answer = p.pull();
+			assertTrue(answer instanceof NamedTuple);
+			NamedTuple tup = (NamedTuple) answer;
+			assertEquals(2, tup.keySet().size());
+			assertEquals(0, ((EmlNumber) tup.get("a")).numberValue().intValue());
+			assertEquals(3, ((EmlNumber) tup.get("n")).numberValue().intValue());
+		}
+		{
+			// Get next tuple
+			Object answer = p.pull();
+			assertTrue(answer instanceof NamedTuple);
+			NamedTuple tup = (NamedTuple) answer;
+			assertEquals(2, tup.keySet().size());
+			assertEquals(1, ((EmlNumber) tup.get("a")).numberValue().intValue());
+			assertEquals(3, ((EmlNumber) tup.get("n")).numberValue().intValue());
+		}
+	}
+	
+	@Test
+	public void testSelect9() throws ParseException
+	{
+		Object processor = m_interpreter.parseLanguage("SELECT (t.a) + (u.b) AS x, (u.c) + (3) AS y FROM 1 AS t, 0 AS u");
+		assertTrue(processor instanceof Select);
+		Select s = (Select) processor;
+		{
+			// We unplug the constant trace t and replace it by the token feeder
+			// as input for the SELECT statement
+			String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/tuples1.csv");
+			InputStream stream = StringUtils.toInputStream(file_contents);
+			StreamReader sr = new StreamReader(stream);
+			TupleFeeder tf = new TupleFeeder();
+			Connector.connect(sr, tf);
+			Connector.connect(tf, s, 0, 0);
+		}
+		{
+			// Ditto for the constant trace u
+			String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/tuples2.csv");
+			InputStream stream = StringUtils.toInputStream(file_contents);
+			StreamReader sr = new StreamReader(stream);
+			TupleFeeder tf = new TupleFeeder();
+			Connector.connect(sr, tf);
+			Connector.connect(tf, s, 0, 1);
+		}
+		Pullable p = s.getPullableOutput(0);
+		{
+			// Get first tuple
+			Object answer = p.pull();
+			assertTrue(answer instanceof NamedTuple);
+			NamedTuple tup = (NamedTuple) answer;
+			assertEquals(2, tup.keySet().size());
+			assertEquals(2, ((EmlNumber) tup.get("x")).numberValue().intValue());
+			assertEquals(6, ((EmlNumber) tup.get("y")).numberValue().intValue());
+		}
+		{
+			// Get next tuple
+			Object answer = p.pull();
+			assertTrue(answer instanceof NamedTuple);
+			NamedTuple tup = (NamedTuple) answer;
+			assertEquals(2, tup.keySet().size());
+			assertEquals(5, ((EmlNumber) tup.get("x")).numberValue().intValue());
+			assertEquals(9, ((EmlNumber) tup.get("y")).numberValue().intValue());
+		}
+		{
+			// Get next tuple
+			Object answer = p.pull();
+			assertTrue(answer instanceof NamedTuple);
+			NamedTuple tup = (NamedTuple) answer;
+			assertEquals(2, tup.keySet().size());
+			assertEquals(8, ((EmlNumber) tup.get("x")).numberValue().intValue());
+			assertEquals(12, ((EmlNumber) tup.get("y")).numberValue().intValue());
+		}
+	}
+
+	@Test
+	public void testTupleFeeder()
+	{
+		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/tuples1.csv");
+		InputStream stream = StringUtils.toInputStream(file_contents);
+		StreamReader sr = new StreamReader(stream);
+		TupleFeeder csv = new TupleFeeder();
+		Connector.connect(sr, csv);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(csv, sink);
+		NamedTuple recv;
+		// First tuple
+		sink.pullHard();
+		recv = (NamedTuple) sink.getQueue(0).remove();
+		assertNotNull(recv);
+		assertEquals(0, ((EmlNumber) recv.get("a")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		// Another tuple
+		sink.pullHard();
+		recv = (NamedTuple) sink.getQueue(0).remove();
+		assertNotNull(recv);
+		assertEquals(1, ((EmlNumber) recv.get("a")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
+		assertEquals(1, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		// Another tuple
+		sink.pullHard();
+		recv = (NamedTuple) sink.getQueue(0).remove();
+		assertNotNull(recv);
+		assertEquals(2, ((EmlNumber) recv.get("a")).numberValue().intValue());
+		assertEquals(4, ((EmlNumber) recv.get("b")).numberValue().intValue());
+		assertEquals(5, ((EmlNumber) recv.get("c")).numberValue().intValue());		
+	}
+
 }

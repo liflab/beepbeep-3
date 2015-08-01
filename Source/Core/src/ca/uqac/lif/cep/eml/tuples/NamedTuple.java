@@ -113,4 +113,24 @@ public class NamedTuple extends EmlConstant implements Map<String, EmlConstant>
 	{
 		return m_contents.values();
 	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append("(");
+		boolean first = true;
+		for (String name : m_contents.keySet())
+		{
+			if (!first)
+			{
+				out.append(",");
+			}
+			EmlConstant value = m_contents.get(name);
+			out.append(name).append("=").append(value);
+			first = false;
+		}
+		out.append(")");
+		return out.toString();
+	}
 }

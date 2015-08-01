@@ -37,4 +37,26 @@ public abstract class EmlConstant extends Tuple
 		out.add(element);
 		return out;
 	}
+	
+	/**
+	 * Attempts to create a constant based on the contents of a string.
+	 * That is, if the string contains only digits, it will create an
+	 * {@link EmlNumber} instead of an {@link EmlString}.
+	 * @param s The string to read from
+	 * @return The constant
+	 */
+	public static EmlConstant createConstantFromString(String s)
+	{
+		int n = 0;
+		try
+		{
+			n = Integer.parseInt(s);
+		}
+		catch (NumberFormatException nfe)
+		{
+			// This is a string
+			return new EmlString(s);
+		}
+		return new EmlNumber(n);
+	}
 }

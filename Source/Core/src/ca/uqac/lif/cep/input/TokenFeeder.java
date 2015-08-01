@@ -74,9 +74,12 @@ public abstract class TokenFeeder extends SingleProcessor
 			Object token = createTokenFromInput(s_out);
 			if (token != null)
 			{
-				Vector<Object> to_fill = new Vector<Object>();
-				to_fill.add(token);
-				out.add(to_fill);
+				if (!(token instanceof NoToken))
+				{
+					Vector<Object> to_fill = new Vector<Object>();
+					to_fill.add(token);
+					out.add(to_fill);
+				}
 			}
 			else
 			{
@@ -85,6 +88,21 @@ public abstract class TokenFeeder extends SingleProcessor
 			s = m_bufferedContents.toString();
 		}
 		return out;
+	}
+	
+	/**
+	 * Dummy object indicating that no token can be produced out of the
+	 * input string. This is different from <code>null</code>, which signals
+	 * the end of the stream.
+	 * @author Sylvain
+	 *
+	 */
+	public static class NoToken
+	{
+		public NoToken()
+		{
+			super();
+		}
 	}
 
 }

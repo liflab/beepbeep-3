@@ -1,0 +1,9 @@
+# Sample tuple file for the tuple feeder
+# The first line contains the name of each attribute in the tuple
+# The remaining lines contain tuples
+
+a,b,c
+
+1,2,3
+2,4,6
+3,6,9 
