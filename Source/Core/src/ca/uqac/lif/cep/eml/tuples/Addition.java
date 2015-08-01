@@ -17,18 +17,21 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Map;
+
+
 public class Addition extends BinaryExpression
 {
 	@Override
-	public Object evaluate()
+	public EmlConstant evaluate(Map<String,Tuple> inputs)
 	{
-		if (m_left instanceof NumberExpression && m_right instanceof NumberExpression)
+		Tuple t_left = m_left.evaluate(inputs);
+		Tuple t_right = m_right.evaluate(inputs);
+		if (t_left instanceof EmlNumber && t_right instanceof EmlNumber)
 		{
-			EmlNumber n_left = ((NumberExpression) m_left).m_number;
-			EmlNumber n_right = ((NumberExpression) m_right).m_number;
-			NumberExpression out = new NumberExpression();
-			out.m_number = new EmlNumber(n_left.numberValue().floatValue() + n_right.numberValue().floatValue());
-			return out;
+			EmlNumber n_left = (EmlNumber) t_left;
+			EmlNumber n_right = (EmlNumber) t_right;
+			return new EmlNumber(n_left.numberValue().floatValue() + n_right.numberValue().floatValue());
 		}
 		return null;
 	}

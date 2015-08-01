@@ -18,8 +18,23 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import ca.uqac.lif.cep.Buildable;
+import ca.uqac.lif.cep.Processor;
 
 public abstract class ProcessorDefinition implements Buildable
 {
-
+	protected String m_processorName;
+	
+	protected Processor m_processor;
+	
+	public ProcessorDefinition()
+	{
+		super();
+		m_processorName = "";
+		m_processor = null;
+	}
+	
+	public String getAlias()
+	{
+		return m_processorName;
+	}
 }

@@ -17,10 +17,14 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
+import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.SingleProcessor;
 
 public class Select extends SingleProcessor
@@ -39,7 +43,12 @@ public class Select extends SingleProcessor
 	
 	public Select()
 	{
-		super();
+		this(0);
+	}
+	
+	public Select(int in_arity)
+	{
+		super(in_arity, 1);
 		m_processors = null;
 		m_attributeList = null;
 	}
@@ -51,16 +60,79 @@ public class Select extends SingleProcessor
 		stack.pop(); // FROM
 		AttributeList al = (AttributeList) stack.pop();
 		stack.pop(); // SELECT
-		m_processors = pdl;
-		m_attributeList = al;
-		stack.push(this);
+		Select sel = new Select(pdl.size());
+		sel.m_processors = pdl;
+		// Connect each processor to the input
+		int j = 0;
+		for (ProcessorDefinition pd : pdl)
+		{
+			Connector.connect(pd.m_processor, sel, 0, j);
+			j++;
+		}
+		sel.m_attributeList = al;
+		stack.push(sel);
 	}
 
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,Tuple> in = new HashMap<String,Tuple>();
+		int i = 0;
+		for (ProcessorDefinition pd : m_processors)
+		{
+			String alias = pd.getAlias();
+			Object o = inputs.get(i);
+			if (!(o instanceof Tuple))
+			{
+				// A SELECT should receive only tuples for input!
+				return null; 
+			}
+			in.put(alias, (Tuple) o);
+			i++;
+		}
+		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
+		Vector<Object> tuples = new Vector<Object>();
+		Tuple t = computeCast(in);
+		if (t != null)
+		{
+			tuples.add(t);
+		}
+		out.add(tuples);
+		return out;
+	}
+	
+	/**
+	 * Performs the computation of the SELECT on a typecast vector of
+	 * inputs
+	 * @param inputs A map from trace aliases to the tuple coming from 
+	 *   that trace
+	 * @return The output tuple
+	 */
+	protected Tuple computeCast(Map<String,Tuple> inputs)
+	{
+		if (m_attributeList.size() == 1)
+		{
+			AttributeDefinition a_def = m_attributeList.getFirst();
+			if (a_def instanceof AttributeDefinitionPlain)
+			{
+				// The select clause has a single attribute with no name:
+				// the output is an unnamed tuple of size 1, i.e. a constant
+				AttributeExpression a_exp = a_def.getExpression();
+				return a_exp.evaluate(inputs);
+			}
+		}
+		// In all other cases, we return a named tuple
+		NamedTuple t_out = new NamedTuple();
+		for (AttributeDefinition a_def : m_attributeList)
+		{
+			// For each attribute definition, evaluate and put its result
+			// in the tuple with the given alias
+			AttributeExpression a_exp = a_def.getExpression();
+			EmlConstant a_result = a_exp.evaluate(inputs);
+			String alias = a_def.getAlias();
+			t_out.put(alias, a_result);
+		}
+		return t_out;
 	}
 	
 	@Override

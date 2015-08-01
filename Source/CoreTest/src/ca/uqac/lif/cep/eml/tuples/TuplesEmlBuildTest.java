@@ -44,7 +44,7 @@ public class TuplesEmlBuildTest
 		String expression = "0";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
 		assertTrue(result instanceof ProcessorDefinitionList);
-		assertEquals(1, ((ProcessorDefinitionList) result).m_definitions.size());
+		assertEquals(1, ((ProcessorDefinitionList) result).size());
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ public class TuplesEmlBuildTest
 		String expression = "0, 1";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
 		assertTrue(result instanceof ProcessorDefinitionList);
-		assertEquals(2, ((ProcessorDefinitionList) result).m_definitions.size());
+		assertEquals(2, ((ProcessorDefinitionList) result).size());
 	}
 	
 	@Test
@@ -62,7 +62,7 @@ public class TuplesEmlBuildTest
 		String expression = "0 AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
 		assertTrue(result instanceof ProcessorDefinitionList);
-		assertEquals(1, ((ProcessorDefinitionList) result).m_definitions.size());
+		assertEquals(1, ((ProcessorDefinitionList) result).size());
 	}
 	
 	@Test
@@ -71,7 +71,7 @@ public class TuplesEmlBuildTest
 		String expression = "(0) AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
 		assertTrue(result instanceof ProcessorDefinitionList);
-		assertEquals(1, ((ProcessorDefinitionList) result).m_definitions.size());
+		assertEquals(1, ((ProcessorDefinitionList) result).size());
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ public class TuplesEmlBuildTest
 		String expression = "0 AS matrace, 1 AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
 		assertTrue(result instanceof ProcessorDefinitionList);
-		assertEquals(2, ((ProcessorDefinitionList) result).m_definitions.size());
+		assertEquals(2, ((ProcessorDefinitionList) result).size());
 	}
 	
 	@Test

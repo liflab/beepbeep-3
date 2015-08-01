@@ -22,11 +22,7 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Processor;
 
 public class ProcessorDefinitionAs extends ProcessorDefinition
-{
-	protected String m_processorName;
-	
-	protected Processor m_processor;
-	
+{	
 	public ProcessorDefinitionAs()
 	{
 		super();

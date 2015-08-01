@@ -18,20 +18,22 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Buildable;
 
-public class AttributeList implements Buildable 
+public class AttributeList extends LinkedList<AttributeDefinition> implements Buildable
 {
-	List<AttributeDefinition> m_attributes;
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	public AttributeList()
 	{
 		super();
-		m_attributes = new LinkedList<AttributeDefinition>();
 	}
+	
 
 	@Override
 	public void build(Stack<Object> stack)
@@ -44,14 +46,14 @@ public class AttributeList implements Buildable
 			{
 				stack.pop(); // ,
 				AttributeDefinition def = (AttributeDefinition) stack.pop();
-				m_attributes.add(def);
+				add(def);
 			}
-			m_attributes.addAll(al.m_attributes);
+			addAll(al);
 		}
 		else
 		{
 			AttributeDefinition def = (AttributeDefinition) stack.pop();
-			m_attributes.add(def);
+			add(def);
 		}
 		stack.push(this);
 	}
@@ -61,7 +63,7 @@ public class AttributeList implements Buildable
 	{
 		StringBuilder out = new StringBuilder();
 		boolean first = true;
-		for (AttributeDefinition def : m_attributes)
+		for (AttributeDefinition def : this)
 		{
 			if (!first)
 			{

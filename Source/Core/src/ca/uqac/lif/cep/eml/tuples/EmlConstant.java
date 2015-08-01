@@ -17,22 +17,24 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
 
-import ca.uqac.lif.cep.SingleProcessor;
-
-public abstract class EmlConstant extends SingleProcessor
+public abstract class EmlConstant extends Tuple
 {
 	public EmlConstant()
 	{
-		super(0, 1);
+		super();
 	}
 	
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
+		Vector<Object> element = new Vector<Object>();
+		element.addElement(this);
+		out.add(element);
+		return out;
 	}
 }

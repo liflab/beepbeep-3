@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Map;
 import java.util.Stack;
 
 public class AttributeNameQualified extends AttributeName
@@ -44,8 +45,26 @@ public class AttributeNameQualified extends AttributeName
 	}
 
 	@Override
-	public Object evaluate() {
-		// TODO Auto-generated method stub
+	public EmlConstant evaluate(Map<String,Tuple> inputs) 
+	{
+		Tuple relevant_tuple = null;
+		if (m_traceName == null || m_traceName.isEmpty())
+		{
+			relevant_tuple = inputs.get("");
+		}
+		else
+		{
+			relevant_tuple = inputs.get(m_traceName);
+		}
+		if (relevant_tuple instanceof NamedTuple)
+		{
+			NamedTuple nt = (NamedTuple) relevant_tuple;
+			return nt.get(m_attributeName);
+		}
+		else if (relevant_tuple instanceof EmlConstant)
+		{
+			return (EmlConstant) relevant_tuple;
+		}
 		return null;
 	}
 	

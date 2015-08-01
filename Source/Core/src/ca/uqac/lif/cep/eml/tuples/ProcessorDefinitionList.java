@@ -18,19 +18,20 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Buildable;
 
-public class ProcessorDefinitionList implements Buildable
+public class ProcessorDefinitionList extends LinkedList<ProcessorDefinition> implements Buildable
 {
-	List<ProcessorDefinition> m_definitions;
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	public ProcessorDefinitionList()
 	{
 		super();
-		m_definitions = new LinkedList<ProcessorDefinition>();
 	}
 
 	@Override
@@ -44,14 +45,14 @@ public class ProcessorDefinitionList implements Buildable
 			{
 				stack.pop(); // ,
 				ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-				m_definitions.add(def);
+				add(def);
 			}
-			m_definitions.addAll(pdl.m_definitions);
+			addAll(pdl);
 		}
 		else
 		{
 			ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-			m_definitions.add(def);
+			add(def);
 		}
 		stack.push(this);
 	}
@@ -61,7 +62,7 @@ public class ProcessorDefinitionList implements Buildable
 	{
 		StringBuilder out = new StringBuilder();
 		boolean first = true;
-		for (ProcessorDefinition def : m_definitions)
+		for (ProcessorDefinition def : this)
 		{
 			if (!first)
 			{

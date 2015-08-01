@@ -19,32 +19,18 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.Vector;
 
-public class NamedTuple extends Tuple implements Map<String, Object> 
+public class NamedTuple extends EmlConstant implements Map<String, EmlConstant> 
 {
-	protected Map<String,Object> m_contents;
+	protected Map<String,EmlConstant> m_contents;
 	
 	public NamedTuple()
 	{
 		super();
-		m_contents = new HashMap<String,Object>();
-	}
-	
-	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
-	{
-		// We simply return ourselves in the output
-		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
-		Vector<Object> element = new Vector<Object>();
-		element.addElement(this);
-		out.add(element);
-		return out;
+		m_contents = new HashMap<String,EmlConstant>();
 	}
 
 	@Override
@@ -73,7 +59,7 @@ public class NamedTuple extends Tuple implements Map<String, Object>
 		return m_contents.containsValue(value);
 	}
 
-	public Set<java.util.Map.Entry<String, Object>> entrySet() 
+	public Set<java.util.Map.Entry<String, EmlConstant>> entrySet() 
 	{
 		return m_contents.entrySet();
 	}
@@ -83,7 +69,7 @@ public class NamedTuple extends Tuple implements Map<String, Object>
 		return m_contents.equals(o);
 	}
 
-	public Object get(Object key) 
+	public EmlConstant get(Object key) 
 	{
 		return m_contents.get(key);
 	}
@@ -103,17 +89,17 @@ public class NamedTuple extends Tuple implements Map<String, Object>
 		return m_contents.keySet();
 	}
 
-	public Object put(String key, Object value) 
+	public EmlConstant put(String key, EmlConstant value) 
 	{
 		return m_contents.put(key, value);
 	}
 
-	public void putAll(Map<? extends String, ? extends Object> m) 
+	public void putAll(Map<? extends String, ? extends EmlConstant> m) 
 	{
 		m_contents.putAll(m);
 	}
 
-	public Object remove(Object key) 
+	public EmlConstant remove(Object key) 
 	{
 		return m_contents.remove(key);
 	}
@@ -123,7 +109,7 @@ public class NamedTuple extends Tuple implements Map<String, Object>
 		return m_contents.size();
 	}
 
-	public Collection<Object> values() 
+	public Collection<EmlConstant> values() 
 	{
 		return m_contents.values();
 	}

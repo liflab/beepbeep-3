@@ -21,5 +21,8 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public abstract class Tuple extends SingleProcessor
 {
-
+	public Tuple()
+	{
+		super(0, 1);
+	}
 }

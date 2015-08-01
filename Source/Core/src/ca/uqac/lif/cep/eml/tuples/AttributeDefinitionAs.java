@@ -20,16 +20,10 @@ package ca.uqac.lif.cep.eml.tuples;
 import java.util.Stack;
 
 public class AttributeDefinitionAs extends AttributeDefinition
-{
-	protected String m_aliasName;
-	
-	protected AttributeExpression m_expression;
-	
+{	
 	public AttributeDefinitionAs()
 	{
 		super();
-		m_aliasName = "";
-		m_expression = null;
 	}
 
 	@Override

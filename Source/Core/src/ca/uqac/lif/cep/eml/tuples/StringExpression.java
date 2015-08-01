@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Map;
 import java.util.Stack;
 
 public class StringExpression extends ConstantExpression
@@ -42,5 +43,11 @@ public class StringExpression extends ConstantExpression
 		StringBuilder out = new StringBuilder();
 		out.append(m_string);
 		return out.toString();
+	}
+	
+	@Override
+	public EmlConstant evaluate(Map<String,Tuple> inputs) 
+	{
+		return m_string;
 	}
 }

@@ -21,5 +21,24 @@ import ca.uqac.lif.cep.Buildable;
 
 public abstract class AttributeDefinition implements Buildable
 {
-
+	protected AttributeExpression m_expression;
+	
+	protected String m_aliasName;
+	
+	public AttributeDefinition()
+	{
+		super();
+		m_expression = null;
+		m_aliasName = "";
+	}
+	
+	public String getAlias()
+	{
+		return m_aliasName;
+	}
+	
+	public AttributeExpression getExpression()
+	{
+		return m_expression;
+	}
 }

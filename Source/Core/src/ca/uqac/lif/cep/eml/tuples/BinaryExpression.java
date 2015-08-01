@@ -19,6 +19,7 @@ public abstract class BinaryExpression extends AttributeExpression
 		m_symbol = (String) stack.pop(); // The symbol
 		stack.pop(); // )
 		AttributeExpression exp_left = (AttributeExpression) stack.pop();
+		stack.pop(); // (
 		m_left = exp_left;
 		m_right = exp_right;
 		stack.push(this);
