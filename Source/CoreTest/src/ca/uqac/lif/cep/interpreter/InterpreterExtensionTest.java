@@ -47,7 +47,6 @@ public class InterpreterExtensionTest
 	{
 		String expression = "0";
 		Object result = m_interpreter.parseLanguage(expression);
-		m_interpreter.setDebugMode(true);
 		assertNotNull(result);
 		assertTrue(result instanceof EmlNumber);
 		assert(((EmlNumber) result).intValue() == 0);
@@ -57,7 +56,6 @@ public class InterpreterExtensionTest
 	public void testExtensionNumber2() throws ParseException
 	{
 		String expression = "FREEZE 0";
-		m_interpreter.setDebugMode(true);
 		Object result = m_interpreter.parseLanguage(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof Freeze);
@@ -71,7 +69,6 @@ public class InterpreterExtensionTest
 	{
 		String expression = "(0) ON A WINDOW OF 3";
 		Object result = m_interpreter.parseLanguage(expression);
-		m_interpreter.setDebugMode(true);
 		assertNotNull(result);
 		assertTrue(result instanceof Window);
 	}
@@ -81,7 +78,6 @@ public class InterpreterExtensionTest
 	{
 		String expression = "EVERY 2ND OF (0)";
 		Object result = m_interpreter.parseLanguage(expression);
-		m_interpreter.setDebugMode(true);
 		assertNotNull(result);
 		assertTrue(result instanceof CountDecimate);
 	}

@@ -233,26 +233,23 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		catch (ClassNotFoundException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Do nothing
 		}
 		catch (IllegalAccessException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Do nothing
 		}
 		catch (SecurityException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e)
+			// Do nothing
+		} 
+		catch (IllegalArgumentException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e)
+			// Do nothing
+		} 
+		catch (InstantiationException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Do nothing
 		}
 	}
 
