@@ -25,11 +25,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.CountDecimate;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.QueueSink;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.util.PackageFileReader;
 import ca.uqac.lif.util.StringUtils;
@@ -41,9 +44,17 @@ public class TuplesEmlSelectTest
 	@Before
 	public void setUp()
 	{
-		m_interpreter = new Interpreter();		
-		GrammarExtension ext = new TupleGrammar();
-		m_interpreter.extendGrammar(ext);
+		m_interpreter = new Interpreter();
+		{
+			// Add input streams to grammar
+			GrammarExtension ext = new StreamGrammar();
+			m_interpreter.extendGrammar(ext);
+		}
+		{
+			// Add tuples to grammar
+			GrammarExtension ext = new TupleGrammar();
+			m_interpreter.extendGrammar(ext);
+		}
 	}
 	
 	@Test
@@ -230,9 +241,72 @@ public class TuplesEmlSelectTest
 			assertEquals(12, ((EmlNumber) tup.get("y")).numberValue().intValue());
 		}
 	}
+	
+	@Test
+	public void testSelectMixed1() throws ParseException
+	{
+		Object processor = m_interpreter.parseLanguage("EVERY 2ND OF (SELECT (t.a) + (u.b) AS x, (u.c) + (3) AS y FROM THE TUPLES OF FILE \"tuples1.csv\" AS t, THE TUPLES OF FILE \"tuples2.csv\" AS u)");
+		assertTrue(processor instanceof CountDecimate);
+		CountDecimate cd = (CountDecimate) processor;
+		Pullable p = cd.getPullableOutput(0);
+		{
+			// Get first tuple
+			Object answer = p.pullHard();
+			assertTrue(answer instanceof NamedTuple);
+			NamedTuple tup = (NamedTuple) answer;
+			assertEquals(2, tup.keySet().size());
+			assertEquals(2, ((EmlNumber) tup.get("x")).numberValue().intValue());
+			assertEquals(6, ((EmlNumber) tup.get("y")).numberValue().intValue());
+		}
+		{
+			// Get next tuple
+			Object answer = p.pullHard();
+			assertTrue(answer instanceof NamedTuple);
+			NamedTuple tup = (NamedTuple) answer;
+			assertEquals(2, tup.keySet().size());
+			assertEquals(8, ((EmlNumber) tup.get("x")).numberValue().intValue());
+			assertEquals(12, ((EmlNumber) tup.get("y")).numberValue().intValue());
+		}
+		{
+			// Get next tuple. There is no next tuple
+			Object answer = p.pull();
+			assertNull(answer);
+		}
+	}
 
 	@Test
-	public void testTupleFeeder()
+	public void testTupleFeeder1() throws ParseException
+	{
+		Object processor = m_interpreter.parseLanguage("THE TUPLES OF FILE \"tuples1.csv\"");
+		assertTrue(processor instanceof TupleFeeder);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect((Processor) processor, sink);
+		NamedTuple recv;
+		// First tuple
+		sink.pullHard();
+		recv = (NamedTuple) sink.getQueue(0).remove();
+		assertNotNull(recv);
+		assertEquals(0, ((EmlNumber) recv.get("a")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		// Another tuple
+		sink.pullHard();
+		recv = (NamedTuple) sink.getQueue(0).remove();
+		assertNotNull(recv);
+		assertEquals(1, ((EmlNumber) recv.get("a")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
+		assertEquals(1, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		// Another tuple
+		sink.pullHard();
+		recv = (NamedTuple) sink.getQueue(0).remove();
+		assertNotNull(recv);
+		assertEquals(2, ((EmlNumber) recv.get("a")).numberValue().intValue());
+		assertEquals(4, ((EmlNumber) recv.get("b")).numberValue().intValue());
+		assertEquals(5, ((EmlNumber) recv.get("c")).numberValue().intValue());		
+	}
+	
+	@Test
+	public void testTupleFeeder2()
 	{
 		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/tuples1.csv");
 		InputStream stream = StringUtils.toInputStream(file_contents);
@@ -264,5 +338,6 @@ public class TuplesEmlSelectTest
 		assertEquals(4, ((EmlNumber) recv.get("b")).numberValue().intValue());
 		assertEquals(5, ((EmlNumber) recv.get("c")).numberValue().intValue());		
 	}
+
 
 }

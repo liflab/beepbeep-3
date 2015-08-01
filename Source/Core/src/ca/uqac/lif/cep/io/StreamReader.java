@@ -18,6 +18,9 @@
 package ca.uqac.lif.cep.io;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -93,6 +96,11 @@ public class StreamReader extends Source
 	protected BufferedReader m_br;
 
 	protected InputStreamReader m_isr;
+	
+	public StreamReader()
+	{
+		super();
+	}
 
 	public StreamReader(InputStream is)
 	{
@@ -183,7 +191,26 @@ public class StreamReader extends Source
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		// TODO
-		// Anyway, this processor is not in the grammar at the moment
+		String filename = (String) stack.pop();
+		if (filename.startsWith("\""))
+		{
+			filename = filename.substring(1);
+		}
+		if (filename.endsWith("\""))
+		{
+			filename = filename.substring(0, filename.length() - 1);
+		}
+		stack.pop(); // FILE
+		try
+		{
+			StreamReader sr = new StreamReader(new FileInputStream(new File(filename)));
+			stack.push(sr);
+		}
+		catch (FileNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			stack.push(new StreamReader(null));
+		}
 	}
 }

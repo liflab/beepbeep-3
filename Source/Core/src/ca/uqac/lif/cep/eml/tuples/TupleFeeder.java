@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.eml.tuples;
 import java.util.Stack;
 import java.util.Vector;
 
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.input.TokenFeeder;
 
 /**
@@ -82,7 +84,12 @@ public class TupleFeeder extends TokenFeeder
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		// TODO
+		Processor p = (Processor) stack.pop();
+		stack.pop(); // OF
+		stack.pop(); // TUPLES
+		stack.pop(); // THE
+		Connector.connect(p, this);
+		stack.push(this);
 	}
 
 }

@@ -43,3 +43,7 @@
 # Binary operators
 
 <eml_addition>,ca.uqac.lif.cep.eml.tuples.Addition
+
+# Tuple feeder
+
+<eml_feeder>,ca.uqac.lif.cep.eml.tuples.TupleFeeder

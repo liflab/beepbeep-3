@@ -20,7 +20,7 @@
 
 # Top-level EML symbols
 
-<eml_expr>               := <eml_constant> | <eml_select> ;
+<eml_expr>               := <eml_constant> | <eml_select> | <eml_feeder> ;
 
 # "SELECT" statement
 
@@ -56,3 +56,7 @@
 
 <eml_att_expr_binary>    := <eml_addition> ;
 <eml_addition>           := ( <eml_att_expr> ) + ( <eml_att_expr> ) ;
+
+# Tuple feeder
+
+<eml_feeder>             := THE TUPLES OF <p_stream> ;

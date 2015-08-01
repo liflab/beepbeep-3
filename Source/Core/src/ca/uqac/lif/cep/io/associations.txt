@@ -1,0 +1,5 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+<p_stream>,ca.uqac.lif.cep.io.StreamReader
