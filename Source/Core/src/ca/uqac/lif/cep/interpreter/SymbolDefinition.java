@@ -15,14 +15,49 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.eml.tuples;
+package ca.uqac.lif.cep.interpreter;
 
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
+import java.util.Stack;
 
-public class TupleGrammar extends GrammarExtension
+import ca.uqac.lif.cep.Buildable;
+
+public class SymbolDefinition implements Buildable 
 {
-	public TupleGrammar()
+	/**
+	 * The non terminal symbol this definition stands for
+	 */
+	protected String m_symbolName;
+	
+	/**
+	 * The variable name of this definition
+	 */
+	protected String m_variableName;
+	
+	public SymbolDefinition()
 	{
-		super(TupleGrammar.class);
+		super();
+		m_symbolName = "";
+		m_variableName = "";
 	}
+	
+	public String getName()
+	{
+		return m_variableName;
+	}
+	
+	public String getSymbol()
+	{
+		return m_symbolName;
+	}
+
+	@Override
+	public void build(Stack<Object> stack) 
+	{
+		m_symbolName = (String) stack.pop();
+		stack.pop(); // A
+		stack.pop(); // IS
+		m_variableName = (String) stack.pop();
+		stack.push(this);
+	}
+
 }

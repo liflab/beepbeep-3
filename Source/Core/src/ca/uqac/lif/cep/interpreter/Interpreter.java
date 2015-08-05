@@ -107,6 +107,11 @@ public class Interpreter implements ParseNodeVisitor
 		addAssociation("<p_prefix>", "ca.uqac.lif.cep.Prefix");
 		addAssociation("<p_print>", "ca.uqac.lif.cep.Print");
 		addAssociation("<p_window>", "ca.uqac.lif.cep.Window");
+		
+		// User definitions
+		addAssociation("<processor_def>", "ca.uqac.lif.cep.interpreter.UserDefinition");
+		addAssociation("<symbol_def_list>", "ca.uqac.lif.cep.interpreter.SymbolDefinitionList");
+		addAssociation("<symbol_def>", "ca.uqac.lif.cep.interpreter.SymbolDefinition");
 
 		// Math
 		addAssociation("<f_addition>", "ca.uqac.lif.cep.math.Addition");
@@ -308,6 +313,16 @@ public class Interpreter implements ParseNodeVisitor
 			return null;
 		}
 		return m_nodes.peek();
+	}
+	
+	void addCaseToRule(String rule_name, String case_string)
+	{
+		m_parser.addCaseToRule(rule_name, case_string);
+	}
+	
+	void addRule(BnfRule rule)
+	{
+		m_parser.addRule(rule);
 	}
 
 	public static class ParseException extends EmptyException
