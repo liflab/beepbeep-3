@@ -28,6 +28,7 @@ import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.bullwinkle.BnfParser.ParseException;
 import ca.uqac.lif.util.PackageFileReader;
 
@@ -41,10 +42,18 @@ public class TuplesEmlGrammarTest
 		try
 		{
 			m_parser = new BnfParser();
-			m_parser.setGrammar(PackageFileReader.readPackageFile(Interpreter.class, "epl.bnf"));		
-			GrammarExtension ext = new TupleGrammar();
-			String productions = ext.getGrammar();
-			m_parser.setGrammar(productions);
+			m_parser.setGrammar(PackageFileReader.readPackageFile(Interpreter.class, "epl.bnf"));
+			{
+				GrammarExtension ext = new StreamGrammar();
+				String productions = ext.getGrammar();
+				m_parser.setGrammar(productions);
+			}
+			{
+				GrammarExtension ext = new TupleGrammar();
+				String productions = ext.getGrammar();
+				m_parser.setGrammar(productions);
+			}
+			
 		}
 		catch (InvalidGrammarException e)
 		{
@@ -162,6 +171,30 @@ public class TuplesEmlGrammarTest
 		String expression = "0";
 		ParseNode result = shouldParse(expression, "<eml_att_expr>");
 		assertEquals("<eml_att_expr>", result.getValue());
+	}
+	
+	@Test
+	public void testExtension14() throws ParseException
+	{
+		String expression = "(0) WHERE (a) = (b)";
+		ParseNode result = shouldParse(expression, "<eml_where>");
+		assertEquals("<eml_where>", result.getValue());
+	}
+	
+	@Test
+	public void testExtension15a() throws ParseException
+	{
+		String expression = "(THE TUPLES OF FILE \"tuples1.csv\") WHERE (a) = (0)";
+		ParseNode result = shouldParse(expression, "<eml_where>");
+		assertEquals("<eml_where>", result.getValue());
+	}
+	
+	@Test
+	public void testExtension15b() throws ParseException
+	{
+		String expression = "(THE TUPLES OF FILE \"tuples1.csv\") WHERE (a) = (0)";
+		ParseNode result = shouldParse(expression, "<processor>");
+		assertEquals("<processor>", result.getValue());
 	}
 	
 	protected ParseNode shouldParse(String expression, String start_symbol) throws ParseException

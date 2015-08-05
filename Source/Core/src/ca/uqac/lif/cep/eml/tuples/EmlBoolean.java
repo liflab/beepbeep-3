@@ -19,31 +19,31 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Stack;
 
-public class EmlNumber extends EmlConstant
+public class EmlBoolean extends EmlConstant
 {
-	protected Number m_number;
+	protected Boolean m_value;
 	
-	public EmlNumber()
+	public EmlBoolean()
 	{
 		super();
 	}
 	
-	public EmlNumber(Number n)
+	public EmlBoolean(Boolean b)
 	{
 		this();
-		m_number = n;
+		m_value = b;
 	}
 
-	public Number numberValue()
+	public Boolean booleanValue()
 	{
-		return m_number.doubleValue();
+		return m_value;
 	}
 	
-	public int intValue()
+	public boolean boolValue()
 	{
-		return m_number.intValue();
+		return m_value;
 	}
-
+	
 	@Override
 	public void build(Stack<Object> stack)
 	{
@@ -54,32 +54,28 @@ public class EmlNumber extends EmlConstant
 	@Override
 	public String toString()
 	{
-		if (m_number.floatValue() % 1 == 0)
-		{
-			// Display as integer
-			return Integer.toString(m_number.intValue());
-		}
-		return m_number.toString();
+		return m_value.toString();
 	}
 	
 	@Override
 	public int hashCode()
 	{
-		return m_number.hashCode();
+		return m_value.hashCode();
 	}
 	
 	@Override
 	public boolean equals(Object o)
 	{
-		if (o == null || !(o instanceof EmlNumber))
+		if (o == null || !(o instanceof EmlBoolean))
 		{
 			return false;
 		}
-		return equals((EmlNumber) o);
+		return equals((EmlBoolean) o);
 	}
 	
-	protected boolean equals(EmlNumber n)
+	protected boolean equals(EmlBoolean b)
 	{
-		return m_number.doubleValue() == n.m_number.doubleValue();
+		return m_value.booleanValue() == b.m_value.booleanValue();
 	}
+
 }

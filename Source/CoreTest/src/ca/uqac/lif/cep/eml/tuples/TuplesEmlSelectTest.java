@@ -338,6 +338,32 @@ public class TuplesEmlSelectTest
 		assertEquals(4, ((EmlNumber) recv.get("b")).numberValue().intValue());
 		assertEquals(5, ((EmlNumber) recv.get("c")).numberValue().intValue());		
 	}
+	
+	@Test
+	public void testWhere1() throws ParseException
+	{
+		Object processor = m_interpreter.parseLanguage("(THE TUPLES OF FILE \"tuples1.csv\") WHERE (a) = (0)");
+		assertTrue(processor instanceof Processor);
+		Processor p = (Processor) processor;
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(p, sink);
+		NamedTuple recv;
+		// First tuple
+		sink.pullHard();
+		recv = (NamedTuple) sink.getQueue(0).remove();
+		assertNotNull(recv);
+		assertEquals(0, ((EmlNumber) recv.get("a")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		// Other tuple
+		sink.pullHard();
+		recv = (NamedTuple) sink.getQueue(0).remove();
+		assertNotNull(recv);
+		assertEquals(0, ((EmlNumber) recv.get("a")).numberValue().intValue());
+		assertEquals(1, ((EmlNumber) recv.get("b")).numberValue().intValue());
+		assertEquals(6, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		
+	}
 
 
 }

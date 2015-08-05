@@ -59,4 +59,26 @@ public class EmlString extends EmlConstant
 	{
 		return m_string.toString();
 	}
+	
+	@Override
+	public int hashCode()
+	{
+		return m_string.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (o == null || !(o instanceof EmlString))
+		{
+			return false;
+		}
+		return equals((EmlString) o);
+	}
+	
+	protected boolean equals(EmlString s)
+	{
+		return m_string.compareTo(s.m_string) == 0;
+	}
+
 }

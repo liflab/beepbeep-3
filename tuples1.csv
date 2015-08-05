@@ -1,6 +1,7 @@
 # Sample tuple file for the tuple feeder
 # The first line contains the name of each attribute in the tuple
 # The remaining lines contain tuples
+# ***Don't forget to end the file with an empty line!!!***
 
 a,b,c
 
@@ -9,3 +10,4 @@ a,b,c
 2,4,5 
 1,3,3
 2,4,2
+0,1,6

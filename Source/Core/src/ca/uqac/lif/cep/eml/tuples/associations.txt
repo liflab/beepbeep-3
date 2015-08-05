@@ -43,7 +43,12 @@
 # Binary operators
 
 <eml_addition>,ca.uqac.lif.cep.eml.tuples.Addition
+<eml_equality>,ca.uqac.lif.cep.eml.tuples.EqualsExpression
 
 # Tuple feeder
 
 <eml_feeder>,ca.uqac.lif.cep.eml.tuples.TupleFeeder
+
+# "WHERE" statement
+
+<eml_where>,ca.uqac.lif.cep.eml.tuples.Where
