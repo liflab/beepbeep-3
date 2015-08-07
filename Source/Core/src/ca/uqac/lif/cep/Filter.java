@@ -53,5 +53,12 @@ public class Filter extends SingleProcessor
 	{
 		// TODO
 	}
+	
+	@Override
+	public Filter newInstance()
+	{
+		return new Filter();
+	}
+
 
 }

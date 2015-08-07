@@ -59,4 +59,21 @@ public abstract class EmlConstant extends Tuple
 		}
 		return new EmlNumber(n);
 	}
+	
+	@Override
+	public EmlConstant newInstance()
+	{
+		EmlConstant out = null;
+		Class<?> c = this.getClass();
+		try {
+			out = (EmlConstant) c.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 }

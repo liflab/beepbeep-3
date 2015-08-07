@@ -24,6 +24,7 @@ import java.io.InputStream;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Combiner;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.CountDecimate;
 import ca.uqac.lif.cep.Processor;
@@ -241,6 +242,41 @@ public class TuplesEmlSelectTest
 			assertEquals(12, ((EmlNumber) tup.get("y")).numberValue().intValue());
 		}
 	}
+	
+	@Test
+	public void testCombine1() throws ParseException
+	{
+		Object processor = m_interpreter.parseLanguage("COMBINE (1) WITH SUM");
+		assertTrue(processor instanceof Combiner);
+		Combiner s = (Combiner) processor;
+		Pullable p = s.getPullableOutput(0);
+		Object answer = p.pull();
+		assertTrue(answer instanceof EmlNumber);
+		EmlNumber num = (EmlNumber) answer;
+		assertEquals(1, num.numberValue().intValue());
+		num = (EmlNumber) p.pull();
+		assertEquals(2, num.numberValue().intValue());
+		num = (EmlNumber) p.pull();
+		assertEquals(3, num.numberValue().intValue());
+	}
+	
+	@Test
+	public void testCombine2() throws ParseException
+	{
+		Object processor = m_interpreter.parseLanguage("COMBINE (2) WITH PRODUCT");
+		assertTrue(processor instanceof Combiner);
+		Combiner s = (Combiner) processor;
+		Pullable p = s.getPullableOutput(0);
+		Object answer = p.pull();
+		assertTrue(answer instanceof EmlNumber);
+		EmlNumber num = (EmlNumber) answer;
+		assertEquals(2, num.numberValue().intValue());
+		num = (EmlNumber) p.pull();
+		assertEquals(4, num.numberValue().intValue());
+		num = (EmlNumber) p.pull();
+		assertEquals(8, num.numberValue().intValue());
+	}
+
 	
 	@Test
 	public void testSelectMixed1() throws ParseException

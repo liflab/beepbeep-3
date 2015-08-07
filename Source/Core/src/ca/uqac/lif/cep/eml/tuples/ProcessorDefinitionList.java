@@ -73,4 +73,10 @@ public class ProcessorDefinitionList extends LinkedList<ProcessorDefinition> imp
 		}
 		return out.toString();
 	}
+	
+	@Override
+	public ProcessorDefinitionList newInstance()
+	{
+		return new ProcessorDefinitionList();
+	}
 }

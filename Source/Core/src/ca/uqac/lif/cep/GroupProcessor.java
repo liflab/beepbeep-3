@@ -199,6 +199,13 @@ public class GroupProcessor extends Processor
 	{
 		// TODO
 	}
+	
+	@Override
+	public GroupProcessor newInstance()
+	{
+		return new GroupProcessor(getInputArity(), getOutputArity());
+	}
+
 
 
 }

@@ -56,5 +56,12 @@ public class Freeze extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
+	
+	@Override
+	public Freeze newInstance()
+	{
+		return new Freeze();
+	}
+
 
 }

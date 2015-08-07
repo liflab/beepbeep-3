@@ -27,7 +27,15 @@ import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.bullwinkle.ParseNodeVisitor;
 import ca.uqac.lif.cep.Buildable;
+import ca.uqac.lif.cep.Combiner;
+import ca.uqac.lif.cep.CountDecimate;
+import ca.uqac.lif.cep.Delay;
+import ca.uqac.lif.cep.Freeze;
 import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.Prefix;
+import ca.uqac.lif.cep.Print;
+import ca.uqac.lif.cep.QueueSource;
+import ca.uqac.lif.cep.Window;
 import ca.uqac.lif.util.EmptyException;
 import ca.uqac.lif.util.PackageFileReader;
 
@@ -56,9 +64,9 @@ public class Interpreter implements ParseNodeVisitor
 
 	/**
 	 * Associations between the name of a production rule and
-	 * the processor whose syntax it defines
+	 * the buildable object whose syntax it defines
 	 */
-	protected Map<String, String> m_associations;
+	protected Map<String, Buildable> m_associations;
 
 	/**
 	 * Instantiates an interpreter and prepares it to parse expressions
@@ -68,7 +76,7 @@ public class Interpreter implements ParseNodeVisitor
 		super();
 		m_parser = initializeParser();
 		m_nodes = new Stack<Object>();
-		m_associations = new HashMap<String, String>();
+		m_associations = new HashMap<String, Buildable>();
 		m_processorDefinitions = new HashMap<String,GroupProcessor>();
 		setBuiltinAssociations();
 	}
@@ -80,7 +88,7 @@ public class Interpreter implements ParseNodeVisitor
 	public void extendGrammar(GrammarExtension ext)
 	{
 		// Adds the associations
-		Map<String,String> associations = ext.getAssociations();
+		Map<String,Buildable> associations = ext.getAssociations();
 		m_associations.putAll(associations);
 		// Adds the productions
 		String productions = ext.getGrammar();
@@ -90,7 +98,6 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		catch (InvalidGrammarException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -98,27 +105,29 @@ public class Interpreter implements ParseNodeVisitor
 	protected void setBuiltinAssociations()
 	{
 		// Basic
-		addAssociation("<p_combiner>", "ca.uqac.lif.cep.Combiner");
-		addAssociation("<p_constant>", "ca.uqac.lif.cep.QueueSource");
-		addAssociation("<p_decimate>", "ca.uqac.lif.cep.CountDecimate");
-		addAssociation("<p_delay>", "ca.uqac.lif.cep.Delay");
-		addAssociation("<p_freeze>", "ca.uqac.lif.cep.Freeze");
-		addAssociation("<p_function>", "ca.uqac.lif.cep.Function");
-		addAssociation("<p_prefix>", "ca.uqac.lif.cep.Prefix");
-		addAssociation("<p_print>", "ca.uqac.lif.cep.Print");
-		addAssociation("<p_window>", "ca.uqac.lif.cep.Window");
+		addAssociation("<p_combiner>", new Combiner());
+		addAssociation("<p_constant>", new QueueSource());
+		addAssociation("<p_decimate>", new CountDecimate());
+		addAssociation("<p_delay>", new Delay());
+		addAssociation("<p_freeze>", new Freeze());
+		//addAssociation("<p_function>", new Function());
+		addAssociation("<p_prefix>", new Prefix());
+		addAssociation("<p_print>", new Print());
+		addAssociation("<p_window>", new Window());
 		
 		// User definitions
-		addAssociation("<processor_def>", "ca.uqac.lif.cep.interpreter.UserDefinition");
-		addAssociation("<symbol_def_list>", "ca.uqac.lif.cep.interpreter.SymbolDefinitionList");
-		addAssociation("<symbol_def>", "ca.uqac.lif.cep.interpreter.SymbolDefinition");
+		addAssociation("<processor_def>", new ca.uqac.lif.cep.interpreter.UserDefinition());
+		addAssociation("<symbol_def_list>", new ca.uqac.lif.cep.interpreter.SymbolDefinitionList());
+		addAssociation("<symbol_def>", new ca.uqac.lif.cep.interpreter.SymbolDefinition());
 
 		// Math
+		/* This will be moved to the tuple EML
 		addAssociation("<f_addition>", "ca.uqac.lif.cep.math.Addition");
 		addAssociation("<f_subtraction>", "ca.uqac.lif.cep.math.Subtraction");
 		addAssociation("<f_division>", "ca.uqac.lif.cep.math.Division");
 		addAssociation("<f_power>", "ca.uqac.lif.cep.math.Power");
 		addAssociation("<c_sum>", "ca.uqac.lif.cep.math.Sum");
+		*/
 	}
 
 	/**
@@ -126,7 +135,7 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param production_rule The rule name
 	 * @param p The processor
 	 */
-	public void addAssociation(String production_rule, String class_name)
+	public void addAssociation(String production_rule, Buildable class_name)
 	{
 		m_associations.put(production_rule, class_name);
 	}
@@ -225,20 +234,16 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		// The node's name appears to refer to a Buildable object
 		String node_name = node.getToken();
-		String class_name = m_associations.get(node_name);
+		Buildable obj = m_associations.get(node_name);
 		try
 		{
-			Class<?> c = Class.forName(class_name);
+			Class<?> c = obj.getClass();
 			Object o = c.newInstance();
 			if (o instanceof Buildable)
 			{
 				Buildable b = (Buildable) o;
 				b.build(m_nodes);
 			}
-		}
-		catch (ClassNotFoundException e)
-		{
-			// Do nothing
 		}
 		catch (IllegalAccessException e)
 		{

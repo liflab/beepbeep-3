@@ -26,18 +26,28 @@ public class TimeDecimate extends SingleProcessor
 	/**
 	 * Interval of time
 	 */
-	protected final long m_interval;
+	protected long m_interval;
 	
 	/**
 	 * The system time when the last event was output
 	 */
 	protected long m_timeLastSent;
 	
+	public TimeDecimate()
+	{
+		super(1, 1);
+	}
+	
 	public TimeDecimate(long interval)
 	{
 		super(1, 1);
 		m_interval = interval;
 		m_timeLastSent = -1;
+	}
+	
+	public void setInterval(long interval)
+	{
+		m_interval = interval;
 	}
 	
 	@Override
@@ -76,5 +86,12 @@ public class TimeDecimate extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
+	
+	@Override
+	public TimeDecimate newInstance()
+	{
+		return new TimeDecimate();
+	}
+
 
 }

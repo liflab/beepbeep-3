@@ -37,4 +37,21 @@ public abstract class ProcessorDefinition implements Buildable
 	{
 		return m_processorName;
 	}
+	
+	@Override
+	public ProcessorDefinition newInstance()
+	{
+		ProcessorDefinition out = null;
+		Class<?> c = this.getClass();
+		try {
+			out = (ProcessorDefinition) c.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 }

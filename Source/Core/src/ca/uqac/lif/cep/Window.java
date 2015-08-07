@@ -181,5 +181,12 @@ public class Window extends SingleProcessor
 		Window out = new Window(p, width.intValue());
 		stack.push(out);
 	}
+	
+	@Override
+	public Window newInstance()
+	{
+		return new Window();
+	}
+
 
 }

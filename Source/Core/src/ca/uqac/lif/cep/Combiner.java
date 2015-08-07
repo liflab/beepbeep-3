@@ -69,5 +69,11 @@ public class Combiner extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
+	
+	@Override
+	public Combiner newInstance()
+	{
+		return new Combiner();
+	}
 
 }

@@ -54,4 +54,11 @@ public class Fork extends SingleProcessor
 	{
 		// TODO
 	}
+	
+	@Override
+	public Fork newInstance()
+	{
+		return new Fork(getOutputArity());
+	}
+
 }

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain HallÃ©
+    Copyright (C) 2008-2015 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,42 +15,28 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Queue;
-import java.util.Stack;
 import java.util.Vector;
 
-public class Mutator extends SingleProcessor
+public class Difference extends CombinableExpression
 {
-	/**
-	 * The output event to send
-	 */
-	protected final Vector<Object> m_output;
-	
-	public Mutator(int in_arity, Vector<Object> v)
+	public Difference()
 	{
-		super(in_arity, v.size());
-		m_output = v;
+		super(new Subtraction());
 	}
 	
-	public Mutator(int in_arity, Object o)
-	{
-		super(in_arity, 1);
-		m_output = new Vector<Object>();
-		m_output.add(o);
-	}
-
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	public Vector<Object> initialize()
 	{
-		return wrapVector(m_output);
+		Vector<Object> out = new Vector<Object>();
+		out.add(new EmlNumber(0));
+		return out;
 	}
-
+	
 	@Override
-	public void build(Stack<Object> stack)
+	public Difference newInstance()
 	{
-		// TODO
+		return new Difference();
 	}
-
 }

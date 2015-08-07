@@ -74,4 +74,11 @@ public class AttributeList extends LinkedList<AttributeDefinition> implements Bu
 		}
 		return out.toString();
 	}
+	
+	@Override
+	public AttributeList newInstance()
+	{
+		return new AttributeList();
+	}
+
 }

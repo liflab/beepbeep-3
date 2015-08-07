@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.interpreter;
 import java.util.HashMap;
 import java.util.Map;
 
+import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.util.PackageFileReader;
 
 /**
@@ -68,9 +69,9 @@ public abstract class GrammarExtension
 	 * grammar and fully-qualified class names.
 	 * @return The map
 	 */
-	public final Map<String,String> getAssociations()
+	public final Map<String,Buildable> getAssociations()
 	{
-		Map<String,String> out = new HashMap<String,String>();
+		Map<String,Buildable> out = new HashMap<String,Buildable>();
 		String file_contents = PackageFileReader.readPackageFile(m_classReference, s_associationsFilename);
 		if (file_contents == null || file_contents.isEmpty())
 		{
@@ -92,7 +93,30 @@ public abstract class GrammarExtension
 			}
 			String non_terminal = parts[0].trim();
 			String class_name = parts[1].trim();
-			out.put(non_terminal, class_name);
+			try 
+			{
+				Class<?> c = Class.forName(class_name);
+				Object o = c.newInstance();
+				if (o instanceof Buildable)
+				{
+					out.put(non_terminal, (Buildable) o);
+				}
+			} 
+			catch (InstantiationException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			catch (IllegalAccessException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			catch (ClassNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return out;
 	}

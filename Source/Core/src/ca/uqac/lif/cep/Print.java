@@ -86,4 +86,11 @@ public class Print extends Sink
 			m_out.print(n.intValue());
 		}
 	}
+	
+	@Override
+	public Print newInstance()
+	{
+		return new Print();
+	}
+
 }

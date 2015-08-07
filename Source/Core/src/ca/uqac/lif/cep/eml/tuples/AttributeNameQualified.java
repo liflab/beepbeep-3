@@ -75,5 +75,12 @@ public class AttributeNameQualified extends AttributeName
 		out.append(m_traceName).append(".").append(m_attributeName);
 		return out.toString();
 	}
+	
+	@Override
+	public AttributeNameQualified newInstance()
+	{
+		return new AttributeNameQualified();
+	}
+
 
 }

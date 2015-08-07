@@ -102,5 +102,12 @@ public class QueueSink extends Sink
 		}
 		stack.push(out);
 	}
+	
+	@Override
+	public QueueSink newInstance()
+	{
+		return new QueueSink(getInputArity());
+	}
+
 
 }

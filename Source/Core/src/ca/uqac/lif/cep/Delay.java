@@ -71,5 +71,12 @@ public class Delay extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
+	
+	@Override
+	public Delay newInstance()
+	{
+		return new Delay();
+	}
+
 
 }

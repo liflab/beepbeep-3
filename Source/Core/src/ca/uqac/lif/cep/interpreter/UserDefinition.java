@@ -95,6 +95,7 @@ public class UserDefinition implements Buildable
 			e.printStackTrace();
 		}
 		interpreter.addCaseToRule("<" + m_symbolName + ">", non_terminal);
+		interpreter.addAssociation(non_terminal, this);
 	}
 	
 	/**
@@ -128,6 +129,18 @@ public class UserDefinition implements Buildable
 		out.append(m_pattern).append(" IS THE ").append(m_symbolName);
 		out.append(" ").append(m_definition).append(".");
 		return out.toString();
+	}
+	
+	@Override
+	public UserDefinition newInstance()
+	{
+		UserDefinition out = new UserDefinition();
+		out.m_definition = m_definition;
+		out.m_pattern = m_pattern;
+		out.m_standsFor = m_standsFor;
+		out.m_symbolDefs = m_symbolDefs;
+		out.m_symbolName = m_symbolName;
+		return out;
 	}
 
 }

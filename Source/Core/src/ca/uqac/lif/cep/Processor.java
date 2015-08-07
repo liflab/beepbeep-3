@@ -134,4 +134,21 @@ public abstract class Processor implements Buildable
 	{
 		return m_outputArity;
 	}
+	
+	@Override
+	public Processor newInstance()
+	{
+		Processor out = null;
+		Class<?> c = this.getClass();
+		try {
+			out = (Processor) c.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 }

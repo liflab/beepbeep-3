@@ -51,5 +51,12 @@ public class Passthrough extends SingleProcessor
 		}
 		stack.push(out);
 	}
+	
+	@Override
+	public Passthrough newInstance()
+	{
+		return new Passthrough(getInputArity());
+	}
+
 
 }

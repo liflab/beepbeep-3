@@ -43,4 +43,11 @@ public class AttributeDefinitionAs extends AttributeDefinition
 		out.append(m_expression).append(" AS ").append(m_aliasName);
 		return out.toString();
 	}
+	
+	@Override
+	public AttributeDefinitionAs newInstance()
+	{
+		return new AttributeDefinitionAs();
+	}
+
 }

@@ -68,4 +68,10 @@ public class EmlNumber extends SingleProcessor
 		out.add(element);
 		return out;
 	}
+	
+	@Override
+	public EmlNumber newInstance()
+	{
+		return new EmlNumber(numberValue());
+	}
 }

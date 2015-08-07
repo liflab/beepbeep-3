@@ -22,6 +22,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
@@ -40,7 +41,7 @@ public class UserDefinitionTest
 	@Test
 	public void testDefinition1() throws ParseException
 	{
-		String expression = "WHEN @P IS A processor: THE COUNT OF (@P) IS THE processor SELECT x FROM (@P).";
+		String expression = "WHEN @P IS A processor: THE COUNT OF (@P) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM.";
 		//m_interpreter.m_parser.setStartRule("<processor_def>");
 		Object o = m_interpreter.parseLanguage(expression);
 		assertNotNull(o);
@@ -48,8 +49,9 @@ public class UserDefinitionTest
 		UserDefinition user_def = (UserDefinition) o;
 		user_def.addToInterpreter(m_interpreter);
 		// Now, parse an expression that uses this definition
-		m_interpreter.setDebugMode(true);
 		String user_expression = "THE COUNT OF (0)";
-		m_interpreter.parseLanguage(user_expression);
+		m_interpreter.setDebugMode(true);
+		Object user_stmt = m_interpreter.parseLanguage(user_expression);
+		assertTrue(user_stmt instanceof Processor);
 	}
 }

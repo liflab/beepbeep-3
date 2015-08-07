@@ -75,5 +75,10 @@ public class SymbolDefinitionList extends HashMap<String, String> implements Bui
 		return out.toString();
 	}
 
+	@Override
+	public SymbolDefinitionList newInstance()
+	{
+		return new SymbolDefinitionList();
+	}
 
 }

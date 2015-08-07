@@ -88,4 +88,11 @@ public class Function extends SingleProcessor
 		}
 		stack.push(out);
 	}
+	
+	@Override
+	public Function newInstance()
+	{
+		return new Function();
+	}
+
 }

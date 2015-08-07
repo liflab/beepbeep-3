@@ -76,4 +76,11 @@ public class QueueSource extends Source
 		QueueSource out = new QueueSource(o, 1);
 		stack.push(out);
 	}
+	
+	@Override
+	public QueueSource newInstance()
+	{
+		return new QueueSource();
+	}
+
 }

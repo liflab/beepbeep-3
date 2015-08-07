@@ -28,4 +28,6 @@ import java.util.Stack;
 public interface Buildable
 {
 	public void build(Stack<Object> stack);
+	
+	public Buildable newInstance();
 }

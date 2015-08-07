@@ -33,6 +33,12 @@ public class EmlNumber extends EmlConstant
 		this();
 		m_number = n;
 	}
+	
+	public EmlNumber(EmlNumber n)
+	{
+		this();
+		m_number = n.numberValue();
+	}
 
 	public Number numberValue()
 	{
@@ -81,5 +87,42 @@ public class EmlNumber extends EmlConstant
 	protected boolean equals(EmlNumber n)
 	{
 		return m_number.doubleValue() == n.m_number.doubleValue();
+	}
+	
+	/**
+	 * Attempts to create an EmlNumber from the object passed as an argument
+	 * @param o The object
+	 * @return An EmlNumber, or null if no number could be build from
+	 *   the argument
+	 */
+	public static EmlNumber toEmlNumber(Object o)
+	{
+		if (o instanceof EmlNumber)
+		{
+			return new EmlNumber((EmlNumber) o);
+		}
+		if (o instanceof Number)
+		{
+			return new EmlNumber((Number) o);
+		}
+		if (o instanceof String)
+		{
+			return new EmlNumber(Double.parseDouble((String) o));
+		}
+		if (o instanceof NamedTuple)
+		{
+			NamedTuple t = (NamedTuple) o;
+			if (t.size() == 1)
+			{
+				// If we have a tuple with a single element, try to make a
+				// number with that element
+				for (String s : t.keySet())
+				{
+					EmlConstant c = t.get(s);
+					return EmlNumber.toEmlNumber(c);
+				}
+			}
+		}
+		return null;
 	}
 }

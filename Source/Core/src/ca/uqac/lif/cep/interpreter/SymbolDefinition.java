@@ -60,4 +60,10 @@ public class SymbolDefinition implements Buildable
 		stack.push(this);
 	}
 
+	@Override
+	public SymbolDefinition newInstance() 
+	{
+		return new SymbolDefinition();
+	}
+
 }

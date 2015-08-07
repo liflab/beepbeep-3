@@ -362,7 +362,5 @@ public abstract class SingleProcessor extends Processor
 		out.add(v);
 		return out;
 	}
-
-	
 	
 }
