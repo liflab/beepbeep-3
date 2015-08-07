@@ -3,6 +3,7 @@ package ca.uqac.lif.cep.math;
 import java.util.Stack;
 import java.util.Vector;
 
+import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
 
 public class NaryCombinable implements Combinable
@@ -41,6 +42,12 @@ public class NaryCombinable implements Combinable
 	{
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Buildable newInstance() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

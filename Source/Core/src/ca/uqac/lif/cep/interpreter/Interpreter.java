@@ -235,32 +235,8 @@ public class Interpreter implements ParseNodeVisitor
 		// The node's name appears to refer to a Buildable object
 		String node_name = node.getToken();
 		Buildable obj = m_associations.get(node_name);
-		try
-		{
-			Class<?> c = obj.getClass();
-			Object o = c.newInstance();
-			if (o instanceof Buildable)
-			{
-				Buildable b = (Buildable) o;
-				b.build(m_nodes);
-			}
-		}
-		catch (IllegalAccessException e)
-		{
-			// Do nothing
-		}
-		catch (SecurityException e)
-		{
-			// Do nothing
-		} 
-		catch (IllegalArgumentException e)
-		{
-			// Do nothing
-		} 
-		catch (InstantiationException e)
-		{
-			// Do nothing
-		}
+		Buildable b = obj.newInstance();
+		b.build(m_nodes);
 	}
 
 	public void addProcessorDefinition(GroupProcessor pd)

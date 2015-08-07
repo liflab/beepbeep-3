@@ -67,4 +67,10 @@ public abstract class NaryComputable implements Computable
 	}
 	
 	protected abstract Vector<Object> computeNumerical(Vector<Number> inputs);
+	
+	public NaryComputable newInstance()
+	{
+		// TODO
+		return null;
+	}
 }

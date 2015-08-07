@@ -41,4 +41,21 @@ public abstract class AttributeDefinition implements Buildable
 	{
 		return m_expression;
 	}
+	
+	@Override
+	public AttributeDefinition newInstance()
+	{
+		AttributeDefinition out = null;
+		Class<?> c = this.getClass();
+		try {
+			out = (AttributeDefinition) c.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 }

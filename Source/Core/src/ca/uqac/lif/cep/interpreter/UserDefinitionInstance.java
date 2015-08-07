@@ -15,22 +15,31 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.eml.tuples;
+package ca.uqac.lif.cep.interpreter;
 
-import java.util.Vector;
+import java.util.Stack;
 
-public class Difference extends CombinableExpression
+public class UserDefinitionInstance extends UserDefinition 
 {
-	public Difference()
+	protected UserDefinition m_definition;
+	
+	public UserDefinitionInstance(UserDefinition definition)
 	{
-		super(new Subtraction());
+		super();
+		m_definition = definition;
 	}
 	
 	@Override
-	public Vector<Object> initialize()
+	public void build(Stack<Object> stack) 
 	{
-		Vector<Object> out = new Vector<Object>();
-		out.add(new EmlNumber(0));
-		return out;
+		// TODO: We must pull stuff from the stack based on the parsing pattern
+		System.out.println("HO");
 	}
+	
+	@Override
+	public UserDefinitionInstance newInstance()
+	{
+		return new UserDefinitionInstance(m_definition);
+	}
+
 }

@@ -67,7 +67,7 @@ public abstract class CombinableExpression implements Buildable, Combinable
 		stack.pop(); // combiner's name
 		stack.push(this);
 	}
-	
+
 	@Override
 	public CombinableExpression newInstance()
 	{

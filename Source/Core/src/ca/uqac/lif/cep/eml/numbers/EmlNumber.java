@@ -72,6 +72,6 @@ public class EmlNumber extends SingleProcessor
 	@Override
 	public EmlNumber newInstance()
 	{
-		return new EmlNumber(numberValue());
+		return new EmlNumber();
 	}
 }

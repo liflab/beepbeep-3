@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.math;
 import java.util.Stack;
 import java.util.Vector;
 
+import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
 
 public class Sum implements Combinable
@@ -65,6 +66,12 @@ public class Sum implements Combinable
 	public int getOutputArity()
 	{
 		return 1;
+	}
+
+	@Override
+	public Buildable newInstance() 
+	{
+		return new Sum();
 	}
 
 }

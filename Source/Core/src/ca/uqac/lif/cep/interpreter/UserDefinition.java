@@ -47,6 +47,11 @@ public class UserDefinition implements Buildable
 	protected String m_pattern;
 	
 	/**
+	 * Whether we read the definition or an instance of the definition
+	 */
+	protected boolean m_isInstantiated = false;
+	
+	/**
 	 * A counter so that every definition number is unique
 	 */
 	protected static int s_defNb = 0;  
@@ -95,7 +100,7 @@ public class UserDefinition implements Buildable
 			e.printStackTrace();
 		}
 		interpreter.addCaseToRule("<" + m_symbolName + ">", non_terminal);
-		interpreter.addAssociation(non_terminal, this);
+		interpreter.addAssociation(non_terminal, new UserDefinitionInstance(this));
 	}
 	
 	/**

@@ -21,5 +21,20 @@ import ca.uqac.lif.cep.Buildable;
 
 public abstract class AttributeName extends AttributeExpression implements Buildable
 {
-
+	@Override
+	public AttributeName newInstance()
+	{
+		AttributeName out = null;
+		Class<?> c = this.getClass();
+		try {
+			out = (AttributeName) c.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 }

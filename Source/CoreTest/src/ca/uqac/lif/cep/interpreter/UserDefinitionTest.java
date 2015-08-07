@@ -50,7 +50,7 @@ public class UserDefinitionTest
 		user_def.addToInterpreter(m_interpreter);
 		// Now, parse an expression that uses this definition
 		String user_expression = "THE COUNT OF (0)";
-		m_interpreter.setDebugMode(true);
+		//m_interpreter.setDebugMode(true);
 		Object user_stmt = m_interpreter.parseLanguage(user_expression);
 		assertTrue(user_stmt instanceof Processor);
 	}
