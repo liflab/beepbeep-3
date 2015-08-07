@@ -35,7 +35,7 @@ import ca.uqac.lif.util.PackageFileReader;
 public class TuplesEmlGrammarTest
 {	
 	protected BnfParser m_parser;
-	
+
 	@Before
 	public void setUp()
 	{
@@ -53,7 +53,7 @@ public class TuplesEmlGrammarTest
 				String productions = ext.getGrammar();
 				m_parser.setGrammar(productions);
 			}
-			
+
 		}
 		catch (InvalidGrammarException e)
 		{
@@ -61,7 +61,7 @@ public class TuplesEmlGrammarTest
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testExtension1() throws ParseException
 	{
@@ -69,7 +69,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_number>");
 		assertEquals("<eml_number>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension2() throws ParseException
 	{
@@ -77,7 +77,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension3() throws ParseException
 	{
@@ -85,7 +85,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension4a() throws ParseException
 	{
@@ -93,7 +93,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension4b() throws ParseException
 	{
@@ -101,14 +101,14 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension5() throws ParseException
 	{
 		String expression = "SELECT 0 AS att FROM 0 AS";
 		shouldNotParse(expression, "<eml_select>");
 	}
-	
+
 	@Test
 	public void testExtension6() throws ParseException
 	{
@@ -116,7 +116,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension7() throws ParseException
 	{
@@ -124,7 +124,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension8() throws ParseException
 	{
@@ -132,7 +132,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension9() throws ParseException
 	{
@@ -140,7 +140,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension10() throws ParseException
 	{
@@ -148,7 +148,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension11() throws ParseException
 	{
@@ -156,7 +156,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension12() throws ParseException
 	{
@@ -164,7 +164,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension13() throws ParseException
 	{
@@ -172,7 +172,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_att_expr>");
 		assertEquals("<eml_att_expr>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension14() throws ParseException
 	{
@@ -180,7 +180,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_where>");
 		assertEquals("<eml_where>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension15a() throws ParseException
 	{
@@ -188,7 +188,7 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_where>");
 		assertEquals("<eml_where>", result.getValue());
 	}
-	
+
 	@Test
 	public void testExtension15b() throws ParseException
 	{
@@ -197,14 +197,22 @@ public class TuplesEmlGrammarTest
 		assertEquals("<processor>", result.getValue());
 	}
 	
+	@Test
+	public void testExtension16() throws ParseException
+	{
+		String expression = "COMBINE (SELECT x FROM (0)) WITH SUM";
+		ParseNode result = shouldParse(expression, "<processor>");
+		assertEquals("<processor>", result.getValue());
+	}
+
 	protected ParseNode shouldParse(String expression, String start_symbol) throws ParseException
 	{
 		m_parser.setStartRule(start_symbol);
 		ParseNode pn = m_parser.parse(expression);
-		assertNotNull(pn);
+		assertNotNull("The parsing of " + expression + " has failed", pn);
 		return pn;
 	}
-	
+
 	protected ParseNode shouldNotParse(String expression, String start_symbol) throws ParseException
 	{
 		m_parser.setStartRule(start_symbol);
@@ -212,6 +220,6 @@ public class TuplesEmlGrammarTest
 		assertNull(pn);
 		return pn;
 	}
-	
+
 
 }

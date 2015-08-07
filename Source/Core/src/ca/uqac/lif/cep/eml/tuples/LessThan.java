@@ -17,9 +17,9 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-public class EqualsExpression extends BinaryExpression 
+public class LessThan extends BinaryExpression 
 {
-	public EqualsExpression()
+	public LessThan()
 	{
 		super();
 		m_symbol = "=";
@@ -28,9 +28,14 @@ public class EqualsExpression extends BinaryExpression
 	@Override
 	public EmlConstant evaluate(Object t_left, Object t_right) 
 	{
-		if (t_left != null && t_right != null && t_left.equals(t_right))
+		EmlNumber n_left = EmlNumber.toEmlNumber(t_left);
+		EmlNumber n_right = EmlNumber.toEmlNumber(t_right);
+		if (t_left != null && t_right != null)
 		{
-			return new EmlBoolean(true);
+			if (n_left.numberValue().doubleValue() < n_right.numberValue().doubleValue())
+			{
+				return new EmlBoolean(true);
+			}
 		}
 		return new EmlBoolean(false);
 	}

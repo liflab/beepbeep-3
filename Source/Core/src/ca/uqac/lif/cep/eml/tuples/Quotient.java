@@ -17,22 +17,20 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-public class EqualsExpression extends BinaryExpression 
+import java.util.Vector;
+
+public class Quotient extends CombinableExpression
 {
-	public EqualsExpression()
+	public Quotient()
 	{
-		super();
-		m_symbol = "=";
+		super(new Division());
 	}
-
+	
 	@Override
-	public EmlConstant evaluate(Object t_left, Object t_right) 
+	public Vector<Object> initialize()
 	{
-		if (t_left != null && t_right != null && t_left.equals(t_right))
-		{
-			return new EmlBoolean(true);
-		}
-		return new EmlBoolean(false);
+		Vector<Object> out = new Vector<Object>();
+		out.add(new EmlNumber(1));
+		return out;
 	}
-
 }

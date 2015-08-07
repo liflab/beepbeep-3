@@ -17,22 +17,17 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-public class EqualsExpression extends BinaryExpression 
+public class Multiplication extends BinaryExpression
 {
-	public EqualsExpression()
-	{
-		super();
-		m_symbol = "=";
-	}
-
 	@Override
-	public EmlConstant evaluate(Object t_left, Object t_right) 
+	public EmlConstant evaluate(Object t_left, Object t_right)
 	{
-		if (t_left != null && t_right != null && t_left.equals(t_right))
+		EmlNumber n_left = EmlNumber.toEmlNumber(t_left);
+		EmlNumber n_right = EmlNumber.toEmlNumber(t_right);
+		if (n_left == null || n_right == null)
 		{
-			return new EmlBoolean(true);
+			return null;
 		}
-		return new EmlBoolean(false);
+		return new EmlNumber(n_left.numberValue().floatValue() * n_right.numberValue().floatValue());
 	}
-
 }

@@ -19,7 +19,8 @@
 # Built-in processors
 
 <processor>          := <p_freeze> | <p_window> | <p_decimate> | <p_prefix> 
-                        | <p_print> | <userdef_proc> | <eml_expr> | <var_name> ;
+                        | <p_print> | <p_combiner> | <userdef_proc> 
+                        | <eml_expr> | <var_name> ;
 <p_freeze>           := FREEZE <processor> ;
 <p_window>           := ( <processor> ) ON A WINDOW OF <number> ;
 <p_decimate>         := EVERY <number> <number_suffix> OF ( <processor> ) ;
