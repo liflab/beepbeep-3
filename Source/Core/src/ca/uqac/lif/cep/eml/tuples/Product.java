@@ -33,4 +33,10 @@ public class Product extends CombinableExpression
 		out.add(new EmlNumber(1));
 		return out;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "PRODUCT";
+	}
 }

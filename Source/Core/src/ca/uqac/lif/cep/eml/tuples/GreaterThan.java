@@ -22,7 +22,7 @@ public class GreaterThan extends BinaryExpression
 	public GreaterThan()
 	{
 		super();
-		m_symbol = "=";
+		m_symbol = ">";
 	}
 
 	@Override

@@ -23,6 +23,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
@@ -41,17 +43,54 @@ public class UserDefinitionTest
 	@Test
 	public void testDefinition1() throws ParseException
 	{
-		String expression = "WHEN @P IS A processor: THE COUNT OF (@P) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM.";
-		//m_interpreter.m_parser.setStartRule("<processor_def>");
+		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM";
 		Object o = m_interpreter.parseLanguage(expression);
 		assertNotNull(o);
-		assertTrue(o instanceof UserDefinition);
-		UserDefinition user_def = (UserDefinition) o;
-		user_def.addToInterpreter(m_interpreter);
+		assertTrue(o instanceof Interpreter.UserDefinition);
+		Interpreter.UserDefinition user_def = (Interpreter.UserDefinition) o;
+		user_def.addToInterpreter();
 		// Now, parse an expression that uses this definition
 		String user_expression = "THE COUNT OF (0)";
 		//m_interpreter.setDebugMode(true);
 		Object user_stmt = m_interpreter.parseLanguage(user_expression);
 		assertTrue(user_stmt instanceof Processor);
+		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
+		// Pull a tuple from the resulting processor
+		Object answer = p.pull();
+		assertNotNull(answer);
+		assertTrue(answer instanceof EmlNumber);
+		EmlNumber num = (EmlNumber) answer;
+		assertEquals(1, num.numberValue().intValue());
+		// Pull another
+		num = (EmlNumber) p.pull();
+		assertEquals(2, num.numberValue().intValue());
+		// Pull another
+		num = (EmlNumber) p.pull();
+		assertEquals(3, num.numberValue().intValue());
+	}
+	
+	@Test
+	public void testDefinition2() throws ParseException
+	{
+		String expression = "PI IS THE eml_number 3.1416";
+		Object o = m_interpreter.parseLanguage(expression);
+		assertNotNull(o);
+		assertTrue(o instanceof Interpreter.UserDefinition);
+		Interpreter.UserDefinition user_def = (Interpreter.UserDefinition) o;
+		user_def.addToInterpreter();
+		// Now, parse an expression that uses this definition
+		String user_expression = "PI";
+		Object user_stmt = m_interpreter.parseLanguage(user_expression);
+		assertTrue(user_stmt instanceof Processor);
+		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
+		// Pull a tuple from the resulting processor
+		Object answer = p.pull();
+		assertNotNull(answer);
+		assertTrue(answer instanceof EmlNumber);
+		EmlNumber num = (EmlNumber) answer;
+		assertEquals(3.1416, num.numberValue().floatValue(), 0.01);
+		// Pull another
+		num = (EmlNumber) p.pull();
+		assertEquals(3.1416, num.numberValue().floatValue(), 0.01);
 	}
 }

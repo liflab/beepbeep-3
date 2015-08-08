@@ -30,15 +30,16 @@
 <p_print>            := PRINT ( <processor> ) ;
 
 
-# Definition of a new processor
+# Definition of a new grammatical object
 
-<processor_def>      := WHEN <symbol_def_list> : <proc_pattern> IS THE <symbol_name> <string_def> . ;
+<processor_def>      := WHEN <symbol_def_list> : <proc_pattern> IS THE <symbol_name> <string_def>
+                        | <proc_pattern> IS THE <symbol_name> <string_def> ;
 <symbol_def_list>    := <symbol_def> , <symbol_def_list> | <symbol_def> ;
 <symbol_def>         := <symbol_var> IS A <symbol_name> ;
 <proc_pattern>       := ^.*?(?=IS);
 <symbol_var>         := ^@[a-zA-Z][\w_]*;	
 <symbol_name>        := ^[a-zA-Z][\w_]*;
-<string_def>       := ^.*?(?=\.);
+<string_def>         := ^.*;
 
 # User-defined processors. Rules get dynamically added here
 

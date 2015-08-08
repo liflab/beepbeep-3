@@ -22,7 +22,7 @@ public class LessThan extends BinaryExpression
 	public LessThan()
 	{
 		super();
-		m_symbol = "=";
+		m_symbol = "<";
 	}
 
 	@Override

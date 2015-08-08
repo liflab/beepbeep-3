@@ -17,9 +17,14 @@
  */
 package ca.uqac.lif.cep.interpreter;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
-public class UserDefinitionInstance extends UserDefinition 
+import ca.uqac.lif.cep.Buildable;
+import ca.uqac.lif.cep.interpreter.Interpreter.UserDefinition;
+
+public class UserDefinitionInstance implements Buildable
 {
 	protected UserDefinition m_definition;
 	
@@ -32,8 +37,30 @@ public class UserDefinitionInstance extends UserDefinition
 	@Override
 	public void build(Stack<Object> stack) 
 	{
-		// TODO: We must pull stuff from the stack based on the parsing pattern
-		System.out.println("HO");
+		// Pull stuff from the stack based on the parsing pattern
+		Map<String,Object> variable_definitions = new HashMap<String,Object>();
+		String[] pattern_parts = m_definition.m_pattern.split(" ");
+		for (int i = pattern_parts.length - 1; i >= 0; i--)
+		{
+			// Read from the end
+			String part = pattern_parts[i];
+			if (part.startsWith("@"))
+			{
+				// This is a variable; pop the object and associate it with
+				// the variable name
+				Object o = stack.pop();
+				variable_definitions.put(part, o);
+			}
+			else
+			{
+				// This is not a variable; eat the corresponding
+				// symbol from the stack and do nothing with it
+				stack.pop();
+			}
+		}
+		// Now that we have the variable associations, parse the definition
+		Object o = m_definition.parseDefinition(variable_definitions);
+		stack.push(o);
 	}
 	
 	@Override

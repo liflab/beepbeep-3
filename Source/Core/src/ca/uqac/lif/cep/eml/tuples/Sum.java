@@ -33,4 +33,10 @@ public class Sum extends CombinableExpression
 		out.add(new EmlNumber(0));
 		return out;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "SUM";
+	}
 }
