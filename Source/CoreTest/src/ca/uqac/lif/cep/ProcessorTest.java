@@ -3,6 +3,7 @@ package ca.uqac.lif.cep;
 import static org.junit.Assert.*;
 
 import java.util.LinkedList;
+import java.util.Vector;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -575,6 +576,33 @@ public class ProcessorTest
 		{
 			fail("Expected " + expected + ", got " + recv);
 		}
+	}
+	
+	@Test
+	public void testFork1()
+	{
+		Vector<Object> events = new Vector<Object>();
+		events.add("A");
+		events.add("B");
+		events.add("C");
+		events.add("D");
+		QueueSource cp = new QueueSource("", 1);
+		cp.setEvents(events);
+		Fork f = new Fork(2);
+		Connector.connect(cp,  f);
+		Pullable p1 = f.getPullableOutput(0);
+		Pullable p2 = f.getPullableOutput(1);
+		String recv;
+		recv = (String) p1.pull();
+		assertEquals("A", recv);
+		recv = (String) p1.pull();
+		assertEquals("B", recv);
+		recv = (String) p2.pull();
+		assertEquals("A", recv);
+		recv = (String) p1.pull();
+		assertEquals("C", recv);
+		recv = (String) p2.pull();
+		assertEquals("B", recv);		
 	}
 
 }

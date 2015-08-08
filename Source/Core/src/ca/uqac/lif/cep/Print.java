@@ -77,6 +77,10 @@ public class Print extends Sink
 		{
 			prettyPrint((Number) o);
 		}
+		else
+		{
+			m_out.print(o);
+		}
 	}
 	
 	protected void prettyPrint(Number n)

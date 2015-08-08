@@ -30,12 +30,16 @@ import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.bullwinkle.ParseNodeVisitor;
 import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combiner;
+import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.CountDecimate;
 import ca.uqac.lif.cep.Delay;
+import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.Freeze;
 import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Prefix;
 import ca.uqac.lif.cep.Print;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.QueueSource;
 import ca.uqac.lif.cep.Window;
 import ca.uqac.lif.util.EmptyException;
@@ -70,6 +74,11 @@ public class Interpreter implements ParseNodeVisitor
 	protected Map<String, GroupProcessor> m_processorDefinitions;
 	
 	/**
+	 * Forks
+	 */
+	protected Map<String, Fork> m_processorForks;
+	
+	/**
 	 * User-defined objects
 	 */
 	protected Map<String, Object> m_symbolDefinitions;
@@ -100,6 +109,7 @@ public class Interpreter implements ParseNodeVisitor
 		m_associations = new HashMap<String, Buildable>();
 		m_processorDefinitions = new HashMap<String, GroupProcessor>();
 		m_symbolDefinitions = new HashMap<String, Object>();
+		m_processorForks = new HashMap<String, Fork>();
 		setBuiltinAssociations();
 	}
 	
@@ -119,7 +129,8 @@ public class Interpreter implements ParseNodeVisitor
 		m_processorDefinitions.putAll(i.m_processorDefinitions);
 		m_symbolDefinitions = new HashMap<String, Object>();
 		m_symbolDefinitions.putAll(i.m_symbolDefinitions);
-
+		m_processorForks = new HashMap<String, Fork>();
+		m_processorForks.putAll(i.m_processorForks);
 	}
 
 	/**
@@ -263,9 +274,31 @@ public class Interpreter implements ParseNodeVisitor
 			// This is a placeholder for some grammatical element:
 			// fetch the object this symbol stands for...
 			Object o = m_symbolDefinitions.get(node_name);
-			// ...and replace the symbol by this object on the stack
-			//m_nodes.pop();
-			m_nodes.push(o);
+			if (o instanceof Processor)
+			{
+				// In the case of processors, we must fork their output
+				Processor o_p = (Processor) o;
+				if (!m_processorForks.containsKey(node_name))
+				{
+					Fork f = new Fork(0);
+					Connector.connect(o_p, f);
+					m_processorForks.put(node_name, f);
+				}
+				// Extend the current fork for this processor with a new output
+				Fork f = m_processorForks.get(node_name);
+				int new_arity = f.getOutputArity() + 1;
+				Fork new_f = f.extendArity(new_arity);
+				Passthrough pt = new Passthrough(o_p.getOutputArity());
+				Connector.connect(new_f, pt, new_arity - 1, 0);
+				m_nodes.push(pt);
+				m_processorForks.put(node_name, new_f);
+			}
+			else
+			{
+				// ...and replace the symbol by this object on the stack
+				//m_nodes.pop();
+				m_nodes.push(o);
+			}
 		}
 		else if (node_name.startsWith("<"))
 		{
@@ -501,6 +534,7 @@ public class Interpreter implements ParseNodeVisitor
 			Object parsed = null;
 			try 
 			{
+				//inner_int.setDebugMode(true);
 				parsed = inner_int.parseLanguage(m_definition);
 			} 
 			catch (ParseException e) 

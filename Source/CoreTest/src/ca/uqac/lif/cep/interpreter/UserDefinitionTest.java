@@ -27,6 +27,7 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.io.StreamGrammar;
 
 public class UserDefinitionTest 
 {
@@ -36,8 +37,8 @@ public class UserDefinitionTest
 	public void setUp()
 	{
 		m_interpreter = new Interpreter();		
-		GrammarExtension ext = new TupleGrammar();
-		m_interpreter.extendGrammar(ext);
+		m_interpreter.extendGrammar(new StreamGrammar());
+		m_interpreter.extendGrammar(new TupleGrammar());
 	}
 	
 	@Test
@@ -92,5 +93,63 @@ public class UserDefinitionTest
 		// Pull another
 		num = (EmlNumber) p.pull();
 		assertEquals(3.1416, num.numberValue().floatValue(), 0.01);
+	}
+	
+	@Test
+	public void testDefinition3() throws ParseException
+	{
+		Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("E IS THE eml_number 2");
+		e_def.addToInterpreter();
+		Processor proc = (Processor) m_interpreter.parseLanguage("SELECT E FROM 1");
+		Pullable p = proc.getPullableOutput(0);
+		EmlNumber number = (EmlNumber) p.pull();
+		assertEquals(2, number.numberValue().intValue());
+	}
+	
+	@Test
+	public void testDefinition4() throws ParseException
+	{
+		{
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
+			e_def.addToInterpreter();
+		}
+		{
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: THE INVERSE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (SELECT x FROM @P) AS T, (THE COUNT OF (@P)) AS U");
+			e_def.addToInterpreter();
+		}
+		Processor proc = (Processor) m_interpreter.parseLanguage("THE INVERSE OF (1)");
+		assertNotNull(proc);
+		Pullable p = proc.getPullableOutput(0);
+		EmlNumber number = (EmlNumber) p.pull();
+		assertEquals(1, number.numberValue().floatValue(), 0.01);
+		number = (EmlNumber) p.pull();
+		assertEquals(0.5, number.numberValue().floatValue(), 0.01);
+		number = (EmlNumber) p.pull();
+		assertEquals(0.33, number.numberValue().floatValue(), 0.01);
+	}
+	
+	@Test
+	public void testDefinition5() throws ParseException
+	{
+		{
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
+			e_def.addToInterpreter();
+		}
+		{
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (COMBINE (SELECT x FROM @P) WITH SUM) AS T, (THE COUNT OF (@P)) AS U");
+			e_def.addToInterpreter();
+		}
+		Processor proc = (Processor) m_interpreter.parseLanguage("THE AVERAGE OF (SELECT a FROM THE TUPLES OF FILE \"tuples3.csv\")");
+		assertNotNull(proc);
+		Pullable p = proc.getPullableOutput(0);
+		EmlNumber number = (EmlNumber) p.pull();
+		assertEquals(0, number.numberValue().floatValue(), 0.01);
+		System.out.println(number);
+		number = (EmlNumber) p.pull();
+		System.out.println(number);
+		//assertEquals(1.5, number.numberValue().floatValue(), 0.01);
+		number = (EmlNumber) p.pull();
+		System.out.println(number);
+		//assertEquals(2, number.numberValue().floatValue(), 0.01);
 	}
 }

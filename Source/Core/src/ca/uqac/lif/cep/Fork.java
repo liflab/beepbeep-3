@@ -32,6 +32,19 @@ public class Fork extends SingleProcessor
 	{
 		super(1, out_arity);
 	}
+	
+	/**
+	 * Creates a copy of the current fork with a greater arity
+	 * @param out_arity The desired arity for the output fork
+	 * @return The new fork
+	 */
+	public Fork extendArity(int out_arity)
+	{
+		Fork f = new Fork(out_arity);
+		f.m_inputPullables.addAll(m_inputPullables);
+		f.m_outputPushables.addAll(m_outputPushables);
+		return f;
+	}
 
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)

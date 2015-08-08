@@ -24,7 +24,9 @@ import java.util.Scanner;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Sink;
+import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.util.AnsiPrinter;
 import ca.uqac.lif.util.AnsiPrinter.Color;
 
@@ -40,6 +42,11 @@ public class CommandLine
 		Scanner scanner = new Scanner(System.in);
 		//	stdout.disableColors();
 		Interpreter interpreter = new Interpreter();
+		// Load extensions for the interpreter
+		{
+			interpreter.extendGrammar(new TupleGrammar());
+			interpreter.extendGrammar(new StreamGrammar());
+		}
 		boolean exit = false;
 		stdout.setForegroundColor(Color.LIGHT_GRAY);
 		stdout.println("BeepBeep 3 - A versatile event stream processor");
@@ -52,7 +59,7 @@ public class CommandLine
 		{
 			stdout.setForegroundColor(Color.PURPLE);
 			stdout.print("\n" + s_prompt);
-			stdout.setForegroundColor(Color.WHITE);
+			stdout.setForegroundColor(Color.BLACK);
 			String command = scanner.nextLine();
 			// Parse instruction
 			command = command.trim();
@@ -82,14 +89,23 @@ public class CommandLine
 			{
 				try
 				{
-					last_processor = (Processor) interpreter.parseLanguage(command);
-					if (last_processor instanceof Sink)
+					Object o = interpreter.parseLanguage(command);
+					if (o instanceof Processor)
 					{
-						Sink sink = (Sink) last_processor;
-						for (int loops = 0; loops < 10; loops++)
+						last_processor = (Processor) o;
+						if (last_processor instanceof Sink)
 						{
-							sink.pullHard();
+							Sink sink = (Sink) last_processor;
+							for (int loops = 0; loops < 10; loops++)
+							{
+								sink.pullHard();
+							}
 						}
+					}
+					else if (o instanceof Interpreter.UserDefinition)
+					{
+						Interpreter.UserDefinition def = (Interpreter.UserDefinition) o;
+						def.addToInterpreter();
 					}
 				}
 				catch (ParseException e)

@@ -9,8 +9,7 @@
 <eml_plain_string>,ca.uqac.lif.cep.eml.tuples.EmlPlainString
 
 # Constant processor
-
-<eml_constant>,ca.uqac.lif.cep.eml.tuples.EmlConstant
+# <eml_constant>,ca.uqac.lif.cep.eml.tuples.EmlConstant (abstract)
 
 # "SELECT" statement
 
@@ -20,23 +19,23 @@
 
 <eml_proc_def_plain>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionPlain
 <eml_proc_def_as>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionAs
-<eml_proc_def>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinition
+#<eml_proc_def>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinition
 <eml_proc_list>,ca.uqac.lif.cep.eml.tuples.ProcessorDefinitionList
 
 # List of named attributes
 
 <eml_att_def_plain>,ca.uqac.lif.cep.eml.tuples.AttributeDefinitionPlain
 <eml_att_def_as>,ca.uqac.lif.cep.eml.tuples.AttributeDefinitionAs
-<eml_att_def>,ca.uqac.lif.cep.eml.tuples.AttributeDefinition
+#<eml_att_def>,ca.uqac.lif.cep.eml.tuples.AttributeDefinition
 <eml_att_list>,ca.uqac.lif.cep.eml.tuples.AttributeList
 
 # Attribute expressions
 
-<eml_att_expr>,ca.uqac.lif.cep.eml.tuples.AttributeExpression
-<eml_att_name>,ca.uqac.lif.cep.eml.tuples.AttributeName
+#<eml_att_expr>,ca.uqac.lif.cep.eml.tuples.AttributeExpression
+#<eml_att_name>,ca.uqac.lif.cep.eml.tuples.AttributeName
 <eml_att_name_q>,ca.uqac.lif.cep.eml.tuples.AttributeNameQualified
 <eml_att_name_plain>,ca.uqac.lif.cep.eml.tuples.AttributeNamePlain
-<eml_att_expr_const>,ca.uqac.lif.cep.eml.tuples.ConstantExpression
+#<eml_att_expr_const>,ca.uqac.lif.cep.eml.tuples.ConstantExpression
 <eml_att_expr_number>,ca.uqac.lif.cep.eml.tuples.NumberExpression
 <eml_att_expr_string>,ca.uqac.lif.cep.eml.tuples.StringExpression
 

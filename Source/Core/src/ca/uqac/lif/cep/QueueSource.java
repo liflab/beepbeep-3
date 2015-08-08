@@ -26,7 +26,7 @@ public class QueueSource extends Source
 	/**
 	 * The events to repeat endlessly
 	 */
-	protected final Vector<Object> m_events;
+	protected Vector<Object> m_events;
 	
 	/**
 	 * The index of the next event to produce
@@ -54,6 +54,11 @@ public class QueueSource extends Source
 		m_events = new Vector<Object>();
 		m_events.addAll(o);
 		m_index = 0;
+	}
+	
+	public void setEvents(Vector<Object> queue)
+	{
+		m_events = queue;
 	}
 
 	@Override

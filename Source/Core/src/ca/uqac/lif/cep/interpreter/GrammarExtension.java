@@ -104,13 +104,11 @@ public abstract class GrammarExtension
 			} 
 			catch (InstantiationException e) 
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("Cannot find instance of " + class_name);
 			} 
 			catch (IllegalAccessException e) 
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.err.println("Cannot instantiate " + class_name);
 			}
 			catch (ClassNotFoundException e)
 			{
