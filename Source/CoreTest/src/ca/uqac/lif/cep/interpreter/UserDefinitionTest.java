@@ -25,6 +25,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
+import ca.uqac.lif.cep.eml.tuples.NamedTuple;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
@@ -144,12 +145,27 @@ public class UserDefinitionTest
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
 		assertEquals(0, number.numberValue().floatValue(), 0.01);
-		System.out.println(number);
 		number = (EmlNumber) p.pull();
-		System.out.println(number);
-		//assertEquals(1.5, number.numberValue().floatValue(), 0.01);
+		assertEquals(1, number.numberValue().floatValue(), 0.01);
 		number = (EmlNumber) p.pull();
-		System.out.println(number);
-		//assertEquals(2, number.numberValue().floatValue(), 0.01);
+		assertEquals(1, number.numberValue().floatValue(), 0.01);
+		number = (EmlNumber) p.pull();
+		assertEquals(2, number.numberValue().floatValue(), 0.01);
+	}
+	
+	@Test
+	public void testDefinition6() throws ParseException
+	{
+		{
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: FOO ( @P ) IS THE processor SELECT T.a AS x, U.a AS y FROM @P AS T, @P AS U");
+			e_def.addToInterpreter();
+		}
+		Processor proc = (Processor) m_interpreter.parseLanguage("FOO (SELECT a FROM THE TUPLES OF FILE \"tuples3.csv\")");
+		assertNotNull(proc);
+		Pullable p = proc.getPullableOutput(0);
+		NamedTuple tuple = (NamedTuple) p.pull();
+		System.out.println(tuple);
+		tuple = (NamedTuple) p.pull();
+		System.out.println(tuple);
 	}
 }

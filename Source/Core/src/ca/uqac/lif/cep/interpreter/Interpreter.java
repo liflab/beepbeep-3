@@ -281,17 +281,16 @@ public class Interpreter implements ParseNodeVisitor
 				if (!m_processorForks.containsKey(node_name))
 				{
 					Fork f = new Fork(0);
-					Connector.connect(o_p, f);
+					Connector.connect(o_p, f, 0, 0);
 					m_processorForks.put(node_name, f);
 				}
 				// Extend the current fork for this processor with a new output
 				Fork f = m_processorForks.get(node_name);
 				int new_arity = f.getOutputArity() + 1;
-				Fork new_f = f.extendArity(new_arity);
+				f.extendArity(new_arity);
 				Passthrough pt = new Passthrough(o_p.getOutputArity());
-				Connector.connect(new_f, pt, new_arity - 1, 0);
+				Connector.connect(f, pt, new_arity - 1, 0);
 				m_nodes.push(pt);
-				m_processorForks.put(node_name, new_f);
 			}
 			else
 			{

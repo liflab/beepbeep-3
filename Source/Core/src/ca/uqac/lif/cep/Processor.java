@@ -33,7 +33,7 @@ public abstract class Processor implements Buildable
 	 * The processor's output arity, i.e. the number of output
 	 * events it produces
 	 */
-	protected final int m_outputArity;
+	protected int m_outputArity;
 	
 	protected Vector<Queue<Object>> m_inputQueues;
 	

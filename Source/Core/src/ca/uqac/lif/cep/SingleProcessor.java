@@ -92,7 +92,6 @@ public abstract class SingleProcessor extends Processor
 		}
 	}
 
-
 	@Override
 	public void reset()
 	{
