@@ -31,8 +31,8 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.QueueSink;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
-import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.util.PackageFileReader;
@@ -40,12 +40,12 @@ import ca.uqac.lif.util.StringUtils;
 
 public class TuplesEmlSelectTest
 {
-	protected Interpreter m_interpreter;
+	protected InterpreterTestFrontEnd m_interpreter;
 
 	@Before
 	public void setUp()
 	{
-		m_interpreter = new Interpreter();
+		m_interpreter = new InterpreterTestFrontEnd();
 		{
 			// Add input streams to grammar
 			GrammarExtension ext = new StreamGrammar();
@@ -241,6 +241,20 @@ public class TuplesEmlSelectTest
 			assertEquals(8, ((EmlNumber) tup.get("x")).numberValue().intValue());
 			assertEquals(12, ((EmlNumber) tup.get("y")).numberValue().intValue());
 		}
+	}
+	
+	@Test
+	public void testSelect10() throws ParseException
+	{
+		m_interpreter.setDebugMode(true);
+		Object processor = m_interpreter.parseQuery("SELECT SIN(x) FROM 1");
+		assertTrue(processor instanceof Select);
+		Select s = (Select) processor;
+		Pullable p = s.getPullableOutput(0);
+		Object answer = p.pull();
+		assertTrue(answer instanceof EmlNumber);
+		EmlNumber n = (EmlNumber) answer;
+		assertEquals(Math.sin(1), n.numberValue().floatValue(), 0.01);
 	}
 	
 	@Test

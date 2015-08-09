@@ -127,6 +127,27 @@ public class Interpreter implements ParseNodeVisitor
 	
 	/**
 	 * Extends the interpreter's grammar with new definitions
+	 * @param c A grammar extension class to add to the interpreter
+	 */
+	public void extendGrammar(Class<? extends GrammarExtension> c)
+	{
+		try 
+		{
+			GrammarExtension ext = c.newInstance();
+			extendGrammar(ext);
+		} 
+		catch (InstantiationException e) 
+		{
+			e.printStackTrace();
+		} 
+		catch (IllegalAccessException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Extends the interpreter's grammar with new definitions
 	 * @param ext The grammar extension to add to the interpreter
 	 */
 	public void extendGrammar(GrammarExtension ext)
@@ -341,18 +362,31 @@ public class Interpreter implements ParseNodeVisitor
 		// Nothing to do
 	}
 	
-	public Pullable executeQuery(String query) throws ParseException
+	public Pullable executeQuery(String query)
 	{
 		return executeQuery(query, 0);
 	}
 	
-	public Pullable executeQuery(String query, int index) throws ParseException
+	public Pullable executeQuery(String query, int index)
 	{
-		Object result = parseQuery(query);
-		if (result instanceof Processor)
+		Object result;
+		try 
 		{
-			Pullable out = ((Processor) result).getPullableOutput(index);
-			return out;
+			result = parseQuery(query);
+			if (result instanceof Processor)
+			{
+				Pullable out = ((Processor) result).getPullableOutput(index);
+				return out;
+			}
+			else if (result instanceof UserDefinition)
+			{
+				((UserDefinition) result).addToInterpreter();
+				return null;
+			}
+		} 
+		catch (ParseException e) 
+		{
+			e.printStackTrace();
 		}
 		return null;
 	}

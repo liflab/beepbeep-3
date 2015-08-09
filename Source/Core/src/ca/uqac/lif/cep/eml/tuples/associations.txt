@@ -39,6 +39,10 @@
 <eml_att_expr_number>,ca.uqac.lif.cep.eml.tuples.NumberExpression
 <eml_att_expr_string>,ca.uqac.lif.cep.eml.tuples.StringExpression
 
+# Unary operators
+
+<eml_sin>,ca.uqac.lif.cep.eml.tuples.Sine
+
 # Binary operators
 
 <eml_addition>,ca.uqac.lif.cep.eml.tuples.Addition
