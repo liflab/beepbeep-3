@@ -61,7 +61,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect1() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT 0 FROM 0");
+		Object processor = m_interpreter.parseQuery("SELECT 0 FROM (0)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -74,7 +74,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect2() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT z FROM 0");
+		Object processor = m_interpreter.parseQuery("SELECT z FROM (0)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -87,7 +87,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect3() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT t.z FROM 0 AS t");
+		Object processor = m_interpreter.parseQuery("SELECT t.z FROM (0 AS t)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -100,7 +100,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect4() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT u.z FROM 1 AS t, 2 AS u");
+		Object processor = m_interpreter.parseQuery("SELECT u.z FROM (1 AS t, 2 AS u)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -113,7 +113,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect5() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT (u.z) + (t.z) FROM 1 AS t, 2 AS u");
+		Object processor = m_interpreter.parseQuery("SELECT (u.z) + (t.z) FROM (1 AS t, 2 AS u)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -126,7 +126,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect6() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT u.z AS w FROM 01 AS t, 2 AS u");
+		Object processor = m_interpreter.parseQuery("SELECT u.z AS w FROM (01 AS t, 2 AS u)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -140,7 +140,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect7() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT u.z AS w, (t.z) + (3) AS v FROM 1 AS t, 2 AS u");
+		Object processor = m_interpreter.parseQuery("SELECT u.z AS w, (t.z) + (3) AS v FROM (1 AS t, 2 AS u)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -154,7 +154,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect8() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT a AS a, (b) + (3) AS n FROM 1");
+		Object processor = m_interpreter.parseQuery("SELECT a AS a, (b) + (3) AS n FROM (1)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		{
@@ -191,7 +191,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect9() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("SELECT (t.a) + (u.b) AS x, (u.c) + (3) AS y FROM 1 AS t, 0 AS u");
+		Object processor = m_interpreter.parseQuery("SELECT (t.a) + (u.b) AS x, (u.c) + (3) AS y FROM (1 AS t, 0 AS u)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		{
@@ -247,7 +247,7 @@ public class TuplesEmlSelectTest
 	public void testSelect10() throws ParseException
 	{
 		m_interpreter.setDebugMode(true);
-		Object processor = m_interpreter.parseQuery("SELECT SIN(x) FROM 1");
+		Object processor = m_interpreter.parseQuery("SELECT SIN(x) FROM (1)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
@@ -295,7 +295,7 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelectMixed1() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("EVERY 2ND OF (SELECT (t.a) + (u.b) AS x, (u.c) + (3) AS y FROM THE TUPLES OF FILE \"tuples1.csv\" AS t, THE TUPLES OF FILE \"tuples2.csv\" AS u)");
+		Object processor = m_interpreter.parseQuery("EVERY 2ND OF (SELECT (t.a) + (u.b) AS x, (u.c) + (3) AS y FROM (THE TUPLES OF FILE \"tuples1.csv\" AS t, THE TUPLES OF FILE \"tuples2.csv\" AS u))");
 		assertTrue(processor instanceof CountDecimate);
 		CountDecimate cd = (CountDecimate) processor;
 		Pullable p = cd.getPullableOutput(0);

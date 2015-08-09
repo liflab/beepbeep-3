@@ -25,7 +25,7 @@
 
 # "SELECT" statement
 
-<eml_select>             := SELECT <eml_att_list> FROM <eml_proc_list> ;
+<eml_select>             := SELECT <eml_att_list> FROM ( <eml_proc_list> ) ;
 
 # List of named processors
 

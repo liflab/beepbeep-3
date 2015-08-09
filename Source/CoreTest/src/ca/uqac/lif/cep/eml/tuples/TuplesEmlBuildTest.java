@@ -142,7 +142,7 @@ public class TuplesEmlBuildTest
 	@Test
 	public void testSelect1() throws ParseException
 	{
-		String expression = "SELECT (t.p) + (2) AS w, t.p AS q FROM 0";
+		String expression = "SELECT (t.p) + (2) AS w, t.p AS q FROM (0)";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_select>");
 		assertTrue(result instanceof Select);
 	}

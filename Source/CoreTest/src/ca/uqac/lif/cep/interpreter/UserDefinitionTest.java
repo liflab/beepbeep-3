@@ -45,7 +45,7 @@ public class UserDefinitionTest
 	@Test
 	public void testDefinition1() throws ParseException
 	{
-		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM";
+		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM";
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof Interpreter.UserDefinition);
@@ -101,7 +101,7 @@ public class UserDefinitionTest
 	{
 		Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("E IS THE eml_number 2");
 		e_def.addToInterpreter();
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT E FROM 1");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT E FROM (1)");
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
 		assertEquals(2, number.numberValue().intValue());
@@ -111,11 +111,11 @@ public class UserDefinitionTest
 	public void testDefinition4() throws ParseException
 	{
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM");
 			e_def.addToInterpreter();
 		}
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE INVERSE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (SELECT x FROM @P) AS T, (THE COUNT OF (@P)) AS U");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE INVERSE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM ((SELECT x FROM (@P)) AS T, (THE COUNT OF (@P)) AS U)");
 			e_def.addToInterpreter();
 		}
 		Processor proc = (Processor) m_interpreter.parseQuery("THE INVERSE OF (1)");
@@ -133,14 +133,14 @@ public class UserDefinitionTest
 	public void testDefinition5() throws ParseException
 	{
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM");
 			e_def.addToInterpreter();
 		}
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (COMBINE (SELECT x FROM @P) WITH SUM) AS T, (THE COUNT OF (@P)) AS U");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM ((COMBINE (SELECT x FROM (@P)) WITH SUM) AS T, (THE COUNT OF (@P)) AS U)");
 			e_def.addToInterpreter();
 		}
-		Processor proc = (Processor) m_interpreter.parseQuery("THE AVERAGE OF (SELECT a FROM THE TUPLES OF FILE \"tuples3.csv\")");
+		Processor proc = (Processor) m_interpreter.parseQuery("THE AVERAGE OF (SELECT a FROM (THE TUPLES OF FILE \"tuples3.csv\"))");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
@@ -157,10 +157,10 @@ public class UserDefinitionTest
 	public void testDefinition6() throws ParseException
 	{
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: FOO ( @P ) IS THE processor SELECT T.a AS x, U.a AS y FROM @P AS T, @P AS U");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: FOO ( @P ) IS THE processor SELECT T.a AS x, U.a AS y FROM (@P AS T, @P AS U)");
 			e_def.addToInterpreter();
 		}
-		Processor proc = (Processor) m_interpreter.parseQuery("FOO (SELECT a FROM THE TUPLES OF FILE \"tuples3.csv\")");
+		Processor proc = (Processor) m_interpreter.parseQuery("FOO (SELECT a FROM (THE TUPLES OF FILE \"tuples3.csv\"))");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		NamedTuple tuple = (NamedTuple) p.pull();

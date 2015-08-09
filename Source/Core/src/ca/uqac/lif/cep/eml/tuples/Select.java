@@ -56,7 +56,9 @@ public class Select extends SingleProcessor
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		ProcessorDefinitionList pdl = (ProcessorDefinitionList) stack.pop(); 
+		stack.pop(); // (
+		ProcessorDefinitionList pdl = (ProcessorDefinitionList) stack.pop();
+		stack.pop(); // )
 		stack.pop(); // FROM
 		AttributeList al = (AttributeList) stack.pop();
 		stack.pop(); // SELECT
@@ -130,6 +132,10 @@ public class Select extends SingleProcessor
 			AttributeExpression a_exp = a_def.getExpression();
 			EmlConstant a_result = a_exp.evaluate(inputs);
 			String alias = a_def.getAlias();
+			if (alias.isEmpty())
+			{
+				alias = a_exp.toString();
+			}
 			t_out.put(alias, a_result);
 		}
 		return t_out;
