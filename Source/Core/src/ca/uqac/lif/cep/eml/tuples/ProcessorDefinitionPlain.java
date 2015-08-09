@@ -31,7 +31,18 @@ public class ProcessorDefinitionPlain extends ProcessorDefinitionAs
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		Processor proc = (Processor) stack.pop();
+		Processor proc = null;
+		Object o = stack.pop();
+		if (o instanceof String)
+		{
+			// Parentheses around the definition
+			proc = (Processor) stack.pop();
+			stack.pop(); // (
+		}
+		else
+		{
+			proc = (Processor) o;	
+		}
 		m_processorName = "";
 		m_processor = proc;
 		stack.push(this);

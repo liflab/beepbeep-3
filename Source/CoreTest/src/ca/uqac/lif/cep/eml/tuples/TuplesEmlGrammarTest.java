@@ -204,6 +204,15 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<processor>");
 		assertEquals("<processor>", result.getValue());
 	}
+	
+	@Test
+	public void testExtension17a() throws ParseException
+	{
+		String expression = "SELECT q FROM (((0) WHERE (a) = (\"MSFT\")))";
+		m_parser.setDebugMode(true);
+		ParseNode result = shouldParse(expression, "<eml_select>");
+		assertEquals("<eml_select>", result.getValue());
+	}
 
 	protected ParseNode shouldParse(String expression, String start_symbol) throws ParseException
 	{
