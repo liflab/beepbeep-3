@@ -23,17 +23,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
-import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
 
 public class TuplesEmlBuildTest
 {
-	protected Interpreter m_interpreter;
+	protected InterpreterTestFrontEnd m_interpreter;
 
 	@Before
 	public void setUp()
 	{
-		m_interpreter = new Interpreter();		
+		m_interpreter = new InterpreterTestFrontEnd();		
 		GrammarExtension ext = new TupleGrammar();
 		m_interpreter.extendGrammar(ext);
 	}

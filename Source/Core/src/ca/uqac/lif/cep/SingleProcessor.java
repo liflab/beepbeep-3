@@ -108,7 +108,11 @@ public abstract class SingleProcessor extends Processor
 	@Override
 	public final Pullable getPullableOutput(int index)
 	{
-		return new OutputPullable(index);
+		if (index >= 0 && index < m_outputArity)
+		{
+			return new OutputPullable(index);
+		}
+		return null;
 	}
 
 	public void start()
@@ -200,7 +204,7 @@ public abstract class SingleProcessor extends Processor
 			if (hasNext() != NextStatus.YES)
 			{
 				return null;
-			}				
+			}
 			Queue<Object> out_queue = m_outputQueues.get(m_index);
 			// If an event is already waiting in the output queue,
 			// return it and don't pull anything from the input

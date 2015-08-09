@@ -89,7 +89,7 @@ public class CommandLine
 			{
 				try
 				{
-					Object o = interpreter.parseLanguage(command);
+					Object o = interpreter.executeQuery(command);
 					if (o instanceof Processor)
 					{
 						last_processor = (Processor) o;

@@ -40,6 +40,7 @@ import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Prefix;
 import ca.uqac.lif.cep.Print;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.QueueSource;
 import ca.uqac.lif.cep.Window;
 import ca.uqac.lif.util.EmptyException;
@@ -90,15 +91,6 @@ public class Interpreter implements ParseNodeVisitor
 	protected Map<String, Buildable> m_associations;
 	
 	/**
-	 * Whether the interpreter is in "definition mode". In this mode, 
-	 * occurrences of symbols of the form <code>@something</code> are
-	 * put as is on the stack. When the interpreter is not in definition
-	 * mode, it tries to replace <code>@something</code> by the object
-	 * this symbol stands for.
-	 */
-	protected boolean m_definitionMode = true;
-
-	/**
 	 * Instantiates an interpreter and prepares it to parse expressions
 	 */
 	public Interpreter()
@@ -131,20 +123,6 @@ public class Interpreter implements ParseNodeVisitor
 		m_symbolDefinitions.putAll(i.m_symbolDefinitions);
 		m_processorForks = new HashMap<String, Fork>();
 		m_processorForks.putAll(i.m_processorForks);
-	}
-
-	/**
-	 * Sets whether the interpreter is in "definition mode". In this mode, 
-	 * occurrences of symbols of the form <code>@something</code> are
-	 * put as is on the stack. When the interpreter is not in definition
-	 * mode, it tries to replace <code>@something</code> by the object
-	 * this symbol stands for.
-	 * @param mode Set to true to put the interpreter in definition mode 
-	 *   (the default), false otherwise
-	 */
-	public void setDefinitionMode(boolean mode)
-	{
-		m_definitionMode = mode;
 	}
 	
 	/**
@@ -201,23 +179,23 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param production_rule The rule name
 	 * @param p The processor
 	 */
-	public void addAssociation(String production_rule, Buildable class_name)
+	void addAssociation(String production_rule, Buildable class_name)
 	{
 		m_associations.put(production_rule, class_name);
 	}
 	
-	public void addSymbolDefinition(String symbol_name, Buildable object)
+	void addSymbolDefinition(String symbol_name, Buildable object)
 	{
 		m_symbolDefinitions.put(symbol_name, object);
 	}
 	
-	public void addSymbolDefinitions(Map<String, Object> defs)
+	void addSymbolDefinitions(Map<String, Object> defs)
 	{
 		m_symbolDefinitions.putAll(defs);
 	}
 
 	/**
-	 * Resets the parser's internal state. Normally this should be
+	 * Resets the interpreter's internal state. Normally this should be
 	 * called before parsing each new expression.
 	 */
 	public void reset()
@@ -336,11 +314,6 @@ public class Interpreter implements ParseNodeVisitor
 		}
 	}
 
-	public void setDebugMode(boolean b)
-	{
-		m_parser.setDebugMode(b);
-	}
-
 	protected void visitAssociation(ParseNode node)
 	{
 		// The node's name appears to refer to a Buildable object
@@ -350,7 +323,7 @@ public class Interpreter implements ParseNodeVisitor
 		b.build(m_nodes);
 	}
 
-	public void addProcessorDefinition(GroupProcessor pd)
+	void addProcessorDefinition(GroupProcessor pd)
 	{
 		// Add rules to the parser
 		String rule_name = "USERDEFPROC" + pd.getId(); // So that each definition is unique
@@ -367,13 +340,29 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		// Nothing to do
 	}
+	
+	public Pullable executeQuery(String query) throws ParseException
+	{
+		return executeQuery(query, 0);
+	}
+	
+	public Pullable executeQuery(String query, int index) throws ParseException
+	{
+		Object result = parseQuery(query);
+		if (result instanceof Processor)
+		{
+			Pullable out = ((Processor) result).getPullableOutput(index);
+			return out;
+		}
+		return null;
+	}
 
-	public Object parseLanguage(String property) throws ParseException
+	public Object parseQuery(String query) throws ParseException
 	{
 		ParseNode node = null;
 		try
 		{
-			node = m_parser.parse(property);
+			node = m_parser.parse(query);
 		}
 		catch (BnfParser.ParseException e)
 		{
@@ -390,10 +379,10 @@ public class Interpreter implements ParseNodeVisitor
 		//return null;    
 	}
 	
-	public Object parseLanguage(String property, String start_symbol) throws ParseException
+	protected Object parseLanguage(String property, String start_symbol) throws ParseException
 	{
 		m_parser.setStartRule(start_symbol);
-		return parseLanguage(property);
+		return parseQuery(property);
 	}
 
 	protected Object parseStatement(ParseNode root)
@@ -443,7 +432,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 	}
 	
-	public class UserDefinition implements Buildable 
+	class UserDefinition implements Buildable 
 	{
 		/**
 		 * The definition of each variable occurring in the expression 
@@ -482,7 +471,7 @@ public class Interpreter implements ParseNodeVisitor
 			super();
 		}
 		
-		public void setInterpreter(Interpreter i)
+		void setInterpreter(Interpreter i)
 		{
 			m_interpreter = i;
 		}
@@ -510,7 +499,7 @@ public class Interpreter implements ParseNodeVisitor
 			stack.push(this);
 		}
 		
-		public Object parseDefinition(Map<String,Object> symbol_defs)
+		Object parseDefinition(Map<String,Object> symbol_defs)
 		{
 			Interpreter inner_int = new Interpreter(Interpreter.this);
 			inner_int.addSymbolDefinitions(symbol_defs);
@@ -534,7 +523,9 @@ public class Interpreter implements ParseNodeVisitor
 			try 
 			{
 				//inner_int.setDebugMode(true);
-				parsed = inner_int.parseLanguage(m_definition);
+				// We give a hint to the interpreter by telling it what
+				// non-terminal symbol to start parsing from
+				parsed = inner_int.parseLanguage(m_definition, "<" + m_symbolName + ">");
 			} 
 			catch (ParseException e) 
 			{
@@ -610,8 +601,5 @@ public class Interpreter implements ParseNodeVisitor
 			out.m_symbolName = m_symbolName;
 			return out;
 		}
-
 	}
-
-
 }

@@ -46,7 +46,7 @@ public class InterpreterExtensionTest
 	public void testExtensionNumber1() throws ParseException
 	{
 		String expression = "0";
-		Object result = m_interpreter.parseLanguage(expression);
+		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof EmlNumber);
 		assert(((EmlNumber) result).intValue() == 0);
@@ -56,7 +56,7 @@ public class InterpreterExtensionTest
 	public void testExtensionNumber2() throws ParseException
 	{
 		String expression = "FREEZE 0";
-		Object result = m_interpreter.parseLanguage(expression);
+		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof Freeze);
 		Pullable output = ((Freeze) result).getPullableOutput(0);
@@ -68,7 +68,7 @@ public class InterpreterExtensionTest
 	public void testExtensionNumber3() throws ParseException
 	{
 		String expression = "(0) ON A WINDOW OF 3";
-		Object result = m_interpreter.parseLanguage(expression);
+		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof Window);
 	}
@@ -77,7 +77,7 @@ public class InterpreterExtensionTest
 	public void testExtensionNumber4() throws ParseException
 	{
 		String expression = "EVERY 2ND OF (0)";
-		Object result = m_interpreter.parseLanguage(expression);
+		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof CountDecimate);
 	}

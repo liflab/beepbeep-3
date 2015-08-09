@@ -46,7 +46,7 @@ public class UserDefinitionTest
 	public void testDefinition1() throws ParseException
 	{
 		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM";
-		Object o = m_interpreter.parseLanguage(expression);
+		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof Interpreter.UserDefinition);
 		Interpreter.UserDefinition user_def = (Interpreter.UserDefinition) o;
@@ -54,7 +54,7 @@ public class UserDefinitionTest
 		// Now, parse an expression that uses this definition
 		String user_expression = "THE COUNT OF (0)";
 		//m_interpreter.setDebugMode(true);
-		Object user_stmt = m_interpreter.parseLanguage(user_expression);
+		Object user_stmt = m_interpreter.parseQuery(user_expression);
 		assertTrue(user_stmt instanceof Processor);
 		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
 		// Pull a tuple from the resulting processor
@@ -75,14 +75,14 @@ public class UserDefinitionTest
 	public void testDefinition2() throws ParseException
 	{
 		String expression = "PI IS THE eml_number 3.1416";
-		Object o = m_interpreter.parseLanguage(expression);
+		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof Interpreter.UserDefinition);
 		Interpreter.UserDefinition user_def = (Interpreter.UserDefinition) o;
 		user_def.addToInterpreter();
 		// Now, parse an expression that uses this definition
 		String user_expression = "PI";
-		Object user_stmt = m_interpreter.parseLanguage(user_expression);
+		Object user_stmt = m_interpreter.parseQuery(user_expression);
 		assertTrue(user_stmt instanceof Processor);
 		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
 		// Pull a tuple from the resulting processor
@@ -99,9 +99,9 @@ public class UserDefinitionTest
 	@Test
 	public void testDefinition3() throws ParseException
 	{
-		Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("E IS THE eml_number 2");
+		Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("E IS THE eml_number 2");
 		e_def.addToInterpreter();
-		Processor proc = (Processor) m_interpreter.parseLanguage("SELECT E FROM 1");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT E FROM 1");
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
 		assertEquals(2, number.numberValue().intValue());
@@ -111,14 +111,14 @@ public class UserDefinitionTest
 	public void testDefinition4() throws ParseException
 	{
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
 			e_def.addToInterpreter();
 		}
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: THE INVERSE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (SELECT x FROM @P) AS T, (THE COUNT OF (@P)) AS U");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE INVERSE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (SELECT x FROM @P) AS T, (THE COUNT OF (@P)) AS U");
 			e_def.addToInterpreter();
 		}
-		Processor proc = (Processor) m_interpreter.parseLanguage("THE INVERSE OF (1)");
+		Processor proc = (Processor) m_interpreter.parseQuery("THE INVERSE OF (1)");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
@@ -133,14 +133,14 @@ public class UserDefinitionTest
 	public void testDefinition5() throws ParseException
 	{
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
 			e_def.addToInterpreter();
 		}
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (COMBINE (SELECT x FROM @P) WITH SUM) AS T, (THE COUNT OF (@P)) AS U");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (COMBINE (SELECT x FROM @P) WITH SUM) AS T, (THE COUNT OF (@P)) AS U");
 			e_def.addToInterpreter();
 		}
-		Processor proc = (Processor) m_interpreter.parseLanguage("THE AVERAGE OF (SELECT a FROM THE TUPLES OF FILE \"tuples3.csv\")");
+		Processor proc = (Processor) m_interpreter.parseQuery("THE AVERAGE OF (SELECT a FROM THE TUPLES OF FILE \"tuples3.csv\")");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
@@ -157,10 +157,10 @@ public class UserDefinitionTest
 	public void testDefinition6() throws ParseException
 	{
 		{
-			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseLanguage("WHEN @P IS A processor: FOO ( @P ) IS THE processor SELECT T.a AS x, U.a AS y FROM @P AS T, @P AS U");
+			Interpreter.UserDefinition e_def = (Interpreter.UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: FOO ( @P ) IS THE processor SELECT T.a AS x, U.a AS y FROM @P AS T, @P AS U");
 			e_def.addToInterpreter();
 		}
-		Processor proc = (Processor) m_interpreter.parseLanguage("FOO (SELECT a FROM THE TUPLES OF FILE \"tuples3.csv\")");
+		Processor proc = (Processor) m_interpreter.parseQuery("FOO (SELECT a FROM THE TUPLES OF FILE \"tuples3.csv\")");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		NamedTuple tuple = (NamedTuple) p.pull();
