@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Processor;
+
 public class EmlNumber extends EmlConstant
 {
 	protected Number m_number;
@@ -54,7 +56,14 @@ public class EmlNumber extends EmlConstant
 	public void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
-		stack.push(EmlNumber.toEmlNumber(o));
+		if (o instanceof Processor)
+		{
+			stack.push(o);
+		}
+		else
+		{
+			stack.push(EmlNumber.toEmlNumber(o));
+		}
 	}
 	
 	@Override

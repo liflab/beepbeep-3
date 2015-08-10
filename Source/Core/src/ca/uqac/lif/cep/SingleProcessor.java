@@ -301,6 +301,11 @@ public abstract class SingleProcessor extends Processor
 			// return it and don't pull anything from the input
 			if (!out_queue.isEmpty())
 			{
+				Object o = out_queue.peek();
+				if (o instanceof GroupProcessor)
+				{
+					//return ((GroupProcessor) o).
+				}
 				return NextStatus.YES;
 			}
 			// Check if each pullable has an event ready

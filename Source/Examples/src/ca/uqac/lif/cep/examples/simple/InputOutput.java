@@ -35,7 +35,7 @@ public class InputOutput
 		my_int.extendGrammar(TupleGrammar.class);
 		
 		// Read tuples from a file
-		Pullable result = my_int.executeQuery("SELECT a AS k FROM THE TUPLES OF FILE \"tuples.csv\"");
+		Pullable result = my_int.executeQuery("SELECT (a) + (1) AS k FROM (THE TUPLES OF FILE \"tuples1.csv\")");
 		while (result.hasNextHard() != Pullable.NextStatus.NO)
 		{
 			NamedTuple t = (NamedTuple) result.pull();

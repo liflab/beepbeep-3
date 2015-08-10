@@ -22,7 +22,7 @@
                         | <p_print> | <p_combiner> | <userdef_proc> 
                         | <eml_expr> | <var_name> ;
 <p_freeze>           := FREEZE <processor> ;
-<p_window>           := ( <processor> ) ON A WINDOW OF <number> ;
+<p_window>           := APPLY ( <processor> ) ON ( <processor> ) ON A WINDOW OF <number> ;
 <p_decimate>         := EVERY <number> <number_suffix> OF ( <processor> ) ;
 <number_suffix>      := ST | ND | RD | TH ;
 <p_prefix>           := <number> OF ( <processor> ) ;

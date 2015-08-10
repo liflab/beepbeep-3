@@ -22,6 +22,7 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
+import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.SingleProcessor;
 
 public class EmlNumber extends SingleProcessor
@@ -56,6 +57,10 @@ public class EmlNumber extends SingleProcessor
 		if (o instanceof Number)
 		{
 			stack.push(new EmlNumber((Number) o));
+		}
+		else if (o instanceof GroupProcessor)
+		{
+			stack.push(o);
 		}
 	}
 

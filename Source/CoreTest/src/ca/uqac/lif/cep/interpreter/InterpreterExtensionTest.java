@@ -67,7 +67,7 @@ public class InterpreterExtensionTest
 	@Test
 	public void testExtensionNumber3() throws ParseException
 	{
-		String expression = "(0) ON A WINDOW OF 3";
+		String expression = "APPLY (0) ON (0) ON A WINDOW OF 3";
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof Window);

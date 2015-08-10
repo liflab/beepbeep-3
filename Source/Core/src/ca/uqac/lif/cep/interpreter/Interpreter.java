@@ -537,6 +537,15 @@ public class Interpreter implements ParseNodeVisitor
 		{
 			Interpreter inner_int = new Interpreter(Interpreter.this);
 			inner_int.addSymbolDefinitions(symbol_defs);
+			int in_arity = 0;
+			for (String symbol : symbol_defs.keySet())
+			{
+				Object def = symbol_defs.get(symbol);
+				if (def instanceof Processor)
+				{
+					in_arity++;
+				}
+			}
 			if (m_symbolDefs != null && !m_symbolDefs.isEmpty())
 			{
 				for (String symbol : m_symbolDefs.keySet())
@@ -564,6 +573,26 @@ public class Interpreter implements ParseNodeVisitor
 			catch (ParseException e) 
 			{
 				e.printStackTrace();
+			}
+			if (parsed != null && parsed instanceof Processor && m_symbolName.compareTo("processor") == 0)
+			{
+				// The parsing succeeded: create a group processor out of 
+				// the parsed expression
+				Processor p_parsed = (Processor) parsed;
+				GroupProcessor gp = new GroupProcessor(in_arity, p_parsed.getOutputArity());
+				gp.addProcessor(p_parsed);
+				int i = 0;
+				for (String placeholder : inner_int.m_processorForks.keySet())
+				{
+					Fork f = inner_int.m_processorForks.get(placeholder);
+					gp.addProcessor(f);
+					gp.associateInput(i, f, 0);
+				}
+				for (int j = 0; j < p_parsed.getOutputArity(); j++)
+				{
+					gp.associateOutput(j, p_parsed, j);
+				}
+				return gp;
 			}
 			return parsed;
 		}

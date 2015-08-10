@@ -35,12 +35,12 @@ public class Main
 		my_int.extendGrammar(TupleGrammar.class);
 		
 		// Add a few definitions
-		my_int.executeQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM @P) WITH SUM");
+		my_int.executeQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM");
 		my_int.executeQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH SUM");
-		my_int.executeQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM THE SUM OF (@P) AS T, THE COUNT OF (@P) AS U");
+		my_int.executeQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (THE SUM OF (@P) AS T, THE COUNT OF (@P) AS U)");
 		
 		// Create a trace
-		my_int.executeQuery("MY TRACE IS THE processor SELECT SIN(x) FROM THE COUNT OF (1)");
+		my_int.executeQuery("MY TRACE IS THE processor SELECT SIN(x) FROM (THE COUNT OF (1))");
 		
 		// Do something with this trace
 		Pullable result = my_int.executeQuery("THE AVERAGE OF (MY TRACE)");
