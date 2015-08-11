@@ -30,5 +30,4 @@ public class Division extends BinaryExpression
 		}
 		return new EmlNumber(n_left.numberValue().floatValue() / n_right.numberValue().floatValue());
 	}
-
 }

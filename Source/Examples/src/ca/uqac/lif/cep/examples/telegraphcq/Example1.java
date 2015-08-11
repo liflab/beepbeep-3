@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain Hallé
+    Copyright (C) 2008-2015 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,14 +37,13 @@ public class Example1
 		// Add a few definitions
 		my_int.executeQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM");
 		my_int.executeQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH SUM");
-		my_int.executeQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (THE SUM OF (@P) AS T, THE COUNT OF (@P) AS U)");
+		my_int.executeQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) Ã· (U.x) FROM (THE SUM OF (@P) AS T, THE COUNT OF (@P) AS U)");
 
 		// Name the input trace
 		my_int.executeQuery("ClosingStockPrices IS THE processor THE TUPLES OF FILE \"ClosingStockPrices.csv\"");
 		
 		// Read tuples from a file
-		//Pullable result = my_int.executeQuery("SELECT x FROM (((SELECT closingPrice, stockSymbol FROM (ClosingStockPrices)) WHERE (stockSymbol) = (\"MSFT\")))");
-		Pullable result = my_int.executeQuery("APPLY (THE AVERAGE OF (0)) ON (SELECT closingPrice FROM (((SELECT closingPrice, stockSymbol FROM (ClosingStockPrices)) WHERE (stockSymbol) = (\"MSFT\")))) ON A WINDOW OF 5");
+		Pullable result = my_int.executeQuery("EVERY 5TH OF (APPLY (THE AVERAGE OF (0)) ON (SELECT closingPrice FROM (((SELECT closingPrice, stockSymbol FROM (ClosingStockPrices)) WHERE (stockSymbol) = (\"MSFT\")))) ON A WINDOW OF 5)");
 		while (result.hasNextHard() != Pullable.NextStatus.NO)
 		{
 			Tuple t = (Tuple) result.pull();
