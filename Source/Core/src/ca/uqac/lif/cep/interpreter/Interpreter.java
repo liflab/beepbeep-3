@@ -62,7 +62,7 @@ public class Interpreter implements ParseNodeVisitor
 	/**
 	 * The stack used to build the object resulting from the parsing  
 	 */
-	protected Stack<Object> m_nodes;
+	protected GroupStack<Object> m_nodes;
 	
 	/**
 	 * A counter so that every user definition number is unique
@@ -97,7 +97,7 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		super();
 		m_parser = initializeParser();
-		m_nodes = new Stack<Object>();
+		m_nodes = new GroupStack<Object>();
 		m_associations = new HashMap<String, Buildable>();
 		m_processorDefinitions = new HashMap<String, GroupProcessor>();
 		m_symbolDefinitions = new HashMap<String, Object>();
@@ -113,7 +113,7 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		super();
 		m_parser = new BnfParser(i.m_parser);
-		m_nodes = new Stack<Object>();
+		m_nodes = new GroupStack<Object>();
 		m_nodes.addAll(i.m_nodes);
 		m_associations = new HashMap<String,Buildable>();
 		m_associations.putAll(i.m_associations);
@@ -582,10 +582,17 @@ public class Interpreter implements ParseNodeVisitor
 				GroupProcessor gp = new GroupProcessor(in_arity, p_parsed.getOutputArity());
 				gp.addProcessor(p_parsed);
 				int i = 0;
+				for (Object o : inner_int.m_nodes.getHistory())
+				{
+					if (o instanceof Processor)
+					{
+						gp.addProcessor((Processor) o);
+					}
+				}
 				for (String placeholder : inner_int.m_processorForks.keySet())
 				{
 					Fork f = inner_int.m_processorForks.get(placeholder);
-					gp.addProcessor(f);
+					//gp.addProcessor(f);
 					gp.associateInput(i, f, 0);
 				}
 				for (int j = 0; j < p_parsed.getOutputArity(); j++)
