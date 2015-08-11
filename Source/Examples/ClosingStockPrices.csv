@@ -1,0 +1,51 @@
+# Sample tuple file for the tuple feeder
+# The first line contains the name of each attribute in the tuple
+# The remaining lines contain tuples
+# ***Don't forget to end the file with an empty line!!!***
+
+stockSymbol,closingPrice,timestamp
+
+MSFT,123,0
+AAPL,123,0
+QCOM,100,0
+QLYS,40,0
+
+MSFT,125,0
+AAPL,124,0
+QCOM,99,0
+QLYS,38,0
+
+MSFT,126,0
+AAPL,123,0
+QCOM,101,0
+QLYS,37,0
+
+MSFT,122,0
+AAPL,122,0
+QCOM,98,0
+QLYS,36,0
+
+MSFT,120,0
+AAPL,125,0
+QCOM,98,0
+QLYS,35,0
+
+MSFT,120,0
+AAPL,125,0
+QCOM,98,0
+QLYS,35,0
+
+MSFT,118,0
+AAPL,127,0
+QCOM,93,0
+QLYS,34,0
+
+MSFT,119,0
+AAPL,126,0
+QCOM,98,0
+QLYS,33,0
+
+MSFT,121,0
+AAPL,126,0
+QCOM,97,0
+QLYS,34,0
