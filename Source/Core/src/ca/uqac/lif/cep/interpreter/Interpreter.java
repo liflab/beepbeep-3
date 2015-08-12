@@ -205,14 +205,29 @@ public class Interpreter implements ParseNodeVisitor
 		m_associations.put(production_rule, class_name);
 	}
 	
-	void addSymbolDefinition(String symbol_name, Buildable object)
+	public void addSymbolDefinition(String symbol_name, Buildable object)
 	{
 		m_symbolDefinitions.put(symbol_name, object);
 	}
 	
-	void addSymbolDefinitions(Map<String, Object> defs)
+	public void addSymbolDefinitions(Map<String, Buildable> defs)
 	{
 		m_symbolDefinitions.putAll(defs);
+	}
+	
+	public void addPlaceholder(String symbol_name, String non_terminal, Buildable object)
+	{
+		m_symbolDefinitions.put(symbol_name, object);
+		try
+		{
+			BnfRule rule = BnfRule.parseRule("<" + non_terminal + "> := " + symbol_name);
+			m_parser.addRule(rule);
+		}
+		catch (InvalidRuleException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -533,7 +548,7 @@ public class Interpreter implements ParseNodeVisitor
 			stack.push(this);
 		}
 		
-		Object parseDefinition(Map<String,Object> symbol_defs)
+		Object parseDefinition(Map<String,Buildable> symbol_defs)
 		{
 			Interpreter inner_int = new Interpreter(Interpreter.this);
 			inner_int.addSymbolDefinitions(symbol_defs);

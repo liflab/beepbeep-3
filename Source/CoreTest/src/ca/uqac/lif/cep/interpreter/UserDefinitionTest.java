@@ -24,22 +24,76 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.QueueSource;
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 import ca.uqac.lif.cep.eml.tuples.NamedTuple;
+import ca.uqac.lif.cep.eml.tuples.Select;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
 
 public class UserDefinitionTest 
 {
-	protected Interpreter m_interpreter;
+	protected InterpreterTestFrontEnd m_interpreter;
 
 	@Before
 	public void setUp()
 	{
-		m_interpreter = new Interpreter();		
+		m_interpreter = new InterpreterTestFrontEnd();		
 		m_interpreter.extendGrammar(new StreamGrammar());
 		m_interpreter.extendGrammar(new TupleGrammar());
+	}
+	
+	@Test
+	public void testPlaceholder1() throws ParseException
+	{
+		String expression = "@P";
+		QueueSource qs = new QueueSource(new Integer(1), 1);
+		m_interpreter.addPlaceholder("@P", "processor", qs);
+		Object o = m_interpreter.parseQuery(expression);
+		assertNotNull(o);
+		assertTrue(o instanceof Processor);	
+		Processor s = (Processor) o;
+		Pullable p = s.getPullableOutput(0);
+		Number n = (Number) p.pullHard();
+		assertNotNull(n);
+		assertEquals(1, n.intValue());
+		n = (Number) p.pullHard();
+		assertNotNull(n);
+		assertEquals(1, n.intValue());
+	}
+	
+	@Test
+	public void testPlaceholder2() throws ParseException
+	{
+		String expression = "SELECT x FROM (@P)";
+		QueueSource qs = new QueueSource(new EmlNumber(1), 1);
+		m_interpreter.addPlaceholder("@P", "processor", qs);
+		Object o = m_interpreter.parseQuery(expression);
+		assertNotNull(o);
+		assertTrue(o instanceof Select);	
+		Select s = (Select) o;
+		Pullable p = s.getPullableOutput(0);
+		EmlNumber n = (EmlNumber) p.pullHard();
+		assertNotNull(n);
+		assertEquals(1, n.intValue());
+	}
+	
+	@Test
+	public void testPlaceholder3() throws ParseException
+	{
+		String expression = "abc IS THE processor @P";
+		QueueSource qs = new QueueSource(new EmlNumber(1), 1);
+		m_interpreter.executeQuery(expression);
+		m_interpreter.addPlaceholder("@P", "processor", qs);
+		Object o = m_interpreter.parseQuery("SELECT x FROM (abc)");
+		assertNotNull(o);
+		assertTrue(o instanceof Select);	
+		Select s = (Select) o;
+		Pullable p = s.getPullableOutput(0);
+		EmlNumber n = (EmlNumber) p.pullHard();
+		assertNotNull(n);
+		assertEquals(1, n.intValue());
 	}
 	
 	@Test

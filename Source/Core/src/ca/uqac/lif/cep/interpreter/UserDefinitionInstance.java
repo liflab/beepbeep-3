@@ -38,7 +38,7 @@ public class UserDefinitionInstance implements Buildable
 	public void build(Stack<Object> stack) 
 	{
 		// Pull stuff from the stack based on the parsing pattern
-		Map<String,Object> variable_definitions = new HashMap<String,Object>();
+		Map<String,Buildable> variable_definitions = new HashMap<String,Buildable>();
 		String[] pattern_parts = m_definition.m_pattern.split(" ");
 		for (int i = pattern_parts.length - 1; i >= 0; i--)
 		{
@@ -48,7 +48,7 @@ public class UserDefinitionInstance implements Buildable
 			{
 				// This is a variable; pop the object and associate it with
 				// the variable name
-				Object o = stack.pop();
+				Buildable o = (Buildable) stack.pop();
 				variable_definitions.put(part, o);
 			}
 			else
