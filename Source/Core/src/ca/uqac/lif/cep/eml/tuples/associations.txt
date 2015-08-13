@@ -61,6 +61,10 @@
 
 <eml_where>,ca.uqac.lif.cep.eml.tuples.Where
 
+# SQL gateway
+
+<sql_feeder>,ca.uqac.lif.cep.eml.tuples.MySqlSource
+
 # Operators that can be used as combiners
 
 <eml_cmb_sum>,ca.uqac.lif.cep.eml.tuples.Sum
