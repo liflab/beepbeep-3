@@ -30,8 +30,19 @@ public class AttributeNamePlain extends AttributeNameQualified
 	public void build(Stack<Object> stack)
 	{
 		EmlString att_name = (EmlString) stack.pop();
-		m_attributeName = att_name.stringValue();
-		stack.push(this);
+		if (att_name.stringValue().compareToIgnoreCase("true") == 0)
+		{
+			stack.push(new BooleanExpression(true));
+		}
+		else if (att_name.stringValue().compareToIgnoreCase("false") == 0)
+		{
+			stack.push(new BooleanExpression(false));
+		}
+		else
+		{
+			m_attributeName = att_name.stringValue();
+			stack.push(this);
+		}
 	}
 	
 	@Override

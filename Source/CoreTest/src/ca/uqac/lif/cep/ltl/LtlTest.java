@@ -104,7 +104,7 @@ public class LtlTest
 		input_events.add(new EmlBoolean(true));
 		input_events.add(new EmlBoolean(false));
 		src.setEvents(input_events);
-		Next g = new Next();
+		OldNext g = new OldNext();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		EmlBoolean b;
@@ -127,7 +127,7 @@ public class LtlTest
 		input_events.add(new EmlBoolean(true));
 		input_events.add(new EmlBoolean(false));
 		src.setEvents(input_events);
-		Next g = new Next();
+		OldNext g = new OldNext();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		EmlBoolean b;

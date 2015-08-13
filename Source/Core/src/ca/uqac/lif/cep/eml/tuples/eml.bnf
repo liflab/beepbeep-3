@@ -44,8 +44,8 @@
 
 # Attribute expressions
 
-<eml_att_expr>           := <eml_att_expr_unary> | <eml_att_expr_binary>
-                            | <eml_att_expr_const> | <eml_att_name> ;
+<eml_att_expr>           := <eml_att_expr_const> | <eml_att_expr_unary>
+                            | <eml_att_expr_binary> | <eml_att_name> ;
 <eml_att_name>           := <eml_att_name_q> | <eml_att_name_plain>  ;
 <eml_att_name_q>         := <eml_plain_string> . <eml_plain_string> ;
 <eml_att_name_plain>     := <eml_plain_string> ;
@@ -70,8 +70,8 @@
 <eml_power>              := ( <eml_att_expr> ) TO THE ( <eml_att_expr> ) <power_particle> ;
 <power_particle>         := ST | ND | RD | TH ;
 <eml_equality>           := ( <eml_att_expr> ) = ( <eml_att_expr> ) ;
-<eml_lt>                 := ( <eml_att_expr> ) \u003c ( <eml_att_expr> ) ;
-<eml_gt>                 := ( <eml_att_expr> ) \u003e ( <eml_att_expr> ) ;
+<eml_lt>                 := ( <eml_att_expr> ) LESS THAN ( <eml_att_expr> ) ;
+<eml_gt>                 := ( <eml_att_expr> ) GREATER THAN ( <eml_att_expr> ) ;
 
 # Tuple feeder
 

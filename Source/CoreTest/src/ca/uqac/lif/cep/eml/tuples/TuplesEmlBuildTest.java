@@ -146,4 +146,12 @@ public class TuplesEmlBuildTest
 		Object result = m_interpreter.parseLanguage(expression, "<eml_select>");
 		assertTrue(result instanceof Select);
 	}
+	
+	@Test
+	public void testSelect2() throws ParseException
+	{
+		String expression = "SELECT (a) LESS THAN (0) FROM (0)";
+		Object result = m_interpreter.parseLanguage(expression, "<eml_select>");
+		assertTrue(result instanceof Select);
+	}
 }

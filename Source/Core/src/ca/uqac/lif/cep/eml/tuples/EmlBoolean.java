@@ -48,7 +48,7 @@ public class EmlBoolean extends EmlConstant
 	public void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
-		stack.push(new EmlNumber((Number) o));
+		stack.push(EmlBoolean.toEmlBoolean(o));
 	}
 	
 	@Override

@@ -34,7 +34,10 @@ public abstract class BinaryExpression extends AttributeExpression
 		stack.pop(); // )
 		AttributeExpression exp_right = (AttributeExpression) stack.pop();
 		stack.pop(); // (
-		m_symbol = (String) stack.pop(); // The symbol
+		do
+		{
+			m_symbol += (String) stack.pop(); // The symbol
+		} while (((String) stack.peek()).compareTo(")") != 0);
 		stack.pop(); // )
 		AttributeExpression exp_left = (AttributeExpression) stack.pop();
 		stack.pop(); // (
