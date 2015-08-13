@@ -52,7 +52,10 @@ public class QueueSource extends Source
 	{
 		super(arity);
 		m_events = new Vector<Object>();
-		m_events.addAll(o);
+		if (o != null)
+		{
+			m_events.addAll(o);
+		}
 		m_index = 0;
 	}
 	
@@ -67,6 +70,10 @@ public class QueueSource extends Source
 		Vector<Object> output = new Vector<Object>();
 		Object event = m_events.get(m_index);
 		m_index = (m_index + 1) % m_events.size();
+		if (event == null)
+		{
+			return null;
+		}
 		for (int i = 0; i < getOutputArity(); i++)
 		{
 			output.add(event);

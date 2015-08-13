@@ -246,7 +246,6 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testSelect10() throws ParseException
 	{
-		m_interpreter.setDebugMode(true);
 		Object processor = m_interpreter.parseQuery("SELECT SIN(x) FROM (1)");
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;

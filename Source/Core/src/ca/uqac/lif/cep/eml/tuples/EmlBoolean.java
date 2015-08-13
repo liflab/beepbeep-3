@@ -77,5 +77,40 @@ public class EmlBoolean extends EmlConstant
 	{
 		return m_value.booleanValue() == b.m_value.booleanValue();
 	}
+	
+	public static EmlBoolean toEmlBoolean(Object o)
+	{
+		if (o instanceof String)
+		{
+			String s = (String) o;
+			if (s.compareToIgnoreCase("true") == 0 
+					|| s.compareToIgnoreCase("T") == 0
+					|| s.compareToIgnoreCase("1") == 0)
+			{
+				return new EmlBoolean(true);
+			}
+			return new EmlBoolean(false);
+		}
+		if (o instanceof Number)
+		{
+			Number n = (Number) o;
+			if (Math.abs(n.doubleValue()) < 0.00001)
+			{
+				return new EmlBoolean(false);
+			}
+			return new EmlBoolean(true);
+		}
+		if (o instanceof Boolean)
+		{
+			return new EmlBoolean((Boolean) o);
+		}
+		if (o instanceof EmlBoolean)
+		{
+			return (EmlBoolean) o;
+		}
+			
+		// When in doubt, return null
+		return null;
+	}
 
 }

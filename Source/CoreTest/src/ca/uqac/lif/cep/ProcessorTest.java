@@ -470,6 +470,36 @@ public class ProcessorTest
 	}
 	
 	@Test
+	public void testBinaryPull()
+	{
+		QueueSource src_left = new QueueSource(null, 1);
+		QueueSource src_right = new QueueSource(null, 1);
+		{
+			Vector<Object> input_events = new Vector<Object>();
+			input_events.add(new Integer(1));
+			input_events.add(new Integer(2));
+			src_left.setEvents(input_events);
+		}
+		{
+			Vector<Object> input_events = new Vector<Object>();
+			input_events.add(null);
+			input_events.add(new Integer(10));
+			input_events.add(new Integer(11));
+			src_right.setEvents(input_events);
+		}
+		Function add = new Function(new Addition(2));
+		Connector.connect(src_left, add, 0, 0);
+		Connector.connect(src_right, add, 0, 1);
+		Pullable p = add.getPullableOutput(0);
+		Number n;
+		n = (Number) p.pull();
+		assertNull(n);
+		n = (Number) p.pull();
+		assertEquals(11, n.intValue());
+
+	}
+	
+	@Test
 	public void testGroupPull1()
 	{
 		// Create the group

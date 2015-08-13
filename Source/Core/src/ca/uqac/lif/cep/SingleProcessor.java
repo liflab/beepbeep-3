@@ -296,23 +296,19 @@ public abstract class SingleProcessor extends Processor
 		@Override
 		public synchronized NextStatus hasNext()
 		{
+			System.out.print("");
 			Queue<Object> out_queue = m_outputQueues.get(m_index);
 			// If an event is already waiting in the output queue,
 			// return it and don't pull anything from the input
 			if (!out_queue.isEmpty())
 			{
-				Object o = out_queue.peek();
-				if (o instanceof GroupProcessor)
-				{
-					//return ((GroupProcessor) o).
-				}
 				return NextStatus.YES;
 			}
 			// Check if each pullable has an event ready
 			for (int i = 0; i < m_inputArity; i++)
 			{
 				Pullable p = m_inputPullables.get(i);
-				NextStatus status = p.hasNextHard();
+				NextStatus status = p.hasNext();
 				if (status == NextStatus.NO)
 				{
 					return NextStatus.NO;
