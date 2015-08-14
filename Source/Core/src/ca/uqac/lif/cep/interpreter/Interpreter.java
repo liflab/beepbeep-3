@@ -417,7 +417,7 @@ public class Interpreter implements ParseNodeVisitor
 		StringBuilder contents = new StringBuilder();
 		while ((input_line = in.readLine()) != null)
 		{
-			contents.append(input_line);
+			contents.append(input_line).append("\n");
 		}
 		in.close();
 		return executeQueries(contents.toString());
@@ -430,7 +430,11 @@ public class Interpreter implements ParseNodeVisitor
 		Pullable last = null;
 		for (String query : parts)
 		{
-			last = executeQuery(query);
+			query = query.trim();
+			if (!query.isEmpty())
+			{
+				last = executeQuery(query);
+			}
 		}
 		return last;
 	}

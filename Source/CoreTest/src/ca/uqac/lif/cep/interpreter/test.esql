@@ -1,0 +1,4 @@
+-- Sample benchmark for BeepBeep 3
+WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM.
+WHEN @P IS A processor: MY PATTERN IN ( @P ) IS THE processor (SELECT (a) LESS THAN (2) FROM (@P)) AND (X (SELECT (a) GREATER THAN (1) FROM (@P))).
+THE COUNT OF ((MY PATTERN IN (THE TUPLES OF FILE "tuples1.csv")) WHERE (x) = (true)).

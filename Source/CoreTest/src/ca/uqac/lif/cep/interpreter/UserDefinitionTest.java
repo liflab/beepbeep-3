@@ -19,6 +19,9 @@ package ca.uqac.lif.cep.interpreter;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,6 +36,7 @@ import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.io.StreamReader;
+import ca.uqac.lif.cep.ltl.LtlGrammar;
 
 public class UserDefinitionTest 
 {
@@ -44,6 +48,7 @@ public class UserDefinitionTest
 		m_interpreter = new InterpreterTestFrontEnd();		
 		m_interpreter.extendGrammar(new StreamGrammar());
 		m_interpreter.extendGrammar(new TupleGrammar());
+		m_interpreter.extendGrammar(new LtlGrammar());
 	}
 	
 	@Test
@@ -235,5 +240,13 @@ public class UserDefinitionTest
 		tuple = (NamedTuple) p.pull();
 		assertEquals(tuple.get("x"), new EmlNumber(2));
 		assertEquals(tuple.get("y"), new EmlNumber(2));
+	}
+	
+	@Test
+	public void testMultipleQueries() throws ParseException, IOException
+	{
+		InputStream is = this.getClass().getResourceAsStream("test.esql");
+		Object o = m_interpreter.executeQueries(is);
+		assertNotNull(o);
 	}
 }

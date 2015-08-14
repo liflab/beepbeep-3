@@ -60,8 +60,7 @@ public class StreamReader extends Source
 	 * nano should not be over 999,999 (otherwise add 1 to milli).
 	 * You should tweak these values to avoid clogging your CPU
 	 * (setting them to 0 will hike it to 100%) while not lagging
-	 * on the input trace. See {@link setSleepInterval} for further
-	 * discussion.
+	 * on the input trace.
 	 */
 	protected int m_sleepIntervalMs = 0;
 	protected int m_sleepIntervalNs = 100000;

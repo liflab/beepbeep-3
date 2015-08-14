@@ -41,7 +41,7 @@ public abstract class TokenFeeder extends SingleProcessor
 	/**
 	 * Analyzes the current contents of the buffer; extracts a complete token
 	 * from it, if any is present
-	 * @param to_fill Will be filled with the contents of the next token
+	 * @param inputs The inputs
 	 */
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
