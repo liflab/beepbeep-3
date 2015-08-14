@@ -75,7 +75,7 @@
 
 # Tuple feeder
 
-<eml_feeder>             := THE TUPLES OF <p_stream> ;
+<eml_feeder>             := THE TUPLES OF <p_reader> ;
 
 # SQL gateway
 

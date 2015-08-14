@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain Hallé
+    Copyright (C) 2008-2015 Sylvain HallÃ©
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
 
-public class InputOutput 
+public class ReadFromFile 
 {
 	public static void main(String[] args)
 	{

@@ -99,7 +99,7 @@ public class StreamReader extends Source
 	
 	public StreamReader()
 	{
-		super();
+		super(1);
 	}
 
 	public StreamReader(InputStream is)
@@ -107,6 +107,16 @@ public class StreamReader extends Source
 		super(1);
 		m_returnCode = ERR_OK;
 		m_isFile = true;
+		setInputStream(is);
+	}
+
+	/**
+	 * Sets the input stream to read from
+	 * @param is The input stream to read from
+	 */
+	public void setInputStream(InputStream is)
+	{
+		m_fis = is;
 		try
 		{
 			m_isr = new InputStreamReader(is, "UTF8");
@@ -117,15 +127,6 @@ public class StreamReader extends Source
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-	}
-
-	/**
-	 * Sets the input stream to read from
-	 * @param is The input stream to read from
-	 */
-	public void setInputStream(InputStream is)
-	{
-		m_fis = is;
 	}
 
 	/**

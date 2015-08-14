@@ -29,17 +29,19 @@ import ca.uqac.lif.cep.Window;
 import ca.uqac.lif.cep.eml.numbers.EmlNumber;
 import ca.uqac.lif.cep.eml.numbers.NumberGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.io.HttpReader;
+import ca.uqac.lif.cep.io.StreamGrammar;
 
 public class InterpreterExtensionTest
 {
-	protected Interpreter m_interpreter;
+	protected InterpreterTestFrontEnd m_interpreter;
 	
 	@Before
 	public void setUp()
 	{
-		m_interpreter = new Interpreter();
-		GrammarExtension ext = new NumberGrammar();
-		m_interpreter.extendGrammar(ext);
+		m_interpreter = new InterpreterTestFrontEnd();
+		m_interpreter.extendGrammar(NumberGrammar.class);
+		m_interpreter.extendGrammar(StreamGrammar.class);
 	}
 	
 	@Test
@@ -80,5 +82,14 @@ public class InterpreterExtensionTest
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof CountDecimate);
+	}
+	
+	@Test
+	public void testExtensionIo1() throws ParseException
+	{
+		String expression = "URL \"http://example.com\"";
+		Object result = m_interpreter.parseQuery(expression);
+		assertNotNull(result);
+		assertTrue(result instanceof HttpReader);
 	}
 }

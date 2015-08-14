@@ -3,3 +3,4 @@
 # -----------------------------------------
 
 <p_stream>,ca.uqac.lif.cep.io.StreamReader
+<p_url>,ca.uqac.lif.cep.io.HttpReader
