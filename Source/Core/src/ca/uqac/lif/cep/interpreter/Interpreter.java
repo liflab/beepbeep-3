@@ -17,6 +17,10 @@
  */
 package ca.uqac.lif.cep.interpreter;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -404,6 +408,31 @@ public class Interpreter implements ParseNodeVisitor
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Pullable executeQueries(InputStream is) throws IOException
+	{
+		BufferedReader in = new BufferedReader(new InputStreamReader(is));
+		String input_line;
+		StringBuilder contents = new StringBuilder();
+		while ((input_line = in.readLine()) != null)
+		{
+			contents.append(input_line);
+		}
+		in.close();
+		return executeQueries(contents.toString());
+	}
+	
+	public Pullable executeQueries(String queries)
+	{
+		queries = queries.replaceAll("--.*?\n", "\n");
+		String[] parts = queries.split(".\n");
+		Pullable last = null;
+		for (String query : parts)
+		{
+			last = executeQuery(query);
+		}
+		return last;
 	}
 
 	public Object parseQuery(String query) throws ParseException

@@ -28,9 +28,11 @@ import ca.uqac.lif.cep.QueueSource;
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 import ca.uqac.lif.cep.eml.tuples.NamedTuple;
 import ca.uqac.lif.cep.eml.tuples.Select;
+import ca.uqac.lif.cep.eml.tuples.TupleFeeder;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
+import ca.uqac.lif.cep.io.StreamReader;
 
 public class UserDefinitionTest 
 {
@@ -94,6 +96,16 @@ public class UserDefinitionTest
 		EmlNumber n = (EmlNumber) p.pullHard();
 		assertNotNull(n);
 		assertEquals(1, n.intValue());
+	}
+	
+	@Test
+	public void testPlaceholder4() throws ParseException
+	{
+		StreamReader sr = new StreamReader();
+		m_interpreter.addPlaceholder("@T", "p_reader", sr);
+		Object o = m_interpreter.parseQuery("THE TUPLES OF @T");
+		assertNotNull(o);
+		assertTrue(o instanceof TupleFeeder);	
 	}
 	
 	@Test
@@ -218,8 +230,10 @@ public class UserDefinitionTest
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		NamedTuple tuple = (NamedTuple) p.pull();
-		System.out.println(tuple);
+		assertEquals(tuple.get("x"), new EmlNumber(0));
+		assertEquals(tuple.get("y"), new EmlNumber(0));
 		tuple = (NamedTuple) p.pull();
-		System.out.println(tuple);
+		assertEquals(tuple.get("x"), new EmlNumber(2));
+		assertEquals(tuple.get("y"), new EmlNumber(2));
 	}
 }
