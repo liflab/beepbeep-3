@@ -426,7 +426,7 @@ public class Interpreter implements ParseNodeVisitor
 	public Pullable executeQueries(String queries)
 	{
 		queries = queries.replaceAll("--.*?\n", "\n");
-		String[] parts = queries.split(".\n");
+		String[] parts = queries.split("\\.\n");
 		Pullable last = null;
 		for (String query : parts)
 		{
