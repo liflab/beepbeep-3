@@ -243,10 +243,17 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testMultipleQueries() throws ParseException, IOException
+	public void testMultipleQueries1() throws ParseException, IOException
 	{
 		InputStream is = this.getClass().getResourceAsStream("test.esql");
 		Object o = m_interpreter.executeQueries(is);
 		assertNotNull(o);
+	}
+	
+	@Test
+	public void testMultipleQueries2() throws ParseException, IOException
+	{
+		InputStream is = this.getClass().getResourceAsStream("test2.esql");
+		m_interpreter.executeQueries(is);
 	}
 }

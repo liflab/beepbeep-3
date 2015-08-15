@@ -430,6 +430,7 @@ public class Interpreter implements ParseNodeVisitor
 		Pullable last = null;
 		for (String query : parts)
 		{
+			query = query.replaceAll("\\s+", " ");
 			query = query.trim();
 			if (!query.isEmpty())
 			{

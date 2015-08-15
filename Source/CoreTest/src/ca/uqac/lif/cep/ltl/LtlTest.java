@@ -427,4 +427,22 @@ public class LtlTest
 		b = (EmlBoolean) p.pull();
 		assertEquals(true, b.boolValue());
 	}
+	
+	@Test
+	public void testMultiline()
+	{
+		String expression = "(SELECT (a) LESS THAN (2) FROM (@P))\nAND\n(X (SELECT (a) GREATER THAN (1) FROM (@P)))";
+		{
+			QueueSource src = new QueueSource(null, 1);
+			Vector<Object> input_events = new Vector<Object>();
+			input_events.add(new EmlBoolean(false));
+			input_events.add(new EmlBoolean(true));
+			input_events.add(new EmlBoolean(true));
+			input_events.add(new EmlBoolean(false));
+			src.setEvents(input_events);
+			m_interpreter.addPlaceholder("@P", "processor", src);
+		}
+		Pullable p = m_interpreter.executeQuery(expression);
+		assertNotNull(p);
+	}
 }
