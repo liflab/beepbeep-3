@@ -23,7 +23,6 @@ import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 
 /**
@@ -31,8 +30,10 @@ import ca.uqac.lif.cep.eml.tuples.EmlNumber;
  * values in a window lie in an interval of a predetermined width.
  * By default, the interval is of width 5 and the window is of width 5.
  * <p>
- * The plateau finder does not create a new event for the same plateau
- * that continues, i.e., a new plateau will only be looked for once
+ * The plateau finder outputs a non-zero event only for the first event
+ * of the plateau (this has to be delayed by the width of the window).
+ * It outputs zero for all other events of the plateau. Moreover,
+ * new plateau will only be looked for only once
  * a value lies outside the current interval. For example, in the following
  * sequence:
  * <table>
@@ -40,33 +41,13 @@ import ca.uqac.lif.cep.eml.tuples.EmlNumber;
  * <tr><th>Value</th><td>1</td><td>2</td><td>3</td><td>2</td><td>1</td><td>2</td><td>10</td><td>8</td></tr> 
  * </table>
  * An output event will be emitted after reading event #5 (there are five
- * consecutive values all within an interval of 5), but no event will be
- * produced after reading event #6 (as it is the continuation of the current
- * plateau).
+ * consecutive values all within an interval of 5), indicating that event 1
+ * is the start of a plateau, but a zero event will be
+ * produced for all other events, as they are the continuation of the current
+ * plateau.
  */
-public class PlateauFinder extends SingleProcessor
-{
-	/**
-	 * The precision used to for the equality between double precision
-	 * numbers
-	 */
-	protected static final double s_precision = 0.00001;
-	
-	/**
-	 * The window of values to remember
-	 */
-	protected Vector<Double> m_values;
-	
-	/**
-	 * The maximum value encountered so far
-	 */
-	protected double m_maxValue;
-	
-	/**
-	 * The minimum value encountered so far
-	 */
-	protected double m_minValue;
-	
+public class PlateauFinder extends WindowProcessor
+{	
 	/**
 	 * The range all values should lie in
 	 */
@@ -77,18 +58,9 @@ public class PlateauFinder extends SingleProcessor
 	 */
 	protected boolean m_plateauFound;
 	
-	/**
-	 * The width of the window to process
-	 */
-	protected int m_windowWidth;
-	
 	public PlateauFinder()
 	{
-		super(1, 1);
-		m_windowWidth = 5;
-		m_values = new Vector<Double>();
-		m_maxValue = 0;
-		m_minValue = 0;
+		super();
 		m_range = 5;
 		m_plateauFound = false;
 	}
@@ -97,16 +69,8 @@ public class PlateauFinder extends SingleProcessor
 	public void reset()
 	{
 		super.reset();
-		m_values = new Vector<Double>(m_windowWidth);
-		m_maxValue = 0;
-		m_minValue = 0;
 		m_plateauFound = false;
-	}
-	
-	public void setWindowWidth(int width)
-	{
-		m_windowWidth = width;
-	}
+	}	
 	
 	public void setPlateauRange(int range)
 	{
@@ -116,6 +80,7 @@ public class PlateauFinder extends SingleProcessor
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
+		Vector<Object> out_vector = new Vector<Object>();
 		EmlNumber n = (EmlNumber) inputs.firstElement();
 		double d = n.numberValue().doubleValue();
 		if (m_values.size() < m_windowWidth)
@@ -137,87 +102,57 @@ public class PlateauFinder extends SingleProcessor
 					m_minValue = d;
 				}
 			}
-			// Window not filled yet: don't return anything
-			return null;
-		}
-		// Window is full
-		// Remove first element and put new at the end
-		double first_value = m_values.remove(0);
-		m_values.addElement(d);
-		if (doubleEquals(first_value, m_minValue))
-		{
-			// The element we removed was the minimum value; recompute min
-			m_minValue = getMinValue();
-		}
-		if (doubleEquals(first_value, m_maxValue))
-		{
-			// The element we removed was the maximum value; recompute max
-			m_maxValue = getMaxValue();
-		}
-		// Check range of values
-		double width = m_maxValue - m_minValue;
-		if (width < m_range && !m_plateauFound)
-		{
-			// All values in the interval: create event with midpoint
-			Vector<Object> out_vector = new Vector<Object>();
-			out_vector.add(new EmlNumber(m_minValue + width / 2));
-			// Reset everything
-			m_values.clear();
-			m_maxValue = 0;
-			m_minValue = 0;
-			return wrapVector(out_vector);
+			if (m_values.size() < m_windowWidth)
+			{
+				// Window not filled yet: don't return anything
+				return null;
+			}
 		}
 		else
 		{
-			// No plateau found
+			// Window is full
+			// Remove first element and put new at the end
+			double first_value = m_values.remove(0);
+			m_values.addElement(d);
+			if (doubleEquals(first_value, m_minValue))
+			{
+				// The element we removed was the minimum value; recompute min
+				m_minValue = getMinValue();
+			}
+			if (doubleEquals(first_value, m_maxValue))
+			{
+				// The element we removed was the maximum value; recompute max
+				m_maxValue = getMaxValue();
+			}			
+		}
+		// Check range of values
+		double width = m_maxValue - m_minValue;
+		if (width < m_range)
+		{
+			if (!m_plateauFound)
+			{
+				// All values in the interval: create event with midpoint
+				out_vector.add(new EmlNumber(m_minValue + width / 2));
+				m_plateauFound = true;				
+			}
+			else
+			{
+				out_vector.add(new EmlNumber(0));
+			}
+		}
+		else
+		{
+			// No plateau found: emit 0
 			m_plateauFound = false;
+			out_vector.add(new EmlNumber(0));
+			// Reset everything
+			//m_values.clear();
+			//m_maxValue = 0;
+			//m_minValue = 0;
 		}
-		return null;
+		return wrapVector(out_vector);
 	}
 	
-	protected double getMaxValue()
-	{
-		double value = 0;
-		int pos = 0;
-		for (double d : m_values)
-		{
-			if (pos == 0)
-			{
-				value = d;
-			}
-			else
-			{
-				value = Math.max(value, d);
-			}
-			pos++;
-		}
-		return value;
-	}
-	
-	protected double getMinValue()
-	{
-		double value = 0;
-		int pos = 0;
-		for (double d : m_values)
-		{
-			if (pos == 0)
-			{
-				value = d;
-			}
-			else
-			{
-				value = Math.min(value, d);
-			}
-			pos++;
-		}
-		return value;
-	}
-	
-	protected static boolean doubleEquals(double d1, double d2)
-	{
-		return Math.abs(d1 - d2) < s_precision;
-	}
-
 	@Override
 	public void build(Stack<Object> stack) 
 	{
@@ -225,7 +160,7 @@ public class PlateauFinder extends SingleProcessor
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // (
 		stack.pop(); // OF
-		stack.pop(); // PEAK
+		stack.pop(); // PLATEAU
 		stack.pop(); // THE
 		Connector.connect(p, this);
 	}

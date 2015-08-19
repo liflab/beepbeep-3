@@ -47,22 +47,51 @@ public class SignalTest
 		Connector.connect(qs,  pf);
 		Pullable p = pf.getPullableOutput(0);
 		EmlNumber n;
+		for (int i = 0; i < 6; i++)
+		{
+			n = (EmlNumber) p.pull();
+			assertNull(n);			
+		}
 		n = (EmlNumber) p.pull();
-		assertNull(n);
+		assertEquals(0, n.numberValue().doubleValue(), 0.01); // First event is not a peak
 		n = (EmlNumber) p.pull();
-		assertNull(n);
+		assertEquals(10, n.numberValue().doubleValue(), 0.01); // Second event is a peak of 10
 		n = (EmlNumber) p.pull();
-		assertNull(n);
-		n = (EmlNumber) p.pull();
-		assertNull(n);
-		n = (EmlNumber) p.pull();
-		assertNull(n);
-		n = (EmlNumber) p.pull();
-		assertNull(n);
-		n = (EmlNumber) p.pull();
-		assertNotNull(n);
-		assertEquals(10, n.numberValue().doubleValue(), 0.01);
+		assertNull(n); // Not enough info yet to conclude on 3rd event
 	}
+	
+	@Test
+	public void testPeakFinder2()
+	{
+		QueueSource qs = new QueueSource(null, 1);
+		Vector<Object> values = new Vector<Object>();
+		values.add(new EmlNumber(1));
+		values.add(new EmlNumber(11)); // Peak
+		values.add(new EmlNumber(1));
+		values.add(new EmlNumber(1));
+		values.add(new EmlNumber(3)); // Peak
+		values.add(new EmlNumber(1));
+		values.add(new EmlNumber(1));
+		values.add(new EmlNumber(2));
+		values.add(new EmlNumber(3));
+		values.add(new EmlNumber(3));
+		qs.setEvents(values);
+		PeakFinder pf = new PeakFinder();
+		Connector.connect(qs,  pf);
+		Pullable p = pf.getPullableOutput(0);
+		EmlNumber n;
+		n = (EmlNumber) p.pullHard();
+		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		n = (EmlNumber) p.pullHard();
+		assertEquals(10, n.numberValue().doubleValue(), 0.01);
+		n = (EmlNumber) p.pullHard();
+		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		n = (EmlNumber) p.pullHard();
+		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		n = (EmlNumber) p.pullHard();
+		assertEquals(2, n.numberValue().doubleValue(), 0.01);
+	}
+
 	
 	@Test
 	public void testPlateauFinder1()
@@ -82,17 +111,19 @@ public class SignalTest
 		Connector.connect(qs,  pf);
 		Pullable p = pf.getPullableOutput(0);
 		EmlNumber n;
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			n = (EmlNumber) p.pull();
 			assertNull(n);
-			
 		}
-		n = (EmlNumber) p.pull();
-		assertNotNull(n);
+		n = (EmlNumber) p.pull(); // First event not start of a plateau
+		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		n = (EmlNumber) p.pull(); // 2nd event not start of a plateau
+		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		n = (EmlNumber) p.pull(); // 3rd is
 		assertEquals(1.5, n.numberValue().doubleValue(), 0.01);
-		n = (EmlNumber) p.pull();
-		assertNull(n); // Don't create new event for the same plateau
+		n = (EmlNumber) p.pull(); // Don't create new event for the same plateau
+		assertEquals(0, n.numberValue().doubleValue(), 0.01);
 	}
 
 }

@@ -1,0 +1,5 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+<gp_heatmap>,ca.uqac.lif.cep.gnuplot.GnuplotHeatMap

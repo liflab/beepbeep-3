@@ -17,13 +17,13 @@
  */
 package ca.uqac.lif.cep.signal;
 
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 
 /**
@@ -43,63 +43,45 @@ import ca.uqac.lif.cep.eml.tuples.EmlNumber;
  * the window are less than the maximum, a peak is found an the whole window 
  * configuration is reconstructed for the next peak.
  * <p>
+ * For each input event, the processor outputs the height of the peak, or
+ * the value 0 if this event is not a peak. Since an event needs to be out of
+ * the window to determine that it is a peak, the emission of output events
+ * is delayed with respect to the consumption of input events.
+ * <p>
  * By default, the window is of width 5. 
  */
-public class PeakFinder extends SingleProcessor
-{
-	/**
-	 * The window of values to remember
-	 */
-	protected Vector<Double> m_values;
-	
-	/**
-	 * The maximum value encountered so far
-	 */
-	protected double m_maxValue;
-	
-	/**
-	 * The minimum value encountered so far
-	 */
-	protected double m_minValue;
-	
-	/**
-	 * The width of the window to process
-	 */
-	protected int m_windowWidth;
-	
+public class PeakFinder extends WindowProcessor
+{	
 	/**
 	 * The position in the window where the highest value is
 	 */
 	protected int m_peakPosition;
 	
+	/**
+	 * The number of events that went out of the window since the last
+	 * peak was seen.
+	 */
+	protected long m_numSincePeak;
+	
 	public PeakFinder()
 	{
-		super(1, 1);
-		m_windowWidth = 5;
-		m_values = new Vector<Double>();
+		super();
 		m_peakPosition = -1;
-		m_maxValue = 0;
-		m_minValue = 0;
+		m_numSincePeak = 0;
 	}
 	
 	@Override
 	public void reset()
 	{
 		super.reset();
-		m_values = new Vector<Double>(m_windowWidth);
 		m_peakPosition = -1;
-		m_maxValue = 0;
-		m_minValue = 0;
+		m_numSincePeak = 0;
 	}
 	
-	public void setWindowWidth(int width)
-	{
-		m_windowWidth = width;
-	}
-
 	@Override
 	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
 	{
+		Queue<Vector<Object>> out_queue = new LinkedList<Vector<Object>>();
 		EmlNumber n = (EmlNumber) inputs.firstElement();
 		double d = n.numberValue().doubleValue();
 		if (m_values.size() < m_windowWidth)
@@ -129,6 +111,7 @@ public class PeakFinder extends SingleProcessor
 		m_values.remove(0);
 		m_values.addElement(d);
 		m_peakPosition--; // This moves the current peak one position to the left
+		m_numSincePeak++;
 		if (d > m_maxValue)
 		{
 			// Current value higher than current peak: update
@@ -139,20 +122,48 @@ public class PeakFinder extends SingleProcessor
 		{
 			if (m_peakPosition < 0)
 			{
-				// The peak has moved out of the window: create output event
-				// with peak height (max - min)
+				// The peak has moved out of the window.
+				// First, say that all events prior to this one were not peaks
+				for (long i = 0; i < m_numSincePeak - 1; i++)
+				{
+					Vector<Object> out_vector = new Vector<Object>();
+					out_vector.add(new EmlNumber(0));
+					out_queue.add(out_vector);
+				}
+				// Then, create output event with peak height (max - min)
 				double peak_height = m_maxValue - m_minValue;
 				Vector<Object> out_vector = new Vector<Object>();
 				out_vector.add(new EmlNumber(peak_height));
+				out_queue.add(out_vector);
 				// Reset everything
-				m_values.clear();
-				m_maxValue = 0;
-				m_minValue = 0;
-				m_peakPosition = -1;
-				return wrapVector(out_vector);
+				m_maxValue = getMaxValue();
+				m_minValue = getMinValue();
+				m_peakPosition = getPeakPosition();
+				m_numSincePeak = 0;
+				return out_queue;
 			}
 		}
 		return null;
+	}
+	
+	public int getPeakPosition()
+	{
+		double value = 0;
+		int cur_pos = 0, peak_pos = 0;
+		for (double d : m_values)
+		{
+			if (cur_pos == 0)
+			{
+				value = d;
+			}
+			if (d > value)
+			{
+				value = d;
+				peak_pos = cur_pos;
+			}
+			cur_pos++;
+		}
+		return peak_pos;
 	}
 
 	@Override
