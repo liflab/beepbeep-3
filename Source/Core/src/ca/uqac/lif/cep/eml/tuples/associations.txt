@@ -53,9 +53,11 @@
 <eml_lt>,ca.uqac.lif.cep.eml.tuples.LessThan
 <eml_gt>,ca.uqac.lif.cep.eml.tuples.GreaterThan
 
-# Tuple feeder
+# Tuple feeders
 
 <eml_feeder>,ca.uqac.lif.cep.eml.tuples.TupleFeeder
+<eml_regex>,ca.uqac.lif.cep.eml.tuples.RegexTupleBuilder
+<eml_regex_name_list>,ca.uqac.lif.cep.eml.tuples.RegexTupleBuilder.RegexAttributeNameList
 
 # "WHERE" statement
 

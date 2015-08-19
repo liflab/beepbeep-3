@@ -124,4 +124,14 @@ public abstract class GrammarExtension
 		String file_contents = PackageFileReader.readPackageFile(m_classReference, s_grammarFilename);
 		return file_contents;
 	}
+	
+	/**
+	 * Produces a message (e.g. copyright info, authors, etc.) associated to 
+	 * the grammar extension
+	 * @return The message
+	 */
+	public String getMessage()
+	{
+		return "";
+	}
 }

@@ -61,8 +61,27 @@
       <name>Bullwinkle</name>
       <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
       <files>
-        
-<zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.1.7/bullwinkle-1.1.7.zip</zip>
+        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.1.7/bullwinkle-1.1.7.zip</zip>
+      </files>
+    </dependency>
+    <dependency>
+      <!--
+      JTransforms. Used for FFT.
+      -->
+      <name>JTransforms</name>
+      <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
+      <files>
+        <jar>http://search.maven.org/remotecontent?filepath=com/github/wendykierp/JTransforms/3.0/JTransforms-3.0.jar</jar>
+      </files>
+    </dependency>
+    <dependency>
+      <!--
+      JLargeArrays. Dependency used by JTransforms.
+      -->
+      <name>JLargeArrays</name>
+      <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
+      <files>
+        <jar>http://search.maven.org/remotecontent?filepath=pl/edu/icm/JLargeArrays/1.2/JLargeArrays-1.2.jar</jar>
       </files>
     </dependency>
   </dependencies>

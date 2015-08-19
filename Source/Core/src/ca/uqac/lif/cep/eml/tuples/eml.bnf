@@ -73,9 +73,12 @@
 <eml_lt>                 := ( <eml_att_expr> ) LESS THAN ( <eml_att_expr> ) ;
 <eml_gt>                 := ( <eml_att_expr> ) GREATER THAN ( <eml_att_expr> ) ;
 
-# Tuple feeder
+# Tuple feeders
 
 <eml_feeder>             := THE TUPLES OF <p_reader> ;
+<eml_regex>              := REGEX <eml_string> WITH NAMES 
+                             <eml_regex_name_list> IN ( <processor> ) ;
+<eml_regex_name_list>    := <eml_att_name_plain> , <eml_regex_name_list> | <eml_att_name_plain> ;
 
 # SQL gateway
 

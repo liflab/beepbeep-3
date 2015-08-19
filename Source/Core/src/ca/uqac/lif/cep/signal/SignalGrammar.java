@@ -15,20 +15,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.eml.tuples;
+package ca.uqac.lif.cep.signal;
 
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 
-public class TupleGrammar extends GrammarExtension
+public class SignalGrammar extends GrammarExtension
 {
-	public TupleGrammar()
+	public SignalGrammar()
 	{
-		super(TupleGrammar.class);
+		super(SignalGrammar.class);
 	}
 	
 	@Override
 	public String getMessage()
 	{
-		return "Tuple EML (C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
+		return "Signal processing extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi\n"
+				+ "DFT algorithm provided by JTransforms by Piotr Wendykier";
 	}
 }

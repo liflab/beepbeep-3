@@ -25,6 +25,12 @@ public class AttributeNamePlain extends AttributeNameQualified
 	{
 		super();
 	}
+	
+	public AttributeNamePlain(String name)
+	{
+		this();
+		m_attributeName = name;
+	}
 
 	@Override
 	public void build(Stack<Object> stack)
