@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" type="text/css" href="screen.css" />
+<title>Hello, World!</title>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+<header class="inner">
+  <a id="forkme_banner" href="https://bitbucket.org/sylvainhalle/beepbeep-3">View on Bitbucket</a>
+
+  <h1 id="project_title">Event Streams and Processors</h1>
+
+  <!--
+	<section id="downloads">
+	  <a class="zip_download_link" href="https://github.com/sylvainhalle/ParkBench/zipball/master">Download this project as a .zip file</a>
+	  <a class="tar_download_link" href="https://github.com/sylvainhalle/ParkBench/tarball/master">Download this project as a tar.gz file</a>
+	</section>
+  -->
+</header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+<section id="main_content" class="inner">
+
+<p>The previous example introduced two important concepts of BeepBeep 3:
+event streams and processors.</p>
+
+<p>An <strong>event stream</strong> (also called a <em>trace</em>) is a sequence
+of elements called <em>events</em>. In BeepBeep 3, an event can be anything:
+a number, a character string, a tuple of name-value pairs, an XML document,
+a set, or any other data structure. In the "Hello World" example, the expression
+<code>"HELLO WORLD"</code> refers to the infinite event stream where each
+event is the same character string. Here are some examples of event streams:</p>
+
+<div class="figure">
+<p>1, 2, 3, 4, 5, ...</p>
+<p>"abc", "def", "abc", ...</p>
+<p>(p=2, q=3), (p=0, q=0), ...</p>
+</div>
+
+<p>A <strong>processor</strong> is a function taking zero or more event streams
+as its input, and producing zero or more event streams as its output. As an
+example, consider the <code>EVERY</code> processor, which returns every
+<i>n</i>-th event of its input stream. Hence if <code>S</code> is the stream
+1, 2, 3, 4, 5, &hellip;, the expression:</p>
+
+<div>
+<pre>
+EVERY 2ND OF (S)
+</pre>
+</div>
+
+<p>produces the output stream 1, 3, 5, 7, ...</p>
+
+<p>Processors can be <em>piped</em>: the output of one processor can be given
+as the input of another.</p>
+
+<a name="interpreter"></a><h2>Using the stand-alone interpreter</h2>
+
+
+</section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+  <footer class="inner">
+	<p class="copyright">&copy; 2008-2015. BeepBeep 3 is maintained by
+	<a href="http://leduotang.ca/sylvain">Sylvain Hallé</a>.</p>
+  </footer>
+</div>
+</body>
+</html>

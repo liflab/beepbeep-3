@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" type="text/css" href="screen.css" />
+<title>Hello, World!</title>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+<header class="inner">
+  <a id="forkme_banner" href="https://bitbucket.org/sylvainhalle/beepbeep-3">View on Bitbucket</a>
+
+  <h1 id="project_title">Hello, World!</h1>
+
+  <!--
+	<section id="downloads">
+	  <a class="zip_download_link" href="https://github.com/sylvainhalle/ParkBench/zipball/master">Download this project as a .zip file</a>
+	  <a class="tar_download_link" href="https://github.com/sylvainhalle/ParkBench/tarball/master">Download this project as a tar.gz file</a>
+	</section>
+  -->
+</header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+<section id="main_content" class="inner">
+
+<p>This first, simple example will show how to obtain BeepBeep 3 and run 
+queries with it.</p>
+
+<ul>
+<li><a href="#interpreter">Using the stand-alone interpreter</a></li>
+<li><a href="#library">Using BeepBeep as a Java library</a></li>
+</ul>
+
+<a name="interpreter"></a><h2>Using the stand-alone interpreter</h2>
+
+<p>The first way to use BeepBeep is by running it directly from the
+command line. This can be done by typing:</p>
+
+<div class="code">
+<pre>
+java -jar beepbeep3.jar
+</pre>
+</div>
+
+<p>You should see something like this:</p>
+
+<div>
+<pre>
+BeepBeep 3, a flexible query engine
+(C) 2008-2015 Laboratoire d'informatique formelle
+
+?
+</pre>
+</div>
+
+<p>This indicates that BeepBeep has started its interpreter. The <code>?</code>
+symbol is the <em>prompt</em>: it tells you that BeepBeep is ready to receive
+your instructions.</p>
+
+<p>At the prompt, type the following, and press Enter:</p>
+
+<div>
+<pre>
+? PRINT ("HELLO WORLD").
+</pre>
+</div>
+
+<p>BeepBeep should reply with:</p>
+
+<div>
+<pre>
+"HELLO WORLD", "HELLO WORLD", "HELLO WORLD", ...
+</pre>
+</div>
+
+<p>It looks like the program is stuttering, but this response is absolutely
+normal. As we will see in the next section, this expression is actually the
+piping of two <em>processors</em>. The first is the processor
+<code>"HELLO WORLD"</code>, which creates an event <em>stream</em> made of
+the character string <code>"HELLO WORLD"</code> repeated an infinite number
+of times. The stream from that processor is then fed as the input of another
+processor, <code>PRINT</code>, which takes whatever its input is and prints it
+on screen.</p>
+
+<p>As an event stream is potentially infinite, by default <code>PRINT</code>
+only shows the first few events of its input. The three dots at the end of
+the line indicate that more elements are available. To show the next element,
+simply type at the prompt:</p>
+
+<div>
+<pre>
+? ,
+</pre>
+</div>
+
+<p>That is, a single comma followed by the Enter key. BeepBeep should reply
+with:</p>
+
+<div>
+<pre>
+"HELLO WORLD", ...
+</pre>
+</div>
+
+<p>The <code>PRINT</code> processor showed the next (in this case, the
+fourth) element of its input stream, which is, unsurprisingly, the string
+<code>"HELLO WORLD"</code> again.</p>
+
+<p>If you ever type something that BeepBeep does not understand, you will
+receive the laconic message:</p>
+
+<div>
+<pre>
+! SYNTAX ERROR
+</pre>
+</div>
+
+<p>Don't worry, we are working on providing more helpful feedback when such a 
+thing occurs. To exit the interpreter, simply type:</p>
+
+<div>
+<pre>
+? QUIT.
+</pre>
+</div>
+
+<p>and the program will return you to the command line.</p>
+
+<p>Using the interpreter in such an interactive manner is useful for tutorials,
+but in general, it is not expected you will use it to evaluate queries on a
+regular basis. Instead of typing commands one by one, you will likely load them
+in batch from a file, as you will do for the input data you wish to process.
+Similarly, rather than printing results on screen, you will probably redirect
+them somewhere else: to a file, through a network connection, or even as the
+input to another application (as a matter of fact, you can even pipe it to
+another instance of BeepBeep, which provides an easy way to distribute
+processing).</p>
+
+<a name="library"></a><h2>Using BeepBeep as a Java library</h2>
+
+<p>The second way to use BeepBeep is as a library that you can integrate within
+your own Java project. Simply make sure that the file <code>beepbeep3.jar</code>
+(and its dependencies) can be found in the classpath of your project. Then, in a
+way similar to JDBC, you can instantiate and interact with a query interpreter
+and fetch results from your query directly from your program.</p>
+
+<p>The following code snippet is a minimal working example of this process:</p>
+
+<div>
+<pre>
+import ca.uqac.lif.cep.*;
+import ca.uqac.lif.cep.eml.tuples.*;
+
+public class MyExample {
+
+  public static void main(String[] args) {
+    Interpreter my_int = new Interpreter();
+    my_int.extendGrammar(TupleGrammar.class);
+    Pullable p = my_int.executeQuery("\"HELLO WORLD\"");
+    for (int i = 0; i &lt; 10; i++) {
+      EmlString s = (EmlString) p.pull();
+      System.out.println(s);
+    }
+  }
+}
+</pre>
+</div>
+
+<p>The first line of the <code>main()</code> method instantiates a BeepBeep
+query interpreter. The second line extends its basic grammar with new
+definitions for handling tuples (we'll discuss grammar extensions later).
+Line 3 tells the interpreter to read a query, which returns an instance of
+a <code>Pullable</code> object. It works much like an iterator, and allows you
+to fetch (i.e. "pull") elements from the output one by one. Line 5 does that,
+calling the <code>pull()</code> method and casting the resulting object into
+an <code>EmlString</code>. The loop in line 4 does this operation 10 times and
+prints the resulting element each time.</p>
+
+<p>Note how this time, we didn't write <code>PRINT ("HELLO WORLD")</code>.
+Rather than piping the output of the <code>"HELLO WORLD"</code> stream to the
+<code>PRINT</code> processor, our program captures its output directly and
+prints it through Java's <code>println</code> method. This ultimately amounts
+to the same thing.</p>
+
+</section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+  <footer class="inner">
+	<p class="copyright">&copy; 2008-2015. BeepBeep 3 is maintained by
+	<a href="http://leduotang.ca/sylvain">Sylvain Hallé</a>.</p>
+  </footer>
+</div>
+</body>
+</html>

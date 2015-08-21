@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" type="text/css" href="screen.css" />
+<title>A Gentle Introduction to BeepBeep 3</title>
+</head>
+<body>
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+<header class="inner">
+  <a id="forkme_banner" href="https://bitbucket.org/sylvainhalle/beepbeep-3">View on Bitbucket</a>
+
+  <h1 id="project_title">A Gentle Introduction to BeepBeep 3</h1>
+  <h1 class="subtitle">Create queries over data streams</h1>
+
+  <!--
+	<section id="downloads">
+	  <a class="zip_download_link" href="https://github.com/sylvainhalle/ParkBench/zipball/master">Download this project as a .zip file</a>
+	  <a class="tar_download_link" href="https://github.com/sylvainhalle/ParkBench/tarball/master">Download this project as a tar.gz file</a>
+	</section>
+  -->
+</header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+<section id="main_content" class="inner">
+
+<h1>A Gentle Introduction to BeepBeep 3</h1>
+<h1 class="subtitle">Create queries over data streams</h1>
+
+<div class="note">
+<p>Note: this document is under construction.</p>
+</div>
+
+<p>BeepBeep 3 is an <em>event query engine</em>: it receives a stream of events
+produced by some application or process, and produces in realtime a new
+stream of events. Internally, BeepBeep analyzes and transforms the event
+stream by passing it through a chain of basic event <em>processors</em>, with the
+output of one (or more) processor being piped to the input of the next one.</p>
+
+<p>BeepBeep's language is very similar to SQL. As a matter of fact, you can
+think of BeepBeep as a special form of database system: instead of querying
+tables, BeepBeep's expressions operate over event streams. Depending on the
+application, these streams can contain various things: name-value tuples,
+scalar numbers, sets, functions, etc. The language can be extended and modified
+in a flexible manner, allowing you to write very readable and high-level
+queries.</p>
+
+<p>This generic process can be put to numerous uses. Given log events from a web
+server, BeepBeep can work as an intrusion detection system. When fed debug
+output from a program under development, the tool can prove useful to detect
+bugs. Overall, BeepBeep's input language provides dozens of simple processors
+that can be piped to perform complex analysis and verification tasks over event
+streams, from the generation of aggregated heat maps to the evaluation of
+temporal logic properties. Users can also program their own processors that can
+be freely mixed with BeepBeep's.</p>
+
+<h2>Code Examples</h2>
+
+<p>All the code examples mentioned in this documentation are available by
+downloading BeepBeep 3's archive. The source of the software is located in the
+<code>Source</code> folder, while the examples can be found under
+<code>Examples</code>. Some of these examples read data from external files;
+the folder contains these files as well.</p>
+
+<h2>Table of Contents</h2>
+
+<ul>
+<li><a href="installing.html">Downloading and installing BeepBeep</a></li>
+<li><a href="hello.html">Hello, World!</a></li>
+<li><a href="processors.html">Event Streams and Processors</a></li>
+</ul>
+
+</section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+  <footer class="inner">
+	<p class="copyright">&copy; 2008-2015. BeepBeep 3 is maintained by
+	<a href="http://leduotang.ca/sylvain">Sylvain Hallé</a>.</p>
+  </footer>
+</div>
+</body>
+</html>

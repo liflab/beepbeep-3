@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" type="text/css" href="screen.css" />
+<title>Downloading and installing BeepBeep</title>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+<header class="inner">
+  <a id="forkme_banner" href="https://bitbucket.org/sylvainhalle/beepbeep-3">View on Bitbucket</a>
+
+  <h1 id="project_title">Downloading and installing BeepBeep</h1>
+
+  <!--
+	<section id="downloads">
+	  <a class="zip_download_link" href="https://github.com/sylvainhalle/ParkBench/zipball/master">Download this project as a .zip file</a>
+	  <a class="tar_download_link" href="https://github.com/sylvainhalle/ParkBench/tarball/master">Download this project as a tar.gz file</a>
+	</section>
+  -->
+</header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+<section id="main_content" class="inner">
+
+<p>The BeepBeep query engine is entirely written in the <a
+href="http://java.com">Java programming language</a>, and is distributed under a
+free software license. Before using BeepBeep to run queries, you must first
+download (and optionally compile) BeepBeep. This section shows you how.</p>
+
+<h2>Downloading and installing</h2>
+
+<p>First make sure you have the following installed:</p>
+
+<ul>
+<li>The Java Development Kit (JDK) to compile. BeepBeep was developed and
+tested on version 7 of the JDK, but it is probably safe to use any version
+from 6 onwards.</li>
+<li><a href="http://ant.apache.org">Ant</a> to automate the compilation and
+build process</li>
+</ul>
+
+<p>BeepBeep 3 can be downloaded from its
+<a href="https://bitbucket.org/sylvainhalle/beepbeep-3">Bitbucket repository</a>.
+If you have <a href="https://git-scm.com/">Git</a> installed, you can simply
+clone BeepBeep into a folder by typing the command:</p>
+
+<div class="code">
+<pre>
+git clone git@bitbucket.org:sylvainhalle/beepbeep-3.git
+</pre>
+</div>
+
+<h3>Installing Dependencies</h3>
+
+<p>Before compiling or executing BeepBeep, a number of other dependencies
+(i.e. Java JAR files) must also be downloaded and installed in Java's extension
+folder. Using Ant, you can automatically download any libraries missing from your
+system by typing:</p>
+
+<div class="code">
+<pre>
+ant download-deps
+</pre>
+</div>
+
+<p>This will put the missing JAR files in the <code>deps</code> folder in the project's
+root. These libraries should then be put somewhere in the classpath, such as
+in Java's extension folder (don't leave them there, it won't work). You can
+do that by typing (<em>with administrator rights</em>):</p>
+
+<div class="code">
+<pre>
+ant install-deps
+</pre>
+</div>
+
+<p>or by putting them manually in the extension folder. Type <code>ant init</code>
+and it will print out what that folder is for your system.</p>
+
+<p>More information on the current dependencies BeepBeep has can be found in the
+<code>Readme</code> file in the root folder of the project.</p>
+
+<h3>Compiling</h3>
+
+Compile the sources by simply typing:
+
+<div class="code">
+<pre>
+ant
+</pre>
+</div>
+
+<p>This will produce a file called <code>beepbeep3.jar</code>
+in the folder. This file
+is runnable and stand-alone, or can be used as a library, so it can be moved
+around to the location of your choice.</p>
+
+<p>In addition, the script generates in the <code>doc</code> folder the Javadoc
+documentation for using BeepBeep. This documentation is also embedded in
+the JAR file. To show documentation in Eclipse, right-click on the jar,
+click "Properties", then fill the Javadoc location (which is the JAR
+itself).</p>
+
+<h3>Testing</h3>
+
+<p>BeepBeep can test itself by running:</p>
+
+<div class="code">
+<pre>
+ant test
+</pre>
+</div>
+
+<p>Unit tests are run with <a href="http://junit.org">jUnit</a>; a detailed report of
+these tests in HTML format is availble in the folder <code>tests/junit</code>, which
+is automatically created. Code coverage is also computed with
+<a href="http://www.eclemma.org/jacoco/">JaCoCo</a>; a detailed report is available
+in the folder <code>tests/coverage</code>.</p>
+
+</section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+  <footer class="inner">
+	<p class="copyright">&copy; 2008-2015. BeepBeep 3 is maintained by
+	<a href="http://leduotang.ca/sylvain">Sylvain Hallé</a>.</p>
+  </footer>
+</div>
+</body>
+</html>
