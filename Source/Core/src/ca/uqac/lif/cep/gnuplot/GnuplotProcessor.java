@@ -21,8 +21,25 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public abstract class GnuplotProcessor extends SingleProcessor 
 {
+	/**
+	 * The graph's title
+	 */
+	protected String m_title;
+	
 	public GnuplotProcessor()
 	{
 		super(1, 1);
+	}
+	
+	/**
+	 * Sets the graph's title.
+	 * @param title The title
+	 */
+	public void setTitle(String title)
+	{
+		if (title != null)
+		{
+			m_title = title;
+		}
 	}
 }
