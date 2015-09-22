@@ -95,7 +95,7 @@ public class GroupProcessor extends Processor
 
 	/**
 	 * Adds a processor to the group
-	 * @param p
+	 * @param p The processor to add
 	 */
 	public void addProcessor(Processor p)
 	{
@@ -103,11 +103,11 @@ public class GroupProcessor extends Processor
 	}
 	
 	/**
-	 * Declares that the <i>-th input of the group is linked to the
-	 * <i>j</i>-th input of processor p
-	 * @param i
-	 * @param p
-	 * @param j
+	 * Declares that the <i>i</i>-th input of the group is linked to the
+	 * <i>j</i>-th input of processor <code>p</code>
+	 * @param i The number of the input of the group
+	 * @param p The processor to connect to
+	 * @param j The number of the input of processor <code>p</code>
 	 */
 	public void associateInput(int i, Processor p, int j)
 	{
@@ -116,11 +116,11 @@ public class GroupProcessor extends Processor
 	}
 	
 	/**
-	 * Declares that the <i>-th output of the group is linked to the
+	 * Declares that the <i>i/</i>-th output of the group is linked to the
 	 * <i>j</i>-th output of processor p
-	 * @param i
-	 * @param p
-	 * @param j
+	 * @param i The number of the output of the group
+	 * @param p The processor to connect to
+	 * @param j The number of the output of processor <code>p</code>
 	 */
 	public void associateOutput(int i, Processor p, int j)
 	{

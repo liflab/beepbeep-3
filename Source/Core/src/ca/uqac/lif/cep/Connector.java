@@ -44,8 +44,9 @@ public class Connector
 	}
 	
 	/**
-	 * Connects two processors, by associating the <i>-th output of <tt>p1</tt>
-	 * to the <i>-th input of <tt>p2</tt>
+	 * Connects two processors, by associating the <i>i</i>-th
+	 * output of <tt>p1</tt>
+	 * to the <i>i</i>-th input of <tt>p2</tt>
 	 * @param p1 The first processor
 	 * @param p2 The second processor
 	 */
@@ -63,6 +64,7 @@ public class Connector
 	 * and <tt>p2</tt> respectively to the first and second input of <tt>p3</tt>
 	 * @param p1 The first processor
 	 * @param p2 The second processor
+	 * @param p3 The third processor
 	 */
 	public static void connect(Processor p1, Processor p2, Processor p3)
 	{

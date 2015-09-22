@@ -37,12 +37,13 @@ import ca.uqac.lif.cep.sets.EmlBag;
  * input.
  * <p>
  * Dimensions of the map must first be declared
- * through {@link #setDimensions()}. It shall be noted that the map passed
+ * through {@link #setDimensions(int, int, int, int)}.
+ * It shall be noted that the map passed
  * to the processor does not need to define a value for every (x,y) coordinate
  * in the declared space; missing points are given the value zero.
  * <p>
  * Optionally, a title for the output
- * graph can be defined using {@link #setTitle()}.
+ * graph can be defined using {@link #setTitle(String)}.
  * @author sylvain
  *
  */
@@ -80,7 +81,8 @@ public class GnuplotHeatMap extends GnuplotProcessor
 
 	/**
 	 * The last heatmap that was sent to the processor. The output
-	 * will only be generated from that map upon a call to {@link get()}.
+	 * will only be generated from that map upon a call to 
+	 * {@link #compute(Vector)}.
 	 */
 	protected EmlBag m_lastMap;
 
@@ -100,10 +102,10 @@ public class GnuplotHeatMap extends GnuplotProcessor
 	/**
 	 * Sets the coordinate space for the heat map. The map will be drawn
 	 * in the rectangle (x1, y1) - (x2, y2).
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
+	 * @param x1 x coordinate of the rectangle
+	 * @param y1 y coordinate of the rectangle
+	 * @param x2 x coordinate of the rectangle
+	 * @param y2 y coordinate of the rectangle
 	 */
 	public void setDimensions(int x1, int y1, int x2, int y2)
 	{

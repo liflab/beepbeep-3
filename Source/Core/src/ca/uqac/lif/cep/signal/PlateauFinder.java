@@ -36,7 +36,7 @@ import ca.uqac.lif.cep.eml.tuples.EmlNumber;
  * new plateau will only be looked for only once
  * a value lies outside the current interval. For example, in the following
  * sequence:
- * <table>
+ * <table summary="">
  * <tr><th>Event #</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
  * <tr><th>Value</th><td>1</td><td>2</td><td>3</td><td>2</td><td>1</td><td>2</td><td>10</td><td>8</td></tr> 
  * </table>
