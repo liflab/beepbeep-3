@@ -15,45 +15,43 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
 import java.util.Vector;
 
-public class IsEven extends NaryComputable
+public class Addition extends NaryComputable
 {
-	public IsEven()
+	public Addition()
 	{
-		super(1);
+		super(2);
+	}
+	
+	public Addition(int arity)
+	{
+		super(arity);
 	}
 
 	@Override
 	protected Vector<Object> computeNumerical(Vector<Number> inputs)
 	{
 		Vector<Object> out = new Vector<Object>();
-		if (inputs.isEmpty())
+		float sum = 0;
+		for (Number n : inputs)
 		{
-			out.add(false);
-		}
-		else
-		{
-			Number n = inputs.firstElement();
-			if (n.intValue() % 2 == 0)
+			if (n != null)
 			{
-				out.add(true);
-			}
-			else
-			{
-				out.add(false);
+				sum += n.floatValue();
 			}
 		}
+		out.add(sum);
 		return out;
 	}
 	
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		stack.push(new IsEven());
+		stack.push(new Addition(2));
 	}
 
 }

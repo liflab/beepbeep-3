@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.interpreter;
 
+import org.junit.Test;
+
 /**
  * A front-end to the {@link Interpreter} class that provides extra public 
  * methods that should only be used for testing
@@ -32,5 +34,11 @@ public class InterpreterTestFrontEnd extends Interpreter
 	public void setDebugMode(boolean b)
 	{
 		m_parser.setDebugMode(b);
+	}
+	
+	@Test
+	public void dummyTest()
+	{
+		// Do nothing
 	}
 }

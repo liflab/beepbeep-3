@@ -1,4 +1,4 @@
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep.eml.numbers;
 
 import static org.junit.Assert.*;
 
@@ -17,6 +17,10 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.QueueSink;
 import ca.uqac.lif.cep.QueueSource;
 import ca.uqac.lif.cep.Window;
+import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
+import ca.uqac.lif.cep.eml.numbers.Division;
+import ca.uqac.lif.cep.eml.numbers.IsGreaterThan;
+import ca.uqac.lif.cep.eml.numbers.Power;
 
 public class MathTest
 {

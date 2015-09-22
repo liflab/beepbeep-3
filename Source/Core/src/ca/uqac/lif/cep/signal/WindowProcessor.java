@@ -20,7 +20,7 @@ public abstract class WindowProcessor extends SingleProcessor
 	/**
 	 * The width of the window to process
 	 */
-	protected int m_windowWidth;
+	protected int m_windowWidth = 1;
 	
 	/**
 	 * The maximum value encountered so far

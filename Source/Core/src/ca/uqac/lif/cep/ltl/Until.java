@@ -51,8 +51,8 @@ public class Until extends BinaryProcessor
 		{
 			return new EmlBoolean(false);
 		}
-		m_right |= right.boolValue();
-		m_left &= left.boolValue();
+		m_right = m_right || right.boolValue();
+		m_left = m_left && left.boolValue();
 		if (m_right)
 		{
 			return new EmlBoolean(true);

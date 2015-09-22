@@ -15,14 +15,42 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep.eml.numbers;
 
-import ca.uqac.lif.cep.Combiner;
+import java.util.Stack;
+import java.util.Vector;
 
-public class CumulativeSum extends Combiner
+public class IsGreaterThan extends NaryComputable
 {
-	public CumulativeSum()
+	public IsGreaterThan()
 	{
-		super(new Sum());
+		super(2);
 	}
+
+	@Override
+	protected Vector<Object> computeNumerical(Vector<Number> inputs)
+	{
+		Vector<Object> out = new Vector<Object>();
+		if (inputs.size() >= 2)
+		{
+			Number n1 = inputs.firstElement();
+			Number n2 = inputs.lastElement();
+			if (n1.floatValue() > n2.floatValue())
+			{
+				out.add(true);
+			}
+			else
+			{
+				out.add(false);
+			}
+		}
+		return out;
+	}
+	
+	@Override
+	public void build(Stack<Object> stack)
+	{
+		stack.push(new IsGreaterThan());
+	}
+
 }

@@ -25,10 +25,10 @@ import java.util.Vector;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.math.Addition;
-import ca.uqac.lif.cep.math.CumulativeSum;
-import ca.uqac.lif.cep.math.Incrementer;
-import ca.uqac.lif.cep.math.IsEven;
+import ca.uqac.lif.cep.eml.numbers.Addition;
+import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
+import ca.uqac.lif.cep.eml.numbers.Incrementer;
+import ca.uqac.lif.cep.eml.numbers.IsEven;
 
 public class ProcessorTest
 {

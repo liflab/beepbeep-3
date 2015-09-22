@@ -1,4 +1,4 @@
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
 import java.util.Vector;

@@ -15,45 +15,62 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep.eml.numbers;
 
-import java.util.Queue;
-import java.util.Stack;
 import java.util.Vector;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.Computable;
 
-public class Incrementer extends SingleProcessor
+public abstract class NaryComputable implements Computable
 {
-	protected final float m_increment;
+	protected final int m_inputArity;
 	
-	public Incrementer(float increment)
+	public NaryComputable()
 	{
-		super(1, 1);
-		m_increment = increment;
+		this(0);
+	}
+	
+	public NaryComputable(int arity)
+	{
+		super();
+		m_inputArity = arity;
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	public final int getInputArity()
 	{
-		Vector<Object> outputs = new Vector<Object>();
-		for (Object in : inputs)
+		return m_inputArity;
+	}
+
+	@Override
+	public final int getOutputArity()
+	{
+		return 1;
+	}
+	
+	@Override
+	public final Vector<Object> compute(Vector<Object> inputs)
+	{
+		Vector<Number> numbers = new Vector<Number>();
+		for (Object o : inputs)
 		{
-			if (in instanceof Number)
+			if (o instanceof Number)
 			{
-				Number n = (Number) in;
-				n = n.floatValue() + m_increment;
-				outputs.add(n);
+				numbers.add((Number) o);
+			}
+			else
+			{
+				numbers.add(0);
 			}
 		}
-		return wrapVector(outputs);
+		return computeNumerical(numbers);
 	}
-
-	@Override
-	public void build(Stack<Object> stack)
+	
+	protected abstract Vector<Object> computeNumerical(Vector<Number> inputs);
+	
+	public NaryComputable newInstance()
 	{
 		// TODO
-		// Anyway, this processor is not in the grammar at the moment
+		return null;
 	}
-
 }

@@ -39,7 +39,8 @@ public abstract class SingleProcessor extends Processor
 		super(in_arity, out_arity);
 		m_inputPullables = new Vector<Pullable>(m_inputArity);
 		m_outputPushables = new Vector<Pushable>(m_outputArity);
-		reset();
+		initializeInput();
+		initializeOutput();
 	}
 
 	@Override

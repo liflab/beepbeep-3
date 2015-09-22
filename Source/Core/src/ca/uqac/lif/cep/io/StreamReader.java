@@ -116,15 +116,18 @@ public class StreamReader extends Source
 	public void setInputStream(InputStream is)
 	{
 		m_fis = is;
-		try
+		if (m_fis != null)
 		{
-			m_isr = new InputStreamReader(is, "UTF8");
-			m_br = new BufferedReader(m_isr);
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			try
+			{
+				m_isr = new InputStreamReader(is, "UTF8");
+				m_br = new BufferedReader(m_isr);
+			}
+			catch (UnsupportedEncodingException e)
+			{
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
 		}
 	}
 

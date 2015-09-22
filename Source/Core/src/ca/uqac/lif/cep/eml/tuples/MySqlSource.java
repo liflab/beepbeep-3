@@ -152,7 +152,7 @@ public class MySqlSource extends Source
 			while (rs.next())
 			{
 				NamedTuple nt = new NamedTuple();
-				for (int i = 0; i < col_count; i++)
+				for (int i = 1; i <= col_count; i++)
 				{
 					String name = col_names.get(i);
 					Object value = rs.getObject(i);

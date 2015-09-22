@@ -15,62 +15,45 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep.eml.numbers;
 
+import java.util.Stack;
 import java.util.Vector;
 
-import ca.uqac.lif.cep.Computable;
-
-public abstract class NaryComputable implements Computable
+public class IsEven extends NaryComputable
 {
-	protected final int m_inputArity;
-	
-	public NaryComputable()
+	public IsEven()
 	{
-		this(0);
-	}
-	
-	public NaryComputable(int arity)
-	{
-		super();
-		m_inputArity = arity;
+		super(1);
 	}
 
 	@Override
-	public final int getInputArity()
+	protected Vector<Object> computeNumerical(Vector<Number> inputs)
 	{
-		return m_inputArity;
-	}
-
-	@Override
-	public final int getOutputArity()
-	{
-		return 1;
-	}
-	
-	@Override
-	public final Vector<Object> compute(Vector<Object> inputs)
-	{
-		Vector<Number> numbers = new Vector<Number>();
-		for (Object o : inputs)
+		Vector<Object> out = new Vector<Object>();
+		if (inputs.isEmpty())
 		{
-			if (o instanceof Number)
+			out.add(false);
+		}
+		else
+		{
+			Number n = inputs.firstElement();
+			if (n.intValue() % 2 == 0)
 			{
-				numbers.add((Number) o);
+				out.add(true);
 			}
 			else
 			{
-				numbers.add(0);
+				out.add(false);
 			}
 		}
-		return computeNumerical(numbers);
+		return out;
 	}
 	
-	protected abstract Vector<Object> computeNumerical(Vector<Number> inputs);
-	
-	public NaryComputable newInstance()
+	@Override
+	public void build(Stack<Object> stack)
 	{
-		// TODO
-		return null;
+		stack.push(new IsEven());
 	}
+
 }

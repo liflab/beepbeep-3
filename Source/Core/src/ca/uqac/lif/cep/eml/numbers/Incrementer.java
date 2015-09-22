@@ -15,63 +15,45 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.math;
+package ca.uqac.lif.cep.eml.numbers;
 
+import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-import ca.uqac.lif.cep.Buildable;
-import ca.uqac.lif.cep.Combinable;
+import ca.uqac.lif.cep.SingleProcessor;
 
-public class Sum implements Combinable
+public class Incrementer extends SingleProcessor
 {
-	public Sum()
-	{
-		super();
-	}
+	protected final float m_increment;
 	
+	public Incrementer(float increment)
+	{
+		super(1, 1);
+		m_increment = increment;
+	}
+
+	@Override
+	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	{
+		Vector<Object> outputs = new Vector<Object>();
+		for (Object in : inputs)
+		{
+			if (in instanceof Number)
+			{
+				Number n = (Number) in;
+				n = n.floatValue() + m_increment;
+				outputs.add(n);
+			}
+		}
+		return wrapVector(outputs);
+	}
+
 	@Override
 	public void build(Stack<Object> stack)
 	{
-		Sum out = new Sum();
-		stack.push(out);
-	}
-
-	@Override
-	public Vector<Object> initialize()
-	{
-		Vector<Object> ob = new Vector<Object>();
-		ob.add(0);
-		return ob;
-	}
-
-	@Override
-	public Vector<Object> combine(Vector<Object> inputs, Vector<Object> total)
-	{
-		Vector<Object> ob = new Vector<Object>();
-		Number n1 = (Number) total.firstElement();
-		Number n2 = (Number) inputs.firstElement();
-		Number n3 = n1.floatValue() + n2.floatValue();
-		ob.add(n3);
-		return ob;
-	}
-
-	@Override
-	public int getInputArity()
-	{
-		return 1;
-	}
-
-	@Override
-	public int getOutputArity()
-	{
-		return 1;
-	}
-
-	@Override
-	public Buildable newInstance() 
-	{
-		return new Sum();
+		// TODO
+		// Anyway, this processor is not in the grammar at the moment
 	}
 
 }
