@@ -128,7 +128,10 @@ public class EmlNumber extends EmlConstant
 				for (String s : t.keySet())
 				{
 					EmlConstant c = t.get(s);
-					return EmlNumber.toEmlNumber(c);
+					if (c != null)
+					{
+						return EmlNumber.toEmlNumber(c);
+					}
 				}
 			}
 		}
