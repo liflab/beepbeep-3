@@ -57,7 +57,7 @@
 
 <eml_feeder>,ca.uqac.lif.cep.eml.tuples.TupleFeeder
 <eml_regex>,ca.uqac.lif.cep.eml.tuples.RegexTupleBuilder
-<eml_regex_name_list>,ca.uqac.lif.cep.eml.tuples.RegexTupleBuilder.RegexAttributeNameList
+<eml_regex_name_list>,ca.uqac.lif.cep.eml.tuples.RegexTupleBuilder$RegexAttributeNameList
 
 # "WHERE" statement
 
