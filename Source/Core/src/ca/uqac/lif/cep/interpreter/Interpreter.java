@@ -71,7 +71,14 @@ public class Interpreter implements ParseNodeVisitor
 	/**
 	 * A counter so that every user definition number is unique
 	 */
-	protected static int s_defNb = 0;  
+	protected static int s_defNb = 0;
+	
+	/**
+	 * The result of the last call to the interpreter. This either
+	 * stores a user definition, a processor, or null if the interpretation
+	 * failed.
+	 */
+	protected Object m_lastQuery = null;
 
 	/**
 	 * User-defined processors
@@ -392,6 +399,7 @@ public class Interpreter implements ParseNodeVisitor
 		try 
 		{
 			result = parseQuery(query);
+			m_lastQuery = result;
 			if (result instanceof Processor)
 			{
 				Pullable out = ((Processor) result).getPullableOutput(index);
@@ -405,6 +413,7 @@ public class Interpreter implements ParseNodeVisitor
 		} 
 		catch (ParseException e) 
 		{
+			System.err.println("Error parsing expression " + query);
 			e.printStackTrace();
 		}
 		return null;
@@ -425,6 +434,7 @@ public class Interpreter implements ParseNodeVisitor
 	
 	public Pullable executeQueries(String queries)
 	{
+		queries += "\n"; // Apppend a CR so that the last query is also matched
 		queries = queries.replaceAll("--.*?\n", "\n");
 		String[] parts = queries.split("\\.\n");
 		Pullable last = null;
@@ -720,5 +730,16 @@ public class Interpreter implements ParseNodeVisitor
 			out.m_symbolName = m_symbolName;
 			return out;
 		}
+	}
+	
+	/**
+	 * Returns the result of the last call to the interpreter.
+	 * This is either a processor, a user definition, or null if the
+	 * interpreter failed, depending on the query.
+	 * @return The result of the call
+	 */
+	public Object getLastQuery()
+	{
+		return m_lastQuery;
 	}
 }
