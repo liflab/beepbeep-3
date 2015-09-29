@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Vector;
-
 public class Difference extends CombinableExpression
 {
 	public Difference()
@@ -27,10 +25,10 @@ public class Difference extends CombinableExpression
 	}
 	
 	@Override
-	public Vector<Object> initialize()
+	public Object[] initialize()
 	{
-		Vector<Object> out = new Vector<Object>();
-		out.add(new EmlNumber(0));
+		Object[] out = new Object[1];
+		out[0] = new EmlNumber(0);
 		return out;
 	}
 	

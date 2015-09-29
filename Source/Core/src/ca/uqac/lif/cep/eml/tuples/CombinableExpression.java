@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
@@ -34,18 +33,18 @@ public abstract class CombinableExpression implements Buildable, Combinable
 	}
 
 	@Override
-	public final Vector<Object> combine(Vector<Object> inputs, Vector<Object> total) 
+	public final Object[] combine(Object[] inputs, Object[] total) 
 	{
-		Vector<Object> output = new Vector<Object>();
-		if (inputs.size() == 0)
+		Object[] output = new Object[1];
+		if (inputs.length == 0)
 		{
 			return total;
 		}
 		// Add input to total
-		Object first_object = inputs.firstElement();
-		Object total_object = total.firstElement();
+		Object first_object = inputs[0];
+		Object total_object = total[0];
 		Object new_total = m_binaryExpression.evaluate(first_object, total_object);
-		output.add(new_total);
+		output[0] = new_total;
 		return output;
 	}
 

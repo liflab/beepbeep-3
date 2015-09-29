@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class CountDecimate extends SingleProcessor
 {
@@ -53,9 +52,9 @@ public class CountDecimate extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Vector<Object> out = null;
+		Object[] out = null;
 		if (m_current == 0)
 		{
 			out = inputs;

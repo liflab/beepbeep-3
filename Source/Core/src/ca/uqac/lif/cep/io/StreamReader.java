@@ -27,7 +27,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Source;
 
@@ -147,9 +146,9 @@ public class StreamReader extends Source
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Vector<Object> out = new Vector<Object>();
+		Object[] out = new String[1];
 		try
 		{
 			if (m_br.ready())
@@ -168,7 +167,7 @@ public class StreamReader extends Source
 				}
 				if (chars_read > 0)
 				{
-					out.add(new String(char_array));
+					out[0] = new String(char_array);
 				}
 			}
 			else

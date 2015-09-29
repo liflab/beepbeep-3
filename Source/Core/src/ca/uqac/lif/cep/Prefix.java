@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class Prefix extends Delay
 {
@@ -34,7 +33,7 @@ public class Prefix extends Delay
 	}
 	
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		m_eventsReceived++;
 		if (m_eventsReceived < m_delay)

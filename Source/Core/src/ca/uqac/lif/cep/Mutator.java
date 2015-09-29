@@ -19,30 +19,29 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class Mutator extends SingleProcessor
 {
 	/**
 	 * The output event to send
 	 */
-	protected final Vector<Object> m_output;
+	protected final Object[] m_output;
 	
-	public Mutator(int in_arity, Vector<Object> v)
+	public Mutator(int in_arity, Object[] v)
 	{
-		super(in_arity, v.size());
+		super(in_arity, v.length);
 		m_output = v;
 	}
 	
 	public Mutator(int in_arity, Object o)
 	{
 		super(in_arity, 1);
-		m_output = new Vector<Object>();
-		m_output.add(o);
+		m_output = new Object[1];
+		m_output[0] = o;
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		return wrapVector(m_output);
 	}

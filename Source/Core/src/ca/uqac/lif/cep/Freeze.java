@@ -19,11 +19,10 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class Freeze extends SingleProcessor
 {
-	protected Vector<Object> m_output;
+	protected Object[] m_output;
 	
 	public Freeze()
 	{
@@ -38,7 +37,7 @@ public class Freeze extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		if (m_output == null)
 		{

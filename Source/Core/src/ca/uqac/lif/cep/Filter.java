@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * Discards events from an input trace based on a selection criterion.
@@ -36,24 +35,28 @@ public class Filter extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Object o = inputs.firstElement();
-		Vector<Object> out = new Vector<Object>();
-		boolean b = (Boolean) inputs.lastElement();
+		Object o = inputs[0];
+		Object[] out = new Object[1];
+		boolean b = (Boolean) inputs[inputs.length - 1];
 		if (b)
 		{
-			out.add(o);
+			out[0] = o;
+		}
+		else
+		{
+			out[0] = null;
 		}
 		return wrapVector(out);
 	}
-	
+
 	@Override
 	public void build(Stack<Object> stack)
 	{
 		// TODO
 	}
-	
+
 	@Override
 	public Filter newInstance()
 	{

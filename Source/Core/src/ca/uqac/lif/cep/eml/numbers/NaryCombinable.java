@@ -1,8 +1,6 @@
 package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
-import java.util.Vector;
-
 import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
 
@@ -17,14 +15,14 @@ public class NaryCombinable implements Combinable
 	}
 
 	@Override
-	public Vector<Object> initialize()
+	public Object[] initialize()
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Vector<Object> combine(Vector<Object> inputs, Vector<Object> total)
+	public Object[] combine(Object[] inputs, Object[] total)
 	{
 		// TODO Auto-generated method stub
 		return null;

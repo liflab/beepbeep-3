@@ -21,7 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class Function extends SingleProcessor
 {
@@ -43,7 +42,7 @@ public class Function extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		return wrapVector(m_compute.compute(inputs));
 	}

@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Vector;
 
 public abstract class EmlConstant extends Tuple
 {
@@ -29,11 +28,11 @@ public abstract class EmlConstant extends Tuple
 	}
 	
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
-		Vector<Object> element = new Vector<Object>();
-		element.addElement(this);
+		Queue<Object[]> out = new LinkedList<Object[]>();
+		Object[] element = new EmlConstant[1];
+		element[0] = this;
 		out.add(element);
 		return out;
 	}

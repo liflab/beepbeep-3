@@ -19,11 +19,10 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public class Combiner extends SingleProcessor
 {
-	protected Vector<Object> m_total = null;
+	protected Object[] m_total = null;
 	
 	protected Combinable m_combinable = null;
 	
@@ -50,7 +49,7 @@ public class Combiner extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		m_total = m_combinable.combine(inputs, m_total);
 		return wrapVector(m_total);

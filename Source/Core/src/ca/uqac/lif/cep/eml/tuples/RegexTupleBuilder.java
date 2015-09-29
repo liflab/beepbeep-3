@@ -21,7 +21,6 @@ package ca.uqac.lif.cep.eml.tuples;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,11 +70,11 @@ public class RegexTupleBuilder extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs) 
+	protected Queue<Object[]> compute(Object[] inputs) 
 	{
-		Vector<Object> out_vector = new Vector<Object>();
+		Object[] out_vector = new Object[1];
 		int num_names = m_attributeNames.size();
-		String s = (String) inputs.firstElement();
+		String s = (String) inputs[0];
 		Matcher mat = m_pattern.matcher(s);
 		if (!mat.find())
 		{
@@ -94,7 +93,7 @@ public class RegexTupleBuilder extends SingleProcessor
 			}
 			tuple.put(name, new EmlString(group));
 		}
-		out_vector.add(tuple);
+		out_vector[0] = tuple;
 		return wrapVector(out_vector);
 	}
 

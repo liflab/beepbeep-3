@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * Duplicates an input event into two or more output events
@@ -44,16 +43,16 @@ public class Fork extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		int arity = getOutputArity();
-		Vector<Object> out = new Vector<Object>(arity);
-		if (!inputs.isEmpty())
+		Object[] out = new Object[arity];
+		if (inputs.length > 0)
 		{
-			Object o = inputs.firstElement();
+			Object o = inputs[0];
 			for (int i = 0; i < arity; i++)
 			{
-				out.add(o);
+				out[i] = o;
 			}
 		}
 		return wrapVector(out);

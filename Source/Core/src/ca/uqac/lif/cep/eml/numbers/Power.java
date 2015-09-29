@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
-import java.util.Vector;
 
 public class Power extends NaryComputable
 {
@@ -28,14 +27,14 @@ public class Power extends NaryComputable
 	}
 
 	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
+	protected Object[] computeNumerical(Number[] inputs)
 	{
-		Vector<Object> out = new Vector<Object>();
-		if (inputs.size() >= 2)
+		Object[] out = new Object[1];
+		if (inputs.length >= 2)
 		{
-			Number x = inputs.firstElement();
-			Number n = inputs.lastElement();
-			out.add(Math.pow(x.doubleValue(), n.doubleValue()));
+			Number x = inputs[0];
+			Number n = inputs[inputs.length - 1];
+			out[0] = Math.pow(x.doubleValue(), n.doubleValue());
 		}
 		return out;
 	}

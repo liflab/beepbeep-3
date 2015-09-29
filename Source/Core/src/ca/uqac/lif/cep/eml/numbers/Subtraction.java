@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
-import java.util.Vector;
 
 public class Subtraction extends NaryComputable
 {
@@ -28,17 +27,17 @@ public class Subtraction extends NaryComputable
 	}
 
 	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
+	protected Object[] computeNumerical(Number[] inputs)
 	{
-		Vector<Object> out = new Vector<Object>();
+		Object[] out = new Object[1];
 		float diff = 0;
-		if (inputs.size() >= 2)
+		if (inputs.length >= 2)
 		{
-			Number n1 = inputs.firstElement();
-			Number n2 = inputs.lastElement();
+			Number n1 = inputs[0];
+			Number n2 = inputs[inputs.length - 1];
 			diff = n2.floatValue() - n1.floatValue();
 		}
-		out.add(diff);
+		out[0] = diff;
 		return out;
 	}
 	

@@ -110,21 +110,21 @@ public class MathTest
 		Number recv;
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // 2^4
+		recv = (Number) sink.remove()[0]; // 2^4
 		if (recv == null || recv.intValue() != 16)
 		{
 			fail("Expected 16, got " + recv);
 		}
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // 3^2
+		recv = (Number) sink.remove()[0]; // 3^2
 		if (recv == null || recv.intValue() != 9)
 		{
 			fail("Expected 9, got " + recv);
 		}
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // 2^0
+		recv = (Number) sink.remove()[0]; // 2^0
 		if (recv == null || recv.intValue() != 1)
 		{
 			fail("Expected 1, got " + recv);
@@ -143,19 +143,19 @@ public class MathTest
 		setupStatisticalMoment(input1, sink, 1);
 		Number recv;
 		sink.pull();
-		recv = (Number) sink.remove().firstElement(); // 2
+		recv = (Number) sink.remove()[0]; // 2
 		if (recv == null || Math.abs(recv.floatValue() - 2) > 0.0001)
 		{
 			fail("Expected 2, got " + recv);
 		}
 		sink.pull();
-		recv = (Number) sink.remove().firstElement(); // 2
+		recv = (Number) sink.remove()[0]; // 2
 		if (recv == null || Math.abs(recv.floatValue() - 2.5) > 0.0001)
 		{
 			fail("Expected 2.5, got " + recv);
 		}
 		sink.pull();
-		recv = (Number) sink.remove().firstElement(); // 2
+		recv = (Number) sink.remove()[0]; // 2
 		if (recv == null || Math.abs(recv.floatValue() - 2.33333) > 0.0001)
 		{
 			fail("Expected 2.33, got " + recv);
@@ -174,19 +174,19 @@ public class MathTest
 		setupStatisticalMoment(input1, sink, 1);
 		Number recv;
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 2
+		recv = (Number) sink.remove()[0]; // 2
 		if (recv == null || Math.abs(recv.floatValue() - 2) > 0.0001)
 		{
 			fail("Expected 2, got " + recv);
 		}
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 2
+		recv = (Number) sink.remove()[0]; // 2
 		if (recv == null || Math.abs(recv.floatValue() - 2.5) > 0.0001)
 		{
 			fail("Expected 2.5, got " + recv);
 		}
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 2
+		recv = (Number) sink.remove()[0]; // 2
 		if (recv == null || Math.abs(recv.floatValue() - 2.33333) > 0.0001)
 		{
 			fail("Expected 2.33, got " + recv);
@@ -253,25 +253,25 @@ public class MathTest
 		Number recv;
 		input1.push();
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 2+3=5, null
+		recv = (Number) sink.remove()[0]; // 2+3=5, null
 		if (recv != null)
 		{
 			fail("Expected null, got " + recv);
 		}
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 3+4=7
+		recv = (Number) sink.remove()[0]; // 3+4=7
 		if (recv == null || recv.intValue() != 7)
 		{
 			fail("Expected 7, got " + recv);
 		}
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 4+0=4, null
+		recv = (Number) sink.remove()[0]; // 4+0=4, null
 		if (recv != null)
 		{
 			fail("Expected null, got " + recv);
 		}
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 0+6=6
+		recv = (Number) sink.remove()[0]; // 0+6=6
 		if (recv == null || recv.intValue() != 6)
 		{
 			fail("Expected 6, got " + recv);
@@ -292,17 +292,11 @@ public class MathTest
 		setupSumIfGreater(input1, sink);
 		Number recv;
 		sink.pullHard();
-		recv = (Number) sink.remove().firstElement(); // 3+4=7
-		if (recv == null || recv.intValue() != 7)
-		{
-			fail("Expected 7, got " + recv);
-		}
+		recv = (Number) sink.remove()[0]; // 3+4=7
+		assertEquals(7, recv);
 		sink.pullHard();
-		recv = (Number) sink.remove().firstElement(); // 0+6=6
-		if (recv == null || recv.intValue() != 6)
-		{
-			fail("Expected 6, got " + recv);
-		}
+		recv = (Number) sink.remove()[0]; // 0+6=6
+		assertEquals(6, recv);
 	}
 
 }

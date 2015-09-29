@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.sets;
 
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
@@ -45,18 +44,18 @@ public class BagUnion implements Combinable
 	}
 
 	@Override
-	public Vector<Object> initialize()
+	public Object[] initialize()
 	{
-		Vector<Object> out_vector = new Vector<Object>();
-		out_vector.add(new EmlBag());
+		Object[] out_vector = new Object[1];
+		out_vector[0] = new EmlBag();
 		return out_vector;
 	}
 
 	@Override
-	public Vector<Object> combine(Vector<Object> inputs, Vector<Object> total) 
+	public Object[] combine(Object[] inputs, Object[] total) 
 	{
-		Vector<Object> out_vector = new Vector<Object>();
-		EmlBag total_bag = (EmlBag) total.firstElement();
+		Object[] out_vector = new Object[getOutputArity()];
+		EmlBag total_bag = (EmlBag) total[0];
 		for (Object o : inputs)
 		{
 			if (o instanceof EmlBag)
@@ -65,7 +64,7 @@ public class BagUnion implements Combinable
 				total_bag.addAll(in_bag);
 			}
 		}
-		out_vector.add(total_bag);
+		out_vector[0] =  total_bag;
 		return out_vector;
 	}
 

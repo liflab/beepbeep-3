@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -34,17 +33,19 @@ public class Incrementer extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Vector<Object> outputs = new Vector<Object>();
+		Object[] outputs = new Object[inputs.length];
+		short i = 0;
 		for (Object in : inputs)
 		{
 			if (in instanceof Number)
 			{
 				Number n = (Number) in;
 				n = n.floatValue() + m_increment;
-				outputs.add(n);
+				outputs[i] = n;
 			}
+			i++;
 		}
 		return wrapVector(outputs);
 	}

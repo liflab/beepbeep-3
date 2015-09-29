@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
-import java.util.Vector;
 
 public class IsGreaterThan extends NaryComputable
 {
@@ -28,20 +27,20 @@ public class IsGreaterThan extends NaryComputable
 	}
 
 	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
+	protected Object[] computeNumerical(Number[] inputs)
 	{
-		Vector<Object> out = new Vector<Object>();
-		if (inputs.size() >= 2)
+		Object[] out = new Object[1];
+		if (inputs.length >= 2)
 		{
-			Number n1 = inputs.firstElement();
-			Number n2 = inputs.lastElement();
+			Number n1 = inputs[0];
+			Number n2 = inputs[inputs.length - 1];
 			if (n1.floatValue() > n2.floatValue())
 			{
-				out.add(true);
+				out[0] = true;
 			}
 			else
 			{
-				out.add(false);
+				out[0] = false;
 			}
 		}
 		return out;

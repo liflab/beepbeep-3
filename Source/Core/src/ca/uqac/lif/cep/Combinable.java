@@ -17,13 +17,11 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.Vector;
-
 public interface Combinable extends Buildable
 {
-	public Vector<Object> initialize();
+	public Object[] initialize();
 	
-	public Vector<Object> combine(Vector<Object> inputs, Vector<Object> total);
+	public Object[] combine(Object[] inputs, Object[] total);
 	
 	public int getInputArity();
 	

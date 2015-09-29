@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.Vector;
-
 public abstract class Sink extends SingleProcessor
 {
 	public Sink()
@@ -36,11 +34,11 @@ public abstract class Sink extends SingleProcessor
 	 */
 	public final void pull()
 	{
-		Vector<Object> inputs = new Vector<Object>(getInputArity());
+		Object[] inputs = new Object[getInputArity()];
 		for (int i = 0; i < getInputArity(); i++)
 		{
 			Pullable p = m_inputPullables.get(i);
-			inputs.add(p.pull());
+			inputs[i] = p.pull();
 		}
 		compute(inputs);
 	}
@@ -50,11 +48,11 @@ public abstract class Sink extends SingleProcessor
 	 */
 	public final void pullHard()
 	{
-		Vector<Object> inputs = new Vector<Object>(getInputArity());
+		Object[] inputs = new Object[getInputArity()];
 		for (int i = 0; i < getInputArity(); i++)
 		{
 			Pullable p = m_inputPullables.get(i);
-			inputs.add(p.pullHard());
+			inputs[i] = p.pullHard();
 		}
 		compute(inputs);
 	}

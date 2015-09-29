@@ -18,7 +18,8 @@
 package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
-import java.util.Vector;
+
+import ca.uqac.lif.cep.Processor;
 
 public class IsEven extends NaryComputable
 {
@@ -28,23 +29,23 @@ public class IsEven extends NaryComputable
 	}
 
 	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
+	protected Object[] computeNumerical(Number[] inputs)
 	{
-		Vector<Object> out = new Vector<Object>();
-		if (inputs.isEmpty())
+		Object[] out = new Object[1];
+		if (Processor.allNull(inputs))
 		{
-			out.add(false);
+			out[0] = false;
 		}
 		else
 		{
-			Number n = inputs.firstElement();
+			Number n = inputs[0];
 			if (n.intValue() % 2 == 0)
 			{
-				out.add(true);
+				out[0] = true;
 			}
 			else
 			{
-				out.add(false);
+				out[0] = false;
 			}
 		}
 		return out;

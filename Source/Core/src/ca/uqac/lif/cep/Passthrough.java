@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * The passthrough processor returns its input as its output
@@ -34,7 +33,7 @@ public class Passthrough extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		return wrapVector(inputs);
 	}

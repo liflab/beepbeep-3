@@ -467,7 +467,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		else
 		{
-			throw new ParseException("Error: the BNF parser returned null");
+			throw new ParseException("Error: the BNF parser returned null on input " + query);
 		}
 		//return null;    
 	}

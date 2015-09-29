@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
-import java.util.Vector;
 
 public class Addition extends NaryComputable
 {
@@ -33,9 +32,9 @@ public class Addition extends NaryComputable
 	}
 
 	@Override
-	protected Vector<Object> computeNumerical(Vector<Number> inputs)
+	protected Object[] computeNumerical(Number[] inputs)
 	{
-		Vector<Object> out = new Vector<Object>();
+		Object[] out = new Object[1];
 		float sum = 0;
 		for (Number n : inputs)
 		{
@@ -44,7 +43,7 @@ public class Addition extends NaryComputable
 				sum += n.floatValue();
 			}
 		}
-		out.add(sum);
+		out[0] = sum;
 		return out;
 	}
 	

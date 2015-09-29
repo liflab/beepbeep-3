@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.input;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -44,7 +43,7 @@ public abstract class TokenFeeder extends SingleProcessor
 	 * @param inputs The inputs
 	 */
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		for (Object o : inputs)
 		{
@@ -54,7 +53,7 @@ public abstract class TokenFeeder extends SingleProcessor
 				m_bufferedContents.append(s);
 			}
 		}
-		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
+		Queue<Object[]> out = new LinkedList<Object[]>();
 		String s = m_bufferedContents.toString();
 		while (!s.isEmpty())
 		{
@@ -76,8 +75,8 @@ public abstract class TokenFeeder extends SingleProcessor
 			{
 				if (!(token instanceof NoToken))
 				{
-					Vector<Object> to_fill = new Vector<Object>();
-					to_fill.add(token);
+					Object[] to_fill = new Object[1];
+					to_fill[0] = token;
 					out.add(to_fill);
 				}
 			}

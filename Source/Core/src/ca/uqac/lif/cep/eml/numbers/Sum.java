@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
@@ -38,21 +37,21 @@ public class Sum implements Combinable
 	}
 
 	@Override
-	public Vector<Object> initialize()
+	public Object[] initialize()
 	{
-		Vector<Object> ob = new Vector<Object>();
-		ob.add(0);
+		Object[] ob = new Object[1];
+		ob[0] = 0;
 		return ob;
 	}
 
 	@Override
-	public Vector<Object> combine(Vector<Object> inputs, Vector<Object> total)
+	public Object[] combine(Object[] inputs, Object[] total)
 	{
-		Vector<Object> ob = new Vector<Object>();
-		Number n1 = (Number) total.firstElement();
-		Number n2 = (Number) inputs.firstElement();
+		Object[] ob = new Object[1];
+		Number n1 = (Number) total[0];
+		Number n2 = (Number) inputs[0];
 		Number n3 = n1.floatValue() + n2.floatValue();
-		ob.add(n3);
+		ob[0] = n3;
 		return ob;
 	}
 

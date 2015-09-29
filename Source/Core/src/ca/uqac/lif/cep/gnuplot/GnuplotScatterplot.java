@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.gnuplot;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -52,17 +51,17 @@ public class GnuplotScatterplot extends GnuplotProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs) 
+	protected Queue<Object[]> compute(Object[] inputs) 
 	{
-		Object first_input = inputs.firstElement();
+		Object first_input = inputs[0];
 		if (first_input instanceof EmlBag)
 		{
 			generatePlot((EmlBag) first_input);
 		}
 		if (m_lastPlot != null)
 		{
-			Vector<Object> out = new Vector<Object>();
-			out.add(m_lastPlot);
+			Object[] out = new Object[1];
+			out[0] = m_lastPlot;
 			return wrapVector(out);
 		}
 		return null;

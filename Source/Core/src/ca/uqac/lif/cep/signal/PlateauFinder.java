@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.signal;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -78,10 +77,10 @@ public class PlateauFinder extends WindowProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Vector<Object> out_vector = new Vector<Object>();
-		EmlNumber n = (EmlNumber) inputs.firstElement();
+		Object[] out_vector = new Object[1];
+		EmlNumber n = (EmlNumber) inputs[0];
 		double d = n.numberValue().doubleValue();
 		if (m_values.size() < m_windowWidth)
 		{
@@ -132,19 +131,19 @@ public class PlateauFinder extends WindowProcessor
 			if (!m_plateauFound)
 			{
 				// All values in the interval: create event with midpoint
-				out_vector.add(new EmlNumber(m_minValue + width / 2));
+				out_vector[0] = new EmlNumber(m_minValue + width / 2);
 				m_plateauFound = true;				
 			}
 			else
 			{
-				out_vector.add(new EmlNumber(0));
+				out_vector[0] = new EmlNumber(0);
 			}
 		}
 		else
 		{
 			// No plateau found: emit 0
 			m_plateauFound = false;
-			out_vector.add(new EmlNumber(0));
+			out_vector[0] = new EmlNumber(0);
 			// Reset everything
 			//m_values.clear();
 			//m_maxValue = 0;

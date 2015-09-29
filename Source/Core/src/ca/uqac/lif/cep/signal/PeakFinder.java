@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.signal;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -79,10 +78,10 @@ public class PeakFinder extends WindowProcessor
 	}
 	
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Queue<Vector<Object>> out_queue = new LinkedList<Vector<Object>>();
-		EmlNumber n = (EmlNumber) inputs.firstElement();
+		Queue<Object[]> out_queue = new LinkedList<Object[]>();
+		EmlNumber n = (EmlNumber) inputs[0];
 		double d = n.numberValue().doubleValue();
 		if (m_values.size() < m_windowWidth)
 		{
@@ -126,14 +125,14 @@ public class PeakFinder extends WindowProcessor
 				// First, say that all events prior to this one were not peaks
 				for (long i = 0; i < m_numSincePeak - 1; i++)
 				{
-					Vector<Object> out_vector = new Vector<Object>();
-					out_vector.add(new EmlNumber(0));
+					Object[] out_vector = new Object[1];
+					out_vector[0] = new EmlNumber(0);
 					out_queue.add(out_vector);
 				}
 				// Then, create output event with peak height (max - min)
 				double peak_height = m_maxValue - m_minValue;
-				Vector<Object> out_vector = new Vector<Object>();
-				out_vector.add(new EmlNumber(peak_height));
+				Object[] out_vector = new Object[1];
+				out_vector[0] = new EmlNumber(peak_height);
 				out_queue.add(out_vector);
 				// Reset everything
 				m_maxValue = getMaxValue();

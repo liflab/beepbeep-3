@@ -51,14 +51,14 @@ public class QueueSink extends Sink
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		for (int i = 0; i < m_queues.size(); i++)
 		{
 			Queue<Object> q = m_queues.get(i);
-			q.add(inputs.get(i));
+			q.add(inputs[i]);
 		}
-		return wrapVector(new Vector<Object>());
+		return wrapVector(new Object[m_queues.size()]);
 	}
 	
 	public Queue<Object> getQueue(int i)
@@ -70,21 +70,21 @@ public class QueueSink extends Sink
 	 * Removes the first event of all queues
 	 * @return A vector containing the first event of all queues, or null
 	 */
-	public Vector<Object> remove()
+	public Object[] remove()
 	{
 		int num_queues = m_queues.size();
-		Vector<Object> out = new Vector<Object>();
+		Object[] out = new Object[num_queues];
 		for (int i = 0; i < num_queues; i++)
 		{
 			Queue<Object> q = m_queues.get(i);
 			if (q.isEmpty())
 			{
-				out.add(null);
+				out[i] = null;
 			}
 			else
 			{
 				Object o = q.remove();
-				out.add(o);				
+				out[i] = o;				
 			}
 		}
 		return out;

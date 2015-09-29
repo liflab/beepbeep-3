@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.ltl;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -35,21 +34,21 @@ public abstract class BinaryProcessor extends SingleProcessor
 	}
 
 	@Override
-	protected final Queue<Vector<Object>> compute(Vector<Object> inputs) 
+	protected final Queue<Object[]> compute(Object[] inputs) 
 	{
-		Object left = inputs.get(0);
-		Object right = inputs.get(1);
+		Object left = inputs[0];
+		Object right = inputs[1];
 		if (left == null || right == null)
 		{
-			return new LinkedList<Vector<Object>>();
+			return new LinkedList<Object[]>();
 		}
 		EmlBoolean result = compute(EmlBoolean.toEmlBoolean(left), EmlBoolean.toEmlBoolean(right));
 		if (result == null)
 		{
 			return null;
 		}
-		Vector<Object> out = new Vector<Object>();
-		out.add(result);
+		Object[] out = new Object[1];
+		out[0] = result;
 		return wrapVector(out);
 	}
 	

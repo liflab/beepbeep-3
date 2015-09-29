@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -76,14 +75,14 @@ public class Select extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		Map<String,Tuple> in = new HashMap<String,Tuple>();
 		int i = 0;
 		for (ProcessorDefinition pd : m_processors)
 		{
 			String alias = pd.getAlias();
-			Object o = inputs.get(i);
+			Object o = inputs[i];
 			if (!(o instanceof Tuple))
 			{
 				// A SELECT should receive only tuples for input!
@@ -92,13 +91,10 @@ public class Select extends SingleProcessor
 			in.put(alias, (Tuple) o);
 			i++;
 		}
-		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
-		Vector<Object> tuples = new Vector<Object>();
+		Queue<Object[]> out = new LinkedList<Object[]>();
+		Object[] tuples = new Object[1];
 		Tuple t = computeCast(in);
-		if (t != null)
-		{
-			tuples.add(t);
-		}
+		tuples[0] = t;
 		out.add(tuples);
 		return out;
 	}

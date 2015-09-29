@@ -65,9 +65,9 @@ public class QueueSource extends Source
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Vector<Object> output = new Vector<Object>();
+		Object[] output = new Object[getOutputArity()];
 		Object event = m_events.get(m_index);
 		m_index = (m_index + 1) % m_events.size();
 		if (event == null)
@@ -76,7 +76,7 @@ public class QueueSource extends Source
 		}
 		for (int i = 0; i < getOutputArity(); i++)
 		{
-			output.add(event);
+			output[i] = event;
 		}
 		return wrapVector(output);
 	}

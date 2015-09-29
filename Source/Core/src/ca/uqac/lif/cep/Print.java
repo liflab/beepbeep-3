@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.util.AnsiPrinter;
 
@@ -42,13 +41,13 @@ public class Print extends Sink
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		if (inputs == null || inputs.isEmpty())
+		if (inputs == null || allNull(inputs))
 		{
 			return null;
 		}
-		Object o = inputs.firstElement();
+		Object o = inputs[0];
 		if (o != null)
 		{
 			m_out.setForegroundColor(AnsiPrinter.Color.LIGHT_GRAY);
@@ -56,7 +55,7 @@ public class Print extends Sink
 			m_out.setForegroundColor(AnsiPrinter.Color.RED);
 			m_out.print(",");
 		}
-		return wrapVector(new Vector<Object>());
+		return wrapVector(new Object[getOutputArity()]);
 	}
 	
 	@Override

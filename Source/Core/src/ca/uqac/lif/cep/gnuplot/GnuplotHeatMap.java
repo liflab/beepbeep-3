@@ -163,7 +163,7 @@ public class GnuplotHeatMap extends GnuplotProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		if (m_lastMap == null)
 		{
@@ -198,8 +198,8 @@ public class GnuplotHeatMap extends GnuplotProcessor
 			out.append("\n");
 		}
 		out.append(getBoilerplateFooter());
-		Vector<Object> out_vector = new Vector<Object>();
-		out_vector.addElement(out.toString());
+		Object[] out_vector = new String[1];
+		out_vector[0] = out.toString();
 		return wrapVector(out_vector);
 	}
 

@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
-import java.util.Vector;
 
 public abstract class Source extends SingleProcessor
 {
@@ -37,19 +36,19 @@ public abstract class Source extends SingleProcessor
 	 */
 	public final void push()
 	{
-		Queue<Vector<Object>> output = compute(null);
+		Queue<Object[]> output = compute(null);
 		if (output == null || output.isEmpty())
 		{
 			return;
 		}
-		for (Vector<Object> evt : output)
+		for (Object[] evt : output)
 		{
-			if (evt != null && !evt.isEmpty())
+			if (evt != null && !allNull(evt))
 			{
 				for (int i = 0; i < output.size(); i++)
 				{
 					Pushable p = m_outputPushables.get(i);
-					p.push(evt.get(i));
+					p.push(evt[i]);
 				}
 			}
 		}

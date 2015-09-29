@@ -105,15 +105,15 @@ public class Window extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		// Add the inputs to each window
 		boolean windows_ok = true;
-		int arity = inputs.size();
+		int arity = inputs.length;
 		for (int i = 0; i < arity; i++)
 		{
 			List<Object> q = m_window.get(i);
-			q.add(inputs.get(i));
+			q.add(inputs[i]);
 			int size_diff = q.size() - m_width;
 			leftTrim(size_diff, q);
 			if (size_diff < 0)
@@ -122,7 +122,7 @@ public class Window extends SingleProcessor
 				windows_ok = false;
 			}
 		}
-		Vector<Object> out = null;
+		Object[] out = null;
 		if (windows_ok) // All windows have the proper width
 		{
 			m_processor.reset();

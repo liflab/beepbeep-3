@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.eml.numbers;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -65,11 +64,11 @@ public class EmlNumber extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Queue<Vector<Object>> out = new LinkedList<Vector<Object>>();
-		Vector<Object> element = new Vector<Object>();
-		element.addElement(this);
+		Queue<Object[]> out = new LinkedList<Object[]>();
+		Object[] element = new EmlNumber[1];
+		element[0] = this;
 		out.add(element);
 		return out;
 	}

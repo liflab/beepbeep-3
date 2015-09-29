@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -38,10 +37,10 @@ public class Where extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Queue<Vector<Object>> out_q = new LinkedList<Vector<Object>>();
-		Object first_elem = inputs.firstElement();
+		Queue<Object[]> out_q = new LinkedList<Object[]>();
+		Object first_elem = inputs[0];
 		if (!(first_elem instanceof Tuple))
 		{
 			// The WHERE processor should receive only tuples
@@ -56,8 +55,8 @@ public class Where extends SingleProcessor
 			EmlBoolean b = (EmlBoolean) result;
 			if (b.boolValue())
 			{
-				Vector<Object> v_o = new Vector<Object>();
-				v_o.add(in_tuple);
+				Object[] v_o = new Object[1];
+				v_o[0] =  in_tuple;
 				out_q.add(v_o);
 			}
 		}

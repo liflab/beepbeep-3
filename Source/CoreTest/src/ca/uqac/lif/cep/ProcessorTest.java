@@ -138,25 +138,25 @@ public class ProcessorTest
 		Connector.connect(wp, qs);
 		// We must push three times to get the first output
 		cs.push();
-		recv = (Number) qs.remove().elementAt(0);
+		recv = (Number) qs.remove()[0];
 		if (recv != null)
 		{
 			fail("Expected null on first push, got " + recv);
 		}
 		cs.push();
-		recv = (Number) qs.remove().elementAt(0);
+		recv = (Number) qs.remove()[0];
 		if (recv != null)
 		{
 			fail("Expected null on second push, got " + recv);
 		}
 		cs.push();
-		recv = (Number) qs.remove().elementAt(0);
+		recv = (Number) qs.remove()[0];
 		if (recv == null || recv.intValue() != 3)
 		{
 			fail("Expected 3 on third push, got " + recv);
 		}
 		cs.push();
-		recv = (Number) qs.remove().elementAt(0);
+		recv = (Number) qs.remove()[0];
 		if (recv == null || recv.intValue() != 3)
 		{
 			fail("Expected 3 on fourth push, got " + recv);
@@ -177,35 +177,35 @@ public class ProcessorTest
 		Number recv;
 		sink.pull();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv == null || recv.intValue() != 1)
 		{
 			fail("Expected 1 on pull " + op_num + ", got " + recv);
 		}
 		sink.pull();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv != null)
 		{
 			fail("Expected null on pull " + op_num + ", got " + recv);
 		}
 		sink.pull();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv == null || recv.intValue() != 3)
 		{
 			fail("Expected 3 on pull " + op_num + ", got " + recv);
 		}
 		sink.pull();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv != null)
 		{
 			fail("Expected null on pull " + op_num + ", got " + recv);
 		}
 		sink.pull();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv == null || recv.intValue() != 5)
 		{
 			fail("Expected 5 on pull " + op_num + ", got " + recv);
@@ -226,35 +226,35 @@ public class ProcessorTest
 		Number recv;
 		ones.push();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv == null || recv.intValue() != 1)
 		{
 			fail("Expected 1 on push " + op_num + ", got " + recv);
 		}
 		ones.push();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv != null)
 		{
 			fail("Expected null on push " + op_num + ", got " + recv);
 		}
 		ones.push();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv == null || recv.intValue() != 3)
 		{
 			fail("Expected 3 on push " + op_num + ", got " + recv);
 		}
 		ones.push();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv != null)
 		{
 			fail("Expected null on push " + op_num + ", got " + recv);
 		}
 		ones.push();
 		op_num++;
-		recv = (Number) sink.remove().firstElement();
+		recv = (Number) sink.remove()[0];
 		if (recv == null || recv.intValue() != 5)
 		{
 			fail("Expected 5 on push " + op_num + ", got " + recv);
@@ -281,13 +281,13 @@ public class ProcessorTest
 		Number recv;
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // 1 + 6
+		recv = (Number) sink.remove()[0]; // 1 + 6
 		if (recv == null || recv.intValue() != 7)
 		{
 			fail("Expected 7, got " + recv);
 		}
 		input1.push(); // We only push on first input
-		recv = (Number) sink.remove().firstElement(); // 2 + ?
+		recv = (Number) sink.remove()[0]; // 2 + ?
 		if (recv != null)
 		{
 			// Can't compute an output event; we're waiting for right input
@@ -295,14 +295,14 @@ public class ProcessorTest
 		}
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // 2 + 4
+		recv = (Number) sink.remove()[0]; // 2 + 4
 		if (recv == null || recv.intValue() != 6)
 		{
 			fail("Expected 10, got " + recv);
 		}
 		input2.push();
 		// Only need to push on right; left already in queue
-		recv = (Number) sink.remove().firstElement(); // 3 + 0
+		recv = (Number) sink.remove()[0]; // 3 + 0
 		if (recv == null || recv.intValue() != 3)
 		{
 			fail("Expected 3, got " + recv);
@@ -331,14 +331,14 @@ public class ProcessorTest
 		Number recv;
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // 1
+		recv = (Number) sink.remove()[0]; // 1
 		if (recv == null || recv.intValue() != 1)
 		{
 			fail("Expected 1, got " + recv);
 		}
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // null
+		recv = (Number) sink.remove()[0]; // null
 		if (recv != null)
 		{
 			fail("Expected null, got " + recv);
@@ -346,14 +346,14 @@ public class ProcessorTest
 		input1.push();
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // 1
+		recv = (Number) sink.remove()[0]; // 1
 		if (recv == null || recv.intValue() != 3)
 		{
 			fail("Expected 3, got " + recv);
 		}
 		input1.push();
 		input2.push();
-		recv = (Number) sink.remove().firstElement(); // null
+		recv = (Number) sink.remove()[0]; // null
 		if (recv != null)
 		{
 			fail("Expected null, got " + recv);
@@ -380,25 +380,22 @@ public class ProcessorTest
 		Connector.connect(filter, sink);
 		Number recv;
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 2
-		if (recv == null || recv.intValue() != 2)
-		{
-			fail("Expected 2, got " + recv);
-		}
+		recv = (Number) sink.remove()[0]; // 2
+		assertEquals(2, recv);
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // null
+		recv = (Number) sink.remove()[0]; // null
 		if (recv != null)
 		{
 			fail("Expected null, got " + recv);
 		}
 		input1.push();
 		input1.push();
-		recv = (Number) sink.remove().firstElement(); // 4
+		recv = (Number) sink.remove()[0]; // 4
 		if (recv == null || recv.intValue() != 4)
 		{
 			fail("Expected 4, got " + recv);
 		}
-		recv = (Number) sink.remove().firstElement(); // 6
+		recv = (Number) sink.remove()[0]; // 6
 		if (recv == null || recv.intValue() != 6)
 		{
 			fail("Expected 6, got " + recv);

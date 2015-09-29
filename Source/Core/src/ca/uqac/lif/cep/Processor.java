@@ -151,4 +151,16 @@ public abstract class Processor implements Buildable
 		}
 		return out;
 	}
+	
+	public static boolean allNull(Object[] v)
+	{
+		for (Object o : v)
+		{
+			if (o != null)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }

@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep.eml.numbers;
 
-import java.util.Vector;
-
 import ca.uqac.lif.cep.Computable;
 
 public abstract class NaryComputable implements Computable
@@ -49,24 +47,26 @@ public abstract class NaryComputable implements Computable
 	}
 	
 	@Override
-	public final Vector<Object> compute(Vector<Object> inputs)
+	public final Object[] compute(Object[] inputs)
 	{
-		Vector<Number> numbers = new Vector<Number>();
+		Number[] numbers = new Number[inputs.length];
+		short i = 0;
 		for (Object o : inputs)
 		{
 			if (o instanceof Number)
 			{
-				numbers.add((Number) o);
+				numbers[i] = (Number) o;
 			}
 			else
 			{
-				numbers.add(0);
+				numbers[i] = 0;
 			}
+			i++;
 		}
 		return computeNumerical(numbers);
 	}
 	
-	protected abstract Vector<Object> computeNumerical(Vector<Number> inputs);
+	protected abstract Object[] computeNumerical(Number[] inputs);
 	
 	public NaryComputable newInstance()
 	{

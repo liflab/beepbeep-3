@@ -70,7 +70,7 @@ public class HttpReader extends StreamReader
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		if (m_fis == null)
 		{

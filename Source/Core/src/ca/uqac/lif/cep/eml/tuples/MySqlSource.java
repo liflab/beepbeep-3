@@ -123,7 +123,7 @@ public class MySqlSource extends Source
 	}
 
 	@Override
-	protected Queue<Vector<Object>> compute(Vector<Object> inputs)
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		if (conn == null)
 		{
