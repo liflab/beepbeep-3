@@ -297,10 +297,9 @@ public abstract class SingleProcessor extends Processor
 		@Override
 		public synchronized NextStatus hasNext()
 		{
-			System.out.print("");
 			Queue<Object> out_queue = m_outputQueues.get(m_index);
 			// If an event is already waiting in the output queue,
-			// return it and don't pull anything from the input
+			// return yes and don't pull anything from the input
 			if (!out_queue.isEmpty())
 			{
 				return NextStatus.YES;
@@ -357,6 +356,10 @@ public abstract class SingleProcessor extends Processor
 	
 	protected static final Queue<Object[]> wrapVector(Object[] v)
 	{
+		if (v == null || allNull(v))
+		{
+			return null;
+		}
 		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		out.add(v);
 		return out;
