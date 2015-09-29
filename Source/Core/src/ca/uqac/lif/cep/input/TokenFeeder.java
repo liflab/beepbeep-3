@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.input;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
@@ -53,7 +53,7 @@ public abstract class TokenFeeder extends SingleProcessor
 				m_bufferedContents.append(s);
 			}
 		}
-		Queue<Object[]> out = new LinkedList<Object[]>();
+		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		String s = m_bufferedContents.toString();
 		while (!s.isEmpty())
 		{

@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -39,7 +39,7 @@ public abstract class UnaryProcessor extends SingleProcessor
 		Object o = inputs[0];
 		if (o == null)
 		{
-			return new LinkedList<Object[]>();
+			return new ArrayDeque<Object[]>();
 		}
 		EmlBoolean result = compute(EmlBoolean.toEmlBoolean(o));
 		if (result == null)

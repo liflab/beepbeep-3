@@ -17,12 +17,12 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Buildable;
 
-public class ProcessorDefinitionList extends LinkedList<ProcessorDefinition> implements Buildable
+public class ProcessorDefinitionList extends ArrayDeque<ProcessorDefinition> implements Buildable
 {
 	/**
 	 * Dummy UID

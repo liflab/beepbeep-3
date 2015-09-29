@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
@@ -39,7 +39,7 @@ public class Where extends SingleProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Queue<Object[]> out_q = new LinkedList<Object[]>();
+		Queue<Object[]> out_q = new ArrayDeque<Object[]>();
 		Object first_elem = inputs[0];
 		if (!(first_elem instanceof Tuple))
 		{

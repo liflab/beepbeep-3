@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.eml.numbers;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -66,7 +66,7 @@ public class EmlNumber extends SingleProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Queue<Object[]> out = new LinkedList<Object[]>();
+		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		Object[] element = new EmlNumber[1];
 		element[0] = this;
 		out.add(element);

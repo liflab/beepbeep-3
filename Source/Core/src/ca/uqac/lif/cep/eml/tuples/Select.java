@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
@@ -91,7 +91,7 @@ public class Select extends SingleProcessor
 			in.put(alias, (Tuple) o);
 			i++;
 		}
-		Queue<Object[]> out = new LinkedList<Object[]>();
+		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		Object[] tuples = new Object[1];
 		Tuple t = computeCast(in);
 		tuples[0] = t;

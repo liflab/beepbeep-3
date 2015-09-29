@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.signal;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -80,7 +80,7 @@ public class PeakFinder extends WindowProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Queue<Object[]> out_queue = new LinkedList<Object[]>();
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		EmlNumber n = (EmlNumber) inputs[0];
 		double d = n.numberValue().doubleValue();
 		if (m_values.size() < m_windowWidth)

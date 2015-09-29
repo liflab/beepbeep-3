@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
@@ -45,7 +45,7 @@ public class QueueSink extends Sink
 		m_queues = new Vector<Queue<Object>>();
 		for (int i = 0; i < arity; i++)
 		{
-			m_queues.add(new LinkedList<Object>());
+			m_queues.add(new ArrayDeque<Object>());
 		}
 
 	}

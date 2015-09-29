@@ -17,12 +17,12 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Buildable;
 
-public class AttributeList extends LinkedList<AttributeDefinition> implements Buildable
+public class AttributeList extends ArrayDeque<AttributeDefinition> implements Buildable
 {
 	/**
 	 * Dummy UID

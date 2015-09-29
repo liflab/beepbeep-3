@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Vector;
 
@@ -80,7 +80,7 @@ public abstract class SingleProcessor extends Processor
 		m_inputQueues = new Vector<Queue<Object>>();
 		for (int i = 0; i < m_inputArity; i++)
 		{
-			m_inputQueues.add(new LinkedList<Object>());
+			m_inputQueues.add(new ArrayDeque<Object>());
 		}
 	}
 
@@ -89,7 +89,7 @@ public abstract class SingleProcessor extends Processor
 		m_outputQueues = new Vector<Queue<Object>>();
 		for (int i = 0; i < m_outputArity; i++)
 		{
-			m_outputQueues.add(new LinkedList<Object>());
+			m_outputQueues.add(new ArrayDeque<Object>());
 		}
 	}
 
@@ -357,14 +357,14 @@ public abstract class SingleProcessor extends Processor
 	
 	protected static final Queue<Object[]> wrapVector(Object[] v)
 	{
-		Queue<Object[]> out = new LinkedList<Object[]>();
+		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		out.add(v);
 		return out;
 	}
 	
 	protected static final Queue<Object[]> wrapObject(Object o)
 	{
-		Queue<Object[]> out = new LinkedList<Object[]>();
+		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		Object[] v = new Object[1];
 		v[0] = o;
 		out.add(v);
