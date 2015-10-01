@@ -648,5 +648,32 @@ public class ProcessorTest
 		recv = (String) p2.pull();
 		assertEquals("B", recv);		
 	}
+	
+	/**
+	 * This test does not assert anything. It is used for step-by-step debugging
+	 * of the {@link SingleProcessor.OutputPullable#hasNext()} method.
+	 */
+	@Test
+	public void testHasNext()
+	{
+		Vector<Object> events = new Vector<Object>();
+		events.add("A");
+		events.add("B");
+		events.add("C");
+		events.add("D");
+		QueueSource cp = new QueueSource("", 1);
+		cp.setEvents(events);
+		Passthrough pt = new Passthrough(1);
+		Connector.connect(cp, pt);
+		Pullable p = pt.getPullableOutput(0);
+		for (int i = 0; i < 10; i++)
+		{
+			if (p.hasNext() == Pullable.NextStatus.YES)
+			{
+				p.pull();
+			}
+		}
+		assertTrue(true);
+	}
 
 }

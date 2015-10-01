@@ -52,6 +52,8 @@
 <eml_equality>,ca.uqac.lif.cep.eml.tuples.EqualsExpression
 <eml_lt>,ca.uqac.lif.cep.eml.tuples.LessThan
 <eml_gt>,ca.uqac.lif.cep.eml.tuples.GreaterThan
+<eml_and>,ca.uqac.lif.cep.eml.tuples.Conjunction
+<eml_or>,ca.uqac.lif.cep.eml.tuples.Disjunction
 
 # Tuple feeders
 

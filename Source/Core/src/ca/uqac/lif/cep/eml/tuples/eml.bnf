@@ -62,11 +62,14 @@
 
 <eml_att_expr_binary>    := <eml_addition> | <eml_multiplication> 
                             | <eml_division> | <eml_subtraction> 
-                            | <eml_equality> | <eml_lt> | <eml_gt> ;
+                            | <eml_equality> | <eml_lt> | <eml_gt> 
+                            | <eml_and> | <eml_or> ;
 <eml_addition>           := ( <eml_att_expr> ) + ( <eml_att_expr> ) ;
 <eml_multiplication>     := ( <eml_att_expr> ) × ( <eml_att_expr> ) ;
 <eml_division>           := ( <eml_att_expr> ) ÷ ( <eml_att_expr> ) ;
 <eml_subtraction>        := ( <eml_att_expr> ) - ( <eml_att_expr> ) ;
+<eml_and>                := ( <eml_att_expr> ) AND ( <eml_att_expr> ) ;
+<eml_or>                 := ( <eml_att_expr> ) OR ( <eml_att_expr> ) ;
 <eml_power>              := ( <eml_att_expr> ) TO THE ( <eml_att_expr> ) <power_particle> ;
 <power_particle>         := ST | ND | RD | TH ;
 <eml_equality>           := ( <eml_att_expr> ) = ( <eml_att_expr> ) ;
