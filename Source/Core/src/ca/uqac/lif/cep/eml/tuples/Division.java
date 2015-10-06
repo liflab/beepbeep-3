@@ -19,15 +19,18 @@ package ca.uqac.lif.cep.eml.tuples;
 
 public class Division extends BinaryExpression
 {
+	protected static final Division s_singleton = new Division();
+	
+	public static Division getSingleton()
+	{
+		return s_singleton;
+	}
+	
 	@Override
 	public EmlConstant evaluate(Object t_left, Object t_right)
 	{
-		EmlNumber n_left = EmlNumber.toEmlNumber(t_left);
-		EmlNumber n_right = EmlNumber.toEmlNumber(t_right);
-		if (n_left == null || n_right == null)
-		{
-			return null;
-		}
-		return new EmlNumber(n_left.numberValue().floatValue() / n_right.numberValue().floatValue());
+		float n_left = EmlNumber.parseFloat(t_left);
+		float n_right = EmlNumber.parseFloat(t_right);
+		return new EmlNumber(n_left / n_right);
 	}
 }

@@ -137,4 +137,43 @@ public class EmlNumber extends EmlConstant
 		}
 		return null;
 	}
+	
+	/**
+	 * Attempts to create a float from the object passed as an argument
+	 * @param o The object
+	 * @return The float, or 0 if no float could be produced from the argument
+	 */
+	public static float parseFloat(Object o)
+	{
+		if (o instanceof EmlNumber)
+		{
+			return ((EmlNumber) o).m_number.floatValue();
+		}
+		if (o instanceof Number)
+		{
+			return ((Number) o).floatValue();
+		}
+		if (o instanceof String)
+		{
+			return Float.parseFloat((String) o);
+		}
+		if (o instanceof NamedTuple)
+		{
+			NamedTuple t = (NamedTuple) o;
+			if (t.size() == 1)
+			{
+				// If we have a tuple with a single element, try to make a
+				// number with that element
+				for (String s : t.keySet())
+				{
+					EmlConstant c = t.get(s);
+					if (c != null)
+					{
+						return EmlNumber.parseFloat(c);
+					}
+				}
+			}
+		}
+		return 0;
+	}
 }
