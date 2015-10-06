@@ -21,7 +21,7 @@ public class Product extends CombinableExpression
 {
 	public Product()
 	{
-		super(new Multiplication());
+		super(Multiplication.s_singleton);
 	}
 	
 	@Override

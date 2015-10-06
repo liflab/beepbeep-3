@@ -21,7 +21,7 @@ public class Quotient extends CombinableExpression
 {
 	public Quotient()
 	{
-		super(new Division());
+		super(Division.s_singleton);
 	}
 	
 	@Override

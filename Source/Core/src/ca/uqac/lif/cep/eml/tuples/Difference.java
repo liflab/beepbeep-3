@@ -21,7 +21,7 @@ public class Difference extends CombinableExpression
 {
 	public Difference()
 	{
-		super(new Subtraction());
+		super(Subtraction.s_singleton);
 	}
 	
 	@Override

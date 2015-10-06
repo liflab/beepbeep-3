@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.Combinable;
 
 public abstract class CombinableExpression implements Buildable, Combinable 
 {
-	protected BinaryExpression m_binaryExpression;
+	protected final BinaryExpression m_binaryExpression;
 	
 	public CombinableExpression(BinaryExpression exp)
 	{

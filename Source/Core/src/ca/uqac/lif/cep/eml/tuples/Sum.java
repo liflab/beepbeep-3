@@ -21,7 +21,7 @@ public class Sum extends CombinableExpression
 {
 	public Sum()
 	{
-		super(new Addition());
+		super(Addition.s_singleton);
 	}
 	
 	@Override
