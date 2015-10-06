@@ -293,10 +293,10 @@ public class MathTest
 		Number recv;
 		sink.pullHard();
 		recv = (Number) sink.remove()[0]; // 3+4=7
-		assertEquals(7, recv);
+		assertEquals(7, recv.intValue());
 		sink.pullHard();
 		recv = (Number) sink.remove()[0]; // 0+6=6
-		assertEquals(6, recv);
+		assertEquals(6, recv.intValue());
 	}
 
 }

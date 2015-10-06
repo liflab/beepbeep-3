@@ -185,7 +185,7 @@ public class TuplesEmlGrammarTest
 	public void testExtension15a() throws ParseException
 	{
 		String expression = "(THE TUPLES OF FILE \"tuples1.csv\") WHERE (a) = (0)";
-		m_parser.setDebugMode(true);
+		m_parser.setDebugMode(false);
 		ParseNode result = shouldParse(expression, "<eml_where>");
 		assertEquals("<eml_where>", result.getValue());
 	}
@@ -210,7 +210,7 @@ public class TuplesEmlGrammarTest
 	public void testExtension17a() throws ParseException
 	{
 		String expression = "SELECT q FROM (((0) WHERE (a) = (\"MSFT\")))";
-		m_parser.setDebugMode(true);
+		m_parser.setDebugMode(false);
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}

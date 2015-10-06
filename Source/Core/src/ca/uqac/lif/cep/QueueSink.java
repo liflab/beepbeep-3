@@ -56,7 +56,10 @@ public class QueueSink extends Sink
 		for (int i = 0; i < m_queues.size(); i++)
 		{
 			Queue<Object> q = m_queues.get(i);
-			q.add(inputs[i]);
+			if (inputs[i] != null)
+			{
+				q.add(inputs[i]);
+			}
 		}
 		return wrapVector(new Object[m_queues.size()]);
 	}
