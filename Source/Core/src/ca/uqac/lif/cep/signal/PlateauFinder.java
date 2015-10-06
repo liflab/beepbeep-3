@@ -50,7 +50,7 @@ public class PlateauFinder extends WindowProcessor
 	/**
 	 * The range all values should lie in
 	 */
-	protected double m_range;
+	protected float m_range;
 
 	/**
 	 * Whether an output event has been sent for the current plateau
@@ -81,7 +81,7 @@ public class PlateauFinder extends WindowProcessor
 	{
 		Object[] out_vector = new Object[1];
 		EmlNumber n = (EmlNumber) inputs[0];
-		double d = n.numberValue().doubleValue();
+		float d = n.floatValue();
 		if (m_values.size() < m_windowWidth)
 		{
 			m_values.addElement(d);

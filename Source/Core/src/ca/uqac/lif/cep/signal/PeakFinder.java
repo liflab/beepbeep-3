@@ -82,7 +82,7 @@ public class PeakFinder extends WindowProcessor
 	{
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		EmlNumber n = (EmlNumber) inputs[0];
-		double d = n.numberValue().doubleValue();
+		float d = n.floatValue();
 		if (m_values.size() < m_windowWidth)
 		{
 			m_values.addElement(d);

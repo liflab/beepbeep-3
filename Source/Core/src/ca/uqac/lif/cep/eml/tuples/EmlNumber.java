@@ -23,33 +23,42 @@ import ca.uqac.lif.cep.Processor;
 
 public class EmlNumber extends EmlConstant
 {
-	protected Number m_number;
+	protected final float m_number;
 	
 	public EmlNumber()
 	{
+		this(0);
+	}
+	
+	public EmlNumber(float n)
+	{
 		super();
+		m_number = n;
 	}
 	
 	public EmlNumber(Number n)
 	{
-		this();
-		m_number = n;
+		this(n.floatValue());
 	}
 	
 	public EmlNumber(EmlNumber n)
 	{
-		this();
-		m_number = n.numberValue();
-	}
-
-	public Number numberValue()
-	{
-		return m_number.doubleValue();
+		this(n.m_number);
 	}
 	
 	public int intValue()
 	{
-		return m_number.intValue();
+		return (int) m_number;
+	}
+	
+	public float floatValue()
+	{
+		return m_number;
+	}
+	
+	public double doubleValue()
+	{
+		return m_number;
 	}
 
 	@Override
@@ -69,18 +78,18 @@ public class EmlNumber extends EmlConstant
 	@Override
 	public String toString()
 	{
-		if (m_number.floatValue() % 1 == 0)
+		if (m_number % 1 == 0)
 		{
 			// Display as integer
-			return Integer.toString(m_number.intValue());
+			return Integer.toString((int) m_number);
 		}
-		return m_number.toString();
+		return Float.toString(m_number);
 	}
 	
 	@Override
 	public int hashCode()
 	{
-		return m_number.hashCode();
+		return (int) m_number;
 	}
 	
 	@Override
@@ -95,7 +104,7 @@ public class EmlNumber extends EmlConstant
 	
 	protected boolean equals(EmlNumber n)
 	{
-		return m_number.doubleValue() == n.m_number.doubleValue();
+		return m_number == n.m_number;
 	}
 	
 	/**
@@ -147,7 +156,7 @@ public class EmlNumber extends EmlConstant
 	{
 		if (o instanceof EmlNumber)
 		{
-			return ((EmlNumber) o).m_number.floatValue();
+			return ((EmlNumber) o).m_number;
 		}
 		if (o instanceof Number)
 		{

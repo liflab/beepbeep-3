@@ -182,8 +182,8 @@ public class GnuplotHeatMap extends GnuplotProcessor
 		{
 			NamedTuple tuple = (NamedTuple) o;
 			int value = m_lastMap.get(tuple);
-			int x = ((EmlNumber) tuple.get("x")).numberValue().intValue();
-			int y = ((EmlNumber) tuple.get("y")).numberValue().intValue();
+			int x = ((EmlNumber) tuple.get("x")).intValue();
+			int y = ((EmlNumber) tuple.get("y")).intValue();
 			m_values[x - m_minX][y - m_minY] = value / m_scale;
 		}
 		// Create Gnuplot output file from that data

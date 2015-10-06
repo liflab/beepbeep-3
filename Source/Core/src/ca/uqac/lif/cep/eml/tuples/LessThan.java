@@ -28,14 +28,11 @@ public class LessThan extends BinaryExpression
 	@Override
 	public EmlConstant evaluate(Object t_left, Object t_right) 
 	{
-		EmlNumber n_left = EmlNumber.toEmlNumber(t_left);
-		EmlNumber n_right = EmlNumber.toEmlNumber(t_right);
-		if (t_left != null && t_right != null)
+		float n_left = EmlNumber.parseFloat(t_left);
+		float n_right = EmlNumber.parseFloat(t_right);
+		if (n_left < n_right)
 		{
-			if (n_left.numberValue().doubleValue() < n_right.numberValue().doubleValue())
-			{
-				return new EmlBoolean(true);
-			}
+			return new EmlBoolean(true);
 		}
 		return new EmlBoolean(false);
 	}

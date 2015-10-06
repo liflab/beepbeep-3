@@ -15,7 +15,7 @@ public abstract class WindowProcessor extends SingleProcessor
 	/**
 	 * The window of values to remember
 	 */
-	protected Vector<Double> m_values;
+	protected Vector<Float> m_values;
 	
 	/**
 	 * The width of the window to process
@@ -36,7 +36,7 @@ public abstract class WindowProcessor extends SingleProcessor
 	public WindowProcessor()
 	{
 		super(1, 1);
-		m_values = new Vector<Double>();
+		m_values = new Vector<Float>();
 		m_windowWidth = 5;
 		m_maxValue = 0;
 		m_minValue = 0;
@@ -46,7 +46,7 @@ public abstract class WindowProcessor extends SingleProcessor
 	public void reset()
 	{
 		super.reset();
-		m_values = new Vector<Double>(m_windowWidth);
+		m_values = new Vector<Float>(m_windowWidth);
 		m_maxValue = 0;
 		m_minValue = 0;
 	}

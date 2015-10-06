@@ -68,7 +68,7 @@ public class TuplesEmlSelectTest
 		Object answer = p.pull();
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber n = (EmlNumber) answer;
-		assertEquals(0, n.numberValue().intValue());
+		assertEquals(0, n.intValue());
 	}
 	
 	@Test
@@ -81,7 +81,7 @@ public class TuplesEmlSelectTest
 		Object answer = p.pull();
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber n = (EmlNumber) answer;
-		assertEquals(0, n.numberValue().intValue());
+		assertEquals(0, n.intValue());
 	}
 	
 	@Test
@@ -94,7 +94,7 @@ public class TuplesEmlSelectTest
 		Object answer = p.pull();
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber n = (EmlNumber) answer;
-		assertEquals(0, n.numberValue().intValue());
+		assertEquals(0, n.intValue());
 	}
 	
 	@Test
@@ -107,7 +107,7 @@ public class TuplesEmlSelectTest
 		Object answer = p.pull();
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber n = (EmlNumber) answer;
-		assertEquals(2, n.numberValue().intValue());
+		assertEquals(2, n.intValue());
 	}
 	
 	@Test
@@ -120,7 +120,7 @@ public class TuplesEmlSelectTest
 		Object answer = p.pull();
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber n = (EmlNumber) answer;
-		assertEquals(3, n.numberValue().intValue());
+		assertEquals(3, n.intValue());
 	}
 	
 	@Test
@@ -134,7 +134,7 @@ public class TuplesEmlSelectTest
 		assertTrue(answer instanceof NamedTuple);
 		NamedTuple tup = (NamedTuple) answer;
 		assertEquals(1, tup.keySet().size());
-		assertEquals(2, ((EmlNumber) tup.get("w")).numberValue().intValue());
+		assertEquals(2, ((EmlNumber) tup.get("w")).intValue());
 	}
 	
 	@Test
@@ -148,7 +148,7 @@ public class TuplesEmlSelectTest
 		assertTrue(answer instanceof NamedTuple);
 		NamedTuple tup = (NamedTuple) answer;
 		assertEquals(2, tup.keySet().size());
-		assertEquals(4, ((EmlNumber) tup.get("v")).numberValue().intValue());
+		assertEquals(4, ((EmlNumber) tup.get("v")).intValue());
 	}
 	
 	@Test
@@ -174,8 +174,8 @@ public class TuplesEmlSelectTest
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
-			assertEquals(0, ((EmlNumber) tup.get("a")).numberValue().intValue());
-			assertEquals(3, ((EmlNumber) tup.get("n")).numberValue().intValue());
+			assertEquals(0, ((EmlNumber) tup.get("a")).intValue());
+			assertEquals(3, ((EmlNumber) tup.get("n")).intValue());
 		}
 		{
 			// Get next tuple
@@ -183,8 +183,8 @@ public class TuplesEmlSelectTest
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
-			assertEquals(1, ((EmlNumber) tup.get("a")).numberValue().intValue());
-			assertEquals(3, ((EmlNumber) tup.get("n")).numberValue().intValue());
+			assertEquals(1, ((EmlNumber) tup.get("a")).intValue());
+			assertEquals(3, ((EmlNumber) tup.get("n")).intValue());
 		}
 	}
 	
@@ -220,8 +220,8 @@ public class TuplesEmlSelectTest
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
-			assertEquals(2, ((EmlNumber) tup.get("x")).numberValue().intValue());
-			assertEquals(6, ((EmlNumber) tup.get("y")).numberValue().intValue());
+			assertEquals(2, ((EmlNumber) tup.get("x")).intValue());
+			assertEquals(6, ((EmlNumber) tup.get("y")).intValue());
 		}
 		{
 			// Get next tuple
@@ -229,8 +229,8 @@ public class TuplesEmlSelectTest
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
-			assertEquals(5, ((EmlNumber) tup.get("x")).numberValue().intValue());
-			assertEquals(9, ((EmlNumber) tup.get("y")).numberValue().intValue());
+			assertEquals(5, ((EmlNumber) tup.get("x")).intValue());
+			assertEquals(9, ((EmlNumber) tup.get("y")).intValue());
 		}
 		{
 			// Get next tuple
@@ -238,8 +238,8 @@ public class TuplesEmlSelectTest
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
-			assertEquals(8, ((EmlNumber) tup.get("x")).numberValue().intValue());
-			assertEquals(12, ((EmlNumber) tup.get("y")).numberValue().intValue());
+			assertEquals(8, ((EmlNumber) tup.get("x")).intValue());
+			assertEquals(12, ((EmlNumber) tup.get("y")).intValue());
 		}
 	}
 	
@@ -253,7 +253,7 @@ public class TuplesEmlSelectTest
 		Object answer = p.pull();
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber n = (EmlNumber) answer;
-		assertEquals(Math.sin(1), n.numberValue().floatValue(), 0.01);
+		assertEquals(Math.sin(1), n.floatValue(), 0.01);
 	}
 	
 	@Test
@@ -266,11 +266,11 @@ public class TuplesEmlSelectTest
 		Object answer = p.pull();
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber num = (EmlNumber) answer;
-		assertEquals(1, num.numberValue().intValue());
+		assertEquals(1, num.intValue());
 		num = (EmlNumber) p.pull();
-		assertEquals(2, num.numberValue().intValue());
+		assertEquals(2, num.intValue());
 		num = (EmlNumber) p.pull();
-		assertEquals(3, num.numberValue().intValue());
+		assertEquals(3, num.intValue());
 	}
 	
 	@Test
@@ -283,11 +283,11 @@ public class TuplesEmlSelectTest
 		Object answer = p.pull();
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber num = (EmlNumber) answer;
-		assertEquals(2, num.numberValue().intValue());
+		assertEquals(2, num.intValue());
 		num = (EmlNumber) p.pull();
-		assertEquals(4, num.numberValue().intValue());
+		assertEquals(4, num.intValue());
 		num = (EmlNumber) p.pull();
-		assertEquals(8, num.numberValue().intValue());
+		assertEquals(8, num.intValue());
 	}
 
 	
@@ -304,8 +304,8 @@ public class TuplesEmlSelectTest
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
-			assertEquals(2, ((EmlNumber) tup.get("x")).numberValue().intValue());
-			assertEquals(6, ((EmlNumber) tup.get("y")).numberValue().intValue());
+			assertEquals(2, ((EmlNumber) tup.get("x")).intValue());
+			assertEquals(6, ((EmlNumber) tup.get("y")).intValue());
 		}
 		{
 			// Get next tuple
@@ -313,8 +313,8 @@ public class TuplesEmlSelectTest
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
-			assertEquals(8, ((EmlNumber) tup.get("x")).numberValue().intValue());
-			assertEquals(12, ((EmlNumber) tup.get("y")).numberValue().intValue());
+			assertEquals(8, ((EmlNumber) tup.get("x")).intValue());
+			assertEquals(12, ((EmlNumber) tup.get("y")).intValue());
 		}
 		{
 			// Get next tuple. There is no next tuple
@@ -335,23 +335,23 @@ public class TuplesEmlSelectTest
 		sink.pullHard();
 		recv = (NamedTuple) sink.getQueue(0).remove();
 		assertNotNull(recv);
-		assertEquals(0, ((EmlNumber) recv.get("a")).numberValue().intValue());
-		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
-		assertEquals(0, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("a")).intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).intValue());
+		assertEquals(0, ((EmlNumber) recv.get("c")).intValue());
 		// Another tuple
 		sink.pullHard();
 		recv = (NamedTuple) sink.getQueue(0).remove();
 		assertNotNull(recv);
-		assertEquals(1, ((EmlNumber) recv.get("a")).numberValue().intValue());
-		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
-		assertEquals(1, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		assertEquals(1, ((EmlNumber) recv.get("a")).intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).intValue());
+		assertEquals(1, ((EmlNumber) recv.get("c")).intValue());
 		// Another tuple
 		sink.pullHard();
 		recv = (NamedTuple) sink.getQueue(0).remove();
 		assertNotNull(recv);
-		assertEquals(2, ((EmlNumber) recv.get("a")).numberValue().intValue());
-		assertEquals(4, ((EmlNumber) recv.get("b")).numberValue().intValue());
-		assertEquals(5, ((EmlNumber) recv.get("c")).numberValue().intValue());		
+		assertEquals(2, ((EmlNumber) recv.get("a")).intValue());
+		assertEquals(4, ((EmlNumber) recv.get("b")).intValue());
+		assertEquals(5, ((EmlNumber) recv.get("c")).intValue());		
 	}
 	
 	@Test
@@ -369,23 +369,23 @@ public class TuplesEmlSelectTest
 		sink.pullHard();
 		recv = (NamedTuple) sink.getQueue(0).remove();
 		assertNotNull(recv);
-		assertEquals(0, ((EmlNumber) recv.get("a")).numberValue().intValue());
-		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
-		assertEquals(0, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("a")).intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).intValue());
+		assertEquals(0, ((EmlNumber) recv.get("c")).intValue());
 		// Another tuple
 		sink.pullHard();
 		recv = (NamedTuple) sink.getQueue(0).remove();
 		assertNotNull(recv);
-		assertEquals(1, ((EmlNumber) recv.get("a")).numberValue().intValue());
-		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
-		assertEquals(1, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		assertEquals(1, ((EmlNumber) recv.get("a")).intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).intValue());
+		assertEquals(1, ((EmlNumber) recv.get("c")).intValue());
 		// Another tuple
 		sink.pullHard();
 		recv = (NamedTuple) sink.getQueue(0).remove();
 		assertNotNull(recv);
-		assertEquals(2, ((EmlNumber) recv.get("a")).numberValue().intValue());
-		assertEquals(4, ((EmlNumber) recv.get("b")).numberValue().intValue());
-		assertEquals(5, ((EmlNumber) recv.get("c")).numberValue().intValue());		
+		assertEquals(2, ((EmlNumber) recv.get("a")).intValue());
+		assertEquals(4, ((EmlNumber) recv.get("b")).intValue());
+		assertEquals(5, ((EmlNumber) recv.get("c")).intValue());		
 	}
 	
 	@Test
@@ -401,16 +401,16 @@ public class TuplesEmlSelectTest
 		sink.pullHard();
 		recv = (NamedTuple) sink.getQueue(0).remove();
 		assertNotNull(recv);
-		assertEquals(0, ((EmlNumber) recv.get("a")).numberValue().intValue());
-		assertEquals(0, ((EmlNumber) recv.get("b")).numberValue().intValue());
-		assertEquals(0, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("a")).intValue());
+		assertEquals(0, ((EmlNumber) recv.get("b")).intValue());
+		assertEquals(0, ((EmlNumber) recv.get("c")).intValue());
 		// Other tuple
 		sink.pullHard();
 		recv = (NamedTuple) sink.getQueue(0).remove();
 		assertNotNull(recv);
-		assertEquals(0, ((EmlNumber) recv.get("a")).numberValue().intValue());
-		assertEquals(1, ((EmlNumber) recv.get("b")).numberValue().intValue());
-		assertEquals(6, ((EmlNumber) recv.get("c")).numberValue().intValue());
+		assertEquals(0, ((EmlNumber) recv.get("a")).intValue());
+		assertEquals(1, ((EmlNumber) recv.get("b")).intValue());
+		assertEquals(6, ((EmlNumber) recv.get("c")).intValue());
 		
 	}
 

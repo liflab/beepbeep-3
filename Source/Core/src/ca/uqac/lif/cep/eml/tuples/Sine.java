@@ -22,11 +22,7 @@ public class Sine extends UnaryExpression
 	@Override
 	public EmlConstant evaluate(Object t_left)
 	{
-		EmlNumber n_left = EmlNumber.toEmlNumber(t_left);
-		if (n_left == null)
-		{
-			return null;
-		}
-		return new EmlNumber(Math.sin(n_left.numberValue().floatValue()));
+		float n_left = EmlNumber.parseFloat(t_left);
+		return new EmlNumber(Math.sin(n_left));
 	}
 }

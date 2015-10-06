@@ -133,13 +133,13 @@ public class UserDefinitionTest
 		assertNotNull(answer);
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber num = (EmlNumber) answer;
-		assertEquals(1, num.numberValue().intValue());
+		assertEquals(1, num.intValue());
 		// Pull another
 		num = (EmlNumber) p.pull();
-		assertEquals(2, num.numberValue().intValue());
+		assertEquals(2, num.intValue());
 		// Pull another
 		num = (EmlNumber) p.pull();
-		assertEquals(3, num.numberValue().intValue());
+		assertEquals(3, num.intValue());
 	}
 	
 	@Test
@@ -161,10 +161,10 @@ public class UserDefinitionTest
 		assertNotNull(answer);
 		assertTrue(answer instanceof EmlNumber);
 		EmlNumber num = (EmlNumber) answer;
-		assertEquals(3.1416, num.numberValue().floatValue(), 0.01);
+		assertEquals(3.1416, num.floatValue(), 0.01);
 		// Pull another
 		num = (EmlNumber) p.pull();
-		assertEquals(3.1416, num.numberValue().floatValue(), 0.01);
+		assertEquals(3.1416, num.floatValue(), 0.01);
 	}
 	
 	@Test
@@ -175,7 +175,7 @@ public class UserDefinitionTest
 		Processor proc = (Processor) m_interpreter.parseQuery("SELECT E FROM (1)");
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
-		assertEquals(2, number.numberValue().intValue());
+		assertEquals(2, number.intValue());
 	}
 	
 	@Test
@@ -193,11 +193,11 @@ public class UserDefinitionTest
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
-		assertEquals(1, number.numberValue().floatValue(), 0.01);
+		assertEquals(1, number.floatValue(), 0.01);
 		number = (EmlNumber) p.pull();
-		assertEquals(0.5, number.numberValue().floatValue(), 0.01);
+		assertEquals(0.5, number.floatValue(), 0.01);
 		number = (EmlNumber) p.pull();
-		assertEquals(0.33, number.numberValue().floatValue(), 0.01);
+		assertEquals(0.33, number.floatValue(), 0.01);
 	}
 	
 	@Test
@@ -215,13 +215,13 @@ public class UserDefinitionTest
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		EmlNumber number = (EmlNumber) p.pull();
-		assertEquals(0, number.numberValue().floatValue(), 0.01);
+		assertEquals(0, number.floatValue(), 0.01);
 		number = (EmlNumber) p.pull();
-		assertEquals(1, number.numberValue().floatValue(), 0.01);
+		assertEquals(1, number.floatValue(), 0.01);
 		number = (EmlNumber) p.pull();
-		assertEquals(1, number.numberValue().floatValue(), 0.01);
+		assertEquals(1, number.floatValue(), 0.01);
 		number = (EmlNumber) p.pull();
-		assertEquals(2, number.numberValue().floatValue(), 0.01);
+		assertEquals(2, number.floatValue(), 0.01);
 	}
 	
 	@Test

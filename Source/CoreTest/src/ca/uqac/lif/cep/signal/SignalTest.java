@@ -53,9 +53,9 @@ public class SignalTest
 			assertNull(n);			
 		}
 		n = (EmlNumber) p.pull();
-		assertEquals(0, n.numberValue().doubleValue(), 0.01); // First event is not a peak
+		assertEquals(0, n.doubleValue(), 0.01); // First event is not a peak
 		n = (EmlNumber) p.pull();
-		assertEquals(10, n.numberValue().doubleValue(), 0.01); // Second event is a peak of 10
+		assertEquals(10, n.doubleValue(), 0.01); // Second event is a peak of 10
 		n = (EmlNumber) p.pull();
 		assertNull(n); // Not enough info yet to conclude on 3rd event
 	}
@@ -81,15 +81,15 @@ public class SignalTest
 		Pullable p = pf.getPullableOutput(0);
 		EmlNumber n;
 		n = (EmlNumber) p.pullHard();
-		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		assertEquals(0, n.doubleValue(), 0.01);
 		n = (EmlNumber) p.pullHard();
-		assertEquals(10, n.numberValue().doubleValue(), 0.01);
+		assertEquals(10, n.doubleValue(), 0.01);
 		n = (EmlNumber) p.pullHard();
-		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		assertEquals(0, n.doubleValue(), 0.01);
 		n = (EmlNumber) p.pullHard();
-		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		assertEquals(0, n.doubleValue(), 0.01);
 		n = (EmlNumber) p.pullHard();
-		assertEquals(2, n.numberValue().doubleValue(), 0.01);
+		assertEquals(2, n.doubleValue(), 0.01);
 	}
 
 	
@@ -117,13 +117,13 @@ public class SignalTest
 			assertNull(n);
 		}
 		n = (EmlNumber) p.pull(); // First event not start of a plateau
-		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		assertEquals(0, n.doubleValue(), 0.01);
 		n = (EmlNumber) p.pull(); // 2nd event not start of a plateau
-		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		assertEquals(0, n.doubleValue(), 0.01);
 		n = (EmlNumber) p.pull(); // 3rd is
-		assertEquals(1.5, n.numberValue().doubleValue(), 0.01);
+		assertEquals(1.5, n.doubleValue(), 0.01);
 		n = (EmlNumber) p.pull(); // Don't create new event for the same plateau
-		assertEquals(0, n.numberValue().doubleValue(), 0.01);
+		assertEquals(0, n.doubleValue(), 0.01);
 	}
 
 }
