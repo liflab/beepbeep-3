@@ -45,21 +45,21 @@ public class Until extends BinaryProcessor
 	{
 		if (m_right)
 		{
-			return new EmlBoolean(true);
+			return EmlBoolean.toEmlBoolean(true);
 		}
 		if (!m_left)
 		{
-			return new EmlBoolean(false);
+			return EmlBoolean.toEmlBoolean(false);
 		}
 		m_right = m_right || right.boolValue();
 		m_left = m_left && left.boolValue();
 		if (m_right)
 		{
-			return new EmlBoolean(true);
+			return EmlBoolean.toEmlBoolean(true);
 		}
 		if (!m_left)
 		{
-			return new EmlBoolean(false);
+			return EmlBoolean.toEmlBoolean(false);
 		}
 		return null;
 	}

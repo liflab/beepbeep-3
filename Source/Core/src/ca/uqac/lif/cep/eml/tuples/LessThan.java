@@ -32,9 +32,9 @@ public class LessThan extends BinaryExpression
 		float n_right = EmlNumber.parseFloat(t_right);
 		if (n_left < n_right)
 		{
-			return new EmlBoolean(true);
+			return EmlBoolean.toEmlBoolean(true);
 		}
-		return new EmlBoolean(false);
+		return EmlBoolean.toEmlBoolean(false);
 	}
 
 }

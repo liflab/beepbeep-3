@@ -47,7 +47,7 @@ public class Globally extends UnaryProcessor
 		m_value &= input.boolValue();
 		if (!m_value)
 		{
-			return new EmlBoolean(false);
+			return EmlBoolean.toEmlBoolean(false);
 		}
 		return null;
 	}

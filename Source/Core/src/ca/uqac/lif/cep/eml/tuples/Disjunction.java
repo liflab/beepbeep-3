@@ -34,9 +34,9 @@ public class Disjunction extends BinaryExpression
 		{
 			if (n_left.boolValue() || n_right.boolValue())
 			{
-				return new EmlBoolean(true);
+				return EmlBoolean.toEmlBoolean(true);
 			}
 		}
-		return new EmlBoolean(false);
+		return EmlBoolean.toEmlBoolean(false);
 	}
 }

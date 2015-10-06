@@ -29,6 +29,6 @@ public class Not extends UnaryProcessor
 	@Override
 	protected EmlBoolean compute(EmlBoolean input)
 	{
-		return new EmlBoolean(!input.boolValue());
+		return EmlBoolean.toEmlBoolean(!input.boolValue());
 	}
 }

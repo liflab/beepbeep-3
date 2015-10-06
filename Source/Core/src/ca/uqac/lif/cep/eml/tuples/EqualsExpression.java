@@ -30,9 +30,9 @@ public class EqualsExpression extends BinaryExpression
 	{
 		if (t_left != null && t_right != null && t_left.equals(t_right))
 		{
-			return new EmlBoolean(true);
+			return EmlBoolean.toEmlBoolean(true);
 		}
-		return new EmlBoolean(false);
+		return EmlBoolean.toEmlBoolean(false);
 	}
 
 }

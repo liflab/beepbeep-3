@@ -21,16 +21,20 @@ import java.util.Stack;
 
 public class EmlBoolean extends EmlConstant
 {
-	protected Boolean m_value;
+	protected final Boolean m_value;
+	
+	public static final EmlBoolean s_true = new EmlBoolean(true);
+	
+	public static final EmlBoolean s_false = new EmlBoolean(false);
 	
 	public EmlBoolean()
 	{
-		super();
+		this(false);
 	}
 	
-	public EmlBoolean(Boolean b)
+	protected EmlBoolean(Boolean b)
 	{
-		this();
+		super();
 		m_value = b;
 	}
 
@@ -80,6 +84,20 @@ public class EmlBoolean extends EmlConstant
 	
 	public static EmlBoolean toEmlBoolean(Object o)
 	{
+		if (o instanceof Boolean)
+		{
+			if ((boolean) o)
+			{
+				return s_true;
+			}
+			{
+				return s_false;
+			}
+		}
+		if (o instanceof EmlBoolean)
+		{
+			return (EmlBoolean) o;
+		}
 		if (o instanceof String)
 		{
 			String s = (String) o;
@@ -87,30 +105,20 @@ public class EmlBoolean extends EmlConstant
 					|| s.compareToIgnoreCase("T") == 0
 					|| s.compareToIgnoreCase("1") == 0)
 			{
-				return new EmlBoolean(true);
+				return EmlBoolean.toEmlBoolean(true);
 			}
-			return new EmlBoolean(false);
+			return EmlBoolean.toEmlBoolean(false);
 		}
 		if (o instanceof Number)
 		{
 			Number n = (Number) o;
 			if (Math.abs(n.doubleValue()) < 0.00001)
 			{
-				return new EmlBoolean(false);
+				return EmlBoolean.toEmlBoolean(false);
 			}
-			return new EmlBoolean(true);
-		}
-		if (o instanceof Boolean)
-		{
-			return new EmlBoolean((Boolean) o);
-		}
-		if (o instanceof EmlBoolean)
-		{
-			return (EmlBoolean) o;
-		}
-			
+			return EmlBoolean.toEmlBoolean(true);
+		}			
 		// When in doubt, return null
 		return null;
 	}
-
 }

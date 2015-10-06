@@ -47,7 +47,7 @@ public class Eventually extends UnaryProcessor
 		m_value |= input.boolValue();
 		if (m_value)
 		{
-			return new EmlBoolean(true);
+			return EmlBoolean.toEmlBoolean(true);
 		}
 		return null;
 	}

@@ -29,7 +29,7 @@ public class And extends BinaryProcessor
 	@Override
 	protected EmlBoolean compute(EmlBoolean left, EmlBoolean right)
 	{
-		return new EmlBoolean(left.boolValue() && right.boolValue());
+		return EmlBoolean.toEmlBoolean(left.boolValue() && right.boolValue());
 	}
 
 }

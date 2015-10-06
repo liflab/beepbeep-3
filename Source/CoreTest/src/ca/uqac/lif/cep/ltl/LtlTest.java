@@ -50,10 +50,10 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(new EmlBoolean(true));
-		input_events.add(new EmlBoolean(true));
-		input_events.add(new EmlBoolean(false));
-		input_events.add(new EmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
 		src.setEvents(input_events);
 		Globally g = new Globally();
 		Connector.connect(src, g);
@@ -74,10 +74,10 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(new EmlBoolean(false));
-		input_events.add(new EmlBoolean(false));
-		input_events.add(new EmlBoolean(true));
-		input_events.add(new EmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
 		src.setEvents(input_events);
 		Eventually g = new Eventually();
 		Connector.connect(src, g);
@@ -99,10 +99,10 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(new EmlBoolean(false));
-		input_events.add(new EmlBoolean(false));
-		input_events.add(new EmlBoolean(true));
-		input_events.add(new EmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
 		src.setEvents(input_events);
 		OldNext g = new OldNext();
 		Connector.connect(src, g);
@@ -122,10 +122,10 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(new EmlBoolean(false));
-		input_events.add(new EmlBoolean(true));
-		input_events.add(new EmlBoolean(true));
-		input_events.add(new EmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
 		src.setEvents(input_events);
 		OldNext g = new OldNext();
 		Connector.connect(src, g);
@@ -143,10 +143,10 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(new EmlBoolean(false));
-		input_events.add(new EmlBoolean(true));
-		input_events.add(new EmlBoolean(true));
-		input_events.add(new EmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(EmlBoolean.toEmlBoolean(false));
 		src.setEvents(input_events);
 		Not g = new Not();
 		Connector.connect(src, g);
@@ -169,18 +169,18 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
 			src_right.setEvents(input_events);
 		}
 		And g = new And();
@@ -205,14 +205,14 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(null);
-			input_events.add(new EmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
 			src_right.setEvents(input_events);
 		}
 		And g = new And();
@@ -233,18 +233,18 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
 			src_right.setEvents(input_events);
 		}
 		Or g = new Or();
@@ -269,18 +269,18 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
 			src_right.setEvents(input_events);
 		}
 		Until g = new Until();
@@ -305,18 +305,18 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src_right.setEvents(input_events);
 		}
 		Until g = new Until();
@@ -341,20 +341,20 @@ public class LtlTest
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@T", "processor", src);
 		}
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@U", "processor", src);
 		}
@@ -377,20 +377,20 @@ public class LtlTest
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@T", "processor", src);
 		}
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@U", "processor", src);
 		}
@@ -412,10 +412,10 @@ public class LtlTest
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@U", "processor", src);
 		}
@@ -435,10 +435,10 @@ public class LtlTest
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new EmlBoolean(false));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(true));
-			input_events.add(new EmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(EmlBoolean.toEmlBoolean(false));
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@P", "processor", src);
 		}
