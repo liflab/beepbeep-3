@@ -62,7 +62,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The event windows
 	 */
-	protected Vector<List<Object>> m_window;
+	protected List<Object>[] m_window;
 	
 	public Window()
 	{
@@ -78,19 +78,20 @@ public class Window extends SingleProcessor
 		reset();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void reset()
 	{
 		super.reset();
 		int arity = getInputArity();
-		m_window = new Vector<List<Object>>(arity);
+		m_window = new List[arity];
 		m_innerInputs = new Vector<Pushable>(arity);
 		if (m_processor != null)
 		{
 			m_processor.reset();
 			for (int i = 0; i < arity; i++)
 			{
-				m_window.add(new LinkedList<Object>());
+				m_window[i] = new LinkedList<Object>();
 				m_innerInputs.add(m_processor.getPushableInput(i));
 			}		
 		}
@@ -112,7 +113,7 @@ public class Window extends SingleProcessor
 		int arity = inputs.length;
 		for (int i = 0; i < arity; i++)
 		{
-			List<Object> q = m_window.get(i);
+			List<Object> q = m_window[i];
 			q.add(inputs[i]);
 			int size_diff = q.size() - m_width;
 			leftTrim(size_diff, q);
@@ -132,7 +133,7 @@ public class Window extends SingleProcessor
 				for (int j = 0; j < getInputArity(); j++)
 				{
 					// Feed 
-					List<Object> q = m_window.get(j);
+					List<Object> q = m_window[j];
 					Object o = q.get(i);
 					Pushable p = m_innerInputs.get(j);
 					p.push(o);
