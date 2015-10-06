@@ -312,7 +312,7 @@ public class Interpreter implements ParseNodeVisitor
 				// Extend the current fork for this processor with a new output
 				Fork f = m_processorForks.get(node_name);
 				int new_arity = f.getOutputArity() + 1;
-				f.extendArity(new_arity);
+				f.extendOutputArity(new_arity);
 				Passthrough pt = new Passthrough(o_p.getOutputArity());
 				Connector.connect(f, pt, new_arity - 1, 0);
 				m_nodes.push(pt);

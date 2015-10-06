@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.Vector;
 
 public abstract class SingleProcessor extends Processor
 {
@@ -37,8 +36,8 @@ public abstract class SingleProcessor extends Processor
 	public SingleProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
-		m_inputPullables = new Vector<Pullable>(m_inputArity);
-		m_outputPushables = new Vector<Pushable>(m_outputArity);
+		m_inputPullables = new Pullable[m_inputArity];
+		m_outputPushables = new Pushable[m_outputArity];
 		initializeInput();
 		initializeOutput();
 	}
@@ -46,32 +45,28 @@ public abstract class SingleProcessor extends Processor
 	@Override
 	public final void setPullableInput(int i, Pullable p)
 	{
-		if (i == m_inputPullables.size())
+		if (i < m_inputPullables.length)
 		{
-			m_inputPullables.add(p);
-		}
-		else
-		{
-			m_inputPullables.set(i, p);
+			m_inputPullables[i] = p;
 		}
 	}
 
 	@Override
-	public final Pushable getPushableOutput(int index)
+	public final Pushable getPushableOutput(int i)
 	{
-		return m_outputPushables.get(index);
+		if (i < m_outputPushables.length)
+		{
+			return m_outputPushables[i];
+		}
+		return null;
 	}
 
 	@Override
 	public final void setPushableOutput(int i, Pushable p)
 	{
-		if (i == m_outputPushables.size())
+		if (i < m_outputPushables.length)
 		{
-			m_outputPushables.add(p);
-		}
-		else
-		{
-			m_outputPushables.set(i, p);	
+			m_outputPushables[i] = p;
 		}
 	}
 
@@ -177,9 +172,9 @@ public abstract class SingleProcessor extends Processor
 					if (evt != null)
 					{
 						//assert evt.length >= m_outputPushables.size();
-						for (int i = 0; i < m_outputPushables.size(); i++)
+						for (int i = 0; i < m_outputPushables.length; i++)
 						{
-							Pushable p = m_outputPushables.get(i);
+							Pushable p = m_outputPushables[i];
 							p.push(evt[i]);
 						}
 					}
@@ -251,7 +246,7 @@ public abstract class SingleProcessor extends Processor
 			{
 				for (int i = 0; i < m_inputArity; i++)
 				{
-					Pullable p = m_inputPullables.get(i);
+					Pullable p = m_inputPullables[i];
 					NextStatus status = p.hasNextHard();
 					if (status == NextStatus.NO)
 					{
@@ -263,7 +258,7 @@ public abstract class SingleProcessor extends Processor
 				Object[] inputs = new Object[m_inputArity];
 				for (int i = 0; i < m_inputArity; i++)
 				{
-					Pullable p = m_inputPullables.get(i);
+					Pullable p = m_inputPullables[i];
 					Object o = p.pullHard();
 					inputs[i] = o;
 				}
@@ -309,7 +304,7 @@ public abstract class SingleProcessor extends Processor
 			// Check if each pullable has an event ready
 			for (int i = 0; i < m_inputArity; i++)
 			{
-				Pullable p = m_inputPullables.get(i);
+				Pullable p = m_inputPullables[i];
 				NextStatus status = p.hasNext();
 				if (status == NextStatus.NO)
 				{

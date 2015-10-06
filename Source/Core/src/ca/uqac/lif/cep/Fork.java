@@ -31,16 +31,6 @@ public class Fork extends SingleProcessor
 	{
 		super(1, out_arity);
 	}
-	
-	/**
-	 * Creates a copy of the current fork with a greater arity
-	 * @param out_arity The desired arity for the output fork
-	 */
-	public void extendArity(int out_arity)
-	{
-		m_outputArity = out_arity;
-		reset();
-	}
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
@@ -56,6 +46,22 @@ public class Fork extends SingleProcessor
 			}
 		}
 		return wrapVector(out);
+	}
+	
+	/**
+	 * Creates a copy of the current fork with a greater arity
+	 * @param out_arity The desired arity for the output fork
+	 */
+	public void extendOutputArity(int out_arity)
+	{
+		m_outputArity = out_arity;
+		Pushable[] out_pushables = new Pushable[out_arity];
+		for (int i = 0; i < m_outputPushables.length; i++)
+		{
+			out_pushables[i] = m_outputPushables[i];
+		}
+		m_outputPushables = out_pushables;
+		reset();
 	}
 	
 	@Override

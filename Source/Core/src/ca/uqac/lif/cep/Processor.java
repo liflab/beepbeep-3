@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 public abstract class Processor implements Buildable
 {
@@ -39,9 +38,9 @@ public abstract class Processor implements Buildable
 	
 	protected Queue<Object>[] m_outputQueues;
 	
-	protected Vector<Pullable> m_inputPullables;
+	protected Pullable[] m_inputPullables;
 	
-	protected Vector<Pushable> m_outputPushables;
+	protected Pushable[] m_outputPushables;
 	
 	protected static int s_uniqueIdCounter = 0;
 	

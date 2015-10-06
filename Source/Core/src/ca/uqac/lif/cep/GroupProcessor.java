@@ -191,7 +191,11 @@ public class GroupProcessor extends Processor
 	@Override
 	public final Pushable getPushableOutput(int index)
 	{
-		return m_outputPushables.get(index);
+		if (index < m_outputPushables.length)
+		{
+			return m_outputPushables[index];
+		}
+		return null;
 	}
 	
 	@Override

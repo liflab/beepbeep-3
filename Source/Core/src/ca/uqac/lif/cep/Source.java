@@ -47,7 +47,7 @@ public abstract class Source extends SingleProcessor
 			{
 				for (int i = 0; i < output.size(); i++)
 				{
-					Pushable p = m_outputPushables.get(i);
+					Pushable p = m_outputPushables[i];
 					p.push(evt[i]);
 				}
 			}

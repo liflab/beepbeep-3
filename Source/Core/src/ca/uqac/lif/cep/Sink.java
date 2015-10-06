@@ -37,7 +37,7 @@ public abstract class Sink extends SingleProcessor
 		Object[] inputs = new Object[getInputArity()];
 		for (int i = 0; i < getInputArity(); i++)
 		{
-			Pullable p = m_inputPullables.get(i);
+			Pullable p = m_inputPullables[i];
 			inputs[i] = p.pull();
 		}
 		compute(inputs);
@@ -51,7 +51,7 @@ public abstract class Sink extends SingleProcessor
 		Object[] inputs = new Object[getInputArity()];
 		for (int i = 0; i < getInputArity(); i++)
 		{
-			Pullable p = m_inputPullables.get(i);
+			Pullable p = m_inputPullables[i];
 			inputs[i] = p.pullHard();
 		}
 		compute(inputs);
