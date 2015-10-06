@@ -21,7 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * Simulates the application of a "sliding window" to a trace.
@@ -52,7 +51,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The internal processor's input pushables
 	 */
-	protected Vector<Pushable> m_innerInputs = null;
+	protected Pushable[] m_innerInputs;
 	
 	/**
 	 * The sink that will receive the events produced by the inner processor
@@ -85,14 +84,14 @@ public class Window extends SingleProcessor
 		super.reset();
 		int arity = getInputArity();
 		m_window = new List[arity];
-		m_innerInputs = new Vector<Pushable>(arity);
+		m_innerInputs = new Pushable[arity];
 		if (m_processor != null)
 		{
 			m_processor.reset();
 			for (int i = 0; i < arity; i++)
 			{
 				m_window[i] = new LinkedList<Object>();
-				m_innerInputs.add(m_processor.getPushableInput(i));
+				m_innerInputs[i] = m_processor.getPushableInput(i);
 			}		
 		}
 		if (m_sink != null)
@@ -135,7 +134,7 @@ public class Window extends SingleProcessor
 					// Feed 
 					List<Object> q = m_window[j];
 					Object o = q.get(i);
-					Pushable p = m_innerInputs.get(j);
+					Pushable p = m_innerInputs[j];
 					p.push(o);
 				}
 				out = m_sink.remove();
