@@ -164,7 +164,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		public synchronized void push(Object o)
+		public void push(Object o)
 		{
 			Queue<Object> q = m_inputQueues[m_index];
 			q.add(o);
@@ -220,7 +220,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		public synchronized Object pull()
+		public Object pull()
 		{
 			if (hasNext() != NextStatus.YES)
 			{
@@ -238,7 +238,7 @@ public abstract class SingleProcessor extends Processor
 		}
 		
 		@Override
-		public synchronized Object pullHard()
+		public Object pullHard()
 		{
 			if (hasNextHard() != NextStatus.YES)
 			{
@@ -255,7 +255,7 @@ public abstract class SingleProcessor extends Processor
 			return null;
 		}
 
-		public synchronized NextStatus hasNextHard()
+		public NextStatus hasNextHard()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -315,7 +315,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		public synchronized NextStatus hasNext()
+		public NextStatus hasNext()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
