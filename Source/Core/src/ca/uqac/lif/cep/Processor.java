@@ -64,7 +64,7 @@ public abstract class Processor implements Buildable
 		m_inputArity = in_arity;
 		m_outputArity = out_arity;
 		m_uniqueId = s_uniqueIdCounter++;
-		reset();
+		initialize();
 	}
 	
 	@Override
@@ -92,6 +92,12 @@ public abstract class Processor implements Buildable
 	{
 		return m_uniqueId;
 	}
+	
+	/**
+	 * Initializes the processor. This has for effect of creating the
+	 * appropriate number of empty queues, pullables, pushables, etc.
+	 */
+	public abstract void initialize();
 	
 	/**
 	 * Resets the processor. This has for effect of flushing the contents

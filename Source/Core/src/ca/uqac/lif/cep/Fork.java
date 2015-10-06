@@ -61,7 +61,7 @@ public class Fork extends SingleProcessor
 			out_pushables[i] = m_outputPushables[i];
 		}
 		m_outputPushables = out_pushables;
-		reset();
+		initialize();
 	}
 	
 	@Override

@@ -79,6 +79,19 @@ public class GroupProcessor extends Processor
 		}
 	}
 	
+	@Override
+	public void initialize()
+	{
+		// Initialize all processors inside the group
+		if (m_processors != null)
+		{
+			for (Processor p : m_processors)
+			{
+				p.initialize();
+			}
+		}
+	}
+	
 
 	@Override
 	public void reset()

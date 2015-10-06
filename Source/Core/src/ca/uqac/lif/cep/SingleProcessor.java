@@ -89,12 +89,35 @@ public abstract class SingleProcessor extends Processor
 			m_outputQueues[i] = new ArrayDeque<Object>();
 		}
 	}
+	
+	protected final void resetInput()
+	{
+		for (int i = 0; i < m_inputArity; i++)
+		{
+			m_inputQueues[i].clear();
+		}
+	}
+
+	protected final void resetOutput()
+	{
+		for (int i = 0; i < m_outputArity; i++)
+		{
+			m_outputQueues[i].clear();
+		}
+	}
+	
+	@Override
+	public void initialize()
+	{
+		initializeInput();
+		initializeOutput();
+	}
 
 	@Override
 	public void reset()
 	{
-		initializeInput();
-		initializeOutput();
+		resetInput();
+		resetOutput();
 	}
 
 	@Override
