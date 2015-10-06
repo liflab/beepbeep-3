@@ -75,21 +75,23 @@ public abstract class SingleProcessor extends Processor
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected final void initializeInput()
 	{
-		m_inputQueues = new Vector<Queue<Object>>();
+		m_inputQueues = new Queue[m_inputArity];
 		for (int i = 0; i < m_inputArity; i++)
 		{
-			m_inputQueues.add(new ArrayDeque<Object>());
+			m_inputQueues[i] = new ArrayDeque<Object>();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected final void initializeOutput()
 	{
-		m_outputQueues = new Vector<Queue<Object>>();
+		m_outputQueues = new Queue[m_outputArity];
 		for (int i = 0; i < m_outputArity; i++)
 		{
-			m_outputQueues.add(new ArrayDeque<Object>());
+			m_outputQueues[i] = new ArrayDeque<Object>();
 		}
 	}
 
@@ -146,12 +148,12 @@ public abstract class SingleProcessor extends Processor
 		@Override
 		public synchronized void push(Object o)
 		{
-			Queue<Object> q = m_inputQueues.get(m_index);
+			Queue<Object> q = m_inputQueues[m_index];
 			q.add(o);
 			// Check if each input queue has an event ready
 			for (int i = 0; i < m_inputArity; i++)
 			{
-				Queue<Object> queue = m_inputQueues.get(i);
+				Queue<Object> queue = m_inputQueues[i];
 				if (queue.isEmpty())
 				{
 					// One of them doesn't: we can't produce an output yet
@@ -162,7 +164,7 @@ public abstract class SingleProcessor extends Processor
 			Object[] inputs = new Object[m_inputArity];
 			for (int i = 0; i < m_inputArity; i++)
 			{
-				Queue<Object> queue = m_inputQueues.get(i);
+				Queue<Object> queue = m_inputQueues[i];
 				Object ob = queue.remove();
 				inputs[i] = ob;
 			}
@@ -206,7 +208,7 @@ public abstract class SingleProcessor extends Processor
 			{
 				return null;
 			}
-			Queue<Object> out_queue = m_outputQueues.get(m_index);
+			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
 			// return it and don't pull anything from the input
 			if (!out_queue.isEmpty())
@@ -224,7 +226,7 @@ public abstract class SingleProcessor extends Processor
 			{
 				return null;
 			}				
-			Queue<Object> out_queue = m_outputQueues.get(m_index);
+			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
 			// return it and don't pull anything from the input
 			if (!out_queue.isEmpty())
@@ -237,7 +239,7 @@ public abstract class SingleProcessor extends Processor
 
 		public synchronized NextStatus hasNextHard()
 		{
-			Queue<Object> out_queue = m_outputQueues.get(m_index);
+			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
 			// return it and don't pull anything from the input
 			if (!out_queue.isEmpty())
@@ -278,7 +280,7 @@ public abstract class SingleProcessor extends Processor
 						{
 							for (int i = 0; i < m_outputArity; i++)
 							{
-								Queue<Object> queue = m_outputQueues.get(i);
+								Queue<Object> queue = m_outputQueues[i];
 								queue.add(evt[i]);
 							}
 							status_to_return = NextStatus.YES;
@@ -297,7 +299,7 @@ public abstract class SingleProcessor extends Processor
 		@Override
 		public synchronized NextStatus hasNext()
 		{
-			Queue<Object> out_queue = m_outputQueues.get(m_index);
+			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
 			// return yes and don't pull anything from the input
 			if (!out_queue.isEmpty())

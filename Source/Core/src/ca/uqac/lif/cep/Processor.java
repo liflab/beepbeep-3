@@ -35,9 +35,9 @@ public abstract class Processor implements Buildable
 	 */
 	protected int m_outputArity;
 	
-	protected Vector<Queue<Object>> m_inputQueues;
+	protected Queue<Object>[] m_inputQueues;
 	
-	protected Vector<Queue<Object>> m_outputQueues;
+	protected Queue<Object>[] m_outputQueues;
 	
 	protected Vector<Pullable> m_inputPullables;
 	
