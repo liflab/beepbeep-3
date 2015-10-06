@@ -28,15 +28,8 @@ public class Disjunction extends BinaryExpression
 	@Override
 	public EmlConstant evaluate(Object t_left, Object t_right) 
 	{
-		EmlBoolean n_left = EmlBoolean.toEmlBoolean(t_left);
-		EmlBoolean n_right = EmlBoolean.toEmlBoolean(t_right);
-		if (t_left != null && t_right != null)
-		{
-			if (n_left.boolValue() || n_right.boolValue())
-			{
-				return EmlBoolean.toEmlBoolean(true);
-			}
-		}
-		return EmlBoolean.toEmlBoolean(false);
+		boolean n_left = EmlBoolean.parseBoolValue(t_left);
+		boolean n_right = EmlBoolean.parseBoolValue(t_right);
+		return EmlBoolean.toEmlBoolean(n_left || n_right);
 	}
 }

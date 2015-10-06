@@ -41,25 +41,25 @@ public class Until extends BinaryProcessor
 	}
 
 	@Override
-	protected EmlBoolean compute(EmlBoolean left, EmlBoolean right)
+	protected EmlBoolean compute(boolean left, boolean right)
 	{
 		if (m_right)
 		{
-			return EmlBoolean.toEmlBoolean(true);
+			return EmlBoolean.s_true;
 		}
 		if (!m_left)
 		{
-			return EmlBoolean.toEmlBoolean(false);
+			return EmlBoolean.s_false;
 		}
-		m_right = m_right || right.boolValue();
-		m_left = m_left && left.boolValue();
+		m_right = m_right || right;
+		m_left = m_left && left;
 		if (m_right)
 		{
-			return EmlBoolean.toEmlBoolean(true);
+			return EmlBoolean.s_true;
 		}
 		if (!m_left)
 		{
-			return EmlBoolean.toEmlBoolean(false);
+			return EmlBoolean.s_false;
 		}
 		return null;
 	}

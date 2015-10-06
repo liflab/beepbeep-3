@@ -27,9 +27,9 @@ public class Or extends BinaryProcessor
 	}
 
 	@Override
-	protected EmlBoolean compute(EmlBoolean left, EmlBoolean right)
+	protected EmlBoolean compute(boolean left, boolean right)
 	{
-		return EmlBoolean.toEmlBoolean(left.boolValue() || right.boolValue());
+		return EmlBoolean.toEmlBoolean(left || right);
 	}
 
 }

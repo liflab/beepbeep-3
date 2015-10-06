@@ -121,4 +121,38 @@ public class EmlBoolean extends EmlConstant
 		// When in doubt, return null
 		return null;
 	}
+	
+	public static boolean parseBoolValue(Object o)
+	{
+		if (o instanceof Boolean)
+		{
+			return (boolean) o;
+		}
+		if (o instanceof EmlBoolean)
+		{
+			return ((EmlBoolean) o).boolValue();
+		}
+		if (o instanceof String)
+		{
+			String s = (String) o;
+			if (s.compareToIgnoreCase("true") == 0 
+					|| s.compareToIgnoreCase("T") == 0
+					|| s.compareToIgnoreCase("1") == 0)
+			{
+				return true;
+			}
+			return false;
+		}
+		if (o instanceof Number)
+		{
+			Number n = (Number) o;
+			if (Math.abs(n.doubleValue()) < 0.00001)
+			{
+				return false;
+			}
+			return true;
+		}			
+		// When in doubt, return false
+		return false;
+	}
 }
