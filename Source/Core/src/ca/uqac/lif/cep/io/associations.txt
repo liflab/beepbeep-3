@@ -2,5 +2,6 @@
 # Class associations for the EML
 # -----------------------------------------
 
+<p_caller>,ca.uqac.lif.cep.io.Caller
 <p_stream>,ca.uqac.lif.cep.io.StreamReader
 <p_url>,ca.uqac.lif.cep.io.HttpReader

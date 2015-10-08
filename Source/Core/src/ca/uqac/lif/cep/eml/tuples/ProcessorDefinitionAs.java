@@ -27,6 +27,13 @@ public class ProcessorDefinitionAs extends ProcessorDefinition
 	{
 		super();
 	}
+	
+	public ProcessorDefinitionAs(String name, Processor p)
+	{
+		this();
+		m_processorName = name;
+		m_processor = p;
+	}
 
 	@Override
 	public void build(Stack<Object> stack)

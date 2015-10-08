@@ -24,6 +24,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
 public class Select extends SingleProcessor
@@ -52,6 +53,36 @@ public class Select extends SingleProcessor
 		m_attributeList = null;
 	}
 
+	public Select(int in_arity, String[] attributes)
+	{
+		this(in_arity);
+		setAttributeList(attributes);
+	}
+
+	/**
+	 * Convenience method to set the attributes of the selection
+	 * @param attributes
+	 */
+	public void setAttributeList(String[] attributes)
+	{
+		AttributeList al = new AttributeList();
+		for (String att : attributes)
+		{
+			AttributeDefinition adef = new AttributeDefinitionPlain();
+			if (att.contains("."))
+			{
+				String[] parts = att.split("\\.");
+				adef.m_expression = new AttributeNameQualified(parts[0], parts[1]);
+			}
+			else
+			{
+				adef.m_expression = new AttributeNamePlain(att);
+			}
+			al.add(adef);
+		}
+		m_attributeList = al;
+	}
+
 	@Override
 	public void build(Stack<Object> stack)
 	{
@@ -72,6 +103,15 @@ public class Select extends SingleProcessor
 		}
 		sel.m_attributeList = al;
 		stack.push(sel);
+	}
+	
+	public void setProcessor(String name, Processor p)
+	{
+		if (m_processors == null)
+		{
+			m_processors = new ProcessorDefinitionList();
+		}
+		m_processors.add(new ProcessorDefinitionAs(name, p));
 	}
 
 	@Override

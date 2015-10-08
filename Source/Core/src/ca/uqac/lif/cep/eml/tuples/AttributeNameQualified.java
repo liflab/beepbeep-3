@@ -28,9 +28,14 @@ public class AttributeNameQualified extends AttributeName
 	
 	public AttributeNameQualified()
 	{
+		this("", "");
+	}
+	
+	public AttributeNameQualified(String trace, String attribute)
+	{
 		super();
-		m_traceName = "";
-		m_attributeName = "";
+		m_traceName = trace;
+		m_attributeName = attribute;
 	}
 
 	@Override

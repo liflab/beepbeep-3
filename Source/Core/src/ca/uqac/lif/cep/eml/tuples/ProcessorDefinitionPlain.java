@@ -27,6 +27,13 @@ public class ProcessorDefinitionPlain extends ProcessorDefinitionAs
 	{
 		super();
 	}
+	
+	public ProcessorDefinitionPlain(Processor p)
+	{
+		this();
+		m_processorName = "";
+		m_processor = p;
+	}
 
 	@Override
 	public void build(Stack<Object> stack)

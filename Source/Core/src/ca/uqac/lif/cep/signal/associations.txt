@@ -1,0 +1,6 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+<sig_peak>,ca.uqac.lif.cep.signal.PeakFinder
+<sig_plateau>,ca.uqac.lif.cep.signal.PlateauFinder

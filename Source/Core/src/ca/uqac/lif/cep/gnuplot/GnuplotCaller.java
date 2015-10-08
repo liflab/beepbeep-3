@@ -15,34 +15,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.eml.tuples;
+package ca.uqac.lif.cep.gnuplot;
 
-import java.util.Stack;
-
-public class AttributeDefinitionPlain extends AttributeDefinitionAs
+public class GnuplotCaller
 {
-	public AttributeDefinitionPlain()
-	{
-		super();
-	}
-	
-	public void setExpression(AttributeExpression aexp)
-	{
-		m_expression = aexp;
-	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		m_expression = (AttributeExpression) stack.pop();
-		stack.push(this);
-	}
-	
-	@Override
-	public String toString()
-	{
-		StringBuilder out = new StringBuilder();
-		out.append(m_expression);
-		return out.toString();
-	}
+
 }
