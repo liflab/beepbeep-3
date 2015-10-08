@@ -86,7 +86,7 @@ public class EmlBoolean extends EmlConstant
 	{
 		if (o instanceof Boolean)
 		{
-			if ((boolean) o)
+			if ((Boolean) o)
 			{
 				return s_true;
 			}
@@ -126,7 +126,7 @@ public class EmlBoolean extends EmlConstant
 	{
 		if (o instanceof Boolean)
 		{
-			return (boolean) o;
+			return (Boolean) o;
 		}
 		if (o instanceof EmlBoolean)
 		{
