@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.jdbc;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import ca.uqac.lif.cep.interpreter.Interpreter;
@@ -41,6 +43,12 @@ public class BeepBeepConnection extends EmptyConnection
 	public void close()
 	{
 		m_interpreter.reset();
+	}
+
+	@Override
+	public PreparedStatement prepareStatement(String query) throws SQLException
+	{
+		return new BeepBeepPreparedStatement(m_interpreter, query);
 	}
 
 }

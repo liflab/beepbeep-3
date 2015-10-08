@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 
-class EmptyStatement implements Statement
+abstract class EmptyStatement implements Statement
 {
 
 	@Override
@@ -118,11 +118,7 @@ class EmptyStatement implements Statement
 	}
 
 	@Override
-	public ResultSet executeQuery(String arg0) throws SQLException
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract ResultSet executeQuery(String arg0) throws SQLException;
 
 	@Override
 	public int executeUpdate(String arg0) throws SQLException
