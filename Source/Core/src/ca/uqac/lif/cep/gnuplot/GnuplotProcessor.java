@@ -130,6 +130,17 @@ public abstract class GnuplotProcessor extends SingleProcessor
 	}
 	
 	/**
+	 * Sets the terminal (i.e. the file type) for the graph
+	 * @param t The terminal
+	 * @return An instance of this processor
+	 */
+	public GnuplotProcessor setTerminal(Terminal t)
+	{
+		m_terminal = getTerminalString(t);
+		return this;
+	}
+	
+	/**
 	 * Runs Gnuplot on a file and returns the resulting graph
 	 * @param instructions The text file for this Gnuplot
 	 * @return The (binary) contents of the image produced by Gnuplot

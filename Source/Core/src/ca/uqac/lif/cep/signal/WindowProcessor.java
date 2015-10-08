@@ -42,21 +42,26 @@ public abstract class WindowProcessor extends SingleProcessor
 	/**
 	 * The maximum value encountered so far
 	 */
-	protected double m_maxValue;
+	protected float m_maxValue;
 	
 	/**
 	 * The minimum value encountered so far
 	 */
-	protected double m_minValue;
+	protected float m_minValue;
 
 	
 	public WindowProcessor()
 	{
+		this(5);
+	}
+	
+	public WindowProcessor(int width)
+	{
 		super(1, 1);
 		m_values = new Vector<Float>();
-		m_windowWidth = 5;
+		m_windowWidth = width;
 		m_maxValue = 0;
-		m_minValue = 0;
+		m_minValue = 0;		
 	}
 	
 	@Override
@@ -68,11 +73,11 @@ public abstract class WindowProcessor extends SingleProcessor
 		m_minValue = 0;
 	}
 	
-	protected double getMaxValue()
+	protected float getMaxValue()
 	{
-		double value = 0;
+		float value = 0;
 		int pos = 0;
-		for (double d : m_values)
+		for (float d : m_values)
 		{
 			if (pos == 0)
 			{
@@ -87,11 +92,11 @@ public abstract class WindowProcessor extends SingleProcessor
 		return value;
 	}
 	
-	protected double getMinValue()
+	protected float getMinValue()
 	{
-		double value = 0;
+		float value = 0;
 		int pos = 0;
-		for (double d : m_values)
+		for (float d : m_values)
 		{
 			if (pos == 0)
 			{

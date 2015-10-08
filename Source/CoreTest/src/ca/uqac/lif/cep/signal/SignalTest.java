@@ -43,7 +43,7 @@ public class SignalTest
 		values.add(new EmlNumber(1));
 		values.add(new EmlNumber(1));
 		qs.setEvents(values);
-		PeakFinder pf = new PeakFinder();
+		PeakFinderLocalMaximum pf = new PeakFinderLocalMaximum();
 		Connector.connect(qs,  pf);
 		Pullable p = pf.getPullableOutput(0);
 		EmlNumber n;
@@ -76,7 +76,7 @@ public class SignalTest
 		values.add(new EmlNumber(3));
 		values.add(new EmlNumber(3));
 		qs.setEvents(values);
-		PeakFinder pf = new PeakFinder();
+		PeakFinderLocalMaximum pf = new PeakFinderLocalMaximum();
 		Connector.connect(qs,  pf);
 		Pullable p = pf.getPullableOutput(0);
 		EmlNumber n;
