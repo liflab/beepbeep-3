@@ -63,6 +63,10 @@ public class BagUnion implements Combinable
 				EmlBag in_bag = (EmlBag) o;
 				total_bag.addAll(in_bag);
 			}
+			else
+			{
+				total_bag.addElement(o);
+			}
 		}
 		out_vector[0] =  total_bag;
 		return out_vector;

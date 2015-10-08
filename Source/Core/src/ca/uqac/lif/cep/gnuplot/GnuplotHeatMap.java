@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.gnuplot;
 
-import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -147,6 +146,7 @@ public class GnuplotHeatMap extends GnuplotProcessor
 	protected StringBuilder getBoilerplateHeader()
 	{
 		StringBuilder out = new StringBuilder();
+		out.append("set terminal ").append(m_terminal).append("\n");
 		out.append("set title \"").append(m_title).append("\"\n");
 		out.append("set xrange [").append(m_minX - 0.5).append(":").append(m_maxX + 0.5).append("]\n");
 		out.append("set yrange [").append(m_minY - 0.5).append(":").append(m_maxY + 0.5).append("]\n");
@@ -163,12 +163,9 @@ public class GnuplotHeatMap extends GnuplotProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected StringBuilder computePlot(EmlBag bag)
 	{
-		if (m_lastMap == null)
-		{
-			return null;
-		}
+		m_lastMap = bag;
 		// Fill matrix with zeros
 		for (int i = m_minX; i < m_maxX; i++)
 		{
@@ -198,9 +195,7 @@ public class GnuplotHeatMap extends GnuplotProcessor
 			out.append("\n");
 		}
 		out.append(getBoilerplateFooter());
-		Object[] out_vector = new String[1];
-		out_vector[0] = out.toString();
-		return wrapVector(out_vector);
+		return out;
 	}
 
 	@Override

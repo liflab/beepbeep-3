@@ -166,6 +166,10 @@ public class EmlNumber extends EmlConstant
 		{
 			return Float.parseFloat((String) o);
 		}
+		if (o instanceof EmlString)
+		{
+			return Float.parseFloat(o.toString());
+		}
 		if (o instanceof NamedTuple)
 		{
 			NamedTuple t = (NamedTuple) o;

@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.sets;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,6 +47,22 @@ public class EmlBag
 			}
 		}
 		return this;
+	}
+	
+	/**
+	 * Picks one element of the bag. This assumes you don't care
+	 * about what element of the bag you get, as long as you get one.
+	 * @return An element of the bag, or null if the bag is empty
+	 */
+	public Object getAnyElement()
+	{
+		Set<Object> objects = m_map.keySet();
+		for (Object o : objects)
+		{
+			// Return the first element you pick
+			return o;
+		}
+		return null;
 	}
 	
 	public boolean contains(Object o)
@@ -114,6 +131,53 @@ public class EmlBag
 	{
 		m_map.clear();
 		return this;
+	}
+	
+	public Iterator<Object> iterator()
+	{
+		return new BagIterator();
+	}
+	
+	protected class BagIterator implements Iterator<Object>
+	{
+		protected Iterator<Object> m_keyIterator;
+		
+		protected Object m_currentKey;
+		
+		protected int m_currentKeyCount = 0;
+		
+		protected int m_currentKeyMax = 0;
+		
+		public BagIterator()
+		{
+			super();
+			m_keyIterator = m_map.keySet().iterator();
+			m_currentKey = null;
+		}
+
+		@Override
+		public boolean hasNext()
+		{
+			if (m_currentKeyCount >= m_currentKeyMax)
+			{
+				if (!m_keyIterator.hasNext())
+				{
+					return false;
+				}
+				m_currentKey = m_keyIterator.next();
+				m_currentKeyCount = 0;
+				m_currentKeyMax = m_map.get(m_currentKey);				
+			}
+			return true;
+		}
+
+		@Override
+		public Object next()
+		{
+			m_currentKeyCount++;
+			return m_currentKey;
+		}
+		
 	}
 
 }
