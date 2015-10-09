@@ -17,8 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.Stack;
 
 /**
  * Duplicates an input event into two or more output events
@@ -30,6 +30,24 @@ public class Fork extends SingleProcessor
 	public Fork(int out_arity)
 	{
 		super(1, out_arity);
+	}
+
+	/**
+	 * Create a fork by extending the arity of another fork
+	 * @param out_arity The output arity of the fork
+	 * @param reference The fork to copy from
+	 */
+	public Fork(int out_arity, Fork reference)
+	{
+		super(1, out_arity);
+		for (int i = 0; i < reference.m_inputPullables.length; i++)
+		{
+			m_inputPullables[i] = reference.m_inputPullables[i];
+		}
+		for (int i = 0; i < reference.m_outputPushables.length; i++)
+		{
+			m_outputPushables[i] = reference.m_outputPushables[i];
+		}
 	}
 
 	@Override
@@ -47,33 +65,25 @@ public class Fork extends SingleProcessor
 		}
 		return wrapVector(out);
 	}
-	
+
 	/**
 	 * Creates a copy of the current fork with a greater arity
 	 * @param out_arity The desired arity for the output fork
 	 */
+	@SuppressWarnings("unchecked")
 	public void extendOutputArity(int out_arity)
 	{
+		m_outputQueues = new Queue[out_arity];
 		m_outputArity = out_arity;
+		for (int i = 0; i < m_outputArity; i++)
+		{
+			m_outputQueues[i] = new ArrayDeque<Object>();
+		}
 		Pushable[] out_pushables = new Pushable[out_arity];
 		for (int i = 0; i < m_outputPushables.length; i++)
 		{
 			out_pushables[i] = m_outputPushables[i];
 		}
 		m_outputPushables = out_pushables;
-		initialize();
 	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		// TODO
-	}
-	
-	@Override
-	public Fork newInstance()
-	{
-		return new Fork(getOutputArity());
-	}
-
 }

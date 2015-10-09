@@ -32,11 +32,6 @@ public class Delay extends SingleProcessor
 	 */
 	protected int m_eventsReceived;
 	
-	public Delay()
-	{
-		this(0);
-	}
-	
 	public Delay(int delay)
 	{
 		super(1, 1);
@@ -61,8 +56,7 @@ public class Delay extends SingleProcessor
 		return null;
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Processor p = (Processor) stack.pop();
 		Number delay = (Number) stack.pop();
@@ -70,12 +64,4 @@ public class Delay extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-	
-	@Override
-	public Delay newInstance()
-	{
-		return new Delay();
-	}
-
-
 }

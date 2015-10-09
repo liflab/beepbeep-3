@@ -17,12 +17,13 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class LessThan extends BinaryExpression 
 {
-	public LessThan()
+	public LessThan(AttributeExpression left, AttributeExpression right)
 	{
-		super();
-		m_symbol = "<";
+		super("<", left, right);
 	}
 
 	@Override
@@ -35,6 +36,20 @@ public class LessThan extends BinaryExpression
 			return EmlBoolean.toEmlBoolean(true);
 		}
 		return EmlBoolean.toEmlBoolean(false);
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // )
+		AttributeExpression exp_right = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // THAN
+		stack.pop(); // LESS
+		stack.pop(); // )
+		AttributeExpression exp_left = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		LessThan op = new LessThan(exp_left, exp_right);
+		stack.push(op);
 	}
 
 }

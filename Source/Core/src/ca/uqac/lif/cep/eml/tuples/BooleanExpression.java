@@ -24,23 +24,16 @@ public class BooleanExpression extends ConstantExpression
 {
 	protected EmlBoolean m_number;
 	
-	public BooleanExpression()
-	{
-		super();
-		m_number = null;
-	}
-	
-	public BooleanExpression(boolean b)
+	public BooleanExpression(Object b)
 	{
 		super();
 		m_number = EmlBoolean.toEmlBoolean(b);
 	}
-
-	@Override
-	public void build(Stack<Object> stack)
+	
+	public static void build(Stack<Object> stack)
 	{
-		m_number = (EmlBoolean) stack.pop();
-		stack.push(this);
+		Object o = stack.pop();
+		stack.push(new BooleanExpression(o));
 	}
 	
 	@Override

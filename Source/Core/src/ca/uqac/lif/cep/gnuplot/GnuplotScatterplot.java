@@ -166,8 +166,7 @@ public class GnuplotScatterplot extends GnuplotProcessor
 		names.toArray(m_otherHeaders);
 	}
 
-	@Override
-	public void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) 
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
@@ -176,8 +175,9 @@ public class GnuplotScatterplot extends GnuplotProcessor
 		stack.pop(); // SCATTERPLOT
 		stack.pop(); // GNUPLOT
 		stack.pop(); // THE
-		Connector.connect(p, this);
-		stack.push(this);
+		GnuplotScatterplot gps = new GnuplotScatterplot();
+		Connector.connect(p, gps);
+		stack.push(gps);
 	}
 
 }

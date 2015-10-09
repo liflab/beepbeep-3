@@ -27,12 +27,7 @@ import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 
 public class Threshold extends SingleProcessor
 {
-	protected float m_threshold;
-	
-	public Threshold()
-	{
-		this(0);
-	}
+	protected final float m_threshold;
 	
 	public Threshold(float threshold)
 	{
@@ -51,16 +46,16 @@ public class Threshold extends SingleProcessor
 		return wrapObject(new EmlNumber(0));
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
-		m_threshold = EmlNumber.parseFloat(stack.pop());
+		float t_value = EmlNumber.parseFloat(stack.pop());
 		stack.pop(); // THRESHOLD
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // )
-		Connector.connect(p,  this);
-		stack.push(this);
+		Threshold t = new Threshold(t_value);
+		Connector.connect(p, t);
+		stack.push(t);
 		
 	}
 

@@ -17,12 +17,29 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class Sine extends UnaryExpression
 {
+	public Sine(AttributeExpression exp)
+	{
+		super("SIN", exp);
+	}
+	
 	@Override
 	public EmlConstant evaluate(Object t_left)
 	{
 		float n_left = EmlNumber.parseFloat(t_left);
 		return new EmlNumber(Math.sin(n_left));
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // )
+		AttributeExpression exp_left = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // SIN
+		Sine op = new Sine(exp_left);
+		stack.push(op);
 	}
 }

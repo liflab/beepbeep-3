@@ -19,12 +19,20 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
+import ca.uqac.lif.cep.io.StreamReader;
+import ca.uqac.lif.util.PackageFileReader;
+import ca.uqac.lif.util.StringUtils;
 
 public class TuplesEmlBuildTest
 {
@@ -153,5 +161,29 @@ public class TuplesEmlBuildTest
 		String expression = "SELECT (a) LESS THAN (0) FROM (0)";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_select>");
 		assertTrue(result instanceof Select);
+	}
+	
+	@Test
+	public void testTupleFeeder1() throws FileNotFoundException
+	{
+		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/tuples2.csv");
+		InputStream stream = StringUtils.toInputStream(file_contents);
+		StreamReader sr = new StreamReader(stream);
+		TupleFeeder tf = new TupleFeeder();
+		Connector.connect(sr, tf);
+		Pullable p = tf.getPullableOutput(0);
+		NamedTuple t = null;
+		t = (NamedTuple) p.pullHard();
+		assertNotNull(t);
+		assertEquals("1", t.get("a").toString());
+		t = (NamedTuple) p.pullHard();
+		assertNotNull(t);
+		assertEquals("2", t.get("a").toString());
+		t = (NamedTuple) p.pullHard();
+		assertNotNull(t);
+		assertEquals("3", t.get("a").toString());
+		t = (NamedTuple) p.pullHard();
+		assertNotNull(t);
+		assertEquals("10", t.get("a").toString());
 	}
 }

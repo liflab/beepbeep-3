@@ -198,8 +198,7 @@ public class GnuplotHeatMap extends GnuplotProcessor
 		return out;
 	}
 
-	@Override
-	public void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) 
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
@@ -208,8 +207,9 @@ public class GnuplotHeatMap extends GnuplotProcessor
 		stack.pop(); // HEATMAP
 		stack.pop(); // GNUPLOT
 		stack.pop(); // THE
-		Connector.connect(p, this);
-		stack.push(this);
+		GnuplotHeatMap ghm = new GnuplotHeatMap();
+		Connector.connect(p, ghm);
+		stack.push(ghm);
 	}
 
 }

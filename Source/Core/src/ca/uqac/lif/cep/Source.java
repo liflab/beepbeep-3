@@ -21,11 +21,6 @@ import java.util.Queue;
 
 public abstract class Source extends SingleProcessor
 {
-	public Source()
-	{
-		super();
-	}
-	
 	public Source(int out_arity)
 	{
 		super(0, out_arity);

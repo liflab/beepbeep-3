@@ -46,8 +46,7 @@ public class Mutator extends SingleProcessor
 		return wrapVector(m_output);
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		// TODO
 	}

@@ -649,6 +649,35 @@ public class ProcessorTest
 		assertEquals("B", recv);		
 	}
 	
+	@Test
+	public void testFork2()
+	{
+		Vector<Object> events = new Vector<Object>();
+		events.add("A");
+		events.add("B");
+		events.add("C");
+		events.add("D");
+		QueueSource cp = new QueueSource("", 1);
+		cp.setEvents(events);
+		Fork f = new Fork(2);
+		Connector.connect(cp,  f);
+		Fork new_f = new Fork(3, f);
+		Pullable p1 = new_f.getPullableOutput(0);
+		Pullable p2 = new_f.getPullableOutput(1);
+		Pullable p3 = new_f.getPullableOutput(2);
+		String recv;
+		recv = (String) p3.pull();
+		assertEquals("A", recv);
+		recv = (String) p1.pull();
+		assertEquals("A", recv);
+		recv = (String) p2.pull();
+		assertEquals("A", recv);
+		recv = (String) p1.pull();
+		assertEquals("B", recv);
+		recv = (String) p2.pull();
+		assertEquals("B", recv);		
+	}
+	
 	/**
 	 * This test does not assert anything. It is used for step-by-step debugging
 	 * of the {@link SingleProcessor.OutputPullable#hasNext()} method.

@@ -17,6 +17,10 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.eml.tuples.EmlBoolean;
 
 public class Eventually extends UnaryProcessor 
@@ -50,5 +54,16 @@ public class Eventually extends UnaryProcessor
 			return EmlBoolean.toEmlBoolean(true);
 		}
 		return null;
+	}
+	
+	public static void build(Stack<Object> stack) 
+	{
+		stack.pop(); // (
+		Processor p = (Processor) stack.pop();
+		stack.pop(); // )
+		stack.pop(); // op
+		Eventually op = new Eventually();
+		Connector.connect(p, op);
+		stack.push(op);
 	}
 }

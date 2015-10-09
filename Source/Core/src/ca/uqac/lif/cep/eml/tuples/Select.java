@@ -41,11 +41,6 @@ public class Select extends SingleProcessor
 	 */
 	protected AttributeList m_attributeList;
 	
-	public Select()
-	{
-		this(0);
-	}
-	
 	public Select(int in_arity)
 	{
 		super(in_arity, 1);
@@ -53,7 +48,7 @@ public class Select extends SingleProcessor
 		m_attributeList = null;
 	}
 
-	public Select(int in_arity, String[] attributes)
+	public Select(int in_arity, String ... attributes)
 	{
 		this(in_arity);
 		setAttributeList(attributes);
@@ -63,28 +58,28 @@ public class Select extends SingleProcessor
 	 * Convenience method to set the attributes of the selection
 	 * @param attributes
 	 */
-	public void setAttributeList(String[] attributes)
+	protected void setAttributeList(String[] attributes)
 	{
 		AttributeList al = new AttributeList();
 		for (String att : attributes)
 		{
-			AttributeDefinition adef = new AttributeDefinitionPlain();
+			AttributeExpression aexp = null;
 			if (att.contains("."))
 			{
 				String[] parts = att.split("\\.");
-				adef.m_expression = new AttributeNameQualified(parts[0], parts[1]);
+				aexp = new AttributeNameQualified(parts[0], parts[1]);
 			}
 			else
 			{
-				adef.m_expression = new AttributeNamePlain(att);
+				aexp = new AttributeNamePlain(att);
 			}
+			AttributeDefinition adef = new AttributeDefinitionPlain(aexp);
 			al.add(adef);
 		}
 		m_attributeList = al;
 	}
-
-	@Override
-	public void build(Stack<Object> stack)
+	
+	public static void build(Stack<Object> stack)
 	{
 		stack.pop(); // (
 		ProcessorDefinitionList pdl = (ProcessorDefinitionList) stack.pop();

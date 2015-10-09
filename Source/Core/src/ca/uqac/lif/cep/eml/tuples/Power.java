@@ -21,6 +21,11 @@ import java.util.Stack;
 
 public class Power extends BinaryExpression
 {
+	public Power(String symbol, AttributeExpression left, AttributeExpression right)
+	{
+		super(symbol, left, right);
+	}
+	
 	@Override
 	public EmlConstant evaluate(Object t_left, Object t_right)
 	{
@@ -29,10 +34,9 @@ public class Power extends BinaryExpression
 		return new EmlNumber(Math.pow(n_left, n_right));
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
-		m_symbol = (String) stack.pop(); // RD, TH, ND, etc.
+		String symbol = (String) stack.pop(); // RD, TH, ND, etc.
 		stack.pop(); // )
 		AttributeExpression exp_right = (AttributeExpression) stack.pop();
 		stack.pop(); // (
@@ -41,9 +45,8 @@ public class Power extends BinaryExpression
 		stack.pop(); // )
 		AttributeExpression exp_left = (AttributeExpression) stack.pop();
 		stack.pop(); // (
-		m_left = exp_left;
-		m_right = exp_right;
-		stack.push(this);
+		Power p = new Power(symbol, exp_left, exp_right);
+		stack.push(p);
 	}
 	
 	@Override

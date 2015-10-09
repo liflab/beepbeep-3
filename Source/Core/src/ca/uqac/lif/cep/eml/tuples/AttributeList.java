@@ -20,9 +20,7 @@ package ca.uqac.lif.cep.eml.tuples;
 import java.util.ArrayDeque;
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
-
-public class AttributeList extends ArrayDeque<AttributeDefinition> implements Buildable
+public class AttributeList extends ArrayDeque<AttributeDefinition>
 {
 	/**
 	 * Dummy UID
@@ -34,11 +32,10 @@ public class AttributeList extends ArrayDeque<AttributeDefinition> implements Bu
 		super();
 	}
 	
-
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Object top = stack.peek();
+		AttributeList new_al = new AttributeList();
 		if (top instanceof AttributeList)
 		{
 			AttributeList al = (AttributeList) stack.pop();
@@ -46,16 +43,16 @@ public class AttributeList extends ArrayDeque<AttributeDefinition> implements Bu
 			{
 				stack.pop(); // ,
 				AttributeDefinition def = (AttributeDefinition) stack.pop();
-				add(def);
+				new_al.add(def);
 			}
-			addAll(al);
+			new_al.addAll(al);
 		}
 		else
 		{
 			AttributeDefinition def = (AttributeDefinition) stack.pop();
-			add(def);
+			new_al.add(def);
 		}
-		stack.push(this);
+		stack.push(new_al);
 	}
 	
 	@Override
@@ -74,11 +71,4 @@ public class AttributeList extends ArrayDeque<AttributeDefinition> implements Bu
 		}
 		return out.toString();
 	}
-	
-	@Override
-	public AttributeList newInstance()
-	{
-		return new AttributeList();
-	}
-
 }

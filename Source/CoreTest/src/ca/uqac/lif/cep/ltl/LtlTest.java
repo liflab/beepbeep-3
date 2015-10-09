@@ -397,10 +397,8 @@ public class LtlTest
 		Pullable p = m_interpreter.executeQuery(expression);
 		assertNotNull(p);
 		EmlBoolean b;
-		System.out.println("About to pull");
 		b = (EmlBoolean) p.pull();
 		assertNull(b);
-		System.out.println("About to pull");
 		b = (EmlBoolean) p.pull();
 		assertEquals(true, b.boolValue());
 	}

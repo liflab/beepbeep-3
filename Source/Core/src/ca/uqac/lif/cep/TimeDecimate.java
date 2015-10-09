@@ -76,8 +76,7 @@ public class TimeDecimate extends SingleProcessor
 		return wrapVector(out);
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Processor p = (Processor) stack.pop();
 		Number interval = (Number) stack.pop();
@@ -85,12 +84,4 @@ public class TimeDecimate extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-	
-	@Override
-	public TimeDecimate newInstance()
-	{
-		return new TimeDecimate();
-	}
-
-
 }

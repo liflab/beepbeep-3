@@ -26,16 +26,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public class EmlNumber extends SingleProcessor
 {
-	protected Number m_number;
-	
-	public EmlNumber()
-	{
-		super(0, 1);
-	}
-	
+	protected final Number m_number;
+
 	public EmlNumber(Number n)
 	{
-		this();
+		super(0, 1);
 		m_number = n;
 	}
 
@@ -49,8 +44,7 @@ public class EmlNumber extends SingleProcessor
 		return m_number.intValue();
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
 		if (o instanceof Number)
@@ -71,11 +65,5 @@ public class EmlNumber extends SingleProcessor
 		element[0] = this;
 		out.add(element);
 		return out;
-	}
-	
-	@Override
-	public EmlNumber newInstance()
-	{
-		return new EmlNumber();
 	}
 }

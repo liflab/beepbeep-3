@@ -41,13 +41,7 @@ public class HttpReader extends StreamReader
 	/**
 	 * The URL to read from
 	 */
-	protected String m_url;
-	
-	public HttpReader()
-	{
-		super();
-		m_url = "";
-	}
+	protected final String m_url;
 	
 	/**
 	 * Instantiates an HTTP reader with an URL. Note that no request is
@@ -57,15 +51,6 @@ public class HttpReader extends StreamReader
 	public HttpReader(String url)
 	{
 		super();
-		m_url = url;
-	}
-	
-	/**
-	 * Sets the URL to read from
-	 * @param url The URL
-	 */
-	public void setUrl(String url)
-	{
 		m_url = url;
 	}
 
@@ -81,12 +66,12 @@ public class HttpReader extends StreamReader
 		return super.compute(inputs);
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
-		m_url = (String) stack.pop();
+		String url = (String) stack.pop();
 		stack.pop(); // URL
-		stack.push(this);
+		HttpReader hr = new HttpReader(url);
+		stack.push(hr);
 	}
 	
 	/**

@@ -21,19 +21,17 @@ import java.util.Stack;
 
 public class AttributeDefinitionAs extends AttributeDefinition
 {	
-	public AttributeDefinitionAs()
+	public AttributeDefinitionAs(AttributeExpression exp, String alias)
 	{
-		super();
+		super(exp, alias);
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		EmlString alias_name = (EmlString) stack.pop();
 		stack.pop(); // AS
-		m_expression = (AttributeExpression) stack.pop();
-		m_aliasName = alias_name.stringValue();
-		stack.push(this);
+		AttributeExpression expression = (AttributeExpression) stack.pop();
+		stack.push(new AttributeDefinitionAs(expression, alias_name.stringValue()));
 	}
 	
 	@Override

@@ -51,17 +51,8 @@ public class Filter extends SingleProcessor
 		return wrapVector(out);
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		// TODO
 	}
-
-	@Override
-	public Filter newInstance()
-	{
-		return new Filter();
-	}
-
-
 }

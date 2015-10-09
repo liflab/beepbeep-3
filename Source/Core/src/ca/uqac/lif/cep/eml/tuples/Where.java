@@ -29,11 +29,12 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public class Where extends SingleProcessor
 {
-	protected AttributeExpression m_filterExpression;
+	protected final AttributeExpression m_filterExpression;
 
-	public Where()
+	public Where(AttributeExpression filter)
 	{
 		super(1, 1);
+		m_filterExpression = filter;
 	}
 
 	@Override
@@ -63,16 +64,15 @@ public class Where extends SingleProcessor
 		return out_q;
 	}
 
-	@Override
-	public void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) 
 	{
 		AttributeExpression ae = (AttributeExpression) stack.pop();
 		stack.pop(); // WHERE
 		stack.pop(); // (
 		Processor proc = (Processor) stack.pop();
 		stack.pop(); // )
-		m_filterExpression = ae;
-		Connector.connect(proc, this);
-		stack.push(this);
+		Where w = new Where(ae);
+		Connector.connect(proc, w);
+		stack.push(w);
 	}
 }

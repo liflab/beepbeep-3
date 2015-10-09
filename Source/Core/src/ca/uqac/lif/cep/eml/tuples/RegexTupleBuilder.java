@@ -24,7 +24,6 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -46,27 +45,22 @@ public class RegexTupleBuilder extends SingleProcessor
 	/**
 	 * The regex pattern to look for
 	 */
-	protected Pattern m_pattern;
+	protected final Pattern m_pattern;
 	
 	/**
 	 * The name given to each capture block in the output tuples 
 	 */
-	protected RegexAttributeNameList m_attributeNames;
-	
-	public RegexTupleBuilder()
-	{
-		super();
-		m_pattern = null;
-		m_attributeNames = new RegexAttributeNameList();
-	}
+	protected final RegexAttributeNameList m_attributeNames;
 	
 	/**
-	 * Sets the pattern to look for
+	 * Constructs a tuple builder.
 	 * @param regex The pattern. This can be any regular expression.
 	 */
-	public void setPattern(String regex)
+	public RegexTupleBuilder(String regex, RegexAttributeNameList attributes)
 	{
+		super(1, 1);
 		m_pattern = Pattern.compile(regex);
+		m_attributeNames = attributes;
 	}
 
 	@Override
@@ -97,24 +91,23 @@ public class RegexTupleBuilder extends SingleProcessor
 		return wrapVector(out_vector);
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // (
 		stack.pop(); // IN		
-		m_attributeNames = (RegexAttributeNameList) stack.pop();
+		RegexAttributeNameList attributes = (RegexAttributeNameList) stack.pop();
 		stack.pop(); // NAMES
 		stack.pop(); // WITH
 		String regex = stack.pop().toString();
-		setPattern(regex);
 		stack.pop(); // REGEX
-		Connector.connect(p, this);
-		stack.push(this);
+		RegexTupleBuilder rtp = new RegexTupleBuilder(regex, attributes);
+		Connector.connect(p, rtp);
+		stack.push(rtp);
 	}
 	
-	public static class RegexAttributeNameList extends ArrayList<AttributeNamePlain> implements Buildable
+	public static class RegexAttributeNameList extends ArrayList<AttributeNamePlain>
 	{
 		/**
 		 * Dummy UID
@@ -126,10 +119,10 @@ public class RegexTupleBuilder extends SingleProcessor
 			super();
 		}
 
-		@Override
-		public void build(Stack<Object> stack)
+		public static void build(Stack<Object> stack)
 		{
 			Object top = stack.peek();
+			RegexAttributeNameList ranl = new RegexAttributeNameList();
 			if (top instanceof RegexAttributeNameList)
 			{
 				RegexAttributeNameList al = (RegexAttributeNameList) stack.pop();
@@ -137,22 +130,16 @@ public class RegexTupleBuilder extends SingleProcessor
 				{
 					stack.pop(); // ,
 					AttributeNamePlain def = (AttributeNamePlain) stack.pop();
-					add(def);
+					ranl.add(def);
 				}
-				addAll(al);
+				ranl.addAll(al);
 			}
 			else
 			{
 				AttributeNamePlain def = (AttributeNamePlain) stack.pop();
-				add(def);
+				ranl.add(def);
 			}
-			stack.push(this);
-		}
-
-		@Override
-		public Buildable newInstance() 
-		{
-			return new RegexAttributeNameList();
+			stack.push(ranl);
 		}
 		
 	}

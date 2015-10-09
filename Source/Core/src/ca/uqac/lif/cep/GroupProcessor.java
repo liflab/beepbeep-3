@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 import java.util.Vector;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
@@ -78,20 +77,6 @@ public class GroupProcessor extends Processor
 			m_processor = p;
 		}
 	}
-	
-	@Override
-	public void initialize()
-	{
-		// Initialize all processors inside the group
-		if (m_processors != null)
-		{
-			for (Processor p : m_processors)
-			{
-				p.initialize();
-			}
-		}
-	}
-	
 
 	@Override
 	public void reset()
@@ -210,19 +195,4 @@ public class GroupProcessor extends Processor
 		}
 		return null;
 	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		// TODO
-	}
-	
-	@Override
-	public GroupProcessor newInstance()
-	{
-		return new GroupProcessor(getInputArity(), getOutputArity());
-	}
-
-
-
 }

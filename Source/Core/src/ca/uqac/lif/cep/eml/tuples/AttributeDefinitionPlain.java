@@ -21,21 +21,16 @@ import java.util.Stack;
 
 public class AttributeDefinitionPlain extends AttributeDefinitionAs
 {
-	public AttributeDefinitionPlain()
+	public AttributeDefinitionPlain(AttributeExpression aexp)
 	{
-		super();
+		super(aexp, "");
 	}
 	
-	public void setExpression(AttributeExpression aexp)
+	public static void build(Stack<Object> stack)
 	{
-		m_expression = aexp;
-	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		m_expression = (AttributeExpression) stack.pop();
-		stack.push(this);
+		AttributeExpression exp = (AttributeExpression) stack.pop();
+		AttributeDefinitionPlain adp = new AttributeDefinitionPlain(exp);
+		stack.push(adp);
 	}
 	
 	@Override

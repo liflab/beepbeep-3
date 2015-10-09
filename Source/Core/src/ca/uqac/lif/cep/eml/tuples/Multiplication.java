@@ -17,9 +17,16 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class Multiplication extends BinaryExpression
 {
-	protected static final Multiplication s_singleton = new Multiplication();
+	protected static final Multiplication s_singleton = new Multiplication(null, null);
+	
+	public Multiplication(AttributeExpression left, AttributeExpression right)
+	{
+		super("*", left, right);
+	}
 	
 	public static Multiplication getSingleton()
 	{
@@ -33,4 +40,18 @@ public class Multiplication extends BinaryExpression
 		float n_right = EmlNumber.parseFloat(t_right);
 		return new EmlNumber(n_left * n_right);
 	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // )
+		AttributeExpression exp_right = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // op
+		stack.pop(); // )
+		AttributeExpression exp_left = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		Multiplication op = new Multiplication(exp_left, exp_right);
+		stack.push(op);
+	}
+	
 }

@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
-public interface Combinable extends Buildable
+public interface Combinable
 {
 	public Object[] initialize();
 	

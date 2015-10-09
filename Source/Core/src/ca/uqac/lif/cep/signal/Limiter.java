@@ -61,8 +61,7 @@ public class Limiter extends SingleProcessor
 		return wrapObject(new EmlNumber(value));
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		// TODO Auto-generated method stub
 	}

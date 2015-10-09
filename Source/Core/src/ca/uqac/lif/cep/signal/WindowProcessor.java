@@ -37,7 +37,7 @@ public abstract class WindowProcessor extends SingleProcessor
 	/**
 	 * The width of the window to process
 	 */
-	protected int m_windowWidth = 1;
+	protected final int m_windowWidth;
 	
 	/**
 	 * The maximum value encountered so far
@@ -109,12 +109,6 @@ public abstract class WindowProcessor extends SingleProcessor
 			pos++;
 		}
 		return value;
-	}
-
-	
-	public void setWindowWidth(int width)
-	{
-		m_windowWidth = width;
 	}
 
 	protected static boolean doubleEquals(double d1, double d2)

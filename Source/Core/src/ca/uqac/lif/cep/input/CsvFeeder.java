@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep.input;
 
-import java.util.Stack;
-
 /**
  * Creates a feed of events from comma-separated string chunks.
  * Note that the input feed must have a trailing comma for all elements,
@@ -41,11 +39,4 @@ public class CsvFeeder extends TokenFeeder
 		// Remove trailing comma
 		return token.substring(0, token.length() - 1);
 	}
-
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		// TODO
-	}
-
 }

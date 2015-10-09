@@ -23,11 +23,6 @@ public abstract class NaryComputable implements Computable
 {
 	protected final int m_inputArity;
 	
-	public NaryComputable()
-	{
-		this(0);
-	}
-	
 	public NaryComputable(int arity)
 	{
 		super();

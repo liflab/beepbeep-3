@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class Difference extends CombinableExpression
 {
 	public Difference()
@@ -36,5 +38,11 @@ public class Difference extends CombinableExpression
 	public String toString()
 	{
 		return "DIFFERENCE";
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // combiner's name
+		stack.push(new Difference());
 	}
 }

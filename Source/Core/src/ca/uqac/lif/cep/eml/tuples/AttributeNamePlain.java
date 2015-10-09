@@ -21,33 +21,26 @@ import java.util.Stack;
 
 public class AttributeNamePlain extends AttributeNameQualified
 {	
-	public AttributeNamePlain()
-	{
-		super();
-	}
-	
 	public AttributeNamePlain(String name)
 	{
-		this();
-		m_attributeName = name;
+		super("", name);
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
-		EmlString att_name = (EmlString) stack.pop();
-		if (att_name.stringValue().compareToIgnoreCase("true") == 0)
+		String att_name = ((EmlString) stack.pop()).stringValue();
+		if (att_name.compareToIgnoreCase("true") == 0)
 		{
 			stack.push(new BooleanExpression(true));
 		}
-		else if (att_name.stringValue().compareToIgnoreCase("false") == 0)
+		else if (att_name.compareToIgnoreCase("false") == 0)
 		{
 			stack.push(new BooleanExpression(false));
 		}
 		else
 		{
-			m_attributeName = att_name.stringValue();
-			stack.push(this);
+			AttributeNamePlain anp = new AttributeNamePlain(att_name);
+			stack.push(anp);
 		}
 	}
 	

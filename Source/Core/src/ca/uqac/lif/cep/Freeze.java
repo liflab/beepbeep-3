@@ -46,8 +46,7 @@ public class Freeze extends SingleProcessor
 		return wrapVector(m_output);
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // FREEZE
@@ -55,12 +54,4 @@ public class Freeze extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-	
-	@Override
-	public Freeze newInstance()
-	{
-		return new Freeze();
-	}
-
-
 }

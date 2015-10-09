@@ -22,12 +22,6 @@ import java.util.Queue;
 
 public abstract class SingleProcessor extends Processor
 {
-
-	public SingleProcessor()
-	{
-		super();
-	}
-	
 	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity
@@ -36,10 +30,6 @@ public abstract class SingleProcessor extends Processor
 	public SingleProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
-		m_inputPullables = new Pullable[m_inputArity];
-		m_outputPushables = new Pushable[m_outputArity];
-		initializeInput();
-		initializeOutput();
 	}
 
 	@Override
@@ -69,26 +59,6 @@ public abstract class SingleProcessor extends Processor
 			m_outputPushables[i] = p;
 		}
 	}
-
-	@SuppressWarnings("unchecked")
-	protected final void initializeInput()
-	{
-		m_inputQueues = new Queue[m_inputArity];
-		for (int i = 0; i < m_inputArity; i++)
-		{
-			m_inputQueues[i] = new ArrayDeque<Object>();
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	protected final void initializeOutput()
-	{
-		m_outputQueues = new Queue[m_outputArity];
-		for (int i = 0; i < m_outputArity; i++)
-		{
-			m_outputQueues[i] = new ArrayDeque<Object>();
-		}
-	}
 	
 	protected final void resetInput()
 	{
@@ -104,13 +74,6 @@ public abstract class SingleProcessor extends Processor
 		{
 			m_outputQueues[i].clear();
 		}
-	}
-	
-	@Override
-	public void initialize()
-	{
-		initializeInput();
-		initializeOutput();
 	}
 
 	@Override

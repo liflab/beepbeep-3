@@ -17,9 +17,16 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class Addition extends BinaryExpression
 {
-	protected static final Addition s_singleton = new Addition();
+	protected static final Addition s_singleton = new Addition(null, null);
+	
+	public Addition(AttributeExpression left, AttributeExpression right)
+	{
+		super("ADDITION", left, right);
+	}
 	
 	public static Addition getSingleton()
 	{
@@ -32,5 +39,18 @@ public class Addition extends BinaryExpression
 		float n_left = EmlNumber.parseFloat(t_left);
 		float n_right = EmlNumber.parseFloat(t_right);
 		return new EmlNumber(n_left + n_right);
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // )
+		AttributeExpression exp_right = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // The symbol
+		stack.pop(); // )
+		AttributeExpression exp_left = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		Addition op = new Addition(exp_left, exp_right);
+		stack.push(op);
 	}
 }

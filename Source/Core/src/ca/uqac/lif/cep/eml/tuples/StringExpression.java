@@ -22,19 +22,19 @@ import java.util.Stack;
 
 public class StringExpression extends ConstantExpression
 {
-	protected EmlString m_string;
+	protected final EmlString m_string;
 	
-	public StringExpression()
+	public StringExpression(EmlString s)
 	{
 		super();
-		m_string = null;
+		m_string = s;
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
-		m_string = (EmlString) stack.pop();
-		stack.push(this);
+		EmlString s = (EmlString) stack.pop();
+		StringExpression s_exp = new StringExpression(s);
+		stack.push(s_exp);
 	}
 	
 	@Override

@@ -17,62 +17,67 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.Stack;
 
-public abstract class Processor implements Buildable
+public abstract class Processor
 {
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires
 	 * to produce an output
 	 */
 	protected final int m_inputArity;
-	
+
 	/**
 	 * The processor's output arity, i.e. the number of output
 	 * events it produces
 	 */
 	protected int m_outputArity;
-	
-	protected Queue<Object>[] m_inputQueues;
-	
+
+	protected final Queue<Object>[] m_inputQueues;
+
 	protected Queue<Object>[] m_outputQueues;
-	
+
 	protected Pullable[] m_inputPullables;
-	
+
 	protected Pushable[] m_outputPushables;
-	
+
 	protected static int s_uniqueIdCounter = 0;
-	
+
 	protected int m_uniqueId;
-	
-	public Processor()
-	{
-		super();
-		m_inputArity = 0;
-		m_outputArity = 0;
-	}
 
 	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
 	 */
+	@SuppressWarnings("unchecked")
 	public Processor(int in_arity, int out_arity)
 	{
 		super();
 		m_inputArity = in_arity;
 		m_outputArity = out_arity;
 		m_uniqueId = s_uniqueIdCounter++;
-		initialize();
+		m_inputQueues = new Queue[m_inputArity];
+		for (int i = 0; i < m_inputArity; i++)
+		{
+			m_inputQueues[i] = new ArrayDeque<Object>();
+		}
+		m_outputQueues = new Queue[m_outputArity];
+		for (int i = 0; i < m_outputArity; i++)
+		{
+			m_outputQueues[i] = new ArrayDeque<Object>();
+		}
+		m_inputPullables = new Pullable[m_inputArity];
+		m_outputPushables = new Pushable[m_outputArity];
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
 		return m_uniqueId;
 	}
-	
+
 	@Override
 	public boolean equals(Object o)
 	{
@@ -83,7 +88,7 @@ public abstract class Processor implements Buildable
 		Processor p = (Processor) o;
 		return m_uniqueId == p.m_uniqueId;
 	}
-	
+
 	/**
 	 * Fetches the processor instance's unique ID
 	 * @return The ID
@@ -92,36 +97,24 @@ public abstract class Processor implements Buildable
 	{
 		return m_uniqueId;
 	}
-	
-	/**
-	 * Initializes the processor. This has for effect of creating the
-	 * appropriate number of empty queues, pullables, pushables, etc.
-	 */
-	public abstract void initialize();
-	
+
 	/**
 	 * Resets the processor. This has for effect of flushing the contents
 	 * of all input and output event queues. If the processor has an internal
 	 * state, this also resets this state to its "initial" settings.
 	 */
 	public abstract void reset();
-	
+
 	public abstract Pushable getPushableInput(int index);
-	
+
 	public abstract Pullable getPullableOutput(int index);
-	
+
 	public abstract void setPullableInput(int i, Pullable p);
-	
+
 	public abstract void setPushableOutput(int i, Pushable p);
-	
+
 	public abstract Pushable getPushableOutput(int index);
-	
-	@Override
-	public abstract void build(Stack<Object> stack);
-	//{
-		// Do nothing
-	//}
-	
+
 	/**
 	 * Returns the processor's input arity
 	 * @return The arity
@@ -130,7 +123,7 @@ public abstract class Processor implements Buildable
 	{
 		return m_inputArity;
 	}
-	
+
 	/**
 	 * Returns the processor's output arity
 	 * @return The arity
@@ -139,24 +132,7 @@ public abstract class Processor implements Buildable
 	{
 		return m_outputArity;
 	}
-	
-	@Override
-	public Processor newInstance()
-	{
-		Processor out = null;
-		Class<?> c = this.getClass();
-		try {
-			out = (Processor) c.newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return out;
-	}
-	
+
 	public static boolean allNull(Object[] v)
 	{
 		for (Object o : v)

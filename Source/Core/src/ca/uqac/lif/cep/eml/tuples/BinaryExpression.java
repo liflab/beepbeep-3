@@ -18,32 +18,21 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Map;
-import java.util.Stack;
 
 public abstract class BinaryExpression extends AttributeExpression
 {
-	protected AttributeExpression m_left;
+	protected final AttributeExpression m_left;
 	
-	protected AttributeExpression m_right;
+	protected final AttributeExpression m_right;
 	
-	protected String m_symbol;
-
-	@Override
-	public void build(Stack<Object> stack)
+	protected final String m_symbol;
+	
+	BinaryExpression(String symbol, AttributeExpression left, AttributeExpression right)
 	{
-		stack.pop(); // )
-		AttributeExpression exp_right = (AttributeExpression) stack.pop();
-		stack.pop(); // (
-		do
-		{
-			m_symbol += (String) stack.pop(); // The symbol
-		} while (((String) stack.peek()).compareTo(")") != 0);
-		stack.pop(); // )
-		AttributeExpression exp_left = (AttributeExpression) stack.pop();
-		stack.pop(); // (
-		m_left = exp_left;
-		m_right = exp_right;
-		stack.push(this);
+		super();
+		m_left = left;
+		m_right = right;
+		m_symbol = symbol;
 	}
 	
 	@Override

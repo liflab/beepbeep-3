@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep;
 
 import java.util.Queue;
-import java.util.Stack;
 
 /**
  * The passthrough processor returns its input as its output
@@ -37,25 +36,4 @@ public class Passthrough extends SingleProcessor
 	{
 		return wrapVector(inputs);
 	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		int arity = getInputArity();
-		Passthrough out = new Passthrough(arity);
-		for (int i = 0; i < arity; i++)
-		{
-			Processor p = (Processor) stack.pop();
-			Connector.connect(p,  out,  1,  i);
-		}
-		stack.push(out);
-	}
-	
-	@Override
-	public Passthrough newInstance()
-	{
-		return new Passthrough(getInputArity());
-	}
-
-
 }

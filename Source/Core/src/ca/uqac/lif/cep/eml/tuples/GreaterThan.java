@@ -17,12 +17,13 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class GreaterThan extends BinaryExpression 
 {
-	public GreaterThan()
+	public GreaterThan(AttributeExpression left, AttributeExpression right)
 	{
-		super();
-		m_symbol = ">";
+		super(">", left, right);
 	}
 
 	@Override
@@ -35,5 +36,19 @@ public class GreaterThan extends BinaryExpression
 			return EmlBoolean.toEmlBoolean(true);
 		}
 		return EmlBoolean.toEmlBoolean(false);
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // )
+		AttributeExpression exp_right = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // THAN
+		stack.pop(); // GREATER
+		stack.pop(); // )
+		AttributeExpression exp_left = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		GreaterThan op = new GreaterThan(exp_left, exp_right);
+		stack.push(op);
 	}
 }

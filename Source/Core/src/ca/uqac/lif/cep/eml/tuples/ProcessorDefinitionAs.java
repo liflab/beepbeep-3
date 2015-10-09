@@ -35,8 +35,7 @@ public class ProcessorDefinitionAs extends ProcessorDefinition
 		m_processor = p;
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		EmlString name = (EmlString) stack.pop();
 		Processor proc = null;
@@ -54,9 +53,8 @@ public class ProcessorDefinitionAs extends ProcessorDefinition
 		{
 			proc = (Processor) stack.pop();
 		}
-		m_processorName = name.stringValue();
-		m_processor = proc;
-		stack.push(this);
+		ProcessorDefinitionAs pda = new ProcessorDefinitionAs(name.stringValue(), proc);
+		stack.push(pda);
 	}
 	
 	@Override

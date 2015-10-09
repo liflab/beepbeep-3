@@ -102,10 +102,10 @@ public class CommandLine
 							}
 						}
 					}
-					else if (o instanceof Interpreter.UserDefinition)
+					else if (o instanceof UserDefinition)
 					{
-						Interpreter.UserDefinition def = (Interpreter.UserDefinition) o;
-						def.addToInterpreter();
+						UserDefinition def = (UserDefinition) o;
+						def.addToInterpreter(interpreter);
 					}
 				}
 				catch (ParseException e)

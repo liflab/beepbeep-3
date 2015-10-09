@@ -17,9 +17,16 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class Division extends BinaryExpression
 {
-	protected static final Division s_singleton = new Division();
+	protected static final Division s_singleton = new Division(null, null);
+	
+	public Division(AttributeExpression left, AttributeExpression right)
+	{
+		super("/", left, right);
+	}
 	
 	public static Division getSingleton()
 	{
@@ -32,5 +39,18 @@ public class Division extends BinaryExpression
 		float n_left = EmlNumber.parseFloat(t_left);
 		float n_right = EmlNumber.parseFloat(t_right);
 		return new EmlNumber(n_left / n_right);
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // )
+		AttributeExpression exp_right = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // op
+		stack.pop(); // )
+		AttributeExpression exp_left = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		Division op = new Division(exp_left, exp_right);
+		stack.push(op);
 	}
 }

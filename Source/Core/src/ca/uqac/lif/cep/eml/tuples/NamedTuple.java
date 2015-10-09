@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 
 public class NamedTuple extends EmlConstant implements Map<String, EmlConstant> 
 {
@@ -31,12 +30,6 @@ public class NamedTuple extends EmlConstant implements Map<String, EmlConstant>
 	{
 		super();
 		m_contents = new HashMap<String,EmlConstant>();
-	}
-
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		// TODO
 	}
 	
 	/* From this point on, these are merely delegate methods

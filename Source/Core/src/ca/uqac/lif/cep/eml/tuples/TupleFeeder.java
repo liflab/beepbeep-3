@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -33,12 +32,12 @@ import ca.uqac.lif.cep.input.TokenFeeder;
  */
 public class TupleFeeder extends TokenFeeder
 {
-	Vector<String> m_names;
+	protected String[] m_names;
 	
 	public TupleFeeder()
 	{
 		super();
-		m_names = new Vector<String>();
+		m_names = null;
 		m_separatorBegin = "";
 		m_separatorEnd = "\n";
 	}
@@ -53,14 +52,11 @@ public class TupleFeeder extends TokenFeeder
 			return new TokenFeeder.NoToken();
 		}
 		String[] parts = token.split(",");
-		if (m_names.isEmpty())
+		if (m_names == null)
 		{
 			// This is the first token we read; it contains the names
 			// of the arguments
-			for (String part : parts)
-			{
-				m_names.add(part);
-			}
+			m_names = parts;
 			return new TokenFeeder.NoToken();
 		}
 		int i = 0;
@@ -81,15 +77,15 @@ public class TupleFeeder extends TokenFeeder
 		return out_tuple;
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // OF
 		stack.pop(); // TUPLES
 		stack.pop(); // THE
-		Connector.connect(p, this);
-		stack.push(this);
+		TupleFeeder tp = new TupleFeeder();
+		Connector.connect(p, tp);
+		stack.push(tp);
 	}
 
 }

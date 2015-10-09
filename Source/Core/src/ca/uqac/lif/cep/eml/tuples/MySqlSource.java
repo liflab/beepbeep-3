@@ -36,21 +36,21 @@ import ca.uqac.lif.cep.Source;
  */
 public class MySqlSource extends Source 
 {
-	protected String m_tableName;
+	protected final String m_tableName;
 
-	protected String m_databaseName;
+	protected final String m_databaseName;
 
-	protected String m_jdbcDriver = "com.mysql.jdbc.Driver";  
+	protected static final String s_jdbcDriver = "com.mysql.jdbc.Driver";  
 
 	/**
 	 * The username used to connect to the database
 	 */
-	protected String m_username = "username";
+	protected final String m_username;
 	
 	/**
 	 * The password used to connect to the database
 	 */
-	protected String m_password = "password";
+	protected final String m_password;
 	
 	protected Connection conn = null;
 	protected Statement stmt = null;
@@ -63,9 +63,22 @@ public class MySqlSource extends Source
 	 */
 	protected boolean m_feedOneByOne;
 
-	public MySqlSource()
+	/**
+	 * Builds a MySQL source.
+	 * @param username The username used to connect to the database
+	 * @param password The password used to connect to the database
+	 * @param dbname The database name to be read from
+	 * @param tablename The name of the table to be read from. Actually, this does not need
+	 * to be a table name, as any SQL expression that returns a table (e.g.
+	 * a <code>SELECT</code> statement) can do.
+	 */
+	public MySqlSource(String username, String password, String dbname, String tablename)
 	{
-		super();
+		super(1);
+		m_username = username;
+		m_password = password;
+		m_tableName = tablename;
+		m_databaseName = dbname;
 		m_feedOneByOne = true;
 	}
 
@@ -82,44 +95,6 @@ public class MySqlSource extends Source
 	public void setFeedOneByOne(boolean b)
 	{
 		m_feedOneByOne = b;
-	}
-	
-	/**
-	 * Sets the username used to connect to the database
-	 * @param s The username
-	 */
-	public void setUsername(String s)
-	{
-		m_username = s;
-	}
-	
-	/**
-	 * Sets the password used to connect to the database
-	 * @param s The password
-	 */
-	public void setPassword(String s)
-	{
-		m_password = s;
-	}
-
-	/**
-	 * Sets the name of the table to be read from. Actually, this does not need
-	 * to be a table name, as any SQL expression that returns a table (e.g.
-	 * a <code>SELECT</code> statement) can do.
-	 * @param name The table name
-	 */
-	public void setTableName(String name)
-	{
-		m_tableName = name;
-	}
-
-	/**
-	 * Sets the database name to be read from
-	 * @param name The database name
-	 */
-	public void setDatabaseName(String name)
-	{
-		m_databaseName = name;
 	}
 
 	@Override
@@ -174,19 +149,20 @@ public class MySqlSource extends Source
 		return null;
 	}
 
-	@Override
-	public void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) 
 	{
-		m_password = (String) stack.pop();
+		String password = (String) stack.pop();
 		stack.pop(); // PASSWORD
 		stack.pop(); // ,
-		m_username = (String) stack.pop();
+		String username = (String) stack.pop();
 		stack.pop(); // USER
 		stack.pop(); // ,
-		m_databaseName = (String) stack.pop();
+		String databaseName = (String) stack.pop();
 		stack.pop(); // DATABASE
 		stack.pop(); // IN
-		m_tableName = (String) stack.pop();
+		String tableName = (String) stack.pop();
 		stack.pop(); // TABLE
+		MySqlSource source = new MySqlSource(username, password, databaseName, tableName);
+		stack.push(source);
 	}
 }

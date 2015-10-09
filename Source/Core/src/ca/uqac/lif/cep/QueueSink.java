@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.Stack;
 import java.util.Vector;
 
 /**
@@ -92,25 +91,5 @@ public class QueueSink extends Sink
 		}
 		return out;
 	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		int arity = getInputArity();
-		QueueSink out = new QueueSink(arity);
-		for (int i = 0; i < arity; i++)
-		{
-			Processor p = (Processor) stack.pop();
-			Connector.connect(p,  out,  1,  i);
-		}
-		stack.push(out);
-	}
-	
-	@Override
-	public QueueSink newInstance()
-	{
-		return new QueueSink(getInputArity());
-	}
-
 
 }

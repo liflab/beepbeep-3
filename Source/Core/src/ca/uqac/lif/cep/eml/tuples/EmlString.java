@@ -39,8 +39,7 @@ public class EmlString extends EmlConstant
 		return m_string;
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
 		if (o instanceof String)
@@ -51,7 +50,6 @@ public class EmlString extends EmlConstant
 		{
 			stack.push(new EmlString(o.toString()));
 		}
-		
 	}
 	
 	@Override

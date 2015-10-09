@@ -46,8 +46,7 @@ public class IsGreaterThan extends NaryComputable
 		return out;
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		stack.push(new IsGreaterThan());
 	}

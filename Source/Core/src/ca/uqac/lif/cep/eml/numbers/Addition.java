@@ -47,8 +47,7 @@ public class Addition extends NaryComputable
 		return out;
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		stack.push(new Addition(2));
 	}

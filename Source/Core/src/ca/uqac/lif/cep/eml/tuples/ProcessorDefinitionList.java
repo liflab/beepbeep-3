@@ -20,9 +20,7 @@ package ca.uqac.lif.cep.eml.tuples;
 import java.util.ArrayDeque;
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
-
-public class ProcessorDefinitionList extends ArrayDeque<ProcessorDefinition> implements Buildable
+public class ProcessorDefinitionList extends ArrayDeque<ProcessorDefinition>
 {
 	/**
 	 * Dummy UID
@@ -33,11 +31,11 @@ public class ProcessorDefinitionList extends ArrayDeque<ProcessorDefinition> imp
 	{
 		super();
 	}
-
-	@Override
-	public void build(Stack<Object> stack)
+	
+	public static void build(Stack<Object> stack)
 	{
 		Object top = stack.peek();
+		ProcessorDefinitionList new_pdl = new ProcessorDefinitionList();
 		if (top instanceof ProcessorDefinitionList)
 		{
 			ProcessorDefinitionList pdl = (ProcessorDefinitionList) stack.pop();
@@ -45,16 +43,16 @@ public class ProcessorDefinitionList extends ArrayDeque<ProcessorDefinition> imp
 			{
 				stack.pop(); // ,
 				ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-				add(def);
+				new_pdl.add(def);
 			}
-			addAll(pdl);
+			new_pdl.addAll(pdl);
 		}
 		else
 		{
 			ProcessorDefinition def = (ProcessorDefinition) stack.pop();
-			add(def);
+			new_pdl.add(def);
 		}
-		stack.push(this);
+		stack.push(new_pdl);
 	}
 	
 	@Override
@@ -72,11 +70,5 @@ public class ProcessorDefinitionList extends ArrayDeque<ProcessorDefinition> imp
 			out.append(def);
 		}
 		return out.toString();
-	}
-	
-	@Override
-	public ProcessorDefinitionList newInstance()
-	{
-		return new ProcessorDefinitionList();
 	}
 }

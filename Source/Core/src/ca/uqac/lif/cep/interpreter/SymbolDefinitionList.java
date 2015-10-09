@@ -20,11 +20,8 @@ package ca.uqac.lif.cep.interpreter;
 import java.util.HashMap;
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
-
-public class SymbolDefinitionList extends HashMap<String, String> implements Buildable
+public class SymbolDefinitionList extends HashMap<String, String>
 {
-
 	/**
 	 * Dummy UID
 	 */
@@ -35,10 +32,10 @@ public class SymbolDefinitionList extends HashMap<String, String> implements Bui
 		super();
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Object top = stack.peek();
+		SymbolDefinitionList new_sdl = new SymbolDefinitionList();
 		if (top instanceof SymbolDefinitionList)
 		{
 			SymbolDefinitionList sdl = (SymbolDefinitionList) stack.pop();
@@ -46,16 +43,16 @@ public class SymbolDefinitionList extends HashMap<String, String> implements Bui
 			{
 				stack.pop(); // ,
 				SymbolDefinition def = (SymbolDefinition) stack.pop();
-				put(def.getName(), def.getSymbol());
+				new_sdl.put(def.getName(), def.getSymbol());
 			}
-			putAll(sdl);
+			new_sdl.putAll(sdl);
 		}
 		else
 		{
 			SymbolDefinition def = (SymbolDefinition) stack.pop();
-			put(def.getName(), def.getSymbol());
+			new_sdl.put(def.getName(), def.getSymbol());
 		}
-		stack.push(this);
+		stack.push(new_sdl);
 	}
 	
 	@Override
@@ -73,12 +70,6 @@ public class SymbolDefinitionList extends HashMap<String, String> implements Bui
 			out.append(def).append(" IS A ").append(get(def));
 		}
 		return out.toString();
-	}
-
-	@Override
-	public SymbolDefinitionList newInstance()
-	{
-		return new SymbolDefinitionList();
 	}
 
 }

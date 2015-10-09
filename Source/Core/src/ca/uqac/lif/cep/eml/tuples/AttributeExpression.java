@@ -19,26 +19,7 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Map;
 
-import ca.uqac.lif.cep.Buildable;
-
-public abstract class AttributeExpression implements Buildable
+public abstract class AttributeExpression
 {
 	public abstract EmlConstant evaluate(Map<String,Tuple> inputs);
-	
-	@Override
-	public AttributeExpression newInstance()
-	{
-		AttributeExpression out = null;
-		Class<?> c = this.getClass();
-		try {
-			out = (AttributeExpression) c.newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return out;
-	}
 }

@@ -19,25 +19,23 @@ package ca.uqac.lif.cep.interpreter;
 
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
-
-public class SymbolDefinition implements Buildable 
+public class SymbolDefinition
 {
 	/**
 	 * The non terminal symbol this definition stands for
 	 */
-	protected String m_symbolName;
+	protected final String m_symbolName;
 	
 	/**
 	 * The variable name of this definition
 	 */
-	protected String m_variableName;
+	protected final String m_variableName;
 	
-	public SymbolDefinition()
+	public SymbolDefinition(String symbol_name, String variable_name)
 	{
 		super();
-		m_symbolName = "";
-		m_variableName = "";
+		m_symbolName = symbol_name;
+		m_variableName = variable_name;
 	}
 	
 	public String getName()
@@ -50,20 +48,14 @@ public class SymbolDefinition implements Buildable
 		return m_symbolName;
 	}
 
-	@Override
-	public void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) 
 	{
-		m_symbolName = (String) stack.pop();
+		String symbol_name = (String) stack.pop();
 		stack.pop(); // A
 		stack.pop(); // IS
-		m_variableName = (String) stack.pop();
-		stack.push(this);
-	}
-
-	@Override
-	public SymbolDefinition newInstance() 
-	{
-		return new SymbolDefinition();
+		String variable_name = (String) stack.pop();
+		SymbolDefinition sd = new SymbolDefinition(symbol_name, variable_name);
+		stack.push(sd);
 	}
 
 }

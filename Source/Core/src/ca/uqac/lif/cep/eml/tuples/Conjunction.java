@@ -17,12 +17,13 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class Conjunction extends BinaryExpression 
 {
-	public Conjunction()
+	public Conjunction(AttributeExpression left, AttributeExpression right)
 	{
-		super();
-		m_symbol = "AND";
+		super("AND", left, right);
 	}
 
 	@Override
@@ -31,5 +32,18 @@ public class Conjunction extends BinaryExpression
 		boolean n_left = EmlBoolean.parseBoolValue(t_left);
 		boolean n_right = EmlBoolean.parseBoolValue(t_right);
 		return EmlBoolean.toEmlBoolean(n_left && n_right);
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // )
+		AttributeExpression exp_right = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // op
+		stack.pop(); // )
+		AttributeExpression exp_left = (AttributeExpression) stack.pop();
+		stack.pop(); // (
+		Conjunction op = new Conjunction(exp_left, exp_right);
+		stack.push(op);
 	}
 }

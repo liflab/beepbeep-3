@@ -17,12 +17,9 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Stack;
-
-import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
 
-public abstract class CombinableExpression implements Buildable, Combinable 
+public abstract class CombinableExpression implements Combinable 
 {
 	protected final BinaryExpression m_binaryExpression;
 	
@@ -58,29 +55,5 @@ public abstract class CombinableExpression implements Buildable, Combinable
 	public final int getOutputArity() 
 	{
 		return 1;
-	}
-	
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		stack.pop(); // combiner's name
-		stack.push(this);
-	}
-
-	@Override
-	public CombinableExpression newInstance()
-	{
-		CombinableExpression out = null;
-		Class<?> c = this.getClass();
-		try {
-			out = (CombinableExpression) c.newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return out;
 	}
 }

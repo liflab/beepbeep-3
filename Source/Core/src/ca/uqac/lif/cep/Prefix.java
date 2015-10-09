@@ -21,12 +21,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class Prefix extends Delay
-{
-	public Prefix()
-	{
-		super();
-	}
-	
+{	
 	public Prefix(int k)
 	{
 		super(k);
@@ -43,8 +38,7 @@ public class Prefix extends Delay
 		return null;
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // OF

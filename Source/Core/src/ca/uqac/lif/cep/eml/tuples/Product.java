@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class Product extends CombinableExpression
 {
 	public Product()
@@ -36,5 +38,11 @@ public class Product extends CombinableExpression
 	public String toString()
 	{
 		return "PRODUCT";
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // combiner's name
+		stack.push(new Product());
 	}
 }

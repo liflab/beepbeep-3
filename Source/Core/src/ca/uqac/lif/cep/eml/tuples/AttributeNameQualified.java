@@ -26,11 +26,6 @@ public class AttributeNameQualified extends AttributeName
 	
 	protected String m_attributeName;
 	
-	public AttributeNameQualified()
-	{
-		this("", "");
-	}
-	
 	public AttributeNameQualified(String trace, String attribute)
 	{
 		super();
@@ -38,15 +33,15 @@ public class AttributeNameQualified extends AttributeName
 		m_attributeName = attribute;
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		EmlString att_name = (EmlString) stack.pop();
 		stack.pop(); // dot
 		EmlString trace_name = (EmlString) stack.pop();
-		m_traceName = trace_name.stringValue();
-		m_attributeName = att_name.stringValue();
-		stack.push(this);
+		String traceName = trace_name.stringValue();
+		String attributeName = att_name.stringValue();
+		AttributeNameQualified anq = new AttributeNameQualified(traceName, attributeName);
+		stack.push(anq);
 	}
 
 	@Override

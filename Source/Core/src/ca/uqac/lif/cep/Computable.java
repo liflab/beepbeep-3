@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
-public interface Computable extends Buildable
+public interface Computable
 {
 	/**
 	 * The maximum input arity that a computable can have

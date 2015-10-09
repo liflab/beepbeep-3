@@ -152,8 +152,7 @@ public class PlateauFinder extends WindowProcessor
 		return wrapVector(out_vector);
 	}
 	
-	@Override
-	public void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) 
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
@@ -161,6 +160,7 @@ public class PlateauFinder extends WindowProcessor
 		stack.pop(); // OF
 		stack.pop(); // PLATEAU
 		stack.pop(); // THE
-		Connector.connect(p, this);
+		PlateauFinder pf = new PlateauFinder();
+		Connector.connect(p, pf);
 	}
 }

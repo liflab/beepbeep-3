@@ -190,8 +190,7 @@ public class StreamReader extends Source
 		return wrapVector(out);
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		String filename = (String) stack.pop();
 		if (filename.startsWith("\""))

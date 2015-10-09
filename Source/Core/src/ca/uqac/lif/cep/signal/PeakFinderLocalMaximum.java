@@ -169,8 +169,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 		return peak_pos;
 	}
 
-	@Override
-	public void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) 
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
@@ -178,7 +177,8 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 		stack.pop(); // OF
 		stack.pop(); // PEAK
 		stack.pop(); // THE
-		Connector.connect(p, this);
+		PeakFinderLocalMaximum pflm = new PeakFinderLocalMaximum();
+		Connector.connect(p, pflm);
 	}
 
 }

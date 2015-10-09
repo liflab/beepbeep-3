@@ -17,19 +17,17 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import ca.uqac.lif.cep.Buildable;
-
-public abstract class AttributeDefinition implements Buildable
+public abstract class AttributeDefinition
 {
-	protected AttributeExpression m_expression;
+	protected final AttributeExpression m_expression;
 	
-	protected String m_aliasName;
+	protected final String m_aliasName;
 	
-	public AttributeDefinition()
+	public AttributeDefinition(AttributeExpression exp, String alias)
 	{
 		super();
-		m_expression = null;
-		m_aliasName = "";
+		m_expression = exp;
+		m_aliasName = alias;
 	}
 	
 	public String getAlias()
@@ -40,22 +38,5 @@ public abstract class AttributeDefinition implements Buildable
 	public AttributeExpression getExpression()
 	{
 		return m_expression;
-	}
-	
-	@Override
-	public AttributeDefinition newInstance()
-	{
-		AttributeDefinition out = null;
-		Class<?> c = this.getClass();
-		try {
-			out = (AttributeDefinition) c.newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return out;
 	}
 }

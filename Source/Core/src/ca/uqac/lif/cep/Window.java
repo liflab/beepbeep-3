@@ -63,11 +63,6 @@ public class Window extends SingleProcessor
 	 */
 	protected List<Object>[] m_window;
 	
-	public Window()
-	{
-		super();
-	}
-	
 	public Window(Processor in_processor, int width)
 	{
 		super(in_processor.getInputArity(), in_processor.getOutputArity());
@@ -166,9 +161,8 @@ public class Window extends SingleProcessor
 			q.remove(0);
 		}
 	}
-	
-	@Override
-	public void build(Stack<Object> stack)
+
+	public static void build(Stack<Object> stack)
 	{
 		Number width = (Number) stack.pop();
 		stack.pop(); // OF
@@ -187,12 +181,4 @@ public class Window extends SingleProcessor
 		Connector.connect(input_trace, out);
 		stack.push(out);
 	}
-	
-	@Override
-	public Window newInstance()
-	{
-		return new Window();
-	}
-
-
 }

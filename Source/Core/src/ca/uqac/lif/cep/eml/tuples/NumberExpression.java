@@ -22,19 +22,18 @@ import java.util.Stack;
 
 public class NumberExpression extends ConstantExpression
 {
-	protected EmlNumber m_number;
+	protected final EmlNumber m_number;
 	
-	public NumberExpression()
+	public NumberExpression(EmlNumber n)
 	{
 		super();
-		m_number = null;
+		m_number = n;
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
-		m_number = (EmlNumber) stack.pop();
-		stack.push(this);
+		EmlNumber number = (EmlNumber) stack.pop();
+		stack.push(new NumberExpression(number));
 	}
 	
 	@Override

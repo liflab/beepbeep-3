@@ -29,12 +29,6 @@ public class Function extends SingleProcessor
 	 */
 	protected final Computable m_compute;
 	
-	public Function()
-	{
-		super();
-		m_compute = null;
-	}
-	
 	public Function(Computable comp)
 	{
 		super(comp.getInputArity(), comp.getOutputArity());
@@ -47,8 +41,7 @@ public class Function extends SingleProcessor
 		return wrapVector(m_compute.compute(inputs));
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		// Principle: pop processors from the stack and count them,
 		// until we pop the Computable. The computable tells us how
@@ -86,12 +79,6 @@ public class Function extends SingleProcessor
 			Connector.connect(p, out, 0, i);
 		}
 		stack.push(out);
-	}
-	
-	@Override
-	public Function newInstance()
-	{
-		return new Function();
 	}
 
 }

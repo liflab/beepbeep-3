@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+import java.util.Stack;
+
 public class Quotient extends CombinableExpression
 {
 	public Quotient()
@@ -36,5 +38,11 @@ public class Quotient extends CombinableExpression
 	public String toString()
 	{
 		return "QUOTIENT";
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		stack.pop(); // combiner's name
+		stack.push(new Quotient());
 	}
 }

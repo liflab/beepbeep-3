@@ -26,11 +26,6 @@ public class Combiner extends SingleProcessor
 	
 	protected Combinable m_combinable = null;
 	
-	public Combiner()
-	{
-		super();
-	}
-	
 	public Combiner(Combinable combinable)
 	{
 		super(combinable.getInputArity(), combinable.getOutputArity());
@@ -55,8 +50,7 @@ public class Combiner extends SingleProcessor
 		return wrapVector(m_total);
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Combinable com = (Combinable) stack.pop();
 		stack.pop(); // WITH
@@ -67,12 +61,6 @@ public class Combiner extends SingleProcessor
 		Combiner out = new Combiner(com);
 		Connector.connect(p, out);
 		stack.push(out);
-	}
-	
-	@Override
-	public Combiner newInstance()
-	{
-		return new Combiner();
 	}
 
 }

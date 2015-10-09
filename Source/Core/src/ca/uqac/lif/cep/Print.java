@@ -58,8 +58,7 @@ public class Print extends Sink
 		return wrapVector(new Object[getOutputArity()]);
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
@@ -89,11 +88,4 @@ public class Print extends Sink
 			m_out.print(n.intValue());
 		}
 	}
-	
-	@Override
-	public Print newInstance()
-	{
-		return new Print();
-	}
-
 }

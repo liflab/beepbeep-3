@@ -61,8 +61,7 @@ public class EmlNumber extends EmlConstant
 		return m_number;
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
 		if (o instanceof Processor)

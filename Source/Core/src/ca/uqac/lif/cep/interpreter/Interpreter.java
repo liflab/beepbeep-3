@@ -21,6 +21,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -32,7 +35,6 @@ import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.bullwinkle.CaptureBlockParseNode;
 import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.bullwinkle.ParseNodeVisitor;
-import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combiner;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.CountDecimate;
@@ -97,9 +99,15 @@ public class Interpreter implements ParseNodeVisitor
 
 	/**
 	 * Associations between the name of a production rule and
-	 * the buildable object whose syntax it defines
+	 * the buildable <em>instance</em> whose syntax it defines
 	 */
-	protected Map<String, Buildable> m_associations;
+	protected Map<String, Object> m_userDefinedAssociations;
+	
+	/**
+	 * Associations between the name of a production rule and
+	 * the buildable class whose syntax it defines
+	 */
+	protected Map<String, Class<?>> m_associations;
 	
 	/**
 	 * Instantiates an interpreter and prepares it to parse expressions
@@ -109,7 +117,8 @@ public class Interpreter implements ParseNodeVisitor
 		super();
 		m_parser = initializeParser();
 		m_nodes = new GroupStack<Object>();
-		m_associations = new HashMap<String, Buildable>();
+		m_associations = new HashMap<String, Class<?>>();
+		m_userDefinedAssociations = new HashMap<String,Object>();
 		m_processorDefinitions = new HashMap<String, GroupProcessor>();
 		m_symbolDefinitions = new HashMap<String, Object>();
 		m_processorForks = new HashMap<String, Fork>();
@@ -126,8 +135,10 @@ public class Interpreter implements ParseNodeVisitor
 		m_parser = new BnfParser(i.m_parser);
 		m_nodes = new GroupStack<Object>();
 		m_nodes.addAll(i.m_nodes);
-		m_associations = new HashMap<String,Buildable>();
+		m_associations = new HashMap<String,Class<?>>();
 		m_associations.putAll(i.m_associations);
+		m_userDefinedAssociations = new HashMap<String,Object>();
+		m_userDefinedAssociations.putAll(i.m_userDefinedAssociations);
 		m_processorDefinitions = new HashMap<String,GroupProcessor>();
 		m_processorDefinitions.putAll(i.m_processorDefinitions);
 		m_symbolDefinitions = new HashMap<String, Object>();
@@ -164,7 +175,7 @@ public class Interpreter implements ParseNodeVisitor
 	public void extendGrammar(GrammarExtension ext)
 	{
 		// Adds the associations
-		Map<String,Buildable> associations = ext.getAssociations();
+		Map<String,Class<?>> associations = ext.getAssociations();
 		m_associations.putAll(associations);
 		// Adds the productions
 		String productions = ext.getGrammar();
@@ -181,29 +192,21 @@ public class Interpreter implements ParseNodeVisitor
 	protected void setBuiltinAssociations()
 	{
 		// Basic
-		addAssociation("<p_combiner>", new Combiner());
-		addAssociation("<p_constant>", new QueueSource());
-		addAssociation("<p_decimate>", new CountDecimate());
-		addAssociation("<p_delay>", new Delay());
-		addAssociation("<p_freeze>", new Freeze());
+		addAssociation("<p_combiner>", Combiner.class);
+		addAssociation("<p_constant>", QueueSource.class);
+		addAssociation("<p_decimate>", CountDecimate.class);
+		addAssociation("<p_delay>", Delay.class);
+		addAssociation("<p_freeze>", Freeze.class);
 		//addAssociation("<p_function>", new Function());
-		addAssociation("<p_prefix>", new Prefix());
-		addAssociation("<p_print>", new Print());
-		addAssociation("<p_window>", new Window());
+		addAssociation("<p_prefix>", Prefix.class);
+		addAssociation("<p_print>", Print.class);
+		addAssociation("<p_window>", Window.class);
 		
 		// User definitions
-		addAssociation("<processor_def>", new UserDefinition());
-		addAssociation("<symbol_def_list>", new ca.uqac.lif.cep.interpreter.SymbolDefinitionList());
-		addAssociation("<symbol_def>", new ca.uqac.lif.cep.interpreter.SymbolDefinition());
+		addAssociation("<processor_def>", UserDefinition.class);
+		addAssociation("<symbol_def_list>", ca.uqac.lif.cep.interpreter.SymbolDefinitionList.class);
+		addAssociation("<symbol_def>", ca.uqac.lif.cep.interpreter.SymbolDefinition.class);
 
-		// Math
-		/* This will be moved to the tuple EML
-		addAssociation("<f_addition>", "ca.uqac.lif.cep.math.Addition");
-		addAssociation("<f_subtraction>", "ca.uqac.lif.cep.math.Subtraction");
-		addAssociation("<f_division>", "ca.uqac.lif.cep.math.Division");
-		addAssociation("<f_power>", "ca.uqac.lif.cep.math.Power");
-		addAssociation("<c_sum>", "ca.uqac.lif.cep.math.Sum");
-		*/
 	}
 
 	/**
@@ -211,22 +214,32 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param production_rule The rule name
 	 * @param p The processor
 	 */
-	void addAssociation(String production_rule, Buildable class_name)
+	void addAssociation(String production_rule, Class<?> c)
 	{
-		m_associations.put(production_rule, class_name);
+		m_associations.put(production_rule, c);
+	}
+
+	/**
+	 * Associates a production rule name to a processor
+	 * @param production_rule The rule name
+	 * @param p The processor
+	 */
+	void addUserDefinedAssociation(String production_rule, Object o)
+	{
+		m_userDefinedAssociations.put(production_rule, o);
 	}
 	
-	public void addSymbolDefinition(String symbol_name, Buildable object)
+	public void addSymbolDefinition(String symbol_name, Object object)
 	{
 		m_symbolDefinitions.put(symbol_name, object);
 	}
 	
-	public void addSymbolDefinitions(Map<String, Buildable> defs)
+	public void addSymbolDefinitions(Map<String, Object> defs)
 	{
 		m_symbolDefinitions.putAll(defs);
 	}
 	
-	public void addPlaceholder(String symbol_name, String non_terminal, Buildable object)
+	public void addPlaceholder(String symbol_name, String non_terminal, Object object)
 	{
 		m_symbolDefinitions.put(symbol_name, object);
 		try
@@ -312,8 +325,13 @@ public class Interpreter implements ParseNodeVisitor
 				// Extend the current fork for this processor with a new output
 				Fork f = m_processorForks.get(node_name);
 				int new_arity = f.getOutputArity() + 1;
-				f.extendOutputArity(new_arity);
 				Passthrough pt = new Passthrough(o_p.getOutputArity());
+				/*
+				Fork new_f = new Fork(new_arity, f);
+				Connector.connect(new_f, pt, new_arity - 1, 0);
+				m_processorForks.put(node_name, new_f);
+				*/
+				f.extendOutputArity(new_arity);
 				Connector.connect(f, pt, new_arity - 1, 0);
 				m_nodes.push(pt);
 			}
@@ -331,6 +349,11 @@ public class Interpreter implements ParseNodeVisitor
 			{
 				// Production rule for something buildable from stack contents
 				visitAssociation(node);
+			}
+			else if (m_userDefinedAssociations.containsKey(node_name))
+			{
+				// Production rule for something buildable from stack contents
+				visitUserDefinedAssociation(node);
 			}
 		}
 		else
@@ -365,9 +388,48 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		// The node's name appears to refer to a Buildable object
 		String node_name = node.getToken();
-		Buildable obj = m_associations.get(node_name);
-		Buildable b = obj.newInstance();
-		b.build(m_nodes);
+		Class<?> obj = m_associations.get(node_name);
+		Method m = getStaticMethod(obj, "build", Stack.class);
+		try
+		{
+			m.invoke(null, m_nodes);
+		} catch (IllegalAccessException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	protected void visitUserDefinedAssociation(ParseNode node)
+	{
+		// The node's name appears to refer to a Buildable object
+		String node_name = node.getToken();
+		Object obj = m_userDefinedAssociations.get(node_name);
+		Method m = getMethod(obj, "build", Stack.class);
+		try
+		{
+			m.invoke(obj, m_nodes);
+		} catch (IllegalAccessException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	void addProcessorDefinition(GroupProcessor pd)
@@ -407,7 +469,8 @@ public class Interpreter implements ParseNodeVisitor
 			}
 			else if (result instanceof UserDefinition)
 			{
-				((UserDefinition) result).addToInterpreter();
+				UserDefinition ud = (UserDefinition) result;
+				ud.addToInterpreter(this);
 				return null;
 			}
 		} 
@@ -525,213 +588,6 @@ public class Interpreter implements ParseNodeVisitor
 		}
 	}
 	
-	class UserDefinition implements Buildable 
-	{
-		/**
-		 * The definition of each variable occurring in the expression 
-		 */
-		protected SymbolDefinitionList m_symbolDefs;
-		
-		/**
-		 * The non-terminal symbol of the grammar this definition adds 
-		 * a new case to
-		 */
-		protected String m_symbolName;
-		
-		/**
-		 * The definition
-		 */
-		protected String m_definition;
-		
-		/**
-		 * The parsing pattern
-		 */
-		protected String m_pattern;
-		
-		/**
-		 * An interpreter to parse the definition
-		 */
-		protected Interpreter m_interpreter;
-		
-		/**
-		 * The object (processor, constant, etc.) this definition ultimately
-		 * stands for
-		 */
-		protected Object m_standsFor;
-		
-		public UserDefinition()
-		{
-			super();
-		}
-		
-		void setInterpreter(Interpreter i)
-		{
-			m_interpreter = i;
-		}
-
-		@Override
-		public void build(Stack<Object> stack) 
-		{
-			// We use toString: if the definition is a single number, a number is
-			// on the stack rather than a string
-			m_definition = ((String) stack.pop().toString()).trim();
-			m_symbolName = ((String) stack.pop()).trim();
-			stack.pop(); // THE
-			stack.pop(); // IS
-			m_pattern = ((String) stack.pop()).trim();
-			if (!stack.isEmpty())
-			{
-				Object separator = stack.pop();
-				if (separator instanceof String && ((String) separator).compareTo(":") == 0)
-				{
-					// This is a definition with a context
-					m_symbolDefs = (SymbolDefinitionList) stack.pop();
-					stack.pop(); // WHEN
-				}
-			}
-			stack.push(this);
-		}
-		
-		Object parseDefinition(Map<String,Buildable> symbol_defs)
-		{
-			Interpreter inner_int = new Interpreter(Interpreter.this);
-			inner_int.addSymbolDefinitions(symbol_defs);
-			int in_arity = 0;
-			for (String symbol : symbol_defs.keySet())
-			{
-				Object def = symbol_defs.get(symbol);
-				if (def instanceof Processor)
-				{
-					in_arity++;
-				}
-			}
-			if (m_symbolDefs != null && !m_symbolDefs.isEmpty())
-			{
-				for (String symbol : m_symbolDefs.keySet())
-				{
-					String symbol_nonterminal = m_symbolDefs.get(symbol);
-					try 
-					{
-						BnfRule rule = BnfRule.parseRule("<" + symbol_nonterminal + "> := " + symbol);
-						inner_int.addRule(rule);
-					} 
-					catch (InvalidRuleException e) 
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-			Object parsed = null;
-			try 
-			{
-				//inner_int.setDebugMode(true);
-				// We give a hint to the interpreter by telling it what
-				// non-terminal symbol to start parsing from
-				parsed = inner_int.parseLanguage(m_definition, "<" + m_symbolName + ">");
-			} 
-			catch (ParseException e) 
-			{
-				e.printStackTrace();
-			}
-			if (parsed != null && parsed instanceof Processor && m_symbolName.compareTo("processor") == 0)
-			{
-				// The parsing succeeded: create a group processor out of 
-				// the parsed expression
-				Processor p_parsed = (Processor) parsed;
-				GroupProcessor gp = new GroupProcessor(in_arity, p_parsed.getOutputArity());
-				gp.addProcessor(p_parsed);
-				int i = 0;
-				for (Object o : inner_int.m_nodes.getHistory())
-				{
-					if (o instanceof Processor)
-					{
-						gp.addProcessor((Processor) o);
-					}
-				}
-				for (String placeholder : inner_int.m_processorForks.keySet())
-				{
-					Fork f = inner_int.m_processorForks.get(placeholder);
-					//gp.addProcessor(f);
-					gp.associateInput(i, f, 0);
-				}
-				for (int j = 0; j < p_parsed.getOutputArity(); j++)
-				{
-					gp.associateOutput(j, p_parsed, j);
-				}
-				return gp;
-			}
-			return parsed;
-		}
-		
-		/**
-		 * Adds this user definition to the grammar of an existing interpreter
-		 */
-		public void addToInterpreter()
-		{
-			String pattern = createPattern();
-			String non_terminal = "<USERDEF" + s_defNb++ + ">";
-			try 
-			{
-				addRule(BnfRule.parseRule(non_terminal + " := " + pattern));
-			} 
-			catch (InvalidRuleException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			addCaseToRule("<" + m_symbolName + ">", non_terminal);
-			addAssociation(non_terminal, new UserDefinitionInstance(this));
-		}
-		
-		/**
-		 * Creates a new grammar case that matches the pattern declared for this
-		 * definition. For example, given the expression:
-		 * <pre>
-		 * WHEN @P IS A XYZ: THE COUNT OF @P IS THE ABC ...
-		 * </pre>
-		 * This would create the following case, appended to the cases of
-		 * non-terminal symbol ABC:
-		 * <pre>
-		 * THE COUNT OF &lt;XYZ&gt;
-		 * </pre>
-		 * @return A string containing the new grammar case
-		 */
-		protected String createPattern()
-		{
-			String out = new String(m_pattern);
-			if (m_symbolDefs != null && !m_symbolDefs.isEmpty())
-			{
-				for (String var_name : m_symbolDefs.keySet())
-				{
-					out = out.replaceAll(var_name, "<" + m_symbolDefs.get(var_name) + ">");
-				}
-			}
-			return out;
-		}
-		
-		@Override
-		public String toString()
-		{
-			StringBuilder out = new StringBuilder();
-			out.append("WHEN ").append(m_symbolDefs).append(": ");
-			out.append(m_pattern).append(" IS THE ").append(m_symbolName);
-			out.append(" ").append(m_definition).append(".");
-			return out.toString();
-		}
-		
-		@Override
-		public UserDefinition newInstance()
-		{
-			UserDefinition out = new UserDefinition();
-			out.m_definition = m_definition;
-			out.m_pattern = m_pattern;
-			out.m_standsFor = m_standsFor;
-			out.m_symbolDefs = m_symbolDefs;
-			out.m_symbolName = m_symbolName;
-			return out;
-		}
-	}
-	
 	/**
 	 * Returns the result of the last call to the interpreter.
 	 * This is either a processor, a user definition, or null if the
@@ -742,4 +598,48 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		return m_lastQuery;
 	}
+	
+	/**
+	 * Retrieves the static method of a given class
+	 * @param type The class
+	 * @param methodName The method name to look for
+	 * @param params Any parameters this method may have
+	 * @return The method, or null if no method was found
+	 */
+	static public Method getStaticMethod(Class<?> type, String methodName, Class<?>... params) 
+	{
+    try 
+    {
+      Method method = type.getDeclaredMethod(methodName, params);
+      if ((method.getModifiers() & Modifier.STATIC) != 0) 
+      {
+        return method;
+      }
+    } 
+    catch (NoSuchMethodException e) 
+    {
+    }
+    return null;
+  }
+	
+	/**
+	 * Retrieves the static method of a given class
+	 * @param type The class
+	 * @param methodName The method name to look for
+	 * @param params Any parameters this method may have
+	 * @return The method, or null if no method was found
+	 */
+	static public Method getMethod(Object o, String methodName, Class<?>... params) 
+	{
+    try 
+    {
+      Method method = o.getClass().getDeclaredMethod(methodName, params);
+      return method;
+    } 
+    catch (NoSuchMethodException e) 
+    {
+    }
+    return null;
+  }
+
 }

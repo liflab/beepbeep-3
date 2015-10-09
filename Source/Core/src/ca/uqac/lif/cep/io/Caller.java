@@ -30,16 +30,11 @@ public class Caller extends SingleProcessor
 	/**
 	 * The command to call
 	 */
-	protected String m_command;
-	
-	public Caller()
-	{
-		super(1, 1);
-	}
+	protected final String m_command;
 	
 	public Caller(String command)
 	{
-		this();
+		super(1, 1);
 		m_command = command;
 	}
 	
@@ -56,8 +51,7 @@ public class Caller extends SingleProcessor
 		return wrapObject(contents);
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
@@ -65,8 +59,8 @@ public class Caller extends SingleProcessor
 		stack.pop(); // ON
 		String command = (String) stack.pop();
 		stack.pop(); // CALL
-		m_command = command;
-		Connector.connect(p, this);
-		stack.push(this);
+		Caller c = new Caller(command);
+		Connector.connect(p, c);
+		stack.push(c);
 	}
 }

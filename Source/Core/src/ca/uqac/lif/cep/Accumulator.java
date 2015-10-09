@@ -20,7 +20,6 @@ package ca.uqac.lif.cep;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
 
 public abstract class Accumulator extends SingleProcessor
 {
@@ -56,8 +55,5 @@ public abstract class Accumulator extends SingleProcessor
 	}
 	
 	protected abstract Queue<Object[]> computeWindow(Object[] window);
-
-	@Override
-	public abstract void build(Stack<Object> stack);
 
 }

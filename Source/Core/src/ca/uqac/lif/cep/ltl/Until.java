@@ -17,6 +17,10 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.eml.tuples.EmlBoolean;
 
 public class Until extends BinaryProcessor 
@@ -62,6 +66,21 @@ public class Until extends BinaryProcessor
 			return EmlBoolean.s_false;
 		}
 		return null;
+	}
+	
+	public static void build(Stack<Object> stack) 
+	{
+		stack.pop(); // (
+		Processor right = (Processor) stack.pop();
+		stack.pop(); // )
+		stack.pop(); // op
+		stack.pop(); // (
+		Processor left = (Processor) stack.pop();
+		stack.pop(); // )
+		Until op = new Until();
+		Connector.connect(left, op, 0, 0);
+		Connector.connect(right, op, 0, 1);
+		stack.push(op);
 	}
 
 }

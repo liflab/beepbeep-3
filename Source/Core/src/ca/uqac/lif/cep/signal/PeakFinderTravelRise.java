@@ -1,7 +1,6 @@
 package ca.uqac.lif.cep.signal;
 
 import java.util.Queue;
-import java.util.Stack;
 
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 
@@ -62,13 +61,6 @@ public class PeakFinderTravelRise extends WindowProcessor
 			}
 		}
 		return wrapObject(new EmlNumber(0));
-	}
-
-	@Override
-	public void build(Stack<Object> stack)
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -23,20 +23,14 @@ import ca.uqac.lif.cep.Processor;
 
 public class ProcessorDefinitionPlain extends ProcessorDefinitionAs
 {
-	public ProcessorDefinitionPlain()
-	{
-		super();
-	}
-	
 	public ProcessorDefinitionPlain(Processor p)
 	{
-		this();
+		super();
 		m_processorName = "";
 		m_processor = p;
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Processor proc = null;
 		Object o = stack.pop();
@@ -50,9 +44,8 @@ public class ProcessorDefinitionPlain extends ProcessorDefinitionAs
 		{
 			proc = (Processor) o;	
 		}
-		m_processorName = "";
-		m_processor = proc;
-		stack.push(this);
+		ProcessorDefinitionPlain pdp = new ProcessorDefinitionPlain(proc);
+		stack.push(pdp);
 	}
 	
 	@Override

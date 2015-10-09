@@ -21,10 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
-import ca.uqac.lif.cep.interpreter.Interpreter.UserDefinition;
-
-public class UserDefinitionInstance implements Buildable
+public class UserDefinitionInstance
 {
 	protected UserDefinition m_definition;
 	
@@ -34,11 +31,10 @@ public class UserDefinitionInstance implements Buildable
 		m_definition = definition;
 	}
 	
-	@Override
 	public void build(Stack<Object> stack) 
 	{
 		// Pull stuff from the stack based on the parsing pattern
-		Map<String,Buildable> variable_definitions = new HashMap<String,Buildable>();
+		Map<String,Object> variable_definitions = new HashMap<String,Object>();
 		String[] pattern_parts = m_definition.m_pattern.split(" ");
 		for (int i = pattern_parts.length - 1; i >= 0; i--)
 		{
@@ -48,7 +44,7 @@ public class UserDefinitionInstance implements Buildable
 			{
 				// This is a variable; pop the object and associate it with
 				// the variable name
-				Buildable o = (Buildable) stack.pop();
+				Object o = stack.pop();
 				variable_definitions.put(part, o);
 			}
 			else
@@ -61,12 +57,6 @@ public class UserDefinitionInstance implements Buildable
 		// Now that we have the variable associations, parse the definition
 		Object o = m_definition.parseDefinition(variable_definitions);
 		stack.push(o);
-	}
-	
-	@Override
-	public UserDefinitionInstance newInstance()
-	{
-		return new UserDefinitionInstance(m_definition);
 	}
 
 }

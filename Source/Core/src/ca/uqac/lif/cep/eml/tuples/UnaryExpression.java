@@ -18,23 +18,18 @@
 package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Map;
-import java.util.Stack;
 
 public abstract class UnaryExpression extends AttributeExpression
 {
-	protected AttributeExpression m_left;
+	protected final AttributeExpression m_left;
 	
-	protected String m_symbol;
-
-	@Override
-	public void build(Stack<Object> stack)
+	protected final String m_symbol;
+	
+	public UnaryExpression(String symbol, AttributeExpression exp)
 	{
-		stack.pop(); // )
-		AttributeExpression exp_left = (AttributeExpression) stack.pop();
-		stack.pop(); // (
-		m_symbol = (String) stack.pop(); // The symbol
-		m_left = exp_left;
-		stack.push(this);
+		super();
+		m_left = exp;
+		m_symbol = symbol;
 	}
 	
 	@Override

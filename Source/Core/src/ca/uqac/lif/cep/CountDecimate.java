@@ -63,8 +63,7 @@ public class CountDecimate extends SingleProcessor
 		return wrapVector(out);
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
@@ -77,11 +76,4 @@ public class CountDecimate extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-	
-	@Override
-	public CountDecimate newInstance()
-	{
-		return new CountDecimate();
-	}
-
 }

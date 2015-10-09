@@ -19,10 +19,7 @@ package ca.uqac.lif.cep.ltl;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.Stack;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.eml.tuples.EmlBoolean;
 
@@ -52,15 +49,4 @@ public abstract class UnaryProcessor extends SingleProcessor
 	}
 	
 	protected abstract EmlBoolean compute(EmlBoolean input);
-
-	@Override
-	public void build(Stack<Object> stack) 
-	{
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // G
-		Connector.connect(p,  this);
-		stack.push(this);
-	}
 }

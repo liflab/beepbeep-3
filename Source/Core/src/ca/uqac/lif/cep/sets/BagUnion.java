@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.sets;
 
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
 
 public class BagUnion implements Combinable
@@ -29,18 +28,11 @@ public class BagUnion implements Combinable
 		super();
 	}
 
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		stack.pop(); // UNION
 		stack.pop(); // BAG
-		stack.push(this);
-	}
-
-	@Override
-	public Buildable newInstance() 
-	{
-		return new BagUnion();
+		stack.push(new BagUnion());
 	}
 
 	@Override

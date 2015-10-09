@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Buildable;
 import ca.uqac.lif.cep.Combinable;
 
 public class Sum implements Combinable
@@ -29,8 +28,7 @@ public class Sum implements Combinable
 		super();
 	}
 	
-	@Override
-	public void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack)
 	{
 		Sum out = new Sum();
 		stack.push(out);
@@ -65,12 +63,6 @@ public class Sum implements Combinable
 	public int getOutputArity()
 	{
 		return 1;
-	}
-
-	@Override
-	public Buildable newInstance() 
-	{
-		return new Sum();
 	}
 
 }
