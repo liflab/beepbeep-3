@@ -21,7 +21,6 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.eml.tuples.EmlBoolean;
 
 public class Eventually extends UnaryProcessor 
 {
@@ -46,12 +45,12 @@ public class Eventually extends UnaryProcessor
 	
 
 	@Override
-	protected EmlBoolean compute(EmlBoolean input)
+	protected Object computeInternal(boolean input)
 	{
-		m_value |= input.boolValue();
+		m_value |= input;
 		if (m_value)
 		{
-			return EmlBoolean.toEmlBoolean(true);
+			return true;
 		}
 		return null;
 	}

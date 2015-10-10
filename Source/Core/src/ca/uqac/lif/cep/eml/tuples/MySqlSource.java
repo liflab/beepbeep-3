@@ -133,11 +133,11 @@ public class MySqlSource extends Source
 					Object value = rs.getObject(i);
 					if (value instanceof String)
 					{
-						nt.put(name, new EmlString((String) value));
+						nt.put(name, (String) value);
 					}
 					else if (value instanceof Number)
 					{
-						nt.put(name,  EmlNumber.toEmlNumber(value));
+						nt.put(name, EmlNumber.toEmlNumber(value));
 					}
 				}
 			}

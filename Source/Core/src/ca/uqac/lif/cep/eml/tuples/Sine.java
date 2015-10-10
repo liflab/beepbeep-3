@@ -27,10 +27,10 @@ public class Sine extends UnaryExpression
 	}
 	
 	@Override
-	public EmlConstant evaluate(Object t_left)
+	public Object evaluate(Object t_left)
 	{
 		float n_left = EmlNumber.parseFloat(t_left);
-		return new EmlNumber(Math.sin(n_left));
+		return Math.sin(n_left);
 	}
 	
 	public static void build(Stack<Object> stack)

@@ -27,14 +27,14 @@ public final class FixedTupleBuilder
 		m_names = names;
 	}
 	
-	public final NamedTupleFixed createTuple(EmlConstant[] values)
+	public final NamedTupleFixed createTuple(Object[] values)
 	{
 		return new NamedTupleFixed(m_names, values);
 	}
 	
-	public final NamedTupleFixed createTuple(String[] values)
+	public final NamedTupleFixed createTupleFromString(String[] values)
 	{
-		EmlConstant[] eml_values = new EmlConstant[values.length];
+		Object[] eml_values = new Object[values.length];
 		for (int i = 0; i < values.length; i++)
 		{
 			eml_values[i] = EmlConstant.createConstantFromString(values[i]);

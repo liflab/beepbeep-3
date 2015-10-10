@@ -55,7 +55,7 @@ public class Combiner extends SingleProcessor
 		Combinable com = (Combinable) stack.pop();
 		stack.pop(); // WITH
 		stack.pop(); // )
-		Processor p = (Processor) stack.pop();
+		Processor p = Processor.liftProcessor(stack.pop());
 		stack.pop(); // (
 		stack.pop(); // COMBINE
 		Combiner out = new Combiner(com);

@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -60,9 +61,9 @@ public final class NamedTupleFixed extends NamedTuple
 {
 	private final String[] m_names;
 	
-	private final EmlConstant[] m_values;
+	private final Object[] m_values;
 	
-	public NamedTupleFixed(String[] names, EmlConstant[] values)
+	public NamedTupleFixed(String[] names, Object[] values)
 	{
 		super();
 		m_names = names;
@@ -103,14 +104,14 @@ public final class NamedTupleFixed extends NamedTuple
 	}
 
 	@Override
-	public final Set<java.util.Map.Entry<String, EmlConstant>> entrySet()
+	public final Set<java.util.Map.Entry<String, Object>> entrySet()
 	{
 		// Don't implement this for now
 		return null;
 	}
 
 	@Override
-	public final EmlConstant get(Object key)
+	public final Object get(Object key)
 	{
 		if (key == null || !(key instanceof String))
 		{
@@ -124,7 +125,7 @@ public final class NamedTupleFixed extends NamedTuple
 		return null;
 	}
 	
-	public final EmlConstant getValue(int index)
+	public final Object getValue(int index)
 	{
 		return m_values[index];
 	}
@@ -160,14 +161,14 @@ public final class NamedTupleFixed extends NamedTuple
 	}
 
 	@Override
-	public final EmlConstant put(String key, EmlConstant value)
+	public final EmlConstant put(String key, Object value)
 	{
 		// Do nothing
 		return null;
 	}
 
 	@Override
-	public final void putAll(Map<? extends String, ? extends EmlConstant> m)
+	public final void putAll(Map<? extends String, ? extends Object> m)
 	{
 		// Do nothing
 	}
@@ -186,14 +187,20 @@ public final class NamedTupleFixed extends NamedTuple
 	}
 
 	@Override
-	public final Collection<EmlConstant> values()
+	public final Collection<Object> values()
 	{
-		List<EmlConstant> l = new ArrayList<EmlConstant>();
-		for (EmlConstant v : m_values)
+		List<Object> l = new ArrayList<Object>();
+		for (Object v : m_values)
 		{
 			l.add(v);
 		}
 		return l;
+	}
+
+	@Override
+	protected Queue<Object[]> compute(Object[] inputs)
+	{
+		return wrapObject(this);
 	}
 
 }

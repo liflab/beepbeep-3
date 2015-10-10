@@ -22,9 +22,9 @@ import java.util.Stack;
 
 public class StringExpression extends ConstantExpression
 {
-	protected final EmlString m_string;
+	private final String m_string;
 	
-	public StringExpression(EmlString s)
+	public StringExpression(String s)
 	{
 		super();
 		m_string = s;
@@ -32,7 +32,7 @@ public class StringExpression extends ConstantExpression
 
 	public static void build(Stack<Object> stack)
 	{
-		EmlString s = (EmlString) stack.pop();
+		String s = EmlString.parseString(stack.pop());
 		StringExpression s_exp = new StringExpression(s);
 		stack.push(s_exp);
 	}
@@ -46,7 +46,7 @@ public class StringExpression extends ConstantExpression
 	}
 	
 	@Override
-	public EmlConstant evaluate(Map<String,Tuple> inputs) 
+	public Object evaluate(Map<String,Object> inputs) 
 	{
 		return m_string;
 	}

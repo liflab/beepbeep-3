@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
+
 import ca.uqac.lif.cep.SingleProcessor;
 
 public abstract class Tuple extends SingleProcessor
@@ -24,5 +25,16 @@ public abstract class Tuple extends SingleProcessor
 	public Tuple()
 	{
 		super(0, 1);
+	}
+	
+	public static Object computeWrap(Object o, Object[] inputs)
+	{
+		if (o instanceof Tuple)
+		{
+			// o is a tuple: call its compute method
+			return ((Tuple) o).compute(inputs);
+		}
+		// o is an instance of a Java object (non-tuple): return it
+		return o;
 	}
 }

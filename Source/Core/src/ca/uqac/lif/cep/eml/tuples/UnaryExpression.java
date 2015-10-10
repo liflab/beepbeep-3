@@ -33,13 +33,13 @@ public abstract class UnaryExpression extends AttributeExpression
 	}
 	
 	@Override
-	public EmlConstant evaluate(Map<String,Tuple> inputs)
+	public Object evaluate(Map<String,Object> inputs)
 	{
-		Tuple t_left = m_left.evaluate(inputs);
+		Object t_left = m_left.evaluate(inputs);
 		return evaluate(t_left);
 	}
 	
-	protected abstract EmlConstant evaluate(Object t_left);
+	protected abstract Object evaluate(Object t_left);
 	
 	@Override
 	public String toString()

@@ -54,11 +54,11 @@ public class Limiter extends SingleProcessor
 		if (m_counter > 0 || value == 0)
 		{
 			// Ignore this event
-			return wrapObject(new EmlNumber(0));
+			return wrapObject(0);
 		}
 		m_counter = m_limit;
 		
-		return wrapObject(new EmlNumber(value));
+		return wrapObject(value);
 	}
 
 	public static void build(Stack<Object> stack)

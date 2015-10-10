@@ -57,10 +57,10 @@ public class PeakFinderTravelRise extends WindowProcessor
 			{
 				System.out.print(T/R + " ");
 				// Declare a peak
-				return wrapObject(new EmlNumber(getMaxValue() - getMinValue()));
+				return wrapObject(getMaxValue() - getMinValue());
 			}
 		}
-		return wrapObject(new EmlNumber(0));
+		return wrapObject(0);
 	}
 
 }

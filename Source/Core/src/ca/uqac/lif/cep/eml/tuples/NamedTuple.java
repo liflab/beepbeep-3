@@ -19,7 +19,7 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Map;
 
-public abstract class NamedTuple extends EmlConstant implements Map<String,EmlConstant>
+public abstract class NamedTuple extends EmlConstant implements Map<String,Object>
 {
 
 }

@@ -512,6 +512,16 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return last;
 	}
+	
+	public Object parseQueryLifted(String query) throws ParseException
+	{
+		Object o = parseQuery(query);
+		if (o instanceof UserDefinition)
+		{
+			return o;
+		}
+		return Processor.liftProcessor(o);
+	}
 
 	public Object parseQuery(String query) throws ParseException
 	{
@@ -526,7 +536,8 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		if (node != null)
 		{
-			return parseStatement(node);
+			Object o = parseStatement(node);
+			return o;
 		}
 		else
 		{

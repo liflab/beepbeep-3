@@ -27,11 +27,11 @@ public class Conjunction extends BinaryExpression
 	}
 
 	@Override
-	public EmlConstant evaluate(Object t_left, Object t_right) 
+	public Object evaluate(Object t_left, Object t_right) 
 	{
 		boolean n_left = EmlBoolean.parseBoolValue(t_left);
 		boolean n_right = EmlBoolean.parseBoolValue(t_right);
-		return EmlBoolean.toEmlBoolean(n_left && n_right);
+		return n_left && n_right;
 	}
 	
 	public static void build(Stack<Object> stack)

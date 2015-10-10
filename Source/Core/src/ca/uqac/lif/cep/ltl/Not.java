@@ -21,7 +21,6 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.eml.tuples.EmlBoolean;
 
 public class Not extends UnaryProcessor 
 {
@@ -31,9 +30,9 @@ public class Not extends UnaryProcessor
 	}
 
 	@Override
-	protected EmlBoolean compute(EmlBoolean input)
+	protected Object computeInternal(boolean input)
 	{
-		return EmlBoolean.toEmlBoolean(!input.boolValue());
+		return !input;
 	}
 	
 	public static void build(Stack<Object> stack) 

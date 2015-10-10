@@ -28,10 +28,10 @@ public class AttributeDefinitionAs extends AttributeDefinition
 
 	public static void build(Stack<Object> stack)
 	{
-		EmlString alias_name = (EmlString) stack.pop();
+		String alias_name = EmlString.parseString(stack.pop());
 		stack.pop(); // AS
 		AttributeExpression expression = (AttributeExpression) stack.pop();
-		stack.push(new AttributeDefinitionAs(expression, alias_name.stringValue()));
+		stack.push(new AttributeDefinitionAs(expression, alias_name));
 	}
 	
 	@Override

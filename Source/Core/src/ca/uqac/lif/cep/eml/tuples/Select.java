@@ -115,23 +115,18 @@ public class Select extends SingleProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Map<String,Tuple> in = new HashMap<String,Tuple>();
+		Map<String,Object> in = new HashMap<String,Object>();
 		int i = 0;
 		for (ProcessorDefinition pd : m_processors)
 		{
 			String alias = pd.getAlias();
 			Object o = inputs[i];
-			if (!(o instanceof Tuple))
-			{
-				// A SELECT should receive only tuples for input!
-				return null; 
-			}
-			in.put(alias, (Tuple) o);
+			in.put(alias, o);
 			i++;
 		}
 		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		Object[] tuples = new Object[1];
-		Tuple t = computeCast(in);
+		Object t = computeCast(in);
 		tuples[0] = t;
 		out.add(tuples);
 		return out;
@@ -144,7 +139,7 @@ public class Select extends SingleProcessor
 	 *   that trace
 	 * @return The output tuple
 	 */
-	protected Tuple computeCast(Map<String,Tuple> inputs)
+	protected Object computeCast(Map<String,Object> inputs)
 	{
 		if (m_attributeList.size() == 1)
 		{
@@ -177,14 +172,14 @@ public class Select extends SingleProcessor
 			m_builder = new FixedTupleBuilder(att_names);
 		}
 		// Now build a tuple with the values we compute
-		EmlConstant[] t_values = new EmlConstant[m_attributeList.size()];
+		Object[] t_values = new Object[m_attributeList.size()];
 		int i = 0;
 		for (AttributeDefinition a_def : m_attributeList)
 		{
 			// For each attribute definition, evaluate and put its result
 			// in the tuple with the given alias
 			AttributeExpression a_exp = a_def.getExpression();
-			EmlConstant a_result = a_exp.evaluate(inputs);
+			Object a_result = a_exp.evaluate(inputs);
 			t_values[i] = a_result;
 			i++;
 		}

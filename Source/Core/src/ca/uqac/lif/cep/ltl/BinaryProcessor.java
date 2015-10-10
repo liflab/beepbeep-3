@@ -39,7 +39,7 @@ public abstract class BinaryProcessor extends SingleProcessor
 		{
 			return new ArrayDeque<Object[]>();
 		}
-		EmlBoolean result = compute(EmlBoolean.parseBoolValue(left), EmlBoolean.parseBoolValue(right));
+		Object result = compute(EmlBoolean.parseBoolValue(left), EmlBoolean.parseBoolValue(right));
 		if (result == null)
 		{
 			return null;
@@ -49,5 +49,5 @@ public abstract class BinaryProcessor extends SingleProcessor
 		return wrapVector(out);
 	}
 	
-	protected abstract EmlBoolean compute(boolean left, boolean right);
+	protected abstract Object compute(boolean left, boolean right);
 }

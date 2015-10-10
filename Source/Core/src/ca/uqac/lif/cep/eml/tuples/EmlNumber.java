@@ -21,7 +21,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Processor;
 
-public class EmlNumber extends EmlConstant
+public abstract class EmlNumber extends EmlConstant
 {
 	protected final float m_number;
 	
@@ -112,38 +112,9 @@ public class EmlNumber extends EmlConstant
 	 * @return An EmlNumber, or null if no number could be build from
 	 *   the argument
 	 */
-	public static EmlNumber toEmlNumber(Object o)
+	public static float toEmlNumber(Object o)
 	{
-		if (o instanceof EmlNumber)
-		{
-			return new EmlNumber((EmlNumber) o);
-		}
-		if (o instanceof Number)
-		{
-			return new EmlNumber((Number) o);
-		}
-		if (o instanceof String)
-		{
-			return new EmlNumber(Double.parseDouble((String) o));
-		}
-		if (o instanceof NamedTuple)
-		{
-			NamedTuple t = (NamedTuple) o;
-			if (t.size() == 1)
-			{
-				// If we have a tuple with a single element, try to make a
-				// number with that element
-				for (String s : t.keySet())
-				{
-					EmlConstant c = t.get(s);
-					if (c != null)
-					{
-						return EmlNumber.toEmlNumber(c);
-					}
-				}
-			}
-		}
-		return null;
+		return parseFloat(o);
 	}
 	
 	/**
@@ -153,10 +124,6 @@ public class EmlNumber extends EmlConstant
 	 */
 	public static float parseFloat(Object o)
 	{
-		if (o instanceof EmlNumber)
-		{
-			return ((EmlNumber) o).m_number;
-		}
 		if (o instanceof Number)
 		{
 			return ((Number) o).floatValue();
@@ -178,7 +145,7 @@ public class EmlNumber extends EmlConstant
 				// number with that element
 				for (String s : t.keySet())
 				{
-					EmlConstant c = t.get(s);
+					Object c = t.get(s);
 					if (c != null)
 					{
 						return EmlNumber.parseFloat(c);

@@ -20,16 +20,17 @@ package ca.uqac.lif.cep.eml.tuples;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 public class NamedTupleMap extends NamedTuple 
 {
-	protected Map<String,EmlConstant> m_contents;
+	protected Map<String,Object> m_contents;
 	
 	public NamedTupleMap()
 	{
 		super();
-		m_contents = new HashMap<String,EmlConstant>();
+		m_contents = new HashMap<String,Object>();
 	}
 	
 	/* From this point on, these are merely delegate methods
@@ -52,7 +53,7 @@ public class NamedTupleMap extends NamedTuple
 		return m_contents.containsValue(value);
 	}
 
-	public Set<java.util.Map.Entry<String, EmlConstant>> entrySet() 
+	public Set<java.util.Map.Entry<String, Object>> entrySet() 
 	{
 		return m_contents.entrySet();
 	}
@@ -62,7 +63,7 @@ public class NamedTupleMap extends NamedTuple
 		return m_contents.equals(o);
 	}
 
-	public EmlConstant get(Object key) 
+	public Object get(Object key) 
 	{
 		return m_contents.get(key);
 	}
@@ -82,17 +83,17 @@ public class NamedTupleMap extends NamedTuple
 		return m_contents.keySet();
 	}
 
-	public EmlConstant put(String key, EmlConstant value) 
+	public Object put(String key, Object value) 
 	{
 		return m_contents.put(key, value);
 	}
 
-	public void putAll(Map<? extends String, ? extends EmlConstant> m) 
+	public void putAll(Map<? extends String, ? extends Object> m) 
 	{
 		m_contents.putAll(m);
 	}
 
-	public EmlConstant remove(Object key) 
+	public Object remove(Object key) 
 	{
 		return m_contents.remove(key);
 	}
@@ -102,7 +103,7 @@ public class NamedTupleMap extends NamedTuple
 		return m_contents.size();
 	}
 
-	public Collection<EmlConstant> values() 
+	public Collection<Object> values() 
 	{
 		return m_contents.values();
 	}
@@ -119,11 +120,17 @@ public class NamedTupleMap extends NamedTuple
 			{
 				out.append(",");
 			}
-			EmlConstant value = m_contents.get(name);
+			Object value = m_contents.get(name);
 			out.append(name).append("=").append(value);
 			first = false;
 		}
 		out.append(")");
 		return out.toString();
+	}
+	
+	@Override
+	protected Queue<Object[]> compute(Object[] inputs)
+	{
+		return wrapObject(this);
 	}
 }

@@ -48,18 +48,14 @@ public class Where extends SingleProcessor
 			return null;
 		}
 		Tuple in_tuple = (Tuple) first_elem;
-		Map<String,Tuple> associations = new HashMap<String,Tuple>();
+		Map<String,Object> associations = new HashMap<String,Object>();
 		associations.put("", in_tuple);
-		EmlConstant result = m_filterExpression.evaluate(associations);
-		if (result instanceof EmlBoolean)
+		Object result = m_filterExpression.evaluate(associations);
+		if (EmlBoolean.parseBoolValue(result) == true)
 		{
-			EmlBoolean b = (EmlBoolean) result;
-			if (b.boolValue())
-			{
-				Object[] v_o = new Object[1];
-				v_o[0] =  in_tuple;
-				out_q.add(v_o);
-			}
+			Object[] v_o = new Object[1];
+			v_o[0] =  in_tuple;
+			out_q.add(v_o);
 		}
 		return out_q;
 	}

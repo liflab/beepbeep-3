@@ -17,26 +17,8 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
-
 public abstract class EmlConstant extends Tuple
 {
-	public EmlConstant()
-	{
-		super();
-	}
-	
-	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
-	{
-		Queue<Object[]> out = new ArrayDeque<Object[]>();
-		Object[] element = new EmlConstant[1];
-		element[0] = this;
-		out.add(element);
-		return out;
-	}
-	
 	/**
 	 * Attempts to create a constant based on the contents of a string.
 	 * That is, if the string contains only digits, it will create an
@@ -44,7 +26,7 @@ public abstract class EmlConstant extends Tuple
 	 * @param s The string to read from
 	 * @return The constant
 	 */
-	public static EmlConstant createConstantFromString(String s)
+	public static Object createConstantFromString(String s)
 	{
 		int n = 0;
 		try
@@ -54,8 +36,8 @@ public abstract class EmlConstant extends Tuple
 		catch (NumberFormatException nfe)
 		{
 			// This is a string
-			return new EmlString(s);
+			return s;
 		}
-		return new EmlNumber(n);
+		return (Integer) n;
 	}
 }

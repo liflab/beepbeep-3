@@ -36,14 +36,14 @@ public abstract class BinaryExpression extends AttributeExpression
 	}
 	
 	@Override
-	public EmlConstant evaluate(Map<String,Tuple> inputs)
+	public Object evaluate(Map<String,Object> inputs)
 	{
-		Tuple t_left = m_left.evaluate(inputs);
-		Tuple t_right = m_right.evaluate(inputs);
+		Object t_left = m_left.evaluate(inputs);
+		Object t_right = m_right.evaluate(inputs);
 		return evaluate(t_left, t_right);
 	}
 	
-	protected abstract EmlConstant evaluate(Object t_left, Object t_right);
+	protected abstract Object evaluate(Object t_left, Object t_right);
 	
 	@Override
 	public String toString()

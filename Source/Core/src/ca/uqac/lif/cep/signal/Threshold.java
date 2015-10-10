@@ -41,9 +41,9 @@ public class Threshold extends SingleProcessor
 		float value = EmlNumber.parseFloat(inputs[0]);
 		if (value > m_threshold)
 		{
-			return wrapObject(new EmlNumber(value));
+			return wrapObject(value);
 		}
-		return wrapObject(new EmlNumber(0));
+		return wrapObject(0);
 	}
 
 	public static void build(Stack<Object> stack)

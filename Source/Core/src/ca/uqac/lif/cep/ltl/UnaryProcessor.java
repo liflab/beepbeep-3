@@ -38,7 +38,7 @@ public abstract class UnaryProcessor extends SingleProcessor
 		{
 			return new ArrayDeque<Object[]>();
 		}
-		EmlBoolean result = compute(EmlBoolean.toEmlBoolean(o));
+		Object result = computeInternal(EmlBoolean.toEmlBoolean(o));
 		if (result == null)
 		{
 			return null;
@@ -48,5 +48,5 @@ public abstract class UnaryProcessor extends SingleProcessor
 		return wrapVector(out);
 	}
 	
-	protected abstract EmlBoolean compute(EmlBoolean input);
+	protected abstract Object computeInternal(boolean input);
 }

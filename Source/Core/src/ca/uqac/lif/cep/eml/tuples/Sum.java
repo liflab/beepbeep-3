@@ -30,7 +30,7 @@ public class Sum extends CombinableExpression
 	public Object[] initialize()
 	{
 		Object[] out = new Object[1];
-		out[0] = new EmlNumber(0);
+		out[0] = 0;
 		return out;
 	}
 	

@@ -21,7 +21,6 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.eml.tuples.EmlBoolean;
 
 public class Until extends BinaryProcessor 
 {
@@ -45,25 +44,25 @@ public class Until extends BinaryProcessor
 	}
 
 	@Override
-	protected EmlBoolean compute(boolean left, boolean right)
+	protected Object compute(boolean left, boolean right)
 	{
 		if (m_right)
 		{
-			return EmlBoolean.s_true;
+			return true;
 		}
 		if (!m_left)
 		{
-			return EmlBoolean.s_false;
+			return false;
 		}
 		m_right = m_right || right;
 		m_left = m_left && left;
 		if (m_right)
 		{
-			return EmlBoolean.s_true;
+			return true;
 		}
 		if (!m_left)
 		{
-			return EmlBoolean.s_false;
+			return false;
 		}
 		return null;
 	}

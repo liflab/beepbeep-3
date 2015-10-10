@@ -34,11 +34,11 @@ public class Multiplication extends BinaryExpression
 	}
 	
 	@Override
-	public EmlConstant evaluate(Object t_left, Object t_right)
+	public Object evaluate(Object t_left, Object t_right)
 	{
 		float n_left = EmlNumber.parseFloat(t_left);
 		float n_right = EmlNumber.parseFloat(t_right);
-		return new EmlNumber(n_left * n_right);
+		return n_left * n_right;
 	}
 	
 	public static void build(Stack<Object> stack)

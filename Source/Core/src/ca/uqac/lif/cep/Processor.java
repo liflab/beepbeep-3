@@ -144,4 +144,20 @@ public abstract class Processor
 		}
 		return true;
 	}
+	
+	/**
+	 * Extracts a processor out of the object passed as an argument. A
+	 * instance of Processor will be returned directly, while other objects
+	 * will be wrapped into a constant processor returning that object.
+	 * @param o The input
+	 * @return A processor
+	 */
+	public static Processor liftProcessor(Object o)
+	{
+		if (o instanceof Processor)
+		{
+			return (Processor) o;
+		}
+		return new Constant(o);
+	}
 }

@@ -80,8 +80,7 @@ public class PlateauFinder extends WindowProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		Object[] out_vector = new Object[1];
-		EmlNumber n = (EmlNumber) inputs[0];
-		float d = n.floatValue();
+		float d = EmlNumber.parseFloat(inputs[0]);
 		if (m_values.size() < m_windowWidth)
 		{
 			m_values.addElement(d);
@@ -131,19 +130,19 @@ public class PlateauFinder extends WindowProcessor
 			if (!m_plateauFound)
 			{
 				// All values in the interval: create event with midpoint
-				out_vector[0] = new EmlNumber(m_minValue + width / 2);
+				out_vector[0] = m_minValue + width / 2;
 				m_plateauFound = true;				
 			}
 			else
 			{
-				out_vector[0] = new EmlNumber(0);
+				out_vector[0] = 0;
 			}
 		}
 		else
 		{
 			// No plateau found: emit 0
 			m_plateauFound = false;
-			out_vector[0] = new EmlNumber(0);
+			out_vector[0] = 0;
 			// Reset everything
 			//m_values.clear();
 			//m_maxValue = 0;

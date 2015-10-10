@@ -21,7 +21,6 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.eml.tuples.EmlBoolean;
 
 public class And extends BinaryProcessor 
 {
@@ -31,9 +30,9 @@ public class And extends BinaryProcessor
 	}
 
 	@Override
-	protected EmlBoolean compute(boolean left, boolean right)
+	protected Object compute(boolean left, boolean right)
 	{
-		return EmlBoolean.toEmlBoolean(left && right);
+		return left && right;
 	}
 	
 	public static void build(Stack<Object> stack) 

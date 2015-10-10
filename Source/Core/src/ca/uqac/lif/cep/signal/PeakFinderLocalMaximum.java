@@ -130,13 +130,13 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 				for (long i = 0; i < m_numSincePeak - 1; i++)
 				{
 					Object[] out_vector = new Object[1];
-					out_vector[0] = new EmlNumber(0);
+					out_vector[0] = 0;
 					out_queue.add(out_vector);
 				}
 				// Then, create output event with peak height (max - min)
 				float peak_height = m_maxValue - m_minValue;
 				Object[] out_vector = new Object[1];
-				out_vector[0] = new EmlNumber(peak_height);
+				out_vector[0] = peak_height;
 				out_queue.add(out_vector);
 				// Reset everything
 				m_maxValue = getMaxValue();

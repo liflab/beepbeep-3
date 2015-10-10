@@ -19,64 +19,27 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Stack;
 
-public class EmlString extends EmlConstant
+public abstract class EmlString extends EmlConstant
 {
-	protected String m_string;
-	
-	public EmlString()
-	{
-		super();
-	}
-	
-	public EmlString(String s)
-	{
-		this();
-		m_string = s;
-	}
-
-	public String stringValue()
-	{
-		return m_string;
-	}
-
 	public static void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
 		if (o instanceof String)
 		{
-			stack.push(new EmlString((String) o));
+			stack.push((String) o);
 		}
 		else if (o instanceof Number)
 		{
-			stack.push(new EmlString(o.toString()));
+			stack.push(o.toString());
 		}
 	}
 	
-	@Override
-	public String toString()
+	public static String parseString(Object o)
 	{
-		return m_string.toString();
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		return m_string.hashCode();
-	}
-	
-	@Override
-	public boolean equals(Object o)
-	{
-		if (o == null || !(o instanceof EmlString))
+		if (o instanceof String)
 		{
-			return false;
+			return (String) o;
 		}
-		return equals((EmlString) o);
+		return o.toString();
 	}
-	
-	protected boolean equals(EmlString s)
-	{
-		return m_string.compareTo(s.m_string) == 0;
-	}
-
 }

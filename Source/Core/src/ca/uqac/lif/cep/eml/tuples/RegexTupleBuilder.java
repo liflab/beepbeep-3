@@ -85,7 +85,7 @@ public class RegexTupleBuilder extends SingleProcessor
 			{
 				name = m_attributeNames.get(i - 1).m_attributeName;
 			}
-			tuple.put(name, new EmlString(group));
+			tuple.put(name, group);
 		}
 		out_vector[0] = tuple;
 		return wrapVector(out_vector);

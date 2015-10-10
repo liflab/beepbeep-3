@@ -37,19 +37,17 @@ public class AttributeNameQualified extends AttributeName
 
 	public static void build(Stack<Object> stack)
 	{
-		EmlString att_name = (EmlString) stack.pop();
+		String att_name = EmlString.parseString(stack.pop());
 		stack.pop(); // dot
-		EmlString trace_name = (EmlString) stack.pop();
-		String traceName = trace_name.stringValue();
-		String attributeName = att_name.stringValue();
-		AttributeNameQualified anq = new AttributeNameQualified(traceName, attributeName);
+		String trace_name = EmlString.parseString(stack.pop());
+		AttributeNameQualified anq = new AttributeNameQualified(trace_name, att_name);
 		stack.push(anq);
 	}
 
 	@Override
-	public EmlConstant evaluate(Map<String,Tuple> inputs) 
+	public Object evaluate(Map<String,Object> inputs) 
 	{
-		Tuple relevant_tuple = null;
+		Object relevant_tuple = null;
 		if (m_traceName == null || m_traceName.isEmpty())
 		{
 			relevant_tuple = inputs.get("");
@@ -74,11 +72,10 @@ public class AttributeNameQualified extends AttributeName
 			NamedTupleMap nt = (NamedTupleMap) relevant_tuple;
 			return nt.get(m_attributeName);
 		}
-		else if (relevant_tuple instanceof EmlConstant)
+		else
 		{
-			return (EmlConstant) relevant_tuple;
+			return Tuple.computeWrap(relevant_tuple, null);
 		}
-		return null;
 	}
 	
 	@Override

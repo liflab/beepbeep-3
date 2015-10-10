@@ -21,5 +21,5 @@ import java.util.Map;
 
 public abstract class AttributeExpression
 {
-	public abstract EmlConstant evaluate(Map<String,Tuple> inputs);
+	public abstract Object evaluate(Map<String,Object> inputs);
 }

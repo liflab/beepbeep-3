@@ -28,7 +28,6 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.QueueSource;
-import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 import ca.uqac.lif.cep.eml.tuples.NamedTuple;
 import ca.uqac.lif.cep.eml.tuples.Select;
 import ca.uqac.lif.cep.eml.tuples.TupleFeeder;
@@ -74,14 +73,14 @@ public class UserDefinitionTest
 	public void testPlaceholder2() throws ParseException
 	{
 		String expression = "SELECT x FROM (@P)";
-		QueueSource qs = new QueueSource(new EmlNumber(1), 1);
+		QueueSource qs = new QueueSource(1, 1);
 		m_interpreter.addPlaceholder("@P", "processor", qs);
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof Select);	
 		Select s = (Select) o;
 		Pullable p = s.getPullableOutput(0);
-		EmlNumber n = (EmlNumber) p.pullHard();
+		Number n = (Number) p.pullHard();
 		assertNotNull(n);
 		assertEquals(1, n.intValue());
 	}
@@ -90,7 +89,7 @@ public class UserDefinitionTest
 	public void testPlaceholder3() throws ParseException
 	{
 		String expression = "abc IS THE processor @P";
-		QueueSource qs = new QueueSource(new EmlNumber(1), 1);
+		QueueSource qs = new QueueSource(1, 1);
 		m_interpreter.executeQuery(expression);
 		m_interpreter.addPlaceholder("@P", "processor", qs);
 		Object o = m_interpreter.parseQuery("SELECT x FROM (abc)");
@@ -98,7 +97,7 @@ public class UserDefinitionTest
 		assertTrue(o instanceof Select);	
 		Select s = (Select) o;
 		Pullable p = s.getPullableOutput(0);
-		EmlNumber n = (EmlNumber) p.pullHard();
+		Number n = (Number) p.pullHard();
 		assertNotNull(n);
 		assertEquals(1, n.intValue());
 	}
@@ -132,14 +131,14 @@ public class UserDefinitionTest
 		// Pull a tuple from the resulting processor
 		Object answer = p.pull();
 		assertNotNull(answer);
-		assertTrue(answer instanceof EmlNumber);
-		EmlNumber num = (EmlNumber) answer;
+		assertTrue(answer instanceof Number);
+		Number num = (Number) answer;
 		assertEquals(1, num.intValue());
 		// Pull another
-		num = (EmlNumber) p.pull();
+		num = (Number) p.pull();
 		assertEquals(2, num.intValue());
 		// Pull another
-		num = (EmlNumber) p.pull();
+		num = (Number) p.pull();
 		assertEquals(3, num.intValue());
 	}
 	
@@ -154,17 +153,17 @@ public class UserDefinitionTest
 		user_def.addToInterpreter(m_interpreter);
 		// Now, parse an expression that uses this definition
 		String user_expression = "PI";
-		Object user_stmt = m_interpreter.parseQuery(user_expression);
+		Object user_stmt = m_interpreter.parseQueryLifted(user_expression);
 		assertTrue(user_stmt instanceof Processor);
 		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
 		// Pull a tuple from the resulting processor
 		Object answer = p.pull();
 		assertNotNull(answer);
-		assertTrue(answer instanceof EmlNumber);
-		EmlNumber num = (EmlNumber) answer;
+		assertTrue(answer instanceof Number);
+		Number num = (Number) answer;
 		assertEquals(3.1416, num.floatValue(), 0.01);
 		// Pull another
-		num = (EmlNumber) p.pull();
+		num = (Number) p.pull();
 		assertEquals(3.1416, num.floatValue(), 0.01);
 	}
 	
@@ -172,10 +171,12 @@ public class UserDefinitionTest
 	public void testDefinition3() throws ParseException
 	{
 		UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("E IS THE eml_number 2");
+		assertNotNull(e_def);
 		e_def.addToInterpreter(m_interpreter);
 		Processor proc = (Processor) m_interpreter.parseQuery("SELECT E FROM (1)");
+		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
-		EmlNumber number = (EmlNumber) p.pull();
+		Number number = (Number) p.pull();
 		assertEquals(2, number.intValue());
 	}
 	
@@ -193,11 +194,11 @@ public class UserDefinitionTest
 		Processor proc = (Processor) m_interpreter.parseQuery("THE INVERSE OF (1)");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
-		EmlNumber number = (EmlNumber) p.pull();
+		Number number = (Number) p.pull();
 		assertEquals(1, number.floatValue(), 0.01);
-		number = (EmlNumber) p.pull();
+		number = (Number) p.pull();
 		assertEquals(0.5, number.floatValue(), 0.01);
-		number = (EmlNumber) p.pull();
+		number = (Number) p.pull();
 		assertEquals(0.33, number.floatValue(), 0.01);
 	}
 	
@@ -215,13 +216,13 @@ public class UserDefinitionTest
 		Processor proc = (Processor) m_interpreter.parseQuery("THE AVERAGE OF (SELECT a FROM (THE TUPLES OF FILE \"tuples3.csv\"))");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
-		EmlNumber number = (EmlNumber) p.pull();
+		Number number = (Number) p.pull();
 		assertEquals(0, number.floatValue(), 0.01);
-		number = (EmlNumber) p.pull();
+		number = (Number) p.pull();
 		//assertEquals(1, number.floatValue(), 0.01);
-		number = (EmlNumber) p.pull();
+		number = (Number) p.pull();
 		//assertEquals(1, number.floatValue(), 0.01);
-		number = (EmlNumber) p.pull();
+		number = (Number) p.pull();
 		//assertEquals(2, number.floatValue(), 0.01);
 	}
 	
@@ -235,12 +236,13 @@ public class UserDefinitionTest
 		Processor proc = (Processor) m_interpreter.parseQuery("FOO (SELECT a FROM (THE TUPLES OF FILE \"tuples3.csv\"))");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
+		assertNotNull(p);
 		NamedTuple tuple = (NamedTuple) p.pull();
-		assertEquals(new EmlNumber(0), tuple.get("x"));
-		assertEquals(new EmlNumber(0), tuple.get("y"));
+		assertEquals(0, tuple.get("x"));
+		assertEquals(0, tuple.get("y"));
 		tuple = (NamedTuple) p.pull();
-		assertEquals(new EmlNumber(6), tuple.get("x"));
-		assertEquals(new EmlNumber(6), tuple.get("y"));
+		assertEquals(6, tuple.get("x"));
+		assertEquals(6, tuple.get("y"));
 	}
 	
 	@Test

@@ -37,7 +37,7 @@ public class ProcessorDefinitionAs extends ProcessorDefinition
 
 	public static void build(Stack<Object> stack)
 	{
-		EmlString name = (EmlString) stack.pop();
+		String name = EmlString.parseString(stack.pop());
 		Processor proc = null;
 		stack.pop(); // AS
 		Object o = stack.peek();
@@ -46,14 +46,14 @@ public class ProcessorDefinitionAs extends ProcessorDefinition
 			// We are in the case where there are
 			// parentheses around the processor
 			stack.pop(); // )
-			proc = (Processor) stack.pop();
+			proc = Processor.liftProcessor(stack.pop());
 			stack.pop(); // (
 		}
 		else
 		{
-			proc = (Processor) stack.pop();
+			proc = Processor.liftProcessor(stack.pop());
 		}
-		ProcessorDefinitionAs pda = new ProcessorDefinitionAs(name.stringValue(), proc);
+		ProcessorDefinitionAs pda = new ProcessorDefinitionAs(name, proc);
 		stack.push(pda);
 	}
 	

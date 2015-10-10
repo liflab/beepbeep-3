@@ -37,12 +37,12 @@ public class ProcessorDefinitionPlain extends ProcessorDefinitionAs
 		if (o instanceof String)
 		{
 			// Parentheses around the definition
-			proc = (Processor) stack.pop();
+			proc = Processor.liftProcessor(stack.pop());
 			stack.pop(); // (
 		}
 		else
 		{
-			proc = (Processor) o;	
+			proc = Processor.liftProcessor(o);	
 		}
 		ProcessorDefinitionPlain pdp = new ProcessorDefinitionPlain(proc);
 		stack.push(pdp);

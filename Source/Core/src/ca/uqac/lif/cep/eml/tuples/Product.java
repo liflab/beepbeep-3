@@ -30,7 +30,7 @@ public class Product extends CombinableExpression
 	public Object[] initialize()
 	{
 		Object[] out = new Object[1];
-		out[0] = new EmlNumber(1);
+		out[0] = 1;
 		return out;
 	}
 	

@@ -58,14 +58,14 @@ public class LtlTest
 		Globally g = new Globally();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
+		Boolean b;
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertEquals(false, b.booleanValue());
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertEquals(false, b.booleanValue());
 	}
 	
@@ -82,15 +82,15 @@ public class LtlTest
 		Eventually g = new Eventually();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
+		Boolean b;
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertNotNull(b);
 		assertEquals(true, b.booleanValue());
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertEquals(true, b.booleanValue());
 	}
 	
@@ -99,22 +99,22 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(EmlBoolean.toEmlBoolean(false));
-		input_events.add(EmlBoolean.toEmlBoolean(false));
-		input_events.add(EmlBoolean.toEmlBoolean(true));
-		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(false);
+		input_events.add(false);
+		input_events.add(true);
+		input_events.add(false);
 		src.setEvents(input_events);
-		OldNext g = new OldNext();
+		Next g = new Next();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
+		Boolean b;
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertNotNull(b);
 		assertEquals(false, b.booleanValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.booleanValue());
+		b = (Boolean) p.pull();
+		assertEquals(true, b.booleanValue());
 	}
 	
 	@Test
@@ -127,13 +127,13 @@ public class LtlTest
 		input_events.add(EmlBoolean.toEmlBoolean(true));
 		input_events.add(EmlBoolean.toEmlBoolean(false));
 		src.setEvents(input_events);
-		OldNext g = new OldNext();
+		Next g = new Next();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
+		Boolean b;
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertNotNull(b);
 		assertEquals(true, b.booleanValue());
 	}
@@ -151,15 +151,15 @@ public class LtlTest
 		Not g = new Not();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
+		boolean b;
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
 	}
 	
 	@Test
@@ -187,15 +187,15 @@ public class LtlTest
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
+		Boolean b;
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
 	}
 	
 	@Test
@@ -219,11 +219,11 @@ public class LtlTest
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
+		Boolean b;
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
 	}
 	
 	@Test
@@ -251,15 +251,15 @@ public class LtlTest
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
+		Boolean b;
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
 	}
 	
 	@Test
@@ -287,15 +287,15 @@ public class LtlTest
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
+		Boolean b;
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
 	}
 	
 	@Test
@@ -323,15 +323,15 @@ public class LtlTest
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
+		Boolean b;
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
 	}
 	
 	@Test
@@ -359,15 +359,15 @@ public class LtlTest
 			m_interpreter.addPlaceholder("@U", "processor", src);
 		}
 		Pullable p = m_interpreter.executeQuery(expression);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
-		b = (EmlBoolean) p.pull();
-		assertEquals(false, b.boolValue());
+		Boolean b;
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
+		b = (Boolean) p.pull();
+		assertEquals(false, b);
 	}
 	
 	@Test
@@ -396,11 +396,11 @@ public class LtlTest
 		}
 		Pullable p = m_interpreter.executeQuery(expression);
 		assertNotNull(p);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
+		Boolean b;
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
 	}
 	
 	@Test
@@ -419,11 +419,11 @@ public class LtlTest
 		}
 		Pullable p = m_interpreter.executeQuery(expression);
 		assertNotNull(p);
-		EmlBoolean b;
-		b = (EmlBoolean) p.pull();
+		Boolean b;
+		b = (Boolean) p.pull();
 		assertNull(b);
-		b = (EmlBoolean) p.pull();
-		assertEquals(true, b.boolValue());
+		b = (Boolean) p.pull();
+		assertEquals(true, b);
 	}
 	
 	@Test

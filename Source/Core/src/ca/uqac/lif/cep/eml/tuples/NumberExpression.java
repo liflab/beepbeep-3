@@ -22,9 +22,9 @@ import java.util.Stack;
 
 public class NumberExpression extends ConstantExpression
 {
-	protected final EmlNumber m_number;
+	protected final float m_number;
 	
-	public NumberExpression(EmlNumber n)
+	public NumberExpression(float n)
 	{
 		super();
 		m_number = n;
@@ -32,8 +32,8 @@ public class NumberExpression extends ConstantExpression
 
 	public static void build(Stack<Object> stack)
 	{
-		EmlNumber number = (EmlNumber) stack.pop();
-		stack.push(new NumberExpression(number));
+		float n = EmlNumber.parseFloat(stack.pop());
+		stack.push(new NumberExpression(n));
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class NumberExpression extends ConstantExpression
 	}
 
 	@Override
-	public EmlConstant evaluate(Map<String,Tuple> inputs) 
+	public Object evaluate(Map<String,Object> inputs) 
 	{
 		return m_number;
 	}

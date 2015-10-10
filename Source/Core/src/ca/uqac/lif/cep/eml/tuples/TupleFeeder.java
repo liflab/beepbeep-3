@@ -59,7 +59,7 @@ public class TupleFeeder extends TokenFeeder
 			m_builder = new FixedTupleBuilder(parts);
 			return new TokenFeeder.NoToken();
 		}
-		return m_builder.createTuple(parts);
+		return m_builder.createTupleFromString(parts);
 	}
 
 	public static void build(Stack<Object> stack)

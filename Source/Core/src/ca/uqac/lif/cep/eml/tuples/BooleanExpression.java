@@ -22,7 +22,7 @@ import java.util.Stack;
 
 public class BooleanExpression extends ConstantExpression
 {
-	protected EmlBoolean m_number;
+	protected boolean m_number;
 	
 	public BooleanExpression(Object b)
 	{
@@ -45,7 +45,7 @@ public class BooleanExpression extends ConstantExpression
 	}
 
 	@Override
-	public EmlConstant evaluate(Map<String,Tuple> inputs) 
+	public Object evaluate(Map<String,Object> inputs) 
 	{
 		return m_number;
 	}

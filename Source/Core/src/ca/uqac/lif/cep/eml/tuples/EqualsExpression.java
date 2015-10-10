@@ -27,13 +27,21 @@ public class EqualsExpression extends BinaryExpression
 	}
 
 	@Override
-	public EmlConstant evaluate(Object t_left, Object t_right) 
+	public Object evaluate(Object t_left, Object t_right) 
 	{
-		if (t_left != null && t_right != null && t_left.equals(t_right))
+		if (t_left != null && t_right != null)
 		{
-			return EmlBoolean.toEmlBoolean(true);
+			if (t_left instanceof Number && t_right instanceof Number)
+			{
+				return ((Number) t_left).floatValue() == ((Number) t_right).floatValue();
+			}
+			if (t_left instanceof String && t_right instanceof String)
+			{
+				return ((String) t_left).compareTo((String) t_right) == 0;
+			}
+			return t_left.equals(t_right);
 		}
-		return EmlBoolean.toEmlBoolean(false);
+		return false;
 	}
 	
 	public static void build(Stack<Object> stack)

@@ -19,106 +19,17 @@ package ca.uqac.lif.cep.eml.tuples;
 
 import java.util.Stack;
 
-public class EmlBoolean extends EmlConstant
+public abstract class EmlBoolean extends EmlConstant
 {
-	protected final Boolean m_value;
-	
-	public static final EmlBoolean s_true = new EmlBoolean(true);
-	
-	public static final EmlBoolean s_false = new EmlBoolean(false);
-	
-	public EmlBoolean()
-	{
-		this(false);
-	}
-	
-	protected EmlBoolean(Boolean b)
-	{
-		super();
-		m_value = b;
-	}
-
-	public Boolean booleanValue()
-	{
-		return m_value;
-	}
-	
-	public boolean boolValue()
-	{
-		return m_value;
-	}
-	
 	public static void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
 		stack.push(EmlBoolean.toEmlBoolean(o));
 	}
-	
-	@Override
-	public String toString()
+
+	public static boolean toEmlBoolean(Object o)
 	{
-		return m_value.toString();
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		return m_value.hashCode();
-	}
-	
-	@Override
-	public boolean equals(Object o)
-	{
-		if (o == null || !(o instanceof EmlBoolean))
-		{
-			return false;
-		}
-		return equals((EmlBoolean) o);
-	}
-	
-	protected boolean equals(EmlBoolean b)
-	{
-		return m_value.booleanValue() == b.m_value.booleanValue();
-	}
-	
-	public static EmlBoolean toEmlBoolean(Object o)
-	{
-		if (o instanceof Boolean)
-		{
-			if ((Boolean) o)
-			{
-				return s_true;
-			}
-			{
-				return s_false;
-			}
-		}
-		if (o instanceof EmlBoolean)
-		{
-			return (EmlBoolean) o;
-		}
-		if (o instanceof String)
-		{
-			String s = (String) o;
-			if (s.compareToIgnoreCase("true") == 0 
-					|| s.compareToIgnoreCase("T") == 0
-					|| s.compareToIgnoreCase("1") == 0)
-			{
-				return EmlBoolean.toEmlBoolean(true);
-			}
-			return EmlBoolean.toEmlBoolean(false);
-		}
-		if (o instanceof Number)
-		{
-			Number n = (Number) o;
-			if (Math.abs(n.doubleValue()) < 0.00001)
-			{
-				return EmlBoolean.toEmlBoolean(false);
-			}
-			return EmlBoolean.toEmlBoolean(true);
-		}			
-		// When in doubt, return null
-		return null;
+		return parseBoolValue(o);
 	}
 	
 	public static boolean parseBoolValue(Object o)
@@ -127,11 +38,7 @@ public class EmlBoolean extends EmlConstant
 		{
 			return (Boolean) o;
 		}
-		if (o instanceof EmlBoolean)
-		{
-			return ((EmlBoolean) o).boolValue();
-		}
-		if (o instanceof String)
+		else if (o instanceof String)
 		{
 			String s = (String) o;
 			if (s.compareToIgnoreCase("true") == 0 
