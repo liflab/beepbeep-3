@@ -126,7 +126,7 @@ public class MySqlSource extends Source
 			}
 			while (rs.next())
 			{
-				NamedTuple nt = new NamedTuple();
+				NamedTupleMap nt = new NamedTupleMap();
 				for (int i = 1; i <= col_count; i++)
 				{
 					String name = col_names.get(i);

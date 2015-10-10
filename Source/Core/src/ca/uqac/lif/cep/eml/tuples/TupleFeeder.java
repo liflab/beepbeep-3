@@ -32,14 +32,14 @@ import ca.uqac.lif.cep.input.TokenFeeder;
  */
 public class TupleFeeder extends TokenFeeder
 {
-	protected String[] m_names;
+	protected FixedTupleBuilder m_builder;
 	
 	public TupleFeeder()
 	{
 		super();
-		m_names = null;
 		m_separatorBegin = "";
 		m_separatorEnd = "\n";
+		m_builder = null;
 	}
 	
 	@Override
@@ -52,29 +52,14 @@ public class TupleFeeder extends TokenFeeder
 			return new TokenFeeder.NoToken();
 		}
 		String[] parts = token.split(",");
-		if (m_names == null)
+		if (m_builder == null)
 		{
 			// This is the first token we read; it contains the names
 			// of the arguments
-			m_names = parts;
+			m_builder = new FixedTupleBuilder(parts);
 			return new TokenFeeder.NoToken();
 		}
-		int i = 0;
-		NamedTuple out_tuple = new NamedTuple();
-		for (String att_name : m_names)
-		{
-			if (i >= parts.length)
-			{
-				// Silently ignore missing parameters, although this
-				// should not happen
-				break;
-			}
-			String value = parts[i];
-			EmlConstant eml_value = EmlConstant.createConstantFromString(value);
-			out_tuple.put(att_name, eml_value);
-			i++;
-		}
-		return out_tuple;
+		return m_builder.createTuple(parts);
 	}
 
 	public static void build(Stack<Object> stack)

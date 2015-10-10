@@ -17,9 +17,28 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Map;
-
-public abstract class NamedTuple extends EmlConstant implements Map<String,EmlConstant>
+public final class FixedTupleBuilder
 {
-
+	private final String[] m_names;
+	
+	public FixedTupleBuilder(String[] names)
+	{
+		super();
+		m_names = names;
+	}
+	
+	public final NamedTupleFixed createTuple(EmlConstant[] values)
+	{
+		return new NamedTupleFixed(m_names, values);
+	}
+	
+	public final NamedTupleFixed createTuple(String[] values)
+	{
+		EmlConstant[] eml_values = new EmlConstant[values.length];
+		for (int i = 0; i < values.length; i++)
+		{
+			eml_values[i] = EmlConstant.createConstantFromString(values[i]);
+		}
+		return new NamedTupleFixed(m_names, eml_values);
+	}	
 }

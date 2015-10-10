@@ -41,11 +41,14 @@ public class Select extends SingleProcessor
 	 */
 	protected AttributeList m_attributeList;
 	
+	protected FixedTupleBuilder m_builder;
+	
 	public Select(int in_arity)
 	{
 		super(in_arity, 1);
 		m_processors = null;
 		m_attributeList = null;
+		m_builder = null;
 	}
 
 	public Select(int in_arity, String ... attributes)
@@ -155,21 +158,37 @@ public class Select extends SingleProcessor
 			}
 		}
 		// In all other cases, we return a named tuple
-		NamedTuple t_out = new NamedTuple();
+		if (m_builder == null)
+		{
+			// First tuple we build: first tell the builder what are the
+			// attribute names for the output tuples
+			String[] att_names = new String[m_attributeList.size()];
+			int i = 0;
+			for (AttributeDefinition a_def : m_attributeList)
+			{
+				String alias = a_def.getAlias();
+				if (alias.isEmpty())
+				{
+					alias = a_def.getExpression().toString();
+				}
+				att_names[i] = alias;
+				i++;
+			}
+			m_builder = new FixedTupleBuilder(att_names);
+		}
+		// Now build a tuple with the values we compute
+		EmlConstant[] t_values = new EmlConstant[m_attributeList.size()];
+		int i = 0;
 		for (AttributeDefinition a_def : m_attributeList)
 		{
 			// For each attribute definition, evaluate and put its result
 			// in the tuple with the given alias
 			AttributeExpression a_exp = a_def.getExpression();
 			EmlConstant a_result = a_exp.evaluate(inputs);
-			String alias = a_def.getAlias();
-			if (alias.isEmpty())
-			{
-				alias = a_exp.toString();
-			}
-			t_out.put(alias, a_result);
+			t_values[i] = a_result;
+			i++;
 		}
-		return t_out;
+		return m_builder.createTuple(t_values);
 	}
 	
 	@Override

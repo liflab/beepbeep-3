@@ -26,6 +26,8 @@ public class AttributeNameQualified extends AttributeName
 	
 	protected String m_attributeName;
 	
+	protected int m_cachedIndex = -1;
+	
 	public AttributeNameQualified(String trace, String attribute)
 	{
 		super();
@@ -56,9 +58,20 @@ public class AttributeNameQualified extends AttributeName
 		{
 			relevant_tuple = inputs.get(m_traceName);
 		}
-		if (relevant_tuple instanceof NamedTuple)
+		if (relevant_tuple instanceof NamedTupleFixed)
 		{
-			NamedTuple nt = (NamedTuple) relevant_tuple;
+			NamedTupleFixed ntf = (NamedTupleFixed) relevant_tuple;
+			if (m_cachedIndex < 0)
+			{
+				// Ask for the index and remember it
+				m_cachedIndex = ntf.getIndexOf(m_attributeName);
+			}
+			// Query tuple based on its index
+			return ntf.getValue(m_cachedIndex);
+		}
+		else if (relevant_tuple instanceof NamedTupleMap)
+		{
+			NamedTupleMap nt = (NamedTupleMap) relevant_tuple;
 			return nt.get(m_attributeName);
 		}
 		else if (relevant_tuple instanceof EmlConstant)

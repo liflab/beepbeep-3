@@ -75,7 +75,7 @@ public class RegexTupleBuilder extends SingleProcessor
 			// The pattern was not found: don't output anything
 			return null;
 		}
-		NamedTuple tuple = new NamedTuple();
+		NamedTupleMap tuple = new NamedTupleMap();
 		int group_count = mat.groupCount();
 		for (int i = 1; i < group_count; i++) // i=0 is the entire pattern
 		{
