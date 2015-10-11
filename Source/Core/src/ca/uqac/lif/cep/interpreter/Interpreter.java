@@ -43,6 +43,7 @@ import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.Freeze;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Passthrough;
+import ca.uqac.lif.cep.Placeholder;
 import ca.uqac.lif.cep.Prefix;
 import ca.uqac.lif.cep.Print;
 import ca.uqac.lif.cep.Processor;
@@ -201,6 +202,7 @@ public class Interpreter implements ParseNodeVisitor
 		addAssociation("<p_prefix>", Prefix.class);
 		addAssociation("<p_print>", Print.class);
 		addAssociation("<p_window>", Window.class);
+		addAssociation("<p_placeholder>", Placeholder.class);
 		
 		// User definitions
 		addAssociation("<processor_def>", UserDefinition.class);

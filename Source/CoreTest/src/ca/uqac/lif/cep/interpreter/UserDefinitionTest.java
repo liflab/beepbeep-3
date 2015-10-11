@@ -28,6 +28,9 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.QueueSource;
+import ca.uqac.lif.cep.eml.tuples.EmlPuller;
+import ca.uqac.lif.cep.eml.tuples.EmlPuller.EmlPullable;
+import ca.uqac.lif.cep.eml.tuples.EmlNumber;
 import ca.uqac.lif.cep.eml.tuples.NamedTuple;
 import ca.uqac.lif.cep.eml.tuples.Select;
 import ca.uqac.lif.cep.eml.tuples.TupleFeeder;
@@ -243,6 +246,26 @@ public class UserDefinitionTest
 		tuple = (NamedTuple) p.pull();
 		assertEquals(6, tuple.get("x"));
 		assertEquals(6, tuple.get("y"));
+	}
+	
+	@Test
+	public void testDefinition7() throws ParseException
+	{
+		{
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH SUM");
+			e_def.addToInterpreter(m_interpreter);
+		}
+		QueueSource qs = new QueueSource(1, 1);
+		m_interpreter.addPlaceholder("@T", "processor", qs);
+		Processor proc = (Processor) m_interpreter.parseQuery("APPLY (THE SUM OF (*)) ON (@T) ON A WINDOW OF 5");
+		assertNotNull(proc);
+		EmlPullable p = EmlPuller.getEmlPullable(proc, 0);
+		assertNotNull(p);
+		Object o = p.pullHard();
+		assertNotNull(o);
+		assertTrue(o instanceof Number);
+		float n = EmlNumber.parseFloat(o);
+		assertEquals(5, n, 0.01);
 	}
 	
 	@Test

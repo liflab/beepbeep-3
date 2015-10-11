@@ -19,8 +19,8 @@
 # Built-in processors
 
 <processor>          := <p_freeze> | <p_window> | <p_decimate> | <p_prefix> 
-                        | <p_print> | <p_combiner> | <userdef_proc> 
-                        | <eml_expr> | <var_name> ;
+                        | <p_print> | <p_combiner> | <p_placeholder> 
+                        | <userdef_proc> | <eml_expr> | <var_name> ;
 <p_freeze>           := FREEZE <processor> ;
 <p_window>           := APPLY ( <processor> ) ON ( <processor> ) ON A WINDOW OF <number> ;
 <p_decimate>         := EVERY <number> <number_suffix> OF ( <processor> ) ;
@@ -28,6 +28,7 @@
 <p_prefix>           := <number> OF ( <processor> ) ;
 <p_combiner>         := COMBINE ( <processor> ) WITH <c_combine> ;
 <p_print>            := PRINT ( <processor> ) ;
+<p_placeholder>      := * ;
 
 
 # Definition of a new grammatical object
