@@ -56,7 +56,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The sink that will receive the events produced by the inner processor
 	 */
-	protected QueueSink m_sink = null;
+	protected SinkLast m_sink = null;
 	
 	/**
 	 * The event windows
@@ -68,7 +68,7 @@ public class Window extends SingleProcessor
 		super(in_processor.getInputArity(), in_processor.getOutputArity());
 		m_width = width;
 		m_processor = in_processor;
-		m_sink = new QueueSink(in_processor.getOutputArity());
+		m_sink = new SinkLast(in_processor.getOutputArity());
 		reset();
 	}
 	
@@ -132,7 +132,7 @@ public class Window extends SingleProcessor
 					Pushable p = m_innerInputs[j];
 					p.push(o);
 				}
-				out = m_sink.remove();
+				out = m_sink.getLast();
 			}
 		}
 		return wrapVector(out);
