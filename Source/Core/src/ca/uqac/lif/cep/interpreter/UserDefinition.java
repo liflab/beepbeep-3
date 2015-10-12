@@ -5,9 +5,9 @@ import java.util.Stack;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.bullwinkle.BnfRule.InvalidRuleException;
-import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SmartFork;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 class UserDefinition 
@@ -140,7 +140,7 @@ class UserDefinition
 			}
 			for (String placeholder : inner_int.m_processorForks.keySet())
 			{
-				Fork f = inner_int.m_processorForks.get(placeholder);
+				SmartFork f = inner_int.m_processorForks.get(placeholder);
 				//gp.addProcessor(f);
 				gp.associateInput(i, f, 0);
 			}

@@ -109,11 +109,30 @@ public abstract class Processor
 
 	public abstract Pullable getPullableOutput(int index);
 
-	public abstract void setPullableInput(int i, Pullable p);
+	public void setPullableInput(int i, Pullable p)
+	{
+		if (i < m_inputPullables.length)
+		{
+			m_inputPullables[i] = p;
+		}
+	}
+	
+	public void setPushableOutput(int i, Pushable p)
+	{
+		if (i < m_outputPushables.length)
+		{
+			m_outputPushables[i] = p;
+		}
+	}
 
-	public abstract void setPushableOutput(int i, Pushable p);
-
-	public abstract Pushable getPushableOutput(int index);
+	public Pushable getPushableOutput(int i)
+	{
+		if (i < m_outputPushables.length)
+		{
+			return m_outputPushables[i];
+		}
+		return null;
+	}
 
 	/**
 	 * Returns the processor's input arity

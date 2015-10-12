@@ -31,34 +31,6 @@ public abstract class SingleProcessor extends Processor
 	{
 		super(in_arity, out_arity);
 	}
-
-	@Override
-	public final void setPullableInput(int i, Pullable p)
-	{
-		if (i < m_inputPullables.length)
-		{
-			m_inputPullables[i] = p;
-		}
-	}
-
-	@Override
-	public final Pushable getPushableOutput(int i)
-	{
-		if (i < m_outputPushables.length)
-		{
-			return m_outputPushables[i];
-		}
-		return null;
-	}
-
-	@Override
-	public final void setPushableOutput(int i, Pushable p)
-	{
-		if (i < m_outputPushables.length)
-		{
-			m_outputPushables[i] = p;
-		}
-	}
 	
 	protected final void resetInput()
 	{
@@ -97,11 +69,6 @@ public abstract class SingleProcessor extends Processor
 			return new OutputPullable(index);
 		}
 		return null;
-	}
-
-	public void start()
-	{
-		// Do nothing by default
 	}
 
 	/**

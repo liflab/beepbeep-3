@@ -39,7 +39,6 @@ import ca.uqac.lif.cep.Combiner;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.CountDecimate;
 import ca.uqac.lif.cep.Delay;
-import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.Freeze;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Passthrough;
@@ -49,6 +48,7 @@ import ca.uqac.lif.cep.Print;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.QueueSource;
+import ca.uqac.lif.cep.SmartFork;
 import ca.uqac.lif.cep.Window;
 import ca.uqac.lif.util.EmptyException;
 import ca.uqac.lif.util.PackageFileReader;
@@ -91,7 +91,7 @@ public class Interpreter implements ParseNodeVisitor
 	/**
 	 * Forks
 	 */
-	protected Map<String, Fork> m_processorForks;
+	protected Map<String, SmartFork> m_processorForks;
 	
 	/**
 	 * User-defined objects
@@ -122,7 +122,7 @@ public class Interpreter implements ParseNodeVisitor
 		m_userDefinedAssociations = new HashMap<String,Object>();
 		m_processorDefinitions = new HashMap<String, GroupProcessor>();
 		m_symbolDefinitions = new HashMap<String, Object>();
-		m_processorForks = new HashMap<String, Fork>();
+		m_processorForks = new HashMap<String, SmartFork>();
 		setBuiltinAssociations();
 	}
 	
@@ -144,7 +144,7 @@ public class Interpreter implements ParseNodeVisitor
 		m_processorDefinitions.putAll(i.m_processorDefinitions);
 		m_symbolDefinitions = new HashMap<String, Object>();
 		m_symbolDefinitions.putAll(i.m_symbolDefinitions);
-		m_processorForks = new HashMap<String, Fork>();
+		m_processorForks = new HashMap<String, SmartFork>();
 		m_processorForks.putAll(i.m_processorForks);
 	}
 	
@@ -320,12 +320,12 @@ public class Interpreter implements ParseNodeVisitor
 				Processor o_p = (Processor) o;
 				if (!m_processorForks.containsKey(node_name))
 				{
-					Fork f = new Fork(0);
+					SmartFork f = new SmartFork(0);
 					Connector.connect(o_p, f, 0, 0);
 					m_processorForks.put(node_name, f);
 				}
 				// Extend the current fork for this processor with a new output
-				Fork f = m_processorForks.get(node_name);
+				SmartFork f = m_processorForks.get(node_name);
 				int new_arity = f.getOutputArity() + 1;
 				Passthrough pt = new Passthrough(o_p.getOutputArity());
 				/*
