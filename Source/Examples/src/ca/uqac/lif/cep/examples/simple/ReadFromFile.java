@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.examples.simple;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.eml.tuples.NamedTuple;
+import ca.uqac.lif.cep.eml.tuples.NamedTupleMap;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
@@ -38,7 +38,7 @@ public class ReadFromFile
 		Pullable result = my_int.executeQuery("SELECT (a) + (1) AS k FROM (THE TUPLES OF FILE \"tuples1.csv\")");
 		while (result.hasNextHard() != Pullable.NextStatus.NO)
 		{
-			NamedTuple t = (NamedTuple) result.pull();
+			NamedTupleMap t = (NamedTupleMap) result.pull();
 			System.out.println(t.get("k"));			
 		}
 	}
