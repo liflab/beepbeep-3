@@ -17,24 +17,27 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.HashMap;
 import java.util.ArrayDeque;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.util.CacheMap;
 
 public class Where extends SingleProcessor
 {
 	protected final AttributeExpression m_filterExpression;
+	
+	private final CacheMap<Object> m_associations;
 
 	public Where(AttributeExpression filter)
 	{
 		super(1, 1);
 		m_filterExpression = filter;
+		String[] dummy_keys = new String[1];
+		m_associations = new CacheMap<Object>(dummy_keys);
 	}
 
 	@Override
@@ -48,9 +51,8 @@ public class Where extends SingleProcessor
 			return null;
 		}
 		Tuple in_tuple = (Tuple) first_elem;
-		Map<String,Object> associations = new HashMap<String,Object>();
-		associations.put("", in_tuple);
-		Object result = m_filterExpression.evaluate(associations);
+		m_associations.putAt(0, in_tuple);
+		Object result = m_filterExpression.evaluate(m_associations);
 		if (EmlBoolean.parseBoolValue(result) == true)
 		{
 			Object[] v_o = new Object[1];

@@ -17,8 +17,9 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Map;
 import java.util.Stack;
+
+import ca.uqac.lif.util.CacheMap;
 
 public class AttributeNameQualified extends AttributeName
 {
@@ -26,7 +27,9 @@ public class AttributeNameQualified extends AttributeName
 	
 	protected String m_attributeName;
 	
-	protected int m_cachedIndex = -1;
+	protected int m_attributeIndex = -1;
+	
+	protected int m_tupleIndex = -1;
 	
 	public AttributeNameQualified(String trace, String attribute)
 	{
@@ -45,27 +48,32 @@ public class AttributeNameQualified extends AttributeName
 	}
 
 	@Override
-	public Object evaluate(Map<String,Object> inputs) 
+	public Object evaluate(CacheMap<Object> inputs) 
 	{
 		Object relevant_tuple = null;
 		if (m_traceName == null || m_traceName.isEmpty())
 		{
-			relevant_tuple = inputs.get("");
+			relevant_tuple = inputs.getValue(0);
 		}
 		else
 		{
-			relevant_tuple = inputs.get(m_traceName);
+			if (m_tupleIndex < 0)
+			{
+				// Ask for the index and remember it
+				m_tupleIndex = inputs.getIndexOf(m_traceName);
+			}
+			relevant_tuple = inputs.getValue(m_tupleIndex);
 		}
 		if (relevant_tuple instanceof NamedTupleFixed)
 		{
 			NamedTupleFixed ntf = (NamedTupleFixed) relevant_tuple;
-			if (m_cachedIndex < 0)
+			if (m_attributeIndex < 0)
 			{
 				// Ask for the index and remember it
-				m_cachedIndex = ntf.getIndexOf(m_attributeName);
+				m_attributeIndex = ntf.getIndexOf(m_attributeName);
 			}
 			// Query tuple based on its index
-			return ntf.getValue(m_cachedIndex);
+			return ntf.getValue(m_attributeIndex);
 		}
 		else if (relevant_tuple instanceof NamedTupleMap)
 		{

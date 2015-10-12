@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Map;
+import ca.uqac.lif.util.CacheMap;
 
 public abstract class UnaryExpression extends AttributeExpression
 {
@@ -33,7 +33,7 @@ public abstract class UnaryExpression extends AttributeExpression
 	}
 	
 	@Override
-	public Object evaluate(Map<String,Object> inputs)
+	public Object evaluate(CacheMap<Object> inputs)
 	{
 		Object t_left = m_left.evaluate(inputs);
 		return evaluate(t_left);

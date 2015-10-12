@@ -17,9 +17,9 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Map;
+import ca.uqac.lif.util.CacheMap;
 
 public abstract class AttributeExpression
 {
-	public abstract Object evaluate(Map<String,Object> inputs);
+	public abstract Object evaluate(CacheMap<Object> inputs);
 }

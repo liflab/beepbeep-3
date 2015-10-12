@@ -17,8 +17,9 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Map;
 import java.util.Stack;
+
+import ca.uqac.lif.util.CacheMap;
 
 public class BooleanExpression extends ConstantExpression
 {
@@ -45,7 +46,7 @@ public class BooleanExpression extends ConstantExpression
 	}
 
 	@Override
-	public Object evaluate(Map<String,Object> inputs) 
+	public Object evaluate(CacheMap<Object> inputs) 
 	{
 		return m_number;
 	}

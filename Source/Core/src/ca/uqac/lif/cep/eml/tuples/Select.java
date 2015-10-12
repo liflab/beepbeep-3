@@ -17,15 +17,14 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.HashMap;
 import java.util.ArrayDeque;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.util.CacheMap;
 
 public class Select extends SingleProcessor
 {
@@ -43,12 +42,15 @@ public class Select extends SingleProcessor
 	
 	protected FixedTupleBuilder m_builder;
 	
+	protected CacheMap<Object> m_aliases;
+	
 	public Select(int in_arity)
 	{
 		super(in_arity, 1);
 		m_processors = null;
 		m_attributeList = null;
 		m_builder = null;
+		m_aliases = null;
 	}
 
 	public Select(int in_arity, String ... attributes)
@@ -115,18 +117,25 @@ public class Select extends SingleProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Map<String,Object> in = new HashMap<String,Object>();
-		int i = 0;
-		for (ProcessorDefinition pd : m_processors)
+		if (m_aliases == null)
 		{
-			String alias = pd.getAlias();
-			Object o = inputs[i];
-			in.put(alias, o);
-			i++;
+			// This is the first time we call compute; fetch the alias names 
+			// and instantiate the map with those names
+			int size = m_processors.size();
+			String[] names = new String[size];
+			int i = 0;
+			for (ProcessorDefinition pd : m_processors)
+			{
+				names[i] = pd.getAlias();
+				i++;
+			}
+			m_aliases = new CacheMap<Object>(names);
 		}
+		// Fill map with current aliases
+		m_aliases.putAll(inputs);
 		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		Object[] tuples = new Object[1];
-		Object t = computeCast(in);
+		Object t = computeCast(m_aliases);
 		tuples[0] = t;
 		out.add(tuples);
 		return out;
@@ -139,7 +148,7 @@ public class Select extends SingleProcessor
 	 *   that trace
 	 * @return The output tuple
 	 */
-	protected Object computeCast(Map<String,Object> inputs)
+	protected Object computeCast(CacheMap<Object> inputs)
 	{
 		if (m_attributeList.size() == 1)
 		{

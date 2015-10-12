@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.eml.tuples;
 
-import java.util.Map;
+import ca.uqac.lif.util.CacheMap;
 
 public abstract class BinaryExpression extends AttributeExpression
 {
@@ -36,7 +36,7 @@ public abstract class BinaryExpression extends AttributeExpression
 	}
 	
 	@Override
-	public Object evaluate(Map<String,Object> inputs)
+	public Object evaluate(CacheMap<Object> inputs)
 	{
 		Object t_left = m_left.evaluate(inputs);
 		Object t_right = m_right.evaluate(inputs);
