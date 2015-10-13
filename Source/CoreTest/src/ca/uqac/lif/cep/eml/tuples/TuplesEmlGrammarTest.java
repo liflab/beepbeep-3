@@ -214,6 +214,15 @@ public class TuplesEmlGrammarTest
 		ParseNode result = shouldParse(expression, "<eml_select>");
 		assertEquals("<eml_select>", result.getValue());
 	}
+	
+	@Test
+	public void testExtension18() throws ParseException
+	{
+		String expression = "(0) WHERE (*) = (0)";
+		m_parser.setDebugMode(false);
+		ParseNode result = shouldParse(expression, "<eml_where>");
+		assertEquals("<eml_where>", result.getValue());
+	}
 
 	protected ParseNode shouldParse(String expression, String start_symbol) throws ParseException
 	{

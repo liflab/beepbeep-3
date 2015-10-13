@@ -28,6 +28,7 @@
 <eml_att_def_as>,ca.uqac.lif.cep.eml.tuples.AttributeDefinitionAs
 #<eml_att_def>,ca.uqac.lif.cep.eml.tuples.AttributeDefinition
 <eml_att_list>,ca.uqac.lif.cep.eml.tuples.AttributeList
+<eml_att_placeholder>,ca.uqac.lif.cep.eml.tuples.AttributePlaceholder
 
 # Attribute expressions
 

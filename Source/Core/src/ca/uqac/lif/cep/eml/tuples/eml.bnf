@@ -46,12 +46,14 @@
 
 <eml_att_expr>           := <eml_att_expr_const> | <eml_att_expr_unary>
                             | <eml_att_expr_binary> | <eml_att_name> ;
-<eml_att_name>           := <eml_att_name_q> | <eml_att_name_plain>  ;
+<eml_att_name>           := <eml_att_name_q> | <eml_att_name_plain> 
+                            | <eml_att_placeholder> ;
 <eml_att_name_q>         := <eml_plain_string> . <eml_plain_string> ;
 <eml_att_name_plain>     := <eml_plain_string> ;
 <eml_att_expr_const>     := <eml_att_expr_number> | <eml_att_expr_string> ;
 <eml_att_expr_number>    := <eml_number> ;
 <eml_att_expr_string>    := <eml_string> ;
+<eml_att_placeholder>    := * ;
 
 # Unary operators
 
