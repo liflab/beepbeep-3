@@ -17,10 +17,9 @@
  */
 
 /**
- * Processors to manipulate traces of generic events. This includes
- * delaying, discarding, freezing, multiplexing and demultiplexing, 
- * and applying a sliding window, among other things.
+ * Elementary classes defining all the basic concepts of event stream
+ * processing.
  * 
  * @author Sylvain Hallé
  */
-package ca.uqac.lif.cep.epl;
+package ca.uqac.lif.cep;

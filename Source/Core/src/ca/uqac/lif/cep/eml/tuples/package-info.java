@@ -17,10 +17,9 @@
  */
 
 /**
- * Processors to manipulate traces of generic events. This includes
- * delaying, discarding, freezing, multiplexing and demultiplexing, 
- * and applying a sliding window, among other things.
+ * Processors and functions for event traces made of tuples of
+ * name-value pairs.
  * 
  * @author Sylvain Hallé
  */
-package ca.uqac.lif.cep.epl;
+package ca.uqac.lif.cep.eml.tuples;

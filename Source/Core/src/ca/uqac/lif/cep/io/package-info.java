@@ -17,10 +17,9 @@
  */
 
 /**
- * Processors to manipulate traces of generic events. This includes
- * delaying, discarding, freezing, multiplexing and demultiplexing, 
- * and applying a sliding window, among other things.
+ * Processors to handle input and output of data from external
+ * sources, such as files and pipes.
  * 
  * @author Sylvain Hallé
  */
-package ca.uqac.lif.cep.epl;
+package ca.uqac.lif.cep.io;
