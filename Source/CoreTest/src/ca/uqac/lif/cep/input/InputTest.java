@@ -30,7 +30,7 @@ public class InputTest
 		StreamReader sr = new StreamReader(stream);
 		CsvFeeder csv = new CsvFeeder();
 		Connector.connect(sr, csv);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(csv, sink);
 		String recv, expected;
 		sink.pullHard();

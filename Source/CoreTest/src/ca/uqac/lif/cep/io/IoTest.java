@@ -45,7 +45,7 @@ public class IoTest
 		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(sr, sink);
 		sr.push();
 		String recv = (String) sink.getQueue(0).remove();

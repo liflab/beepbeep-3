@@ -329,7 +329,7 @@ public class TuplesEmlSelectTest
 	{
 		Object processor = m_interpreter.parseQuery("THE TUPLES OF FILE \"tuples1.csv\"");
 		assertTrue(processor instanceof TupleFeeder);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect((Processor) processor, sink);
 		NamedTuple recv;
 		// First tuple
@@ -363,7 +363,7 @@ public class TuplesEmlSelectTest
 		StreamReader sr = new StreamReader(stream);
 		TupleFeeder csv = new TupleFeeder();
 		Connector.connect(sr, csv);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(csv, sink);
 		NamedTuple recv;
 		// First tuple

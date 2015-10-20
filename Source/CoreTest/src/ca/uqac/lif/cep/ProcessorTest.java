@@ -43,7 +43,7 @@ public class ProcessorTest
 	public void testPush1()
 	{
 		QueueSource cp = new QueueSource("A", 1);
-		QueueSink qs = new QueueSink(1);
+		QueueSink qs = new QueueSink();
 		Connector.connect(cp, qs);
 		cp.push();
 		if (qs.getQueue(0).size() != 1)
@@ -133,7 +133,7 @@ public class ProcessorTest
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
 		Window wp = new Window(new CumulativeSum(), 3);
-		QueueSink qs = new QueueSink(1);
+		QueueSink qs = new QueueSink();
 		Connector.connect(cs, wp);
 		Connector.connect(wp, qs);
 		// We must push three times to get the first output
@@ -172,7 +172,7 @@ public class ProcessorTest
 		Connector.connect(ones, count);
 		CountDecimate decim = new CountDecimate(2);
 		Connector.connect(count, decim);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(decim, sink);
 		Number recv;
 		sink.pull();
@@ -221,7 +221,7 @@ public class ProcessorTest
 		Connector.connect(ones, count);
 		CountDecimate decim = new CountDecimate(2);
 		Connector.connect(count, decim);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(decim, sink);
 		Number recv;
 		ones.push();
@@ -276,7 +276,7 @@ public class ProcessorTest
 		QueueSource input2 = new QueueSource(l_input2, 1);
 		Function add = new Function(new Addition(2));
 		Connector.connect(input1, input2, add);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(add, sink);
 		Number recv;
 		input1.push();
@@ -326,7 +326,7 @@ public class ProcessorTest
 		QueueSource input2 = new QueueSource(l_input2, 1);
 		Filter f = new Filter();
 		Connector.connect(input1, input2, f);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(f, sink);
 		Number recv;
 		input1.push();
@@ -376,7 +376,7 @@ public class ProcessorTest
 		Function even = new Function(new IsEven());
 		Connector.connect(fork, even, 1, 0);
 		Connector.connect(even, filter, 0, 1);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(filter, sink);
 		Number recv;
 		input1.push();
@@ -427,7 +427,7 @@ public class ProcessorTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(l_input2, 1);
 		Connector.connect(input1, input2, add_plus_10);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;
 		
@@ -521,7 +521,7 @@ public class ProcessorTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(l_input2, 1);
 		Connector.connect(input1, input2, add_plus_10);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;
 		
@@ -583,7 +583,7 @@ public class ProcessorTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(l_input2, 1);
 		Connector.connect(input1, input2, add_plus_10);
-		QueueSink sink = new QueueSink(1);
+		QueueSink sink = new QueueSink();
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;
 		

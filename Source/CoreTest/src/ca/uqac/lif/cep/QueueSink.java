@@ -34,9 +34,9 @@ public class QueueSink extends Sink
 {
 	protected Vector<Queue<Object>> m_queues;
 	
-	public QueueSink(int in_arity)
+	public QueueSink()
 	{
-		super(in_arity);
+		super(1);
 		reset();
 	}
 	
