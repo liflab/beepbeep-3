@@ -102,7 +102,7 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		public void push(Object o)
+		public Pushable push(Object o)
 		{
 			// Just push the event directly to the output pushables
 			for (int i = 0; i < m_outputPushables.length; i++)
@@ -110,6 +110,7 @@ public final class SmartFork extends Processor
 				m_outputPushables[i].push(o);
 			}
 			incrementClean();
+			return this;
 		}
 	}
 	

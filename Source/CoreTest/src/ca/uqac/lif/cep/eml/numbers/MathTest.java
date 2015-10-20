@@ -9,10 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Constant;
 import ca.uqac.lif.cep.Filter;
 import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.Function;
-import ca.uqac.lif.cep.Mutator;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.QueueSink;
 import ca.uqac.lif.cep.QueueSource;
@@ -202,7 +202,7 @@ public class MathTest
 			// Left part: sum of x^n
 			Fork fork2 = new Fork(2);
 			Connector.connect(fork, fork2, 0, 0);
-			Mutator exponent = new Mutator(1, n);
+			Constant exponent = new Constant(n);
 			Connector.connect(fork2, exponent, 0, 0);
 			Function pow = new Function(new Power());
 			Connector.connect(fork2, pow, 1, 0);
@@ -212,7 +212,7 @@ public class MathTest
 		CumulativeSum sum_right = new CumulativeSum();
 		{
 			// Right part: sum of 1
-			Mutator one = new Mutator(1, 1);
+			Constant one = new Constant(1);
 			Connector.connect(fork, one, 1, 0);
 			Connector.connect(one, sum_right);
 		}
@@ -228,7 +228,7 @@ public class MathTest
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
 		Function greater = new Function(new IsGreaterThan());
-		Mutator five = new Mutator(1, 5);
+		Constant five = new Constant(5);
 		Connector.connect(fork, five, 0, 0);
 		Connector.connect(fork, greater, 1, 0);
 		Connector.connect(five, greater, 0, 1);

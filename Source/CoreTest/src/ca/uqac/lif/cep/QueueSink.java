@@ -21,9 +21,13 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Vector;
 
+import org.junit.Test;
+
 /**
- * Sink that accumulates events into queues
- * @author sylvain
+ * Sink that accumulates events into queues. This is a scaffolding
+ * class only used in testing.
+ * 
+ * @author Sylvain Hallé
  *
  */
 public class QueueSink extends Sink
@@ -90,6 +94,16 @@ public class QueueSink extends Sink
 			}
 		}
 		return out;
+	}
+	
+	/**
+	 * Dummy test. This is only to avoid jUnit complaining that this file
+	 * contains no test.
+	 */
+	@Test
+	public void nopTest()
+	{
+		// Do nothing
 	}
 
 }

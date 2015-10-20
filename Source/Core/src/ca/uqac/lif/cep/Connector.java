@@ -20,6 +20,34 @@ package ca.uqac.lif.cep;
 /**
  * Provides a number of convenient methods for connecting the outputs of
  * processors to the inputs of other processors.
+ * <p>
+ * Methods provided by the <code>Connector</code> class are called
+ * <code>connect()</code> and have various signatures. Their return value
+ * typically consists of the <em>last</em> processor of the chain given
+ * as an argument. This means that nested calls to <code>connect()</code>
+ * are possible to form a complex chain of processors in one pass, e.g.
+ * <pre>
+ * Processor p = Connector.connect(
+ *   new QueueSource(2, 1),
+ *   Connector.connect(new QueueSource(1, 1), new Addition(), 0, 0),
+ *   0, 1);
+ * </pre>
+ * <p>
+ * In the previous example, the inner call to <code>connect()</code>
+ * links output 0 of a <code>QueueSource</code> to input 0 of an
+ * <code>Addition</code> processor; this partially-connected
+ * <code>Addition</code> is the return value of this method. It is then used
+ * in the outer call, where another <code>QueueSource</code> is linked
+ * to its input 1. This fully-connected <code>Addition</code> is what is
+ * put into variable <code>p</code>.
+ * <p>
+ * If you use lots of calls to <code>Connector.connect</code>, you may
+ * consider writing:
+ * <pre>
+ * static import Connector.connect;
+ * </pre>
+ * in the beginning of your file, so you can simply write <code>connect</code>
+ * instead of <code>Connector.connect</code> every time.
  * @author sylvain
  *
  */
@@ -32,8 +60,9 @@ public class Connector
 	 * @param p2 The second processor
 	 * @param i The output number of the first processor
 	 * @param j The input number of the second processor
+	 * @return A reference to processor p2
 	 */
-	public static void connect(Processor p1, Processor p2, int i, int j)
+	public static Processor connect(Processor p1, Processor p2, int i, int j)
 	{
 		// Pull
 		Pullable p1_out = p1.getPullableOutput(i);
@@ -41,6 +70,7 @@ public class Connector
 		// Push
 		Pushable p2_in = p2.getPushableInput(j);
 		p1.setPushableOutput(i, p2_in);
+		return p2;
 	}
 	
 	/**
@@ -49,14 +79,16 @@ public class Connector
 	 * to the <i>i</i>-th input of <tt>p2</tt>
 	 * @param p1 The first processor
 	 * @param p2 The second processor
+	 * @return A reference to processor p2
 	 */
-	public static void connect(Processor p1, Processor p2)
+	public static Processor connect(Processor p1, Processor p2)
 	{
 		int arity = p1.getOutputArity();
 		for (int i = 0; i < arity; i++)
 		{
 			connect(p1, p2, i, i);
 		}
+		return p2;
 	}
 	
 	/**
@@ -65,10 +97,12 @@ public class Connector
 	 * @param p1 The first processor
 	 * @param p2 The second processor
 	 * @param p3 The third processor
+	 * @return A reference to processor p3
 	 */
-	public static void connect(Processor p1, Processor p2, Processor p3)
+	public static Processor connect(Processor p1, Processor p2, Processor p3)
 	{
 		connect(p1, p3, 0, 0);
 		connect(p2, p3, 0, 1);
+		return p3;
 	}
 }

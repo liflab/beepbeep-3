@@ -17,27 +17,98 @@
  */
 package ca.uqac.lif.cep;
 
+/**
+ * Queries events on one of a processor's outputs. For a processor with
+ * an output arity <i>n</i>, there exists <i>n</i> distinct pullables,
+ * namely one for each output trace. Every pullable works roughly like a
+ * classical <code>Iterator</code>: it is possible to check whether new
+ * output events are available, and get one new output event.
+ * <p>
+ * However,
+ * contrarily to iterators, <code>Pullable</code>s have two versions of
+ * each method: a <em>soft</em> and a <em>hard</em> version.
+ * <ul>
+ * <li><strong>Soft</strong> methods make a single attempt at producing an
+ *   output event. Since processors are connected in a chain, this generally
+ *   means pulling events from the input in order to produce the output.
+ *   However, if pulling the input produces no event, no output event can
+ *   be produced. In such a case, {@link #hasNext()} will return a special
+ *   value (<code>MAYBE</code>), and {@link #pull()} will return
+ *   <code>null</code>. Soft methods can be seen a doing "one turn of the
+ *   crank" on the whole chain of processors --whether or not this outputs
+ *   something.</li>
+ * <li><strong>Hard</strong> methods are actually calls to soft methods until
+ *   an output event is produced: the "crank" is turned as long as necessary
+ *   to produce something. This means that one call to, e.g.
+ *   {@link #pullHard()} may consume more than one event from a processor's
+ *   input. Therefore, calls to {@link #hasNextHard()} never return
+ *   <code>MAYBE</code> (only <code>YES</code> or <code>NO</code>), and
+ *   {@link #pullHard()} returns <code>null</code> only if no event will
+ *   ever be output in the future (this occurs, for example, when pulling
+ *   events from a file, and the end of the file has been reached).</li>
+ * </ul> 
+ * <p>
+ * The lifecycle of a <code>Pullable</code> object is as follows:
+ * <ul>
+ * <li>One obtains a reference to one of a processor's pullables. This
+ *   can be done explicitly, e.g. by calling
+ *   {@link Processor#getPullableOutput(int)}, or implicitly, for example
+ *   through every call to {@link Connector#connect(Processor, Processor)}.</li>
+ * <li>At various moments, one calls {@link #hasNext()} (or
+ *   {@link #hasNextHard()} to check if events are available</li>
+ * <li>One calls {@link #pull()} (or {@link #pullHard()} to produce the next
+ *   available output event.</li>
+ * </ul>
+ * <p>
+ * For the same processor, mixing calls to soft and hard methods is discouraged.
+ * As a matter of fact, the Pullable's behaviour in such a situation is
+ * left undefined.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public interface Pullable
 {
+	/**
+	 * The "next" status of the pullable. Indicates whether a new output event
+	 * is available (i.e. can be "pulled").
+	 * <ul>
+	 * <li><code>YES</code> indicates that a new event can be pulled right now,
+	 *   using either {@link #pull()} or {@link #pullHard()}</li>
+	 * <li><code>NO</code> indicates that no event is available, and will
+	 *   ever be. Receiving <code>NO</code> generally indicates that the
+	 *   end of the (output) trace has been reached</li>
+	 * <li><code>MAYBE</code> indicates that no event is available, but that
+	 *   keeping on pulling <em>may </em>produce an event in the future. This
+	 *   value is only returned by {@link #hasNext()}.</li>
+	 * </ul>
+	 * 
+	 * @author Sylvain Hallé
+	 *
+	 */
 	public static enum NextStatus {YES, NO, MAYBE};
 	
 	/**
-	 * Number of times the {@link #hasNext} method tries to produce an
-	 * output from the input before giving up 
+	 * Number of times the {@link #hasNextHard()} method tries to produce an
+	 * output from the input before giving up. While in theory, the method
+	 * tries "as long as necessary", in practice a bound was put on the
+	 * number of attempts as a safeguard to avoid infinite loops.
 	 */
 	public static final long s_maxRetries = 1000;
 	
 	/**
 	 * Attempts to pull an event from the source. An event is returned if
-	 * {@link #hasNext()} returns "yes", and null is returned otherwise.
-	 * @return An event, or null if none could be retrieved
+	 * {@link #hasNext()} returns <code>YES<</code>, and <code>null</code>
+	 * is returned otherwise.
+	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
 	public Object pull();
 
 	/**
 	 * Attempts to pull an event from the source. An event is returned if
-	 * {@link #hasNextHard()} returns "yes", and null is returned otherwise.
-	 * @return An event, or null if none could be retrieved
+	 * {@link #hasNextHard()} returns <code>YES<</code>, and <code>null</code>
+	 * is returned otherwise.
+	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
 	public Object pullHard();
 	

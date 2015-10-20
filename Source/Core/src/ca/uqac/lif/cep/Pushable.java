@@ -17,7 +17,29 @@
  */
 package ca.uqac.lif.cep;
 
+/**
+ * Gives events to some of a processor's input. Interface {@link Pushable}
+ * is the opposite of {@link Pullable}: rather than querying events form
+ * a processor's output (i.e. "pulling"), it gives events to a processor's
+ * input. This has for effect of triggering the processor's computation
+ * and "pushing" results (if any) to the processor's output.
+ * <p>
+ * If a processor is of input arity <i>n</i>, there exist <i>n</i> distinct
+ * {@link Pullable}s: one for each input trace.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public interface Pushable
 {
-	public void push(Object o);
+	/**
+	 * Pushes an event into one of the processor's input trace.
+	 * @param o The event. Although you can technically push <code>null</code>,
+	 *   the behaviour in this case is undefined. It <code>may</code> be
+	 *   interpreted as if you are passing no event.
+	 * @return The same instance of pushable. This is done to allow chain
+	 *   calls to {@link Pushable} objects, e.g.
+	 *   <code>p.push(o1).push(o2)</code>.
+	 */
+	public Pushable push(Object o);
 }

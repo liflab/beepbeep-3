@@ -17,6 +17,18 @@
  */
 package ca.uqac.lif.cep;
 
+/**
+ * Receives input events and stores them. As its name implies, the
+ * <code>Sink</code> is just that: the end of a pipe of processors where
+ * events are input, but which has no output. In other words, a sink
+ * is a processor with an output arity of 0.
+ * <p>
+ * When operating in "pull" mode, it is nevertheless possible to ask the
+ * sink to pull on its inputs; this is why, like a {@link Pullable}, it
+ * implements methods {@link #pull()} and {@link #pullHard()}. 
+ * @author Sylvain Hallé
+ *
+ */
 public abstract class Sink extends SingleProcessor
 {
 	public Sink()
