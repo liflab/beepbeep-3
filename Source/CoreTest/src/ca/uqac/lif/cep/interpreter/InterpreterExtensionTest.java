@@ -97,7 +97,6 @@ public class InterpreterExtensionTest
 	@Test
 	public void testPlaceholder() throws ParseException
 	{
-		m_interpreter.setDebugMode(true);
 		String expression = "*";
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
