@@ -98,7 +98,7 @@ public interface Pullable
 	
 	/**
 	 * Attempts to pull an event from the source. An event is returned if
-	 * {@link #hasNext()} returns <code>YES<</code>, and <code>null</code>
+	 * {@link #hasNext()} returns <code>YES</code>, and <code>null</code>
 	 * is returned otherwise.
 	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
@@ -106,7 +106,7 @@ public interface Pullable
 
 	/**
 	 * Attempts to pull an event from the source. An event is returned if
-	 * {@link #hasNextHard()} returns <code>YES<</code>, and <code>null</code>
+	 * {@link #hasNextHard()} returns <code>YES</code>, and <code>null</code>
 	 * is returned otherwise.
 	 * @return An event, or <code>null</code> if none could be retrieved
 	 */

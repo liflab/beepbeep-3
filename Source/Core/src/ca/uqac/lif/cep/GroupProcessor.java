@@ -25,22 +25,63 @@ import java.util.Vector;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
 
+/**
+ * Encapsulates a chain of processors as if it were a single one.
+ * 
+ * @author Sylvain Hallé
+ */
 public class GroupProcessor extends Processor
 {
+	/**
+	 * The set of processors included in the group
+	 */
 	protected Set<Processor> m_processors = null;
 
+	/**
+	 * The {@link Pushable}s associated to each of the processor's
+	 * input traces
+	 */
 	protected Vector<Pushable> m_inputPushables = null;
 
+	/**
+	 * The {@link Pullable}s associated to each of the processor's
+	 * output traces
+	 */
 	protected Vector<Pullable> m_outputPullables = null;
 	
+	/**
+	 * A map between numbers and processor associations. An element
+	 * (m,(n,p)) of this map means that the <i>m</i>-th input of the
+	 * group processor is in fact the <i>n</i>-th input of processor
+	 * <code>p</code>
+	 */
 	protected Map<Integer,ProcessorAssociation> m_inputPullableAssociations;
-	
+
+	/**
+	 * A map between numbers and processor associations. An element
+	 * (m,(n,p)) of this map means that the <i>m</i>-th output of the
+	 * group processor is in fact the <i>n</i>-th output of processor
+	 * <code>p</code>
+	 */
 	protected Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
 	
+	/**
+	 * If this group processor is associated to a BNF rule, this contains
+	 * the name of the non-terminal part (left-hand side) of the rule
+	 */
 	protected String m_ruleName;
-	
+
+	/**
+	 * If this group processor is associated to a BNF rule, this contains
+	 * the name right-hand side of the rule
+	 */
 	protected BnfRule m_rule;
 
+	/**
+	 * Crate a group processor
+	 * @param in_arity The input arity
+	 * @param out_arity The output arity
+	 */
 	public GroupProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
@@ -51,26 +92,55 @@ public class GroupProcessor extends Processor
 		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
 	}
 	
+	/**
+	 * Sets the name of the rule associated to this processor
+	 * @param rule_name The rule name
+	 */
 	public void setRuleName(String rule_name)
 	{
 		m_ruleName = rule_name;
 	}
 	
+	/**
+	 * Retrieves the name of the rule associated to this processor
+	 * @return The rule name
+	 */
 	public String getRuleName()
 	{
 		return m_ruleName;
 	}
 	
+	/**
+	 * Retrieves the BNF parsing rule associated to this group processor
+	 * @return The parsing rule
+	 */
 	public BnfRule getRule()
 	{
 		return m_rule;
 	}
 	
+	/**
+	 * Tuple made of a number and a processor.
+	 * 
+	 * @author Sylvain Hallé
+	 */
 	protected static class ProcessorAssociation
 	{
+		/**
+		 * The number
+		 */
 		int m_outputNumber;
+		
+		/**
+		 * The processor
+		 */
 		Processor m_processor;
 		
+		/**
+		 * Create a new processor association
+		 * @param number The number
+		 * @param p The processor associated to that number
+		 */
 		ProcessorAssociation(int number, Processor p)
 		{
 			m_outputNumber = number;

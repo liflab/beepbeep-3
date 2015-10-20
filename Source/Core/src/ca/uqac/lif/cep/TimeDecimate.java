@@ -20,33 +20,37 @@ package ca.uqac.lif.cep;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+ * After returning an input event, discards all others for the next
+ * <i>n</i> seconds. This processor therefore acts as a rate limiter.
+ * <p>
+ * Note that this processor uses <code>System.nanoTime()</code> as its
+ * clock.
+ * 
+ * @author Sylvain Hallé
+ */
 public class TimeDecimate extends SingleProcessor
 {
 	/**
 	 * Interval of time
 	 */
-	protected long m_interval;
+	protected final long m_interval;
 	
 	/**
 	 * The system time when the last event was output
 	 */
 	protected long m_timeLastSent;
 	
-	public TimeDecimate()
-	{
-		super(1, 1);
-	}
-	
+	/**
+	 * Instantiates a time decimator
+	 * @param interval The interval (in nanoseconds) during which
+	 *   events should be discarded after an output event is produced 
+	 */
 	public TimeDecimate(long interval)
 	{
 		super(1, 1);
 		m_interval = interval;
 		m_timeLastSent = -1;
-	}
-	
-	public void setInterval(long interval)
-	{
-		m_interval = interval;
 	}
 	
 	@Override

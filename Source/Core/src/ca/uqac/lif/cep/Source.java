@@ -19,6 +19,19 @@ package ca.uqac.lif.cep;
 
 import java.util.Queue;
 
+/**
+ * Produces output events from no input. In other words, a source is a
+ * processor with input arity 0. It is the opposite of the {@link Sink}.
+ * <p>
+ * While a source has no input <em>trace</em>, this does not mean it has
+ * not input at all. For example, a processor reading from a file and creating
+ * events out of the file's content is an example of a source. It does not
+ * receive events as input, yet creates output events from something external
+ * to it.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public abstract class Source extends SingleProcessor
 {
 	public Source(int out_arity)

@@ -21,8 +21,9 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 /**
- * Duplicates an input event into two or more output events
- * @author sylvain
+ * Duplicates an input trace into two or more output traces.
+ * 
+ * @author Sylvain Hallé
  *
  */
 public class Fork extends SingleProcessor

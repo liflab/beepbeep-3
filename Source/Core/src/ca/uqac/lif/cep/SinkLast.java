@@ -20,7 +20,9 @@ package ca.uqac.lif.cep;
 import java.util.Queue;
 
 /**
- * Sink that remembers only the last event sent to it
+ * Sink that remembers only the last event sent to it. This event can
+ * be queried with {@link #getLast()}.
+ * 
  * @author Sylvain Hallé
  *
  */

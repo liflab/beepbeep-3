@@ -20,6 +20,15 @@ package ca.uqac.lif.cep;
 import java.util.Queue;
 import java.util.Vector;
 
+/**
+ * Source whose input is a queue of objects. One gives the
+ * <code>QueueSource</code> a list of events, and that source sends
+ * these events as its input one by one. When reaching the end of
+ * the list, the source returns to the beginning and keeps feeding
+ * events from the list endlessly.
+ * 
+ * @author Sylvain Hallé
+ */
 public class QueueSource extends Source
 {
 	/**

@@ -20,6 +20,15 @@ package ca.uqac.lif.cep;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+ * Repeatedly outputs the first event it has received. <code>Freeze</code>
+ * works a bit like {@link Constant}; however, while <code>Constant</code>
+ * is given the event to output, <code>Freeze</code> waits for a first event,
+ * outputs it, and then outputs that event whenever some new input comes in.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public class Freeze extends SingleProcessor
 {
 	protected Object[] m_output;

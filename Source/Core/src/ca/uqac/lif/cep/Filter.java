@@ -24,8 +24,8 @@ import java.util.Stack;
  * Discards events from an input trace based on a selection criterion.
  * The processor takes as input two events simultaneously; it outputs
  * the first if the second is true.
- * @author sylvain
- *
+ * 
+ * @author Sylvain Hallé
  */
 public class Filter extends SingleProcessor
 {

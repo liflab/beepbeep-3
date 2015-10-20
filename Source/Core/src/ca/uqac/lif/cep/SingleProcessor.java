@@ -369,7 +369,7 @@ public abstract class SingleProcessor extends Processor
 	 * that descendants of {@link SingleProcessor} (which implement
 	 * {@link #compute(Object[])}) can use to avoid
 	 * a few lines of code when they output a single event. 
-	 * @param v The object
+	 * @param o The object
 	 * @return The queue
 	 */
 	protected static final Queue<Object[]> wrapObject(Object o)

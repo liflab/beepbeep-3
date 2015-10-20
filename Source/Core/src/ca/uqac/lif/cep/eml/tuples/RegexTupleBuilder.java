@@ -55,6 +55,8 @@ public class RegexTupleBuilder extends SingleProcessor
 	/**
 	 * Constructs a tuple builder.
 	 * @param regex The pattern. This can be any regular expression.
+	 * @param attributes The attribute names to give each capture
+	 *   block
 	 */
 	public RegexTupleBuilder(String regex, RegexAttributeNameList attributes)
 	{

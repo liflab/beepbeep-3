@@ -218,7 +218,7 @@ public abstract class Processor
 	 * @param i The index of the output. Should be greater than 0
 	 *   (not checked) and less than the processor's output arity.
 	 *   Outside these bounds, nothing will occur.
-	 * @param p The pushable, <code>null</code> if <code>i</code> is
+	 * @return The pushable, <code>null</code> if <code>i</code> is
 	 *   out of range
 	 */	
 	public Pushable getPushableOutput(int i)

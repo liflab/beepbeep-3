@@ -20,6 +20,12 @@ package ca.uqac.lif.cep;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+ * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
+ * is called the <em>decimation interval</em>.
+ * 
+ * @author Sylvain Hallé
+ */
 public class CountDecimate extends SingleProcessor
 {
 	/**

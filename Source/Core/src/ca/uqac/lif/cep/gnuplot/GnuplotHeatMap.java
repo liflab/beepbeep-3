@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.gnuplot;
 
 import java.util.Stack;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -30,7 +29,7 @@ import ca.uqac.lif.cep.sets.EmlBag;
  * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.EmlBag}.
  * The keys of the heatmap
  * are {@link NamedTuple}s of integers representing (x,y) coordinates; the
- * values of the heatmap are integers. When its method {@link #compute(Vector)}
+ * values of the heatmap are integers. When its method {@link #compute(Object[])}
  * is called, the processor returns a String containing a Gnuplot file
  * producing the graphical heatmap from the <em>last</em> map received as an
  * input.
@@ -81,7 +80,7 @@ public class GnuplotHeatMap extends GnuplotProcessor
 	/**
 	 * The last heatmap that was sent to the processor. The output
 	 * will only be generated from that map upon a call to 
-	 * {@link #compute(Vector)}.
+	 * {@link #compute(Object[])}.
 	 */
 	protected EmlBag m_lastMap;
 

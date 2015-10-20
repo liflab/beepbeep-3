@@ -61,7 +61,8 @@ public class Select extends SingleProcessor
 
 	/**
 	 * Convenience method to set the attributes of the selection
-	 * @param attributes
+	 * @param attributes An array of strings, containing the names of the
+	 *   tuple's attributes one wishes to select
 	 */
 	protected void setAttributeList(String[] attributes)
 	{
