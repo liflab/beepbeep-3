@@ -172,6 +172,7 @@ public class UserDefinition
 	
 	/**
 	 * Adds this user definition to the grammar of an existing interpreter
+	 * @param i The interpreter to add the definition to
 	 */
 	public void addToInterpreter(Interpreter i)
 	{

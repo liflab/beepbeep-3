@@ -45,12 +45,6 @@ import java.util.Set;
  *   of a key a first time, and from that point on query the remaining tuples
  *   by directly providing the index.</li>
  * </ul>
- * <p>The process can be further optimized by using the 
- * {@link FixedTupleBuilder} class to build a stream of tuples that all follow
- * the same schema.
- * <p>Note that if these constraints are not suitable for your processing,
- * you should use the "regular" {@link NamedTupleMap} class that gives you
- * much more flexibility (possibly at the expense of some overhead).
  * @author Sylvain Hallé
  *
  */

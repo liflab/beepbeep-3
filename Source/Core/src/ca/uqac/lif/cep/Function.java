@@ -22,6 +22,15 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+ * Applies a function to input events to produce output events. This 
+ * class provides a way to "lift" any <i>m</i>-to-<i>n</i> function
+ * into an <i>m</i>-to-<i>n</i> processor, by simply calling the
+ * function on the inputs to produce the outputs.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public class Function extends SingleProcessor
 {
 	/**
@@ -29,6 +38,10 @@ public class Function extends SingleProcessor
 	 */
 	protected final Computable m_compute;
 	
+	/**
+	 * Instantiates a new function
+	 * @param comp The computable object responsible for the computation
+	 */
 	public Function(Computable comp)
 	{
 		super(comp.getInputArity(), comp.getOutputArity());

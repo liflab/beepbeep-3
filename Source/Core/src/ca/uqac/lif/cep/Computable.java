@@ -17,6 +17,11 @@
  */
 package ca.uqac.lif.cep;
 
+/**
+ * Represents a stateless <i>m</i>-to-<i>n</i> function.
+ * 
+ * @author Sylvain Hallé
+ */
 public interface Computable
 {
 	/**

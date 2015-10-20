@@ -23,12 +23,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * Reads chunks of data from an URL, using an HTTP request.
  * These chunks are returned as events in the form of strings.
- * @author sylvain
+ * 
+ * @author Sylvain Hallé
  */
 public class HttpReader extends StreamReader
 {
@@ -45,8 +45,8 @@ public class HttpReader extends StreamReader
 	
 	/**
 	 * Instantiates an HTTP reader with an URL. Note that no request is
-	 * sent over the network until the first call to {@link #compute(Vector)}.
-	 * @param url The URL
+	 * sent over the network until the first call to {@link #compute(Object[])}.
+	 * @param url The URL to read from
 	 */
 	public HttpReader(String url)
 	{

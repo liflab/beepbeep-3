@@ -609,11 +609,11 @@ public class Interpreter implements ParseNodeVisitor
   }
 	
 	/**
-	 * Retrieves the static method of a given class
-	 * @param type The class
+	 * Retrieves a method of a given object
+	 * @param o The object
 	 * @param methodName The method name to look for
 	 * @param params Any parameters this method may have
-	 * @return The method, or null if no method was found
+	 * @return The method, or <code>null</code> if no method was found
 	 */
 	static public Method getMethod(Object o, String methodName, Class<?>... params) 
 	{
