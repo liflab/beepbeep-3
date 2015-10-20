@@ -15,11 +15,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.interpreter;
+package ca.uqac.lif.cep;
 
 import java.util.Stack;
-
-import ca.uqac.lif.cep.epl.Passthrough;
 
 public final class Placeholder extends Passthrough
 {

@@ -1,0 +1,24 @@
+# -----------------------------------------
+# Grammar for BeepBeep 3; edit at your own risk!
+#
+# This is the EPL part of the language (Event Processing Language).
+# Working with BeepBeep 3 also requires the inclusion of at least
+# one grammar for the EML (Event Manipulation Language).
+# -----------------------------------------
+
+# Types
+
+<number>             := ^\d+;
+<boolean>            := TRUE | FALSE ;
+<var_name>           := ^\$[\w\d]+;
+
+# Processors
+
+<processor>          := <p_freeze> | <p_window> | <p_decimate> | <p_prefix> 
+                        | <p_combiner> | <var_name> ;
+<p_freeze>           := FREEZE <processor> ;
+<p_window>           := APPLY ( <processor> ) ON ( <processor> ) ON A WINDOW OF <number> ;
+<p_decimate>         := EVERY <number> <number_suffix> OF ( <processor> ) ;
+<number_suffix>      := ST | ND | RD | TH ;
+<p_prefix>           := <number> OF ( <processor> ) ;
+<p_placeholder>      := * ;

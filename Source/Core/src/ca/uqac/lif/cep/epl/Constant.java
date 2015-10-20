@@ -15,23 +15,38 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.eml.tuples;
+package ca.uqac.lif.cep.epl;
 
-import java.util.Stack;
+import java.util.Queue;
 
-import ca.uqac.lif.cep.Passthrough;
+import ca.uqac.lif.cep.SingleProcessor;
 
-public final class Placeholder extends Passthrough
+/**
+ * Returns the same event over and over
+ * 
+ * @author Sylvain Hallé
+ */
+public class Constant extends SingleProcessor
 {
-	public Placeholder()
+	/**
+	 * The event to return
+	 */
+	private final Object m_toReturn;
+
+	/**
+	 * Creates a constant processor
+	 * @param o The event to return
+	 */
+	public Constant(Object o)
 	{
-		super(1);
+		super(0, 1);
+		m_toReturn = o;
 	}
-	
-	public static void build(Stack<Object> stack)
+
+	@Override
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		stack.pop(); // *
-		stack.push(new Placeholder());
+		return wrapObject(m_toReturn);
 	}
 
 }

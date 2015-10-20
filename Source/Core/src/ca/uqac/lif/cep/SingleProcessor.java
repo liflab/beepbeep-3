@@ -120,8 +120,11 @@ public abstract class SingleProcessor extends Processor
 		@Override
 		public Pushable push(Object o)
 		{
-			Queue<Object> q = m_inputQueues[m_index];
-			q.add(o);
+			if (m_index < m_inputQueues.length)
+			{
+				Queue<Object> q = m_inputQueues[m_index];
+				q.add(o);
+			}
 			// Check if each input queue has an event ready
 			for (int i = 0; i < m_inputArity; i++)
 			{
