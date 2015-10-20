@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+
+<!--
+	Citrusy: A responsive HTML5 website template by HTML5Templates.com
+	Released for free under the Creative Commons Attribution 3.0 license (html5templates.com/license)
+	Visit http://html5templates.com for more great templates or follow us on Twitter @HTML5T
+-->
+
+<html>
+<head>
+<title>Learn in five minutes - BeepBeep</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<noscript>
+<link rel="stylesheet" href="css/5grid/core.css" />
+<link rel="stylesheet" href="css/5grid/core-desktop.css" />
+<link rel="stylesheet" href="css/5grid/core-1200px.css" />
+<link rel="stylesheet" href="css/5grid/core-noscript.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/style-desktop.css" />
+</noscript>
+<link rel="stylesheet" href="css/custom.css" />
+<script src="css/5grid/jquery.js"></script>
+<script src="css/5grid/init.js?use=mobile,desktop,1000px&amp;mobileUI=1&amp;mobileUI.theme=none"></script>
+<!--[if IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
+</head><body>
+<div id="header-wrapper">
+	<header id="header">
+		<div class="5grid-layout">
+			<div class="row">
+				<div class="12u" id="logo"> <!-- Logo -->
+					<h1><a href="#" class="mobileUI-site-name">BeepBeep</a></h1>
+					<p>The event processor anyone can use</p>
+				</div>
+			</div>
+		</div>
+		<div class="5grid-layout">
+			<div class="row">
+				<div class="12u" id="menu">
+					<nav class="mobileUI-site-nav">
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li class="current_page_item"><a href="quickintro.html">In 5 minutes</a></li>
+							<li><a href="features.html">Features</a></li>
+							<li><a href="download.html">Get BeepBeep</a></li>
+							<li><a href="documentation.html">Documentation</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+</div>
+<div id="wrapper">
+	<div id="page">
+		<div class="5grid-layout">
+			<div class="row">
+				<div class="3u">
+					<div id="sidebar2">
+						<section>
+							<div class="sbox1">
+								<h2>In this document</h2>
+								<ul class="style1">
+									<li class="first"><a href="#select">Selecting columns</a></li>
+									<li><a href="#sum">Computing a sum</a></li>
+									<li><a href="#results">Getting the results</a></li>
+									<li><a href="#thatsit">That's it!</a></li>
+								</ul>
+							</div>
+						</section>
+						<section>
+							<div class="sbox2">
+								<h2>Quick links</h2>
+								<ul class="style1">
+									<li class="first"><a href="#">Why use ESQL?</a></li>
+									<li><a href="processors.html">Available processors</a></li>
+									<li><a href="custom.html">Create your own processor</a></li>
+									<li><a href="extend.html">Extend ESQL</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="9u mobileUI-main-content">
+					<div id="content">
+						<section>
+							<div class="post">
+								<h2>Learn BeepBeep in five minutes</h2>
+
+<p>In this quick tutorial, you will learn the basics of ESQL, the Event Stream
+Query Language that BeepBeep uses to process sequences of data elements called
+<strong>events</strong>.</p>
+
+<a name="select"></a>
+<h3 class="normal">Selecting columns</h3>
+
+<p>Suppose you have a system that produced a stream of numerical values and
+stored them one after the other in a text file called <code>Values.csv</code>. The file looks like
+this:</p>
+
+<center>
+<table cellpadding="10" border="1">
+<tr><th>a</th><th>b</th><th>c</th></tr>
+<tr><td>0</td><td>1</td><td>6</td></tr>
+<tr><td>2</td><td>1</td><td>2</td></tr>
+<tr><td>8</td><td>5</td><td>3</td></tr>
+<tr><td colspan="3">...</td></tr>
+</table>
+</center>
+
+<p>Each line corresponds to an <em>event</em>, which contains values for three
+parameters, called <i>a</i>,
+<i>b</i> and <i>c</i>. You want to read this <strong>trace</strong> of events
+and get the values for column <i>a</i>.</p>
+
+<p>If this trace were a table where each event is a line, what
+SQL query would you write to do this? Well, it turns out that the <u>E</u>SQL
+query you need to write looks very similar:</p>
+
+<pre class="code">
+SELECT a FROM (
+  THE TUPLES OF FILE "Values.csv" )
+</pre>
+
+<p>This expression actually involves three <strong>processors</strong>. A
+processor takes zero or more event traces as its input, and returns zero or
+more event traces as its output. In the previous query, the expression
+<code>FILE "Values.csv"</code> corresponds to the input processor, which reads
+data from a file and produces an output trace made of the contents of that file,
+separated into binary chunks:</p>
+
+<p style="text-align:center">
+<img src="images/pipe-file.png" alt="File processor"/>
+</p>
+
+<p>The second processor corresponds to the expression <code>THE TUPLES OF</code>.
+Its job is to take as input a trace of binary chunks, to interpret these chunks
+as the contents of a CSV file, and to create a <em>tuple</em> out of each line:</p>
+
+<p><p style="text-align:center">
+<img src="images/pipe-tuple.png" alt="Tuple processor"/>
+</p>
+
+<p>The third processor corresponds to the <code>SELECT</code> part. For each
+tuple it receives as its input, it cuts and combines parts of that tuple to
+produce a new tuple as output. In our case, the expression is simply to return
+the value of column <i>a</i> directly.</p>
+
+<p style="text-align:center">
+<img src="images/pipe-select.png" alt="Select processor"/>
+</p>
+
+<p>The process of giving the output trace(s) of a processor as the input to
+another processor is called <strong>composition</strong>. In our example, the
+previous expression is the composition, or "piping", of these three processors
+together, producing a <em>chain</em> of processors:</p>
+
+<p style="text-align:center">
+<img src="images/pipe-complete.png" alt="All processors"/>
+</p>
+
+<a name="sum"></a>
+<h3 class="normal">Computing a sum</h3>
+
+<p>The nice thing about processors is that anything can be piped to anything,
+as long as the events are of the proper type; for example, it does not make sense
+to send the output of the <code>FILE</code> processor directly into
+<code>SELECT</code>, as <code>FILE</code> produces binary chunks and
+<code>SELECT</code> expects tuples.</p>
+
+<p>This means that we can pipe the output of the previous expression into
+something else. For example, we could compute the cumulative sum of all values
+of <i>a</i> using the expression <code>COMBINE ... WITH ...</code>. The expression
+takes as input a trace of events, and an operator that will be used to "combine"
+the events of the trace. Graphically, the combiner can be represented as:</p>
+
+<p style="text-align:center">
+<img src="images/pipe-combiner.png" alt="Combiner"/>
+</p>
+
+<p>The combiner takes an input event, passes it into a function (the blue box) and
+returns the result. This result is also piped back into the function to be
+applied with the next event that will come. The combiner needs to be supplied
+with an initial event <i>e</i> that is used to call the function for the first
+event it receives.</p>
+
+<p>In our case, the function we need to use is <code>ADDITION</code>, which
+implicitly assumes the number <code>0</code> as its starting event <i>e</i> when
+used in a combiner. The query becomes the following:</p>
+
+<pre class="code">
+COMBINE (
+  SELECT a FROM (
+    THE TUPLES OF FILE "Values.csv" ))
+WITH ADDITION
+</pre>
+
+<p>Or graphically:</p>
+
+<p style="text-align:center">
+<img src="images/pipe-complete2.png" alt="Complete pipe 2"/>
+</p>
+
+<a name="results"></a>
+<h3>Getting the results</h3>
+
+<p>You have probably noticed that the result of our chain of processors is a
+single pipe that sends out events into the open air. These output events have to
+go <em>somewhere</em>. We shall now show how you can get a grasp of these events
+and use them, for example, in your own Java program.</p>
+
+<a name="jdbc"></a><h4>Using JDBC</h4>
+
+<p>If you know how to use <a href="https://en.wikipedia.org/wiki/Jdbc">JDBC</a> to access SQL databases, you can
+also use it to read the output of an ESQL query. Instead of
+calling SQL queries to a database server like MySQL, you simply call ESQL queries
+on BeepBeep.</p>
+
+<pre class="code">
+Class.forName("ca.uqac.lif.cep.jdbc.BeepBeepDriver");
+Connection con = java.sql.DriverManager.getConnection("jdbc:beepbeep:","user","password");
+Statement stmt = con.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT a FROM (THE TUPLES OF FILE 'Values.csv')");
+while(rs.next()) {
+  int sum = rs.getInt();
+}
+rs.close();
+con.close();
+</pre>
+
+<p>In SQL, you use <code>next()</code> and <code>getXXX()</code> to
+fetch one more tuple of the result and some element of that tuple, respectively.
+In ESQL, you use the same methods to pull the next <em>event</em> of the
+result stream, and get some element of that event.</p>
+
+<h4>Using native objects</h4>
+
+<p>Another way to get the results is to manipulate the result of the query
+directly.
+
+<pre class="code">
+Interpreter my_int = new Interpreter();
+Pullable p = my_int.executeQuery("COMBINE (SELECT a FROM (THE TUPLES OF FILE 'Values.csv')) WITH ADDITION");
+while (p.hasNext()) {
+  int sum = (int) p.next();
+}
+</pre>
+
+<p>Notice how pulling the cumulative sum out of a column of an external CSV file
+has been reduced to a four-liner. As a matter of fact, we claim that BeepBeep
+is the easiest stream processor around.</p>
+
+<p>If you wish, you can also do without the ESQL syntax, and pipe the processors
+by yourself:</p>
+
+<pre class="code">
+StreamReader sr = new StreamReader(new FileInputStream(new File("Values.csv")));
+TupleFeeder tf = new TupleFeeder();
+Select s = new Select(1, "a");
+Combiner comb = new Combiner(Addition.class);
+Connector.connect(sr, tf, s, comb);
+Pullable p = comb.getPullable(0);
+while (p.hasNext()) {
+  int sum = (int) p.next();
+}
+</pre>
+
+<h4>Through the command line</h4>
+
+<p>One last way of doing something with the results is by calling BeepBeep on
+the command line, and have the result of the query sent to a file. By default,
+BeepBeep pipes the output of a query to the standard output, which means that
+you can pipe the results into the standard input of another process by simply
+writing:</p>
+
+<pre class="code">
+java -jar beepbeep3.jar query.esql | anotherprocess
+</pre>
+
+<p>where <code>query.esql</code> is a text file that contains the query (or set of
+queries) to execute.</p>
+
+<a name="thatsit"></a>
+<h3>That's it!</h3>
+
+<p>Is it five minutes yet? So far you've learned:</p>
+
+<ul>
+<li>How BeepBeep uses chains of <strong>processors</strong> to process streams
+of <strong>events</strong> of various types</li>
+<li>How you can write a chain of processors using a simple language called
+<strong>ESQL</strong> --which looks a lot like SQL</li>
+<li>How you can easily <strong>fetch the results</strong>
+of an ESQL query and use them in
+your program, in about half a dozen lines of code</li>
+</ul>
+
+<p>You're now ready to learn more about BeepBeep.</p>
+
+<ul>
+<li>See what <a href="processors.html">processors</a> are available, and how you can use
+  them in ESQL queries</li>
+<li><a href="custom.html">Create your own processor</a> in a few lines of code,
+  and <a href="extend.html">extend
+  the ESQL grammar</a> to use it in your own queries</li>
+</ul>
+
+							</div>
+						</section>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="footer-wrapper">
+	<div class="5grid-layout">
+		<div class="row" id="footer-content">
+			<div class="3u" id="box1">
+				<section>
+					<h2>Made at LIF</h2>
+					<p><a href="#"><img src="images/logo-shadow.png" alt="LIF"/></a></p>
+					<p>&nbsp;</p>
+					<p>BeepBeep was developed through the research done at <a href="http://lif.uqac.ca">LIF</a>, the
+					Formal Computer Science Laboratory in <a href="http://www.uqac.ca/">Université du Québec à
+					Chicoutimi</a>, Canada.</p>
+				</section>
+			</div>
+			<div class="3u" id="box2">
+				<section>
+					<h2>Around BeepBeep</h2>
+					<ul class="style6">
+						<li class="first">
+							<h3>Meet the author</h3>
+							<p><a href="http://leduotang.ca/sylvain">Visit the homepage of Sylvain Hallé, author of BeepBeep and recipient of numerous research awards.</a></p>
+						</li>
+						<li>
+							<h3>Complex Event Processing</h3>
+							<p><a href="https://en.wikipedia.org/wiki/Complex_event_processing">Read about CEP on Wikipedia</a></p>
+						</li>
+						<!--<li>
+							<h3>Donec dictum metus in sapien</h3>
+							<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
+						</li>-->
+					</ul>
+				</section>
+			</div>
+			<div class="3u" id="box4">
+				<section>
+					<h2>Interested in BeepBeep?</h2>
+					<p><strong>If you think BeepBeep can be useful to you, please contact us!</strong></p>
+					<p>&nbsp;</p>
+					<p>BeepBeep is free software, released under the <a href="https://www.gnu.org/copyleft/lesser.html">GNU LGPL</a>. This means you can include it as a library
+					in any project, including closed-source commercial software.</p>
+					<p>&nbsp;</p>
+					<p>Also, if you are interested to contribute new features to the tool, don't hesitate to drop us a line.</p>
+				</section>
+			</div>
+			<div class="3u" id="box3">
+				<section>
+					<h2>Contact Information</h2>
+					<p><strong>Sylvain Hallé, Ph.D.</strong><br/>
+					Associate Professor</p>
+					<p><strong>Email</strong>: shalle@uqac.ca</p>
+					<p>&nbsp;</p>
+					<p><strong>Université du Québec à Chicoutimi</strong><br/>
+					555, boul. de l'Université<br/>
+					Chicoutimi, Québec<br/>
+					G7H 2B1 Canada</p>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>
+<div>
+	<div class="5grid-layout" id="copyright">
+		<div class="row">
+			<div class="12u">
+				<p>&copy; 2008-2015 Laboratoire d'informatique formelle | Design: <a href="http://html5templates.com/">HTML5Templates.com</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
