@@ -23,6 +23,8 @@ import java.util.Vector;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.epl.Sink;
+
 /**
  * Sink that accumulates events into queues. This is a scaffolding
  * class only used in testing.

@@ -21,4 +21,3 @@
 <p_decimate>         := EVERY <number> <number_suffix> OF ( <processor> ) ;
 <number_suffix>      := ST | ND | RD | TH ;
 <p_prefix>           := <number> OF ( <processor> ) ;
-<p_placeholder>      := * ;

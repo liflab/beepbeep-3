@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Combiner;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.CountDecimate;
+import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.QueueSink;

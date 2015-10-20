@@ -29,6 +29,10 @@ import ca.uqac.lif.cep.eml.numbers.Addition;
 import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
 import ca.uqac.lif.cep.eml.numbers.Incrementer;
 import ca.uqac.lif.cep.eml.numbers.IsEven;
+import ca.uqac.lif.cep.epl.CountDecimate;
+import ca.uqac.lif.cep.epl.Filter;
+import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.epl.Window;
 
 public class ProcessorTest
 {

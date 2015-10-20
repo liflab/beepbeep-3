@@ -27,7 +27,8 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.QueueSource;
+import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.eml.tuples.EmlPuller;
 import ca.uqac.lif.cep.eml.tuples.EmlPuller.EmlPullable;
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
@@ -48,9 +49,9 @@ public class UserDefinitionTest
 	public void setUp()
 	{
 		m_interpreter = new InterpreterTestFrontEnd();		
-		m_interpreter.extendGrammar(new StreamGrammar());
-		m_interpreter.extendGrammar(new TupleGrammar());
-		m_interpreter.extendGrammar(new LtlGrammar());
+		m_interpreter.extendGrammar(StreamGrammar.class);
+		m_interpreter.extendGrammar(TupleGrammar.class);
+		m_interpreter.extendGrammar(LtlGrammar.class);
 	}
 	
 	@Test
@@ -259,6 +260,7 @@ public class UserDefinitionTest
 		m_interpreter.addPlaceholder("@T", "processor", qs);
 		Processor proc = (Processor) m_interpreter.parseQuery("APPLY (THE SUM OF (*)) ON (@T) ON A WINDOW OF 5");
 		assertNotNull(proc);
+		assertTrue(proc instanceof Window);
 		EmlPullable p = EmlPuller.getEmlPullable(proc, 0);
 		assertNotNull(p);
 		Object o = p.pullHard();

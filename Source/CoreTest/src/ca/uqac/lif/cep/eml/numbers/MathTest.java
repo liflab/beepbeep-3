@@ -10,13 +10,13 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Constant;
-import ca.uqac.lif.cep.Filter;
+import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.Function;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.QueueSink;
-import ca.uqac.lif.cep.QueueSource;
-import ca.uqac.lif.cep.Window;
+import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
 import ca.uqac.lif.cep.eml.numbers.Division;
 import ca.uqac.lif.cep.eml.numbers.IsGreaterThan;

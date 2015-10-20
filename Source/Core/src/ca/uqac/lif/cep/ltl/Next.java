@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.ltl;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Delay;
+import ca.uqac.lif.cep.epl.Delay;
 import ca.uqac.lif.cep.Processor;
 
 public class Next extends Delay

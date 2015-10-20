@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Source;
+import ca.uqac.lif.cep.epl.Source;
 
 /**
  * Converts a query to a MySQL database into a trace of named tuples.

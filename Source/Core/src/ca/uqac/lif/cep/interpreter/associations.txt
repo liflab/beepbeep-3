@@ -1,5 +1,6 @@
 <processor_def>,ca.uqac.lif.cep.interpreter.UserDefinition
 <symbol_def_list>,ca.uqac.lif.cep.interpreter.SymbolDefinitionList
 <symbol_def>,ca.uqac.lif.cep.interpreter.SymbolDefinition
-<p_placeholder>,ca.uqac.lif.cep.interpreter.Placeholder
+<p_constant>,ca.uqac.lif.cep.Constant
 <p_combiner>,ca.uqac.lif.cep.Combiner
+<p_placeholder>,ca.uqac.lif.cep.Placeholder

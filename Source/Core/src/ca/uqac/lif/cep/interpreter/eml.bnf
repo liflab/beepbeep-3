@@ -12,8 +12,9 @@
 
 # Definition of a processor
 
-<processor>          := <userdef_proc> | <eml_expr> | <p_combiner> | <p_placeholder> ; 
+<processor>          := <p_placeholder> | <userdef_proc> | <eml_expr> | <p_combiner> ; 
 <p_combiner>         := COMBINE ( <processor> ) WITH <c_combine> ;
+<p_placeholder>      := * ;
 
 # Definition of a new grammatical object
 

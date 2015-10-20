@@ -25,6 +25,8 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
+import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.epl.Window;
 
 public class ThroughputTest
 {

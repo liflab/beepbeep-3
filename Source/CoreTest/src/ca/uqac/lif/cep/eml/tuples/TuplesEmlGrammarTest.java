@@ -26,6 +26,7 @@ import ca.uqac.lif.bullwinkle.BnfParser;
 import ca.uqac.lif.bullwinkle.BnfParser.InvalidGrammarException;
 import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
+import ca.uqac.lif.cep.epl.EplGrammar;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
@@ -42,7 +43,12 @@ public class TuplesEmlGrammarTest
 		try
 		{
 			m_parser = new BnfParser();
-			m_parser.setGrammar(PackageFileReader.readPackageFile(Interpreter.class, "epl.bnf"));
+			m_parser.setGrammar(PackageFileReader.readPackageFile(Interpreter.class, "eml.bnf"));
+			{
+				GrammarExtension ext = new EplGrammar();
+				String productions = ext.getGrammar();
+				m_parser.setGrammar(productions);
+			}
 			{
 				GrammarExtension ext = new StreamGrammar();
 				String productions = ext.getGrammar();

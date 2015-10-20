@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.QueueSource;
+import ca.uqac.lif.cep.epl.QueueSource;
 
 public class SignalTest 
 {
