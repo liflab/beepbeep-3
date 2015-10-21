@@ -236,7 +236,7 @@ public abstract class SingleProcessor extends Processor
 				return NextStatus.YES;
 			}
 			// Check if each pullable has an event ready
-			for (long tries = 0; tries < Pullable.s_maxRetries; tries++)
+			for (int tries = 0; tries < Pullable.s_maxRetries; tries++)
 			{
 				for (int i = 0; i < m_inputArity; i++)
 				{
@@ -313,7 +313,7 @@ public abstract class SingleProcessor extends Processor
 			// Pull an event from each
 			Object[] inputs = new Object[m_inputArity];
 			{
-				short i = 0;
+				int i = 0;
 				for (Pullable p : m_inputPullables)
 				{
 					inputs[i] = p.pull();
@@ -331,7 +331,7 @@ public abstract class SingleProcessor extends Processor
 					{
 						// We computed an output event; add it to the output queue
 						// and answer YES
-						short i = 0;
+						int i = 0;
 						for (Queue<Object> queue : m_outputQueues)
 						{
 							queue.add(evt[i]);

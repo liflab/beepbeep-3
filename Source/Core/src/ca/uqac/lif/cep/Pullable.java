@@ -94,7 +94,7 @@ public interface Pullable
 	 * tries "as long as necessary", in practice a bound was put on the
 	 * number of attempts as a safeguard to avoid infinite loops.
 	 */
-	public static final long s_maxRetries = 1000;
+	public static final int s_maxRetries = 1000;
 	
 	/**
 	 * Attempts to pull an event from the source. An event is returned if

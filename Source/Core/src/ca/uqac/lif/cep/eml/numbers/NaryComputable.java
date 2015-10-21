@@ -45,7 +45,7 @@ public abstract class NaryComputable implements Computable
 	public final Object[] compute(Object[] inputs)
 	{
 		Number[] numbers = new Number[inputs.length];
-		short i = 0;
+		int i = 0;
 		for (Object o : inputs)
 		{
 			if (o instanceof Number)
