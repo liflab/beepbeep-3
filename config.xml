@@ -33,7 +33,7 @@
   <author>Sylvain Hall&#233;</author>
   
   <!-- The project's main class -->
-  <mainclass>ca.uqac.lif.cep.interpreter.CommandLine</mainclass>
+  <mainclass>ca.uqac.lif.cep.cli.CommandLine</mainclass>
   
   <!-- Output jar -->
   <jar>
