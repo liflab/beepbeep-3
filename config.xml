@@ -46,22 +46,12 @@
   <dependencies>
     <dependency>
       <!--
-      Apache Commons CLI. Used to parse command-line options.
-      -->
-      <name>Apache Commons CLI</name>
-      <classname>org.apache.commons.cli.GnuParser</classname>
-      <files>
-        <zip>http://archive.apache.org/dist/commons/cli/binaries/commons-cli-1.3.1-bin.zip</zip>
-      </files>
-    </dependency>
-    <dependency>
-      <!--
       Bullwinkle. Used to parse Cornipickle statements.
       -->
       <name>Bullwinkle</name>
       <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
       <files>
-        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.1.7/bullwinkle-1.1.7.zip</zip>
+        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.1.8/bullwinkle-1.1.8.zip</zip>
       </files>
     </dependency>
     <dependency>
