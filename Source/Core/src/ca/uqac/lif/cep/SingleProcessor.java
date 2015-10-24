@@ -102,7 +102,12 @@ public abstract class SingleProcessor extends Processor
 		/**
 		 * The index of the processor's input this pushable refers to
 		 */
-		protected final int m_index;
+		private final int m_index;
+		
+		/**
+		 * The number of events pushed so far
+		 */
+		private int m_pushCount;
 
 		/**
 		 * Creates a pushable associated to some of a processor's input
@@ -115,11 +120,19 @@ public abstract class SingleProcessor extends Processor
 		{
 			super();
 			m_index = index;
+			m_pushCount = 0;
+		}
+		
+		@Override
+		public int getPushCount()
+		{
+			return m_pushCount;
 		}
 
 		@Override
 		public Pushable push(Object o)
 		{
+			m_pushCount++;
 			if (m_index < m_inputQueues.length)
 			{
 				Queue<Object> q = m_inputQueues[m_index];
@@ -174,7 +187,12 @@ public abstract class SingleProcessor extends Processor
 		/**
 		 * The index of the processor's output this pullable refers to
 		 */
-		protected final int m_index;
+		private final int m_index;
+		
+		/**
+		 * The number of events pulled so far
+		 */
+		private int m_pullCount;
 
 		/**
 		 * Creates a pullable associated to some of a processor's output
@@ -187,6 +205,13 @@ public abstract class SingleProcessor extends Processor
 		{
 			super();
 			m_index = index;
+			m_pullCount = 0;
+		}
+
+		@Override
+		public int getPullCount()
+		{
+			return m_pullCount;
 		}
 
 		@Override
@@ -202,6 +227,7 @@ public abstract class SingleProcessor extends Processor
 			if (!out_queue.isEmpty())
 			{
 				Object o = out_queue.remove();
+				m_pullCount++;
 				return o;
 			}
 			return null;
@@ -220,6 +246,7 @@ public abstract class SingleProcessor extends Processor
 			if (!out_queue.isEmpty())
 			{
 				Object o = out_queue.remove();
+				m_pullCount++;
 				return o;
 			}
 			return null;

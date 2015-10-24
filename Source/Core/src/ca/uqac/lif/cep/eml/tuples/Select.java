@@ -58,6 +58,18 @@ public class Select extends SingleProcessor
 		this(in_arity);
 		setAttributeList(attributes);
 	}
+	
+	public Select(int in_arity, AttributeExpression ... expressions)
+	{
+		this(in_arity);
+		AttributeList al = new AttributeList();
+		for (AttributeExpression aexp : expressions)
+		{
+			AttributeDefinition adef = new AttributeDefinitionPlain(aexp);
+			al.add(adef);
+		}
+		m_attributeList = al;
+	}
 
 	/**
 	 * Convenience method to set the attributes of the selection
@@ -122,15 +134,23 @@ public class Select extends SingleProcessor
 		{
 			// This is the first time we call compute; fetch the alias names 
 			// and instantiate the map with those names
-			int size = m_processors.size();
-			String[] names = new String[size];
-			int i = 0;
-			for (ProcessorDefinition pd : m_processors)
+			if (m_processors != null)
 			{
-				names[i] = pd.getAlias();
-				i++;
+				int size = m_processors.size();
+				String[] names = new String[size];
+				int i = 0;
+				for (ProcessorDefinition pd : m_processors)
+				{
+					names[i] = pd.getAlias();
+					i++;
+				}
+				m_aliases = new CacheMap<Object>(names);				
 			}
-			m_aliases = new CacheMap<Object>(names);
+			else
+			{
+				String[] names = {""};
+				m_aliases = new CacheMap<Object>(names);
+			}
 		}
 		// Fill map with current aliases
 		m_aliases.putAll(inputs);

@@ -25,6 +25,7 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
+import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
 
@@ -85,7 +86,7 @@ public class ThroughputTest
 			Connector.connect(pt, pt2);
 			pt = pt2;
 		}
-		QueueSink s = new QueueSink();
+		QueueSink s = new QueueSink(1);
 		Connector.connect(pt, s);
 		Queue<Object> q = s.getQueue(0);
 		float start_time = System.nanoTime();
@@ -112,7 +113,7 @@ public class ThroughputTest
 		QueueSource cp = new QueueSource(null, 1);
 		cp.setEvents(events);
 		Window wp = new Window(new CumulativeSum(), 3);
-		QueueSink qs = new QueueSink();
+		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, wp);
 		Connector.connect(wp, qs);
 		Queue<Object> q = qs.getQueue(0);

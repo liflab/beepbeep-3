@@ -42,4 +42,10 @@ public interface Pushable
 	 *   <code>p.push(o1).push(o2)</code>.
 	 */
 	public Pushable push(Object o);
+	
+	/**
+	 * Gets the number of events pushed so far
+	 * @return The number of events
+	 */
+	public int getPushCount();
 }

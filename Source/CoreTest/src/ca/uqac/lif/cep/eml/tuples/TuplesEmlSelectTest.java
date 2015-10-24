@@ -27,9 +27,9 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Combiner;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.epl.CountDecimate;
+import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.QueueSink;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
@@ -329,7 +329,7 @@ public class TuplesEmlSelectTest
 	{
 		Object processor = m_interpreter.parseQuery("THE TUPLES OF FILE \"tuples1.csv\"");
 		assertTrue(processor instanceof TupleFeeder);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		Connector.connect((Processor) processor, sink);
 		NamedTuple recv;
 		// First tuple
@@ -363,7 +363,7 @@ public class TuplesEmlSelectTest
 		StreamReader sr = new StreamReader(stream);
 		TupleFeeder csv = new TupleFeeder();
 		Connector.connect(sr, csv);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		Connector.connect(csv, sink);
 		NamedTuple recv;
 		// First tuple

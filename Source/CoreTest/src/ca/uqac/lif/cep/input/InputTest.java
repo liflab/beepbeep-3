@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.QueueSink;
+import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.util.PackageFileReader;
 import ca.uqac.lif.util.StringUtils;
@@ -30,7 +30,7 @@ public class InputTest
 		StreamReader sr = new StreamReader(stream);
 		CsvFeeder csv = new CsvFeeder();
 		Connector.connect(sr, csv);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		Connector.connect(csv, sink);
 		String recv, expected;
 		sink.pullHard();

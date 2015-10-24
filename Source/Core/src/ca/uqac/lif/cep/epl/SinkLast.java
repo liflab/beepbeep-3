@@ -26,14 +26,23 @@ import java.util.Queue;
  * @author Sylvain Hallé
  *
  */
-class SinkLast extends Sink
+public class SinkLast extends Sink
 {
+	/**
+	 * The last event (or array of events) received 
+	 */
 	protected Object[] m_last;
+	
+	/**
+	 * The number of events received so far
+	 */
+	protected int m_eventCounter;
 	
 	public SinkLast(int in_arity)
 	{
 		super(in_arity);
 		m_last = null;
+		m_eventCounter = 0;
 	}
 	
 	@Override
@@ -41,6 +50,16 @@ class SinkLast extends Sink
 	{
 		super.reset();
 		m_last = null;
+		m_eventCounter = 0;
+	}
+	
+	/**
+	 * Returns the count of events pushed to the sink so far
+	 * @return The count
+	 */
+	public int getPushCount()
+	{
+		return getPushableInput(0).getPushCount();
 	}
 
 	@Override

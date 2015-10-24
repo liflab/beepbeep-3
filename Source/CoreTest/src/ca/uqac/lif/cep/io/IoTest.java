@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.QueueSink;
+import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.util.PackageFileReader;
 import ca.uqac.lif.util.StringUtils;
 
@@ -45,7 +45,7 @@ public class IoTest
 		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		Connector.connect(sr, sink);
 		sr.push();
 		String recv = (String) sink.getQueue(0).remove();

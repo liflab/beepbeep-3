@@ -14,7 +14,7 @@ import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.Function;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.QueueSink;
+import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
@@ -35,7 +35,7 @@ public class MathTest
 	{
 		QueueSource cp = new QueueSource(1, 1);
 		CumulativeSum cs = new CumulativeSum();
-		QueueSink qs = new QueueSink();
+		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, cs);
 		Connector.connect(cs, qs);
 		Queue<Object> q = qs.getQueue(0);
@@ -65,7 +65,7 @@ public class MathTest
 	{
 		QueueSource cp = new QueueSource(1, 1);
 		CumulativeSum cs = new CumulativeSum();
-		QueueSink qs = new QueueSink();
+		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, cs);
 		Connector.connect(cs, qs);
 		Queue<Object> q = qs.getQueue(0);
@@ -105,7 +105,7 @@ public class MathTest
 		QueueSource input2 = new QueueSource(l_input2, 1);
 		Function pow = new Function(new Power());
 		Connector.connect(input1, input2, pow);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		Connector.connect(pow, sink);
 		Number recv;
 		input1.push();
@@ -139,7 +139,7 @@ public class MathTest
 		l_input1.add(3);
 		l_input1.add(2);
 		QueueSource input1 = new QueueSource(l_input1, 1);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		setupStatisticalMoment(input1, sink, 1);
 		Number recv;
 		sink.pull();
@@ -170,7 +170,7 @@ public class MathTest
 		l_input1.add(3);
 		l_input1.add(2);
 		QueueSource input1 = new QueueSource(l_input1, 1);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		setupStatisticalMoment(input1, sink, 1);
 		Number recv;
 		input1.push();
@@ -248,7 +248,7 @@ public class MathTest
 		l_input1.add(0);
 		l_input1.add(6);
 		QueueSource input1 = new QueueSource(l_input1, 1);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		setupSumIfGreater(input1, sink);
 		Number recv;
 		input1.push();
@@ -288,7 +288,7 @@ public class MathTest
 		l_input1.add(0);
 		l_input1.add(6);
 		QueueSource input1 = new QueueSource(l_input1, 1);
-		QueueSink sink = new QueueSink();
+		QueueSink sink = new QueueSink(1);
 		setupSumIfGreater(input1, sink);
 		Number recv;
 		sink.pullHard();

@@ -151,5 +151,11 @@ public interface Pullable
 	 * @return Whether a next event exists
 	 */
 	public NextStatus hasNextHard();
+	
+	/**
+	 * Gets the number of events pulled so far
+	 * @return The number of events
+	 */
+	public int getPullCount();
 
 }
