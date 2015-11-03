@@ -20,6 +20,7 @@ package ca.uqac.lif.cep;
 import static org.junit.Assert.*;
 
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Vector;
 
 import org.junit.Before;
@@ -765,6 +766,27 @@ public class ProcessorTest
 			}
 		}
 		assertTrue(true);
+	}
+	
+	@Test
+	public void testMuxerPush1()
+	{
+		Integer i;
+		Multiplexer mux = new Multiplexer(2);
+		QueueSink qs = new QueueSink(1);
+		Connector.connect(mux, qs);
+		Queue<Object> q = qs.getQueue(0);
+		Pushable push1 = mux.getPushableInput(0);
+		Pushable push2 = mux.getPushableInput(1);
+		push1.push(0);
+		assertTrue(!q.isEmpty());
+		i = (Integer) q.remove();
+		assertEquals(0, i.intValue());
+		push2.push(1);
+		push1.push(2);
+		assertTrue(!q.isEmpty());
+		i = (Integer) q.remove();
+		assertEquals(1, i.intValue());
 	}
 
 }

@@ -162,7 +162,19 @@ public abstract class Processor
 	 * state, this should also reset this state to its "initial" settings
 	 * (whatever that means in your context).
 	 */
-	public abstract void reset();
+	public void reset()
+	{
+		// Reset input
+		for (int i = 0; i < m_inputArity; i++)
+		{
+			m_inputQueues[i].clear();
+		}
+		// Reset output
+		for (int i = 0; i < m_outputArity; i++)
+		{
+			m_outputQueues[i].clear();
+		}
+	}
 
 	/**
 	 * Returns the {@link Pushable} corresponding to the processor's

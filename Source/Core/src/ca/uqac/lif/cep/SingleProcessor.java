@@ -53,21 +53,6 @@ public abstract class SingleProcessor extends Processor
 	}
 
 	@Override
-	public void reset()
-	{
-		// Reset input
-		for (int i = 0; i < m_inputArity; i++)
-		{
-			m_inputQueues[i].clear();
-		}
-		// Reset output
-		for (int i = 0; i < m_outputArity; i++)
-		{
-			m_outputQueues[i].clear();
-		}
-	}
-
-	@Override
 	public final Pushable getPushableInput(int index)
 	{
 		return new InputPushable(index);
