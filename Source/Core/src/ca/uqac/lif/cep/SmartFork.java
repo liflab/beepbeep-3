@@ -245,6 +245,7 @@ public final class SmartFork extends Processor
 		Iterator<Object> it = m_inputEvents.iterator();
 		while (it.hasNext())
 		{
+			it.next(); // Must call next, otherwise can't call remove() later on
 			boolean all_consumed = true;
 			for (int j = 0; j < m_cursors.length; j++)
 			{
