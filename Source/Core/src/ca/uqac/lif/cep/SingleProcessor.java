@@ -253,6 +253,7 @@ public abstract class SingleProcessor extends Processor
 				for (int i = 0; i < m_inputArity; i++)
 				{
 					Pullable p = m_inputPullables[i];
+					assert p != null;
 					NextStatus status = p.hasNextHard();
 					if (status == NextStatus.NO)
 					{

@@ -39,7 +39,7 @@ public class Threshold extends SingleProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		float value = EmlNumber.parseFloat(inputs[0]);
-		if (value > m_threshold)
+		if (Math.abs(value) > m_threshold)
 		{
 			return wrapObject(value);
 		}

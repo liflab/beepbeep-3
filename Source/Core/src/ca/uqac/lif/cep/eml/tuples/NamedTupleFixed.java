@@ -214,7 +214,16 @@ public final class NamedTupleFixed extends NamedTuple
 			{
 				out.append(",");
 			}
-			out.append("(").append(m_names[i]).append(",").append(m_values[i]).append(")");
+			out.append("(").append(m_names[i]).append(",");
+			if (i < m_values.length)
+			{
+				out.append(m_values[i]);
+			}
+			else
+			{
+				out.append("?");
+			}
+			out.append(")");
 		}
 		out.append(")");
 		return out.toString();

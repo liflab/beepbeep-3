@@ -184,7 +184,7 @@ public class PlateauFinder extends WindowProcessor
 			//m_maxValue = 0;
 			//m_minValue = 0;
 		}
-		if (m_relative && ((Number) out_vector[0]).doubleValue() > 0)
+		if (m_relative && ((Number) out_vector[0]).doubleValue() != 0)
 		{
 			Number cur_abs = (Number) out_vector[0];
 			out_vector[0] = cur_abs.doubleValue() - m_lastPlateauFound;

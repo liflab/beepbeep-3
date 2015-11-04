@@ -214,6 +214,7 @@ public final class CacheMap<T> implements Map<String,T>
 	
 	public final void putAll(T[] values)
 	{
+		assert values.length == m_keys.length;
 		m_values = values;
 	}
 

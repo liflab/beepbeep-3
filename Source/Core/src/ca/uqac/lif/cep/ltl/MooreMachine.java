@@ -143,6 +143,7 @@ public class MooreMachine extends SingleProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		List<Transition> transitions = m_relation.get(m_currentState);
+		//System.out.println(inputs[0]);
 		Transition otherwise = null;
 		for (Transition t : transitions)
 		{
