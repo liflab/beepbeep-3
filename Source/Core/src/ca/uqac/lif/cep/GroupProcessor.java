@@ -164,10 +164,26 @@ public class GroupProcessor extends Processor
 	/**
 	 * Adds a processor to the group
 	 * @param p The processor to add
+	 * @return A reference to the current group processor
 	 */
-	public void addProcessor(Processor p)
+	public GroupProcessor addProcessor(Processor p)
 	{
 		m_processors.add(p);
+		return this;
+	}
+
+	/**
+	 * Adds multiple processors to the group
+	 * @param procs The processors to add
+	 * @return A reference to the current group processor
+	 */
+	public GroupProcessor addProcessors(Processor... procs)
+	{
+		for (Processor p : procs)
+		{
+			m_processors.add(p);
+		}
+		return this;
 	}
 	
 	/**
@@ -176,11 +192,13 @@ public class GroupProcessor extends Processor
 	 * @param i The number of the input of the group
 	 * @param p The processor to connect to
 	 * @param j The number of the input of processor <code>p</code>
+	 * @return A reference to the current group processor
 	 */
-	public void associateInput(int i, Processor p, int j)
+	public GroupProcessor associateInput(int i, Processor p, int j)
 	{
 		setPushableInput(i, p.getPushableInput(j));
 		setPullableInputAssociation(i, p, j);
+		return this;
 	}
 	
 	/**
@@ -189,11 +207,13 @@ public class GroupProcessor extends Processor
 	 * @param i The number of the output of the group
 	 * @param p The processor to connect to
 	 * @param j The number of the output of processor <code>p</code>
+	 * @return A reference to the current group processor
 	 */
-	public void associateOutput(int i, Processor p, int j)
+	public GroupProcessor associateOutput(int i, Processor p, int j)
 	{
 		setPullableOutput(i, p.getPullableOutput(j));
 		setPushableOutputAssociation(i, p, j);
+		return this;
 	}
 
 	@Override

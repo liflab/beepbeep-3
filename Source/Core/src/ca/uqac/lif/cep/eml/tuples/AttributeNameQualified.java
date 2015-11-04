@@ -23,18 +23,25 @@ import ca.uqac.lif.util.CacheMap;
 
 public class AttributeNameQualified extends AttributeName
 {
-	protected String m_traceName;
+	protected final String m_traceName;
 	
-	protected String m_attributeName;
+	protected final String m_attributeName;
 	
-	protected int m_attributeIndex = -1;
+	private int m_attributeIndex = -1;
 	
-	protected int m_tupleIndex = -1;
+	private int m_tupleIndex = -1;
 	
 	public AttributeNameQualified(String trace, String attribute)
 	{
 		super();
 		m_traceName = trace;
+		m_attributeName = attribute;
+	}
+	
+	public AttributeNameQualified(String attribute)
+	{
+		super();
+		m_traceName = null;
 		m_attributeName = attribute;
 	}
 

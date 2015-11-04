@@ -70,6 +70,17 @@ public class Select extends SingleProcessor
 		}
 		m_attributeList = al;
 	}
+	
+	public Select(int in_arity, AttributeDefinition... definitions)
+	{
+		this(in_arity);
+		AttributeList al = new AttributeList();
+		for (AttributeDefinition adef : definitions)
+		{
+			al.add(adef);
+		}
+		m_attributeList = al;
+	}
 
 	/**
 	 * Convenience method to set the attributes of the selection
@@ -118,13 +129,14 @@ public class Select extends SingleProcessor
 		stack.push(sel);
 	}
 	
-	public void setProcessor(String name, Processor p)
+	public Select setProcessor(String name, Processor p)
 	{
 		if (m_processors == null)
 		{
 			m_processors = new ProcessorDefinitionList();
 		}
 		m_processors.add(new ProcessorDefinitionAs(name, p));
+		return this;
 	}
 
 	@Override

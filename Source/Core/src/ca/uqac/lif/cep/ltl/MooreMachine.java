@@ -143,19 +143,44 @@ public class MooreMachine extends SingleProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		List<Transition> transitions = m_relation.get(m_currentState);
+		Transition otherwise = null;
 		for (Transition t : transitions)
 		{
-			if (t.isFired(inputs))
+			if (t instanceof TransitionOtherwise)
 			{
-				// This transition fires: move to that state
-				m_currentState = t.getDestination();
-				// Anything to output?
-				if (m_outputSymbols.containsKey(m_currentState))
-				{
-					return wrapVector(m_outputSymbols.get(m_currentState));
-				}
-				break;
+				otherwise = t;
 			}
+			else
+			{
+				if (t.isFired(inputs))
+				{
+					// This transition fires: move to that state
+					return fire(t);
+				}
+			}
+		}
+		if (otherwise != null)
+		{
+			// No "normal" transition has fired, but we have an "otherwise": fire it
+			return fire(otherwise);
+		}
+		// Screwed: no transition defined for this input
+		return null;
+	}
+	
+	/**
+	 * Fires a transition and updates the machine's state
+	 * @param t The transition to fire
+	 * @return Any output symbol associated with the destination state,
+	 *   <code>null</code> otherwise
+	 */
+	protected Queue<Object[]> fire(Transition t)
+	{
+		m_currentState = t.getDestination();
+		// Anything to output?
+		if (m_outputSymbols.containsKey(m_currentState))
+		{
+			return wrapVector(m_outputSymbols.get(m_currentState));
 		}
 		return null;
 	}
@@ -193,6 +218,37 @@ public class MooreMachine extends SingleProcessor
 		public int getDestination()
 		{
 			return 0;
+		}
+	}
+	
+	/**
+	 * Represents the "otherwise" transition in the Moore machine
+	 * @author Sylvain Hallé
+	 *
+	 */
+	public static final class TransitionOtherwise extends Transition
+	{
+		/**
+		 * The destination state of that transition
+		 */
+		private final int m_destination;
+		
+		public TransitionOtherwise(int destination)
+		{
+			super();
+			m_destination = destination;
+		}
+		
+		@Override
+		public boolean isFired(Object[] inputs)
+		{
+			return true;
+		}
+		
+		@Override
+		public int getDestination()
+		{
+			return m_destination;
 		}
 	}
 	

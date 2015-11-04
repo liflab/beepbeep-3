@@ -247,4 +247,22 @@ public final class CacheMap<T> implements Map<String,T>
 		}
 		return l;
 	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append("{");
+		for (int i = 0; i < m_keys.length; i++)
+		{
+			if (i > 0)
+			{
+				out.append(",");
+			}
+			out.append("(\"").append(m_keys[i]).append("\":");
+			out.append(m_values[i]).append(")");
+		}
+		out.append("}");
+		return out.toString();
+	}
 }
