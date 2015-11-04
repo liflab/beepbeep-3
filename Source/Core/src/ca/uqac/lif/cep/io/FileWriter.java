@@ -64,6 +64,11 @@ public class FileWriter extends Sink
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
+		if (inputs == null || inputs[0] == null)
+		{
+			// Don't write anything if the input is null
+			return null;
+		}
 		if (m_append == true)
 		{
 			return append(inputs[0]);
@@ -75,12 +80,9 @@ public class FileWriter extends Sink
 	{
 		try
 		{
-			if (m_outStream != null)
-			{
-				m_outStream.close();
-			}
 			m_outStream = new FileOutputStream(m_file);
-			return append(o);
+			append(o);
+			m_outStream.close();
 		}
 		catch (IOException e)
 		{
