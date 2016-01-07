@@ -138,7 +138,7 @@ public class BeepBeepDriver implements Driver
       return new BeepBeepConnection(url, extractAddress(url), prop);
   }
 
-	@Override
+  	// @Override -- Comment out annotation for Java 1.6 compliance
 	public Logger getParentLogger() throws SQLFeatureNotSupportedException
 	{
 		// TODO Auto-generated method stub

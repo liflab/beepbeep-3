@@ -75,7 +75,7 @@ abstract class EmptyStatement implements Statement
 		
 	}
 
-	@Override
+	// @Override -- Comment out annotation for Java 1.6 compliance
 	public void closeOnCompletion() throws SQLException
 	{
 		// TODO Auto-generated method stub
@@ -253,7 +253,7 @@ abstract class EmptyStatement implements Statement
 		return null;
 	}
 
-	@Override
+	// @Override -- Comment out annotation for Java 1.6 compliance
 	public boolean isCloseOnCompletion() throws SQLException
 	{
 		// TODO Auto-generated method stub
