@@ -475,14 +475,14 @@ class EmptyResultSet implements ResultSet
 		return null;
 	}
 
-	@Override
+	// @Override -- Comment out annotation for Java 1.6 compliance
 	public <T> T getObject(int columnIndex, Class<T> type) throws SQLException
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	// @Override -- Comment out annotation for Java 1.6 compliance
 	public <T> T getObject(String columnLabel, Class<T> type) throws SQLException
 	{
 		// TODO Auto-generated method stub

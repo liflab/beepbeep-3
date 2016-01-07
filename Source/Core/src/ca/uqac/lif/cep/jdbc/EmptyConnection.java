@@ -65,7 +65,7 @@ abstract class EmptyConnection implements java.sql.Connection
 			return null;
 		}
 
-		@Override
+		// @Override -- Comment out annotation for Java 1.6 compliance
 		public void abort(Executor executor) throws SQLException
 		{
 			// TODO Auto-generated method stub
@@ -191,14 +191,14 @@ abstract class EmptyConnection implements java.sql.Connection
 			return null;
 		}
 
-		@Override
+		// @Override -- Comment out annotation for Java 1.6 compliance
 		public int getNetworkTimeout() throws SQLException
 		{
 			// TODO Auto-generated method stub
 			return 0;
 		}
 
-		@Override
+		// @Override -- Comment out annotation for Java 1.6 compliance
 		public String getSchema() throws SQLException
 		{
 			// TODO Auto-generated method stub
@@ -378,7 +378,7 @@ abstract class EmptyConnection implements java.sql.Connection
 			
 		}
 
-		@Override
+		// @Override -- Comment out annotation for Java 1.6 compliance
 		public void setNetworkTimeout(Executor executor, int milliseconds)
 				throws SQLException
 		{
@@ -407,7 +407,7 @@ abstract class EmptyConnection implements java.sql.Connection
 			return null;
 		}
 
-		@Override
+		// @Override -- Comment out annotation for Java 1.6 compliance
 		public void setSchema(String schema) throws SQLException
 		{
 			// TODO Auto-generated method stub
