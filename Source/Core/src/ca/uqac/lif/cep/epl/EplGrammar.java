@@ -15,45 +15,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.epl;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import ca.uqac.lif.cep.interpreter.GrammarExtension;
 
-public abstract class Accumulator extends SingleProcessor
+public class EplGrammar extends GrammarExtension
 {
-	protected List<Object> m_window;
-	
-	protected final int m_width;
-	
-	public Accumulator()
+	public EplGrammar()
 	{
-		this(5);
+		super(EplGrammar.class);
 	}
 	
-	public Accumulator(int width)
-	{
-		super(1, 1);
-		m_width = width;
-		m_window = new LinkedList<Object>();
-	}
-
 	@Override
-	protected final Queue<Object[]> compute(Object[] inputs)
+	public String getMessage()
 	{
-		if (m_window.size() == m_width)
-		{
-			m_window.remove(0);
-		}
-		m_window.add(inputs[0]);
-		if (m_window.size() == m_width)
-		{
-			return computeWindow(m_window.toArray());
-		}
-		return null;
+		return "EPL extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
 	}
-	
-	protected abstract Queue<Object[]> computeWindow(Object[] window);
-
 }

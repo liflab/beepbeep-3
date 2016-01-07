@@ -28,7 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Queue;
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Source;
+import ca.uqac.lif.cep.epl.Source;
 
 /**
  * Reads chunks of data from an input source.

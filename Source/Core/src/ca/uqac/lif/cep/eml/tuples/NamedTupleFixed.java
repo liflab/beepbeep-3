@@ -202,5 +202,31 @@ public final class NamedTupleFixed extends NamedTuple
 	{
 		return wrapObject(this);
 	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append("(");
+		for (int i = 0; i < m_names.length; i++)
+		{
+			if (i > 0)
+			{
+				out.append(",");
+			}
+			out.append("(").append(m_names[i]).append(",");
+			if (i < m_values.length)
+			{
+				out.append(m_values[i]);
+			}
+			else
+			{
+				out.append("?");
+			}
+			out.append(")");
+		}
+		out.append(")");
+		return out.toString();
+	}
 
 }

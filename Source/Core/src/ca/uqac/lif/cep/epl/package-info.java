@@ -15,44 +15,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
-
-import java.util.Queue;
-import java.util.Stack;
 
 /**
- * Discards events from an input trace based on a selection criterion.
- * The processor takes as input two events simultaneously; it outputs
- * the first if the second is true.
- * @author sylvain
- *
+ * Processors to manipulate traces of generic events. This includes
+ * delaying, discarding, freezing, multiplexing and demultiplexing, 
+ * and applying a sliding window, among other things.
+ * 
+ * @author Sylvain Hallé
  */
-public class Filter extends SingleProcessor
-{
-	public Filter()
-	{
-		super(2, 1);
-	}
-
-	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
-	{
-		Object o = inputs[0];
-		Object[] out = new Object[1];
-		boolean b = (Boolean) inputs[inputs.length - 1];
-		if (b)
-		{
-			out[0] = o;
-		}
-		else
-		{
-			out[0] = null;
-		}
-		return wrapVector(out);
-	}
-
-	public static void build(Stack<Object> stack)
-	{
-		// TODO
-	}
-}
+package ca.uqac.lif.cep.epl;

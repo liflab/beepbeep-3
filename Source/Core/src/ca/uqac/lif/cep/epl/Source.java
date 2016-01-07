@@ -15,10 +15,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.epl;
 
 import java.util.Queue;
 
+import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SingleProcessor;
+
+/**
+ * Produces output events from no input. In other words, a source is a
+ * processor with input arity 0. It is the opposite of the {@link Sink}.
+ * <p>
+ * While a source has no input <em>trace</em>, this does not mean it has
+ * not input at all. For example, a processor reading from a file and creating
+ * events out of the file's content is an example of a source. It does not
+ * receive events as input, yet creates output events from something external
+ * to it.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public abstract class Source extends SingleProcessor
 {
 	public Source(int out_arity)

@@ -15,46 +15,44 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.epl;
 
-public abstract class Sink extends SingleProcessor
-{
-	public Sink()
+import java.util.Queue;
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor;
+
+/**
+ * Returns the first <i>n</i> input events and discards the following ones.
+ * 
+ * @author Sylvain Hallé
+ */
+public class Prefix extends Delay
+{	
+	public Prefix(int k)
 	{
-		this(0);
+		super(k);
 	}
 	
-	public Sink(int in_arity)
+	@Override
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		super(in_arity, 0);
-	}
-
-	/**
-	 * Tells the sink to pull events from the pipeline
-	 */
-	public final void pull()
-	{
-		Object[] inputs = new Object[getInputArity()];
-		for (int i = 0; i < getInputArity(); i++)
+		m_eventsReceived++;
+		if (m_eventsReceived < m_delay)
 		{
-			Pullable p = m_inputPullables[i];
-			inputs[i] = p.pull();
+			return wrapVector(inputs);
 		}
-		compute(inputs);
+		return null;
 	}
 	
-	/**
-	 * Tells the sink to pull events from the pipeline
-	 */
-	public final void pullHard()
+	public static void build(Stack<Object> stack)
 	{
-		Object[] inputs = new Object[getInputArity()];
-		for (int i = 0; i < getInputArity(); i++)
-		{
-			Pullable p = m_inputPullables[i];
-			inputs[i] = p.pullHard();
-		}
-		compute(inputs);
+		Processor p = (Processor) stack.pop();
+		stack.pop(); // OF
+		Number interval = (Number) stack.pop();
+		Prefix out = new Prefix(interval.intValue());
+		Connector.connect(p, out);
+		stack.push(out);
 	}
-
 }

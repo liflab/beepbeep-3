@@ -22,10 +22,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.CountDecimate;
-import ca.uqac.lif.cep.Freeze;
+import ca.uqac.lif.cep.epl.CountDecimate;
+import ca.uqac.lif.cep.epl.Freeze;
+import ca.uqac.lif.cep.Placeholder;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.Window;
+import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.eml.numbers.EmlNumber;
 import ca.uqac.lif.cep.eml.numbers.NumberGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
@@ -91,5 +92,14 @@ public class InterpreterExtensionTest
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof HttpReader);
+	}
+	
+	@Test
+	public void testPlaceholder() throws ParseException
+	{
+		String expression = "*";
+		Object result = m_interpreter.parseQuery(expression);
+		assertNotNull(result);
+		assertTrue(result instanceof Placeholder);
 	}
 }

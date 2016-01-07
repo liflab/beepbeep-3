@@ -75,13 +75,15 @@ public abstract class GnuplotProcessor extends SingleProcessor
 	/**
 	 * Sets the graph's title.
 	 * @param title The title
+	 * @return An instance of this GnuPlot object
 	 */
-	public void setTitle(String title)
+	public GnuplotProcessor setTitle(String title)
 	{
 		if (title != null)
 		{
 			m_title = title;
 		}
+		return this;
 	}
 	
 	/**

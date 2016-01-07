@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.QueueSink;
+import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.util.PackageFileReader;
 import ca.uqac.lif.util.StringUtils;

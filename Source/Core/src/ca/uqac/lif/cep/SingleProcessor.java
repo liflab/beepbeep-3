@@ -20,6 +20,26 @@ package ca.uqac.lif.cep;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+/**
+ * Performs a computation on input events to produce output events.
+ * <p>
+ * This is the direct descendant of {@link Processor}, and probably the one
+ * you'll want to inherit from when creating your own processors. While
+ * {@link Processor} takes care of input and output queues,
+ * {@link SingleProcessor} also implements {@link Pullable}s and
+ * {@link Pushable}s. These take care of collecting input events, waiting
+ * until one new event is received from all input traces before triggering
+ * the computation, pulling and buffering events from all outputs when
+ * either of the {@link Pullable}s is being called, etc.
+ * <p>
+ * The only thing that is left undefined is what to do
+ * when new input events have been received from all input traces. This
+ * is the task of abstract method {@link #compute(Object[])}, which descendants
+ * of this class must implement.
+ *   
+ * @author Sylvain Hallé
+ *
+ */
 public abstract class SingleProcessor extends Processor
 {
 	/**
@@ -30,29 +50,6 @@ public abstract class SingleProcessor extends Processor
 	public SingleProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
-	}
-	
-	protected final void resetInput()
-	{
-		for (int i = 0; i < m_inputArity; i++)
-		{
-			m_inputQueues[i].clear();
-		}
-	}
-
-	protected final void resetOutput()
-	{
-		for (int i = 0; i < m_outputArity; i++)
-		{
-			m_outputQueues[i].clear();
-		}
-	}
-
-	@Override
-	public void reset()
-	{
-		resetInput();
-		resetOutput();
 	}
 
 	@Override
@@ -80,24 +77,52 @@ public abstract class SingleProcessor extends Processor
 	 */
 	protected abstract Queue<Object[]> compute(Object[] inputs);
 
+	/**
+	 * Implementation of a {@link Pushable} for a single processor.
+	 * 
+	 * @author Sylvain Hallé
+	 */
 	protected class InputPushable implements Pushable
 	{
 		/**
 		 * The index of the processor's input this pushable refers to
 		 */
-		protected final int m_index;
+		private final int m_index;
+		
+		/**
+		 * The number of events pushed so far
+		 */
+		private int m_pushCount;
 
+		/**
+		 * Creates a pushable associated to some of a processor's input
+		 * traces. 
+		 * @param index The index of the trace. Should be between 0 and
+		 *   the processor's input arity - 1. This is not checked by the
+		 *   constructor, so beware.
+		 */
 		InputPushable(int index)
 		{
 			super();
 			m_index = index;
+			m_pushCount = 0;
+		}
+		
+		@Override
+		public int getPushCount()
+		{
+			return m_pushCount;
 		}
 
 		@Override
-		public void push(Object o)
+		public Pushable push(Object o)
 		{
-			Queue<Object> q = m_inputQueues[m_index];
-			q.add(o);
+			m_pushCount++;
+			if (m_index < m_inputQueues.length)
+			{
+				Queue<Object> q = m_inputQueues[m_index];
+				q.add(o);
+			}
 			// Check if each input queue has an event ready
 			for (int i = 0; i < m_inputArity; i++)
 			{
@@ -105,7 +130,7 @@ public abstract class SingleProcessor extends Processor
 				if (queue.isEmpty())
 				{
 					// One of them doesn't: we can't produce an output yet
-					return;
+					return this;
 				}
 			}
 			// Pick an event from each input queue
@@ -133,20 +158,45 @@ public abstract class SingleProcessor extends Processor
 					}
 				}
 			}
+			return this;
 		}
 	}
 
+	/**
+	 * Implementation of a {@link Pullable} for a single processor.
+	 * 
+	 * @author Sylvain Hallé
+	 */
 	protected class OutputPullable implements Pullable
 	{
 		/**
 		 * The index of the processor's output this pullable refers to
 		 */
-		protected final int m_index;
+		private final int m_index;
+		
+		/**
+		 * The number of events pulled so far
+		 */
+		private int m_pullCount;
 
+		/**
+		 * Creates a pullable associated to some of a processor's output
+		 * traces. 
+		 * @param index The index of the trace. Should be between 0 and
+		 *   the processor's output arity - 1. This is not checked by the
+		 *   constructor, so beware.
+		 */
 		public OutputPullable(int index)
 		{
 			super();
 			m_index = index;
+			m_pullCount = 0;
+		}
+
+		@Override
+		public int getPullCount()
+		{
+			return m_pullCount;
 		}
 
 		@Override
@@ -162,6 +212,7 @@ public abstract class SingleProcessor extends Processor
 			if (!out_queue.isEmpty())
 			{
 				Object o = out_queue.remove();
+				m_pullCount++;
 				return o;
 			}
 			return null;
@@ -180,11 +231,13 @@ public abstract class SingleProcessor extends Processor
 			if (!out_queue.isEmpty())
 			{
 				Object o = out_queue.remove();
+				m_pullCount++;
 				return o;
 			}
 			return null;
 		}
 
+		@Override
 		public NextStatus hasNextHard()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
@@ -195,11 +248,12 @@ public abstract class SingleProcessor extends Processor
 				return NextStatus.YES;
 			}
 			// Check if each pullable has an event ready
-			for (long tries = 0; tries < Pullable.s_maxRetries; tries++)
+			for (int tries = 0; tries < Pullable.s_maxRetries; tries++)
 			{
 				for (int i = 0; i < m_inputArity; i++)
 				{
 					Pullable p = m_inputPullables[i];
+					assert p != null;
 					NextStatus status = p.hasNextHard();
 					if (status == NextStatus.NO)
 					{
@@ -272,7 +326,7 @@ public abstract class SingleProcessor extends Processor
 			// Pull an event from each
 			Object[] inputs = new Object[m_inputArity];
 			{
-				short i = 0;
+				int i = 0;
 				for (Pullable p : m_inputPullables)
 				{
 					inputs[i] = p.pull();
@@ -290,7 +344,7 @@ public abstract class SingleProcessor extends Processor
 					{
 						// We computed an output event; add it to the output queue
 						// and answer YES
-						short i = 0;
+						int i = 0;
 						for (Queue<Object> queue : m_outputQueues)
 						{
 							queue.add(evt[i]);
@@ -304,6 +358,16 @@ public abstract class SingleProcessor extends Processor
 		}
 	}
 	
+	/**
+	 * Puts an array of objects (given as an argument) into an
+	 * empty queue of arrays of objects. This is a convenience method
+	 * that descendants of {@link SingleProcessor} (which implement
+	 * {@link #compute(Object[])}) can use to avoid
+	 * a few lines of code when they output a single array of events. 
+	 * @param v The array of objects
+	 * @return The queue, or <code>null</code> if all elements of
+	 *   <code>v</code> are null
+	 */
 	protected static final Queue<Object[]> wrapVector(Object[] v)
 	{
 		if (v == null || allNull(v))
@@ -315,6 +379,15 @@ public abstract class SingleProcessor extends Processor
 		return out;
 	}
 	
+	/**
+	 * Puts a object (given as an argument) into an
+	 * empty queue of arrays of objects. This is a convenience method
+	 * that descendants of {@link SingleProcessor} (which implement
+	 * {@link #compute(Object[])}) can use to avoid
+	 * a few lines of code when they output a single event. 
+	 * @param o The object
+	 * @return The queue
+	 */
 	protected static final Queue<Object[]> wrapObject(Object o)
 	{
 		Queue<Object[]> out = new ArrayDeque<Object[]>();

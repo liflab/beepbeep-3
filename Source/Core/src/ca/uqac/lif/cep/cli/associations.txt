@@ -1,0 +1,5 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+<p_print>,ca.uqac.lif.cep.cli.Print

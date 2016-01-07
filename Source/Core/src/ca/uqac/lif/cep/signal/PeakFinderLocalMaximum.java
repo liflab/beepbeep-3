@@ -60,7 +60,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 	 * The number of events that went out of the window since the last
 	 * peak was seen.
 	 */
-	protected long m_numSincePeak;
+	protected int m_numSincePeak;
 	
 	public PeakFinderLocalMaximum()
 	{
@@ -127,7 +127,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 			{
 				// The peak has moved out of the window.
 				// First, say that all events prior to this one were not peaks
-				for (long i = 0; i < m_numSincePeak - 1; i++)
+				for (int i = 0; i < m_numSincePeak - 1; i++)
 				{
 					Object[] out_vector = new Object[1];
 					out_vector[0] = 0;

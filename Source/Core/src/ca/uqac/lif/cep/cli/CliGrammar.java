@@ -15,36 +15,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.cli;
 
-import java.util.Queue;
-import java.util.Stack;
+import ca.uqac.lif.cep.interpreter.GrammarExtension;
 
-public class Prefix extends Delay
-{	
-	public Prefix(int k)
+public class CliGrammar extends GrammarExtension
+{
+	public CliGrammar()
 	{
-		super(k);
+		super(CliGrammar.class);
 	}
 	
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	public String getMessage()
 	{
-		m_eventsReceived++;
-		if (m_eventsReceived < m_delay)
-		{
-			return wrapVector(inputs);
-		}
-		return null;
-	}
-	
-	public static void build(Stack<Object> stack)
-	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // OF
-		Number interval = (Number) stack.pop();
-		Prefix out = new Prefix(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
+		return "CLI extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
 	}
 }

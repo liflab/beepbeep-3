@@ -57,11 +57,40 @@ public class PlateauFinder extends WindowProcessor
 	 */
 	protected boolean m_plateauFound;
 	
+	/**
+	 * Whether the height of the plateau should be relative to that of the
+	 * last plateau (<code>true</code>), or absolute (<code>false</code>)
+	 */
+	protected boolean m_relative;
+	
+	/**
+	 * The value of the last plateau found. Remembering this value is
+	 * necessary if the finder is set to "relative" mode 
+	 * @see #setRelative(boolean)
+	 */
+	protected double m_lastPlateauFound;
+	
+	/**
+	 * Instantiates a plateau finder with default settings
+	 */
 	public PlateauFinder()
 	{
 		super();
 		m_range = 5;
 		m_plateauFound = false;
+		m_lastPlateauFound = 0;
+	}
+	
+	/**
+	 * Sets whether the height of the plateau should be relative to that of the
+	 * last plateau (<code>true</code>), or absolute (<code>false</code>)
+	 * @param relative See above
+	 * @return A reference to the current plateau finder
+	 */
+	public PlateauFinder setRelative(boolean relative)
+	{
+		m_relative = relative;
+		return this;
 	}
 	
 	@Override
@@ -71,9 +100,16 @@ public class PlateauFinder extends WindowProcessor
 		m_plateauFound = false;
 	}	
 	
-	public void setPlateauRange(int range)
+	/**
+	 * Sets the range all values should lie in to be considered in the
+	 * same plateau
+	 * @param range The range
+	 * @return A reference to the current plateau finder
+	 */
+	public PlateauFinder setPlateauRange(int range)
 	{
 		m_range = range;
+		return this;
 	}
 
 	@Override
@@ -147,6 +183,12 @@ public class PlateauFinder extends WindowProcessor
 			//m_values.clear();
 			//m_maxValue = 0;
 			//m_minValue = 0;
+		}
+		if (m_relative && ((Number) out_vector[0]).doubleValue() != 0)
+		{
+			Number cur_abs = (Number) out_vector[0];
+			out_vector[0] = cur_abs.doubleValue() - m_lastPlateauFound;
+			m_lastPlateauFound = cur_abs.doubleValue();
 		}
 		return wrapVector(out_vector);
 	}

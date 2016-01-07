@@ -15,43 +15,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
 
-import java.util.Queue;
-import java.util.Stack;
-
-public class Freeze extends SingleProcessor
-{
-	protected Object[] m_output;
-	
-	public Freeze()
-	{
-		super(1, 1);
-	}
-	
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_output = null;
-	}
-
-	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
-	{
-		if (m_output == null)
-		{
-			m_output = inputs;
-		}
-		return wrapVector(m_output);
-	}
-	
-	public static void build(Stack<Object> stack)
-	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // FREEZE
-		Freeze out = new Freeze();
-		Connector.connect(p, out);
-		stack.push(out);
-	}
-}
+/**
+ * Rudimentary interactive command-line interpreter for BeepBeep 3.
+ * 
+ * @author Sylvain Hallé
+ */
+package ca.uqac.lif.cep.cli;

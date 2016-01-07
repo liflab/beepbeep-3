@@ -20,8 +20,11 @@ package ca.uqac.lif.cep;
 import java.util.Queue;
 
 /**
- * The passthrough processor returns its input as its output
- * @author sylvain
+ * Returns its input as its output. Although it seems useless,
+ * <code>Passthrough</code> is used internally by the ESQL interpreter as
+ * a placeholder when building processor chains from an expression.
+ *  
+ * @author Sylvain Hallé
  *
  */
 public class Passthrough extends SingleProcessor

@@ -15,20 +15,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.epl;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.Vector;
 
 /**
- * Sink that accumulates events into queues
- * @author sylvain
+ * Sink that accumulates events into queues.
+ * 
+ * @author Sylvain Hallé
  *
  */
 public class QueueSink extends Sink
 {
-	protected Vector<Queue<Object>> m_queues;
+	protected Queue<Object>[] m_queues;
 	
 	public QueueSink(int in_arity)
 	{
@@ -36,15 +36,16 @@ public class QueueSink extends Sink
 		reset();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void reset()
 	{
 		super.reset();
 		int arity = getInputArity();
-		m_queues = new Vector<Queue<Object>>();
+		m_queues = new Queue[arity];
 		for (int i = 0; i < arity; i++)
 		{
-			m_queues.add(new ArrayDeque<Object>());
+			m_queues[i] = new ArrayDeque<Object>();
 		}
 
 	}
@@ -52,20 +53,20 @@ public class QueueSink extends Sink
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		for (int i = 0; i < m_queues.size(); i++)
+		for (int i = 0; i < m_queues.length; i++)
 		{
-			Queue<Object> q = m_queues.get(i);
+			Queue<Object> q = m_queues[i];
 			if (inputs[i] != null)
 			{
 				q.add(inputs[i]);
 			}
 		}
-		return wrapVector(new Object[m_queues.size()]);
+		return wrapVector(new Object[m_queues.length]);
 	}
 	
 	public Queue<Object> getQueue(int i)
 	{
-		return m_queues.get(i);
+		return m_queues[i];
 	}
 	
 	/**
@@ -74,11 +75,10 @@ public class QueueSink extends Sink
 	 */
 	public Object[] remove()
 	{
-		int num_queues = m_queues.size();
-		Object[] out = new Object[num_queues];
-		for (int i = 0; i < num_queues; i++)
+		Object[] out = new Object[m_queues.length];
+		for (int i = 0; i < m_queues.length; i++)
 		{
-			Queue<Object> q = m_queues.get(i);
+			Queue<Object> q = m_queues[i];
 			if (q.isEmpty())
 			{
 				out[i] = null;

@@ -25,6 +25,11 @@ import org.junit.Test;
  */
 public class InterpreterTestFrontEnd extends Interpreter 
 {
+	public InterpreterTestFrontEnd()
+	{
+		super();
+	}
+	
 	@Override
 	public Object parseLanguage(String property, String start_symbol) throws ParseException
 	{

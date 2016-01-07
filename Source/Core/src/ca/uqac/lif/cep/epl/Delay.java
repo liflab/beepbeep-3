@@ -15,11 +15,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.epl;
 
 import java.util.Queue;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
+
+/**
+ * Discards the first <i>n</i> events of the input, and outputs
+ * the remaining ones.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public class Delay extends SingleProcessor
 {
 	/**
@@ -32,6 +43,10 @@ public class Delay extends SingleProcessor
 	 */
 	protected int m_eventsReceived;
 	
+	/**
+	 * Creates a new delay processor.
+	 * @param delay The number of events from the input trace to discard
+	 */
 	public Delay(int delay)
 	{
 		super(1, 1);

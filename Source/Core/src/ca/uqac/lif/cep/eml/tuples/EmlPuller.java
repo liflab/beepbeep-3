@@ -122,6 +122,12 @@ public class EmlPuller
 		{
 			return m_pullable.hasNextHard();
 		}
+
+		@Override
+		public int getPullCount()
+		{
+			return m_pullable.getPullCount();
+		}
 		
 	}
 }

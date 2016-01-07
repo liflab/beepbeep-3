@@ -19,6 +19,12 @@ package ca.uqac.lif.cep;
 
 import java.util.Stack;
 
+/**
+ * Placeholder used to symbolize the output of some processor. This is used
+ * only for parsing of ESQL expressions and should not be very useful to you.
+ * 
+ * @author Sylvain Hallé
+ */
 public final class Placeholder extends Passthrough
 {
 	public Placeholder()

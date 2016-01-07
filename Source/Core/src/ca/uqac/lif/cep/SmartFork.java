@@ -22,14 +22,27 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Duplicates an input event into two or more output events
- * @author sylvain
+ * Duplicates an input event into two or more output traces. Contrarily to
+ * the {@link Fork}, the "smart" fork assumes an input arity of 1, and uses
+ * that to optimize the internal buffering of input events into the output
+ * queues. (Events are kept into a single queue, rather than be copied into
+ * <i>n</i> output queues.) For input arity 1, this object is preferred over
+ * {@link Fork}, as it otherwise behaves in exactly the same way.
+ * 
+ * @author Sylvain Hallé
  *
  */
 public final class SmartFork extends Processor
 {
+	/**
+	 * The buffer of input events
+	 */
 	private List<Object> m_inputEvents;
 	
+	/**
+	 * A set of cursors, i.e. pointers to the input buffer. For a fork of
+	 * output arity <i>n</i>, there are <i>n</i> cursors.
+	 */
 	protected int[] m_cursors;
 	
 	/**
@@ -44,6 +57,10 @@ public final class SmartFork extends Processor
 	 */
 	protected int m_timeSinceLastClean;
 	
+	/**
+	 * Instantiates a fork.
+	 * @param out_arity The fork's output arity
+	 */
 	public SmartFork(int out_arity)
 	{
 		super(1, out_arity);
@@ -53,7 +70,7 @@ public final class SmartFork extends Processor
 	}
 	
 	/**
-	 * Create a fork by extending the arity of another fork
+	 * Creates a fork by extending the arity of another fork
 	 * @param out_arity The output arity of the fork
 	 * @param reference The fork to copy from
 	 */
@@ -96,23 +113,38 @@ public final class SmartFork extends Processor
 	
 	protected class QueuePushable implements Pushable
 	{
+		private int m_pushCount;
+		
 		public QueuePushable()
 		{
 			super();
+			m_pushCount = 0;
 		}
 
 		@Override
-		public void push(Object o)
+		public Pushable push(Object o)
 		{
 			// Just push the event directly to the output pushables
 			for (int i = 0; i < m_outputPushables.length; i++)
 			{
 				m_outputPushables[i].push(o);
 			}
+			m_pushCount++;
 			incrementClean();
+			return this;
+		}
+
+		@Override
+		public int getPushCount()
+		{
+			return m_pushCount;
 		}
 	}
 	
+	/**
+	 * Increments the clean counter, which is used to decide when to
+	 * perform a clean-up of the input buffer 
+	 */
 	protected void incrementClean()
 	{
 		m_timeSinceLastClean = (m_timeSinceLastClean + 1) % s_cleanInterval;
@@ -124,12 +156,21 @@ public final class SmartFork extends Processor
 	
 	protected class QueuePullable implements Pullable
 	{
-		protected int m_queueIndex;
+		private int m_queueIndex;
+		
+		private int m_pullCount;
 		
 		public QueuePullable(int index)
 		{
 			super();
 			m_queueIndex = index;
+			m_pullCount = 0;
+		}
+		
+		@Override
+		public int getPullCount()
+		{
+			return m_pullCount;
 		}
 
 		@Override
@@ -148,6 +189,7 @@ public final class SmartFork extends Processor
 			{
 				out = m_inputEvents.get(m_cursors[m_queueIndex]);
 				m_cursors[m_queueIndex]++;
+				m_pullCount++;
 			}
 			incrementClean();
 			return out;
@@ -203,6 +245,7 @@ public final class SmartFork extends Processor
 		Iterator<Object> it = m_inputEvents.iterator();
 		while (it.hasNext())
 		{
+			it.next(); // Must call next, otherwise can't call remove() later on
 			boolean all_consumed = true;
 			for (int j = 0; j < m_cursors.length; j++)
 			{

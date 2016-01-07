@@ -15,65 +15,46 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.epl;
 
 import java.util.Queue;
 import java.util.Stack;
 
-public class CountDecimate extends SingleProcessor
+import ca.uqac.lif.cep.SingleProcessor;
+
+/**
+ * Discards events from an input trace based on a selection criterion.
+ * The processor takes as input two events simultaneously; it outputs
+ * the first if the second is true.
+ * 
+ * @author Sylvain Hallé
+ */
+public class Filter extends SingleProcessor
 {
-	/**
-	 * The decimation interval
-	 */
-	protected final int m_interval;
-	
-	/**
-	 * Index of last event received
-	 */
-	protected int m_current;
-	
-	public CountDecimate()
+	public Filter()
 	{
-		this(1);
-	}
-	
-	public CountDecimate(int interval)
-	{
-		super(1, 1);
-		m_interval = interval;
-		m_current = 0;
-	}
-	
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_current = 0;
+		super(2, 1);
 	}
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Object[] out = null;
-		if (m_current == 0)
+		Object o = inputs[0];
+		Object[] out = new Object[1];
+		boolean b = (Boolean) inputs[inputs.length - 1];
+		if (b)
 		{
-			out = inputs;
+			out[0] = o;
 		}
-		m_current = (m_current + 1) % m_interval;
+		else
+		{
+			out[0] = null;
+		}
 		return wrapVector(out);
 	}
-	
+
 	public static void build(Stack<Object> stack)
 	{
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // OF
-		stack.pop(); // TH
-		Number interval = (Number) stack.pop();
-		stack.pop(); // EVERY
-		CountDecimate out = new CountDecimate(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
+		// TODO
 	}
 }

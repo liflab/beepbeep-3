@@ -58,10 +58,34 @@ public class Select extends SingleProcessor
 		this(in_arity);
 		setAttributeList(attributes);
 	}
+	
+	public Select(int in_arity, AttributeExpression ... expressions)
+	{
+		this(in_arity);
+		AttributeList al = new AttributeList();
+		for (AttributeExpression aexp : expressions)
+		{
+			AttributeDefinition adef = new AttributeDefinitionPlain(aexp);
+			al.add(adef);
+		}
+		m_attributeList = al;
+	}
+	
+	public Select(int in_arity, AttributeDefinition... definitions)
+	{
+		this(in_arity);
+		AttributeList al = new AttributeList();
+		for (AttributeDefinition adef : definitions)
+		{
+			al.add(adef);
+		}
+		m_attributeList = al;
+	}
 
 	/**
 	 * Convenience method to set the attributes of the selection
-	 * @param attributes
+	 * @param attributes An array of strings, containing the names of the
+	 *   tuple's attributes one wishes to select
 	 */
 	protected void setAttributeList(String[] attributes)
 	{
@@ -105,13 +129,14 @@ public class Select extends SingleProcessor
 		stack.push(sel);
 	}
 	
-	public void setProcessor(String name, Processor p)
+	public Select setProcessor(String name, Processor p)
 	{
 		if (m_processors == null)
 		{
 			m_processors = new ProcessorDefinitionList();
 		}
 		m_processors.add(new ProcessorDefinitionAs(name, p));
+		return this;
 	}
 
 	@Override
@@ -121,15 +146,23 @@ public class Select extends SingleProcessor
 		{
 			// This is the first time we call compute; fetch the alias names 
 			// and instantiate the map with those names
-			int size = m_processors.size();
-			String[] names = new String[size];
-			int i = 0;
-			for (ProcessorDefinition pd : m_processors)
+			if (m_processors != null)
 			{
-				names[i] = pd.getAlias();
-				i++;
+				int size = m_processors.size();
+				String[] names = new String[size];
+				int i = 0;
+				for (ProcessorDefinition pd : m_processors)
+				{
+					names[i] = pd.getAlias();
+					i++;
+				}
+				m_aliases = new CacheMap<Object>(names);				
 			}
-			m_aliases = new CacheMap<Object>(names);
+			else
+			{
+				String[] names = {""};
+				m_aliases = new CacheMap<Object>(names);
+			}
 		}
 		// Fill map with current aliases
 		m_aliases.putAll(inputs);

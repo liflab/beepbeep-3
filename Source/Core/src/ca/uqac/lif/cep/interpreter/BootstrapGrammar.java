@@ -15,50 +15,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.interpreter;
 
-import java.util.Queue;
+import ca.uqac.lif.cep.interpreter.GrammarExtension;
 
-/**
- * Sink that remembers only the last event sent to it
- * @author Sylvain Hallé
- *
- */
-class SinkLast extends Sink
+public class BootstrapGrammar extends GrammarExtension
 {
-	protected Object[] m_last;
-	
-	public SinkLast(int in_arity)
+	public BootstrapGrammar()
 	{
-		super(in_arity);
-		m_last = null;
+		super(BootstrapGrammar.class);
 	}
 	
 	@Override
-	public void reset()
+	public String getMessage()
 	{
-		super.reset();
-		m_last = null;
-	}
-
-	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
-	{
-		m_last = inputs;
-		return null;
-	}
-	
-	public Object[] getLast()
-	{
-		return m_last;
-	}
-	
-	public Object getQueue(int i)
-	{
-		if (m_last == null)
-		{
-			return null;
-		}
-		return m_last[i];
+		return "Bootstrap grammar\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
 	}
 }

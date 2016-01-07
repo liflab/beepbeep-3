@@ -27,19 +27,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 
-import ca.uqac.lif.cep.Source;
+import ca.uqac.lif.cep.epl.Source;
 
 /**
- * Converts a query to a MySQL database into a trace of named tuples. 
+ * Converts a query to a MySQL database into a trace of named tuples.
+ * <p>
+ * Currently, this processor uses the MySQL JDBC driver. This could be
+ * changed to use other drivers.
  */
 public class MySqlSource extends Source 
 {
+	/**
+	 * The name of the database table to read from. Actually, this does not need
+	 * to be a table name, as any SQL expression that returns a table (e.g.
+	 * a <code>SELECT</code> statement) can do.
+	 */
 	protected final String m_tableName;
 
+	/**
+	 * The name of the database to read from
+	 */
 	protected final String m_databaseName;
 
+	/**
+	 * The URL string of the JDBC driver to use. Could be changed to other
+	 * drivers than MySQL, eventually.
+	 */
 	protected static final String s_jdbcDriver = "com.mysql.jdbc.Driver";  
 
 	/**
@@ -52,13 +66,25 @@ public class MySqlSource extends Source
 	 */
 	protected final String m_password;
 	
-	protected Connection conn = null;
-	protected Statement stmt = null;
-	protected ResultSet rs = null; 
+	/**
+	 * The database connection object
+	 */
+	protected Connection m_connection = null;
+	
+	/**
+	 * The statement object corresponding to the SQL query being executed 
+	 */
+	protected Statement m_statement = null;
+	
+	/**
+	 * The query's result set, out of which tuples will be extracted one
+	 * by one
+	 */
+	protected ResultSet m_resultSet = null; 
 
 	/**
 	 * Whether the tuples of the underlying relation should be output
-	 * one by one on every call to {@link #compute(Vector)}, or
+	 * one by one on every call to {@link #compute(Object[])}, or
 	 * output all at once on the first call to that method.
 	 */
 	protected boolean m_feedOneByOne;
@@ -68,7 +94,8 @@ public class MySqlSource extends Source
 	 * @param username The username used to connect to the database
 	 * @param password The password used to connect to the database
 	 * @param dbname The database name to be read from
-	 * @param tablename The name of the table to be read from. Actually, this does not need
+	 * @param tablename The name of the table to be read from. Actually, this
+	 *   does not need
 	 * to be a table name, as any SQL expression that returns a table (e.g.
 	 * a <code>SELECT</code> statement) can do.
 	 */
@@ -84,7 +111,7 @@ public class MySqlSource extends Source
 
 	/**
 	 * Sets whether the tuples of the underlying relation should be output
-	 * one by one on every call to {@link #compute(Vector)}, or
+	 * one by one on every call to {@link #compute(Object[])}, or
 	 * output all at once on the first call to that method. While this
 	 * has no effect on the end result, it might have an impact on the
 	 * performance (e.g. if the source outputs a very large number of
@@ -100,15 +127,15 @@ public class MySqlSource extends Source
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		if (conn == null)
+		if (m_connection == null)
 		{
 			// First connect to the database
 			String db_url = "jdbc:mysql://localhost/" + m_databaseName;
 			try 
 			{
-				conn = DriverManager.getConnection(db_url, m_username, m_password);
-				stmt = conn.createStatement();
-			    rs = stmt.executeQuery(m_tableName);
+				m_connection = DriverManager.getConnection(db_url, m_username, m_password);
+				m_statement = m_connection.createStatement();
+			    m_resultSet = m_statement.executeQuery(m_tableName);
 			} 
 			catch (SQLException e) 
 			{
@@ -117,20 +144,20 @@ public class MySqlSource extends Source
 		}
 		try 
 		{
-			ResultSetMetaData metadata = rs.getMetaData();
+			ResultSetMetaData metadata = m_resultSet.getMetaData();
 			List<String> col_names = new ArrayList<String>();
 			int col_count = metadata.getColumnCount();
 			for (int i = 0; i < col_count; i++)
 			{
 				col_names.add(metadata.getColumnName(i));
 			}
-			while (rs.next())
+			while (m_resultSet.next())
 			{
 				NamedTupleMap nt = new NamedTupleMap();
 				for (int i = 1; i <= col_count; i++)
 				{
 					String name = col_names.get(i);
-					Object value = rs.getObject(i);
+					Object value = m_resultSet.getObject(i);
 					if (value instanceof String)
 					{
 						nt.put(name, (String) value);

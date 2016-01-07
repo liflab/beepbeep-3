@@ -35,21 +35,13 @@ import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.bullwinkle.CaptureBlockParseNode;
 import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.bullwinkle.ParseNodeVisitor;
-import ca.uqac.lif.cep.Combiner;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.CountDecimate;
-import ca.uqac.lif.cep.Delay;
-import ca.uqac.lif.cep.Freeze;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Passthrough;
-import ca.uqac.lif.cep.Placeholder;
-import ca.uqac.lif.cep.Prefix;
-import ca.uqac.lif.cep.Print;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.QueueSource;
 import ca.uqac.lif.cep.SmartFork;
-import ca.uqac.lif.cep.Window;
+import ca.uqac.lif.cep.epl.EplGrammar;
 import ca.uqac.lif.util.EmptyException;
 import ca.uqac.lif.util.PackageFileReader;
 
@@ -59,7 +51,7 @@ public class Interpreter implements ParseNodeVisitor
 	 * Location of the file containing the grammar. This path is
 	 * relative to the location of the <tt>Interpreter</tt> class
 	 */
-	protected static String s_grammarFile = "epl.bnf";
+	protected static String s_grammarFile = "eml.bnf";
 
 	/**
 	 * The parser used to read expressions
@@ -123,7 +115,9 @@ public class Interpreter implements ParseNodeVisitor
 		m_processorDefinitions = new HashMap<String, GroupProcessor>();
 		m_symbolDefinitions = new HashMap<String, Object>();
 		m_processorForks = new HashMap<String, SmartFork>();
-		setBuiltinAssociations();
+		extendGrammar(BootstrapGrammar.class);
+		m_parser.setStartRule("<S>");
+		extendGrammar(EplGrammar.class);
 	}
 	
 	/**
@@ -190,27 +184,6 @@ public class Interpreter implements ParseNodeVisitor
 		}
 	}
 
-	protected void setBuiltinAssociations()
-	{
-		// Basic
-		addAssociation("<p_combiner>", Combiner.class);
-		addAssociation("<p_constant>", QueueSource.class);
-		addAssociation("<p_decimate>", CountDecimate.class);
-		addAssociation("<p_delay>", Delay.class);
-		addAssociation("<p_freeze>", Freeze.class);
-		//addAssociation("<p_function>", new Function());
-		addAssociation("<p_prefix>", Prefix.class);
-		addAssociation("<p_print>", Print.class);
-		addAssociation("<p_window>", Window.class);
-		addAssociation("<p_placeholder>", Placeholder.class);
-		
-		// User definitions
-		addAssociation("<processor_def>", UserDefinition.class);
-		addAssociation("<symbol_def_list>", ca.uqac.lif.cep.interpreter.SymbolDefinitionList.class);
-		addAssociation("<symbol_def>", ca.uqac.lif.cep.interpreter.SymbolDefinition.class);
-
-	}
-
 	/**
 	 * Associates a production rule name to a processor
 	 * @param production_rule The rule name
@@ -272,7 +245,7 @@ public class Interpreter implements ParseNodeVisitor
 	protected BnfParser initializeParser()
 	{
 		BnfParser parser = new BnfParser();
-		String grammar = null;
+		/*String grammar = null;
 		try
 		{
 			grammar = getGrammarString();
@@ -281,7 +254,7 @@ public class Interpreter implements ParseNodeVisitor
 		catch (InvalidGrammarException e)
 		{
 			e.printStackTrace();
-		}
+		}*/
 		//parser.setDebugMode(true);
 		return parser;
 	}
@@ -636,11 +609,11 @@ public class Interpreter implements ParseNodeVisitor
   }
 	
 	/**
-	 * Retrieves the static method of a given class
-	 * @param type The class
+	 * Retrieves a method of a given object
+	 * @param o The object
 	 * @param methodName The method name to look for
 	 * @param params Any parameters this method may have
-	 * @return The method, or null if no method was found
+	 * @return The method, or <code>null</code> if no method was found
 	 */
 	static public Method getMethod(Object o, String methodName, Class<?>... params) 
 	{

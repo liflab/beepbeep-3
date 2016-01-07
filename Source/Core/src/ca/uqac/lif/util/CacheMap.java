@@ -45,12 +45,6 @@ import java.util.Set;
  *   of a key a first time, and from that point on query the remaining tuples
  *   by directly providing the index.</li>
  * </ul>
- * <p>The process can be further optimized by using the 
- * {@link FixedTupleBuilder} class to build a stream of tuples that all follow
- * the same schema.
- * <p>Note that if these constraints are not suitable for your processing,
- * you should use the "regular" {@link NamedTupleMap} class that gives you
- * much more flexibility (possibly at the expense of some overhead).
  * @author Sylvain Hallé
  *
  */
@@ -220,6 +214,7 @@ public final class CacheMap<T> implements Map<String,T>
 	
 	public final void putAll(T[] values)
 	{
+		assert values.length == m_keys.length;
 		m_values = values;
 	}
 
@@ -252,5 +247,23 @@ public final class CacheMap<T> implements Map<String,T>
 			l.add((T) v);
 		}
 		return l;
+	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append("{");
+		for (int i = 0; i < m_keys.length; i++)
+		{
+			if (i > 0)
+			{
+				out.append(",");
+			}
+			out.append("(\"").append(m_keys[i]).append("\":");
+			out.append(m_values[i]).append(")");
+		}
+		out.append("}");
+		return out.toString();
 	}
 }

@@ -35,7 +35,7 @@ public class Incrementer extends SingleProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		Object[] outputs = new Object[inputs.length];
-		short i = 0;
+		int i = 0;
 		for (Object in : inputs)
 		{
 			if (in instanceof Number)

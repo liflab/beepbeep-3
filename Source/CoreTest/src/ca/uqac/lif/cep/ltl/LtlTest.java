@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.QueueSource;
+import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.eml.tuples.EmlBoolean;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
@@ -443,4 +443,5 @@ public class LtlTest
 		Pullable p = m_interpreter.executeQuery(expression);
 		assertNotNull(p);
 	}
+	
 }

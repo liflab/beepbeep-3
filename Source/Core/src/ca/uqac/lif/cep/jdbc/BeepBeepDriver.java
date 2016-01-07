@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 public class BeepBeepDriver implements Driver
 {
-	public static final String PREFIX = "jdbc:beepbeep:";
+	public static final String s_prefix = "jdbc:beepbeep:";
 
   static 
   {
@@ -45,6 +45,7 @@ public class BeepBeepDriver implements Driver
   /**
    * @see java.sql.Driver#getMajorVersion()
    */
+  @Override
   public int getMajorVersion() 
   {
       return 0;
@@ -53,6 +54,7 @@ public class BeepBeepDriver implements Driver
   /**
    * @see java.sql.Driver#getMinorVersion()
    */
+  @Override
   public int getMinorVersion() 
   {
       return 0;
@@ -61,6 +63,7 @@ public class BeepBeepDriver implements Driver
   /**
    * @see java.sql.Driver#jdbcCompliant()
    */
+  @Override
   public boolean jdbcCompliant() 
   {
       return false;
@@ -69,6 +72,7 @@ public class BeepBeepDriver implements Driver
   /**
    * @see java.sql.Driver#acceptsURL(java.lang.String)
    */
+  @Override
   public boolean acceptsURL(String url) 
   {
       return isValidURL(url);
@@ -76,17 +80,19 @@ public class BeepBeepDriver implements Driver
 
   /**
    * Validates a URL
-   * @param url
-   * @return true if the URL is valid, false otherwise
+   * @param url The URL. It is considered valid if it begins by the string
+   *  <code>jdbc:beepbeep:</code>
+   * @return <code>true</code> if the URL is valid, <code>false</code> otherwise
    */
   public static boolean isValidURL(String url) 
   {
-      return url != null && url.toLowerCase().startsWith(PREFIX);
+      return url != null && url.toLowerCase().startsWith(s_prefix);
   }
 
   /**
    * @see java.sql.Driver#getPropertyInfo(java.lang.String, java.util.Properties)
    */
+  @Override
   public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException 
   {
       return new DriverPropertyInfo[0];
@@ -95,6 +101,7 @@ public class BeepBeepDriver implements Driver
   /**
    * @see java.sql.Driver#connect(java.lang.String, java.util.Properties)
    */
+  @Override
   public Connection connect(String url, Properties info) throws SQLException 
   {
       return createConnection(url, info);
@@ -108,15 +115,16 @@ public class BeepBeepDriver implements Driver
   static String extractAddress(String url) 
   {
       // if no file name is given use a memory database
-      return PREFIX.equalsIgnoreCase(url) ? ":memory:" : url.substring(PREFIX.length());
+      return s_prefix.equalsIgnoreCase(url) ? ":memory:" : url.substring(s_prefix.length());
   }
 
   /**
    * Creates a new database connection to a given URL.
-   * @param url the URL
-   * @param prop the properties
-   * @return a Connection object that represents a connection to the URL
-   * @throws SQLException
+   * @param url The connection URL
+   * @param prop The properties
+   * @return A <code>Connection</code> object that represents a connection
+   *  to the URL
+   * @throws SQLException If the URL provided is invalid
    * @see java.sql.Driver#connect(java.lang.String, java.util.Properties)
    */
   public static Connection createConnection(String url, Properties prop) throws SQLException 

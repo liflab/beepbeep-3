@@ -20,6 +20,7 @@ package ca.uqac.lif.cep;
 import java.util.Queue;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.epl.Sink;
 import ca.uqac.lif.util.AnsiPrinter;
 
 public class Print extends Sink
