@@ -123,16 +123,31 @@ public class Interpreter implements ParseNodeVisitor
 	/**
 	 * Instantiates an interpreter, specifying a list of grammar extensions
 	 * to load.
+	 * <p>
+	 * Note: we must resort to this signature, rather than the natural
+	 * <tt>Class&lt;? extends GrammarExtension&gt; ...</tt> that we would normally
+	 * write. The reason is backwards compatibility with Java 1.6.
+	 * Using Java > 1.6 would require us to add the @SafeVarargs
+	 * annotation to prevent compile warnings, but this annotation
+	 * does not exist in Java 1.6 and produces a compile error. Thus this
+	 * is the only way to ensure warning- and error-free compilation in
+	 * both situations.
 	 * @param extensions The list of grammar extensions to load into
 	 *   the interpreter
 	 */
-	@SafeVarargs
-	public Interpreter(Class<? extends GrammarExtension> ... extensions)
+	@SuppressWarnings("unchecked")
+	public Interpreter(Class<?>  ... extensions)
 	{
+		/*
+		 *
+		 */
 		this();
-		for (Class<? extends GrammarExtension> ext : extensions)
+		for (Class<?> ext : extensions)
 		{
-			extendGrammar(ext);
+			if (ext.isAssignableFrom(GrammarExtension.class))
+			{
+				extendGrammar((Class<? extends GrammarExtension>) ext);	
+			}
 		}
 	}
 	
