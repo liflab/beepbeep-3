@@ -46,8 +46,9 @@ public class BagUnion implements Combinable
 	@Override
 	public Object[] combine(Object[] inputs, Object[] total) 
 	{
-		Object[] out_vector = new Object[getOutputArity()];
-		EmlBag total_bag = (EmlBag) total[0];
+		Object[] out_vector = new Object[1];
+		EmlBag total_bag = new EmlBag();
+		total_bag.addAll((EmlBag) total[0]);
 		for (Object o : inputs)
 		{
 			if (o instanceof EmlBag)

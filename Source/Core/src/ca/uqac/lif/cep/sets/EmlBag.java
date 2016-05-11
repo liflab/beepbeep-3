@@ -131,4 +131,10 @@ public class EmlBag
 		m_map.clear();
 		return this;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return m_map.toString();
+	}
 }

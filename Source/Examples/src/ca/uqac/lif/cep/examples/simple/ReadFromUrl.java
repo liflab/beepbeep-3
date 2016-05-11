@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.examples.simple;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.eml.tuples.NamedTupleMap;
+import ca.uqac.lif.cep.eml.tuples.NamedTuple;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
@@ -38,7 +38,7 @@ public class ReadFromUrl
 		Pullable result = my_int.executeQuery("SELECT (a) + (1) AS k FROM (THE TUPLES OF URL \"https://bitbucket.org/sylvainhalle/beepbeep-3/raw/4dcb7fa4330a079d532394d48ba8f519e5021148/tuples1.csv\")");
 		while (result.hasNextHard() != Pullable.NextStatus.NO)
 		{
-			NamedTupleMap t = (NamedTupleMap) result.pull();
+			NamedTuple t = (NamedTuple) result.pull();
 			System.out.println(t.get("k"));			
 		}
 	}

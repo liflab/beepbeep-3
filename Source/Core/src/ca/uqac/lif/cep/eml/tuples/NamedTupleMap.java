@@ -33,6 +33,15 @@ public class NamedTupleMap extends NamedTuple
 		m_contents = new HashMap<String,Object>();
 	}
 	
+	public NamedTupleMap(NamedTupleMap ntm)
+	{
+		this();
+		for (String key : ntm.m_contents.keySet())
+		{
+			m_contents.put(key, ntm.m_contents.get(key));
+		}
+	}
+	
 	/* From this point on, these are merely delegate methods
 	 * for the inner Map object
 	 */
@@ -58,9 +67,34 @@ public class NamedTupleMap extends NamedTuple
 		return m_contents.entrySet();
 	}
 
+	@Override
 	public boolean equals(Object o) 
 	{
-		return m_contents.equals(o);
+		if (o == null || !(o instanceof NamedTupleMap))
+		{
+			return false;
+		}
+		NamedTupleMap ntm = (NamedTupleMap) o;
+		return ntm.m_contents.equals(m_contents);
+		/*
+		if (ntm.m_contents.keySet().size() != m_contents.keySet().size())
+		{
+			return false;
+		}
+		for (String key : m_contents.keySet())
+		{
+			if (!ntm.m_contents.containsKey(key))
+			{
+				return false;
+			}
+			Object o1 = m_contents.get(key);
+			Object o2 = ntm.m_contents.get(key);
+			if (!o1.equals(o2))
+			{
+				return false;
+			}
+		}
+		return true;*/
 	}
 
 	public Object get(Object key) 

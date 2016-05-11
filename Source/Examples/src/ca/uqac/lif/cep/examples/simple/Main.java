@@ -46,7 +46,7 @@ public class Main
 		Pullable result = my_int.executeQuery("THE AVERAGE OF (MY TRACE)");
 		for (int i = 0; i < 10; i++)
 		{
-			EmlNumber t = (EmlNumber) result.pull();
+			Float t = (Float) result.pull();
 			System.out.println(t);
 		}
 	}
