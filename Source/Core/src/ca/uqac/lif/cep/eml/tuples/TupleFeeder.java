@@ -38,7 +38,7 @@ public class TupleFeeder extends TokenFeeder
 	{
 		super();
 		m_separatorBegin = "";
-		m_separatorEnd = "\n";
+		m_separatorEnd = System.getProperty("line.separator");
 		m_builder = null;
 	}
 	

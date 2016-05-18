@@ -57,7 +57,7 @@ public class IoTest
 	@Test
 	public void testUrlFeeder1()
 	{
-		HttpReader hr = new HttpReader("https://bitbucket.org/sylvainhalle/beepbeep-3/raw/4dcb7fa4330a079d532394d48ba8f519e5021148/tuples1.csv");
+		HttpReader hr = new HttpReader("https://raw.githubusercontent.com/liflab/beepbeep-3/master/tuples1.csv");
 		Pullable p = hr.getPullableOutput(0);
 		assertNotNull(p);
 		Object o = p.pull();

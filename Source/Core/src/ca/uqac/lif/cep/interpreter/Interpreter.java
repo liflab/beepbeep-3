@@ -69,6 +69,11 @@ public class Interpreter implements ParseNodeVisitor
 	protected static int s_defNb = 0;
 	
 	/**
+	 * The system-dependent line separator
+	 */
+	protected static final String CRLF = System.getProperty("line.separator");
+	
+	/**
 	 * The result of the last call to the interpreter. This either
 	 * stores a user definition, a processor, or null if the interpretation
 	 * failed.
@@ -127,7 +132,7 @@ public class Interpreter implements ParseNodeVisitor
 	 * Note: we must resort to this signature, rather than the natural
 	 * <tt>Class&lt;? extends GrammarExtension&gt; ...</tt> that we would normally
 	 * write. The reason is backwards compatibility with Java 1.6.
-	 * Using Java > 1.6 would require us to add the @SafeVarargs
+	 * Using Java &gt; 1.6 would require us to add the @SafeVarargs
 	 * annotation to prevent compile warnings, but this annotation
 	 * does not exist in Java 1.6 and produces a compile error. Thus this
 	 * is the only way to ensure warning- and error-free compilation in
@@ -499,7 +504,7 @@ public class Interpreter implements ParseNodeVisitor
 		StringBuilder contents = new StringBuilder();
 		while ((input_line = in.readLine()) != null)
 		{
-			contents.append(input_line).append("\n");
+			contents.append(input_line).append(CRLF);
 		}
 		in.close();
 		return executeQueries(contents.toString());
@@ -507,9 +512,9 @@ public class Interpreter implements ParseNodeVisitor
 	
 	public Pullable executeQueries(String queries)
 	{
-		queries += "\n"; // Apppend a CR so that the last query is also matched
-		queries = queries.replaceAll("--.*?\n", "\n");
-		String[] parts = queries.split("\\.\n");
+		queries += CRLF; // Apppend a CR so that the last query is also matched
+		queries = queries.replaceAll("--.*?" + CRLF, CRLF);
+		String[] parts = queries.split("\\." + CRLF);
 		Pullable last = null;
 		for (String query : parts)
 		{
