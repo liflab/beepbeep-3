@@ -27,6 +27,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.Pullable.NextStatus;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.util.PackageFileReader;
 import ca.uqac.lif.util.StringUtils;
@@ -52,6 +53,26 @@ public class IoTest
 		assertNotNull(recv);
 		recv = recv.trim();
 		assertEquals(35, recv.length());
+	}
+	
+	@Test
+	public void testStreamReaderPull1() throws FileNotFoundException
+	{
+		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.txt");
+		InputStream stream = StringUtils.toInputStream(file_contents);
+		StreamReader sr = new StreamReader(stream);
+		sr.setIsFile(true);
+		int turns = 0;
+		Pullable p = sr.getPullableOutput(0);
+		String s = "";
+		while (p.hasNext() != NextStatus.NO)
+		{
+			turns++;
+			String pulled = (String) p.pull();
+			assertNotNull(pulled);
+			s += p.pull();
+		}
+		assertTrue("Pulled the source for too long", turns < 4);
 	}
 	
 	@Test

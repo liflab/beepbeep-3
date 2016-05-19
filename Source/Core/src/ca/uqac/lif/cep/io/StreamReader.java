@@ -187,6 +187,11 @@ public class StreamReader extends Source
 			// Not an error in itself, but will cause the thread in which PipeReader
 			// runs to end (gracefully)
 		}
+		if (m_returnCode == ERR_EOF || m_returnCode == ERR_EOT)
+		{
+			// End of stream
+			return null;
+		}
 		return wrapVector(out);
 	}
 	

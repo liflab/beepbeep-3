@@ -336,7 +336,11 @@ public abstract class SingleProcessor extends Processor
 			// Compute output event(s)
 			NextStatus status_to_return = NextStatus.MAYBE;
 			Queue<Object[]> computed = compute(inputs);
-			if (computed != null && !computed.isEmpty())
+			if (computed == null)
+			{
+				status_to_return = NextStatus.NO;
+			}
+			else if (!computed.isEmpty())
 			{
 				for (Object[] evt : computed)
 				{
