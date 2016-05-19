@@ -26,7 +26,7 @@
   <name>BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.2.1-alpha</version>
+  <version>0.2.2-alpha</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -51,7 +51,7 @@
       <name>Bullwinkle</name>
       <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
       <files>
-        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.1.8/bullwinkle-1.1.8.zip</zip>
+        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.2/bullwinkle-1.2.zip</zip>
       </files>
     </dependency>
     <dependency>

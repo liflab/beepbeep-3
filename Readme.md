@@ -25,10 +25,8 @@ repository using Git:
 
 The project requires the following libraries to be present in the system:
 
-- The [Apache Commons CLI](http://commons.apache.org/proper/commons-cli/)
-  to handle command-line parameters *(tested with version 1.3.1)*
 - The [Bullwinkle parser](https://github.com/sylvainhalle/Bullwinkle),
-  an on-the-fly parser for BNF grammars *(tested with version 1.1.5)*
+  an on-the-fly parser for BNF grammars *(tested with version 1.2)*
   
 Using Ant, you can automatically download any libraries missing from your
 system by typing:
