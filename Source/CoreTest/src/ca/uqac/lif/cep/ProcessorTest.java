@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.*;
 
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
 
@@ -272,16 +271,18 @@ public class ProcessorTest
 	@Test
 	public void testAdditionPush1()
 	{
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(1);
 		l_input1.add(2);
 		l_input1.add(3);
-		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(6);
 		l_input2.add(4);
 		l_input2.add(0);
-		QueueSource input1 = new QueueSource(l_input1, 1);
-		QueueSource input2 = new QueueSource(l_input2, 1);
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
+		QueueSource input2 = new QueueSource(null, 1);
+		input2.setEvents(l_input2);
 		FunctionProcessor add = new FunctionProcessor(new Addition());
 		Connector.connect(input1, input2, add);
 		QueueSink sink = new QueueSink(1);
@@ -320,18 +321,20 @@ public class ProcessorTest
 	@Test
 	public void testFilter1()
 	{
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(1);
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(4);
-		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(true);
 		l_input2.add(false);
 		l_input2.add(true);
 		l_input2.add(false);
-		QueueSource input1 = new QueueSource(l_input1, 1);
-		QueueSource input2 = new QueueSource(l_input2, 1);
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
+		QueueSource input2 = new QueueSource(null, 1);
+		input2.setEvents(l_input2);
 		Filter f = new Filter();
 		Connector.connect(input1, input2, f);
 		QueueSink sink = new QueueSink(1);
@@ -371,12 +374,13 @@ public class ProcessorTest
 	@Test
 	public void testFilter2()
 	{
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
 		Fork fork = new Fork(2);
 		Connector.connect(input1, fork);
 		Filter filter = new Filter();
@@ -422,18 +426,20 @@ public class ProcessorTest
 		add_plus_10.associateOutput(0, add, 0);
 		
 		// Connect the group to two sources and one sink
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(6);
 		QueueSource input1 = new QueueSource(l_input1, 1);
-		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		input1.setEvents(l_input1);
+		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(1);
 		l_input2.add(2);
 		l_input2.add(3);
 		l_input2.add(4);
-		QueueSource input2 = new QueueSource(l_input2, 1);
+		QueueSource input2 = new QueueSource(null, 1);
+		input2.setEvents(l_input2);
 		Connector.connect(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
@@ -516,18 +522,20 @@ public class ProcessorTest
 		add_plus_10.associateOutput(0, add, 0);
 		
 		// Connect the group to two sources and one sink
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(l_input1, 1);
-		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
+		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(1);
 		l_input2.add(2);
 		l_input2.add(3);
 		l_input2.add(4);
-		QueueSource input2 = new QueueSource(l_input2, 1);
+		QueueSource input2 = new QueueSource(null, 1);
+		input2.setEvents(l_input2);
 		Connector.connect(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
@@ -578,18 +586,20 @@ public class ProcessorTest
 		add_plus_10.associateOutput(0, add, 0);
 		
 		// Connect the group to two sources and one sink
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(l_input1, 1);
-		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
+		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(1);
 		l_input2.add(2);
 		l_input2.add(3);
 		l_input2.add(4);
-		QueueSource input2 = new QueueSource(l_input2, 1);
+		QueueSource input2 = new QueueSource(null, 1);
+		input2.setEvents(l_input2);
 		Connector.connect(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);

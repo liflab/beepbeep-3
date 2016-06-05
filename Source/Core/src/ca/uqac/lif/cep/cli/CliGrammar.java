@@ -23,13 +23,7 @@ public class CliGrammar extends GrammarExtension
 {
 	public CliGrammar()
 	{
-		super(CliGrammar.class);
-	}
-	
-	@Override
-	public String getMessage()
-	{
-		return "CLI extension\n"
-				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
+		super(CliGrammar.class, "CLI extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi");
 	}
 }

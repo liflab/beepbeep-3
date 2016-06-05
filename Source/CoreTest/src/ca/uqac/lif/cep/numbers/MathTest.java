@@ -2,8 +2,8 @@ package ca.uqac.lif.cep.numbers;
 
 import static org.junit.Assert.*;
 
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Vector;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -95,16 +95,18 @@ public class MathTest
 	@Test
 	public void testPower()
 	{
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(2);
-		LinkedList<Object> l_input2 = new LinkedList<Object>();
+		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(4);
 		l_input2.add(2);
 		l_input2.add(0);
-		QueueSource input1 = new QueueSource(l_input1, 1);
-		QueueSource input2 = new QueueSource(l_input2, 1);
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
+		QueueSource input2 = new QueueSource(null, 1);
+		input2.setEvents(l_input2);
 		FunctionProcessor pow = new FunctionProcessor(new Power());
 		Connector.connect(input1, input2, pow);
 		QueueSink sink = new QueueSink(1);
@@ -136,11 +138,12 @@ public class MathTest
 	@Test
 	public void testStatisticalMomentPull1()
 	{
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(2);
-		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
 		QueueSink sink = new QueueSink(1);
 		setupStatisticalMoment(input1, sink, 1);
 		Number recv;
@@ -167,11 +170,12 @@ public class MathTest
 	@Test
 	public void testStatisticalMomentPush1()
 	{
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(2);
-		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
 		QueueSink sink = new QueueSink(1);
 		setupStatisticalMoment(input1, sink, 1);
 		Number recv;
@@ -243,13 +247,14 @@ public class MathTest
 	@Test
 	public void testSumIfGreaterPush()
 	{
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(0);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
 		QueueSink sink = new QueueSink(1);
 		setupSumIfGreater(input1, sink);
 		Number recv;
@@ -283,13 +288,14 @@ public class MathTest
 	@Test
 	public void testSumIfGreaterPullHard()
 	{
-		LinkedList<Object> l_input1 = new LinkedList<Object>();
+		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(0);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSource input1 = new QueueSource(null, 1);
+		input1.setEvents(l_input1);
 		QueueSink sink = new QueueSink(1);
 		setupSumIfGreater(input1, sink);
 		Number recv;

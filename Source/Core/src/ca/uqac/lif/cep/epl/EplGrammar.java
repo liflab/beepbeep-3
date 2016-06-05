@@ -23,13 +23,7 @@ public class EplGrammar extends GrammarExtension
 {
 	public EplGrammar()
 	{
-		super(EplGrammar.class);
-	}
-	
-	@Override
-	public String getMessage()
-	{
-		return "EPL extension\n"
-				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
-	}
+		super(EplGrammar.class, "EPL extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi");
+	}	
 }

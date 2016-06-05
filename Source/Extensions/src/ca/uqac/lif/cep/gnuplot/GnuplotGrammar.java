@@ -23,13 +23,7 @@ public class GnuplotGrammar extends GrammarExtension
 {
 	public GnuplotGrammar()
 	{
-		super(GnuplotGrammar.class);
-	}
-	
-	@Override
-	public String getMessage()
-	{
-		return "Gnuplot extension\n"
-				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
+		super(GnuplotGrammar.class, "Gnuplot extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi");
 	}
 }

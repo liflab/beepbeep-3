@@ -3,7 +3,7 @@
 # -----------------------------------------
 
 <p_decimate>,ca.uqac.lif.cep.epl.CountDecimate
-<p_delay>,ca.uqac.lif.cep.epl.Delay
+<p_trim>,ca.uqac.lif.cep.epl.Trim
 <p_freeze>,ca.uqac.lif.cep.epl.Freeze
 <p_prefix>,ca.uqac.lif.cep.epl.Prefix
 <p_window>,ca.uqac.lif.cep.epl.Window

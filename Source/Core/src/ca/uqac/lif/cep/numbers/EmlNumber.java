@@ -33,11 +33,6 @@ public class EmlNumber extends SingleProcessor
 		super(0, 1);
 		m_number = n;
 	}
-
-	public Number numberValue()
-	{
-		return m_number.doubleValue();
-	}
 	
 	public int intValue()
 	{

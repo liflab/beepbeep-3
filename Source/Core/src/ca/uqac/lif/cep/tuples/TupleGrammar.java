@@ -23,12 +23,6 @@ public class TupleGrammar extends GrammarExtension
 {
 	public TupleGrammar()
 	{
-		super(TupleGrammar.class);
-	}
-	
-	@Override
-	public String getMessage()
-	{
-		return "Tuple EML (C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
+		super(TupleGrammar.class, "Tuple EML (C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi");
 	}
 }

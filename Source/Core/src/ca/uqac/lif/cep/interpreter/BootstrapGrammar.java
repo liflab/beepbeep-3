@@ -23,13 +23,7 @@ public class BootstrapGrammar extends GrammarExtension
 {
 	public BootstrapGrammar()
 	{
-		super(BootstrapGrammar.class);
-	}
-	
-	@Override
-	public String getMessage()
-	{
-		return "Bootstrap grammar\n"
-				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi";
+		super(BootstrapGrammar.class, "Bootstrap grammar\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi");
 	}
 }

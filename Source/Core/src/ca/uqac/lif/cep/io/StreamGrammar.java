@@ -23,6 +23,7 @@ public class StreamGrammar extends GrammarExtension
 {
 	public StreamGrammar()
 	{
-		super(StreamGrammar.class);
+		super(StreamGrammar.class, "I/O streams extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi\n");
 	}
 }

@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  *
  */
-public class Delay extends SingleProcessor
+public class Trim extends SingleProcessor
 {
 	/**
 	 * How many events to ignore at the beginning of the trace
@@ -47,7 +47,7 @@ public class Delay extends SingleProcessor
 	 * Creates a new delay processor.
 	 * @param delay The number of events from the input trace to discard
 	 */
-	public Delay(int delay)
+	public Trim(int delay)
 	{
 		super(1, 1);
 		m_delay = delay;
@@ -73,9 +73,13 @@ public class Delay extends SingleProcessor
 	
 	public static void build(Stack<Object> stack)
 	{
+		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
+		stack.pop(); // (
+		stack.pop(); // OF
 		Number delay = (Number) stack.pop();
-		Delay out = new Delay(delay.intValue());
+		stack.pop(); // TRIM
+		Trim out = new Trim(delay.intValue());
 		Connector.connect(p, out);
 		stack.push(out);
 	}

@@ -23,6 +23,7 @@ public class LtlGrammar extends GrammarExtension
 {
 	public LtlGrammar()
 	{
-		super(LtlGrammar.class);
+		super(LtlGrammar.class, "Linear Temporal Logic extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutim");
 	}
 }

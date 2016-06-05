@@ -23,14 +23,7 @@ public class SetGrammar extends GrammarExtension
 {
 	public SetGrammar()
 	{
-		super(SetGrammar.class);
-	}
-	
-	@Override
-	public String getMessage()
-	{
-		return "Set and data structures extension\n"
-				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi\n"
-				+ "DFT algorithm provided by JTransforms by Piotr Wendykier";
+		super(SetGrammar.class, "Set and data structures extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi\n");
 	}
 }

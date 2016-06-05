@@ -36,7 +36,7 @@ public abstract class Sink extends SingleProcessor
 {
 	public Sink()
 	{
-		this(0);
+		this(1);
 	}
 	
 	public Sink(int in_arity)

@@ -62,7 +62,9 @@ public class Freeze extends SingleProcessor
 	
 	public static void build(Stack<Object> stack)
 	{
+		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
+		stack.pop(); // )
 		stack.pop(); // FREEZE
 		Freeze out = new Freeze();
 		Connector.connect(p, out);

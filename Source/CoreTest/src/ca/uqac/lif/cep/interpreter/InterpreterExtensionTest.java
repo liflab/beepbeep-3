@@ -59,7 +59,7 @@ public class InterpreterExtensionTest
 	@Test
 	public void testExtensionNumber2() throws ParseException
 	{
-		String expression = "FREEZE 0";
+		String expression = "FREEZE (0)";
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof Freeze);

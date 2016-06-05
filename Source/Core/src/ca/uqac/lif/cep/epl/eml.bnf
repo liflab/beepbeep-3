@@ -15,9 +15,10 @@
 # Processors
 
 <processor>          := <p_freeze> | <p_window> | <p_decimate> | <p_prefix> 
-                        | <p_cumulative> | <var_name> ;
-<p_freeze>           := FREEZE <processor> ;
+                        | <p_cumulative> | <p_trim> | <var_name> ;
+<p_freeze>           := FREEZE ( <processor> ) ;
+<p_trim>             := TRIM <number> OF ( <processor> ) ;
 <p_window>           := APPLY ( <processor> ) ON ( <processor> ) ON A WINDOW OF <number> ;
 <p_decimate>         := EVERY <number> <number_suffix> OF ( <processor> ) ;
 <number_suffix>      := ST | ND | RD | TH ;
-<p_prefix>           := <number> OF ( <processor> ) ;
+<p_prefix>           := THE FIRST <number> OF ( <processor> ) ;

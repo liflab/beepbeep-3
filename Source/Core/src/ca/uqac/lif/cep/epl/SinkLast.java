@@ -38,6 +38,13 @@ public class SinkLast extends Sink
 	 */
 	protected int m_eventCounter;
 	
+	public SinkLast()
+	{
+		super();
+		m_last = null;
+		m_eventCounter = 0;
+	}
+	
 	public SinkLast(int in_arity)
 	{
 		super(in_arity);
@@ -52,15 +59,6 @@ public class SinkLast extends Sink
 		m_last = null;
 		m_eventCounter = 0;
 	}
-	
-	/**
-	 * Returns the count of events pushed to the sink so far
-	 * @return The count
-	 */
-	public int getPushCount()
-	{
-		return getPushableInput(0).getPushCount();
-	}
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
@@ -72,14 +70,5 @@ public class SinkLast extends Sink
 	public Object[] getLast()
 	{
 		return m_last;
-	}
-	
-	public Object getQueue(int i)
-	{
-		if (m_last == null)
-		{
-			return null;
-		}
-		return m_last[i];
 	}
 }

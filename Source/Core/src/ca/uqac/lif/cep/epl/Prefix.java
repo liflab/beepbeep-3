@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.Processor;
  * 
  * @author Sylvain Hallé
  */
-public class Prefix extends Delay
+public class Prefix extends Trim
 {	
 	public Prefix(int k)
 	{
@@ -39,18 +39,29 @@ public class Prefix extends Delay
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		m_eventsReceived++;
-		if (m_eventsReceived < m_delay)
+		if (m_eventsReceived <= m_delay)
 		{
 			return wrapVector(inputs);
 		}
 		return null;
 	}
 	
+	@Override
+	public void reset()
+	{
+		super.reset();
+		m_eventsReceived = 0;
+	}
+	
 	public static void build(Stack<Object> stack)
 	{
+		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
+		stack.pop(); // )
 		stack.pop(); // OF
 		Number interval = (Number) stack.pop();
+		stack.pop(); // FIRST
+		stack.pop(); // THE
 		Prefix out = new Prefix(interval.intValue());
 		Connector.connect(p, out);
 		stack.push(out);

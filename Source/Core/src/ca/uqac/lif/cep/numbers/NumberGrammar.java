@@ -23,6 +23,7 @@ public class NumberGrammar extends GrammarExtension
 {
 	public NumberGrammar()
 	{
-		super(NumberGrammar.class);
+		super(NumberGrammar.class, "Numbers and arithmetic extension\n"
+				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi\n");
 	}
 }

@@ -23,14 +23,8 @@ public class SignalGrammar extends GrammarExtension
 {
 	public SignalGrammar()
 	{
-		super(SignalGrammar.class);
-	}
-	
-	@Override
-	public String getMessage()
-	{
-		return "Signal processing extension\n"
+		super(SignalGrammar.class, "Signal processing extension\n"
 				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi\n"
-				+ "DFT algorithm provided by JTransforms by Piotr Wendykier";
+				+ "DFT algorithm provided by JTransforms by Piotr Wendykier");
 	}
 }

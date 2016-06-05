@@ -47,27 +47,27 @@ public class Window extends SingleProcessor
 	 * The window's width
 	 */
 	protected int m_width;
-	
+
 	/**
 	 * The internal processor
 	 */
 	protected Processor m_processor = null;
-	
+
 	/**
 	 * The internal processor's input pushables
 	 */
 	protected Pushable[] m_innerInputs;
-	
+
 	/**
 	 * The sink that will receive the events produced by the inner processor
 	 */
 	protected SinkLast m_sink = null;
-	
+
 	/**
 	 * The event windows
 	 */
 	protected List<Object>[] m_window;
-	
+
 	public Window(Processor in_processor, int width)
 	{
 		super(in_processor.getInputArity(), in_processor.getOutputArity());
@@ -76,7 +76,7 @@ public class Window extends SingleProcessor
 		m_sink = new SinkLast(in_processor.getOutputArity());
 		reset();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void reset()
@@ -85,23 +85,14 @@ public class Window extends SingleProcessor
 		int arity = getInputArity();
 		m_window = new List[arity];
 		m_innerInputs = new Pushable[arity];
-		if (m_processor != null)
+		m_processor.reset();
+		for (int i = 0; i < arity; i++)
 		{
-			m_processor.reset();
-			for (int i = 0; i < arity; i++)
-			{
-				m_window[i] = new LinkedList<Object>();
-				m_innerInputs[i] = m_processor.getPushableInput(i);
-			}		
-		}
-		if (m_sink != null)
-		{
-			m_sink.reset();
-		}
-		if (m_processor != null && m_sink != null)
-		{
-			Connector.connect(m_processor, m_sink);
-		}
+			m_window[i] = new LinkedList<Object>();
+			m_innerInputs[i] = m_processor.getPushableInput(i);
+		}		
+		m_sink.reset();
+		Connector.connect(m_processor, m_sink);
 	}
 
 	@Override
@@ -142,7 +133,7 @@ public class Window extends SingleProcessor
 		}
 		return wrapVector(out);
 	}
-	
+
 	/**
 	 * Trims <i>n</i> events from the beginning of <tt>q</tt>
 	 * @param n The number of events to trim. If <i>n</i>&nbsp;&lt;1,

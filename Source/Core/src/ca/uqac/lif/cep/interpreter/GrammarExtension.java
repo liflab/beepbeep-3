@@ -43,7 +43,12 @@ public abstract class GrammarExtension
 	/**
 	 * The character used for comments in the associations file
 	 */
-	protected static final String s_commentChar = "#";
+	protected static final transient String s_commentChar = "#";
+	
+	/**
+	 * The message used to describe this grammar
+	 */
+	protected String m_message = "";
 	
 	/**
 	 * A reference to the current class of grammar extension. This is
@@ -56,11 +61,13 @@ public abstract class GrammarExtension
 	/**
 	 * Instantiates a grammar extension
 	 * @param reference The current grammar extension
+	 * @param message The short description for this grammar extension 
 	 */
-	protected GrammarExtension(Class<? extends GrammarExtension> reference)
+	protected GrammarExtension(Class<? extends GrammarExtension> reference, String message)
 	{
 		super();
 		m_classReference = reference;
+		m_message = message;
 	}
 	
 	/**
@@ -116,8 +123,8 @@ public abstract class GrammarExtension
 	 * the grammar extension
 	 * @return The message
 	 */
-	public String getMessage()
+	public final String getMessage()
 	{
-		return "";
+		return m_message;
 	}
 }
