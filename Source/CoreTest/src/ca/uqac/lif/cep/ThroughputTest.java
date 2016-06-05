@@ -24,10 +24,10 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.eml.numbers.Addition;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
+import ca.uqac.lif.cep.numbers.Addition;
 
 public class ThroughputTest
 {

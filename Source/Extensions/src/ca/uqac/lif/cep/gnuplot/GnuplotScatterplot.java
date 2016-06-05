@@ -26,9 +26,9 @@ import java.util.TreeMap;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.eml.tuples.EmlNumber;
-import ca.uqac.lif.cep.eml.tuples.NamedTuple;
 import ca.uqac.lif.cep.sets.Multiset;
+import ca.uqac.lif.cep.tuples.EmlNumber;
+import ca.uqac.lif.cep.tuples.NamedTuple;
 
 /**
  * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.EmlBag}.

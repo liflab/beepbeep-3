@@ -19,9 +19,6 @@ package ca.uqac.lif.cep.interpreter;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,18 +26,17 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
-import ca.uqac.lif.cep.eml.numbers.NumberGrammar;
-import ca.uqac.lif.cep.eml.tuples.EmlPuller;
-import ca.uqac.lif.cep.eml.tuples.EmlPuller.EmlPullable;
-import ca.uqac.lif.cep.eml.tuples.EmlNumber;
-import ca.uqac.lif.cep.eml.tuples.NamedTuple;
-import ca.uqac.lif.cep.eml.tuples.Select;
-import ca.uqac.lif.cep.eml.tuples.TupleFeeder;
-import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.io.StreamReader;
-import ca.uqac.lif.cep.ltl.LtlGrammar;
+import ca.uqac.lif.cep.numbers.NumberGrammar;
+import ca.uqac.lif.cep.tuples.EmlNumber;
+import ca.uqac.lif.cep.tuples.EmlPuller;
+import ca.uqac.lif.cep.tuples.NamedTuple;
+import ca.uqac.lif.cep.tuples.Select;
+import ca.uqac.lif.cep.tuples.TupleFeeder;
+import ca.uqac.lif.cep.tuples.TupleGrammar;
+import ca.uqac.lif.cep.tuples.EmlPuller.EmlPullable;
 
 public class UserDefinitionTest 
 {
@@ -53,7 +49,6 @@ public class UserDefinitionTest
 		m_interpreter.extendGrammar(NumberGrammar.class);
 		m_interpreter.extendGrammar(StreamGrammar.class);
 		m_interpreter.extendGrammar(TupleGrammar.class);
-		m_interpreter.extendGrammar(LtlGrammar.class);
 	}
 	
 	@Test
@@ -272,26 +267,4 @@ public class UserDefinitionTest
 		assertEquals(5, n, 0.01);
 	}
 	
-	@Test
-	public void testMultipleQueries1() throws ParseException, IOException
-	{
-		InputStream is = this.getClass().getResourceAsStream("test.esql");
-		Object o = m_interpreter.executeQueries(is);
-		assertNotNull(o);
-	}
-	
-	@Test
-	public void testMultipleQueries2() throws ParseException, IOException
-	{
-		InputStream is = this.getClass().getResourceAsStream("test2.esql");
-		m_interpreter.executeQueries(is);
-	}
-	
-	@Test
-	public void testMultipleQueries3() throws ParseException, IOException
-	{
-		InputStream is = this.getClass().getResourceAsStream("test3.esql");
-		Object o = m_interpreter.executeQueries(is);
-		assertNotNull(o);
-	}	
 }

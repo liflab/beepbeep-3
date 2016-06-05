@@ -26,13 +26,13 @@ import java.util.Vector;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.eml.numbers.Addition;
-import ca.uqac.lif.cep.eml.numbers.Incrementer;
 import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
+import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.numbers.Incrementer;
 
 public class ProcessorTest
 {

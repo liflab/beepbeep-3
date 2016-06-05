@@ -1,0 +1,95 @@
+# -----------------------------------------
+# Grammar for BeepBeep 3; edit at your own risk!
+#
+# This is an EML (Event Manipulation Language) where events are
+# associative maps from names to primitive types (number, strings).
+# This grammar works in tandem with the EPL (Event Processing
+# Language) grammar.
+# -----------------------------------------
+
+# Primitive types
+
+<eml_boolean>            := true | false ;
+<eml_number>             := ^(\d+\.\d+\u007c\d+);
+<eml_string>             := ^".*?";
+<eml_plain_string>       := ^[a-zA-Z]\w*;
+
+# Constant processor
+
+<eml_constant>           := <eml_number> | <eml_boolean> | <eml_string> ;
+
+# Top-level EML symbols
+
+<eml_expr>               := <eml_constant> | <eml_select> | <eml_feeder> 
+                            | <sql_feeder> | <eml_where> ;
+
+# "SELECT" statement
+
+<eml_select>             := SELECT <eml_att_list> FROM ( <eml_proc_list> ) ;
+
+# List of named processors
+
+<eml_proc_def_plain>     := ( <processor> ) | <processor> ;
+<eml_proc_def_as>        := ( <processor> ) AS <eml_plain_string>
+                            | <processor> AS <eml_plain_string> ;
+<eml_proc_def>           := <eml_proc_def_as> | <eml_proc_def_plain> ;
+<eml_proc_list>          := <eml_proc_def> , <eml_proc_list> | <eml_proc_def> ;
+
+# List of named attributes
+
+<eml_att_def_plain>      := <eml_att_expr> ;
+<eml_att_def_as>         := <eml_att_expr> AS <eml_plain_string> ;
+<eml_att_def>            := <eml_att_def_as> | <eml_att_def_plain> ;
+<eml_att_list>           := <eml_att_def> , <eml_att_list> | <eml_att_def> ;
+
+# Attribute expressions
+
+<eml_att_expr>           := <eml_att_expr_const> | <eml_att_expr_unary>
+                            | <eml_att_expr_binary> | <eml_att_name> ;
+<eml_att_name>           := <eml_att_name_q> | <eml_att_name_plain> 
+                            | <eml_att_placeholder> ;
+<eml_att_name_q>         := <eml_plain_string> . <eml_plain_string> ;
+<eml_att_name_plain>     := <eml_plain_string> ;
+<eml_att_expr_const>     := <eml_att_expr_number> | <eml_att_expr_string> ;
+<eml_att_expr_number>    := <eml_number> ;
+<eml_att_expr_string>    := <eml_string> ;
+<eml_att_placeholder>    := * ;
+
+# Unary operators
+
+<eml_att_expr_unary>     := <eml_sin> ;
+<eml_sin>                := SIN ( <eml_att_expr> ) ; 
+
+# Binary operators
+
+<eml_att_expr_binary>    := <eml_addition> | <eml_multiplication> 
+                            | <eml_division> | <eml_subtraction> 
+                            | <eml_equality> | <eml_lt> | <eml_gt> 
+                            | <eml_and> | <eml_or> ;
+<eml_addition>           := ( <eml_att_expr> ) + ( <eml_att_expr> ) ;
+<eml_multiplication>     := ( <eml_att_expr> ) × ( <eml_att_expr> ) ;
+<eml_division>           := ( <eml_att_expr> ) ÷ ( <eml_att_expr> ) ;
+<eml_subtraction>        := ( <eml_att_expr> ) - ( <eml_att_expr> ) ;
+<eml_and>                := ( <eml_att_expr> ) AND ( <eml_att_expr> ) ;
+<eml_or>                 := ( <eml_att_expr> ) OR ( <eml_att_expr> ) ;
+<eml_power>              := ( <eml_att_expr> ) TO THE ( <eml_att_expr> ) <power_particle> ;
+<power_particle>         := ST | ND | RD | TH ;
+<eml_equality>           := ( <eml_att_expr> ) = ( <eml_att_expr> ) ;
+<eml_lt>                 := ( <eml_att_expr> ) LESS THAN ( <eml_att_expr> ) ;
+<eml_gt>                 := ( <eml_att_expr> ) GREATER THAN ( <eml_att_expr> ) ;
+
+# Tuple feeders
+
+<eml_feeder>             := THE TUPLES OF <p_reader> ;
+<eml_regex>              := REGEX <eml_string> WITH NAMES 
+                             <eml_regex_name_list> IN ( <processor> ) ;
+<eml_regex_name_list>    := <eml_att_name_plain> , <eml_regex_name_list> | <eml_att_name_plain> ;
+
+# SQL gateway
+
+<sql_feeder>             := TABLE <eml_plain_string> IN DATABASE <eml_plain_string> , 
+                            USER <eml_string>, PASSWORD <eml_string> ;
+
+# "WHERE" statement
+
+<eml_where>              := ( <processor> ) WHERE <eml_att_expr> ;

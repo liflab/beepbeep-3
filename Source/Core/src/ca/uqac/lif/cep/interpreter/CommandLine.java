@@ -24,7 +24,6 @@ import java.util.Scanner;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.epl.Sink;
-import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.util.AnsiPrinter;
@@ -44,7 +43,7 @@ public class CommandLine
 		Interpreter interpreter = new Interpreter();
 		// Load extensions for the interpreter
 		{
-			interpreter.extendGrammar(new TupleGrammar());
+			//interpreter.extendGrammar(new TupleGrammar());
 			interpreter.extendGrammar(new StreamGrammar());
 		}
 		boolean exit = false;

@@ -28,11 +28,11 @@ import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Placeholder;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.Window;
-import ca.uqac.lif.cep.eml.numbers.EmlNumber;
-import ca.uqac.lif.cep.eml.numbers.NumberGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.HttpReader;
 import ca.uqac.lif.cep.io.StreamGrammar;
+import ca.uqac.lif.cep.numbers.EmlNumber;
+import ca.uqac.lif.cep.numbers.NumberGrammar;
 
 public class InterpreterExtensionTest
 {

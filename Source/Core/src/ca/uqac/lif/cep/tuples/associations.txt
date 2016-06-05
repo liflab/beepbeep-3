@@ -1,0 +1,71 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+# Primitive types
+
+<eml_number>,ca.uqac.lif.cep.tuples.EmlNumber
+<eml_string>,ca.uqac.lif.cep.tuples.EmlString
+<eml_plain_string>,ca.uqac.lif.cep.tuples.EmlPlainString
+
+# Constant processor
+# <eml_constant>,ca.uqac.lif.cep.tuples.EmlConstant (abstract)
+
+# "SELECT" statement
+
+<eml_select>,ca.uqac.lif.cep.tuples.Select
+
+# List of named processors
+
+<eml_proc_def_plain>,ca.uqac.lif.cep.tuples.ProcessorDefinitionPlain
+<eml_proc_def_as>,ca.uqac.lif.cep.tuples.ProcessorDefinitionAs
+#<eml_proc_def>,ca.uqac.lif.cep.tuples.ProcessorDefinition
+<eml_proc_list>,ca.uqac.lif.cep.tuples.ProcessorDefinitionList
+
+# List of named attributes
+
+<eml_att_def_plain>,ca.uqac.lif.cep.tuples.AttributeDefinitionPlain
+<eml_att_def_as>,ca.uqac.lif.cep.tuples.AttributeDefinitionAs
+#<eml_att_def>,ca.uqac.lif.cep.tuples.AttributeDefinition
+<eml_att_list>,ca.uqac.lif.cep.tuples.AttributeList
+<eml_att_placeholder>,ca.uqac.lif.cep.tuples.AttributePlaceholder
+
+# Attribute expressions
+
+#<eml_att_expr>,ca.uqac.lif.cep.tuples.AttributeExpression
+#<eml_att_name>,ca.uqac.lif.cep.tuples.AttributeName
+<eml_att_name_q>,ca.uqac.lif.cep.tuples.AttributeNameQualified
+<eml_att_name_plain>,ca.uqac.lif.cep.tuples.AttributeNamePlain
+#<eml_att_expr_const>,ca.uqac.lif.cep.tuples.ConstantExpression
+<eml_att_expr_number>,ca.uqac.lif.cep.tuples.NumberExpression
+<eml_att_expr_string>,ca.uqac.lif.cep.tuples.StringExpression
+
+# Unary operators
+
+<eml_sin>,ca.uqac.lif.cep.tuples.Sine
+
+# Binary operators
+
+<eml_addition>,ca.uqac.lif.cep.tuples.Addition
+<eml_subtraction>,ca.uqac.lif.cep.tuples.Subtraction
+<eml_multiplication>,ca.uqac.lif.cep.tuples.Multiplication
+<eml_division>,ca.uqac.lif.cep.tuples.Division
+<eml_equality>,ca.uqac.lif.cep.tuples.EqualsExpression
+<eml_lt>,ca.uqac.lif.cep.tuples.LessThan
+<eml_gt>,ca.uqac.lif.cep.tuples.GreaterThan
+<eml_and>,ca.uqac.lif.cep.tuples.Conjunction
+<eml_or>,ca.uqac.lif.cep.tuples.Disjunction
+
+# Tuple feeders
+
+<eml_feeder>,ca.uqac.lif.cep.tuples.TupleFeeder
+<eml_regex>,ca.uqac.lif.cep.tuples.RegexTupleBuilder
+<eml_regex_name_list>,ca.uqac.lif.cep.tuples.RegexTupleBuilder$RegexAttributeNameList
+
+# "WHERE" statement
+
+<eml_where>,ca.uqac.lif.cep.tuples.Where
+
+# SQL gateway
+
+<sql_feeder>,ca.uqac.lif.cep.tuples.MySqlSource

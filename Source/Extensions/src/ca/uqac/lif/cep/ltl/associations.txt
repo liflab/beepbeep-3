@@ -1,0 +1,11 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+<ltl_not>,ca.uqac.lif.cep.ltl.Not
+<ltl_and>,ca.uqac.lif.cep.ltl.And
+<ltl_or>,ca.uqac.lif.cep.ltl.Or
+<globally>,ca.uqac.lif.cep.ltl.Globally
+<eventually>,ca.uqac.lif.cep.ltl.Eventually
+<until>,ca.uqac.lif.cep.ltl.Until
+<next>,ca.uqac.lif.cep.ltl.Next
