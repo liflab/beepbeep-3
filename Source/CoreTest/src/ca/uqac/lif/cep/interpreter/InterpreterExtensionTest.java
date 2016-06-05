@@ -25,7 +25,6 @@ import org.junit.Test;
 import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.epl.Freeze;
 import ca.uqac.lif.cep.CumulativeProcessor;
-import ca.uqac.lif.cep.Placeholder;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;

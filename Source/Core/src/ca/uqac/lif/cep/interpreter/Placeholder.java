@@ -15,9 +15,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.interpreter;
 
 import java.util.Stack;
+
+import ca.uqac.lif.cep.Passthrough;
 
 /**
  * Placeholder used to symbolize the output of some processor. This is used

@@ -7,6 +7,8 @@ import java.util.Queue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.epl.QueueSink;
+import ca.uqac.lif.cep.interpreter.GrammarExtension;
+import ca.uqac.lif.cep.interpreter.Interpreter;
 
 /**
  * Unit tests for {@link Function}, {@link UnaryFunction}, {@link BinaryFunction}
@@ -154,6 +156,13 @@ public class FunctionTest
 			assertEquals(c, i.intValue());
 		}
 	}
+	
+	@Test
+	public void testGrammar()
+	{
+		Interpreter interp = new Interpreter();
+		interp.extendGrammar(DummyGrammarExtension.class);
+	}
 
 	public static class DummyUnaryFunction extends UnaryFunction<Integer,Integer>
 	{
@@ -186,6 +195,15 @@ public class FunctionTest
 		{
 			return x.intValue() + y.intValue();
 		}
+	}
+	
+	public static class DummyGrammarExtension extends GrammarExtension
+	{
+		protected DummyGrammarExtension(Class<? extends GrammarExtension> reference, String message)
+		{
+			super(DummyGrammarExtension.class, "");
+		}
+		
 	}
 
 }
