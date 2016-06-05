@@ -11,13 +11,15 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Constant;
 import ca.uqac.lif.cep.epl.Filter;
+import ca.uqac.lif.cep.CumulativeFunction;
+import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Fork;
-import ca.uqac.lif.cep.Function;
+import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
-import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
+import ca.uqac.lif.cep.eml.numbers.Addition;
 import ca.uqac.lif.cep.eml.numbers.Division;
 import ca.uqac.lif.cep.eml.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.eml.numbers.Power;
@@ -34,7 +36,7 @@ public class MathTest
 	public void testSumPush()
 	{
 		QueueSource cp = new QueueSource(1, 1);
-		CumulativeSum cs = new CumulativeSum();
+		Sum cs = new Sum();
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, cs);
 		Connector.connect(cs, qs);
@@ -64,7 +66,7 @@ public class MathTest
 	public void testSumPull()
 	{
 		QueueSource cp = new QueueSource(1, 1);
-		CumulativeSum cs = new CumulativeSum();
+		Sum cs = new Sum();
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, cs);
 		Connector.connect(cs, qs);
@@ -103,7 +105,7 @@ public class MathTest
 		l_input2.add(0);
 		QueueSource input1 = new QueueSource(l_input1, 1);
 		QueueSource input2 = new QueueSource(l_input2, 1);
-		Function pow = new Function(new Power());
+		FunctionProcessor pow = new FunctionProcessor(new Power());
 		Connector.connect(input1, input2, pow);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(pow, sink);
@@ -197,37 +199,37 @@ public class MathTest
 	{
 		Fork fork = new Fork(2);
 		Connector.connect(source, fork);
-		CumulativeSum sum_left = new CumulativeSum();
+		Sum sum_left = new Sum();
 		{
 			// Left part: sum of x^n
 			Fork fork2 = new Fork(2);
 			Connector.connect(fork, fork2, 0, 0);
 			Constant exponent = new Constant(n);
 			Connector.connect(fork2, exponent, 0, 0);
-			Function pow = new Function(new Power());
+			FunctionProcessor pow = new FunctionProcessor(new Power());
 			Connector.connect(fork2, pow, 1, 0);
 			Connector.connect(exponent, pow, 0, 1);
 			Connector.connect(pow, sum_left);
 		}
-		CumulativeSum sum_right = new CumulativeSum();
+		Sum sum_right = new Sum();
 		{
 			// Right part: sum of 1
 			Constant one = new Constant(1);
 			Connector.connect(fork, one, 1, 0);
 			Connector.connect(one, sum_right);
 		}
-		Function div = new Function(new Division());
+		FunctionProcessor div = new FunctionProcessor(new Division());
 		Connector.connect(sum_left, sum_right, div);
 		Connector.connect(div, sink);
 	}
 	
 	protected static void setupSumIfGreater(Processor source, Processor sink)
 	{
-		Window win = new Window(new CumulativeSum(), 2);
+		Window win = new Window(new Sum(), 2);
 		Connector.connect(source, win);
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
-		Function greater = new Function(new IsGreaterThan());
+		FunctionProcessor greater = new FunctionProcessor(new IsGreaterThan());
 		Constant five = new Constant(5);
 		Connector.connect(fork, five, 0, 0);
 		Connector.connect(fork, greater, 1, 0);
@@ -297,6 +299,15 @@ public class MathTest
 		sink.pullHard();
 		recv = (Number) sink.remove()[0]; // 0+6=6
 		assertEquals(6, recv.intValue());
+	}
+	
+	public static class Sum extends CumulativeProcessor
+	{
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public Sum()
+		{
+			super(new CumulativeFunction(new Addition()));
+		}
 	}
 
 }

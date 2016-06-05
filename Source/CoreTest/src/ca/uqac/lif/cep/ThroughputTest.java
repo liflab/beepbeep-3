@@ -24,7 +24,7 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
+import ca.uqac.lif.cep.eml.numbers.Addition;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
@@ -112,7 +112,7 @@ public class ThroughputTest
 		events.add(4);
 		QueueSource cp = new QueueSource(null, 1);
 		cp.setEvents(events);
-		Window wp = new Window(new CumulativeSum(), 3);
+		Window wp = new Window(new Sum(), 3);
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, wp);
 		Connector.connect(wp, qs);
@@ -127,6 +127,15 @@ public class ThroughputTest
 		long throughput = (long) (((float) num_events) / (end_time - start_time) * 1000000000f);
 		System.out.println("Throughput on window (push): " + throughput + " ev/s");
 		assertTrue(true);
+	}
+	
+	public static class Sum extends CumulativeProcessor
+	{
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public Sum()
+		{
+			super(new CumulativeFunction(new Addition()));
+		}
 	}
 
 }

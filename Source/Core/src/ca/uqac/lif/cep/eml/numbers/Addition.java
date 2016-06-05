@@ -19,37 +19,26 @@ package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
 
-public class Addition extends NaryComputable
+import ca.uqac.lif.cep.BinaryFunction;
+
+public class Addition extends BinaryFunction<Number,Number,Number>
 {
-	public Addition()
+	public static void build(Stack<Object> stack)
 	{
-		super(2);
-	}
-	
-	public Addition(int arity)
-	{
-		super(arity);
+		stack.pop();
+		stack.push(new Addition());
 	}
 
 	@Override
-	protected Object[] computeNumerical(Number[] inputs)
+	public Number evaluate(Number x, Number y) 
 	{
-		Object[] out = new Object[1];
-		float sum = 0;
-		for (Number n : inputs)
-		{
-			if (n != null)
-			{
-				sum += n.floatValue();
-			}
-		}
-		out[0] = sum;
-		return out;
+		return x.floatValue() + y.floatValue();
 	}
-	
-	public static void build(Stack<Object> stack)
+
+	@Override
+	public Number getStartValue() 
 	{
-		stack.push(new Addition(2));
+		return 0;
 	}
 
 }

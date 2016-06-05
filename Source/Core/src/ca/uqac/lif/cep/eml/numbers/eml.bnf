@@ -12,3 +12,12 @@
 <eml_number>             := ^\d+;
 
 <eml_expr>               := <eml_number> ;
+
+# Functions on numbers
+
+<c_function>             := <fct_addition> | <fct_subtraction> | <fct_division>
+                            | <fct_multiplication> ;
+<fct_addition>           := ADDITION ;
+<fct_subtraction>        := SUBTRACTION ;
+<fct_division>           := DIVISION ;
+<fct_multiplication>     := MULTIPLICATION ;

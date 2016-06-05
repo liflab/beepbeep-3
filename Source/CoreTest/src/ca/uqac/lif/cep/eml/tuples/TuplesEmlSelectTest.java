@@ -24,13 +24,13 @@ import java.io.InputStream;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Combiner;
+import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.eml.numbers.NumberGrammar;
 import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
 import ca.uqac.lif.cep.io.StreamGrammar;
@@ -46,16 +46,9 @@ public class TuplesEmlSelectTest
 	public void setUp()
 	{
 		m_interpreter = new InterpreterTestFrontEnd();
-		{
-			// Add input streams to grammar
-			GrammarExtension ext = new StreamGrammar();
-			m_interpreter.extendGrammar(ext);
-		}
-		{
-			// Add tuples to grammar
-			GrammarExtension ext = new TupleGrammar();
-			m_interpreter.extendGrammar(ext);
-		}
+		m_interpreter.extendGrammar(NumberGrammar.class);
+		m_interpreter.extendGrammar(StreamGrammar.class);
+		m_interpreter.extendGrammar(TupleGrammar.class);
 	}
 	
 	@Test
@@ -259,10 +252,10 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testCombine1() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("COMBINE (1) WITH SUM");
+		Object processor = m_interpreter.parseQuery("COMBINE (1) WITH ADDITION");
 		assertNotNull(processor);
-		assertTrue(processor instanceof Combiner);
-		Combiner s = (Combiner) processor;
+		assertTrue(processor instanceof CumulativeProcessor);
+		CumulativeProcessor s = (CumulativeProcessor) processor;
 		Pullable p = s.getPullableOutput(0);
 		Object answer = p.pull();
 		assertTrue(answer instanceof Number);
@@ -277,9 +270,9 @@ public class TuplesEmlSelectTest
 	@Test
 	public void testCombine2() throws ParseException
 	{
-		Object processor = m_interpreter.parseQuery("COMBINE (2) WITH PRODUCT");
-		assertTrue(processor instanceof Combiner);
-		Combiner s = (Combiner) processor;
+		Object processor = m_interpreter.parseQuery("COMBINE (2) WITH MULTIPLICATION");
+		assertTrue(processor instanceof CumulativeProcessor);
+		CumulativeProcessor s = (CumulativeProcessor) processor;
 		Pullable p = s.getPullableOutput(0);
 		Object answer = p.pull();
 		assertTrue(answer instanceof Number);

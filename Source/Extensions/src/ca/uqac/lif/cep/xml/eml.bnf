@@ -1,0 +1,12 @@
+# -----------------------------------------
+# Grammar for BeepBeep 3; edit at your own risk!
+#
+# This is an EML (Event Manipulation Language) for XML/XPath
+#
+# This grammar works in tandem with the EPL (Event Processing
+# Language) grammar.
+# -----------------------------------------
+
+<xml_feeder>             := THE XML OF ( <processor> ) ;
+<p_xpath>                := XPATH <p_string> ON ( <processor> ) ;
+<p_string>               := ^[^\s]+;

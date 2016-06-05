@@ -19,36 +19,26 @@ package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
 
-public class IsGreaterThan extends NaryComputable
+import ca.uqac.lif.cep.BinaryFunction;
+
+public class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
 {
-	public IsGreaterThan()
+	public static void build(Stack<Object> stack)
 	{
-		super(2);
+		stack.pop();
+		stack.push(new IsGreaterThan());
 	}
 
 	@Override
-	protected Object[] computeNumerical(Number[] inputs)
+	public Boolean evaluate(Number x, Number y) 
 	{
-		Object[] out = new Object[1];
-		if (inputs.length >= 2)
-		{
-			Number n1 = inputs[0];
-			Number n2 = inputs[inputs.length - 1];
-			if (n1.floatValue() > n2.floatValue())
-			{
-				out[0] = true;
-			}
-			else
-			{
-				out[0] = false;
-			}
-		}
-		return out;
+		return x.floatValue() > y.floatValue();
 	}
-	
-	public static void build(Stack<Object> stack)
+
+	@Override
+	public Boolean getStartValue() 
 	{
-		stack.push(new IsGreaterThan());
+		return false;
 	}
 
 }

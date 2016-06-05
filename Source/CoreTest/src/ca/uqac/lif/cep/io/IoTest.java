@@ -64,6 +64,7 @@ public class IoTest
 		sr.setIsFile(true);
 		int turns = 0;
 		Pullable p = sr.getPullableOutput(0);
+		@SuppressWarnings("unused")
 		String s = "";
 		while (p.hasNext() != NextStatus.NO)
 		{

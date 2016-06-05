@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.epl.Freeze;
+import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Placeholder;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.Window;
@@ -83,6 +84,15 @@ public class InterpreterExtensionTest
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof CountDecimate);
+	}
+	
+	@Test
+	public void testExtensionNumber5() throws ParseException
+	{
+		String expression = "COMBINE (EVERY 2ND OF (0)) WITH ADDITION";
+		Object result = m_interpreter.parseQuery(expression);
+		assertNotNull(result);
+		assertTrue(result instanceof CumulativeProcessor);
 	}
 	
 	@Test

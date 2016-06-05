@@ -93,12 +93,3 @@
 # "WHERE" statement
 
 <eml_where>              := ( <processor> ) WHERE <eml_att_expr> ;
-
-# Operators that can be used as combiners
-
-<c_combine>              := <eml_cmb_sum> | <eml_cmb_product> | <eml_quotient>
-                            | <eml_difference> ;
-<eml_cmb_sum>            := SUM ;
-<eml_cmb_product>        := PRODUCT ;
-<eml_cmb_quotient>       := QUOTIENT ;
-<eml_cmb_difference>     := DIFFERENCE ;

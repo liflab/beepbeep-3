@@ -3,3 +3,7 @@
 # -----------------------------------------
 
 <eml_number>,ca.uqac.lif.cep.eml.numbers.EmlNumber
+<fct_addition>,ca.uqac.lif.cep.eml.numbers.Addition
+<fct_subtraction>,ca.uqac.lif.cep.eml.numbers.Subtraction
+<fct_multiplication>,ca.uqac.lif.cep.eml.numbers.Multiplication
+<fct_division>,ca.uqac.lif.cep.eml.numbers.Division

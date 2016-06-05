@@ -1,0 +1,7 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+<eml_bag>,ca.uqac.lif.cep.sets.EmlBag
+<eml_set>,ca.uqac.lif.cep.sets.EmlSet
+<eml_bag_union>,ca.uqac.lif.cep.sets.BagUnion

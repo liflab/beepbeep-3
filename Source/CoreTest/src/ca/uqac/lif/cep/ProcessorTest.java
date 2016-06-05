@@ -27,9 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.eml.numbers.Addition;
-import ca.uqac.lif.cep.eml.numbers.CumulativeSum;
 import ca.uqac.lif.cep.eml.numbers.Incrementer;
-import ca.uqac.lif.cep.eml.numbers.IsEven;
 import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.epl.QueueSink;
@@ -85,28 +83,32 @@ public class ProcessorTest
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new CumulativeSum(), 3);
+		Window wp = new Window(new Sum(), 3);
 		Connector.connect(cs, wp);
 		Pullable p = wp.getPullableOutput(0);
 		// We must pull three times to get the first output
 		recv = (Number) p.pull();
 		if (recv != null)
 		{
+			// 0 + 1 = 1
 			fail("Expected null on first pull, got " + recv);
 		}
 		recv = (Number) p.pull();
 		if (recv != null)
 		{
+			// 1 + 1 = 2
 			fail("Expected null on second pull, got " + recv);
 		}
 		recv = (Number) p.pull();
 		if (recv == null || recv.intValue() != 3)
 		{
+			// 2 + 1 = 3
 			fail("Expected 3 on third pull, got " + recv);
 		}
 		recv = (Number) p.pull();
 		if (recv == null || recv.intValue() != 3)
 		{
+			// 3 + 1 = 4
 			fail("Expected 3 on fourth pull, got " + recv);
 		}
 	}
@@ -116,7 +118,7 @@ public class ProcessorTest
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new CumulativeSum(), 3);
+		Window wp = new Window(new Sum(), 3);
 		Connector.connect(cs, wp);
 		Pullable p = wp.getPullableOutput(0);
 		// We pull hard: get output on first call
@@ -138,7 +140,7 @@ public class ProcessorTest
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new CumulativeSum(), 3);
+		Window wp = new Window(new Sum(), 3);
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cs, wp);
 		Connector.connect(wp, qs);
@@ -174,7 +176,7 @@ public class ProcessorTest
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1, 1);
-		CumulativeSum count = new CumulativeSum();
+		Sum count = new Sum();
 		Connector.connect(ones, count);
 		CountDecimate decim = new CountDecimate(2);
 		Connector.connect(count, decim);
@@ -223,7 +225,7 @@ public class ProcessorTest
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1, 1);
-		CumulativeSum count = new CumulativeSum();
+		Sum count = new Sum();
 		Connector.connect(ones, count);
 		CountDecimate decim = new CountDecimate(2);
 		Connector.connect(count, decim);
@@ -280,7 +282,7 @@ public class ProcessorTest
 		l_input2.add(0);
 		QueueSource input1 = new QueueSource(l_input1, 1);
 		QueueSource input2 = new QueueSource(l_input2, 1);
-		Function add = new Function(new Addition(2));
+		FunctionProcessor add = new FunctionProcessor(new Addition());
 		Connector.connect(input1, input2, add);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add, sink);
@@ -379,7 +381,7 @@ public class ProcessorTest
 		Connector.connect(input1, fork);
 		Filter filter = new Filter();
 		Connector.connect(fork, filter, 0, 0);
-		Function even = new Function(new IsEven());
+		FunctionProcessor even = new FunctionProcessor(new IsEven());
 		Connector.connect(fork, even, 1, 0);
 		Connector.connect(even, filter, 0, 1);
 		QueueSink sink = new QueueSink(1);
@@ -412,7 +414,7 @@ public class ProcessorTest
 	public void testGroupPush1()
 	{
 		// Create the group
-		Function add = new Function(new Addition(2));
+		FunctionProcessor add = new FunctionProcessor(new Addition());
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -490,7 +492,7 @@ public class ProcessorTest
 			input_events.add(new Integer(11));
 			src_right.setEvents(input_events);
 		}
-		Function add = new Function(new Addition(2));
+		FunctionProcessor add = new FunctionProcessor(new Addition());
 		Connector.connect(src_left, add, 0, 0);
 		Connector.connect(src_right, add, 0, 1);
 		Pullable p = add.getPullableOutput(0);
@@ -506,7 +508,7 @@ public class ProcessorTest
 	public void testGroupPull1()
 	{
 		// Create the group
-		Function add = new Function(new Addition(2));
+		FunctionProcessor add = new FunctionProcessor(new Addition());
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -566,7 +568,7 @@ public class ProcessorTest
 	public void testGroupPush2()
 	{
 		// Create the group
-		Function add = new Function(new Addition(2));
+		FunctionProcessor add = new FunctionProcessor(new Addition());
 		Incrementer inc = new Incrementer(10);
 		Connector.connect(inc, add, 0, 0);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
@@ -788,5 +790,23 @@ public class ProcessorTest
 		i = (Integer) q.remove();
 		assertEquals(1, i.intValue());
 	}
-
+	
+	public static class IsEven extends UnaryFunction<Number,Boolean>
+	{
+		
+		@Override
+		public Boolean evaluate(Number x) 
+		{
+			return x.floatValue() % 2 == 0;
+		}
+	}
+	
+	public static class Sum extends CumulativeProcessor
+	{
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public Sum()
+		{
+			super(new CumulativeFunction(new Addition()));
+		}
+	}
 }

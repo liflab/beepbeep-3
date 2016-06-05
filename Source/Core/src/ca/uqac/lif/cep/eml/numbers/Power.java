@@ -19,29 +19,30 @@ package ca.uqac.lif.cep.eml.numbers;
 
 import java.util.Stack;
 
-public class Power extends NaryComputable
+import ca.uqac.lif.cep.BinaryFunction;
+
+public class Power extends BinaryFunction<Number,Number,Number>
 {
 	public Power()
 	{
-		super(2);
+		super();
 	}
 
-	@Override
-	protected Object[] computeNumerical(Number[] inputs)
-	{
-		Object[] out = new Object[1];
-		if (inputs.length >= 2)
-		{
-			Number x = inputs[0];
-			Number n = inputs[inputs.length - 1];
-			out[0] = Math.pow(x.doubleValue(), n.doubleValue());
-		}
-		return out;
-	}
-	
 	public static void build(Stack<Object> stack)
 	{
+		stack.pop();
 		stack.push(new Power());
 	}
 
+	@Override
+	public Number evaluate(Number x, Number y) 
+	{
+		return Math.pow(x.floatValue(), y.floatValue());
+	}
+
+	@Override
+	public Number getStartValue() 
+	{
+		return 1;
+	}
 }

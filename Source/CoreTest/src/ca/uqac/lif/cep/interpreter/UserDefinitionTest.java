@@ -29,6 +29,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
+import ca.uqac.lif.cep.eml.numbers.NumberGrammar;
 import ca.uqac.lif.cep.eml.tuples.EmlPuller;
 import ca.uqac.lif.cep.eml.tuples.EmlPuller.EmlPullable;
 import ca.uqac.lif.cep.eml.tuples.EmlNumber;
@@ -48,7 +49,8 @@ public class UserDefinitionTest
 	@Before
 	public void setUp()
 	{
-		m_interpreter = new InterpreterTestFrontEnd();		
+		m_interpreter = new InterpreterTestFrontEnd();
+		m_interpreter.extendGrammar(NumberGrammar.class);
 		m_interpreter.extendGrammar(StreamGrammar.class);
 		m_interpreter.extendGrammar(TupleGrammar.class);
 		m_interpreter.extendGrammar(LtlGrammar.class);
@@ -119,7 +121,7 @@ public class UserDefinitionTest
 	@Test
 	public void testDefinition1() throws ParseException
 	{
-		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM";
+		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION";
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof UserDefinition);
@@ -188,7 +190,7 @@ public class UserDefinitionTest
 	public void testDefinition4() throws ParseException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		{
@@ -210,11 +212,11 @@ public class UserDefinitionTest
 	public void testDefinition5() throws ParseException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM ((COMBINE (SELECT x FROM (@P)) WITH SUM) AS T, (THE COUNT OF (@P)) AS U)");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM ((COMBINE (SELECT x FROM (@P)) WITH ADDITION) AS T, (THE COUNT OF (@P)) AS U)");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		Processor proc = (Processor) m_interpreter.parseQuery("THE AVERAGE OF (SELECT a FROM (THE TUPLES OF FILE \"tuples3.csv\"))");
@@ -253,7 +255,7 @@ public class UserDefinitionTest
 	public void testDefinition7() throws ParseException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH SUM");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		QueueSource qs = new QueueSource(1, 1);

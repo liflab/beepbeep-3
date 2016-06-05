@@ -25,6 +25,7 @@ import org.junit.Test;
 import ca.uqac.lif.bullwinkle.BnfParser;
 import ca.uqac.lif.bullwinkle.BnfParser.InvalidGrammarException;
 import ca.uqac.lif.bullwinkle.ParseNode;
+import ca.uqac.lif.cep.eml.numbers.NumberGrammar;
 import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
 import ca.uqac.lif.cep.epl.EplGrammar;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
@@ -46,6 +47,11 @@ public class TuplesEmlGrammarTest
 			m_parser.setGrammar(PackageFileReader.readPackageFile(Interpreter.class, "eml.bnf"));
 			{
 				GrammarExtension ext = new EplGrammar();
+				String productions = ext.getGrammar();
+				m_parser.setGrammar(productions);
+			}
+			{
+				GrammarExtension ext = new NumberGrammar();
 				String productions = ext.getGrammar();
 				m_parser.setGrammar(productions);
 			}
@@ -207,7 +213,7 @@ public class TuplesEmlGrammarTest
 	@Test
 	public void testExtension16() throws ParseException
 	{
-		String expression = "COMBINE (SELECT x FROM (0)) WITH SUM";
+		String expression = "COMBINE (SELECT x FROM (0)) WITH ADDITION";
 		ParseNode result = shouldParse(expression, "<processor>");
 		assertEquals("<processor>", result.getValue());
 	}

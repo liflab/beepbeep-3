@@ -1,0 +1,11 @@
+# -----------------------------------------
+# Grammar for BeepBeep 3; edit at your own risk!
+#
+# This is an EML (Event Manipulation Language) for data structures.
+#
+# This grammar works in tandem with the EPL (Event Processing
+# Language) grammar.
+# -----------------------------------------
+
+<c_combine>              := <eml_bag_union> ;
+<eml_bag_union>          := BAG UNION ;

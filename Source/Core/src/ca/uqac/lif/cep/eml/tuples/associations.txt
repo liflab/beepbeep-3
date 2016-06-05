@@ -69,10 +69,3 @@
 # SQL gateway
 
 <sql_feeder>,ca.uqac.lif.cep.eml.tuples.MySqlSource
-
-# Operators that can be used as combiners
-
-<eml_cmb_sum>,ca.uqac.lif.cep.eml.tuples.Sum
-<eml_cmb_product>,ca.uqac.lif.cep.eml.tuples.Product
-<eml_cmb_difference>,ca.uqac.lif.cep.eml.tuples.Difference
-<eml_cmb_quotient>,ca.uqac.lif.cep.eml.tuples.Quotient
