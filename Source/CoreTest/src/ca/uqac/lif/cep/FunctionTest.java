@@ -199,11 +199,9 @@ public class FunctionTest
 	
 	public static class DummyGrammarExtension extends GrammarExtension
 	{
-		protected DummyGrammarExtension(Class<? extends GrammarExtension> reference, String message)
+		public DummyGrammarExtension()
 		{
 			super(DummyGrammarExtension.class, "");
-		}
-		
+		}		
 	}
-
 }

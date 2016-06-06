@@ -64,6 +64,13 @@ public class QueueSink extends Sink
 		return wrapVector(new Object[m_queues.length]);
 	}
 	
+	/**
+	 * Gets the queue corresponding to the <i>i</i>-th output of the sink 
+	 * @param i The position of the output. Must be non-negative and less than
+	 *   the queue's arity.
+	 * @return The queue
+	 */
+	/*@requires i >= 0 && i < m_queues.length */
 	public Queue<Object> getQueue(int i)
 	{
 		return m_queues[i];

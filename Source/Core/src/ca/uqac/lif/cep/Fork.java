@@ -38,7 +38,7 @@ public class Fork extends SingleProcessor
 	 * @param out_arity The output arity of the fork
 	 * @param reference The fork to copy from
 	 */
-	public Fork(int out_arity, Fork reference)
+	/*public Fork(int out_arity, Fork reference)
 	{
 		super(1, out_arity);
 		for (int i = 0; i < reference.m_inputPullables.length; i++)
@@ -49,7 +49,7 @@ public class Fork extends SingleProcessor
 		{
 			m_outputPushables[i] = reference.m_outputPushables[i];
 		}
-	}
+	}*/
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)

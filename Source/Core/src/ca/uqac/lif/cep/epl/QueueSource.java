@@ -66,5 +66,12 @@ public class QueueSource extends Source
 		}
 		return wrapVector(output);
 	}
+	
+	@Override
+	public void reset()
+	{
+		super.reset();
+		m_index = 0;
+	}
 
 }

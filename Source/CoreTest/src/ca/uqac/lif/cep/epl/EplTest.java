@@ -12,6 +12,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.Utilities;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
 import ca.uqac.lif.cep.io.StreamGrammar;
@@ -52,9 +53,9 @@ public class EplTest
 			in.push(2);
 			assertTrue(queue.isEmpty());
 			in.push(3);
-			queueContains(3, queue);
+			Utilities.queueContains(3, queue);
 			in.push(4);
-			queueContains(4, queue);
+			Utilities.queueContains(4, queue);
 			d.reset();
 		}
 	}
@@ -84,7 +85,7 @@ public class EplTest
 			in.push(0); condition.push(false);
 			assertTrue(queue.isEmpty());
 			in.push(1); condition.push(true);
-			queueContains(1, queue);
+			Utilities.queueContains(1, queue);
 			f.reset();
 		}
 	}
@@ -101,19 +102,19 @@ public class EplTest
 		{
 			in.push(0);
 			assertEquals(1, queue.size());
-			queueContains(0, queue);
+			Utilities.queueContains(0, queue);
 			in.push(1);
 			assertTrue(queue.isEmpty());
 			in.push(2);
 			assertTrue(queue.isEmpty());
 			in.push(3);
-			queueContains(3, queue);
+			Utilities.queueContains(3, queue);
 			in.push(4);
 			assertTrue(queue.isEmpty());
 			in.push(5);
 			assertTrue(queue.isEmpty());
 			in.push(6);
-			queueContains(6, queue);
+			Utilities.queueContains(6, queue);
 			f.reset();
 		}
 	}
@@ -130,22 +131,13 @@ public class EplTest
 		{
 			in.push(0);
 			assertEquals(1, queue.size());
-			queueContains(0, queue);
+			Utilities.queueContains(0, queue);
 			in.push(1);
-			queueContains(1, queue);
+			Utilities.queueContains(1, queue);
 			in.push(2);
-			queueContains(2, queue);
+			Utilities.queueContains(2, queue);
 			f.reset();
 		}
-	}
-
-	private static void queueContains(int value, Queue<Object> queue)
-	{
-		assertEquals(1, queue.size());
-		Object o = queue.remove();
-		assertNotNull(o);
-		assertTrue(o instanceof Number);
-		assertEquals(value, ((Number) o).intValue());
 	}
 
 	@Test
@@ -170,11 +162,11 @@ public class EplTest
 		for (int k = 0; k < 2; k++)
 		{
 			in.push(0);
-			queueContains(0, queue);
+			Utilities.queueContains(0, queue);
 			in.push(1);
-			queueContains(0, queue);
+			Utilities.queueContains(0, queue);
 			in.push(2);
-			queueContains(0, queue);
+			Utilities.queueContains(0, queue);
 			f.reset();
 		}
 	}
@@ -200,11 +192,11 @@ public class EplTest
 		for (int k = 0; k < 2; k++)
 		{
 			in.push(0);
-			queueContains(0, queue);
+			Utilities.queueContains(0, queue);
 			in.push(1);
-			queueContains(1, queue);
+			Utilities.queueContains(1, queue);
 			in.push(2);
-			queueContains(2, queue);
+			Utilities.queueContains(2, queue);
 			in.push(3);
 			assertTrue(queue.isEmpty());
 			in.push(4);
@@ -274,7 +266,7 @@ public class EplTest
 		for (int i = 0; i < 10; i++)
 		{
 			source.push();
-			queueContains(i % 3, out);
+			Utilities.queueContains(i % 3, out);
 		}
 	}
 
@@ -372,11 +364,11 @@ public class EplTest
 		in.push(1);
 		assertTrue(queue.isEmpty());
 		in.push(2);
-		queueContains(2, queue);
+		Utilities.queueContains(2, queue);
 		in.push(3);
-		queueContains(3, queue);
+		Utilities.queueContains(3, queue);
 		in.push(4);
-		queueContains(4, queue);
+		Utilities.queueContains(4, queue);
 	}
 
 	@Test
