@@ -20,24 +20,32 @@ package ca.uqac.lif.cep;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Vector;
 
 /**
- * Converts a sequence of <i>n</i> consecutive events into <i>n</i>
- * events sent simultaneously to a processor as its inputs. This effectively
- * works as like time demultiplexer.
+ * Converts a sequence of <i>n</i> consecutive events into an event
+ * that is a vector of size <i>n</i>. This effectively
+ * works as a time demultiplexer.
  * 
  * @author Sylvain Hallé
- *
  */
-public abstract class Demultiplexer extends SingleProcessor
+public class Demultiplexer extends SingleProcessor
 {
+	/**
+	 * The window of objects to be stored
+	 */
 	protected List<Object> m_window;
 	
 	/**
 	 * The width of the demuxing, i.e. the value of <i>n</i> in the
 	 * definition above
 	 */
-	protected final int m_width;
+	private int m_width;
+	
+	Demultiplexer()
+	{
+		super(1, 1);
+	}
 	
 	/**
 	 * Creates a new demuxer
@@ -60,11 +68,19 @@ public abstract class Demultiplexer extends SingleProcessor
 		m_window.add(inputs[0]);
 		if (m_window.size() == m_width)
 		{
-			return computeWindow(m_window.toArray());
+			Vector<Object> objects = new Vector<Object>();
+			objects.addAll(m_window);
+			Object[] out = new Object[1];
+			out[0] = objects;
+			return wrapVector(out);
 		}
 		return null;
 	}
 	
-	protected abstract Queue<Object[]> computeWindow(Object[] window);
-
+	@Override
+	public void reset()
+	{
+		super.reset();
+		m_window.clear();
+	}
 }

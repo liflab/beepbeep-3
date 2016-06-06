@@ -20,43 +20,46 @@ package ca.uqac.lif.cep;
 import static org.junit.Assert.*;
 
 import java.util.Queue;
+import java.util.Vector;
 
 import org.junit.Test;
 
 import ca.uqac.lif.cep.epl.QueueSink;
 
 /**
- * Unit tests for a few simple processors: {@link Constant}, 
- * {@link Passthrough}
+ * Unit tests for the {@link Demultiplexer} class.
  * @author Sylvain Hallé
+ *
  */
-public class SimpleTests
+public class DemultiplexerTest
 {
+	@SuppressWarnings("unchecked")
 	@Test
-	public void testConstant()
+	public void testDemultiplexer()
 	{
-		String out = null;
-		Constant c = new Constant("A");
-		TypedPullable<String> p = new TypedPullable<String>(c.getPullableOutput(0));
-		out = p.pull();
-		assertEquals("A", out);
-		out = p.pull();
-		assertEquals("A", out);
-	}
-	
-	@Test
-	public void testPassthrough()
-	{
-		Passthrough c = new Passthrough(1);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(c,  sink);
-		Pushable in = c.getPushableInput(0);
-		Queue<Object> q = sink.getQueue(0);
-		for (int i = 0; i < 10; i++)
+		Demultiplexer demux = new Demultiplexer(3);
+		QueueSink qsink = new QueueSink(1);
+		Connector.connect(demux, qsink);
+		Pushable push1 = demux.getPushableInput(0);
+		for (int k = 0; k < 2; k++)
 		{
-			in.push(i);
-			int out = (int) q.remove();
-			assertEquals(i, out);
+			Queue<Object> queue = qsink.getQueue(0);
+			push1.push(0);
+			assertEquals(0, queue.size());
+			push1.push(1);
+			assertEquals(0, queue.size());
+			push1.push(2);
+			assertEquals(1, queue.size());
+			Vector<Object> out = (Vector<Object>) queue.remove();
+			assertEquals(3, out.size());
+			push1.push(3);
+			out = (Vector<Object>) queue.remove();
+			assertEquals(3, out.size());
+			push1.push(4);
+			out = (Vector<Object>) queue.remove();
+			assertEquals(3, out.size());
+			demux.reset();
+			qsink.reset();
 		}
 	}
 }
