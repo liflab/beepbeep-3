@@ -52,7 +52,7 @@ public class InterpreterExtensionTest
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof EmlNumber);
-		assert(((EmlNumber) result).intValue() == 0);
+		assertEquals(0, ((EmlNumber) result).intValue());
 	}
 	
 	@Test

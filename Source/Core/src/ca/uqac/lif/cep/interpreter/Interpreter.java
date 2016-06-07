@@ -62,17 +62,17 @@ public class Interpreter implements ParseNodeVisitor
 	 * The stack used to build the object resulting from the parsing  
 	 */
 	protected GroupStack<Object> m_nodes;
-	
+
 	/**
 	 * A counter so that every user definition number is unique
 	 */
 	protected static int s_defNb = 0;
-	
+
 	/**
 	 * The system-dependent line separator
 	 */
 	protected static final String CRLF = System.getProperty("line.separator");
-	
+
 	/**
 	 * The result of the last call to the interpreter. This either
 	 * stores a user definition, a processor, or null if the interpretation
@@ -84,12 +84,12 @@ public class Interpreter implements ParseNodeVisitor
 	 * User-defined processors
 	 */
 	protected Map<String, GroupProcessor> m_processorDefinitions;
-	
+
 	/**
 	 * Forks
 	 */
 	protected Map<String, SmartFork> m_processorForks;
-	
+
 	/**
 	 * User-defined objects
 	 */
@@ -100,13 +100,13 @@ public class Interpreter implements ParseNodeVisitor
 	 * the buildable <em>instance</em> whose syntax it defines
 	 */
 	protected Map<String, Object> m_userDefinedAssociations;
-	
+
 	/**
 	 * Associations between the name of a production rule and
 	 * the buildable class whose syntax it defines
 	 */
 	protected Map<String, Class<?>> m_associations;
-	
+
 	/**
 	 * Instantiates an interpreter and prepares it to parse expressions
 	 */
@@ -124,7 +124,7 @@ public class Interpreter implements ParseNodeVisitor
 		m_parser.setStartRule("<S>");
 		extendGrammar(EplGrammar.class);
 	}
-	
+
 	/**
 	 * Instantiates an interpreter, specifying a list of grammar extensions
 	 * to load.
@@ -155,7 +155,7 @@ public class Interpreter implements ParseNodeVisitor
 			}
 		}
 	}
-	
+
 	/**
 	 * Instantiates an interpreter with the rules of another
 	 * @param i The interpreter to borrow the rules form
@@ -177,7 +177,7 @@ public class Interpreter implements ParseNodeVisitor
 		m_processorForks = new HashMap<String, SmartFork>();
 		m_processorForks.putAll(i.m_processorForks);
 	}
-	
+
 	/**
 	 * Extends the interpreter's grammar with new definitions
 	 * @param c A grammar extension class to add to the interpreter
@@ -200,7 +200,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return this;
 	}
-	
+
 	/**
 	 * Extends the interpreter's grammar with new definitions
 	 * @param ext The grammar extension to add to the interpreter
@@ -243,17 +243,17 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		m_userDefinedAssociations.put(production_rule, o);
 	}
-	
+
 	public void addSymbolDefinition(String symbol_name, Object object)
 	{
 		m_symbolDefinitions.put(symbol_name, object);
 	}
-	
+
 	public void addSymbolDefinitions(Map<String, Object> defs)
 	{
 		m_symbolDefinitions.putAll(defs);
 	}
-	
+
 	public void addPlaceholder(String symbol_name, String non_terminal, Object object)
 	{
 		m_symbolDefinitions.put(symbol_name, object);
@@ -345,7 +345,7 @@ public class Interpreter implements ParseNodeVisitor
 				Fork new_f = new Fork(new_arity, f);
 				Connector.connect(new_f, pt, new_arity - 1, 0);
 				m_processorForks.put(node_name, new_f);
-				*/
+				 */
 				f.extendOutputArity(new_arity);
 				Connector.connect(f, pt, new_arity - 1, 0);
 				m_nodes.push(pt);
@@ -422,7 +422,7 @@ public class Interpreter implements ParseNodeVisitor
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void visitUserDefinedAssociation(ParseNode node)
 	{
 		// The node's name appears to refer to a Buildable object
@@ -464,12 +464,12 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		// Nothing to do
 	}
-	
+
 	public Pullable executeQuery(String query)
 	{
 		return executeQuery(query, 0);
 	}
-	
+
 	public Pullable executeQuery(String query, int index)
 	{
 		Object result;
@@ -496,7 +496,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return null;
 	}
-	
+
 	public Pullable executeQueries(InputStream is) throws IOException
 	{
 		BufferedReader in = new BufferedReader(new InputStreamReader(is));
@@ -509,7 +509,7 @@ public class Interpreter implements ParseNodeVisitor
 		in.close();
 		return executeQueries(contents.toString());
 	}
-	
+
 	public Pullable executeQueries(String queries)
 	{
 		queries += CRLF; // Apppend a CR so that the last query is also matched
@@ -527,7 +527,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return last;
 	}
-	
+
 	public Object parseQueryLifted(String query) throws ParseException
 	{
 		Object o = parseQuery(query);
@@ -560,7 +560,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		//return null;    
 	}
-	
+
 	protected Object parseLanguage(String property, String start_symbol) throws ParseException
 	{
 		m_parser.setStartRule(start_symbol);
@@ -577,12 +577,12 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return m_nodes.peek();
 	}
-	
+
 	void addCaseToRule(String rule_name, String case_string)
 	{
 		m_parser.addCaseToRule(rule_name, case_string);
 	}
-	
+
 	void addRule(BnfRule rule)
 	{
 		m_parser.addRule(rule);
@@ -613,7 +613,7 @@ public class Interpreter implements ParseNodeVisitor
 			super(message);
 		}
 	}
-	
+
 	/**
 	 * Returns the result of the last call to the interpreter.
 	 * This is either a processor, a user definition, or null if the
@@ -624,7 +624,7 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		return m_lastQuery;
 	}
-	
+
 	/**
 	 * Retrieves the static method of a given class
 	 * @param type The class
@@ -634,20 +634,20 @@ public class Interpreter implements ParseNodeVisitor
 	 */
 	static public Method getStaticMethod(Class<?> type, String methodName, Class<?>... params) 
 	{
-    try 
-    {
-      Method method = type.getDeclaredMethod(methodName, params);
-      if ((method.getModifiers() & Modifier.STATIC) != 0) 
-      {
-        return method;
-      }
-    } 
-    catch (NoSuchMethodException e) 
-    {
-    }
-    return null;
-  }
-	
+		try 
+		{
+			Method method = type.getDeclaredMethod(methodName, params);
+			if ((method.getModifiers() & Modifier.STATIC) != 0) 
+			{
+				return method;
+			}
+		} 
+		catch (NoSuchMethodException e) 
+		{
+		}
+		return null;
+	}
+
 	/**
 	 * Retrieves a method of a given object
 	 * @param o The object
@@ -657,15 +657,32 @@ public class Interpreter implements ParseNodeVisitor
 	 */
 	static public Method getMethod(Object o, String methodName, Class<?>... params) 
 	{
-    try 
-    {
-      Method method = o.getClass().getDeclaredMethod(methodName, params);
-      return method;
-    } 
-    catch (NoSuchMethodException e) 
-    {
-    }
-    return null;
-  }
+		try 
+		{
+			Method method = o.getClass().getDeclaredMethod(methodName, params);
+			return method;
+		} 
+		catch (NoSuchMethodException e) 
+		{
+		}
+		return null;
+	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		for (String key : m_processorDefinitions.keySet())
+		{
+			GroupProcessor pd = m_processorDefinitions.get(key);
+			out.append(pd).append("\n");
+		}
+		for (String key : m_symbolDefinitions.keySet())
+		{
+			Object pd = m_symbolDefinitions.get(key);
+			out.append(pd).append("\n");
+		}
+		return out.toString();
+	}
 
 }

@@ -19,11 +19,16 @@ package ca.uqac.lif.cep.interpreter;
 
 import static org.junit.Assert.*;
 
+import java.util.Queue;
+import java.util.Vector;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
@@ -265,6 +270,32 @@ public class UserDefinitionTest
 		assertTrue(o instanceof Number);
 		float n = EmlNumber.parseFloat(o);
 		assertEquals(5, n, 0.01);
+	}
+	
+	@Test
+	public void testDefinition8() throws ParseException
+	{
+		{
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor, @N IS A number: FOO ( @P ) BAR @N IS THE processor TRIM @N OF (@P)");
+			e_def.addToInterpreter(m_interpreter);
+		}
+		QueueSource qs = new QueueSource(null, 1);
+		Vector<Object> events = new Vector<Object>();
+		events.add(0);
+		events.add(1);
+		events.add(2);
+		qs.setEvents(events);
+		m_interpreter.addPlaceholder("@T", "processor", qs);
+		Processor proc = (Processor) m_interpreter.parseQuery("FOO (@T) BAR 2");
+		assertNotNull(proc);
+		QueueSink qsink = new QueueSink(1);
+		Connector.connect(proc, qsink);
+		Queue<Object> queue = qsink.getQueue(0);
+		qsink.pullHard();
+		assertFalse(queue.isEmpty());
+		int i = (int) queue.remove();
+		assertEquals(2, i);
+		assertNotNull(m_interpreter.toString());
 	}
 	
 }
