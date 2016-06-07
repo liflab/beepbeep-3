@@ -55,4 +55,10 @@ public abstract class BinaryFunction<T,V,U> implements Function
 	{
 		// Do nothing
 	}
+	
+	@Override
+	public BinaryFunction<T,V,U> clone()
+	{
+		return this;
+	}
 }

@@ -684,5 +684,14 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return out.toString();
 	}
-
+	
+	/**
+	 * Sets the interpreter into "debug mode". This should normally only
+	 * be useful for debugging and testing purposes.
+	 * @param b Set to true to get debug info
+	 */
+	public void setDebugMode(boolean b)
+	{
+		m_parser.setDebugMode(b);
+	}
 }

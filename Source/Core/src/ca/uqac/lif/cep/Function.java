@@ -22,7 +22,7 @@ package ca.uqac.lif.cep;
  * 
  * @author Sylvain Hallé
  */
-public interface Function
+public interface Function extends Cloneable
 {
 	/**
 	 * The maximum input arity that a computable can have
@@ -58,4 +58,10 @@ public interface Function
 	 * stateless function, nothing requires to be done.
 	 */
 	public void reset();
+	
+	/**
+	 * Creates a copy of the function
+	 * @return The copy
+	 */
+	public Function clone();
 }

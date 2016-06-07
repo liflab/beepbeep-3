@@ -30,3 +30,7 @@
 # User-defined processors. Rules get dynamically added here
 
 <userdef_proc>       := gnarfnfar ;
+
+# Functions. Rules are added by grammar extensions.
+
+<c_function>         := arfarfarf ;

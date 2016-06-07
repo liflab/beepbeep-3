@@ -58,5 +58,11 @@ public abstract class UnaryFunction<T,U> implements Function
 	{
 		// Do nothing
 	}
+	
+	@Override
+	public UnaryFunction<T,U> clone()
+	{
+		return this;
+	}
 
 }

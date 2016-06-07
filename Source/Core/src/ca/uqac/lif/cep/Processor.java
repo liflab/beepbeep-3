@@ -40,7 +40,7 @@ import java.util.Queue;
  * @author Sylvain Hallé
  *
  */
-public abstract class Processor
+public abstract class Processor implements Cloneable
 {
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires
@@ -294,5 +294,11 @@ public abstract class Processor
 			return (Processor) o;
 		}
 		return new Constant(o);
+	}
+	
+	@Override
+	public Processor clone()
+	{
+		return null;
 	}
 }

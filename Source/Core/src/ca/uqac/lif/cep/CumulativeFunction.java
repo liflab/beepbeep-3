@@ -62,4 +62,11 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 	{
 		m_lastValue = m_function.getStartValue();
 	}
+	
+	@Override
+	public CumulativeFunction<T> clone()
+	{
+		CumulativeFunction<T> out = new CumulativeFunction<T>(m_function.clone());
+		return out;
+	}
 }

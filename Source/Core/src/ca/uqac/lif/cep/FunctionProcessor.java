@@ -60,6 +60,13 @@ public class FunctionProcessor extends SingleProcessor
 		return wrapVector(m_function.compute(inputs));
 	}
 	
+	@Override
+	public FunctionProcessor clone()
+	{
+		FunctionProcessor out = new FunctionProcessor(m_function.clone());
+		return out;
+	}
+	
 	public static void build(Stack<Object> stack)
 	{
 		// Principle: pop processors from the stack and count them,
