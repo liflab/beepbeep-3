@@ -228,5 +228,11 @@ public final class NamedTupleFixed extends NamedTuple
 		out.append(")");
 		return out.toString();
 	}
+	
+	@Override
+	public NamedTupleFixed clone()
+	{
+		return new NamedTupleFixed(m_names, m_values);
+	}
 
 }

@@ -180,5 +180,11 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 		PeakFinderLocalMaximum pflm = new PeakFinderLocalMaximum();
 		Connector.connect(p, pflm);
 	}
+	
+	@Override
+	public PeakFinderLocalMaximum clone()
+	{
+		return new PeakFinderLocalMaximum(m_windowWidth);
+	}
 
 }

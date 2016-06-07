@@ -219,4 +219,10 @@ public class StreamReader extends Source
 			stack.push(new StreamReader(null));
 		}
 	}
+	
+	@Override
+	public StreamReader clone()
+	{
+		return new StreamReader(m_fis);
+	}
 }

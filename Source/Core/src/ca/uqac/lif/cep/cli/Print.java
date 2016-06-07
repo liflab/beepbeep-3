@@ -91,4 +91,10 @@ public class Print extends Sink
 			m_out.print(n.intValue());
 		}
 	}
+	
+	@Override
+	public Print clone()
+	{
+		return new Print(getInputArity(), m_out);
+	}
 }

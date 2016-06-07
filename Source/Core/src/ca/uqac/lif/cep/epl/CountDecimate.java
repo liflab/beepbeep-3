@@ -86,4 +86,10 @@ public class CountDecimate extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
+
+	@Override
+	public CountDecimate clone() 
+	{
+		return new CountDecimate(m_interval);
+	}
 }

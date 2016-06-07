@@ -39,4 +39,10 @@ public class Passthrough extends SingleProcessor
 	{
 		return wrapVector(inputs);
 	}
+	
+	@Override
+	public Passthrough clone()
+	{
+		return new Passthrough(getInputArity());
+	}
 }

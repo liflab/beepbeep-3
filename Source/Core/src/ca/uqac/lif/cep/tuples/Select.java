@@ -236,4 +236,14 @@ public class Select extends SingleProcessor
 			.append(" FROM ").append(m_processors);
 		return out.toString();
 	}
+	
+	@Override
+	public Select clone()
+	{
+		Select out = new Select(getInputArity());
+		out.m_aliases = m_aliases;
+		out.m_attributeList = m_attributeList;
+		out.m_processors = m_processors;
+		return out;
+	}
 }

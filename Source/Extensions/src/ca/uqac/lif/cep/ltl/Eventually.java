@@ -42,7 +42,6 @@ public class Eventually extends UnaryProcessor
 		super.reset();
 		m_value = false;
 	}
-	
 
 	@Override
 	protected Object computeInternal(boolean input)
@@ -64,5 +63,11 @@ public class Eventually extends UnaryProcessor
 		Eventually op = new Eventually();
 		Connector.connect(p, op);
 		stack.push(op);
+	}
+	
+	@Override
+	public Eventually clone()
+	{
+		return new Eventually();
 	}
 }

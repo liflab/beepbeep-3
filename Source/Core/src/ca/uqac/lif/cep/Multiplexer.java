@@ -56,7 +56,7 @@ public class Multiplexer extends Processor
 	{
 		// The muxer will directly push to its output whatever
 		// comes from any of its inputs, so we don't care about the index
-		return new MuxPushable();
+		return new MuxPushable(index);
 	}
 
 	@Override
@@ -64,6 +64,12 @@ public class Multiplexer extends Processor
 	{
 		// We ignore index, as it is supposed to be 0 (the muxer is of arity 1)
 		return new MuxPullable();
+	}
+	
+	@Override
+	public Multiplexer clone()
+	{
+		return new Multiplexer(getInputArity());
 	}
 	
 	protected final class MuxPullable implements Pullable
@@ -201,6 +207,18 @@ public class Multiplexer extends Processor
 		{
 			return m_pullCount;
 		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return Multiplexer.this;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return 0;
+		}
 	}
 	
 	protected final class MuxPushable implements Pushable
@@ -210,10 +228,16 @@ public class Multiplexer extends Processor
 		 */
 		private int m_pushCount;
 		
-		public MuxPushable()
+		/**
+		 * The index this pushable is linked to
+		 */
+		private int m_index;
+		
+		public MuxPushable(int index)
 		{
 			super();
 			m_pushCount = 0;
+			m_index = index;
 		}
 
 		@Override
@@ -228,6 +252,18 @@ public class Multiplexer extends Processor
 		public int getPushCount()
 		{
 			return m_pushCount;
+		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return Multiplexer.this;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return m_index;
 		}
 	}
 

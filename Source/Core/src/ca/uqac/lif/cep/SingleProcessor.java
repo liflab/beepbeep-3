@@ -113,6 +113,12 @@ public abstract class SingleProcessor extends Processor
 		{
 			return m_pushCount;
 		}
+		
+		@Override
+		public int getPosition()
+		{
+			return m_index;
+		}
 
 		@Override
 		public Pushable push(Object o)
@@ -159,6 +165,12 @@ public abstract class SingleProcessor extends Processor
 				}
 			}
 			return this;
+		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return SingleProcessor.this;
 		}
 	}
 
@@ -359,6 +371,18 @@ public abstract class SingleProcessor extends Processor
 				}
 			}
 			return status_to_return;
+		}
+		
+		@Override
+		public Processor getProcessor() 
+		{
+			return SingleProcessor.this;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return m_index;
 		}
 	}
 	

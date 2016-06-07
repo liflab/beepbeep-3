@@ -48,4 +48,17 @@ public interface Pushable
 	 * @return The number of events
 	 */
 	public int getPushCount();
+	
+	/**
+	 * Gets the processor instance this Pushable is linked to 
+	 * @return The processor
+	 */
+	public Processor getProcessor();
+	
+	/**
+	 * Gets the position this Pushable is associated to: 0 is the first input
+	 * (or output), 1 the second, etc.
+	 * @return The position
+	 */
+	public int getPosition();
 }

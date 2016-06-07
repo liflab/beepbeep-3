@@ -45,4 +45,10 @@ public class Not extends UnaryProcessor
 		Connector.connect(p, op);
 		stack.push(op);
 	}
+	
+	@Override
+	public Not clone()
+	{
+		return new Not();
+	}
 }

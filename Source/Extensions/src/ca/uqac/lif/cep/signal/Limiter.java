@@ -65,5 +65,11 @@ public class Limiter extends SingleProcessor
 	{
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public Limiter clone()
+	{
+		return new Limiter(m_limit);
+	}
 
 }

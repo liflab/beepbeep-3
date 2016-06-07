@@ -61,4 +61,10 @@ public class EmlNumber extends SingleProcessor
 		out.add(element);
 		return out;
 	}
+	
+	@Override
+	public EmlNumber clone()
+	{
+		return new EmlNumber(m_number);
+	}
 }

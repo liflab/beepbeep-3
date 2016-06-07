@@ -83,4 +83,10 @@ public class Demultiplexer extends SingleProcessor
 		super.reset();
 		m_window.clear();
 	}
+
+	@Override
+	public Demultiplexer clone() 
+	{
+		return new Demultiplexer(m_width);
+	}
 }

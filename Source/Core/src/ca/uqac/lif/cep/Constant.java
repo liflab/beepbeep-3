@@ -47,4 +47,9 @@ public class Constant extends SingleProcessor
 		return wrapObject(m_toReturn);
 	}
 
+	@Override
+	public Constant clone() 
+	{
+		return new Constant(m_toReturn);
+	}
 }

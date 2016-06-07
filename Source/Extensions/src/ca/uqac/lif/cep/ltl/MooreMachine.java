@@ -194,6 +194,23 @@ public class MooreMachine extends SingleProcessor
 	public static class Transition
 	{
 		/**
+		 * Creates a new transition
+		 */
+		public Transition()
+		{
+			super();
+		}
+		
+		/**
+		 * Copies a transition from another transition
+		 * @param t The transition to copy from
+		 */
+		public Transition(Transition t)
+		{
+			super();
+		}
+		
+		/**
 		 * Determines if the transition fires for the given input
 		 * @param inputs The input events
 		 * @return <code>true</code> if the transition fires, <code>false</code>
@@ -234,6 +251,12 @@ public class MooreMachine extends SingleProcessor
 		 */
 		private final int m_destination;
 		
+		public TransitionOtherwise(TransitionOtherwise t)
+		{
+			super();
+			m_destination = t.m_destination;
+		}
+		
 		public TransitionOtherwise(int destination)
 		{
 			super();
@@ -251,6 +274,25 @@ public class MooreMachine extends SingleProcessor
 		{
 			return m_destination;
 		}
+	}
+	
+	@Override
+	public MooreMachine clone()
+	{
+		MooreMachine out = new MooreMachine(getInputArity(), getOutputArity());
+		out.m_initialState = m_initialState;
+		out.m_outputSymbols = m_outputSymbols;
+		out.m_relation = new HashMap<Integer,List<Transition>>();
+		for (int k : m_relation.keySet())
+		{
+			List<Transition> lt = m_relation.get(k);
+			List<Transition> new_lt = new ArrayList<Transition>();
+			for (Transition t : lt)
+			{
+				new_lt.add(new Transition(t));
+			}
+		}
+		return out;
 	}
 	
 }

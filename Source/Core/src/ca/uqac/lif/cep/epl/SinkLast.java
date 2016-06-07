@@ -71,4 +71,10 @@ public class SinkLast extends Sink
 	{
 		return m_last;
 	}
+	
+	@Override
+	public SinkLast clone()
+	{
+		return new SinkLast(getInputArity());
+	}
 }

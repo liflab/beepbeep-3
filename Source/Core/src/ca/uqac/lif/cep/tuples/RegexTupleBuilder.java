@@ -45,12 +45,17 @@ public class RegexTupleBuilder extends SingleProcessor
 	/**
 	 * The regex pattern to look for
 	 */
-	protected final Pattern m_pattern;
+	protected Pattern m_pattern;
 	
 	/**
 	 * The name given to each capture block in the output tuples 
 	 */
-	protected final RegexAttributeNameList m_attributeNames;
+	protected RegexAttributeNameList m_attributeNames;
+	
+	RegexTupleBuilder()
+	{
+		super(1, 1);
+	}
 	
 	/**
 	 * Constructs a tuple builder.
@@ -142,8 +147,16 @@ public class RegexTupleBuilder extends SingleProcessor
 				ranl.add(def);
 			}
 			stack.push(ranl);
-		}
-		
+		}		
+	}
+	
+	@Override
+	public RegexTupleBuilder clone()
+	{
+		RegexTupleBuilder out = new RegexTupleBuilder();
+		out.m_pattern = m_pattern;
+		out.m_attributeNames = m_attributeNames;
+		return out;
 	}
 
 }

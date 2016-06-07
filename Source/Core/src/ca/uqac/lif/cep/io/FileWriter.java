@@ -130,4 +130,10 @@ public class FileWriter extends Sink
 		}
 		return this;
 	}
+	
+	@Override
+	public FileWriter clone()
+	{
+		return new FileWriter(m_file, m_append);
+	}
 }

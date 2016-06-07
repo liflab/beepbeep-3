@@ -167,4 +167,10 @@ public class NamedTupleMap extends NamedTuple
 	{
 		return wrapObject(this);
 	}
+	
+	@Override
+	public NamedTupleMap clone()
+	{
+		return new NamedTupleMap(this);
+	}
 }

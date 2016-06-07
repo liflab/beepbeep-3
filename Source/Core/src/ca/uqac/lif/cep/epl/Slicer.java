@@ -126,4 +126,10 @@ public class Slicer extends SingleProcessor
 		Connector.connect(p1, out);
 		stack.push(out);
 	}
+	
+	@Override
+	public Slicer clone()
+	{
+		return new Slicer(m_slicingFunction.clone(), m_processor.clone());
+	}
 }

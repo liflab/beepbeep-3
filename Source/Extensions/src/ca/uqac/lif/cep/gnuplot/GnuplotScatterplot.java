@@ -215,5 +215,12 @@ public class GnuplotScatterplot extends GnuplotProcessor
 		Connector.connect(p, gps);
 		stack.push(gps);
 	}
+	
+	@Override
+	public GnuplotScatterplot clone()
+	{
+		return new GnuplotScatterplot();
+	}
+
 
 }

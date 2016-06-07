@@ -73,5 +73,13 @@ public class QueueSource extends Source
 		super.reset();
 		m_index = 0;
 	}
+	
+	@Override
+	public QueueSource clone()
+	{
+		QueueSource out = new QueueSource(null, getOutputArity());
+		out.setEvents(m_events);
+		return out;
+	}
 
 }

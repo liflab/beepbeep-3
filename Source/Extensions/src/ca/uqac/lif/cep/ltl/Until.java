@@ -82,4 +82,9 @@ public class Until extends BinaryProcessor
 		stack.push(op);
 	}
 
+	@Override
+	public Until clone()
+	{
+		return new Until();
+	}
 }

@@ -86,6 +86,12 @@ public final class SmartFork extends Processor
 			m_outputPushables[i] = reference.m_outputPushables[i];
 		}
 	}
+	
+	@Override
+	public SmartFork clone()
+	{
+		return new SmartFork(getOutputArity());
+	}
 
 	@Override
 	public void reset()
@@ -138,6 +144,18 @@ public final class SmartFork extends Processor
 		public int getPushCount()
 		{
 			return m_pushCount;
+		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return SmartFork.this;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return 0;
 		}
 	}
 	
@@ -231,7 +249,19 @@ public final class SmartFork extends Processor
 				return NextStatus.YES;
 			}
 			return m_inputPullables[0].hasNextHard();
-		}		
+		}	
+		
+		@Override
+		public Processor getProcessor() 
+		{
+			return SmartFork.this;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return m_queueIndex;
+		}
 	}
 	
 	/**

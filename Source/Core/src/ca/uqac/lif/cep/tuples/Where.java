@@ -73,4 +73,10 @@ public class Where extends SingleProcessor
 		Connector.connect(proc, w);
 		stack.push(w);
 	}
+	
+	@Override
+	public Where clone()
+	{
+		return new Where(m_filterExpression);
+	}
 }

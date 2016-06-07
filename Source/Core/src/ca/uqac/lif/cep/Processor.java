@@ -139,7 +139,7 @@ public abstract class Processor implements Cloneable
 	@Override
 	public boolean equals(Object o)
 	{
-		if (!(o instanceof Processor))
+		if (o == null || !(o instanceof Processor))
 		{
 			return false;
 		}
@@ -199,7 +199,7 @@ public abstract class Processor implements Cloneable
 	/**
 	 * Assigns a {@link Pullable} to the processor's <i>i</i>-th input.
 	 * @param i The index of the input
-	 * @param p The pullable to assignt it to
+	 * @param p The pullable to assign it to
 	 */
 	public void setPullableInput(int i, Pullable p)
 	{
@@ -207,6 +207,21 @@ public abstract class Processor implements Cloneable
 		{
 			m_inputPullables[i] = p;
 		}
+	}
+	
+	/**
+	 * Returns the {@link Pullable} corresponding to the processor's
+	 * <i>i</i>-th input
+	 * @param i The index of the input
+	 * @return The pullable
+	 */
+	public Pullable getPullableInput(int i)
+	{
+		if (i < m_inputPullables.length)
+		{
+			return m_inputPullables[i];
+		}
+		return null;
 	}
 
 	/**
@@ -297,8 +312,5 @@ public abstract class Processor implements Cloneable
 	}
 	
 	@Override
-	public Processor clone()
-	{
-		return null;
-	}
+	public abstract Processor clone();
 }

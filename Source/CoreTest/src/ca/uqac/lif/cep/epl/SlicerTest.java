@@ -35,7 +35,6 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.numbers.Addition;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
-import ca.uqac.lif.cep.tuples.TupleGrammar;
 
 /**
  * Unit tests for the {@link Slicer} processor.

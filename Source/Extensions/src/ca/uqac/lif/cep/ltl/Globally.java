@@ -43,7 +43,6 @@ public class Globally extends UnaryProcessor
 		m_value = true;
 	}
 	
-
 	@Override
 	protected Object computeInternal(boolean input)
 	{
@@ -64,5 +63,11 @@ public class Globally extends UnaryProcessor
 		Globally op = new Globally();
 		Connector.connect(p, op);
 		stack.push(op);
+	}
+	
+	@Override
+	public Globally clone()
+	{
+		return new Globally();
 	}
 }

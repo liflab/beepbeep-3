@@ -210,5 +210,11 @@ public class GnuplotHeatMap extends GnuplotProcessor
 		Connector.connect(p, ghm);
 		stack.push(ghm);
 	}
+	
+	@Override
+	public GnuplotHeatMap clone()
+	{
+		return new GnuplotHeatMap();
+	}
 
 }

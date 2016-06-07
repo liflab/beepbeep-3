@@ -49,5 +49,11 @@ public class Or extends BinaryProcessor
 		Connector.connect(right, op, 0, 1);
 		stack.push(op);
 	}
+	
+	@Override
+	public Or clone()
+	{
+		return new Or();
+	}
 
 }

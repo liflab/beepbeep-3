@@ -31,7 +31,6 @@ import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.numbers.Incrementer;
 
 public class ProcessorTest
 {
@@ -510,135 +509,6 @@ public class ProcessorTest
 
 	}
 	
-	@Test
-	public void testGroupPull1()
-	{
-		// Create the group
-		FunctionProcessor add = new FunctionProcessor(new Addition());
-		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
-		add_plus_10.addProcessor(add);
-		add_plus_10.associateInput(0, add, 0);
-		add_plus_10.associateInput(1, add, 1);
-		add_plus_10.associateOutput(0, add, 0);
-		
-		// Connect the group to two sources and one sink
-		Vector<Object> l_input1 = new Vector<Object>();
-		l_input1.add(2);
-		l_input1.add(3);
-		l_input1.add(4);
-		l_input1.add(6);
-		QueueSource input1 = new QueueSource(null, 1);
-		input1.setEvents(l_input1);
-		Vector<Object> l_input2 = new Vector<Object>();
-		l_input2.add(1);
-		l_input2.add(2);
-		l_input2.add(3);
-		l_input2.add(4);
-		QueueSource input2 = new QueueSource(null, 1);
-		input2.setEvents(l_input2);
-		Connector.connect(input1, input2, add_plus_10);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(add_plus_10, sink);
-		Number recv, expected;
-		
-		// Run
-		sink.pull();
-		expected = 3;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		sink.pull();
-		expected = 5;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		sink.pull();
-		expected = 7;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		sink.pull();
-		expected = 10;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-	}
-	
-	@Test
-	public void testGroupPush2()
-	{
-		// Create the group
-		FunctionProcessor add = new FunctionProcessor(new Addition());
-		Incrementer inc = new Incrementer(10);
-		Connector.connect(inc, add, 0, 0);
-		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
-		add_plus_10.addProcessor(add);
-		add_plus_10.associateInput(0, inc, 0);
-		add_plus_10.associateInput(1, add, 1);
-		add_plus_10.associateOutput(0, add, 0);
-		
-		// Connect the group to two sources and one sink
-		Vector<Object> l_input1 = new Vector<Object>();
-		l_input1.add(2);
-		l_input1.add(3);
-		l_input1.add(4);
-		l_input1.add(6);
-		QueueSource input1 = new QueueSource(null, 1);
-		input1.setEvents(l_input1);
-		Vector<Object> l_input2 = new Vector<Object>();
-		l_input2.add(1);
-		l_input2.add(2);
-		l_input2.add(3);
-		l_input2.add(4);
-		QueueSource input2 = new QueueSource(null, 1);
-		input2.setEvents(l_input2);
-		Connector.connect(input1, input2, add_plus_10);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(add_plus_10, sink);
-		Number recv, expected;
-		
-		// Run
-		input1.push();
-		input2.push();
-		expected = 13;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		input1.push();
-		input2.push();
-		expected = 15;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		input1.push();
-		input2.push();
-		expected = 17;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		input1.push();
-		input2.push();
-		expected = 20;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-	}
 	
 	/**
 	 * This test does not assert anything. It is used for step-by-step debugging
@@ -705,5 +575,5 @@ public class ProcessorTest
 		{
 			super(new CumulativeFunction(new Addition()));
 		}
-	}
+	}	
 }

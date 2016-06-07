@@ -192,4 +192,10 @@ public class MySqlSource extends Source
 		MySqlSource source = new MySqlSource(username, password, databaseName, tableName);
 		stack.push(source);
 	}
+	
+	@Override
+	public MySqlSource clone()
+	{
+		return new MySqlSource(m_username, m_password, m_databaseName, m_tableName);
+	}
 }

@@ -39,4 +39,10 @@ public class CsvFeeder extends TokenFeeder
 		// Remove trailing comma
 		return token.substring(0, token.length() - 1);
 	}
+	
+	@Override
+	public CsvFeeder clone()
+	{
+		return new CsvFeeder();
+	}
 }

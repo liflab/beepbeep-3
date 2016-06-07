@@ -63,4 +63,10 @@ public class Caller extends SingleProcessor
 		Connector.connect(p, c);
 		stack.push(c);
 	}
+	
+	@Override
+	public Caller clone()
+	{
+		return new Caller(m_command);
+	}
 }

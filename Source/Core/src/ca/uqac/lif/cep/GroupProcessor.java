@@ -48,7 +48,7 @@ public class GroupProcessor extends Processor
 	 * output traces
 	 */
 	protected Vector<Pullable> m_outputPullables = null;
-	
+
 	/**
 	 * A map between numbers and processor associations. An element
 	 * (m,(n,p)) of this map means that the <i>m</i>-th input of the
@@ -64,7 +64,7 @@ public class GroupProcessor extends Processor
 	 * <code>p</code>
 	 */
 	protected Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
-	
+
 	/**
 	 * If this group processor is associated to a BNF rule, this contains
 	 * the name of the non-terminal part (left-hand side) of the rule
@@ -91,7 +91,7 @@ public class GroupProcessor extends Processor
 		m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
 		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
 	}
-	
+
 	/**
 	 * Sets the name of the rule associated to this processor
 	 * @param rule_name The rule name
@@ -100,7 +100,7 @@ public class GroupProcessor extends Processor
 	{
 		m_ruleName = rule_name;
 	}
-	
+
 	/**
 	 * Retrieves the name of the rule associated to this processor
 	 * @return The rule name
@@ -109,7 +109,7 @@ public class GroupProcessor extends Processor
 	{
 		return m_ruleName;
 	}
-	
+
 	/**
 	 * Retrieves the BNF parsing rule associated to this group processor
 	 * @return The parsing rule
@@ -118,7 +118,7 @@ public class GroupProcessor extends Processor
 	{
 		return m_rule;
 	}
-	
+
 	/**
 	 * Tuple made of a number and a processor.
 	 * 
@@ -129,13 +129,13 @@ public class GroupProcessor extends Processor
 		/**
 		 * The number
 		 */
-		int m_outputNumber;
-		
+		int m_ioNumber;
+
 		/**
 		 * The processor
 		 */
 		Processor m_processor;
-		
+
 		/**
 		 * Create a new processor association
 		 * @param number The number
@@ -143,7 +143,7 @@ public class GroupProcessor extends Processor
 		 */
 		ProcessorAssociation(int number, Processor p)
 		{
-			m_outputNumber = number;
+			m_ioNumber = number;
 			m_processor = p;
 		}
 	}
@@ -185,7 +185,7 @@ public class GroupProcessor extends Processor
 		}
 		return this;
 	}
-	
+
 	/**
 	 * Declares that the <i>i</i>-th input of the group is linked to the
 	 * <i>j</i>-th input of processor <code>p</code>
@@ -200,7 +200,7 @@ public class GroupProcessor extends Processor
 		setPullableInputAssociation(i, p, j);
 		return this;
 	}
-	
+
 	/**
 	 * Declares that the <i>i/</i>-th output of the group is linked to the
 	 * <i>j</i>-th output of processor p
@@ -227,24 +227,24 @@ public class GroupProcessor extends Processor
 	{
 		return m_outputPullables.get(index);
 	}
-	
+
 	@Override
 	public final void setPullableInput(int i, Pullable p)
 	{
 		ProcessorAssociation a = m_inputPullableAssociations.get(i);
-		a.m_processor.setPullableInput(a.m_outputNumber, p);
+		a.m_processor.setPullableInput(a.m_ioNumber, p);
 	}
 
 	public final void setPushableOutputAssociation(int i, Processor p, int j)
 	{
 		m_outputPushableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
 	}
-	
+
 	@Override
 	public final void setPushableOutput(int i, Pushable p)
 	{
 		ProcessorAssociation a = m_outputPushableAssociations.get(i);
-		a.m_processor.setPushableOutput(a.m_outputNumber, p);
+		a.m_processor.setPushableOutput(a.m_ioNumber, p);
 	}
 
 	public final void setPullableInputAssociation(int i, Processor p, int j)
@@ -284,5 +284,72 @@ public class GroupProcessor extends Processor
 			return m_outputPushables[index];
 		}
 		return null;
+	}
+
+	@Override
+	public GroupProcessor clone()
+	{
+		GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
+		Map<Integer,Processor> new_procs = new HashMap<Integer,Processor>();
+		Processor start = null;
+		// Clone every processor of the original group
+		for (Processor p : m_processors)
+		{
+			if (start == null)
+			{
+				start = p;
+			}
+			Processor clone_p = p.clone();
+			new_procs.put(p.getId(), clone_p);
+			group.addProcessor(clone_p);
+		}
+		// Re-pipe the inputs like in the original group
+		for (Integer input_number : m_inputPullableAssociations.keySet())
+		{
+			ProcessorAssociation pa = m_inputPullableAssociations.get(input_number);
+			Processor clone_p = new_procs.get(pa.m_processor.getId());
+			group.associateInput(input_number, clone_p, pa.m_ioNumber);
+		}
+		// Re-pipe the outputs like in the original group
+		for (Integer output_number : m_outputPushableAssociations.keySet())
+		{
+			ProcessorAssociation pa = m_outputPushableAssociations.get(output_number);
+			Processor clone_p = new_procs.get(pa.m_processor.getId());
+			group.associateOutput(output_number, clone_p, pa.m_ioNumber);
+		}
+		// Re-pipe the internal processors like in the original group
+		CopyCrawler cc = new CopyCrawler(new_procs);
+		cc.crawl(start);
+		return group;
+	}
+
+	protected static class CopyCrawler extends PipeCrawler
+	{
+		Map<Integer,Processor> m_correspondences;
+
+		public CopyCrawler(Map<Integer,Processor> correspondences)
+		{
+			super();
+			m_correspondences = correspondences;
+		}
+
+		@Override
+		public void visit(Processor p)
+		{
+			int out_arity = p.getOutputArity();
+			for (int i = 0; i < out_arity; i++)
+			{
+				Pushable push = p.getPushableOutput(i);
+				if (push != null)
+				{
+					Processor target = push.getProcessor();
+					int j = push.getPosition();
+					Processor new_p = m_correspondences.get(p.getId());
+					Processor new_target = m_correspondences.get(target.getId());
+					Connector.connect(new_p, new_target, i, j);
+				}
+			}
+		}
+
 	}
 }

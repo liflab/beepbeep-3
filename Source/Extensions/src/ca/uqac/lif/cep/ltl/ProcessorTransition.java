@@ -48,6 +48,11 @@ public class ProcessorTransition extends MooreMachine.Transition
 	 */
 	final int m_destination;
 	
+	public ProcessorTransition(ProcessorTransition pt)
+	{
+		this(pt.m_destination, pt.m_condition.clone());
+	}
+	
 	/**
 	 * Instantiates a new transition
 	 * @param condition The condition for taking that transition

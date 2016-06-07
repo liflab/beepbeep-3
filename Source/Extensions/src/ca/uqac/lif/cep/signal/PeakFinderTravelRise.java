@@ -62,5 +62,11 @@ public class PeakFinderTravelRise extends WindowProcessor
 		}
 		return wrapObject(0);
 	}
+	
+	@Override
+	public PeakFinderTravelRise clone()
+	{
+		return new PeakFinderTravelRise(m_windowWidth);
+	}
 
 }

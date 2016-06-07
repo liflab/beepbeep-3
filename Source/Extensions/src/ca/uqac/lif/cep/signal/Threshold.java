@@ -27,6 +27,9 @@ import ca.uqac.lif.cep.tuples.EmlNumber;
 
 public class Threshold extends SingleProcessor
 {
+	/**
+	 * The threshold to cut values
+	 */
 	protected final float m_threshold;
 	
 	public Threshold(float threshold)
@@ -55,8 +58,13 @@ public class Threshold extends SingleProcessor
 		stack.pop(); // )
 		Threshold t = new Threshold(t_value);
 		Connector.connect(p, t);
-		stack.push(t);
-		
+		stack.push(t);		
+	}
+	
+	@Override
+	public Threshold clone()
+	{
+		return new Threshold(m_threshold);
 	}
 
 }

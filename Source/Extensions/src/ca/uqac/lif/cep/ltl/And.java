@@ -50,4 +50,10 @@ public class And extends BinaryProcessor
 		stack.push(op);
 	}
 
+	@Override
+	public And clone()
+	{
+		return new And();
+	}
+
 }

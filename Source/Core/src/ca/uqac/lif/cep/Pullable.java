@@ -157,5 +157,18 @@ public interface Pullable
 	 * @return The number of events
 	 */
 	public int getPullCount();
+	
+	/**
+	 * Gets the processor instance this Pullable is linked to 
+	 * @return The processor
+	 */
+	public Processor getProcessor();
+	
+	/**
+	 * Gets the position this Pullable is associated to: 0 is the first input
+	 * (or output), 1 the second, etc.
+	 * @return The position
+	 */
+	public int getPosition();
 
 }

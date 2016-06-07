@@ -177,4 +177,10 @@ public class Window extends SingleProcessor
 		Connector.connect(input_trace, out);
 		stack.push(out);
 	}
+	
+	@Override
+	public Window clone()
+	{
+		return new Window(m_processor.clone(), m_width);
+	}
 }

@@ -204,4 +204,13 @@ public class PlateauFinder extends WindowProcessor
 		PlateauFinder pf = new PlateauFinder();
 		Connector.connect(p, pf);
 	}
+
+	@Override
+	public PlateauFinder clone()
+	{
+		PlateauFinder out = new PlateauFinder();
+		out.m_relative = m_relative;
+		out.m_range = m_range;
+		return out;
+	}
 }

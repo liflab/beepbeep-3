@@ -83,4 +83,10 @@ public class Trim extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
+	
+	@Override
+	public Trim clone()
+	{
+		return new Trim(m_delay);
+	}
 }

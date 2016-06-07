@@ -86,4 +86,10 @@ public class Insert extends SingleProcessor
 		super.reset();
 		m_sentPad = false;
 	}
+	
+	@Override
+	public Insert clone()
+	{
+		return new Insert(m_pad, m_times);
+	}
 }

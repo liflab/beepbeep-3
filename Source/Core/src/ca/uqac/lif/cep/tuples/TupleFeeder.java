@@ -72,5 +72,11 @@ public class TupleFeeder extends TokenFeeder
 		Connector.connect(p, tp);
 		stack.push(tp);
 	}
+	
+	@Override
+	public TupleFeeder clone()
+	{
+		return new TupleFeeder();
+	}
 
 }

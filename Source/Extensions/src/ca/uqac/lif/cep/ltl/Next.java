@@ -40,4 +40,10 @@ public class Next extends Trim
 		Connector.connect(p, nx);
 		stack.push(nx);
 	}
+	
+	@Override
+	public Next clone()
+	{
+		return new Next();
+	}
 }

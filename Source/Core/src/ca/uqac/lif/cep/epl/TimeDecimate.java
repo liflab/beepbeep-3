@@ -92,4 +92,10 @@ public class TimeDecimate extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
+	
+	@Override
+	public TimeDecimate clone()
+	{
+		return new TimeDecimate(m_interval);
+	}
 }
