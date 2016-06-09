@@ -283,7 +283,7 @@ public class ProcessorTest
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
 		FunctionProcessor add = new FunctionProcessor(new Addition());
-		Connector.connect(input1, input2, add);
+		Connector.connectFork(input1, input2, add);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add, sink);
 		Number recv;
@@ -335,7 +335,7 @@ public class ProcessorTest
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
 		Filter f = new Filter();
-		Connector.connect(input1, input2, f);
+		Connector.connectFork(input1, input2, f);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(f, sink);
 		Number recv;
@@ -439,7 +439,7 @@ public class ProcessorTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
-		Connector.connect(input1, input2, add_plus_10);
+		Connector.connectFork(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;

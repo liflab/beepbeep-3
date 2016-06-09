@@ -108,7 +108,7 @@ public class MathTest
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
 		FunctionProcessor pow = new FunctionProcessor(new Power());
-		Connector.connect(input1, input2, pow);
+		Connector.connectFork(input1, input2, pow);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(pow, sink);
 		Number recv;
@@ -223,7 +223,7 @@ public class MathTest
 			Connector.connect(one, sum_right);
 		}
 		FunctionProcessor div = new FunctionProcessor(new Division());
-		Connector.connect(sum_left, sum_right, div);
+		Connector.connectFork(sum_left, sum_right, div);
 		Connector.connect(div, sink);
 	}
 	

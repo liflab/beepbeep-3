@@ -108,6 +108,24 @@ public abstract class TokenFeeder extends SingleProcessor
 	}
 	
 	/**
+	 * Gets the starting separator to split tokens
+	 * @return The starting separator
+	 */
+	public String getSeparatorBegin()
+	{
+		return m_separatorBegin;
+	}
+	
+	/**
+	 * Gets the ending separator to split tokens
+	 * @return The ending separator
+	 */
+	public String getSeparatorEnd()
+	{
+		return m_separatorEnd;
+	}
+	
+	/**
 	 * Dummy object indicating that no token can be produced out of the
 	 * input string. This is different from <code>null</code>, which signals
 	 * the end of the stream.

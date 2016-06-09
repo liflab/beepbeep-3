@@ -75,12 +75,12 @@ public class ConnectorTest
 	}
 	
 	@Test
-	public void testThreeUnary()
+	public void testThreeUnary1()
 	{
 		Passthrough p1 = new Passthrough(1);
 		Passthrough p2 = new Passthrough(1);
 		QueueSink qs1 = new QueueSink(1);
-		Connector.connect(p1, p2, qs1);
+		Connector.connectFork(p1, p2, qs1);
 		Pushable push1 = p1.getPushableInput(0);
 		for (int k = 0; k < 2; k++)
 		{
@@ -93,5 +93,52 @@ public class ConnectorTest
 			p1.reset();
 			qs1.reset();
 		}
+	}
+	
+	@Test
+	public void testThreeUnary2()
+	{
+		Passthrough p1 = new Passthrough(1);
+		Incrementer p2 = new Incrementer(10);
+		QueueSink qs1 = new QueueSink(1);
+		Connector.connect(p1, p2, qs1);
+		Pushable push1 = p1.getPushableInput(0);
+		for (int k = 0; k < 2; k++)
+		{
+			Queue<Object> queue = qs1.getQueue(0);
+			for (int i = 0; i < 5; i++)
+			{
+				push1.push(i);
+				Utilities.queueContains(i + 10, queue);
+			}
+			p1.reset();
+			qs1.reset();
+		}
+	}
+	
+	public static class Incrementer extends FunctionProcessor
+	{
+		public Incrementer(int i)
+		{
+			super(new Plus(i));
+		}
+	}
+	
+	public static class Plus extends UnaryFunction<Integer,Integer>
+	{
+		int m_plus = 0;
+		
+		public Plus(int i)
+		{
+			super();
+			m_plus = i;
+		}
+		
+		@Override
+		public Integer evaluate(Integer x) 
+		{
+			return x + 10;
+		}
+		
 	}
 }

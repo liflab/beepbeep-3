@@ -269,7 +269,7 @@ public class GroupTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
-		Connector.connect(input1, input2, add_plus_10);
+		Connector.connectFork(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;
@@ -333,7 +333,7 @@ public class GroupTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
-		Connector.connect(input1, input2, add_plus_10);
+		Connector.connectFork(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv;
