@@ -23,6 +23,16 @@ import ca.uqac.lif.cep.BinaryFunction;
 
 public class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
 {
+	/**
+	 * A static instance of the function
+	 */
+	public static final transient IsGreaterThan instance = new IsGreaterThan();
+	
+	private IsGreaterThan()
+	{
+		super();
+	}
+	
 	public static void build(Stack<Object> stack)
 	{
 		stack.pop();
@@ -40,5 +50,4 @@ public class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
 	{
 		return false;
 	}
-
 }

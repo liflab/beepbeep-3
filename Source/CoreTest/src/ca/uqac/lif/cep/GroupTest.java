@@ -247,7 +247,7 @@ public class GroupTest
 	public void testGroupPull1()
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(new Addition());
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -309,7 +309,7 @@ public class GroupTest
 	public void testGroupPush2()
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(new Addition());
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		Incrementer inc = new Incrementer(10);
 		Connector.connect(inc, add, 0, 0);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);

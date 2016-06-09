@@ -23,10 +23,24 @@ import ca.uqac.lif.cep.BinaryFunction;
 
 public class Addition extends BinaryFunction<Number,Number,Number>
 {
+	/**
+	 * A static instance of addition
+	 */
+	public static final transient Addition instance = new Addition();
+	
+	/**
+	 * Make constructor private, to force users to refer to the static
+	 * instance of addition
+	 */
+	private Addition()
+	{
+		
+	}
+	
 	public static void build(Stack<Object> stack)
 	{
 		stack.pop();
-		stack.push(new Addition());
+		stack.push(instance);
 	}
 
 	@Override

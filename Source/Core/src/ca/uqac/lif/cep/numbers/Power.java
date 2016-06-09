@@ -23,6 +23,11 @@ import ca.uqac.lif.cep.BinaryFunction;
 
 public class Power extends BinaryFunction<Number,Number,Number>
 {
+	/**
+	 * Static reference to a single instance of the function
+	 */
+	public static final transient Power instance = new Power();
+	
 	public Power()
 	{
 		super();
@@ -31,7 +36,7 @@ public class Power extends BinaryFunction<Number,Number,Number>
 	public static void build(Stack<Object> stack)
 	{
 		stack.pop();
-		stack.push(new Power());
+		stack.push(instance);
 	}
 
 	@Override

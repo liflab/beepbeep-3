@@ -80,7 +80,7 @@ public class SlicerTest
 	{
 		public Sum()
 		{
-			super(new CumulativeFunction<Number>(new Addition()));
+			super(new CumulativeFunction<Number>(Addition.instance));
 		}
 	}
 

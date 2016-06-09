@@ -25,7 +25,7 @@ public class BagUnion extends CumulativeFunction<Multiset>
 {
 	public BagUnion()
 	{
-		super(new MultisetUnion());
+		super(MultisetUnion.instance);
 	}
 
 	public static void build(Stack<Object> stack)

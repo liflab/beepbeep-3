@@ -23,11 +23,20 @@ import ca.uqac.lif.cep.BinaryFunction;
 
 public class Division extends BinaryFunction<Number,Number,Number>
 {
+	/**
+	 * Static reference to a single instance of the function
+	 */
+	public static final transient Division instance = new Division();
+	
+	private Division()
+	{
+		super();
+	}
 	
 	public static void build(Stack<Object> stack)
 	{
 		stack.pop();
-		stack.push(new Division());
+		stack.push(Division.instance);
 	}
 
 	@Override

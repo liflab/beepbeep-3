@@ -23,7 +23,12 @@ import ca.uqac.lif.cep.BinaryFunction;
 
 public class Subtraction extends BinaryFunction<Number,Number,Number>
 {
-	public Subtraction()
+	/**
+	 * Static reference to a single instance of the function
+	 */
+	public static final transient Subtraction instance = new Subtraction();
+	
+	private Subtraction()
 	{
 		super();
 	}
@@ -31,7 +36,7 @@ public class Subtraction extends BinaryFunction<Number,Number,Number>
 	public static void build(Stack<Object> stack)
 	{
 		stack.pop();
-		stack.push(new Subtraction());
+		stack.push(instance);
 	}
 
 	@Override

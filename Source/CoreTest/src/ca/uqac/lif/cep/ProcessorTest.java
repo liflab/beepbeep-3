@@ -282,7 +282,7 @@ public class ProcessorTest
 		input1.setEvents(l_input1);
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
-		FunctionProcessor add = new FunctionProcessor(new Addition());
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		Connector.connectFork(input1, input2, add);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add, sink);
@@ -417,7 +417,7 @@ public class ProcessorTest
 	public void testGroupPush1()
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(new Addition());
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -497,7 +497,7 @@ public class ProcessorTest
 			input_events.add(new Integer(11));
 			src_right.setEvents(input_events);
 		}
-		FunctionProcessor add = new FunctionProcessor(new Addition());
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		Connector.connect(src_left, add, 0, 0);
 		Connector.connect(src_right, add, 0, 1);
 		Pullable p = add.getPullableOutput(0);
@@ -573,7 +573,7 @@ public class ProcessorTest
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{
-			super(new CumulativeFunction(new Addition()));
+			super(new CumulativeFunction(Addition.instance));
 		}
 	}	
 }
