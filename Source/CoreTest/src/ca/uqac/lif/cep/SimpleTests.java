@@ -55,7 +55,7 @@ public class SimpleTests
 		for (int i = 0; i < 10; i++)
 		{
 			in.push(i);
-			int out = (int) q.remove();
+			int out = ((Number) q.remove()).intValue();
 			assertEquals(i, out);
 		}
 	}

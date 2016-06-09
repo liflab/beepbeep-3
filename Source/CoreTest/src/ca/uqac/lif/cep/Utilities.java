@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -41,5 +40,11 @@ public class Utilities
 		assertNotNull(o);
 		assertTrue(o instanceof Number);
 		assertEquals(value, ((Number) o).intValue());
+	}
+	
+	public static void assertEquals(int i, Object o)
+	{
+		assertTrue(o instanceof Number);
+		org.junit.Assert.assertEquals(i, ((Number) o).intValue());
 	}
 }

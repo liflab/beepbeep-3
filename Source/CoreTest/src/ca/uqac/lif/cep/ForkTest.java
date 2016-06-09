@@ -266,7 +266,7 @@ public class ForkTest
 		for (int i = 0; i < SmartFork.s_cleanInterval + 3; i++)
 		{
 			assertEquals(Pullable.NextStatus.YES, p1.hasNextHard());
-			recv = (int) p1.pullHard();
+			recv = ((Number) p1.pullHard()).intValue();
 			p2.pullHard();
 			assertEquals(i % 4, recv);
 		}
@@ -275,7 +275,7 @@ public class ForkTest
 		for (int i = 0; i < SmartFork.s_cleanInterval + 3; i++)
 		{
 			assertEquals(Pullable.NextStatus.YES, p1.hasNextHard());
-			recv = (int) p1.pullHard();
+			recv = ((Number) p1.pullHard()).intValue();
 			p2.pullHard();
 			assertEquals(i % 4, recv);
 		}
@@ -301,7 +301,7 @@ public class ForkTest
 		for (int i = 0; i < SmartFork.s_cleanInterval + 3; i++)
 		{
 			assertEquals(Pullable.NextStatus.YES, p1.hasNextHard());
-			recv = (int) p1.pullHard();
+			recv = ((Number) p1.pullHard()).intValue();
 			// Here we don't do p2.pullHard()
 			assertEquals(i % 4, recv);
 		}
@@ -310,7 +310,7 @@ public class ForkTest
 		for (int i = 0; i < SmartFork.s_cleanInterval + 3; i++)
 		{
 			assertEquals(Pullable.NextStatus.YES, p1.hasNextHard());
-			recv = (int) p1.pullHard();
+			recv = ((Number) p1.pullHard()).intValue();
 			// Here we don't do p2.pullHard()
 			assertEquals(i % 4, recv);
 		}

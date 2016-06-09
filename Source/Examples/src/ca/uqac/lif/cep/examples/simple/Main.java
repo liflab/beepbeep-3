@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.examples.simple;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.eml.tuples.*;
+import ca.uqac.lif.cep.tuples.*;
 import ca.uqac.lif.cep.interpreter.*;
 import ca.uqac.lif.cep.io.StreamGrammar;
 

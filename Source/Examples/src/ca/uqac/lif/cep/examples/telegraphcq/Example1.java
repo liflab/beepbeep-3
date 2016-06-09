@@ -18,8 +18,8 @@
 package ca.uqac.lif.cep.examples.telegraphcq;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.eml.tuples.Tuple;
-import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
+import ca.uqac.lif.cep.tuples.Tuple;
+import ca.uqac.lif.cep.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
 

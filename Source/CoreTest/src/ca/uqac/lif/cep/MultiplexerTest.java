@@ -51,7 +51,7 @@ public class MultiplexerTest
 			push1.push(1);
 			push2.push(101);
 			assertEquals(2, queue.size());
-			int i = (int) queue.remove();
+			int i = ((Number) queue.remove()).intValue();
 			assertEquals(1, i);
 			Utilities.queueContains(101, queue);
 			mux.reset();
@@ -89,19 +89,19 @@ public class MultiplexerTest
 		assertEquals(Pullable.NextStatus.YES, pull1.hasNext());
 		qsink.pull();
 		assertEquals(1, queue.size());
-		i = (int) queue.remove();
+		i = ((Number) queue.remove()).intValue();
 		assertEquals(0, i);
 		qsink.pull();
 		assertEquals(1, queue.size());
-		i = (int) queue.remove();
+		i = ((Number) queue.remove()).intValue();
 		assertEquals(100, i);
 		qsink.pull();
 		assertEquals(1, queue.size());
-		i = (int) queue.remove();
+		i = ((Number) queue.remove()).intValue();
 		assertTrue(i == 101 || i == 1);
 		qsink.pull();
 		assertEquals(1, queue.size());
-		i = (int) queue.remove();
+		i = ((Number) queue.remove()).intValue();
 		assertTrue(i == 101 || i == 1);
 	}
 	
@@ -134,16 +134,16 @@ public class MultiplexerTest
 		Pullable pull1 = mux.getPullableOutput(0);
 		assertEquals(Pullable.NextStatus.YES, pull1.hasNextHard());
 		qsink.pullHard();
-		i = (int) queue.remove();
+		i = ((Number) queue.remove()).intValue();
 		assertEquals(0, i);
 		qsink.pullHard();
-		i = (int) queue.remove();
+		i = ((Number) queue.remove()).intValue();
 		assertEquals(100, i);
 		qsink.pullHard();
-		i = (int) queue.remove();
+		i = ((Number) queue.remove()).intValue();
 		assertTrue(i == 101 || i == 1);
 		qsink.pullHard();
-		i = (int) queue.remove();
+		i = ((Number) queue.remove()).intValue();
 		assertTrue(i == 101 || i == 1);
 	}
 }

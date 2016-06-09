@@ -293,7 +293,7 @@ public class UserDefinitionTest
 		Queue<Object> queue = qsink.getQueue(0);
 		qsink.pullHard();
 		assertFalse(queue.isEmpty());
-		int i = (int) queue.remove();
+		int i = ((Number) queue.remove()).intValue();
 		assertEquals(2, i);
 		assertNotNull(m_interpreter.toString());
 	}
