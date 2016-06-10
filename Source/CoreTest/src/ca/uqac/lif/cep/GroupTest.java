@@ -247,7 +247,7 @@ public class GroupTest
 	public void testGroupPull1()
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(new Addition());
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -269,7 +269,7 @@ public class GroupTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
-		Connector.connect(input1, input2, add_plus_10);
+		Connector.connectFork(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;
@@ -309,7 +309,7 @@ public class GroupTest
 	public void testGroupPush2()
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(new Addition());
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		Incrementer inc = new Incrementer(10);
 		Connector.connect(inc, add, 0, 0);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
@@ -333,7 +333,7 @@ public class GroupTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
-		Connector.connect(input1, input2, add_plus_10);
+		Connector.connectFork(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv;

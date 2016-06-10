@@ -108,7 +108,7 @@ public class MathTest
 		QueueSource input2 = new QueueSource(null, 1);
 		input2.setEvents(l_input2);
 		FunctionProcessor pow = new FunctionProcessor(new Power());
-		Connector.connect(input1, input2, pow);
+		Connector.connectFork(input1, input2, pow);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(pow, sink);
 		Number recv;
@@ -222,8 +222,8 @@ public class MathTest
 			Connector.connect(fork, one, 1, 0);
 			Connector.connect(one, sum_right);
 		}
-		FunctionProcessor div = new FunctionProcessor(new Division());
-		Connector.connect(sum_left, sum_right, div);
+		FunctionProcessor div = new FunctionProcessor(Division.instance);
+		Connector.connectFork(sum_left, sum_right, div);
 		Connector.connect(div, sink);
 	}
 	
@@ -233,7 +233,7 @@ public class MathTest
 		Connector.connect(source, win);
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
-		FunctionProcessor greater = new FunctionProcessor(new IsGreaterThan());
+		FunctionProcessor greater = new FunctionProcessor(IsGreaterThan.instance);
 		Constant five = new Constant(5);
 		Connector.connect(fork, five, 0, 0);
 		Connector.connect(fork, greater, 1, 0);
@@ -312,7 +312,7 @@ public class MathTest
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{
-			super(new CumulativeFunction(new Addition()));
+			super(new CumulativeFunction(Addition.instance));
 		}
 	}
 

@@ -18,8 +18,8 @@
 package ca.uqac.lif.cep.examples.simple;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.eml.tuples.NamedTuple;
-import ca.uqac.lif.cep.eml.tuples.TupleGrammar;
+import ca.uqac.lif.cep.tuples.NamedTuple;
+import ca.uqac.lif.cep.tuples.TupleGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
 

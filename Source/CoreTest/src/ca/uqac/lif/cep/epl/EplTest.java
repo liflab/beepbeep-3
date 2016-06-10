@@ -242,11 +242,11 @@ public class EplTest
 		QueueSource source = new QueueSource(0, 1);
 		Pullable out = source.getPullableOutput(0);
 		o = out.pull();
-		assertEquals(0, (int) o);
+		Utilities.assertEquals(0, o);
 		o = out.pull();
-		assertEquals(0, (int) o);
+		Utilities.assertEquals(0, o);
 		o = out.pull();
-		assertEquals(0, (int) o);
+		Utilities.assertEquals(0, o);
 	}
 
 	@Test
@@ -264,7 +264,7 @@ public class EplTest
 		{
 			o = out.pull();
 			assertTrue(o instanceof Integer);
-			assertEquals(i % 3, (int) o);
+			Utilities.assertEquals(i % 3, o);
 		}
 	}
 
@@ -303,7 +303,7 @@ public class EplTest
 			source.push();
 			Object[] objs = sink.getLast();
 			assertEquals(1, objs.length);
-			assertEquals(i % 3, (int) objs[0]);
+			Utilities.assertEquals(i % 3, objs[0]);
 		}
 	}
 
@@ -342,7 +342,8 @@ public class EplTest
 			sink.pull();
 			Object[] objs = sink.getLast();
 			assertEquals(1, objs.length);
-			assertEquals(i % 3, (int) objs[0]);
+			
+			Utilities.assertEquals(i % 3, objs[0]);
 		}
 	}
 
@@ -362,7 +363,7 @@ public class EplTest
 			sink.pullHard();
 			Object[] objs = sink.getLast();
 			assertEquals(1, objs.length);
-			assertEquals(i % 3, (int) objs[0]);
+			Utilities.assertEquals(i % 3, objs[0]);
 		}
 	}
 
@@ -411,22 +412,22 @@ public class EplTest
 		{
 			Queue<Object> queue = sink.getQueue(0);
 			in.push(0);
-			int i = (int) queue.remove();
+			int i = ((Number) queue.remove()).intValue();
 			assertEquals(99, i);
 			in.push(1);
-			i = (int) queue.remove();
+			i = ((Number) queue.remove()).intValue();
 			assertEquals(99, i);
 			in.push(2);
-			i = (int) queue.remove();
+			i = ((Number) queue.remove()).intValue();
 			assertEquals(99, i);
 			in.push(3);
-			i = (int) queue.remove();
+			i = ((Number) queue.remove()).intValue();
 			assertEquals(0, i);
 			in.push(4);
-			i = (int) queue.remove();
+			i = ((Number) queue.remove()).intValue();
 			assertEquals(1, i);
 			in.push(5);
-			i = (int) queue.remove();
+			i = ((Number) queue.remove()).intValue();
 			assertEquals(2, i);
 			ins.reset();
 			sink.reset();

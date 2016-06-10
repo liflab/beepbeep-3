@@ -134,7 +134,7 @@ public class ThroughputTest
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{
-			super(new CumulativeFunction(new Addition()));
+			super(new CumulativeFunction(Addition.instance));
 		}
 	}
 

@@ -74,24 +74,6 @@ public class Connector
 	}
 	
 	/**
-	 * Connects two processors, by associating the <i>i</i>-th
-	 * output of <tt>p1</tt>
-	 * to the <i>i</i>-th input of <tt>p2</tt>
-	 * @param p1 The first processor
-	 * @param p2 The second processor
-	 * @return A reference to processor p2
-	 */
-	public static Processor connect(Processor p1, Processor p2)
-	{
-		int arity = p1.getOutputArity();
-		for (int i = 0; i < arity; i++)
-		{
-			connect(p1, p2, i, i);
-		}
-		return p2;
-	}
-	
-	/**
 	 * Connects three processors, by associating the (first) output of <tt>p1</tt>
 	 * and <tt>p2</tt> respectively to the first and second input of <tt>p3</tt>
 	 * @param p1 The first processor
@@ -99,10 +81,38 @@ public class Connector
 	 * @param p3 The third processor
 	 * @return A reference to processor p3
 	 */
-	public static Processor connect(Processor p1, Processor p2, Processor p3)
+	public static Processor connectFork(Processor p1, Processor p2, Processor p3)
 	{
 		connect(p1, p3, 0, 0);
 		connect(p2, p3, 0, 1);
 		return p3;
+	}
+	
+	/**
+	 * Connects a chain of processors, by associating the outputs of one
+	 * to the inputs of the next. The output arity of the first must match
+	 * that input arity of the next one. In the case the arity is greater
+	 * than 1, the <i>i</i>-th output is linked to the <i>i</i>-th input.
+	 * @param procs The list of processors
+	 * @return The last processor of the chain
+	 */
+	public static Processor connect(Processor ... procs)
+	{
+		if (procs.length == 1)
+		{
+			// If given only one processor, do nothing
+			return procs[0];
+		}
+		for (int j = 0; j < procs.length - 1; j++)
+		{
+			Processor p1 = procs[j];
+			Processor p2 = procs[j + 1];
+			int arity = p1.getOutputArity();
+			for (int i = 0; i < arity; i++)
+			{
+				connect(p1, p2, i, i);
+			}			
+		}
+		return procs[procs.length - 1];
 	}
 }

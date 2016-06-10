@@ -68,7 +68,6 @@ public abstract class TokenFeeder extends SingleProcessor
 			if (index2 < 0)
 				break;
 			String s_out = s.substring(index2, index + m_separatorEnd.length());
-			//m_bufferedContents.delete(index2, index + m_separatorEnd.length());
 			m_bufferedContents.delete(0, index + m_separatorEnd.length());
 			Object token = createTokenFromInput(s_out);
 			if (token != null)
@@ -79,10 +78,6 @@ public abstract class TokenFeeder extends SingleProcessor
 					to_fill[0] = token;
 					out.add(to_fill);
 				}
-			}
-			else
-			{
-				break;
 			}
 			s = m_bufferedContents.toString();
 		}
@@ -105,6 +100,24 @@ public abstract class TokenFeeder extends SingleProcessor
 	public void setSeparatorEnd(String sep)
 	{
 		m_separatorEnd = sep;
+	}
+	
+	/**
+	 * Gets the starting separator to split tokens
+	 * @return The starting separator
+	 */
+	public String getSeparatorBegin()
+	{
+		return m_separatorBegin;
+	}
+	
+	/**
+	 * Gets the ending separator to split tokens
+	 * @return The ending separator
+	 */
+	public String getSeparatorEnd()
+	{
+		return m_separatorEnd;
 	}
 	
 	/**

@@ -23,11 +23,20 @@ import ca.uqac.lif.cep.BinaryFunction;
 
 public class Multiplication extends BinaryFunction<Number,Number,Number>
 {
+	/**
+	 * Static reference to a single instance of the function
+	 */
+	public static final transient Multiplication instance = new Multiplication();
+	
+	private Multiplication()
+	{
+		super();
+	}
 	
 	public static void build(Stack<Object> stack)
 	{
 		stack.pop();
-		stack.push(new Multiplication());
+		stack.push(instance);
 	}
 
 	@Override
