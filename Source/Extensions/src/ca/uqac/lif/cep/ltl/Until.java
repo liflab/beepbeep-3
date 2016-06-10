@@ -21,48 +21,49 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class Until extends BinaryProcessor 
 {
-	protected boolean m_left;
+	protected Value m_left;
 	
-	protected boolean m_right;
+	protected Value m_right;
 	
 	public Until()
 	{
 		super();
-		m_left = true;
-		m_right = false;
+		m_left = Value.TRUE;
+		m_right = Value.FALSE;
 	}
 	
 	@Override
 	public void reset()
 	{
 		super.reset();
-		m_left = true;
-		m_right = false;
+		m_left = Value.TRUE;
+		m_right = Value.FALSE;
 	}
 
 	@Override
-	protected Object compute(boolean left, boolean right)
+	protected Object compute(Object left, Object right)
 	{
-		if (m_right)
+		if (m_right == Value.TRUE)
 		{
-			return true;
+			return Value.TRUE;
 		}
-		if (!m_left)
+		if (m_left == Value.FALSE)
 		{
-			return false;
+			return Value.FALSE;
 		}
-		m_right = m_right || right;
-		m_left = m_left && left;
-		if (m_right)
+		m_right = Troolean.or(m_right, right);
+		m_left = Troolean.and(m_left, left);
+		if (m_right == Value.TRUE)
 		{
-			return true;
+			return Value.TRUE;
 		}
-		if (!m_left)
+		if (m_left == Value.FALSE)
 		{
-			return false;
+			return Value.FALSE;
 		}
 		return null;
 	}
@@ -72,7 +73,7 @@ public class Until extends BinaryProcessor
 		stack.pop(); // (
 		Processor right = (Processor) stack.pop();
 		stack.pop(); // )
-		stack.pop(); // op
+		stack.pop(); // U
 		stack.pop(); // (
 		Processor left = (Processor) stack.pop();
 		stack.pop(); // )

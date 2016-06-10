@@ -21,7 +21,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.tuples.EmlBoolean;
 
 public abstract class UnaryProcessor extends SingleProcessor 
 {
@@ -38,7 +37,7 @@ public abstract class UnaryProcessor extends SingleProcessor
 		{
 			return new ArrayDeque<Object[]>();
 		}
-		Object result = computeInternal(EmlBoolean.toEmlBoolean(o));
+		Object result = computeInternal(o);
 		if (result == null)
 		{
 			return null;
@@ -48,5 +47,5 @@ public abstract class UnaryProcessor extends SingleProcessor
 		return wrapVector(out);
 	}
 	
-	protected abstract Object computeInternal(boolean input);
+	protected abstract Object computeInternal(Object o);
 }

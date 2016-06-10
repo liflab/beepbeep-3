@@ -33,9 +33,13 @@ import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
-import ca.uqac.lif.cep.tuples.EmlBoolean;
 import ca.uqac.lif.cep.tuples.TupleGrammar;
+import ca.uqac.lif.cep.ltl.Troolean.Value;
 
+/**
+ * Unit tests for the LTL operators
+ * @author Sylvain Hallé
+ */
 public class LtlTest 
 {
 	protected InterpreterTestFrontEnd m_interpreter;
@@ -55,23 +59,23 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(EmlBoolean.toEmlBoolean(true));
-		input_events.add(EmlBoolean.toEmlBoolean(true));
-		input_events.add(EmlBoolean.toEmlBoolean(false));
-		input_events.add(EmlBoolean.toEmlBoolean(true));
+		input_events.add(Value.TRUE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.FALSE);
+		input_events.add(Value.TRUE);
 		src.setEvents(input_events);
 		Globally g = new Globally();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
+		Value b;
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b.booleanValue());
-		b = (Boolean) p.pull();
-		assertEquals(false, b.booleanValue());
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
@@ -79,24 +83,24 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(EmlBoolean.toEmlBoolean(false));
-		input_events.add(EmlBoolean.toEmlBoolean(false));
-		input_events.add(EmlBoolean.toEmlBoolean(true));
-		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(Value.FALSE);
+		input_events.add(Value.FALSE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.FALSE);
 		src.setEvents(input_events);
 		Eventually g = new Eventually();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
+		Value b;
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
+		b = (Value) p.pull();
 		assertNotNull(b);
-		assertEquals(true, b.booleanValue());
-		b = (Boolean) p.pull();
-		assertEquals(true, b.booleanValue());
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -104,22 +108,22 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(false);
-		input_events.add(false);
-		input_events.add(true);
-		input_events.add(false);
+		input_events.add(Value.FALSE);
+		input_events.add(Value.FALSE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.FALSE);
 		src.setEvents(input_events);
 		Next g = new Next();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
+		Value b;
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
+		b = (Value) p.pull();
 		assertNotNull(b);
-		assertEquals(false, b.booleanValue());
-		b = (Boolean) p.pull();
-		assertEquals(true, b.booleanValue());
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -127,20 +131,20 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(EmlBoolean.toEmlBoolean(false));
-		input_events.add(EmlBoolean.toEmlBoolean(true));
-		input_events.add(EmlBoolean.toEmlBoolean(true));
-		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(Value.FALSE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.FALSE);
 		src.setEvents(input_events);
 		Next g = new Next();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
+		Value b;
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
+		b = (Value) p.pull();
 		assertNotNull(b);
-		assertEquals(true, b.booleanValue());
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -148,23 +152,23 @@ public class LtlTest
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
-		input_events.add(EmlBoolean.toEmlBoolean(false));
-		input_events.add(EmlBoolean.toEmlBoolean(true));
-		input_events.add(EmlBoolean.toEmlBoolean(true));
-		input_events.add(EmlBoolean.toEmlBoolean(false));
+		input_events.add(Value.FALSE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.FALSE);
 		src.setEvents(input_events);
 		Not g = new Not();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
-		boolean b;
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -174,33 +178,33 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
 		And g = new And();
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
@@ -210,25 +214,25 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(null);
-			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
 		And g = new And();
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
+		Value b;
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
@@ -238,33 +242,33 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
 		Or g = new Or();
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -274,33 +278,33 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
 		Until g = new Until();
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
@@ -310,33 +314,33 @@ public class LtlTest
 		QueueSource src_right = new QueueSource(null, 1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src_right.setEvents(input_events);
 		}
 		Until g = new Until();
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
-		Boolean b;
-		b = (Boolean) p.pull();
+		Value b;
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -346,33 +350,33 @@ public class LtlTest
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@T", "processor", src);
 		}
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@U", "processor", src);
 		}
 		Pullable p = m_interpreter.executeQuery(expression);
-		Boolean b;
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
-		b = (Boolean) p.pull();
-		assertEquals(false, b);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
@@ -382,30 +386,30 @@ public class LtlTest
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@T", "processor", src);
 		}
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@U", "processor", src);
 		}
 		Pullable p = m_interpreter.executeQuery(expression);
 		assertNotNull(p);
-		Boolean b;
-		b = (Boolean) p.pull();
+		Value b;
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -415,20 +419,20 @@ public class LtlTest
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@U", "processor", src);
 		}
 		Pullable p = m_interpreter.executeQuery(expression);
 		assertNotNull(p);
-		Boolean b;
-		b = (Boolean) p.pull();
+		Value b;
+		b = (Value) p.pull();
 		assertNull(b);
-		b = (Boolean) p.pull();
-		assertEquals(true, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -438,10 +442,10 @@ public class LtlTest
 		{
 			QueueSource src = new QueueSource(null, 1);
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(EmlBoolean.toEmlBoolean(false));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(true));
-			input_events.add(EmlBoolean.toEmlBoolean(false));
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@P", "processor", src);
 		}

@@ -21,6 +21,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class Eventually extends UnaryProcessor 
 {
@@ -28,28 +29,28 @@ public class Eventually extends UnaryProcessor
 	 * Whether the value "true" has been seen previously in the
 	 * input trace
 	 */
-	protected boolean m_value;
+	protected Value m_value;
 	
 	public Eventually()
 	{
 		super();
-		m_value = false;
+		m_value = Value.FALSE;
 	}
 	
 	@Override
 	public void reset()
 	{
 		super.reset();
-		m_value = false;
+		m_value = Value.FALSE;
 	}
 
 	@Override
-	protected Object computeInternal(boolean input)
+	protected Object computeInternal(Object input)
 	{
-		m_value |= input;
-		if (m_value)
+		m_value = Troolean.or(m_value, input);
+		if (m_value == Value.TRUE)
 		{
-			return true;
+			return Value.TRUE;
 		}
 		return null;
 	}

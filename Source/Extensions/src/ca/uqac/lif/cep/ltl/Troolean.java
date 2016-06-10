@@ -26,13 +26,15 @@ public class Troolean
 	public static final transient TrooleanNot NOT_FUNCTION = new TrooleanNot();
 
 	/**
-	 * Computes the logical conjunction of two Trooleans
-	 * @param x The first Troolean
-	 * @param y The second Troolean
+	 * Computes the logical conjunction of two objects
+	 * @param x The first object
+	 * @param y The second object
 	 * @return The result
 	 */
-	public static Value and(Value x, Value y)
+	public static Value and(Object a, Object b)
 	{
+		Value x = trooleanValue(a);
+		Value y = trooleanValue(b);
 		if (x == Value.FALSE || y == Value.FALSE)
 		{
 			return Value.FALSE;
@@ -45,13 +47,15 @@ public class Troolean
 	}
 	
 	/**
-	 * Computes the logical conjunction of two Trooleans
-	 * @param x The first Troolean
-	 * @param y The second Troolean
+	 * Computes the logical conjunction of two objects
+	 * @param a The first Troolean
+	 * @param b The second Troolean
 	 * @return The result
 	 */
-	public static Value or(Value x, Value y)
+	public static Value or(Object a, Object b)
 	{
+		Value x = trooleanValue(a);
+		Value y = trooleanValue(b);
 		if (x == Value.TRUE || y == Value.TRUE)
 		{
 			return Value.TRUE;
@@ -64,12 +68,13 @@ public class Troolean
 	}
 	
 	/**
-	 * Computes the logical negation of a Troolean
-	 * @param x The first Troolean
+	 * Computes the logical negation of an object
+	 * @param a The first object
 	 * @return The result
 	 */
-	public static Value not(Value x)
+	public static Value not(Object a)
 	{
+		Value x = trooleanValue(a);
 		if (x == Value.FALSE)
 		{
 			return Value.TRUE;
@@ -82,15 +87,59 @@ public class Troolean
 	}
 	
 	/**
-	 * Converts an ordinary Boolean into a Troolean
-	 * @param b The Boolean value
+	 * Converts an object into a Troolean. The method uses the following
+	 * rules:
+	 * <ul>
+	 * <li><tt>null</tt> evaluates to INCONCLUSIVE</li>
+	 * <li>Ordinary Booleans evaluate to their corresponding value</li>
+	 * <li>Ordinary Trooleans evaluate to their corresponding value</li>
+	 * <li>The strings "1", "true" and "T" evaluate to TRUE</li>
+	 * <li>The strings "0", "false" and "F" evaluate to FALSE</li> 
+	 * <li>All other strings evaluate to INCONCLUSIVE</li>
+	 * <li>All other objects evaluate to INCONCLUSIVE</li>
+	 * </ul>
+	 * @param b The object
 	 * @return The Troolean value
 	 */
-	public static Value trooleanValue(boolean b)
+	public static Value trooleanValue(Object o)
 	{
-		if (b == true)
-			return Value.TRUE;
-		return Value.FALSE;
+		if (o == null)
+		{
+			return Value.INCONCLUSIVE;
+		}
+		if (o instanceof Value)
+		{
+			return (Value) o;
+		}
+		if (o instanceof Boolean)
+		{
+			if (((Boolean) o).booleanValue() == true)
+			{
+				return Value.TRUE;
+			}
+			return Value.FALSE;
+		}
+		if (o instanceof String)
+		{
+			String s = (String) o;
+			if (s.compareTo("1") == 0 || 
+					s.compareToIgnoreCase("true") == 0 || 
+					s.compareToIgnoreCase("T") == 0)
+			{
+				return Value.TRUE;
+			}
+			if (s.compareTo("0") == 0 || 
+					s.compareToIgnoreCase("false") == 0 || 
+					s.compareToIgnoreCase("F") == 0)
+			{
+				return Value.FALSE;
+			}
+			else
+			{
+				return Value.INCONCLUSIVE;
+			}
+		}
+		return Value.INCONCLUSIVE;
 	}
 
 	/**
@@ -107,7 +156,7 @@ public class Troolean
 		@Override
 		public Value getStartValue()
 		{
-			return Value.TRUE;
+			return Value.INCONCLUSIVE;
 		}
 		
 	}
@@ -126,7 +175,7 @@ public class Troolean
 		@Override
 		public Value getStartValue()
 		{
-			return Value.FALSE;
+			return Value.INCONCLUSIVE;
 		}
 	}
 	

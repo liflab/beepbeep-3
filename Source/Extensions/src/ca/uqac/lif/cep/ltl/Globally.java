@@ -21,35 +21,41 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ltl.Troolean.Value;
 
+/**
+ * 
+ * @author sylvain
+ *
+ */
 public class Globally extends UnaryProcessor 
 {
 	/**
 	 * Whether the value "false" has been seen previously in the
 	 * input trace
 	 */
-	protected boolean m_value;
+	protected Value m_value;
 	
 	public Globally()
 	{
 		super();
-		m_value = true;
+		m_value = Value.TRUE;
 	}
 	
 	@Override
 	public void reset()
 	{
 		super.reset();
-		m_value = true;
+		m_value = Value.TRUE;
 	}
 	
 	@Override
-	protected Object computeInternal(boolean input)
+	protected Object computeInternal(Object input)
 	{
-		m_value &= input;
-		if (!m_value)
+		m_value = Troolean.and(m_value,  input);
+		if (m_value == Value.FALSE)
 		{
-			return false;
+			return Value.FALSE;
 		}
 		return null;
 	}

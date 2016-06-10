@@ -20,19 +20,14 @@ package ca.uqac.lif.cep.ltl;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
-public class Or extends BinaryProcessor 
+public class Or extends FunctionProcessor 
 {
 	public Or()
 	{
-		super();
-	}
-
-	@Override
-	protected Object compute(boolean left, boolean right)
-	{
-		return left || right;
+		super(Troolean.OR_FUNCTION);
 	}
 	
 	public static void build(Stack<Object> stack) 
