@@ -29,7 +29,6 @@ import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
-import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.numbers.Addition;
 
 public class ProcessorTest
@@ -76,98 +75,6 @@ public class ProcessorTest
 		}
 	}
 	
-	@Test
-	public void testWindowPull1()
-	{
-		Number recv;
-		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new Sum(), 3);
-		Connector.connect(cs, wp);
-		Pullable p = wp.getPullableOutput(0);
-		// We must pull three times to get the first output
-		recv = (Number) p.pull();
-		if (recv != null)
-		{
-			// 0 + 1 = 1
-			fail("Expected null on first pull, got " + recv);
-		}
-		recv = (Number) p.pull();
-		if (recv != null)
-		{
-			// 1 + 1 = 2
-			fail("Expected null on second pull, got " + recv);
-		}
-		recv = (Number) p.pull();
-		if (recv == null || recv.intValue() != 3)
-		{
-			// 2 + 1 = 3
-			fail("Expected 3 on third pull, got " + recv);
-		}
-		recv = (Number) p.pull();
-		if (recv == null || recv.intValue() != 3)
-		{
-			// 3 + 1 = 4
-			fail("Expected 3 on fourth pull, got " + recv);
-		}
-	}
-	
-	@Test
-	public void testWindowPull2()
-	{
-		Number recv;
-		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new Sum(), 3);
-		Connector.connect(cs, wp);
-		Pullable p = wp.getPullableOutput(0);
-		// We pull hard: get output on first call
-		recv = (Number) p.pullHard();
-		if (recv == null || recv.intValue() != 3)
-		{
-			fail("Expected 3 on first pull, got " + recv);
-		}
-		recv = (Number) p.pullHard();
-		if (recv == null || recv.intValue() != 3)
-		{
-			fail("Expected 3 on second pull, got " + recv);
-		}
-	}
-
-	
-	@Test
-	public void testWindowPush1()
-	{
-		Number recv;
-		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
-		Window wp = new Window(new Sum(), 3);
-		QueueSink qs = new QueueSink(1);
-		Connector.connect(cs, wp);
-		Connector.connect(wp, qs);
-		// We must push three times to get the first output
-		cs.push();
-		recv = (Number) qs.remove()[0];
-		if (recv != null)
-		{
-			fail("Expected null on first push, got " + recv);
-		}
-		cs.push();
-		recv = (Number) qs.remove()[0];
-		if (recv != null)
-		{
-			fail("Expected null on second push, got " + recv);
-		}
-		cs.push();
-		recv = (Number) qs.remove()[0];
-		if (recv == null || recv.intValue() != 3)
-		{
-			fail("Expected 3 on third push, got " + recv);
-		}
-		cs.push();
-		recv = (Number) qs.remove()[0];
-		if (recv == null || recv.intValue() != 3)
-		{
-			fail("Expected 3 on fourth push, got " + recv);
-		}
-	}
 	
 	@Test
 	public void testDecimatePull1()

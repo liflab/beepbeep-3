@@ -33,6 +33,11 @@ import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.numbers.EmlNumber;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
 
+/**
+ * Unit tests for grammar extensions
+ * @author Sylvain Hallé
+ *
+ */
 public class InterpreterExtensionTest
 {
 	protected InterpreterTestFrontEnd m_interpreter;

@@ -43,6 +43,11 @@ import ca.uqac.lif.cep.tuples.TupleFeeder;
 import ca.uqac.lif.cep.tuples.TupleGrammar;
 import ca.uqac.lif.cep.tuples.EmlPuller.EmlPullable;
 
+/**
+ * Unit tests for ESQL user definitions
+ * @author Sylvain Hallé
+ *
+ */
 public class UserDefinitionTest 
 {
 	protected InterpreterTestFrontEnd m_interpreter;
