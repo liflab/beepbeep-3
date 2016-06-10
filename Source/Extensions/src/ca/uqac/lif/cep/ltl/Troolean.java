@@ -26,15 +26,13 @@ public class Troolean
 	public static final transient TrooleanNot NOT_FUNCTION = new TrooleanNot();
 
 	/**
-	 * Computes the logical conjunction of two objects
-	 * @param x The first object
-	 * @param y The second object
+	 * Computes the logical conjunction of two values
+	 * @param x The first value
+	 * @param y The second value
 	 * @return The result
 	 */
-	public static Value and(Object a, Object b)
+	public static Value and(Value x, Value y)
 	{
-		Value x = trooleanValue(a);
-		Value y = trooleanValue(b);
 		if (x == Value.FALSE || y == Value.FALSE)
 		{
 			return Value.FALSE;
@@ -47,15 +45,13 @@ public class Troolean
 	}
 	
 	/**
-	 * Computes the logical conjunction of two objects
-	 * @param a The first Troolean
-	 * @param b The second Troolean
+	 * Computes the logical conjunction of two values
+	 * @param a The first value
+	 * @param b The second value
 	 * @return The result
 	 */
-	public static Value or(Object a, Object b)
+	public static Value or(Value x, Value y)
 	{
-		Value x = trooleanValue(a);
-		Value y = trooleanValue(b);
 		if (x == Value.TRUE || y == Value.TRUE)
 		{
 			return Value.TRUE;
@@ -68,13 +64,12 @@ public class Troolean
 	}
 	
 	/**
-	 * Computes the logical negation of an object
-	 * @param a The first object
+	 * Computes the logical negation of a value
+	 * @param a The first value
 	 * @return The result
 	 */
-	public static Value not(Object a)
+	public static Value not(Value x)
 	{
-		Value x = trooleanValue(a);
 		if (x == Value.FALSE)
 		{
 			return Value.TRUE;

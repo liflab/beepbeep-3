@@ -50,7 +50,7 @@ public class Globally extends UnaryProcessor
 	}
 	
 	@Override
-	protected Object computeInternal(Object input)
+	protected Object computeInternal(Value input)
 	{
 		m_value = Troolean.and(m_value,  input);
 		if (m_value == Value.FALSE)

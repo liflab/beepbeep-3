@@ -19,6 +19,28 @@
 /**
  * Processors to express complex patterns over sequences of events
  * with Linear Temporal Logic.
+ * Temporal operators have processors in two versions: Boolean and
+ * <em>Troolean</em>.
+ * <p>
+ * Boolean processors are called {@link Globally}, {@link Eventually}
+ * {@link Until} and {@link Next}. If a<sub>0</sub> a<sub>1</sub>
+ * a<sub>2</sub> &hellip; is an input trace, the processor Globally
+ * produces an output trace b<sub>0</sub> b<sub>1</sub>
+ * b<sub>2</sub> &hellip; such that b<sub>i</sub> = false if and only
+ * there exists j &geq; i such that b<sub>j</sub> = false. In other
+ * words, the i-th output event is the Boolean verdict of evaluating
+ * <b>G</b> &phi; on the input trace, starting at the i-th event.
+ * <p>
+ * Troolean processors are called {@link Always}, {@link Sometime},
+ * {@link UpTo} and {@link After}. If a<sub>0</sub> a<sub>1</sub>
+ * a<sub>2</sub> &hellip; is an input trace, the processor Always
+ * produces an output trace b<sub>0</sub> b<sub>1</sub>
+ * b<sub>2</sub> &hellip; such that b<sub>i</sub> = false if there exists
+ * j &leq; i such that b<sub>j</sub> = false, and "?" (the
+ * "inconclusive" value of LTL<sub>3</sub>) otherwise.  In other
+ * words, the i-th output event is the Boolean verdict of evaluating
+ * <b>G</b> &phi; on the input trace, after reading i events.
+ * 
  * 
  * @author Sylvain Hallé
  */

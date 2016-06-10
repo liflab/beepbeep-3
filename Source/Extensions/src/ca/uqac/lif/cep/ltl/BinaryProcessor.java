@@ -21,6 +21,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public abstract class BinaryProcessor extends SingleProcessor 
 {
@@ -38,7 +39,7 @@ public abstract class BinaryProcessor extends SingleProcessor
 		{
 			return new ArrayDeque<Object[]>();
 		}
-		Object result = compute(left, right);
+		Object result = compute(Troolean.trooleanValue(left), Troolean.trooleanValue(right));
 		if (result == null)
 		{
 			return null;
@@ -48,5 +49,5 @@ public abstract class BinaryProcessor extends SingleProcessor
 		return wrapVector(out);
 	}
 	
-	protected abstract Object compute(Object left, Object right);
+	protected abstract Object compute(Value left, Value right);
 }

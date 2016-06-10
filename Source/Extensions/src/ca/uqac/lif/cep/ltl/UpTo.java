@@ -20,54 +20,58 @@ package ca.uqac.lif.cep.ltl;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.CumulativeFunction;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
-public class Until extends BinaryProcessor 
+/**
+ * Troolean version of the LTL <b>U</b> operator
+ * @author Sylvain Hallé
+ */
+public class UpTo extends BinaryProcessor 
 {
-	protected Value m_left;
-	
-	protected Value m_right;
-	
-	public Until()
+	protected CumulativeFunction<Value> m_left;
+
+	protected CumulativeFunction<Value> m_right;
+
+	protected Value m_currentValue;
+
+	public UpTo()
 	{
 		super();
-		m_left = Value.TRUE;
-		m_right = Value.FALSE;
+		m_left = new Always();
+		m_right = new Sometime();
+		m_currentValue = Value.INCONCLUSIVE;
 	}
-	
+
 	@Override
 	public void reset()
 	{
 		super.reset();
-		m_left = Value.TRUE;
-		m_right = Value.FALSE;
+		m_left.reset();
+		m_right.reset();
+		m_currentValue = Value.INCONCLUSIVE;
 	}
 
 	@Override
 	protected Object compute(Value left, Value right)
 	{
-		if (m_right == Value.TRUE)
+		if (m_currentValue == Value.INCONCLUSIVE)
 		{
-			return Value.TRUE;
+			Value v_left = m_left.evaluate(left);
+			Value v_right = m_right.evaluate(right);
+			if (v_right == Value.TRUE)
+			{
+				m_currentValue = Value.TRUE;
+			}
+			else if (v_left == Value.FALSE)
+			{
+				m_currentValue = Value.FALSE;
+			}
 		}
-		if (m_left == Value.FALSE)
-		{
-			return Value.FALSE;
-		}
-		m_right = Troolean.or(m_right, right);
-		m_left = Troolean.and(m_left, left);
-		if (m_right == Value.TRUE)
-		{
-			return Value.TRUE;
-		}
-		if (m_left == Value.FALSE)
-		{
-			return Value.FALSE;
-		}
-		return null;
+		return m_currentValue;
 	}
-	
+
 	public static void build(Stack<Object> stack) 
 	{
 		stack.pop(); // (

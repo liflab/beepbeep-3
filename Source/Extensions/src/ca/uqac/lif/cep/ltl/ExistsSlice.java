@@ -5,9 +5,9 @@ import ca.uqac.lif.cep.Function;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
-public class ForAllSlices extends FirstOrderSlicer
+public class ExistsSlice extends FirstOrderSlicer
 {
-	public ForAllSlices(Function slice_function, Processor p) 
+	public ExistsSlice(Function slice_function, Processor p) 
 	{
 		super(slice_function, p);
 	}
@@ -15,6 +15,6 @@ public class ForAllSlices extends FirstOrderSlicer
 	@Override
 	protected CumulativeFunction<Value> getMergeFunction()
 	{
-		return new Always();
+		return new Sometime();
 	}
 }

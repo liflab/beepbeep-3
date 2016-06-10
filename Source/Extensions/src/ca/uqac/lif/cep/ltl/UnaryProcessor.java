@@ -21,6 +21,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public abstract class UnaryProcessor extends SingleProcessor 
 {
@@ -37,7 +38,7 @@ public abstract class UnaryProcessor extends SingleProcessor
 		{
 			return new ArrayDeque<Object[]>();
 		}
-		Object result = computeInternal(o);
+		Object result = computeInternal(Troolean.trooleanValue(o));
 		if (result == null)
 		{
 			return null;
@@ -47,5 +48,5 @@ public abstract class UnaryProcessor extends SingleProcessor
 		return wrapVector(out);
 	}
 	
-	protected abstract Object computeInternal(Object o);
+	protected abstract Object computeInternal(Value o);
 }
