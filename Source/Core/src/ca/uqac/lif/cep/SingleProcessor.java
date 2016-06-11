@@ -402,7 +402,7 @@ public abstract class SingleProcessor extends Processor
 		{
 			return null;
 		}
-		Queue<Object[]> out = new ArrayDeque<Object[]>();
+		Queue<Object[]> out = newQueue();
 		out.add(v);
 		return out;
 	}
@@ -418,11 +418,20 @@ public abstract class SingleProcessor extends Processor
 	 */
 	protected static final Queue<Object[]> wrapObject(Object o)
 	{
-		Queue<Object[]> out = new ArrayDeque<Object[]>();
+		Queue<Object[]> out = newQueue();
 		Object[] v = new Object[1];
 		v[0] = o;
 		out.add(v);
 		return out;
+	}
+	
+	/**
+	 * Gets a new instance of an empty object queue
+	 * @return The queue
+	 */
+	public static Queue<Object[]> newQueue()
+	{
+		return new ArrayDeque<Object[]>();
 	}
 	
 }

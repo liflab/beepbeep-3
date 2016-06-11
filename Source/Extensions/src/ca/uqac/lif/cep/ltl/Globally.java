@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,47 +17,32 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
- * 
- * @author sylvain
- *
+ * Boolean implementation of the LTL <b>G</b> processor
+ * @author Sylvain Hallé
  */
-public class Globally extends UnaryProcessor 
+public class Globally extends SingleProcessor 
 {
-	/**
-	 * Whether the value "false" has been seen previously in the
-	 * input trace
-	 */
-	protected Value m_value;
+	protected int m_notFalseCount = 0;
 	
 	public Globally()
 	{
-		super();
-		m_value = Value.TRUE;
+		super(1, 1);
 	}
 	
 	@Override
 	public void reset()
 	{
 		super.reset();
-		m_value = Value.TRUE;
-	}
-	
-	@Override
-	protected Object computeInternal(Value input)
-	{
-		m_value = Troolean.and(m_value,  input);
-		if (m_value == Value.FALSE)
-		{
-			return Value.FALSE;
-		}
-		return null;
+		m_notFalseCount = 0;
 	}
 	
 	public static void build(Stack<Object> stack) 
@@ -75,5 +60,27 @@ public class Globally extends UnaryProcessor
 	public Globally clone()
 	{
 		return new Globally();
+	}
+
+	@Override
+	protected Queue<Object[]> compute(Object[] inputs) 
+	{
+		Queue<Object[]> out = newQueue();
+		Value v = Troolean.trooleanValue(inputs[0]);
+		if (v == Value.FALSE)
+		{
+			for (int i = 0; i < m_notFalseCount; i++)
+			{
+				Object[] e = new Object[1];
+				e[0] = Value.FALSE;
+				out.add(e);
+			}
+			m_notFalseCount = 0;
+		}
+		else
+		{
+			m_notFalseCount++;
+		}
+		return out;
 	}
 }

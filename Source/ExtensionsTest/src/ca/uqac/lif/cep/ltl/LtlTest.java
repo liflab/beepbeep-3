@@ -79,6 +79,30 @@ public class LtlTest
 	}
 	
 	@Test
+	public void testAlways1()
+	{
+		QueueSource src = new QueueSource(null, 1);
+		Vector<Object> input_events = new Vector<Object>();
+		input_events.add(Value.TRUE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.FALSE);
+		input_events.add(Value.TRUE);
+		src.setEvents(input_events);
+		Always g = new Always();
+		Connector.connect(src, g);
+		Pullable p = g.getPullableOutput(0);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.INCONCLUSIVE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.INCONCLUSIVE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+	}
+	
+	@Test
 	public void testEventually1()
 	{
 		QueueSource src = new QueueSource(null, 1);
@@ -98,6 +122,30 @@ public class LtlTest
 		assertNull(b);
 		b = (Value) p.pull();
 		assertNotNull(b);
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
+	}
+	
+	@Test
+	public void testSometime1()
+	{
+		QueueSource src = new QueueSource(null, 1);
+		Vector<Object> input_events = new Vector<Object>();
+		input_events.add(Value.FALSE);
+		input_events.add(Value.FALSE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.FALSE);
+		src.setEvents(input_events);
+		Sometime g = new Sometime();
+		Connector.connect(src, g);
+		Pullable p = g.getPullableOutput(0);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.INCONCLUSIVE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.INCONCLUSIVE, b);
+		b = (Value) p.pull();
 		assertEquals(Value.TRUE, b);
 		b = (Value) p.pull();
 		assertEquals(Value.TRUE, b);
@@ -300,11 +348,11 @@ public class LtlTest
 		b = (Value) p.pull();
 		assertEquals(Value.FALSE, b);
 		b = (Value) p.pull();
-		assertEquals(Value.FALSE, b);
+		assertEquals(Value.TRUE, b);
 		b = (Value) p.pull();
-		assertEquals(Value.FALSE, b);
+		assertNull(b);
 		b = (Value) p.pull();
-		assertEquals(Value.FALSE, b);
+		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
@@ -337,6 +385,78 @@ public class LtlTest
 		assertNull(b);
 		b = (Value) p.pull();
 		assertNull(b);
+		b = (Value) p.pull();
+		assertEquals(Value.TRUE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+	}
+	
+	@Test
+	public void testUpTo1()
+	{
+		QueueSource src_left = new QueueSource(null, 1);
+		QueueSource src_right = new QueueSource(null, 1);
+		{
+			Vector<Object> input_events = new Vector<Object>();
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
+			src_left.setEvents(input_events);
+		}
+		{
+			Vector<Object> input_events = new Vector<Object>();
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			src_right.setEvents(input_events);
+		}
+		UpTo g = new UpTo();
+		Connector.connect(src_left, g, 0, 0);
+		Connector.connect(src_right, g, 0, 1);
+		Pullable p = g.getPullableOutput(0);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.FALSE, b);
+	}
+	
+	@Test
+	public void testUpTo2()
+	{
+		QueueSource src_left = new QueueSource(null, 1);
+		QueueSource src_right = new QueueSource(null, 1);
+		{
+			Vector<Object> input_events = new Vector<Object>();
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
+			src_left.setEvents(input_events);
+		}
+		{
+			Vector<Object> input_events = new Vector<Object>();
+			input_events.add(Value.FALSE);
+			input_events.add(Value.FALSE);
+			input_events.add(Value.TRUE);
+			input_events.add(Value.FALSE);
+			src_right.setEvents(input_events);
+		}
+		UpTo g = new UpTo();
+		Connector.connect(src_left, g, 0, 0);
+		Connector.connect(src_right, g, 0, 1);
+		Pullable p = g.getPullableOutput(0);
+		Value b;
+		b = (Value) p.pull();
+		assertEquals(Value.INCONCLUSIVE, b);
+		b = (Value) p.pull();
+		assertEquals(Value.INCONCLUSIVE, b);
 		b = (Value) p.pull();
 		assertEquals(Value.TRUE, b);
 		b = (Value) p.pull();

@@ -17,18 +17,20 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.CumulativeFunction;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Troolean version of the LTL <b>U</b> operator
  * @author Sylvain Hallé
  */
-public class UpTo extends BinaryProcessor 
+public class UpTo extends SingleProcessor 
 {
 	protected CumulativeFunction<Value> m_left;
 
@@ -38,9 +40,9 @@ public class UpTo extends BinaryProcessor
 
 	public UpTo()
 	{
-		super();
-		m_left = new Always();
-		m_right = new Sometime();
+		super(2, 1);
+		m_left = new CumulativeFunction<Value>(Troolean.AND_FUNCTION);
+		m_right = new CumulativeFunction<Value>(Troolean.OR_FUNCTION);
 		m_currentValue = Value.INCONCLUSIVE;
 	}
 
@@ -54,8 +56,10 @@ public class UpTo extends BinaryProcessor
 	}
 
 	@Override
-	protected Object compute(Value left, Value right)
+	protected Queue<Object[]> compute(Object[] input)
 	{
+		Value left = Troolean.trooleanValue(input[0]);
+		Value right = Troolean.trooleanValue(input[1]);
 		if (m_currentValue == Value.INCONCLUSIVE)
 		{
 			Value v_left = m_left.evaluate(left);
@@ -69,7 +73,7 @@ public class UpTo extends BinaryProcessor
 				m_currentValue = Value.FALSE;
 			}
 		}
-		return m_currentValue;
+		return wrapObject(m_currentValue);
 	}
 
 	public static void build(Stack<Object> stack) 

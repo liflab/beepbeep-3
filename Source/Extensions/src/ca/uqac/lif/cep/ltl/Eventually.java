@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,42 +17,32 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
-public class Eventually extends UnaryProcessor 
+/**
+ * Boolean implementation of the LTL <b>F</b> processor
+ * @author Sylvain Hallé
+ */
+public class Eventually extends SingleProcessor 
 {
-	/**
-	 * Whether the value "true" has been seen previously in the
-	 * input trace
-	 */
-	protected Value m_value;
+	protected int m_notTrueCount = 0;
 	
 	public Eventually()
 	{
-		super();
-		m_value = Value.FALSE;
+		super(1, 1);
 	}
 	
 	@Override
 	public void reset()
 	{
 		super.reset();
-		m_value = Value.FALSE;
-	}
-
-	@Override
-	protected Object computeInternal(Value input)
-	{
-		m_value = Troolean.or(m_value, input);
-		if (m_value == Value.TRUE)
-		{
-			return Value.TRUE;
-		}
-		return null;
+		m_notTrueCount = 0;
 	}
 	
 	public static void build(Stack<Object> stack) 
@@ -60,7 +50,7 @@ public class Eventually extends UnaryProcessor
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // )
-		stack.pop(); // op
+		stack.pop(); // F
 		Eventually op = new Eventually();
 		Connector.connect(p, op);
 		stack.push(op);
@@ -70,5 +60,27 @@ public class Eventually extends UnaryProcessor
 	public Eventually clone()
 	{
 		return new Eventually();
+	}
+
+	@Override
+	protected Queue<Object[]> compute(Object[] inputs) 
+	{
+		Queue<Object[]> out = newQueue();
+		Value v = Troolean.trooleanValue(inputs[0]);
+		if (v == Value.TRUE)
+		{
+			for (int i = 0; i < m_notTrueCount; i++)
+			{
+				Object[] e = new Object[1];
+				e[0] = Value.TRUE;
+				out.add(e);
+			}
+			m_notTrueCount = 0;
+		}
+		else
+		{
+			m_notTrueCount++;
+		}
+		return out;
 	}
 }

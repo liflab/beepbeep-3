@@ -17,53 +17,63 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
-public class Until extends BinaryProcessor 
+/**
+ * Boolean implementation of the LTL <b>U</b> processor
+ * @author Sylvain Hallé
+ */
+public class Until extends SingleProcessor 
 {
-	protected Value m_left;
-	
-	protected Value m_right;
+	protected int m_eventCount = 0;
 	
 	public Until()
 	{
-		super();
-		m_left = Value.TRUE;
-		m_right = Value.FALSE;
+		super(2, 1);
+		m_eventCount = 0;
 	}
 	
 	@Override
 	public void reset()
 	{
 		super.reset();
-		m_left = Value.TRUE;
-		m_right = Value.FALSE;
+		m_eventCount = 0;
 	}
 
 	@Override
-	protected Object compute(Value left, Value right)
+	protected Queue<Object[]> compute(Object[] input)
 	{
-		if (m_right == Value.TRUE)
+		Value left = Troolean.trooleanValue(input[0]);
+		Value right = Troolean.trooleanValue(input[1]);
+		Queue<Object[]> out = newQueue();
+		m_eventCount++;
+		if (right == Value.TRUE)
 		{
-			return Value.TRUE;
+			for (int i = 0; i < m_eventCount; i++)
+			{
+				Object[] e = new Object[1];
+				e[0] = Value.TRUE;
+				out.add(e);
+				m_eventCount = 0;
+			}
+			return out;
 		}
-		if (m_left == Value.FALSE)
+		if (left == Value.FALSE)
 		{
-			return Value.FALSE;
-		}
-		m_right = Troolean.or(m_right, right);
-		m_left = Troolean.and(m_left, left);
-		if (m_right == Value.TRUE)
-		{
-			return Value.TRUE;
-		}
-		if (m_left == Value.FALSE)
-		{
-			return Value.FALSE;
+			for (int i = 0; i < m_eventCount; i++)
+			{
+				Object[] e = new Object[1];
+				e[0] = Value.FALSE;
+				out.add(e);
+				m_eventCount = 0;
+			}
+			return out;			
 		}
 		return null;
 	}

@@ -15,6 +15,6 @@ public class ForAllSlices extends FirstOrderSlicer
 	@Override
 	protected CumulativeFunction<Value> getMergeFunction()
 	{
-		return new Always();
+		return new CumulativeFunction<Value>(Troolean.AND_FUNCTION);
 	}
 }

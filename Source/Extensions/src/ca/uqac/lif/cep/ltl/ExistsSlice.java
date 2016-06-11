@@ -15,6 +15,6 @@ public class ExistsSlice extends FirstOrderSlicer
 	@Override
 	protected CumulativeFunction<Value> getMergeFunction()
 	{
-		return new Sometime();
+		return new CumulativeFunction<Value>(Troolean.OR_FUNCTION);
 	}
 }
