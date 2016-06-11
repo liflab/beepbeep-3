@@ -15,10 +15,44 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package ca.uqac.lif.cep.editor;
 
-/**
- * Rudimentary interactive command-line interpreter and GUI.
- * 
- * @author Sylvain Hallé
- */
-package ca.uqac.lif.cep.cli;
+import ca.uqac.lif.jerrydog.InnerFileServer;
+
+public class GuiServer extends InnerFileServer 
+{
+
+	/**
+	 * Instantiates a new GUI server
+	 */
+	public GuiServer() 
+	{
+		super(GuiServer.class);
+		setServerPort(31313);
+		setUserAgent("BeepBeep 3 editor");
+	}
+
+	public static void main(String[] args)
+	{
+		GuiServer server = new GuiServer();
+		server.startServer();
+		while (true)
+		{
+			sleep(10000);
+		}
+	}
+
+	public static void sleep(long d)
+	{
+		try 
+		{
+			Thread.sleep(d);
+		} 
+		catch (InterruptedException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
