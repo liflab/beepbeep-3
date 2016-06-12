@@ -20,11 +20,14 @@ package ca.uqac.lif.cep.ltl;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.FileHelper;
 import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
 public class And extends FunctionProcessor 
 {
+	protected static final transient byte[] s_image = FileHelper.internalFileToBytes(And.class, "And.png");
+	
 	public And()
 	{
 		super(Troolean.AND_FUNCTION);
@@ -49,6 +52,12 @@ public class And extends FunctionProcessor
 	public And clone()
 	{
 		return new And();
+	}
+	
+	@Override
+	public byte[] getImage()
+	{
+		return s_image;
 	}
 
 }

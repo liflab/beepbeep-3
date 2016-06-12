@@ -17,10 +17,19 @@
  */
 package ca.uqac.lif.cep.editor;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import ca.uqac.lif.cep.Passthrough;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.jerrydog.InnerFileServer;
+import ca.uqac.lif.json.JsonMap;
 
 public class GuiServer extends InnerFileServer 
 {
+	protected Set<Processor> m_processors;
+	
+	protected static transient final String s_processorImageFolder = "resource/images/processors";
 
 	/**
 	 * Instantiates a new GUI server
@@ -28,8 +37,11 @@ public class GuiServer extends InnerFileServer
 	public GuiServer() 
 	{
 		super(GuiServer.class);
+		m_processors = new HashSet<Processor>();
 		setServerPort(31313);
 		setUserAgent("BeepBeep 3 editor");
+		registerCallback(0, new GetImage(this));
+		registerCallback(0, new NewProcessor(this));
 	}
 
 	public static void main(String[] args)
@@ -42,6 +54,10 @@ public class GuiServer extends InnerFileServer
 		}
 	}
 
+	/**
+	 * Sleep for some time
+	 * @param d The time (in ms)
+	 */
 	public static void sleep(long d)
 	{
 		try 
@@ -50,9 +66,47 @@ public class GuiServer extends InnerFileServer
 		} 
 		catch (InterruptedException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Instantiates a new processor, and returns a JSON element used to
+	 * display it in the editor
+	 * @param type The type of processor to instantiate
+	 * @return
+	 */
+	public JsonMap createNewProcessor(String type)
+	{
+		JsonMap map = new JsonMap();
+		Processor p = null;
+		if (type.compareToIgnoreCase("ca.uqac.lif.cep.Passthrough") == 0)
+		{
+			p = new Passthrough(1);
+		}
+		else if (type.compareToIgnoreCase("ca.uqac.lif.cep.ltl.And") == 0)
+		{
+			p = new ca.uqac.lif.cep.ltl.And();
+		}
+		m_processors.add(p);
+		map.put("id", p.getId());
+		return map;
+	}
+	
+	/**
+	 * Retrieves the instance of processor with given ID
+	 * @param id The ID
+	 * @return The processor, or null if not found
+	 */
+	public Processor getProcessor(int id)
+	{
+		for (Processor p : m_processors)
+		{
+			if (p.getId() == id)
+			{
+				return p;
+			}
+		}
+		return null;
+	}
 }
