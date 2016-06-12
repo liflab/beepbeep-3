@@ -42,6 +42,7 @@ public class Editor extends InnerFileServer
 		setUserAgent("BeepBeep 3 editor");
 		registerCallback(0, new GetImage(this));
 		registerCallback(0, new NewProcessor(this));
+		registerCallback(0, new ConnectProcessors(this));
 	}
 
 	public static void main(String[] args)
