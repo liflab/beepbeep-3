@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="262.93647"
-     inkscape:cy="891.28633"
+     inkscape:zoom="1.4"
+     inkscape:cx="165.7995"
+     inkscape:cy="686.36819"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1346,5 +1346,126 @@
          x="709.57642"
          y="183.50902" />
     </g>
+    <g
+       id="g3203"
+       transform="matrix(0,-1,1,0,-249.71402,561.97374)"
+       inkscape:export-filename="/home/sylvain/Workspaces/beepbeep-3/Source/Core/src/ca/uqac/lif/cep/processor-2-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="matrix(0,0.72757334,-0.72757334,0,505.74296,68.509053)"
+         id="g3173"
+         style="display:inline">
+        <rect
+           y="458.03918"
+           x="438.83429"
+           height="92.85714"
+           width="48.0457"
+           id="rect3175"
+           style="color:#000000;fill:#6f916f;fill-opacity:1;fill-rule:nonzero;stroke:#0b280b;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           style="color:#000000;fill:#6f916f;fill-opacity:1;fill-rule:nonzero;stroke:#0b280b;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3177"
+           width="56.907108"
+           height="27.197224"
+           x="434.40359"
+           y="540.8717" />
+        <path
+           style="fill:#d7f4d7;stroke:#d7f4d7;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 445.16412,524.07143 0,12.85714"
+           id="path3179"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3181"
+           d="m 440.15135,545.49189 0,18.15906"
+           style="fill:#d7f4d7;stroke:#d7f4d7;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      </g>
+    </g>
+    <rect
+       style="color:#000000;fill:#217821;fill-opacity:1;fill-rule:nonzero;stroke:#0b280b;stroke-width:2.18271995;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3183"
+       width="34.956772"
+       height="67.560379"
+       x="387.79318"
+       y="136.08556"
+       transform="matrix(0,1,1,0,0,0)"
+       inkscape:export-filename="/home/sylvain/Workspaces/beepbeep-3/Source/Core/src/ca/uqac/lif/cep/processor-2-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="196.35229"
+       x="384.56952"
+       height="19.787975"
+       width="41.404095"
+       id="rect3185"
+       style="color:#000000;fill:#217821;fill-opacity:1;fill-rule:nonzero;stroke:#0b280b;stroke-width:2.18271995;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       transform="matrix(0,1,1,0,0,0)"
+       inkscape:export-filename="/home/sylvain/Workspaces/beepbeep-3/Source/Core/src/ca/uqac/lif/cep/processor-2-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path3187"
+       d="m 184.12886,390.72011 9.35452,0"
+       style="fill:#d7f4d7;stroke:#d7f4d7;stroke-width:0.72757334px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/sylvain/Workspaces/beepbeep-3/Source/Core/src/ca/uqac/lif/cep/processor-2-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#d7f4d7;stroke:#d7f4d7;stroke-width:0.72757334px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 199.71382,389.26496 13.21205,0"
+       id="path3189"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/sylvain/Workspaces/beepbeep-3/Source/Core/src/ca/uqac/lif/cep/processor-2-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       transform="matrix(0,1,1,0,-249.71402,248.61002)"
+       id="g3210"
+       inkscape:export-filename="/home/sylvain/Workspaces/beepbeep-3/Source/Core/src/ca/uqac/lif/cep/processor-2-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         style="display:inline"
+         id="g3212"
+         transform="matrix(0,0.72757334,-0.72757334,0,505.74296,68.509053)">
+        <rect
+           style="color:#000000;fill:#6f916f;fill-opacity:1;fill-rule:nonzero;stroke:#0b280b;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3214"
+           width="48.0457"
+           height="92.85714"
+           x="438.83429"
+           y="458.03918" />
+        <rect
+           y="540.8717"
+           x="434.40359"
+           height="27.197224"
+           width="56.907108"
+           id="rect3216"
+           style="color:#000000;fill:#6f916f;fill-opacity:1;fill-rule:nonzero;stroke:#0b280b;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3218"
+           d="m 445.16412,524.07143 0,12.85714"
+           style="fill:#d7f4d7;stroke:#d7f4d7;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           style="fill:#d7f4d7;stroke:#d7f4d7;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 440.15135,545.49189 0,18.15906"
+           id="path3220"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <rect
+       style="color:#000000;fill:#93ac93;fill-opacity:1;fill-rule:nonzero;stroke:#0b280b;stroke-width:2.18271995;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3191"
+       width="64.442215"
+       height="57.166473"
+       x="373.05048"
+       y="-184.14079"
+       transform="matrix(0,1,-1,0,0,0)"
+       inkscape:export-filename="/home/sylvain/Workspaces/beepbeep-3/Source/Core/src/ca/uqac/lif/cep/processor-2-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

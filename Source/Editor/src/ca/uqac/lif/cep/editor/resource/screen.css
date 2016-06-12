@@ -17,6 +17,10 @@ html {
   background-size: contain;
 }
 
+#playground {
+	position: relative;
+}
+
 .processor-box {
 	opacity: 0.85;
 	display: block;
@@ -43,4 +47,15 @@ html {
 
 .processor-box-output:hover {
 	background-color: red;
+}
+
+div.line{
+  transform-origin: 0 100%;
+  height: 3px; /* Line width of 3 */
+  background: #000; /* Black fill */
+}
+
+.pipe-box {
+	border: solid 1px black;
+	position: absolute;
 }
