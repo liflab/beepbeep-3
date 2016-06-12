@@ -325,11 +325,11 @@ public abstract class Processor implements Cloneable
 	public abstract Processor clone();
 	
 	/**
-	 * Provides an image used to represent the processor
-	 * @return The image
+	 * Provides an editor box used to represent the processor in an editor
+	 * @return The box
 	 */
-	public byte[] getImage()
+	public EditorBox getEditorBox()
 	{
-		return s_genericImage;
+		return new EditorBox.GenericEditorBox(this, getInputArity(), getOutputArity());
 	}
 }

@@ -20,24 +20,24 @@ package ca.uqac.lif.cep.editor;
 import java.util.HashSet;
 import java.util.Set;
 
+import ca.uqac.lif.cep.EditorBox;
 import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.jerrydog.InnerFileServer;
-import ca.uqac.lif.json.JsonMap;
 
-public class GuiServer extends InnerFileServer 
+public class Editor extends InnerFileServer 
 {
-	protected Set<Processor> m_processors;
+	protected Set<EditorBox> m_boxes;
 	
 	protected static transient final String s_processorImageFolder = "resource/images/processors";
 
 	/**
 	 * Instantiates a new GUI server
 	 */
-	public GuiServer() 
+	public Editor() 
 	{
-		super(GuiServer.class);
-		m_processors = new HashSet<Processor>();
+		super(Editor.class);
+		m_boxes = new HashSet<EditorBox>();
 		setServerPort(31313);
 		setUserAgent("BeepBeep 3 editor");
 		registerCallback(0, new GetImage(this));
@@ -46,7 +46,7 @@ public class GuiServer extends InnerFileServer
 
 	public static void main(String[] args)
 	{
-		GuiServer server = new GuiServer();
+		Editor server = new Editor();
 		server.startServer();
 		while (true)
 		{
@@ -74,11 +74,10 @@ public class GuiServer extends InnerFileServer
 	 * Instantiates a new processor, and returns a JSON element used to
 	 * display it in the editor
 	 * @param type The type of processor to instantiate
-	 * @return
+	 * @return An editor box for this new processor
 	 */
-	public JsonMap createNewProcessor(String type)
+	public EditorBox createNewProcessor(String type)
 	{
-		JsonMap map = new JsonMap();
 		Processor p = null;
 		if (type.compareToIgnoreCase("ca.uqac.lif.cep.Passthrough") == 0)
 		{
@@ -88,9 +87,9 @@ public class GuiServer extends InnerFileServer
 		{
 			p = new ca.uqac.lif.cep.ltl.And();
 		}
-		m_processors.add(p);
-		map.put("id", p.getId());
-		return map;
+		EditorBox box = p.getEditorBox();
+		m_boxes.add(box);
+		return box;
 	}
 	
 	/**
@@ -98,11 +97,11 @@ public class GuiServer extends InnerFileServer
 	 * @param id The ID
 	 * @return The processor, or null if not found
 	 */
-	public Processor getProcessor(int id)
+	public EditorBox getBox(int id)
 	{
-		for (Processor p : m_processors)
+		for (EditorBox p : m_boxes)
 		{
-			if (p.getId() == id)
+			if (p.getProcessor().getId() == id)
 			{
 				return p;
 			}

@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.ltl;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.EditorBox;
+import ca.uqac.lif.cep.EditorBox.Coordinate;
 import ca.uqac.lif.cep.FileHelper;
 import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
@@ -55,9 +57,20 @@ public class And extends FunctionProcessor
 	}
 	
 	@Override
-	public byte[] getImage()
+	public EditorBox getEditorBox()
 	{
-		return s_image;
+		EditorBox box = new EditorBox(this, s_image);
+		box.setSize(61, 76);
+		Coordinate[] inputs = {
+				new Coordinate(22, 10, Coordinate.Orientation.UP),
+				new Coordinate(22, 67, Coordinate.Orientation.DOWN)
+		};
+		Coordinate[] outputs = {
+				new Coordinate(52, 40, Coordinate.Orientation.RIGHT)
+		};
+		box.setInputPoints(inputs);
+		box.setOutputPoints(outputs);
+		return box;
 	}
 
 }

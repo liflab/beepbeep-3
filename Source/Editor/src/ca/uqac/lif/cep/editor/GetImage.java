@@ -4,14 +4,14 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.EditorBox;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 import ca.uqac.lif.jerrydog.RequestCallback;
 
 public class GetImage extends EditorCallback
 {
-	public GetImage(GuiServer editor)
+	public GetImage(Editor editor)
 	{
 		super(RequestCallback.Method.GET, "/image", editor);
 	}
@@ -22,14 +22,14 @@ public class GetImage extends EditorCallback
 		CallbackResponse response = new CallbackResponse(t);
 		Map<String,String> params = getParameters(t);
 		int proc_id = Integer.parseInt(params.get("id"));
-		Processor p = m_editor.getProcessor(proc_id);
-		if (p == null)
+		EditorBox box = m_editor.getBox(proc_id);
+		if (box == null)
 		{
-			// Processor not found
+			// Box not found
 			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
 			return response;
 		}
-		byte[] image = p.getImage();
+		byte[] image = box.getImage();
 		if (image == null)
 		{
 			// No image
