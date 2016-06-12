@@ -16,3 +16,31 @@ html {
   background: url('logo-1000.png') top left no-repeat;
   background-size: contain;
 }
+
+.processor-box {
+	opacity: 0.85;
+	display: block;
+	position: absolute;
+}
+
+.processor-box:hover {
+	opacity: 1;
+}
+
+.processor-box-input,  .processor-box-output {
+	border-radius: 10px;
+	width: 10px;
+	height: 10px;
+	margin-left: -5px;
+	margin-top: -5px;
+	padding: 0;
+	position: absolute;
+}
+
+.processor-box-input:hover {
+	background-color: green;
+}
+
+.processor-box-output:hover {
+	background-color: red;
+}
