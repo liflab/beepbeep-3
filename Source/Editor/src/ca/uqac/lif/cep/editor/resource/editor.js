@@ -116,7 +116,7 @@ function create_palette(data, id)
 	            // return event !== false ? false : true;
 	        },
 	        revertDuration: 0,
-	        stop : ajax_processor(entry.processorname)
+	        stop : ajax_processor(id, i)
 	    });
 		li.appendTo(ul);
 	}
@@ -127,10 +127,10 @@ function create_palette(data, id)
 
 /**
  * Closure to return
- * @param processorname
+ * @param i
  * @returns {Function}
  */
-function ajax_processor(processorname)
+function ajax_processor(palette_id, button_id)
 {
 	return function(event)
 	{
@@ -139,7 +139,8 @@ function ajax_processor(processorname)
 			"method" : "POST",
 			"url" : "processor",
 			"data" : {
-				"type" : processorname,
+				"palette" : palette_id,
+				"button" : button_id,
 				"x" : event.clientX - $("#playground").position().left,
 				"y" : event.clientY - $("#playground").position().top,
 			}

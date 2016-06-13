@@ -91,16 +91,6 @@ public abstract class Processor implements Cloneable
 	 * The unique ID given to this processor instance 
 	 */
 	protected int m_uniqueId;
-	
-	/**
-	 * A generic image used to represent the processor in the editor
-	 */
-	protected static transient final byte[] s_genericImage;
-	
-	static
-	{
-		s_genericImage = FileHelper.internalFileToBytes(Processor.class, "image-1-1.png");
-	}
 
 	/**
 	 * Initializes a processor. This has for effect of executing the basic
@@ -323,13 +313,5 @@ public abstract class Processor implements Cloneable
 	
 	@Override
 	public abstract Processor clone();
-	
-	/**
-	 * Provides an editor box used to represent the processor in an editor
-	 * @return The box
-	 */
-	public EditorBox getEditorBox()
-	{
-		return new EditorBox.GenericEditorBox(this, getInputArity(), getOutputArity());
-	}
+
 }

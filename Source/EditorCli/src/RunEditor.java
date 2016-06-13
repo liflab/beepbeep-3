@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -15,39 +15,40 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.ltl;
+import ca.uqac.lif.cep.editor.Editor;
+import ca.uqac.lif.cep.ltl.LtlPalette;
 
-import java.util.Stack;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.FunctionProcessor;
-import ca.uqac.lif.cep.Processor;
-
-public class And extends FunctionProcessor 
+public class RunEditor 
 {
-	public And()
+	/**
+	 * Runs the editor
+	 * @param args Command-line arguments
+	 */
+	public static void main(String[] args)
 	{
-		super(Troolean.AND_FUNCTION);
-	}
-	
-	public static void build(Stack<Object> stack) 
-	{
-		stack.pop(); // (
-		Processor right = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // op
-		stack.pop(); // (
-		Processor left = (Processor) stack.pop();
-		stack.pop(); // )
-		And op = new And();
-		Connector.connect(left, op, 0, 0);
-		Connector.connect(right, op, 0, 1);
-		stack.push(op);
+		Editor editor = new Editor();
+		// Create palettes
+		editor.add(new LtlPalette());
+		editor.startServer();
+		while (true)
+		{
+			sleep(10000);
+		}
 	}
 
-	@Override
-	public And clone()
+	/**
+	 * Sleep for some time
+	 * @param d The time (in ms)
+	 */
+	public static void sleep(long d)
 	{
-		return new And();
+		try 
+		{
+			Thread.sleep(d);
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 }

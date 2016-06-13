@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.editor;
 import java.util.Map;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.EditorBox;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;

@@ -15,9 +15,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.editor;
 
-import ca.uqac.lif.cep.EditorBox.Coordinate.Orientation;
+import ca.uqac.lif.cep.FileHelper;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.editor.EditorBox.Coordinate.Orientation;
 
 /**
  * Information about the graphical representation of a processor in

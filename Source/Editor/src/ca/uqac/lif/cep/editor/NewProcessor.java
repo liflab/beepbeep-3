@@ -21,7 +21,6 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import ca.uqac.lif.cep.EditorBox;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 import ca.uqac.lif.jerrydog.RequestCallback;
@@ -38,17 +37,32 @@ public class NewProcessor extends EditorCallback
 	{
 		CallbackResponse response = new CallbackResponse(t);
 		Map<String,String> params = getParameters(t);
-		String type = params.get("type").trim();
-		EditorBox box = m_editor.createNewProcessor(type);
+		int palette_id = Integer.parseInt(params.get("palette").trim());
+		Palette palette = m_editor.getPalette(palette_id);
+		if (palette == null)
+		{
+			// Palette not found
+			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
+			return response;
+		}
+		int button_id = Integer.parseInt(params.get("button").trim());
+		PaletteEntry entry = palette.getEntry(button_id);
+		if (entry == null)
+		{
+			// Entry not found
+			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
+			return response;
+		}
+		EditorBox box = entry.newEditorBox();
 		if (params.containsKey("x") && params.containsKey("y"))
 		{
 			box.setX(Float.parseFloat(params.get("x").trim()));
 			box.setY(Float.parseFloat(params.get("y").trim()));
 		}
+		m_editor.add(box);
 		response.setCode(CallbackResponse.HTTP_OK);
 		response.setContentType(ContentType.JSON);
 		response.setContents(box.toJson());
 		return response;
 	}
-
 }

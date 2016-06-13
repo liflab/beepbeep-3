@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -22,9 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import ca.uqac.lif.cep.EditorBox;
-import ca.uqac.lif.cep.Passthrough;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.jerrydog.InnerFileServer;
 
 public class Editor extends InnerFileServer 
@@ -72,34 +69,6 @@ public class Editor extends InnerFileServer
 		m_palettes.add(pal);
 		return this;
 	}
-
-	public static void main(String[] args)
-	{
-		Editor editor = new Editor();
-		// Create palettes
-		editor.add(new Palette(new ca.uqac.lif.cep.ltl.LtlGrammar()));
-		editor.startServer();
-		while (true)
-		{
-			sleep(10000);
-		}
-	}
-
-	/**
-	 * Sleep for some time
-	 * @param d The time (in ms)
-	 */
-	public static void sleep(long d)
-	{
-		try 
-		{
-			Thread.sleep(d);
-		} 
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-		}
-	}
 	
 	/**
 	 * Gets the palette with given ID
@@ -110,27 +79,16 @@ public class Editor extends InnerFileServer
 	{
 		return m_palettes.get(id);
 	}
-
+	
 	/**
-	 * Instantiates a new processor, and returns a JSON element used to
-	 * display it in the editor
-	 * @param type The type of processor to instantiate
-	 * @return An editor box for this new processor
+	 * Adds a new editor box to this editor
+	 * @param box The box
+	 * @return This editor
 	 */
-	public EditorBox createNewProcessor(String type)
+	public Editor add(EditorBox box)
 	{
-		Processor p = null;
-		if (type.compareToIgnoreCase("ca.uqac.lif.cep.Passthrough") == 0)
-		{
-			p = new Passthrough(1);
-		}
-		else if (type.compareToIgnoreCase("ca.uqac.lif.cep.ltl.And") == 0)
-		{
-			p = new ca.uqac.lif.cep.ltl.And();
-		}
-		EditorBox box = p.getEditorBox();
 		m_boxes.add(box);
-		return box;
+		return this;
 	}
 	
 	/**

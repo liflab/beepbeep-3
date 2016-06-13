@@ -75,6 +75,8 @@ div.line{
 	padding: 4px;
 	margin: 0px;
 	display: inline-block;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
 }
 
 .processor-palette ul li {

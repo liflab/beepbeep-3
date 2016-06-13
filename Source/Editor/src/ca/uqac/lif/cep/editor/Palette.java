@@ -19,13 +19,8 @@ package ca.uqac.lif.cep.editor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import ca.uqac.lif.cep.EditorBox;
-import ca.uqac.lif.cep.FileHelper;
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
-
-public class Palette 
+public abstract class Palette 
 {
 	/**
 	 * The palette name
@@ -57,30 +52,6 @@ public class Palette
 		m_id = s_idCounter++;
 		m_name = "Palette " + m_id;
 		m_entries = new ArrayList<PaletteEntry>();
-	}
-	
-	/**
-	 * Creates a palette from a grammar extension
-	 * @param ext The grammar extension
-	 */
-	public Palette(GrammarExtension ext)
-	{
-		this();
-		Map<String,Class<?>> associations = ext.getAssociations();
-		for (Class<?> clazz : associations.values())
-		{
-			String full_name = clazz.getName();
-			String[] name_parts = full_name.split("\\.");
-			String short_name = name_parts[name_parts.length - 1];
-			byte[] image = FileHelper.internalFileToBytes(clazz, short_name + ".png");
-			if (image == null)
-			{
-				// No image provided: replace with placeholder
-				image = EditorBox.s_image11;
-			}
-			PaletteEntry entry = new PaletteEntry(full_name, image);
-			add(entry);
-		}
 	}
 	
 	/**
@@ -151,31 +122,5 @@ public class Palette
 		out.append("]");
 		out.append("}");
 		return out.toString();
-	}
-	
-	public static class PaletteEntry
-	{
-		/**
-		 * The name of the processor
-		 */
-		public String processorName;
-		
-		/**
-		 * The image associated to it in the palette
-		 */
-		public byte[] image;
-		
-		public PaletteEntry(String name, byte[] img)
-		{
-			super();
-			processorName = name;
-			image = img;
-		}
-		
-		public String toJson()
-		{
-			return "{\"processorname\":\"" + processorName + "\"}";
-		}
-
 	}
 }
