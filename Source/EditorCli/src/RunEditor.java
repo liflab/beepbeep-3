@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import ca.uqac.lif.cep.editor.Editor;
+import ca.uqac.lif.cep.editor.IoPalette;
 import ca.uqac.lif.cep.ltl.LtlPalette;
 
 public class RunEditor 
@@ -28,6 +29,7 @@ public class RunEditor
 	{
 		Editor editor = new Editor();
 		// Create palettes
+		editor.add(new IoPalette());
 		editor.add(new LtlPalette());
 		editor.startServer();
 		while (true)
