@@ -1,83 +1,73 @@
-//Yo
-$(document).ready(function() {
-	$(".processor-box").draggable();
-	$("#new-proc").click(function() {
-		$.ajax({
-			"method" : "POST",
-			"url" : "processor",
-			"data" : {
-				"type" : "ca.uqac.lif.cep.Passthrough"
-			}
-		}).done(function(data) {
-			data.lines = [];
-			boxes.push(data);
-			create_div(data);
-		});
-	});
-	$("#new-proc-and").click(function() {
-		$.ajax({
-			"method" : "POST",
-			"url" : "processor",
-			"data" : {
-				"type" : "ca.uqac.lif.cep.ltl.And"
-			}
-		}).done(function(data) {
-			data.lines = [];
-			boxes.push(data);
-			create_div(data);
-		});
-	});
-	$("#connect").click(function() {
-		var parts_1 = selected.pop().split("-");
-		var parts_2 = selected.pop().split("-");
-		var id_out = -1;
-		if (parts_1[3] === "output" && parts_2[3] === "input")
-		{
-			id_out = parts_1[2];
-			var nb_out = parts_1[4];
-			var id_in = parts_2[2];
-			var nb_in = parts_2[4];
-		}
-		else if (parts_1[3] === "input" && parts_2[3] === "output")
-		{
-			id_out = parts_2[2];
-			var nb_out = parts_2[4];
-			var id_in = parts_1[2];
-			var nb_in = parts_1[4];
-		}
-		if (id_out == -1)
-		{
-			return;
-		}
-		// Clear the stack
-		selected = [];
-		// Draw line
-		draw_line(id_out, nb_out, id_in, nb_in);
-		$.ajax({
-			"method" : "POST",
-			"url" : "connect",
-			"data" : {
-				"input-id" : id_in,
-				"input-nb" : nb_in,
-				"output-id" : id_out,
-				"output-nb" : nb_out
-			}
-		}).done(function(data) {
-			console.log("Connected");
-		});		
-	});
-});
-
+/**
+ * The set of processor boxes currently in use in the editor
+ */
 var boxes = [];
 
+/**
+ * The stack of elements that have been clicked since the last action
+ */
 var selected = [];
 
-create_div = function(data)
+/**
+ * Connects two processors
+ */
+function connect_processors()
+{
+	var parts_1 = selected.pop().split("-");
+	var parts_2 = selected.pop().split("-");
+	var id_out = -1;
+	if (parts_1[3] === "output" && parts_2[3] === "input")
+	{
+		id_out = parts_1[2];
+		var nb_out = parts_1[4];
+		var id_in = parts_2[2];
+		var nb_in = parts_2[4];
+	}
+	else if (parts_1[3] === "input" && parts_2[3] === "output")
+	{
+		id_out = parts_2[2];
+		var nb_out = parts_2[4];
+		var id_in = parts_1[2];
+		var nb_in = parts_1[4];
+	}
+	if (id_out == -1)
+	{
+		return;
+	}
+	// Clear the stack
+	selected = [];
+	// Draw line
+	draw_line(id_out, nb_out, id_in, nb_in);
+	// Call the server
+	$.ajax({
+		"method" : "POST",
+		"url" : "connect",
+		"data" : {
+			"input-id" : id_in,
+			"input-nb" : nb_in,
+			"output-id" : id_out,
+			"output-nb" : nb_out
+		}
+	}).done(function(data) {
+		console.log("Connected");
+	});
+};
+
+/**
+ * Create a new <tt>div</tt> element for a processor, based on the JSON
+ * data provided by the editor. This function creates the main box for
+ * the processor, and small boxes for each of the processor's inputs
+ * and outputs. These boxes are placed at the coordinates specified in
+ * the JSON.
+ * 
+ * @param data The JSON data
+ */
+function create_div(data)
 {
 	jQuery("<div/>", {
 		id: "processor-box-" + data.id,
 		"class": "processor-box",
-		title: 'Some processor',
+		title: data.name,
 		width: data.width + "px",
 		height: data.height + "px",
 		css : {
@@ -86,32 +76,54 @@ create_div = function(data)
 	}).appendTo('#playground').draggable();
 	for (var i = 0; i < data.inputs.length; i++)
 	{
-		jQuery("<div/>", {
-			id: "processor-box-" + data.id + "-input-" + i,
-			"class" : "processor-box-input",
-			title: "Input " + i,
-			css : {
-				left: data.inputs[i].x + "px",
-				top: data.inputs[i].y + "px"
-			}
-		}).appendTo("#processor-box-" + data.id).click(function() {
-			selected.push($(this).attr("id"));
-		});
+		create_input_box(data.id, i, data.inputs[i]);
 	}
 	for (var i = 0; i < data.outputs.length; i++)
 	{
-		jQuery("<div/>", {
-			id: "processor-box-" + data.id + "-output-" + i,
-			"class" : "processor-box-output",
-			title: "Output " + i,
-			css : {
-				left: data.outputs[i].x + "px",
-				top: data.outputs[i].y + "px"
-			}
-		}).appendTo("#processor-box-" + data.id).click(function() {
-			selected.push($(this).attr("id"));
-		});
+		create_output_box(data.id, i, data.outputs[i]);
 	}
+};
+
+/**
+ * Creates a <tt>div</tt> element for the input of a processor
+ * @param id The ID of the box
+ * @param i The number of the input
+ * @param data The JSON data corresponding to that input
+ */
+function create_input_box(id, i, data)
+{
+	jQuery("<div/>", {
+		id: "processor-box-" + id + "-input-" + i,
+		"class" : "processor-box-input",
+		title: "Input " + i,
+		css : {
+			left: data.x + "px",
+			top: data.y + "px"
+		}
+	}).appendTo("#processor-box-" + id).click(function(e) {
+		selected.push($(this).attr("id"));
+	});
+};
+
+/**
+ * Creates a <tt>div</tt> element for the output of a processor
+ * @param id The ID of the box
+ * @param i The number of the output
+ * @param data The JSON data corresponding to that output
+ */
+function create_output_box(id, i, data)
+{
+	jQuery("<div/>", {
+		id: "processor-box-" + id + "-output-" + i,
+		"class" : "processor-box-output",
+		title: "Output " + i,
+		css : {
+			left: data.x + "px",
+			top: data.y + "px"
+		}
+	}).appendTo("#processor-box-" + id).click(function(e) {
+		selected.push($(this).attr("id"));
+	});
 };
 
 /**
@@ -181,7 +193,8 @@ function draw_line(out_id, out_nb, in_id, in_nb)
 	}*/
 };
 
-/* http://www.monkeyandcrow.com/blog/drawing_lines_with_css3/ */
+/* From: http://www.monkeyandcrow.com/blog/drawing_lines_with_css3/
+ * To be replaced with something more appropriate some day */
 function create_line(x1,y1, x2,y2){
     var length = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
   var angle  = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
@@ -197,3 +210,42 @@ function create_line(x1,y1, x2,y2){
         .offset({left: x1, top: y1});
     return line;
 }
+
+/**
+ * Performs an update of the GUI when some element is clicked
+ * @param element The element
+ */
+function clicked(element)
+{
+	
+};
+
+$(document).ready(function() {
+	$("#new-proc").click(function() {
+		$.ajax({
+			"method" : "POST",
+			"url" : "processor",
+			"data" : {
+				"type" : "ca.uqac.lif.cep.Passthrough"
+			}
+		}).done(function(data) {
+			data.lines = [];
+			boxes.push(data);
+			create_div(data);
+		});
+	});
+	$("#new-proc-and").click(function() {
+		$.ajax({
+			"method" : "POST",
+			"url" : "processor",
+			"data" : {
+				"type" : "ca.uqac.lif.cep.ltl.And"
+			}
+		}).done(function(data) {
+			data.lines = [];
+			boxes.push(data);
+			create_div(data);
+		});
+	});
+	$("#connect").click(connect_processors);
+});

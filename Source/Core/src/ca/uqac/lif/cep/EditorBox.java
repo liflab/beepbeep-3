@@ -189,6 +189,7 @@ public class EditorBox
 		StringBuilder out = new StringBuilder();
 		out.append("{");
 		out.append("\"id\":").append(m_processor.getId()).append(",");
+		out.append("\"name\": \"").append(getProcessorName()).append("\",");
 		out.append("\"width\":").append(m_width).append(",");
 		out.append("\"height\":").append(m_height).append(",");
 		out.append("\"inputs\":[");
@@ -213,6 +214,13 @@ public class EditorBox
 		out.append("]");
 		out.append("}");
 		return out.toString();
+	}
+	
+	protected String getProcessorName()
+	{
+		String class_name = m_processor.getClass().getName();
+		String[] parts = class_name.split("\\.");
+		return parts[parts.length - 1];
 	}
 	
 	/**
