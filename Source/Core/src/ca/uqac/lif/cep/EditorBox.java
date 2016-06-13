@@ -50,6 +50,16 @@ public class EditorBox
 	 * The width of the image, in pixels
 	 */
 	protected int m_width = 0;
+	
+	/**
+	 * The x position of the box in the editor
+	 */
+	protected int m_x = 0;
+	
+	/**
+	 * The y position of the box in the editor
+	 */
+	protected int m_y = 0;
 
 	/**
 	 * The location of each input point in the image
@@ -178,6 +188,28 @@ public class EditorBox
 	public Processor getProcessor()
 	{
 		return m_processor;
+	}
+	
+	/**
+	 * Sets the x position of this box
+	 * @param x The position
+	 * @return This box
+	 */
+	public EditorBox setX(int x)
+	{
+		m_x = x;
+		return this;
+	}
+	
+	/**
+	 * Sets the y position of this box
+	 * @param y The position
+	 * @return This box
+	 */
+	public EditorBox setY(int y)
+	{
+		m_y = y;
+		return this;
 	}
 	
 	/**

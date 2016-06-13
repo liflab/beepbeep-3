@@ -43,6 +43,7 @@ public class Editor extends InnerFileServer
 		registerCallback(0, new GetImage(this));
 		registerCallback(0, new NewProcessor(this));
 		registerCallback(0, new ConnectProcessors(this));
+		registerCallback(0, new MoveBox(this));
 	}
 
 	public static void main(String[] args)

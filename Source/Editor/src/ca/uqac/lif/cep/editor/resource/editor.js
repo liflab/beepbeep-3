@@ -9,6 +9,11 @@ var boxes = [];
 var selected = [];
 
 /**
+ * Global variable to detect if an element is being dragged
+ */
+var is_dragging = false;
+
+/**
  * Connects two processors
  */
 function connect_processors()
@@ -64,7 +69,7 @@ function connect_processors()
  */
 function create_div(data)
 {
-	jQuery("<div/>", {
+	var box = jQuery("<div/>", {
 		id: "processor-box-" + data.id,
 		"class": "processor-box",
 		title: data.name,
@@ -74,6 +79,17 @@ function create_div(data)
 			backgroundImage : "url('image?id=" + data.id + "')"
 		}
 	}).appendTo('#playground').draggable();
+	box.mousedown(function() {
+		is_dragging = false;
+	}).mousemove(function() {
+		is_dragging = true;
+	}).mouseup(function() {
+		var was_dragging = is_dragging;
+	    is_dragging = false;
+	    if (was_dragging) {
+	    	dragged($(this));
+	    }
+	});
 	for (var i = 0; i < data.inputs.length; i++)
 	{
 		create_input_box(data.id, i, data.inputs[i]);
@@ -218,6 +234,28 @@ function create_line(x1,y1, x2,y2){
 function clicked(element)
 {
 	
+};
+
+/**
+ * Performs an update of the GUI when some element is dragged
+ * @param element The element
+ */
+function dragged(element)
+{
+	var parts = element.attr("id").split("-");
+	var id = parts[2];
+	$.ajax({
+		"method" : "POST",
+		"url" : "move",
+		"data" : {
+			"id" : id,
+			"x" : element.position().left,
+			"y" : element.position().top
+		}
+	}).done(function(data) {
+		// Do nothing
+	});	
+	console.log(element.attr("id"));
 };
 
 $(document).ready(function() {
