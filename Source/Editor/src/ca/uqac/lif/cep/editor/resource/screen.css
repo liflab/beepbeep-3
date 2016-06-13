@@ -59,3 +59,36 @@ div.line{
 	border: solid 1px black;
 	position: absolute;
 }
+
+.processor-palette {
+	border: solid 1px black;
+	border-radius: 8px;
+	background: grey;
+	padding: 0px;
+	padding-top: 16px;
+	display: inline-block;
+}
+
+.processor-palette ul {
+	background: white;
+	list-style-type: none;
+	padding: 4px;
+	margin: 0px;
+	display: inline-block;
+}
+
+.processor-palette ul li {
+	width: 48px;
+	height: 48px;
+	border: solid 1px #ddd;
+	border-radius: 4px;
+	display: inline-block;
+	margin: 4px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.processor-palette ul li span {
+	display: none;
+}

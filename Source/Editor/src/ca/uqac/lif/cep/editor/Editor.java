@@ -18,6 +18,8 @@
 package ca.uqac.lif.cep.editor;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import ca.uqac.lif.cep.EditorBox;
@@ -29,6 +31,8 @@ public class Editor extends InnerFileServer
 {
 	protected Set<EditorBox> m_boxes;
 	
+	protected List<Palette> m_palettes;
+	
 	protected static transient final String s_processorImageFolder = "resource/images/processors";
 
 	/**
@@ -38,18 +42,43 @@ public class Editor extends InnerFileServer
 	{
 		super(Editor.class);
 		m_boxes = new HashSet<EditorBox>();
+		m_palettes = new LinkedList<Palette>();
 		setServerPort(31313);
 		setUserAgent("BeepBeep 3 editor");
 		registerCallback(0, new GetImage(this));
 		registerCallback(0, new NewProcessor(this));
 		registerCallback(0, new ConnectProcessors(this));
 		registerCallback(0, new MoveBox(this));
+		registerCallback(0, new GetPalettes(this));
+		registerCallback(0, new PaletteButton(this));
+	}
+	
+	/**
+	 * Gets the list of all palettes created for this editor
+	 * @return The list of palettes
+	 */
+	public List<Palette> getPalettes()
+	{
+		return m_palettes;
+	}
+	
+	/**
+	 * Adds a palette to this editor
+	 * @param pal The palette
+	 * @return This editor
+	 */
+	public Editor add(Palette pal)
+	{
+		m_palettes.add(pal);
+		return this;
 	}
 
 	public static void main(String[] args)
 	{
-		Editor server = new Editor();
-		server.startServer();
+		Editor editor = new Editor();
+		// Create palettes
+		editor.add(new Palette(new ca.uqac.lif.cep.ltl.LtlGrammar()));
+		editor.startServer();
 		while (true)
 		{
 			sleep(10000);
@@ -70,6 +99,16 @@ public class Editor extends InnerFileServer
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Gets the palette with given ID
+	 * @param id The palette ID
+	 * @return The palette
+	 */
+	public Palette getPalette(int id)
+	{
+		return m_palettes.get(id);
 	}
 
 	/**

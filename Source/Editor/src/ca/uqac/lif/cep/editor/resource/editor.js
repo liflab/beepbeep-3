@@ -1,3 +1,21 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /**
  * The set of processor boxes currently in use in the editor
  */
@@ -59,6 +77,81 @@ function connect_processors()
 };
 
 /**
+ * Creates a new palette, based on JSON data
+ * @param data The data for the palette
+ * @param id The palette ID
+ */
+function create_palette(data, id)
+{
+	var div = jQuery("<div/>", {
+		"class": "processor-palette",
+		"title": data.name
+	});
+	var ul = jQuery("<ul/>");
+	for (var i = 0; i < data.entries.length; i++)
+	{
+		var entry = data.entries[i];
+		var li = jQuery("<li/>", {
+			"class": "palette-button",
+			id: "palette-" + id + "-button-" + i,
+			title: entry.processorname,
+			css: {
+				backgroundImage: "url('palette-button?id=" + id + "&nb=" + i + "')"
+			}
+		});
+		//li.click(ajax_processor(entry.processorname));
+		li.draggable({
+	        revert : function(event, ui) {
+	            // on older version of jQuery use "draggable"
+	            // $(this).data("draggable")
+	            // on 2.x versions of jQuery use "ui-draggable"
+	            // $(this).data("ui-draggable")
+	            $(this).data("uiDraggable").originalPosition = {
+	                top : 0,
+	                left : 0
+	            };
+	            // return boolean
+	            return !event;
+	            // that evaluate like this:
+	            // return event !== false ? false : true;
+	        },
+	        revertDuration: 0,
+	        stop : ajax_processor(entry.processorname)
+	    });
+		li.appendTo(ul);
+	}
+	ul.appendTo(div);
+	div.draggable().resizable();
+	return div;
+};
+
+/**
+ * Closure to return
+ * @param processorname
+ * @returns {Function}
+ */
+function ajax_processor(processorname)
+{
+	return function(event)
+	{
+		console.log(event);
+		$.ajax({
+			"method" : "POST",
+			"url" : "processor",
+			"data" : {
+				"type" : processorname,
+				"x" : event.clientX - $("#playground").position().left,
+				"y" : event.clientY - $("#playground").position().top,
+			}
+		}).done(function(data) {
+			data.lines = [];
+			boxes.push(data);
+			create_div(data);
+		});		
+	};
+};
+
+/**
  * Create a new <tt>div</tt> element for a processor, based on the JSON
  * data provided by the editor. This function creates the main box for
  * the processor, and small boxes for each of the processor's inputs
@@ -76,7 +169,11 @@ function create_div(data)
 		width: data.width + "px",
 		height: data.height + "px",
 		css : {
-			backgroundImage : "url('image?id=" + data.id + "')"
+			backgroundImage : "url('image?id=" + data.id + "')",
+			left: data.x,
+			top: data.y,
+			marginLeft: -data.width / 2,
+			marginTop: -data.height / 2
 		}
 	}).appendTo('#playground').draggable();
 	box.mousedown(function() {
@@ -259,31 +356,15 @@ function dragged(element)
 };
 
 $(document).ready(function() {
-	$("#new-proc").click(function() {
-		$.ajax({
-			"method" : "POST",
-			"url" : "processor",
-			"data" : {
-				"type" : "ca.uqac.lif.cep.Passthrough"
-			}
-		}).done(function(data) {
-			data.lines = [];
-			boxes.push(data);
-			create_div(data);
-		});
-	});
-	$("#new-proc-and").click(function() {
-		$.ajax({
-			"method" : "POST",
-			"url" : "processor",
-			"data" : {
-				"type" : "ca.uqac.lif.cep.ltl.And"
-			}
-		}).done(function(data) {
-			data.lines = [];
-			boxes.push(data);
-			create_div(data);
-		});
+	$.ajax({
+		"method" : "GET",
+		"url" : "palettes"
+	}).done(function(data) {
+		for (var i = 0; i < data.length; i++)
+		{
+			var pal = create_palette(data[i], i);
+			pal.appendTo("#playground");
+		}
 	});
 	$("#connect").click(connect_processors);
 });

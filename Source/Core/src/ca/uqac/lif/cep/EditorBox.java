@@ -54,12 +54,12 @@ public class EditorBox
 	/**
 	 * The x position of the box in the editor
 	 */
-	protected int m_x = 0;
+	protected float m_x = 0;
 	
 	/**
 	 * The y position of the box in the editor
 	 */
-	protected int m_y = 0;
+	protected float m_y = 0;
 
 	/**
 	 * The location of each input point in the image
@@ -195,7 +195,7 @@ public class EditorBox
 	 * @param x The position
 	 * @return This box
 	 */
-	public EditorBox setX(int x)
+	public EditorBox setX(float x)
 	{
 		m_x = x;
 		return this;
@@ -206,7 +206,7 @@ public class EditorBox
 	 * @param y The position
 	 * @return This box
 	 */
-	public EditorBox setY(int y)
+	public EditorBox setY(float y)
 	{
 		m_y = y;
 		return this;
@@ -224,6 +224,8 @@ public class EditorBox
 		out.append("\"name\": \"").append(getProcessorName()).append("\",");
 		out.append("\"width\":").append(m_width).append(",");
 		out.append("\"height\":").append(m_height).append(",");
+		out.append("\"x\":").append(m_x).append(",");
+		out.append("\"y\":").append(m_y).append(",");
 		out.append("\"inputs\":[");
 		for (int i = 0; i < m_inputPoints.length; i++)
 		{

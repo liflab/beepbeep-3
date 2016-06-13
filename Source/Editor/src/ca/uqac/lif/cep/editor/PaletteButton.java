@@ -19,17 +19,18 @@ package ca.uqac.lif.cep.editor;
 
 import java.util.Map;
 
-import com.sun.net.httpserver.HttpExchange;
-
-import ca.uqac.lif.cep.EditorBox;
+import ca.uqac.lif.cep.editor.Palette.PaletteEntry;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;
+import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 
-public class MoveBox extends EditorCallback
+import com.sun.net.httpserver.HttpExchange;
+
+public class PaletteButton extends EditorCallback
 {
-	public MoveBox(Editor editor)
+	public PaletteButton(Editor editor)
 	{
-		super(RequestCallback.Method.POST, "/move", editor);
+		super(RequestCallback.Method.GET, "/palette-button", editor);
 	}
 
 	@Override
@@ -37,18 +38,33 @@ public class MoveBox extends EditorCallback
 	{
 		CallbackResponse response = new CallbackResponse(t);
 		Map<String,String> params = getParameters(t);
-		int proc_id = Integer.parseInt(params.get("id").trim());
-		float x = Float.parseFloat(params.get("x").trim());
-		float y = Float.parseFloat(params.get("y").trim());
-		EditorBox box = m_editor.getBox(proc_id);
-		if (box == null)
+		int palette_id = Integer.parseInt(params.get("id").trim());
+		int button_nb = Integer.parseInt(params.get("nb").trim());
+		Palette pal = m_editor.getPalette(palette_id);
+		if (pal == null)
 		{
-			// Box not found
+			// Palette not found
 			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
 			return response;
 		}
-		box.setX(x).setY(y);
+		PaletteEntry entry = pal.getEntry(button_nb);
+		if (entry == null)
+		{
+			// Entry not found
+			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
+			return response;
+		}
+		byte[] image = entry.image;
+		if (image == null)
+		{
+			// No image
+			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
+			return response;
+		}
 		response.setCode(CallbackResponse.HTTP_OK);
+		response.setContentType(ContentType.PNG);
+		response.setContents(image);
 		return response;
 	}
+
 }

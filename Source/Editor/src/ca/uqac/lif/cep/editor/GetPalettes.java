@@ -17,38 +17,41 @@
  */
 package ca.uqac.lif.cep.editor;
 
-import java.util.Map;
+import java.util.List;
+
+import ca.uqac.lif.jerrydog.CallbackResponse;
+import ca.uqac.lif.jerrydog.RequestCallback;
+import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import ca.uqac.lif.cep.EditorBox;
-import ca.uqac.lif.jerrydog.CallbackResponse;
-import ca.uqac.lif.jerrydog.RequestCallback;
-
-public class MoveBox extends EditorCallback
+public class GetPalettes extends EditorCallback 
 {
-	public MoveBox(Editor editor)
+	public GetPalettes(Editor editor)
 	{
-		super(RequestCallback.Method.POST, "/move", editor);
+		super(RequestCallback.Method.GET, "/palettes", editor);
 	}
 
 	@Override
-	public CallbackResponse process(HttpExchange t)
+	public CallbackResponse process(HttpExchange t) 
 	{
 		CallbackResponse response = new CallbackResponse(t);
-		Map<String,String> params = getParameters(t);
-		int proc_id = Integer.parseInt(params.get("id").trim());
-		float x = Float.parseFloat(params.get("x").trim());
-		float y = Float.parseFloat(params.get("y").trim());
-		EditorBox box = m_editor.getBox(proc_id);
-		if (box == null)
+		List<Palette> palettes = m_editor.getPalettes();
+		StringBuilder out = new StringBuilder(); 
+		out.append("[");
+		for (int i = 0; i < palettes.size(); i++)
 		{
-			// Box not found
-			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
-			return response;
+			if (i > 0)
+			{
+				out.append(",");
+			}
+			Palette pal = palettes.get(i);
+			out.append(pal.toJson());
 		}
-		box.setX(x).setY(y);
+		out.append("]");
 		response.setCode(CallbackResponse.HTTP_OK);
+		response.setContentType(ContentType.JSON);
+		response.setContents(out.toString());
 		return response;
 	}
 }
