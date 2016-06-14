@@ -82,13 +82,29 @@ div.line{
 .processor-palette ul li {
 	width: 48px;
 	height: 48px;
-	border: solid 1px #ddd;
+	border: solid 1px #888;
 	border-radius: 4px;
 	display: inline-block;
 	margin: 4px;
+	padding: 4px;
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
+}
+
+.processor-palette ul li div {
+	width: 48px;
+	height: 48px;
+	display: inline-block;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin: 0;
+}
+
+
+.processor-palette ul li:hover {
+	background-color: yellow;
 }
 
 .processor-palette ul li span {

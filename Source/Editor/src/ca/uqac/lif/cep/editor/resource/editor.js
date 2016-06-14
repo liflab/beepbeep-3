@@ -94,10 +94,7 @@ function create_palette(data, id)
 		var li = jQuery("<li/>", {
 			"class": "palette-button",
 			id: "palette-" + id + "-button-" + i,
-			title: entry.processorname,
-			css: {
-				backgroundImage: "url('palette-button?id=" + id + "&nb=" + i + "')"
-			}
+			title: entry.processorname
 		});
 		//li.click(ajax_processor(entry.processorname));
 		li.draggable({
@@ -118,6 +115,12 @@ function create_palette(data, id)
 	        revertDuration: 0,
 	        stop : ajax_processor(id, i)
 	    });
+		var in_div = jQuery("<div/>", {
+			css: {
+				backgroundImage: "url('palette-button?id=" + id + "&nb=" + i + "')"
+			}
+		});
+		in_div.appendTo(li);
 		li.appendTo(ul);
 	}
 	ul.appendTo(div);
