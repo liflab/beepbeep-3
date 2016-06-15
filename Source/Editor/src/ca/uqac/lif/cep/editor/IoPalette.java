@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 
 import ca.uqac.lif.cep.FileHelper;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.editor.ProcessorSettings.Setting;
+import ca.uqac.lif.cep.editor.ProcessorSettings.StringSetting;
 import ca.uqac.lif.cep.io.FileWriter;
 import ca.uqac.lif.cep.io.StreamReader;
 
@@ -33,11 +35,13 @@ public class IoPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
+			Setting s_filename = settings.get("Filename");
+			String filename = (String) s_filename.getValue();
 			try 
 			{
-				return new StreamReaderEditorBox(new StreamReader(new FileInputStream(new File("foo.csv"))), image);
+				return new StreamReaderEditorBox(new StreamReader(new FileInputStream(new File(filename))), image);
 			} 
 			catch (FileNotFoundException e)
 			{
@@ -45,6 +49,14 @@ public class IoPalette extends Palette
 				e.printStackTrace();
 			}
 			return null;
+		}
+		
+		@Override
+		public ProcessorSettings getSettings()
+		{
+			ProcessorSettings settings = new ProcessorSettings();
+			settings.add(new StringSetting("Filename", true));
+			return settings;
 		}
 		
 		protected static class StreamReaderEditorBox extends EditorBox
@@ -72,9 +84,19 @@ public class IoPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
-			return new FileWriterEditorBox(new FileWriter(new File("out.txt"), false), image);
+			Setting s_filename = settings.get("filename");
+			String filename = (String) s_filename.getValue();
+			return new FileWriterEditorBox(new FileWriter(new File(filename), false), image);
+		}
+		
+		@Override
+		public ProcessorSettings getSettings()
+		{
+			ProcessorSettings settings = new ProcessorSettings();
+			settings.add(new StringSetting("filename", true));
+			return settings;
 		}
 		
 		protected static class FileWriterEditorBox extends EditorBox

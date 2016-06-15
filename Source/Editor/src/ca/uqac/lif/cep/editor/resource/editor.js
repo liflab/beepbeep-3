@@ -137,8 +137,29 @@ function ajax_processor(palette_id, button_id)
 {
 	return function(event)
 	{
-		console.log(event);
 		$.ajax({
+			"method" : "GET",
+			"url" : "settings",
+			"data" : {
+				"palette" : palette_id,
+				"button" : button_id,
+				"x" : event.clientX - $("#playground").position().left,
+				"y" : event.clientY - $("#playground").position().top,
+			}
+		}).done(function(data) {
+			if (data.length == 0)
+			{
+				console.log("CREATE");
+				return;
+			}
+			var div = settings_div(data);
+			div.appendTo("#playground");
+			div.css({
+				left: event.clientX - $("#playground").position().left,
+				top: event.clientY - $("#playground").position().top
+			});
+		});	
+		/*$.ajax({
 			"method" : "POST",
 			"url" : "processor",
 			"data" : {
@@ -151,8 +172,48 @@ function ajax_processor(palette_id, button_id)
 			data.lines = [];
 			boxes.push(data);
 			create_div(data);
-		});		
+		});	*/	
 	};
+};
+
+function settings_div(data)
+{
+	var div = jQuery("<div/>", {
+		"class": "settings"
+	});
+	var ul = jQuery("<ul/>", {
+	});
+	for (var i = 0; i < data.length; i++)
+	{
+		var setting = data[i];
+		var mand_class = "";
+		var in_html = "";
+		if (setting.mandatory)
+		{
+			mand_class = "mandatory";
+			//in_html = "*";
+		}
+		in_html += setting.name;
+		in_html += " <input type=\"text\" />";
+		var li = jQuery("<li/>", {
+			"class": mand_class
+		});
+		li.html(in_html);
+		li.appendTo(ul);
+	}
+	ul.appendTo(div);
+	var cancel = jQuery("<button/>").html("Cancel").click(function() {
+		div.remove();
+	});
+	cancel.appendTo(div);
+	var create = jQuery("<button/>").html("Create");
+
+	create.appendTo(div);
+	
+	/*div.dialog({
+		modal:true
+	});*/
+	return div;
 };
 
 /**

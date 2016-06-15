@@ -24,6 +24,11 @@ public abstract class PaletteEntry
 		return "{\"processorname\":\"" + processorName + "\"}";
 	}
 	
-	public abstract EditorBox newEditorBox();
+	public ProcessorSettings getSettings()
+	{
+		return new ProcessorSettings();
+	}
+	
+	public abstract EditorBox newEditorBox(ProcessorSettings settings);
 
 }

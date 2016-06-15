@@ -34,9 +34,24 @@ import ca.uqac.lif.cep.editor.EditorBox.Coordinate.Orientation;
 public class EditorBox 
 {
 	/**
+	 * The ID for this box
+	 */
+	protected int m_id;
+	
+	/**
+	 * A counter for box IDs
+	 */
+	protected static transient int s_idCounter = 0;
+	
+	/**
 	 * The processor linked to this box
 	 */
 	protected Processor m_processor;
+	
+	/**
+	 * The settings associated to the processor
+	 */
+	protected ProcessorSettings m_settings;
 	
 	/**
 	 * The image used to represent a processor
@@ -120,6 +135,7 @@ public class EditorBox
 	public EditorBox(Processor p, byte[] image)
 	{
 		super();
+		m_id = s_idCounter++;
 		m_processor = p;
 		m_image = image;
 		m_inputPoints = new Coordinate[0];
@@ -135,6 +151,15 @@ public class EditorBox
 	{
 		m_image = image;
 		return this;
+	}
+	
+	/**
+	 * Gets the ID of this processor box
+	 * @return The ID
+	 */
+	public int getId()
+	{
+		return m_id;
 	}
 	
 	/**
@@ -193,6 +218,26 @@ public class EditorBox
 	}
 	
 	/**
+	 * Gets the settings associated to this box
+	 * @return The settings
+	 */
+	public ProcessorSettings getSettings()
+	{
+		return m_settings;
+	}
+	
+	/**
+	 * Sets the settings associated to this box
+	 * @param settings The settings
+	 * @return This box
+	 */
+	public EditorBox setSettings(ProcessorSettings settings)
+	{
+		m_settings = settings;
+		return this;
+	}
+	
+	/**
 	 * Sets the x position of this box
 	 * @param x The position
 	 * @return This box
@@ -222,7 +267,7 @@ public class EditorBox
 	{
 		StringBuilder out = new StringBuilder();
 		out.append("{");
-		out.append("\"id\":").append(m_processor.getId()).append(",");
+		out.append("\"id\":").append(m_id).append(",");
 		out.append("\"name\": \"").append(getProcessorName()).append("\",");
 		out.append("\"width\":").append(m_width).append(",");
 		out.append("\"height\":").append(m_height).append(",");

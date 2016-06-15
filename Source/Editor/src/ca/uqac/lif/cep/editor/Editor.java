@@ -48,6 +48,7 @@ public class Editor extends InnerFileServer
 		registerCallback(0, new MoveBox(this));
 		registerCallback(0, new GetPalettes(this));
 		registerCallback(0, new PaletteButton(this));
+		registerCallback(0, new GetSettings(this));
 	}
 	
 	/**

@@ -24,14 +24,12 @@ import com.sun.net.httpserver.HttpExchange;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 import ca.uqac.lif.jerrydog.RequestCallback;
-import ca.uqac.lif.json.JsonElement;
-import ca.uqac.lif.json.JsonParser;
 
-public class NewProcessor extends EditorCallback
+public class GetSettings extends EditorCallback
 {
-	public NewProcessor(Editor editor)
+	public GetSettings(Editor editor)
 	{
-		super(RequestCallback.Method.POST, "/processor", editor);
+		super(RequestCallback.Method.GET, "/settings", editor);
 	}
 
 	@Override
@@ -39,8 +37,6 @@ public class NewProcessor extends EditorCallback
 	{
 		CallbackResponse response = new CallbackResponse(t);
 		Map<String,String> params = getParameters(t);
-		JsonElement json = m_parser.parse(params.get(""));
-		
 		int palette_id = Integer.parseInt(params.get("palette").trim());
 		Palette palette = m_editor.getPalette(palette_id);
 		if (palette == null)
@@ -58,15 +54,10 @@ public class NewProcessor extends EditorCallback
 			return response;
 		}
 		EditorBox box = entry.newEditorBox();
-		if (params.containsKey("x") && params.containsKey("y"))
-		{
-			box.setX(Float.parseFloat(params.get("x").trim()));
-			box.setY(Float.parseFloat(params.get("y").trim()));
-		}
-		m_editor.add(box);
+		ProcessorSettings settings = box.getSettings();
 		response.setCode(CallbackResponse.HTTP_OK);
 		response.setContentType(ContentType.JSON);
-		response.setContents(box.toJson());
+		response.setContents(box.toJson().toString());
 		return response;
 	}
 }

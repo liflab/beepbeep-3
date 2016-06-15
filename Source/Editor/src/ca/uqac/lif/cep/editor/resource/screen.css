@@ -102,11 +102,24 @@ div.line{
 	margin: 0;
 }
 
-
 .processor-palette ul li:hover {
 	background-color: yellow;
 }
 
 .processor-palette ul li span {
 	display: none;
+}
+
+.settings {
+	background: #eee;
+	border: solid 1px black;
+	border-radius: 6px;
+	padding: 8px;
+	display: inline-block;
+	position: absolute;
+}
+
+.settings .mandatory {
+	color: red;
+	
 }
