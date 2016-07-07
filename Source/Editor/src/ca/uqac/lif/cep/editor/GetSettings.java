@@ -53,8 +53,8 @@ public class GetSettings extends EditorCallback
 			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
 			return response;
 		}
-		EditorBox box = entry.newEditorBox();
-		ProcessorSettings settings = box.getSettings();
+		ProcessorSettings settings = entry.getSettings();
+		EditorBox box = entry.newEditorBox(settings);
 		response.setCode(CallbackResponse.HTTP_OK);
 		response.setContentType(ContentType.JSON);
 		response.setContents(box.toJson().toString());

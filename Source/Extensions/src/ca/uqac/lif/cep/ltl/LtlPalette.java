@@ -22,6 +22,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.editor.EditorBox;
 import ca.uqac.lif.cep.editor.Palette;
 import ca.uqac.lif.cep.editor.PaletteEntry;
+import ca.uqac.lif.cep.editor.ProcessorSettings;
 
 /**
  * Editor palette for LTL and Boolean logic processors
@@ -56,7 +57,7 @@ public class LtlPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
 			return new BinaryEditorBox(new And(), image);
 		}
@@ -73,7 +74,7 @@ public class LtlPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
 			return new BinaryEditorBox(new Or(), image);
 		}
@@ -90,7 +91,7 @@ public class LtlPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
 			return new BinaryEditorBox(new Until(), image);
 		}
@@ -107,7 +108,7 @@ public class LtlPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
 			return new UnaryEditorBox(new Not(), image);
 		}
@@ -124,7 +125,7 @@ public class LtlPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
 			return new UnaryEditorBox(new Eventually(), image);
 		}
@@ -141,7 +142,7 @@ public class LtlPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
 			return new UnaryEditorBox(new Globally(), image);
 		}
@@ -158,7 +159,7 @@ public class LtlPalette extends Palette
 		}
 
 		@Override
-		public EditorBox newEditorBox() 
+		public EditorBox newEditorBox(ProcessorSettings settings) 
 		{
 			return new UnaryEditorBox(new Next(), image);
 		}

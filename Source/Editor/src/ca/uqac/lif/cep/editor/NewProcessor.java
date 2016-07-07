@@ -26,6 +26,7 @@ import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 import ca.uqac.lif.jerrydog.RequestCallback;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonParser;
+import ca.uqac.lif.json.JsonParser.JsonParseException;
 
 public class NewProcessor extends EditorCallback
 {
@@ -39,7 +40,17 @@ public class NewProcessor extends EditorCallback
 	{
 		CallbackResponse response = new CallbackResponse(t);
 		Map<String,String> params = getParameters(t);
-		JsonElement json = m_parser.parse(params.get(""));
+		JsonElement json = null;
+		try 
+		{
+			json = m_parser.parse(params.get(""));
+		} 
+		catch (JsonParseException e) 
+		{
+			// Baaad request
+			response.setCode(CallbackResponse.HTTP_BAD_REQUEST);
+			return response;
+		}
 		
 		int palette_id = Integer.parseInt(params.get("palette").trim());
 		Palette palette = m_editor.getPalette(palette_id);
@@ -57,7 +68,8 @@ public class NewProcessor extends EditorCallback
 			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
 			return response;
 		}
-		EditorBox box = entry.newEditorBox();
+		ProcessorSettings settings = entry.getSettings();
+		EditorBox box = entry.newEditorBox(settings);
 		if (params.containsKey("x") && params.containsKey("y"))
 		{
 			box.setX(Float.parseFloat(params.get("x").trim()));
