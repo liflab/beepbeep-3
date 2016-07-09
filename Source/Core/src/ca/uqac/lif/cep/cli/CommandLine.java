@@ -29,8 +29,8 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.UserDefinition;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
-import ca.uqac.lif.util.AnsiPrinter;
-import ca.uqac.lif.util.AnsiPrinter.Color;
+import ca.uqac.lif.cep.util.AnsiPrinter;
+import ca.uqac.lif.cep.util.AnsiPrinter.Color;
 
 public class CommandLine
 {

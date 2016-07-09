@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.util;
+package ca.uqac.lif.cep.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,13 +24,11 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Vector;
 
-import ca.uqac.lif.util.FileReadWrite;
-
 public class CommandRunner extends Thread
 {
 	protected String[] m_command;
 	
-	protected String m_stdin;
+	protected byte[] m_stdin;
 	
 	protected volatile boolean m_stop = false; 
 	
@@ -46,7 +44,7 @@ public class CommandRunner extends Thread
 	 * @param stdin If not set to null, this string will be sent to the stdin
 	 *   of the command being run
 	 */
-	public CommandRunner(List<String> command, String stdin)
+	public CommandRunner(List<String> command, byte[] stdin)
 	{
 		super();
 		m_command = new String[command.size()];
@@ -61,10 +59,10 @@ public class CommandRunner extends Thread
 	/**
 	 * Creates a CommandRunner to run a command.
 	 * @param command The command to run
-	 * @param stdin If not set to null, this string will be sent to the stdin
-	 *   of the command being run
+	 * @param stdin If not set to null, this array of bytes
+	 * will be sent to the stdin of the command being run
 	 */
-	public CommandRunner(String[] command, String stdin)
+	public CommandRunner(String[] command, byte[] stdin)
 	{
 		super();
 		m_command = command;
@@ -74,10 +72,21 @@ public class CommandRunner extends Thread
 	/**
 	 * Creates a CommandRunner to run a command.
 	 * @param command The command to run
+	 * @param stdin If not set to null, this string will be sent to the stdin
+	 *   of the command being run
+	 */
+	public CommandRunner(String[] command, String stdin)
+	{
+		this(command, stdin.getBytes());
+	}
+	
+	/**
+	 * Creates a CommandRunner to run a command.
+	 * @param command The command to run
 	 */
 	public CommandRunner(String[] command)
 	{
-		this(command, null);
+		this(command, new byte[0]);
 	}
 
 	/**
@@ -191,6 +200,11 @@ public class CommandRunner extends Thread
 	
 	public static byte[] runAndGet(String command, String inputs)
 	{
+		return runAndGet(command, inputs.getBytes());
+	}
+	
+	public static byte[] runAndGet(String command, byte[] inputs)
+	{
 		String[] s_command = new String[1];
 		s_command[0] = command;
 		CommandRunner runner = new CommandRunner(s_command, inputs);
@@ -216,35 +230,6 @@ public class CommandRunner extends Thread
 		return out;
 	}
 
-	public static void main(String[] args) throws IOException
-	{
-		//String[] command = {"D:/Workspaces/ParkBench/testA.bat"};
-		//String[] command = {"C:/Program Files/gnuplot/binary/gnuplot.exe"};
-		String[] command = {"gnuplot"};
-		String gpfile = FileReadWrite.readFile("/home/sylvain/test.gp");
-		CommandRunner runner = new CommandRunner(command, gpfile);
-		runner.start();
-		// Wait until the command is done
-		while (runner.isAlive())
-		{
-			// Wait 0.1 s and check again
-			try
-			{
-				Thread.sleep(100);
-			}
-			catch (InterruptedException e) 
-			{
-				// This happens if the user cancels the command manually
-				runner.stopCommand();
-				runner.interrupt();
-				System.err.println("Interrupted");
-				return;
-			}
-		}
-		byte[] out = runner.getBytes();
-		System.out.println(out.length);
-	}
-
 	@Override
 	public void run()
 	{
@@ -259,8 +244,7 @@ public class CommandRunner extends Thread
 			if (m_stdin != null)
 			{
 				OutputStream process_stdin = process.getOutputStream();
-				byte[] stdin_bytes = m_stdin.getBytes();
-				process_stdin.write(stdin_bytes, 0, stdin_bytes.length);
+				process_stdin.write(m_stdin, 0, m_stdin.length);
 				process_stdin.flush();
 				process_stdin.close();
 				//System.out.println("Writing " + stdin_bytes.length + " bytes");

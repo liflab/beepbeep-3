@@ -17,7 +17,23 @@
  */
 package ca.uqac.lif.cep.gnuplot;
 
-public class GnuplotCaller
-{
+import ca.uqac.lif.cep.io.Caller;
 
+/**
+ * Processor taking as input a string containing a Gnuplot graph,
+ * and returning as its output the result of calling Gnuplot on
+ * that graph. This is probably a string of bytes with the contents
+ * of an image.
+ * <p>
+ * Note that the Gnuplot software must be installed and accessible
+ * from the systems's command line by typing <code>gnuplot</code>.
+ * @author Sylvain Hallé
+ *
+ */
+public class GnuplotCaller extends Caller
+{
+	public GnuplotCaller()
+	{
+		super("gnuplot");
+	}
 }

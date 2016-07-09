@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import ca.uqac.lif.util.CacheMap;
+import ca.uqac.lif.cep.util.CacheMap;
 
 public abstract class UnaryExpression extends AttributeExpression
 {

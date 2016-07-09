@@ -21,7 +21,6 @@ import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.sets.Multiset;
-import ca.uqac.lif.util.CommandRunner;
 
 public abstract class GnuplotProcessor extends SingleProcessor 
 {
@@ -123,12 +122,7 @@ public abstract class GnuplotProcessor extends SingleProcessor
 			StringBuilder plot_contents = computePlot(bag);
 			m_lastPlot = plot_contents.toString();
 		}
-		if (m_isRaw)
-		{
-			return wrapObject(m_lastPlot);
-		}
-		byte[] image = getImage(m_lastPlot);
-		return wrapObject(image);
+		return wrapObject(m_lastPlot);
 	}
 	
 	/**
@@ -141,38 +135,7 @@ public abstract class GnuplotProcessor extends SingleProcessor
 		m_terminal = getTerminalString(t);
 		return this;
 	}
-	
-	/**
-	 * Runs Gnuplot on a file and returns the resulting graph
-	 * @param instructions The text file for this Gnuplot
-	 * @return The (binary) contents of the image produced by Gnuplot
-	 */
-	public final byte[] getImage(String instructions)
-	{
-		byte[] image = null;
-		String[] command = {s_path};
-		CommandRunner runner = new CommandRunner(command, instructions);
-		runner.start();
-		// Wait until the command is done
-		while (runner.isAlive())
-		{
-			// Wait 0.1 s and check again
-			try
-			{
-				Thread.sleep(s_waitInterval);
-			}
-			catch (InterruptedException e) 
-			{
-				// This happens if the user cancels the command manually
-				runner.stopCommand();
-				runner.interrupt();
-				return null;
-			}
-		}
-		image = runner.getBytes();
-		return image;
-	}
-	
+		
 	/**
 	 * Returns the terminal string associated to this plot 
 	 * @param term The terminal

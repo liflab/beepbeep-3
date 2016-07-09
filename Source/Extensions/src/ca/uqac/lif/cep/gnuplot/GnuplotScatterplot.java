@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.tuples.EmlNumber;
 import ca.uqac.lif.cep.tuples.NamedTuple;
 
 /**
- * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.EmlBag}.
+ * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.Multiset}.
  */
 
 public class GnuplotScatterplot extends GnuplotProcessor

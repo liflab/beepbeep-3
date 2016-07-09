@@ -23,8 +23,15 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.util.CommandRunner;
+import ca.uqac.lif.cep.util.CommandRunner;
 
+/**
+ * Processor calling an external command upon receiving an event,
+ * and returning the output of that command as its output stream.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public class Caller extends SingleProcessor
 {
 	/**
@@ -47,7 +54,7 @@ public class Caller extends SingleProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		// Pass the event (as is) to the standard input of the command
-		byte[] contents = CommandRunner.runAndGet(m_command, (String) inputs[0]);
+		byte[] contents = CommandRunner.runAndGet(m_command, (byte[]) inputs[0]);
 		return wrapObject(contents);
 	}
 

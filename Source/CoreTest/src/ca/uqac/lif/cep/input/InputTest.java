@@ -11,8 +11,8 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.io.StreamReader;
+import ca.uqac.lif.cep.util.StringUtils;
 import ca.uqac.lif.util.PackageFileReader;
-import ca.uqac.lif.util.StringUtils;
 
 public class InputTest
 {

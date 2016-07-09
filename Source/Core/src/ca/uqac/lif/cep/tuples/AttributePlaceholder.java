@@ -2,7 +2,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
-import ca.uqac.lif.util.CacheMap;
+import ca.uqac.lif.cep.util.CacheMap;
 
 public final class AttributePlaceholder extends AttributeName
 {

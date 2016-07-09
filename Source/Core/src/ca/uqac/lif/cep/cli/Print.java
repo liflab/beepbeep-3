@@ -23,7 +23,7 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.epl.Sink;
-import ca.uqac.lif.util.AnsiPrinter;
+import ca.uqac.lif.cep.util.AnsiPrinter;
 
 public class Print extends Sink
 {

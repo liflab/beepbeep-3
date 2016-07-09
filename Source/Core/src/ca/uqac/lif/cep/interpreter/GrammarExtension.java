@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.interpreter;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.uqac.lif.util.PackageFileReader;
+import ca.uqac.lif.cep.util.PackageFileReader;
 
 /**
  * Provides extensions to the original parser's grammar

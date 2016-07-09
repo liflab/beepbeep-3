@@ -42,8 +42,8 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.SmartFork;
 import ca.uqac.lif.cep.epl.EplGrammar;
+import ca.uqac.lif.cep.util.PackageFileReader;
 import ca.uqac.lif.util.EmptyException;
-import ca.uqac.lif.util.PackageFileReader;
 
 public class Interpreter implements ParseNodeVisitor
 {

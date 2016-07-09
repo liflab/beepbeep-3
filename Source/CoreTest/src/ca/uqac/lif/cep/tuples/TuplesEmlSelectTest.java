@@ -39,8 +39,8 @@ import ca.uqac.lif.cep.tuples.NamedTuple;
 import ca.uqac.lif.cep.tuples.Select;
 import ca.uqac.lif.cep.tuples.TupleFeeder;
 import ca.uqac.lif.cep.tuples.TupleGrammar;
+import ca.uqac.lif.cep.util.StringUtils;
 import ca.uqac.lif.util.PackageFileReader;
-import ca.uqac.lif.util.StringUtils;
 
 public class TuplesEmlSelectTest
 {
