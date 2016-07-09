@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.io;
+package ca.uqac.lif.io.websocket;
 
 import static org.junit.Assert.*;
 
@@ -35,6 +35,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.epl.QueueSink;
+import ca.uqac.lif.cep.io.websocket.WebSocketReader;
 
 /**
  * Unit tests for the WebSocket reader.
