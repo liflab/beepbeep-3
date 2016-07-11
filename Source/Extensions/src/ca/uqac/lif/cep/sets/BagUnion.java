@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.sets;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.CumulativeFunction;
 
 public class BagUnion extends CumulativeFunction<Multiset>

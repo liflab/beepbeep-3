@@ -24,6 +24,7 @@ import java.util.Vector;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
