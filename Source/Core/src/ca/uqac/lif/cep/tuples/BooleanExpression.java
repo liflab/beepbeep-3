@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.util.CacheMap;
 
 public class BooleanExpression extends ConstantExpression
@@ -31,7 +32,7 @@ public class BooleanExpression extends ConstantExpression
 		m_number = EmlBoolean.toEmlBoolean(b);
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o = stack.pop();
 		stack.push(new BooleanExpression(o));

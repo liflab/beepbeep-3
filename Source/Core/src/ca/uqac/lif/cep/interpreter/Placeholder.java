@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.interpreter;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Passthrough;
 
 /**
@@ -34,7 +35,7 @@ public final class Placeholder extends Passthrough
 		super(1);
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // *
 		stack.push(new Placeholder());

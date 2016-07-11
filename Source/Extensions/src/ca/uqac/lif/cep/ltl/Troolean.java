@@ -142,6 +142,11 @@ public class Troolean
 	 */
 	public static class TrooleanAnd extends BinaryFunction<Value,Value,Value>
 	{
+		TrooleanAnd()
+		{
+			super(Value.class, Value.class, Value.class);
+		}
+		
 		@Override
 		public Value evaluate(Value x, Value y) 
 		{
@@ -161,6 +166,11 @@ public class Troolean
 	 */
 	public static class TrooleanOr extends BinaryFunction<Value,Value,Value>
 	{
+		TrooleanOr()
+		{
+			super(Value.class, Value.class, Value.class);
+		}
+		
 		@Override
 		public Value evaluate(Value x, Value y) 
 		{
@@ -179,6 +189,11 @@ public class Troolean
 	 */
 	public static class TrooleanNot extends UnaryFunction<Value,Value>
 	{
+		TrooleanNot()
+		{
+			super(Value.class, Value.class);
+		}
+		
 		@Override
 		public Value evaluate(Value x) 
 		{

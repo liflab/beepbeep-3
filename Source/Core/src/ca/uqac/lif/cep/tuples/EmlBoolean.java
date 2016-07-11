@@ -19,9 +19,11 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public abstract class EmlBoolean extends EmlConstant
 {
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o = stack.pop();
 		stack.push(EmlBoolean.toEmlBoolean(o));

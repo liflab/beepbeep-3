@@ -30,12 +30,13 @@ import java.util.Stack;
 
 import ca.uqac.lif.bullwinkle.BnfParser;
 import ca.uqac.lif.bullwinkle.BnfParser.InvalidGrammarException;
-import ca.uqac.lif.bullwinkle.BnfRule.InvalidRuleException;
 import ca.uqac.lif.bullwinkle.BnfRule;
+import ca.uqac.lif.bullwinkle.BnfRule.InvalidRuleException;
 import ca.uqac.lif.bullwinkle.CaptureBlockParseNode;
 import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.bullwinkle.ParseNodeVisitor;
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Processor;
@@ -334,7 +335,15 @@ public class Interpreter implements ParseNodeVisitor
 				if (!m_processorForks.containsKey(node_name))
 				{
 					SmartFork f = new SmartFork(0);
-					Connector.connect(o_p, f, 0, 0);
+					try
+					{
+						Connector.connect(o_p, f, 0, 0);
+					} 
+					catch (ConnectorException e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					m_processorForks.put(node_name, f);
 				}
 				// Extend the current fork for this processor with a new output
@@ -347,7 +356,15 @@ public class Interpreter implements ParseNodeVisitor
 				m_processorForks.put(node_name, new_f);
 				 */
 				f.extendOutputArity(new_arity);
-				Connector.connect(f, pt, new_arity - 1, 0);
+				try 
+				{
+					Connector.connect(f, pt, new_arity - 1, 0);
+				} 
+				catch (ConnectorException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				m_nodes.push(pt);
 			}
 			else

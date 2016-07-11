@@ -1,15 +1,16 @@
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSource;
 
 public class PullableTest 
 {
 	@Test
-	public void testTypedPullable1()
+	public void testTypedPullable1() throws ConnectorException
 	{
 		QueueSource qs = new QueueSource("A", 1);
 		Passthrough pt = new Passthrough(1);
@@ -23,7 +24,7 @@ public class PullableTest
 	}
 	
 	@Test
-	public void testTypedPullable2()
+	public void testTypedPullable2() throws ConnectorException
 	{
 		QueueSource qs = new QueueSource("A", 1);
 		Passthrough pt = new Passthrough(1);

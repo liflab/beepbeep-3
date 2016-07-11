@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class AttributeNamePlain extends AttributeNameQualified
 {	
 	public AttributeNamePlain(String name)
@@ -26,7 +28,7 @@ public class AttributeNamePlain extends AttributeNameQualified
 		super("", name);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String att_name = EmlString.parseString(stack.pop());
 		if (att_name.compareToIgnoreCase("true") == 0)

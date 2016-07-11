@@ -24,6 +24,7 @@ import java.util.Vector;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.QueueSourceBatch;
@@ -36,10 +37,10 @@ public class ForkTest
 {
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testFork()
+	public void testFork() throws ConnectorException
 	{
 		Passthrough p1 = new Passthrough(1);
-		Fork fork = new Fork(2);
+		Fork fork = new Fork(3);
 		Connector.connect(p1, fork);
 		Pushable push = p1.getPushableInput(0);
 		QueueSink[] sinks = new QueueSink[3];
@@ -65,10 +66,10 @@ public class ForkTest
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testSmartFork()
+	public void testSmartFork() throws ConnectorException
 	{
 		Passthrough p1 = new Passthrough(1);
-		SmartFork fork = new SmartFork(2);
+		SmartFork fork = new SmartFork(3);
 		Connector.connect(p1, fork);
 		Pushable push = p1.getPushableInput(0);
 		QueueSink[] sinks = new QueueSink[3];
@@ -95,7 +96,7 @@ public class ForkTest
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testExtendArityFork()
+	public void testExtendArityFork() throws ConnectorException
 	{
 		Passthrough p1 = new Passthrough(1);
 		Fork fork = new Fork(2);
@@ -128,7 +129,7 @@ public class ForkTest
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testExtendAritySmartFork()
+	public void testExtendAritySmartFork() throws ConnectorException
 	{
 		Passthrough p1 = new Passthrough(1);
 		SmartFork fork = new SmartFork(2);
@@ -161,7 +162,7 @@ public class ForkTest
 
 	
 	@Test
-	public void testFork1()
+	public void testFork1() throws ConnectorException
 	{
 		Vector<Object> events = new Vector<Object>();
 		events.add("A");
@@ -188,7 +189,7 @@ public class ForkTest
 	}
 	
 	@Test
-	public void testSmartFork1()
+	public void testSmartFork1() throws ConnectorException
 	{
 		Vector<Object> events = new Vector<Object>();
 		events.add("A");
@@ -220,7 +221,7 @@ public class ForkTest
 	}
 	
 	@Test
-	public void testSmartFork2()
+	public void testSmartFork2() throws ConnectorException
 	{
 		Vector<Object> events = new Vector<Object>();
 		events.add("A");
@@ -249,7 +250,7 @@ public class ForkTest
 	}
 	
 	@Test
-	public void testSmartFork3()
+	public void testSmartFork3() throws ConnectorException
 	{
 		Vector<Object> events = new Vector<Object>();
 		events.add(0);
@@ -282,7 +283,7 @@ public class ForkTest
 	}
 	
 	@Test
-	public void testSmartFork4()
+	public void testSmartFork4() throws ConnectorException
 	{
 		/* Only difference with previous test: we never consume
 		 * anything from the second queue
@@ -317,7 +318,7 @@ public class ForkTest
 	}
 	
 	@Test
-	public void testSmartFork5()
+	public void testSmartFork5() throws ConnectorException
 	{
 		/*
 		 * In this test, we push events faster than we pull them

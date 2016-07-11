@@ -21,6 +21,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -39,7 +40,7 @@ public class EmlNumber extends SingleProcessor
 		return m_number.intValue();
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o = stack.pop();
 		if (o instanceof Number)

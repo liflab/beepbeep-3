@@ -17,13 +17,17 @@
  */
 package ca.uqac.lif.cep.xml;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.epl.SinkLast;
 import ca.uqac.lif.xml.XPathExpression;
@@ -35,7 +39,7 @@ public class XmlTest
 {
 
 	@Test
-	public void testSingle1()
+	public void testSingle1() throws ConnectorException
 	{
 		XmlFeeder feeder = new XmlFeeder();
 		Pushable in = feeder.getPushableInput(0);
@@ -50,7 +54,7 @@ public class XmlTest
 	}
 	
 	@Test
-	public void testSingle2()
+	public void testSingle2() throws ConnectorException
 	{
 		XmlFeeder feeder = new XmlFeeder();
 		Pushable in = feeder.getPushableInput(0);
@@ -63,7 +67,7 @@ public class XmlTest
 	}
 	
 	@Test
-	public void testXPath1() throws XPathParseException, XmlParseException
+	public void testXPath1() throws XPathParseException, XmlParseException, ConnectorException
 	{
 		XPathEvaluator xpath = new XPathEvaluator(XPathExpression.parse("a/b/text()"));
 		Pushable in = xpath.getPushableInput(0);

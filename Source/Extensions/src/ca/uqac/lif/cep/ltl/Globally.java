@@ -21,6 +21,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
@@ -45,7 +46,7 @@ public class Globally extends SingleProcessor
 		m_notFalseCount = 0;
 	}
 	
-	public static void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) throws ConnectorException, ConnectorException 
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();

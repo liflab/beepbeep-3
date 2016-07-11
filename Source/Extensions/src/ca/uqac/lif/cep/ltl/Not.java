@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.ltl;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
@@ -30,7 +31,7 @@ public class Not extends FunctionProcessor
 		super(Troolean.NOT_FUNCTION);
 	}
 	
-	public static void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();

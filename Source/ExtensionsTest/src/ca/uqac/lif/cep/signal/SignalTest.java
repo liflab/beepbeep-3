@@ -17,20 +17,22 @@
  */
 package ca.uqac.lif.cep.signal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.Vector;
 
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.QueueSource;
 
 public class SignalTest 
 {
 	@Test
-	public void testPeakFinder1()
+	public void testPeakFinder1() throws ConnectorException
 	{
 		QueueSource qs = new QueueSource(null, 1);
 		Vector<Object> values = new Vector<Object>();
@@ -60,7 +62,7 @@ public class SignalTest
 	}
 	
 	@Test
-	public void testPeakFinder2()
+	public void testPeakFinder2() throws ConnectorException
 	{
 		QueueSource qs = new QueueSource(null, 1);
 		Vector<Object> values = new Vector<Object>();
@@ -93,7 +95,7 @@ public class SignalTest
 
 	
 	@Test
-	public void testPlateauFinder1()
+	public void testPlateauFinder1() throws ConnectorException
 	{
 		QueueSource qs = new QueueSource(null, 1);
 		Vector<Object> values = new Vector<Object>();

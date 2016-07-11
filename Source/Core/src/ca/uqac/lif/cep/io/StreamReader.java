@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Queue;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.Source;
 
 /**
@@ -195,7 +196,7 @@ public class StreamReader extends Source
 		return wrapVector(out);
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String filename = (String) stack.pop();
 		if (filename.startsWith("\""))

@@ -1,6 +1,6 @@
 package ca.uqac.lif.cep.input;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -8,6 +8,7 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -21,7 +22,7 @@ import ca.uqac.lif.cep.epl.QueueSource;
 public class TokenFeederTest 
 {
 	@Test
-	public void testTokenFeederPush1()
+	public void testTokenFeederPush1() throws ConnectorException
 	{
 		String s;
 		MyFeeder mf = new MyFeeder("|", ".");
@@ -38,7 +39,7 @@ public class TokenFeederTest
 	}
 	
 	@Test
-	public void testTokenFeederPush2()
+	public void testTokenFeederPush2() throws ConnectorException
 	{
 		String s;
 		MyFeeder mf = new MyFeeder("|", ".");
@@ -55,7 +56,7 @@ public class TokenFeederTest
 	}
 	
 	@Test
-	public void testTokenFeederPush3()
+	public void testTokenFeederPush3() throws ConnectorException
 	{
 		String s;
 		MyFeeder mf = new MyFeeder("", "\n");
@@ -72,7 +73,7 @@ public class TokenFeederTest
 	}
 	
 	@Test
-	public void testTokenFeederPull1()
+	public void testTokenFeederPull1() throws ConnectorException
 	{
 		Object o;
 		QueueSource qsource = new QueueSource(null, 1);

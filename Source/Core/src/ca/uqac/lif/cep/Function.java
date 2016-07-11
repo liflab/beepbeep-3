@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Set;
+
 /**
  * Represents a stateless <i>m</i>-to-<i>n</i> function.
  * 
@@ -25,7 +27,7 @@ package ca.uqac.lif.cep;
 public interface Function extends Cloneable
 {
 	/**
-	 * The maximum input arity that a computable can have
+	 * The maximum input arity that a function can have
 	 */
 	public static int s_maxInputArity = 10;
 	
@@ -64,4 +66,20 @@ public interface Function extends Cloneable
 	 * @return The copy
 	 */
 	public Function clone();
+	
+	/**
+	 * Populates the set of classes accepted by the function for its
+	 * <i>i</i>-th input
+	 * @param classes The set of to fill with classes
+	 * @param index The index of the input to query
+	 */
+	public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index);
+	
+	/**
+	 * Returns the type of the events produced by the function for its
+	 * <i>i</i>-th output
+	 * @param index The index of the output to query
+	 * @return The type of the output
+	 */	
+	public Class<?> getOutputTypeFor(int index);
 }

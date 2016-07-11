@@ -17,15 +17,18 @@
  */
 package ca.uqac.lif.cep.interpreter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.epl.CountDecimate;
-import ca.uqac.lif.cep.epl.Freeze;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.epl.CountDecimate;
+import ca.uqac.lif.cep.epl.Freeze;
 import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.HttpReader;
@@ -51,7 +54,7 @@ public class InterpreterExtensionTest
 	}
 	
 	@Test
-	public void testExtensionNumber1() throws ParseException
+	public void testExtensionNumber1() throws ParseException, ConnectorException
 	{
 		String expression = "0";
 		Object result = m_interpreter.parseQuery(expression);
@@ -61,7 +64,7 @@ public class InterpreterExtensionTest
 	}
 	
 	@Test
-	public void testExtensionNumber2() throws ParseException
+	public void testExtensionNumber2() throws ParseException, ConnectorException
 	{
 		String expression = "FREEZE (0)";
 		Object result = m_interpreter.parseQuery(expression);
@@ -73,7 +76,7 @@ public class InterpreterExtensionTest
 	}
 	
 	@Test
-	public void testExtensionNumber3() throws ParseException
+	public void testExtensionNumber3() throws ParseException, ConnectorException
 	{
 		String expression = "APPLY (0) ON (0) ON A WINDOW OF 3";
 		Object result = m_interpreter.parseQuery(expression);
@@ -82,7 +85,7 @@ public class InterpreterExtensionTest
 	}
 	
 	@Test
-	public void testExtensionNumber4() throws ParseException
+	public void testExtensionNumber4() throws ParseException, ConnectorException
 	{
 		String expression = "EVERY 2ND OF (0)";
 		Object result = m_interpreter.parseQuery(expression);
@@ -91,7 +94,7 @@ public class InterpreterExtensionTest
 	}
 	
 	@Test
-	public void testExtensionNumber5() throws ParseException
+	public void testExtensionNumber5() throws ParseException, ConnectorException
 	{
 		String expression = "COMBINE (EVERY 2ND OF (0)) WITH ADDITION";
 		Object result = m_interpreter.parseQuery(expression);
@@ -100,7 +103,7 @@ public class InterpreterExtensionTest
 	}
 	
 	@Test
-	public void testExtensionIo1() throws ParseException
+	public void testExtensionIo1() throws ParseException, ConnectorException
 	{
 		String expression = "URL \"http://example.com\"";
 		Object result = m_interpreter.parseQuery(expression);
@@ -109,7 +112,7 @@ public class InterpreterExtensionTest
 	}
 	
 	@Test
-	public void testPlaceholder() throws ParseException
+	public void testPlaceholder() throws ParseException, ConnectorException
 	{
 		String expression = "*";
 		Object result = m_interpreter.parseQuery(expression);

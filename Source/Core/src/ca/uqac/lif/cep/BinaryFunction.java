@@ -1,5 +1,7 @@
 package ca.uqac.lif.cep;
 
+import java.util.Set;
+
 /**
  * Function of two inputs and one output
  * @param <T> The type of the first input
@@ -8,6 +10,35 @@ package ca.uqac.lif.cep;
  */
 public abstract class BinaryFunction<T,V,U> implements Function 
 {
+	/**
+	 * The class of the first input
+	 */
+	private Class<T> m_inputTypeLeft;
+	
+	/**
+	 * The class of the second input
+	 */
+	private Class<V> m_inputTypeRight;
+
+	/**
+	 * The class of the output
+	 */
+	private Class<U> m_outputType;
+	
+	/**
+	 * Creates a new instance of a binary function
+	 * @param t The class of the first input
+	 * @param v The class of the second input
+	 * @param u The class of the output
+	 */
+	public BinaryFunction(Class<T> t, Class<V> v, Class<U> u)
+	{
+		super();
+		m_inputTypeLeft = t;
+		m_inputTypeRight = v;
+		m_outputType = u;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 2 */
@@ -61,4 +92,39 @@ public abstract class BinaryFunction<T,V,U> implements Function
 	{
 		return this;
 	}
+	
+	public final Class<T> getInputTypeLeft()
+	{
+		return m_inputTypeLeft;
+	}
+	
+	public final Class<V> getInputTypeRight()
+	{
+		return m_inputTypeRight;
+	}
+	
+	@Override
+	public final void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+	{
+		if (index == 0)
+		{
+			classes.add(m_inputTypeLeft);
+		}
+		else
+		{
+			classes.add(m_inputTypeRight);
+		}
+	}
+	
+	public final Class<U> getOutputType()
+	{
+		return m_outputType;
+	}
+	
+	@Override
+	public final Class<?> getOutputTypeFor(int index)
+	{
+		return m_outputType;
+	}
+
 }

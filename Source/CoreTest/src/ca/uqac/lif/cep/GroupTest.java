@@ -17,13 +17,17 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Queue;
 import java.util.Vector;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.numbers.Addition;
@@ -35,7 +39,7 @@ import ca.uqac.lif.cep.numbers.Addition;
 public class GroupTest 
 {
 	@Test
-	public void testGroup1()
+	public void testGroup1() throws ConnectorException
 	{
 		Passthrough pt1 = new Passthrough(1);
 		GroupProcessor gp = new GroupProcessor(1, 1);
@@ -55,7 +59,7 @@ public class GroupTest
 	}
 	
 	@Test
-	public void testGroup2()
+	public void testGroup2() throws ConnectorException
 	{
 		Passthrough pt1 = new Passthrough(2);
 		GroupProcessor gp = new GroupProcessor(2, 2);
@@ -88,7 +92,7 @@ public class GroupTest
 	}
 	
 	@Test
-	public void testGroup3()
+	public void testGroup3() throws ConnectorException
 	{
 		Passthrough pt1 = new Passthrough(1);
 		Passthrough pt2 = new Passthrough(1);
@@ -111,7 +115,7 @@ public class GroupTest
 	}
 
 	@Test
-	public void testClone1()
+	public void testClone1() throws ConnectorException
 	{
 		Passthrough pt1 = new Passthrough(1);
 		GroupProcessor gp = new GroupProcessor(1, 1);
@@ -136,7 +140,7 @@ public class GroupTest
 	}
 	
 	@Test
-	public void testClone2()
+	public void testClone2() throws ConnectorException
 	{
 		Passthrough pt1 = new Passthrough(2);
 		GroupProcessor gp = new GroupProcessor(2, 2);
@@ -173,7 +177,7 @@ public class GroupTest
 	}
 	
 	@Test
-	public void testClone3()
+	public void testClone3() throws ConnectorException
 	{
 		Passthrough pt1 = new Passthrough(1);
 		Passthrough pt2 = new Passthrough(1);
@@ -202,7 +206,7 @@ public class GroupTest
 	}
 	
 	@Test
-	public void testClone4()
+	public void testClone4() throws ConnectorException
 	{
 		Passthrough pt1 = new Passthrough(2);
 		Passthrough pt2 = new Passthrough(2);
@@ -244,7 +248,7 @@ public class GroupTest
 	}
 	
 	@Test
-	public void testGroupPull1()
+	public void testGroupPull1() throws ConnectorException
 	{
 		// Create the group
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
@@ -306,7 +310,7 @@ public class GroupTest
 	}
 	
 	@Test
-	public void testGroupPush2()
+	public void testGroupPush2() throws ConnectorException
 	{
 		// Create the group
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
@@ -371,7 +375,7 @@ public class GroupTest
 		
 		public IncrementFunction(int increment)
 		{
-			super();
+			super(Number.class, Number.class);
 			m_increment = increment;
 		}
 		

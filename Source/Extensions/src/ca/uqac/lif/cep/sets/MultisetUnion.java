@@ -11,7 +11,7 @@ public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset>
 	
 	private MultisetUnion()
 	{
-		super();
+		super(Multiset.class, Multiset.class, Multiset.class);
 	}
 	
 	@Override

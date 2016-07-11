@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.epl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Queue;
 import java.util.Stack;
@@ -25,6 +25,7 @@ import java.util.Stack;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.CumulativeFunction;
 import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Processor;
@@ -43,7 +44,7 @@ import ca.uqac.lif.cep.numbers.NumberGrammar;
 public class SlicerTest
 {
 	@Test
-	public void testSlicer1()
+	public void testSlicer1() throws ConnectorException
 	{
 		Slicer sli = new Slicer(new IsEven(), new Sum());
 		QueueSink qsink = new QueueSink(1);
@@ -68,7 +69,7 @@ public class SlicerTest
 	}
 	
 	@Test
-	public void testSlicerParse() throws ParseException
+	public void testSlicerParse() throws ParseException, ConnectorException
 	{
 		Interpreter my_int = new Interpreter();
 		my_int.extendGrammar(NumberGrammar.class);
@@ -86,13 +87,18 @@ public class SlicerTest
 
 	public static class IsEven extends UnaryFunction<Number,Boolean>
 	{
+		public IsEven()
+		{
+			super(Number.class, Boolean.class);
+		}
+		
 		@Override
 		public Boolean evaluate(Number x) 
 		{
 			return x.intValue() % 2 == 0;
 		}
 		
-		public static void build(Stack<Object> stack)
+		public static void build(Stack<Object> stack) throws ConnectorException
 		{
 			stack.pop(); // ISEVEN
 			stack.push(new IsEven());

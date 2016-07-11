@@ -21,6 +21,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.tuples.EmlNumber;
@@ -49,7 +50,7 @@ public class Threshold extends SingleProcessor
 		return wrapObject(0);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		float t_value = EmlNumber.parseFloat(stack.pop());
 		stack.pop(); // THRESHOLD

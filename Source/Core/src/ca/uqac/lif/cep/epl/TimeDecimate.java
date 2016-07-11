@@ -21,6 +21,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -84,7 +85,7 @@ public class TimeDecimate extends SingleProcessor
 		return wrapVector(out);
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Processor p = (Processor) stack.pop();
 		Number interval = (Number) stack.pop();

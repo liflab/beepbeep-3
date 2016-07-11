@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.tuples;
 import java.util.ArrayDeque;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class AttributeList extends ArrayDeque<AttributeDefinition>
 {
 	/**
@@ -32,7 +34,7 @@ public class AttributeList extends ArrayDeque<AttributeDefinition>
 		super();
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object top = stack.peek();
 		AttributeList new_al = new AttributeList();

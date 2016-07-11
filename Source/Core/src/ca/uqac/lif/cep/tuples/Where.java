@@ -22,6 +22,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.util.CacheMap;
@@ -62,7 +63,7 @@ public class Where extends SingleProcessor
 		return out_q;
 	}
 
-	public static void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		AttributeExpression ae = (AttributeExpression) stack.pop();
 		stack.pop(); // WHERE

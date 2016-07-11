@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -98,7 +99,7 @@ public class RegexTupleBuilder extends SingleProcessor
 		return wrapVector(out_vector);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
@@ -126,7 +127,7 @@ public class RegexTupleBuilder extends SingleProcessor
 			super();
 		}
 
-		public static void build(Stack<Object> stack)
+		public static void build(Stack<Object> stack) throws ConnectorException
 		{
 			Object top = stack.peek();
 			RegexAttributeNameList ranl = new RegexAttributeNameList();

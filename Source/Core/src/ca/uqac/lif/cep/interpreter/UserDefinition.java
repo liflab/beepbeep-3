@@ -22,6 +22,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.bullwinkle.BnfRule.InvalidRuleException;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SmartFork;
@@ -75,7 +76,7 @@ public class UserDefinition
 		m_interpreter = i;
 	}
 
-	public static void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		// We use toString: if the definition is a single number, a number is
 		// on the stack rather than a string

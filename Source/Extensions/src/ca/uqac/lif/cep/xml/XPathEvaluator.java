@@ -45,9 +45,14 @@ public class XPathEvaluator extends FunctionProcessor
 		 * Creates a new XPath function
 		 * @param exp The XPath expression to evaluate
 		 */
+		@SuppressWarnings("unchecked")
 		public XPathFunction(XPathExpression exp)
 		{
-			super();
+			/* The double cast below is a bit of trickery to pass the
+			 * runtime type of the collection. It was found here:
+			 * http://stackoverflow.com/a/30754982
+			 */
+			super(XmlElement.class, (Class<Collection<XmlElement>>) (Object) Collection.class);
 			m_expression = exp;
 		}
 		

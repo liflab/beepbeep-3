@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Set;
+
 /**
  * Function of one input and one output
  * @param <T> The type of the input
@@ -24,6 +26,28 @@ package ca.uqac.lif.cep;
  */
 public abstract class UnaryFunction<T,U> implements Function 
 {
+	/**
+	 * The class of the input
+	 */
+	private Class<T> m_inputType;
+
+	/**
+	 * The class of the output
+	 */
+	private Class<U> m_outputType;
+	
+	/**
+	 * Creates a new instance of an unary function
+	 * @param t The class of the input
+	 * @param u The class of the output
+	 */
+	public UnaryFunction(Class<T> t, Class<U> u)
+	{
+		super();
+		m_inputType = t;
+		m_outputType = u;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 1 */
@@ -64,5 +88,16 @@ public abstract class UnaryFunction<T,U> implements Function
 	{
 		return this;
 	}
-
+	
+	@Override
+	public final void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+	{
+		classes.add(m_inputType);
+	}
+	
+	@Override
+	public final Class<?> getOutputTypeFor(int index)
+	{
+		return m_outputType;
+	}
 }

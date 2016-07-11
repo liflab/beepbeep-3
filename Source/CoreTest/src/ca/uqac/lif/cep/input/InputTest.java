@@ -1,6 +1,6 @@
 package ca.uqac.lif.cep.input;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.util.StringUtils;
@@ -23,7 +24,7 @@ public class InputTest
 	}
 
 	@Test
-	public void testCsvFeeder() throws IOException
+	public void testCsvFeeder() throws IOException, ConnectorException
 	{
 		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.csv");
 		InputStream stream = StringUtils.toInputStream(file_contents);

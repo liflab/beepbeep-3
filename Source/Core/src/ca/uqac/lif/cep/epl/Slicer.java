@@ -23,6 +23,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Function;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
@@ -83,7 +84,15 @@ public class Slicer extends SingleProcessor
 			Processor p = m_processor.clone();
 			m_slices.put(slice_id, p);
 			QueueSink sink = new QueueSink(output_arity);
-			Connector.connect(p, sink);
+			try 
+			{
+				Connector.connect(p, sink);
+			} 
+			catch (ConnectorException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			m_sinks.put(slice_id, sink);
 		}
 		// Find processor corresponding to that slice
@@ -110,7 +119,7 @@ public class Slicer extends SingleProcessor
 		m_slicingFunction.reset();
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Function f = (Function) stack.pop();
 		stack.pop(); // ON

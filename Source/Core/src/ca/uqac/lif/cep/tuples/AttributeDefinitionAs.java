@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class AttributeDefinitionAs extends AttributeDefinition
 {	
 	public AttributeDefinitionAs(AttributeExpression exp, String alias)
@@ -26,7 +28,7 @@ public class AttributeDefinitionAs extends AttributeDefinition
 		super(exp, alias);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String alias_name = EmlString.parseString(stack.pop());
 		stack.pop(); // AS

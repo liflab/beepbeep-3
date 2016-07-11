@@ -17,13 +17,15 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Queue;
 import java.util.Vector;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 
@@ -34,7 +36,7 @@ import ca.uqac.lif.cep.epl.QueueSource;
 public class MultiplexerTest 
 {
 	@Test
-	public void testMultiplexerPush()
+	public void testMultiplexerPush() throws ConnectorException
 	{
 		Multiplexer mux = new Multiplexer(2);
 		Pushable push1 = mux.getPushableInput(0);
@@ -60,7 +62,7 @@ public class MultiplexerTest
 	}
 	
 	@Test
-	public void testMultiplexerPull()
+	public void testMultiplexerPull() throws ConnectorException
 	{
 		int i = -1;
 		QueueSource qsource1 = new QueueSource(null, 1);
@@ -106,7 +108,7 @@ public class MultiplexerTest
 	}
 	
 	@Test
-	public void testMultiplexerPullHard()
+	public void testMultiplexerPullHard() throws ConnectorException
 	{
 		int i = -1;
 		QueueSource qsource1 = new QueueSource(null, 1);

@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.interpreter;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class SymbolDefinition
 {
 	/**
@@ -48,7 +50,7 @@ public class SymbolDefinition
 		return m_symbolName;
 	}
 
-	public static void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		String symbol_name = (String) stack.pop();
 		stack.pop(); // A

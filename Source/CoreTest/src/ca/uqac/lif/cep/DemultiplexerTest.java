@@ -17,13 +17,14 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Queue;
 import java.util.Vector;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 
 /**
@@ -35,7 +36,7 @@ public class DemultiplexerTest
 {
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testDemultiplexer()
+	public void testDemultiplexer() throws ConnectorException
 	{
 		Demultiplexer demux = new Demultiplexer(3);
 		QueueSink qsink = new QueueSink(1);

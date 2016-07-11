@@ -17,7 +17,9 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -26,21 +28,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
 import ca.uqac.lif.cep.io.StreamReader;
-import ca.uqac.lif.cep.tuples.Addition;
-import ca.uqac.lif.cep.tuples.AttributeExpression;
-import ca.uqac.lif.cep.tuples.AttributeList;
-import ca.uqac.lif.cep.tuples.AttributeNameQualified;
-import ca.uqac.lif.cep.tuples.NamedTuple;
-import ca.uqac.lif.cep.tuples.NumberExpression;
-import ca.uqac.lif.cep.tuples.ProcessorDefinitionList;
-import ca.uqac.lif.cep.tuples.Select;
-import ca.uqac.lif.cep.tuples.TupleFeeder;
-import ca.uqac.lif.cep.tuples.TupleGrammar;
 import ca.uqac.lif.cep.util.StringUtils;
 import ca.uqac.lif.util.PackageFileReader;
 
@@ -57,7 +50,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testProcList1() throws ParseException
+	public void testProcList1() throws ParseException, ConnectorException
 	{
 		String expression = "0";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -66,7 +59,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testProcList2() throws ParseException
+	public void testProcList2() throws ParseException, ConnectorException
 	{
 		String expression = "0, 1";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -75,7 +68,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testProcList3() throws ParseException
+	public void testProcList3() throws ParseException, ConnectorException
 	{
 		String expression = "0 AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -84,7 +77,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testProcList3b() throws ParseException
+	public void testProcList3b() throws ParseException, ConnectorException
 	{
 		String expression = "(0) AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -94,7 +87,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testProcList4() throws ParseException
+	public void testProcList4() throws ParseException, ConnectorException
 	{
 		String expression = "0 AS matrace, 1 AS matrace";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_proc_list>");
@@ -104,7 +97,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testAttributeExpression1() throws ParseException
+	public void testAttributeExpression1() throws ParseException, ConnectorException
 	{
 		String expression = "0";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_att_expr>");
@@ -112,7 +105,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testAttributeExpression2() throws ParseException
+	public void testAttributeExpression2() throws ParseException, ConnectorException
 	{
 		String expression = "0";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_att_expr>");
@@ -120,7 +113,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testAttributeExpression3() throws ParseException
+	public void testAttributeExpression3() throws ParseException, ConnectorException
 	{
 		String expression = "(0) + (0)";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_att_expr>");
@@ -128,7 +121,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testAttributeExpression4() throws ParseException
+	public void testAttributeExpression4() throws ParseException, ConnectorException
 	{
 		String expression = "t.p";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_att_expr>");
@@ -136,7 +129,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testAttributeList1() throws ParseException
+	public void testAttributeList1() throws ParseException, ConnectorException
 	{
 		String expression = "t.p, t.p";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_att_list>");
@@ -144,7 +137,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testAttributeList2() throws ParseException
+	public void testAttributeList2() throws ParseException, ConnectorException
 	{
 		String expression = "t.p, t.p AS q";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_att_list>");
@@ -152,7 +145,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testAttributeList3() throws ParseException
+	public void testAttributeList3() throws ParseException, ConnectorException
 	{
 		String expression = "(t.p) + (2) AS w, t.p AS q";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_att_list>");
@@ -160,7 +153,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testSelect1() throws ParseException
+	public void testSelect1() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT (t.p) + (2) AS w, t.p AS q FROM (0)";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_select>");
@@ -168,7 +161,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testSelect2() throws ParseException
+	public void testSelect2() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT (a) LESS THAN (0) FROM (0)";
 		Object result = m_interpreter.parseLanguage(expression, "<eml_select>");
@@ -176,7 +169,7 @@ public class TuplesEmlBuildTest
 	}
 	
 	@Test
-	public void testTupleFeeder1() throws FileNotFoundException
+	public void testTupleFeeder1() throws FileNotFoundException, ConnectorException
 	{
 		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/tuples2.csv");
 		InputStream stream = StringUtils.toInputStream(file_contents);

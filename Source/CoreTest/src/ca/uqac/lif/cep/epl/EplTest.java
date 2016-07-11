@@ -17,7 +17,9 @@
  */
 package ca.uqac.lif.cep.epl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -26,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -54,7 +57,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testTrim()
+	public void testTrim() throws ConnectorException
 	{
 		Trim d = new Trim(3);
 		QueueSink qs = new QueueSink(1);
@@ -78,7 +81,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testTrimGrammar() throws ParseException
+	public void testTrimGrammar() throws ParseException, ConnectorException
 	{
 		String s = "TRIM 3 OF (SELECT 1 FROM (1))";
 		Object q = m_interpreter.parseQuery(s);
@@ -89,7 +92,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testFilter()
+	public void testFilter() throws ConnectorException
 	{
 		Filter f = new Filter();
 		QueueSink qs = new QueueSink(1);
@@ -108,7 +111,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testCountDecimate1()
+	public void testCountDecimate1() throws ConnectorException
 	{
 		CountDecimate f = new CountDecimate(3);
 		QueueSink qs = new QueueSink(1);
@@ -137,7 +140,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testCountDecimate2()
+	public void testCountDecimate2() throws ConnectorException
 	{
 		CountDecimate f = new CountDecimate();
 		QueueSink qs = new QueueSink(1);
@@ -158,7 +161,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testCountDecimateGrammar() throws ParseException
+	public void testCountDecimateGrammar() throws ParseException, ConnectorException
 	{
 		String s = "EVERY 3RD OF (SELECT 1 FROM (1))";
 		Object q = m_interpreter.parseQuery(s);
@@ -169,7 +172,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testFreeze()
+	public void testFreeze() throws ConnectorException
 	{
 		Freeze f = new Freeze();
 		QueueSink qs = new QueueSink(1);
@@ -190,7 +193,7 @@ public class EplTest
 
 
 	@Test
-	public void testFreezeGrammar() throws ParseException
+	public void testFreezeGrammar() throws ParseException, ConnectorException
 	{
 		String s = "FREEZE (SELECT 1 FROM (1))";
 		Object q = m_interpreter.parseQuery(s);
@@ -199,7 +202,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testPrefix1()
+	public void testPrefix1() throws ConnectorException
 	{
 		Prefix f = new Prefix(3);
 		QueueSink qs = new QueueSink(1);
@@ -225,7 +228,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testPrefixGrammar() throws ParseException
+	public void testPrefixGrammar() throws ParseException, ConnectorException
 	{
 		String s = "THE FIRST 3 OF (SELECT 1 FROM (1))";
 		Object q = m_interpreter.parseQuery(s);
@@ -236,7 +239,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testQueueSource1()
+	public void testQueueSource1() throws ConnectorException
 	{
 		Object o = null;
 		QueueSource source = new QueueSource(0, 1);
@@ -250,7 +253,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testQueueSource2()
+	public void testQueueSource2() throws ConnectorException
 	{
 		Object o = null;
 		Vector<Object> queue = new Vector<Object>();
@@ -269,7 +272,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testQueueSource3()
+	public void testQueueSource3() throws ConnectorException
 	{
 		Vector<Object> queue = new Vector<Object>();
 		queue.add(0);
@@ -288,7 +291,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testSinkLast()
+	public void testSinkLast() throws ConnectorException
 	{
 		Vector<Object> queue = new Vector<Object>();
 		queue.add(0);
@@ -308,7 +311,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testQueueSink1()
+	public void testQueueSink1() throws ConnectorException
 	{
 		Object[] o = null;
 		QueueSink sink = new QueueSink(2);
@@ -327,7 +330,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testQueueSink2()
+	public void testQueueSink2() throws ConnectorException
 	{
 		Vector<Object> queue = new Vector<Object>();
 		queue.add(0);
@@ -348,7 +351,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testQueueSink3()
+	public void testQueueSink3() throws ConnectorException
 	{
 		Vector<Object> queue = new Vector<Object>();
 		queue.add(0);
@@ -369,7 +372,7 @@ public class EplTest
 
 
 	@Test
-	public void testWindow1()
+	public void testWindow1() throws ConnectorException
 	{
 		Passthrough p = new Passthrough(1);
 		Window w = new Window(p, 3);
@@ -390,7 +393,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testWindowGrammar() throws ParseException
+	public void testWindowGrammar() throws ParseException, ConnectorException
 	{
 		String s = "APPLY (SELECT 1 FROM (1)) ON (SELECT 1 FROM (1)) ON A WINDOW OF 3";
 		Object q = m_interpreter.parseQuery(s);
@@ -401,7 +404,7 @@ public class EplTest
 	}
 
 	@Test
-	public void testInsert()
+	public void testInsert() throws ConnectorException
 	{
 		Object[] to_insert = {99};
 		Insert ins = new Insert(to_insert, 3);

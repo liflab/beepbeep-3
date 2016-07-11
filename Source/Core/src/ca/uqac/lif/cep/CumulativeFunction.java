@@ -37,7 +37,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 	 */
 	public CumulativeFunction(BinaryFunction<T,T,T> function)
 	{
-		super();
+		super(function.getInputTypeLeft(), function.getOutputType());
 		m_function = function;
 		m_lastValue = m_function.getStartValue();
 	}

@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class Power extends BinaryExpression
 {
 	public Power(String symbol, AttributeExpression left, AttributeExpression right)
@@ -34,7 +36,7 @@ public class Power extends BinaryExpression
 		return Math.pow(n_left, n_right);
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String symbol = (String) stack.pop(); // RD, TH, ND, etc.
 		stack.pop(); // )

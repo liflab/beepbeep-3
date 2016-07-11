@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class Sine extends UnaryExpression
 {
 	public Sine(AttributeExpression exp)
@@ -33,7 +35,7 @@ public class Sine extends UnaryExpression
 		return Math.sin(n_left);
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // )
 		AttributeExpression exp_left = (AttributeExpression) stack.pop();

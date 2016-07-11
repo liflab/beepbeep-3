@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.numbers;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.BinaryFunction;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 
 public class Multiplication extends BinaryFunction<Number,Number,Number>
 {
@@ -30,10 +31,10 @@ public class Multiplication extends BinaryFunction<Number,Number,Number>
 	
 	private Multiplication()
 	{
-		super();
+		super(Number.class, Number.class, Number.class);
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop();
 		stack.push(instance);

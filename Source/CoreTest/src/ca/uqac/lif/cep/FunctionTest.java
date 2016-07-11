@@ -1,11 +1,15 @@
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Queue;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
@@ -18,7 +22,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
 public class FunctionTest 
 {
 	@Test
-	public void testAdditionOnce()
+	public void testAdditionOnce() throws ConnectorException
 	{
 		DummyUnaryFunction duf = new DummyUnaryFunction();
 		Integer i = duf.evaluate(0);
@@ -27,7 +31,7 @@ public class FunctionTest
 	}
 
 	@Test
-	public void testAddition()
+	public void testAddition() throws ConnectorException
 	{
 		DummyAdditionFunction add = new DummyAdditionFunction();
 		Integer i = add.evaluate(2, 3);
@@ -40,7 +44,7 @@ public class FunctionTest
 	}
 
 	@Test
-	public void testUnaryAsProcessor()
+	public void testUnaryAsProcessor() throws ConnectorException
 	{
 		FunctionProcessor fp = new FunctionProcessor(new DummyUnaryFunction());
 		Pushable in = fp.getPushableInput(0);
@@ -63,7 +67,7 @@ public class FunctionTest
 	}
 
 	@Test
-	public void testAdditionAsProcessor()
+	public void testAdditionAsProcessor() throws ConnectorException
 	{
 		FunctionProcessor fp = new FunctionProcessor(new DummyAdditionFunction());
 		Pushable in1 = fp.getPushableInput(0);
@@ -88,7 +92,7 @@ public class FunctionTest
 	}
 
 	@Test
-	public void testAdditionAsCumulativeProcessor()
+	public void testAdditionAsCumulativeProcessor() throws ConnectorException
 	{
 		FunctionProcessor fp = new FunctionProcessor(new CumulativeFunction<Integer>(new DummyAdditionFunction()));
 		Pushable in = fp.getPushableInput(0);
@@ -111,7 +115,7 @@ public class FunctionTest
 	}
 
 	@Test
-	public void testAdditionNullAsCumulativeProcessor()
+	public void testAdditionNullAsCumulativeProcessor() throws ConnectorException
 	{
 		FunctionProcessor fp = new FunctionProcessor(new CumulativeFunction<Integer>(new DummyAdditionFunctionNull()));
 		Pushable in = fp.getPushableInput(0);
@@ -134,7 +138,7 @@ public class FunctionTest
 	}
 
 	@Test
-	public void testAdditionCumulative()
+	public void testAdditionCumulative() throws ConnectorException
 	{
 		CumulativeFunction<Integer> cf = new CumulativeFunction<Integer>(new DummyAdditionFunction());
 		Integer i;
@@ -146,7 +150,7 @@ public class FunctionTest
 	}
 
 	@Test
-	public void testAdditionCumulativeNull()
+	public void testAdditionCumulativeNull() throws ConnectorException
 	{
 		CumulativeFunction<Integer> cf = new CumulativeFunction<Integer>(new DummyAdditionFunctionNull());
 		Integer i;
@@ -158,7 +162,7 @@ public class FunctionTest
 	}
 	
 	@Test
-	public void testGrammar()
+	public void testGrammar() throws ConnectorException
 	{
 		Interpreter interp = new Interpreter();
 		interp.extendGrammar(DummyGrammarExtension.class);
@@ -166,6 +170,11 @@ public class FunctionTest
 
 	public static class DummyUnaryFunction extends UnaryFunction<Integer,Integer>
 	{
+		public DummyUnaryFunction()
+		{
+			super(Integer.class, Integer.class);
+		}
+		
 		@Override
 		public Integer evaluate(Integer x) 
 		{
@@ -175,6 +184,11 @@ public class FunctionTest
 
 	public static class DummyAdditionFunction extends BinaryFunction<Integer,Integer,Integer>
 	{
+		public DummyAdditionFunction()
+		{
+			super(Integer.class, Integer.class, Integer.class);
+		}
+		
 		@Override
 		public Integer evaluate(Integer x, Integer y) 
 		{
@@ -190,6 +204,11 @@ public class FunctionTest
 
 	public static class DummyAdditionFunctionNull extends BinaryFunction<Integer,Integer,Integer>
 	{
+		public DummyAdditionFunctionNull()
+		{
+			super(Integer.class, Integer.class, Integer.class);
+		}
+		
 		@Override
 		public Integer evaluate(Integer x, Integer y) 
 		{

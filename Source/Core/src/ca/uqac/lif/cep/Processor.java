@@ -18,7 +18,9 @@
 package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
+import java.util.HashSet;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Receives zero or more input events, and produces zero or more output
@@ -313,5 +315,64 @@ public abstract class Processor implements Cloneable
 	
 	@Override
 	public abstract Processor clone();
-
+	
+	/**
+	 * Gets the type of events the processor accepts for its <i>i</i>-th
+	 * input trace. Note that this method returns a <em>set</em>, in the case
+	 * where the processor accepts various types of objects (for example,
+	 * a processor accepting <code>Number</code>s, but also <code>String</code>s
+	 * it converts into numbers internally).
+	 * @param index The index of the input to query
+	 * @return A set of classes. If <code>index</code> it less than 0 or
+	 *   greater than the processor's declared input arity, the set will
+	 *   be empty.
+	 */
+	public final /*@NotNull*/ Set<Class<?>> getInputType(int index)
+	{
+		Set<Class<?>> classes = new HashSet<Class<?>>();
+		if (index >= 0 && index < m_inputArity)
+		{
+			getInputTypesFor(classes, index);
+		}
+		return classes;
+	}
+	
+	/**
+	 * Populates the set of classes accepted by the processor for its
+	 * <i>i</i>-th input
+	 * @param classes The set of to fill with classes
+	 * @param index The index of the input to query
+	 */
+	public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+	{
+		classes.add(Object.class);
+	}
+	
+	/**
+	 * Gets the type of events the processor produces for its <i>i</i>-th
+	 * output trace. 
+	 * @param index The index of the output to query
+	 * @return A set of classes. If <code>index</code> it less than 0 or
+	 *   greater than the processor's declared output arity, the response
+	 *   will be <code>null</code>.
+	 */
+	public final Class<?> getOutputType(int index)
+	{
+		if (index >= 0 && index < m_outputArity)
+		{
+			return getOutputTypeFor(index);
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the type of the events produced by the processor for its
+	 * <i>i</i>-th output
+	 * @param index The index of the output to query
+	 * @return The type of the output
+	 */	
+	public Class<?> getOutputTypeFor(int index)
+	{
+		return Object.class;
+	}
 }

@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.Queue;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 /**
  * Reads chunks of data from an URL, using an HTTP request.
  * These chunks are returned as events in the form of strings.
@@ -66,7 +68,7 @@ public class HttpReader extends StreamReader
 		return super.compute(inputs);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String url = (String) stack.pop();
 		stack.pop(); // URL

@@ -17,10 +17,14 @@
  */
 package ca.uqac.lif.cep;
 
+import static org.junit.Assert.assertFalse;
+
 import java.util.Queue;
+import java.util.Set;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 
 /**
@@ -30,7 +34,7 @@ import ca.uqac.lif.cep.epl.QueueSink;
 public class ConnectorTest 
 {
 	@Test
-	public void testTwoUnary()
+	public void testTwoUnary() throws ConnectorException
 	{
 		Passthrough p1 = new Passthrough(1);
 		QueueSink qs1 = new QueueSink(1);
@@ -50,7 +54,7 @@ public class ConnectorTest
 	}
 	
 	@Test
-	public void testTwoBinary()
+	public void testTwoBinary() throws ConnectorException
 	{
 		Passthrough p1 = new Passthrough(2);
 		QueueSink qs1 = new QueueSink(2);
@@ -75,12 +79,11 @@ public class ConnectorTest
 	}
 	
 	@Test
-	public void testThreeUnary1()
+	public void testThreeUnary1() throws ConnectorException
 	{
 		Passthrough p1 = new Passthrough(1);
-		Passthrough p2 = new Passthrough(1);
 		QueueSink qs1 = new QueueSink(1);
-		Connector.connectFork(p1, p2, qs1);
+		Connector.connect(p1, qs1);
 		Pushable push1 = p1.getPushableInput(0);
 		for (int k = 0; k < 2; k++)
 		{
@@ -96,7 +99,7 @@ public class ConnectorTest
 	}
 	
 	@Test
-	public void testThreeUnary2()
+	public void testThreeUnary2() throws ConnectorException
 	{
 		Passthrough p1 = new Passthrough(1);
 		Incrementer p2 = new Incrementer(10);
@@ -116,6 +119,14 @@ public class ConnectorTest
 		}
 	}
 	
+	@Test
+	public void testIncompatibleTypes() throws ConnectorException
+	{
+		Processor apples = new Apples();
+		Processor oranges = new Oranges();
+		assertFalse(Connector.isCompatible(apples, oranges, 0, 0));
+	}
+	
 	public static class Incrementer extends FunctionProcessor
 	{
 		public Incrementer(int i)
@@ -130,7 +141,7 @@ public class ConnectorTest
 		
 		public Plus(int i)
 		{
-			super();
+			super(Integer.class, Integer.class);
 			m_plus = i;
 		}
 		
@@ -140,5 +151,73 @@ public class ConnectorTest
 			return x + 10;
 		}
 		
+	}
+	
+	public static class Apples extends SingleProcessor
+	{
+		public Apples()
+		{
+			super(1, 1);
+		}
+
+		@Override
+		protected Queue<Object[]> compute(Object[] inputs) 
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Processor clone() 
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		@Override
+		public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+		{
+			classes.add(Number.class);
+		}
+		
+		@Override
+		public Class<?> getOutputTypeFor(int index)
+		{
+			return Number.class;
+		}
+	}
+	
+	public static class Oranges extends SingleProcessor
+	{
+		public Oranges()
+		{
+			super(1, 1);
+		}
+
+		@Override
+		protected Queue<Object[]> compute(Object[] inputs) 
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Processor clone() 
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		@Override
+		public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+		{
+			classes.add(String.class);
+		}
+		
+		@Override
+		public Class<?> getOutputTypeFor(int index)
+		{
+			return String.class;
+		}
 	}
 }

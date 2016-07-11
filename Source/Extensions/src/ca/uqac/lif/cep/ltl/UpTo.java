@@ -21,6 +21,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.CumulativeFunction;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -76,7 +77,7 @@ public class UpTo extends SingleProcessor
 		return wrapObject(m_currentValue);
 	}
 
-	public static void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		stack.pop(); // (
 		Processor right = (Processor) stack.pop();

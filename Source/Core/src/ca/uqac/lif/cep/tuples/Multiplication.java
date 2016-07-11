@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class Multiplication extends BinaryExpression
 {
 	protected static final Multiplication s_singleton = new Multiplication(null, null);
@@ -41,7 +43,7 @@ public class Multiplication extends BinaryExpression
 		return n_left * n_right;
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // )
 		AttributeExpression exp_right = (AttributeExpression) stack.pop();

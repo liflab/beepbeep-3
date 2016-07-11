@@ -17,7 +17,10 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -25,6 +28,7 @@ import java.util.Vector;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.epl.QueueSink;
@@ -41,7 +45,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testPush1()
+	public void testPush1() throws ConnectorException
 	{
 		QueueSource cp = new QueueSource("A", 1);
 		QueueSink qs = new QueueSink(1);
@@ -59,7 +63,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testPull1()
+	public void testPull1() throws ConnectorException
 	{
 		QueueSource cp = new QueueSource("A", 1);
 		String recv;
@@ -77,7 +81,7 @@ public class ProcessorTest
 	
 	
 	@Test
-	public void testDecimatePull1()
+	public void testDecimatePull1() throws ConnectorException
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1, 1);
@@ -126,7 +130,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testDecimatePush1()
+	public void testDecimatePush1() throws ConnectorException
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1, 1);
@@ -175,7 +179,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testAdditionPush1()
+	public void testAdditionPush1() throws ConnectorException
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(1);
@@ -225,7 +229,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testFilter1()
+	public void testFilter1() throws ConnectorException
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(1);
@@ -278,7 +282,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testFilter2()
+	public void testFilter2() throws ConnectorException
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -321,7 +325,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testGroupPush1()
+	public void testGroupPush1() throws ConnectorException
 	{
 		// Create the group
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
@@ -387,7 +391,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testBinaryPull()
+	public void testBinaryPull() throws ConnectorException
 	{
 		QueueSource src_left = new QueueSource(null, 1);
 		QueueSource src_right = new QueueSource(null, 1);
@@ -422,7 +426,7 @@ public class ProcessorTest
 	 * of the {@link SingleProcessor.OutputPullable#hasNext()} method.
 	 */
 	@Test
-	public void testHasNext()
+	public void testHasNext() throws ConnectorException
 	{
 		Vector<Object> events = new Vector<Object>();
 		events.add("A");
@@ -445,7 +449,7 @@ public class ProcessorTest
 	}
 	
 	@Test
-	public void testMuxerPush1()
+	public void testMuxerPush1() throws ConnectorException
 	{
 		Integer i;
 		Multiplexer mux = new Multiplexer(2);
@@ -467,6 +471,10 @@ public class ProcessorTest
 	
 	public static class IsEven extends UnaryFunction<Number,Boolean>
 	{
+		public IsEven()
+		{
+			super(Number.class, Boolean.class);
+		}
 		
 		@Override
 		public Boolean evaluate(Number x) 

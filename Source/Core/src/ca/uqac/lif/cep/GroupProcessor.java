@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 
 /**
  * Encapsulates a chain of processors as if it were a single one.
@@ -346,7 +347,14 @@ public class GroupProcessor extends Processor
 					int j = push.getPosition();
 					Processor new_p = m_correspondences.get(p.getId());
 					Processor new_target = m_correspondences.get(target.getId());
-					Connector.connect(new_p, new_target, i, j);
+					try 
+					{
+						Connector.connect(new_p, new_target, i, j);
+					} 
+					catch (ConnectorException e) 
+					{
+						e.printStackTrace();
+					}
 				}
 			}
 		}

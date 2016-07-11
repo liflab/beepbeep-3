@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 
 public class ProcessorDefinitionPlain extends ProcessorDefinitionAs
@@ -30,7 +31,7 @@ public class ProcessorDefinitionPlain extends ProcessorDefinitionAs
 		m_processor = p;
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Processor proc = null;
 		Object o = stack.pop();

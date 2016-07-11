@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
@@ -55,7 +56,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testGlobally1()
+	public void testGlobally1() throws ConnectorException
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -79,7 +80,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testAlways1()
+	public void testAlways1() throws ConnectorException
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -103,7 +104,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testEventually1()
+	public void testEventually1() throws ConnectorException
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -128,7 +129,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testSometime1()
+	public void testSometime1() throws ConnectorException
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -152,7 +153,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testNext1()
+	public void testNext1() throws ConnectorException
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -175,7 +176,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testNext2()
+	public void testNext2() throws ConnectorException
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -196,7 +197,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testNot()
+	public void testNot() throws ConnectorException
 	{
 		QueueSource src = new QueueSource(null, 1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -220,7 +221,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testAnd1()
+	public void testAnd1() throws ConnectorException
 	{
 		QueueSource src_left = new QueueSource(null, 1);
 		QueueSource src_right = new QueueSource(null, 1);
@@ -256,7 +257,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testAnd2()
+	public void testAnd2() throws ConnectorException
 	{
 		QueueSource src_left = new QueueSource(null, 1);
 		QueueSource src_right = new QueueSource(null, 1);
@@ -284,7 +285,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testOr()
+	public void testOr() throws ConnectorException
 	{
 		QueueSource src_left = new QueueSource(null, 1);
 		QueueSource src_right = new QueueSource(null, 1);
@@ -320,7 +321,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testUntil1()
+	public void testUntil1() throws ConnectorException
 	{
 		QueueSource src_left = new QueueSource(null, 1);
 		QueueSource src_right = new QueueSource(null, 1);
@@ -356,7 +357,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testUntil2()
+	public void testUntil2() throws ConnectorException
 	{
 		QueueSource src_left = new QueueSource(null, 1);
 		QueueSource src_right = new QueueSource(null, 1);
@@ -392,7 +393,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testUpTo1()
+	public void testUpTo1() throws ConnectorException
 	{
 		QueueSource src_left = new QueueSource(null, 1);
 		QueueSource src_right = new QueueSource(null, 1);
@@ -428,7 +429,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testUpTo2()
+	public void testUpTo2() throws ConnectorException
 	{
 		QueueSource src_left = new QueueSource(null, 1);
 		QueueSource src_right = new QueueSource(null, 1);
@@ -464,7 +465,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testExpression1()
+	public void testExpression1() throws ConnectorException
 	{
 		String expression = "(@T) AND (@U)";
 		{
@@ -500,7 +501,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testExpression2()
+	public void testExpression2() throws ConnectorException
 	{
 		String expression = "(@T) AND (X (@U))";
 		{
@@ -533,7 +534,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testExpression3()
+	public void testExpression3() throws ConnectorException
 	{
 		String expression = "X (@U)";
 		{
@@ -556,7 +557,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testMultiline()
+	public void testMultiline() throws ConnectorException
 	{
 		String expression = "(SELECT (a) LESS THAN (2) FROM (@P))\nAND\n(X (SELECT (a) GREATER THAN (1) FROM (@P)))";
 		{
@@ -574,7 +575,7 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testMultipleQueries1() throws ParseException, IOException
+	public void testMultipleQueries1() throws ParseException, IOException, ConnectorException
 	{
 		InputStream is = this.getClass().getResourceAsStream("test.esql");
 		Object o = m_interpreter.executeQueries(is);
@@ -582,14 +583,14 @@ public class LtlTest
 	}
 	
 	@Test
-	public void testMultipleQueries2() throws ParseException, IOException
+	public void testMultipleQueries2() throws ParseException, IOException, ConnectorException
 	{
 		InputStream is = this.getClass().getResourceAsStream("test2.esql");
 		m_interpreter.executeQueries(is);
 	}
 	
 	@Test
-	public void testMultipleQueries3() throws ParseException, IOException
+	public void testMultipleQueries3() throws ParseException, IOException, ConnectorException
 	{
 		InputStream is = this.getClass().getResourceAsStream("test3.esql");
 		Object o = m_interpreter.executeQueries(is);

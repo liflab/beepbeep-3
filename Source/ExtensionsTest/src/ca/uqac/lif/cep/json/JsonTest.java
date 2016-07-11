@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.epl.SinkLast;
 import ca.uqac.lif.json.JsonList;
@@ -42,7 +43,7 @@ public class JsonTest
 	protected static JsonParser s_parser = new JsonParser();
 	
 	@Test
-	public void testSingle1()
+	public void testSingle1() throws ConnectorException
 	{
 		JsonFeeder feeder = new JsonFeeder();
 		Pushable in = feeder.getPushableInput(0);
@@ -57,7 +58,7 @@ public class JsonTest
 	}
 	
 	@Test
-	public void testSingle2()
+	public void testSingle2() throws ConnectorException
 	{
 		JsonFeeder feeder = new JsonFeeder();
 		Pushable in = feeder.getPushableInput(0);
@@ -70,7 +71,7 @@ public class JsonTest
 	}
 	
 	@Test
-	public void testJPath1() throws JsonParseException
+	public void testJPath1() throws JsonParseException, ConnectorException
 	{
 		JPathEvaluator jpath = new JPathEvaluator("a.b");
 		Pushable in = jpath.getPushableInput(0);

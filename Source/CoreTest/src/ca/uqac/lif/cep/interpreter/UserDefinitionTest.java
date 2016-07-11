@@ -17,7 +17,10 @@
  */
 package ca.uqac.lif.cep.interpreter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -26,6 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.QueueSink;
@@ -37,11 +41,11 @@ import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tuples.EmlNumber;
 import ca.uqac.lif.cep.tuples.EmlPuller;
+import ca.uqac.lif.cep.tuples.EmlPuller.EmlPullable;
 import ca.uqac.lif.cep.tuples.NamedTuple;
 import ca.uqac.lif.cep.tuples.Select;
 import ca.uqac.lif.cep.tuples.TupleFeeder;
 import ca.uqac.lif.cep.tuples.TupleGrammar;
-import ca.uqac.lif.cep.tuples.EmlPuller.EmlPullable;
 
 /**
  * Unit tests for ESQL user definitions
@@ -62,7 +66,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testPlaceholder1() throws ParseException
+	public void testPlaceholder1() throws ParseException, ConnectorException
 	{
 		String expression = "@P";
 		QueueSource qs = new QueueSource(new Integer(1), 1);
@@ -81,7 +85,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testPlaceholder2() throws ParseException
+	public void testPlaceholder2() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT x FROM (@P)";
 		QueueSource qs = new QueueSource(1, 1);
@@ -97,7 +101,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testPlaceholder3() throws ParseException
+	public void testPlaceholder3() throws ParseException, ConnectorException
 	{
 		String expression = "abc IS THE processor @P";
 		QueueSource qs = new QueueSource(1, 1);
@@ -114,7 +118,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testPlaceholder4() throws ParseException
+	public void testPlaceholder4() throws ParseException, ConnectorException
 	{
 		StreamReader sr = new StreamReader();
 		m_interpreter.addPlaceholder("@T", "p_reader", sr);
@@ -124,7 +128,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testDefinition1() throws ParseException
+	public void testDefinition1() throws ParseException, ConnectorException
 	{
 		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION";
 		Object o = m_interpreter.parseQuery(expression);
@@ -154,7 +158,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testDefinition2() throws ParseException
+	public void testDefinition2() throws ParseException, ConnectorException
 	{
 		String expression = "PI IS THE eml_number 3.1416";
 		Object o = m_interpreter.parseQuery(expression);
@@ -179,7 +183,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testDefinition3() throws ParseException
+	public void testDefinition3() throws ParseException, ConnectorException
 	{
 		UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("E IS THE eml_number 2");
 		assertNotNull(e_def);
@@ -192,7 +196,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testDefinition4() throws ParseException
+	public void testDefinition4() throws ParseException, ConnectorException
 	{
 		{
 			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION");
@@ -214,7 +218,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testDefinition5() throws ParseException
+	public void testDefinition5() throws ParseException, ConnectorException
 	{
 		{
 			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION");
@@ -238,7 +242,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testDefinition6() throws ParseException
+	public void testDefinition6() throws ParseException, ConnectorException
 	{
 		{
 			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: FOO ( @P ) IS THE processor SELECT T.a AS x, U.a AS y FROM (@P AS T, @P AS U)");
@@ -257,7 +261,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testDefinition7() throws ParseException
+	public void testDefinition7() throws ParseException, ConnectorException
 	{
 		{
 			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH ADDITION");
@@ -278,7 +282,7 @@ public class UserDefinitionTest
 	}
 	
 	@Test
-	public void testDefinition8() throws ParseException
+	public void testDefinition8() throws ParseException, ConnectorException
 	{
 		{
 			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor, @N IS A number: FOO ( @P ) BAR @N IS THE processor TRIM @N OF (@P)");

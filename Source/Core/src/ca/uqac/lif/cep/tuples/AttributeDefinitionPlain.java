@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class AttributeDefinitionPlain extends AttributeDefinitionAs
 {
 	public AttributeDefinitionPlain(AttributeExpression aexp)
@@ -26,7 +28,7 @@ public class AttributeDefinitionPlain extends AttributeDefinitionAs
 		super(aexp, "");
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		AttributeExpression exp = (AttributeExpression) stack.pop();
 		AttributeDefinitionPlain adp = new AttributeDefinitionPlain(exp);

@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.util.CacheMap;
 
 public class AttributeNameQualified extends AttributeName
@@ -45,7 +46,7 @@ public class AttributeNameQualified extends AttributeName
 		m_attributeName = attribute;
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String att_name = EmlString.parseString(stack.pop());
 		stack.pop(); // dot

@@ -36,7 +36,7 @@ public class ThroughputTest
 	 * on 1,000,000 events.
 	 */
 	@Test
-	public void testPassthroughPull()
+	public void testPassthroughPull() throws ConnectorException
 	{
 		long num_events = 1000000;
 		Vector<Object> events = new Vector<Object>();
@@ -68,7 +68,7 @@ public class ThroughputTest
 	}
 	
 	@Test
-	public void testPassthroughPush()
+	public void testPassthroughPush() throws ConnectorException
 	{
 		long num_events = 1000000;
 		Vector<Object> events = new Vector<Object>();
@@ -102,7 +102,7 @@ public class ThroughputTest
 	}
 	
 	@Test
-	public void testWindow()
+	public void testWindow() throws ConnectorException
 	{
 		long num_events = 1000000;
 		Vector<Object> events = new Vector<Object>();

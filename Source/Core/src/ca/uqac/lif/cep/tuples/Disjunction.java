@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 public class Disjunction extends BinaryExpression 
 {
 	public Disjunction(AttributeExpression left, AttributeExpression right)
@@ -34,7 +36,7 @@ public class Disjunction extends BinaryExpression
 		return n_left || n_right;
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // )
 		AttributeExpression exp_right = (AttributeExpression) stack.pop();

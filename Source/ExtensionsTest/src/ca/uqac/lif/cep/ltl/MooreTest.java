@@ -17,13 +17,15 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Vector;
 
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.tuples.AttributePlaceholder;
@@ -40,7 +42,7 @@ public class MooreTest
 	public static final int ST_3 = 3;
 	
 	@Test
-	public void testMoore1()
+	public void testMoore1() throws ConnectorException
 	{
 		// Setup event source
 		QueueSource source = new QueueSource(null, 1);

@@ -19,6 +19,8 @@ package ca.uqac.lif.cep;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 /**
  * Creates a cumulative processor out of a cumulative function.
  * This is simply a {@link FunctionProcessor} whose function is of
@@ -33,7 +35,7 @@ public class CumulativeProcessor extends FunctionProcessor
 		super(f);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		BinaryFunction<?,?,?> com = (BinaryFunction<?,?,?>) stack.pop();
 		stack.pop(); // WITH

@@ -48,13 +48,16 @@ public class JPathEvaluator extends FunctionProcessor
 		 */
 		public JPathFunction(String path)
 		{
-			super();
-			m_path = JsonPath.getPathElements(path);
+			this(JsonPath.getPathElements(path));
 		}
-		
+
+		/**
+		 * Creates a new XPath function
+		 * @param path The path elements to evaluate
+		 */
 		public JPathFunction(List<PathElement> path)
 		{
-			super();
+			super(JsonElement.class, JsonElement.class);
 			m_path = path;
 		}
 		

@@ -17,12 +17,13 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Queue;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 
 /**
@@ -33,7 +34,7 @@ import ca.uqac.lif.cep.epl.QueueSink;
 public class SimpleTests
 {
 	@Test
-	public void testConstant()
+	public void testConstant() throws ConnectorException
 	{
 		String out = null;
 		Constant c = new Constant("A");
@@ -45,7 +46,7 @@ public class SimpleTests
 	}
 	
 	@Test
-	public void testPassthrough()
+	public void testPassthrough() throws ConnectorException
 	{
 		Passthrough c = new Passthrough(1);
 		QueueSink sink = new QueueSink(1);

@@ -2,6 +2,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.util.CacheMap;
 
 public final class AttributePlaceholder extends AttributeName
@@ -15,7 +16,7 @@ public final class AttributePlaceholder extends AttributeName
 		return only_value;
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // *
 		stack.push(s_instance);

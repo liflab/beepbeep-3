@@ -26,6 +26,8 @@ import java.sql.Statement;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 /**
  * This set of tests shows how BeepBeep can be used as a drop-in replacement
  * in any existing code that uses JDBC. The examples below are all copy-pasted
@@ -45,7 +47,7 @@ public class JdbcTest
 	 * an SQL query.
 	 */
 	@Test
-	public void testSimpleQuery()
+	public void testSimpleQuery() throws ConnectorException
 	{
 		try 
 		{

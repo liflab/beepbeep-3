@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.interpreter;
 
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
 
 public class BootstrapGrammar extends GrammarExtension
 {

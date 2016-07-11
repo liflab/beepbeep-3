@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.editor;
 import java.util.Map;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;
@@ -52,8 +53,16 @@ public class ConnectProcessors extends EditorCallback
 		}
 		Processor in_p = in_box.getProcessor();
 		Processor out_p = out_box.getProcessor();
-		Connector.connect(out_p, in_p, out_nb, in_nb);
-		response.setCode(CallbackResponse.HTTP_OK);
+		try 
+		{
+			Connector.connect(out_p, in_p, out_nb, in_nb);
+			response.setCode(CallbackResponse.HTTP_OK);
+		}
+		catch (ConnectorException e) 
+		{
+			response.setCode(CallbackResponse.HTTP_BAD_REQUEST);
+			response.setContents(e.getMessage());
+		}
 		return response;
 	}
 

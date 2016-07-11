@@ -23,6 +23,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -92,7 +93,15 @@ public class Window extends SingleProcessor
 			m_innerInputs[i] = m_processor.getPushableInput(i);
 		}		
 		m_sink.reset();
-		Connector.connect(m_processor, m_sink);
+		try 
+		{
+			Connector.connect(m_processor, m_sink);
+		} 
+		catch (ConnectorException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -158,7 +167,7 @@ public class Window extends SingleProcessor
 		}
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Number width = (Number) stack.pop();
 		stack.pop(); // OF

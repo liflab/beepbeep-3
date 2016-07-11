@@ -17,7 +17,9 @@
  */
 package ca.uqac.lif.cep.io;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -26,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pullable.NextStatus;
 import ca.uqac.lif.cep.epl.QueueSink;
@@ -41,7 +44,7 @@ public class IoTest
 	}
 	
 	@Test
-	public void testStreamReaderPush1() throws FileNotFoundException
+	public void testStreamReaderPush1() throws FileNotFoundException, ConnectorException
 	{
 		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
@@ -56,7 +59,7 @@ public class IoTest
 	}
 	
 	@Test
-	public void testStreamReaderPull1() throws FileNotFoundException
+	public void testStreamReaderPull1() throws FileNotFoundException, ConnectorException
 	{
 		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
@@ -77,7 +80,7 @@ public class IoTest
 	}
 	
 	@Test
-	public void testUrlFeeder1()
+	public void testUrlFeeder1() throws ConnectorException
 	{
 		HttpReader hr = new HttpReader("https://raw.githubusercontent.com/liflab/beepbeep-3/master/tuples1.csv");
 		Pullable p = hr.getPullableOutput(0);

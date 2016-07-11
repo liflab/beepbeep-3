@@ -17,28 +17,28 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.epl.CountDecimate;
-import ca.uqac.lif.cep.epl.QueueSink;
+import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.epl.CountDecimate;
+import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.interpreter.InterpreterTestFrontEnd;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
-import ca.uqac.lif.cep.tuples.NamedTuple;
-import ca.uqac.lif.cep.tuples.Select;
-import ca.uqac.lif.cep.tuples.TupleFeeder;
-import ca.uqac.lif.cep.tuples.TupleGrammar;
 import ca.uqac.lif.cep.util.StringUtils;
 import ca.uqac.lif.util.PackageFileReader;
 
@@ -56,7 +56,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect1() throws ParseException
+	public void testSelect1() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT 0 FROM (0)");
 		assertTrue(processor instanceof Select);
@@ -69,7 +69,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect2() throws ParseException
+	public void testSelect2() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT z FROM (0)");
 		assertTrue(processor instanceof Select);
@@ -82,7 +82,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect3() throws ParseException
+	public void testSelect3() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT t.z FROM (0 AS t)");
 		assertTrue(processor instanceof Select);
@@ -95,7 +95,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect4() throws ParseException
+	public void testSelect4() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT u.z FROM (1 AS t, 2 AS u)");
 		assertTrue(processor instanceof Select);
@@ -108,7 +108,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect5() throws ParseException
+	public void testSelect5() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT (u.z) + (t.z) FROM (1 AS t, 2 AS u)");
 		assertTrue(processor instanceof Select);
@@ -121,7 +121,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect6() throws ParseException
+	public void testSelect6() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT u.z AS w FROM (01 AS t, 2 AS u)");
 		assertTrue(processor instanceof Select);
@@ -135,7 +135,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect7() throws ParseException
+	public void testSelect7() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT u.z AS w, (t.z) + (3) AS v FROM (1 AS t, 2 AS u)");
 		assertTrue(processor instanceof Select);
@@ -149,7 +149,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect8() throws ParseException
+	public void testSelect8() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT a AS a, (b) + (3) AS n FROM (1)");
 		assertTrue(processor instanceof Select);
@@ -186,7 +186,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect9() throws ParseException
+	public void testSelect9() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT (t.a) + (u.b) AS x, (u.c) + (3) AS y FROM (1 AS t, 0 AS u)");
 		assertTrue(processor instanceof Select);
@@ -241,7 +241,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testSelect10() throws ParseException
+	public void testSelect10() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("SELECT SIN(x) FROM (1)");
 		assertTrue(processor instanceof Select);
@@ -254,7 +254,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testCombine1() throws ParseException
+	public void testCombine1() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("COMBINE (1) WITH ADDITION");
 		assertNotNull(processor);
@@ -272,7 +272,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testCombine2() throws ParseException
+	public void testCombine2() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("COMBINE (2) WITH MULTIPLICATION");
 		assertTrue(processor instanceof CumulativeProcessor);
@@ -290,7 +290,7 @@ public class TuplesEmlSelectTest
 
 	
 	@Test
-	public void testSelectMixed1() throws ParseException
+	public void testSelectMixed1() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("EVERY 2ND OF (SELECT (t.a) + (u.b) AS x, (u.c) + (3) AS y FROM (THE TUPLES OF FILE \"tuples1.csv\" AS t, THE TUPLES OF FILE \"tuples2.csv\" AS u))");
 		assertTrue(processor instanceof CountDecimate);
@@ -322,7 +322,7 @@ public class TuplesEmlSelectTest
 	}
 
 	@Test
-	public void testTupleFeeder1() throws ParseException
+	public void testTupleFeeder1() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("THE TUPLES OF FILE \"tuples1.csv\"");
 		assertTrue(processor instanceof TupleFeeder);
@@ -353,7 +353,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testTupleFeeder2()
+	public void testTupleFeeder2() throws ConnectorException
 	{
 		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/tuples1.csv");
 		InputStream stream = StringUtils.toInputStream(file_contents);
@@ -387,7 +387,7 @@ public class TuplesEmlSelectTest
 	}
 	
 	@Test
-	public void testWhere1() throws ParseException
+	public void testWhere1() throws ParseException, ConnectorException
 	{
 		Object processor = m_interpreter.parseQuery("(THE TUPLES OF FILE \"tuples1.csv\") WHERE (a) = (0)");
 		assertTrue(processor instanceof Processor);

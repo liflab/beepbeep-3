@@ -34,6 +34,7 @@ import org.java_websocket.server.WebSocketServer;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.io.websocket.WebSocketReader;
 
@@ -52,7 +53,7 @@ public class WebSocketTest
 	protected static final int s_waitTime = 250;
 	
 	@Test
-	public void testRead1() throws URISyntaxException, InterruptedException, IOException
+	public void testRead1() throws URISyntaxException, InterruptedException, IOException, ConnectorException
 	{
 		WebSocketReader wsr = new WebSocketReader(new URI("ws://localhost:51234"));
 		QueueSink sink = new QueueSink(1);

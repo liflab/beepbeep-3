@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.xml;
 
-import ca.uqac.lif.cep.Function;
 import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.UnaryFunction;
 import ca.uqac.lif.xml.XmlElement;
@@ -28,14 +27,9 @@ import ca.uqac.lif.xml.XmlElement.XmlParseException;
  */
 public class XmlFeeder extends FunctionProcessor
 {
-	/**
-	 * The function associated to this feeder
-	 */
-	private static final transient Function s_function = new XmlParsingFunction();
-	
 	public XmlFeeder()
 	{
-		super(s_function);
+		super(XmlParsingFunction.instance);
 	}
 	
 	/**
@@ -43,6 +37,16 @@ public class XmlFeeder extends FunctionProcessor
 	 */
 	public static class XmlParsingFunction extends UnaryFunction<String,XmlElement> 
 	{
+		/**
+		 * Instance of the function
+		 */
+		public static XmlParsingFunction instance = new XmlParsingFunction();
+		
+		private XmlParsingFunction()
+		{
+			super(String.class, XmlElement.class);
+		}
+		
 		@Override
 		public /*@Nullable*/ XmlElement evaluate(String x)
 		{

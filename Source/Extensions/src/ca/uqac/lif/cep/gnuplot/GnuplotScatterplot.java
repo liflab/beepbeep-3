@@ -25,6 +25,7 @@ import java.util.Stack;
 import java.util.TreeMap;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.sets.Multiset;
 import ca.uqac.lif.cep.tuples.EmlNumber;
@@ -202,7 +203,7 @@ public class GnuplotScatterplot extends GnuplotProcessor
 		names.toArray(m_otherHeaders);
 	}
 
-	public static void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();

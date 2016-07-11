@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.tuples;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.input.TokenFeeder;
 
@@ -62,7 +63,7 @@ public class TupleFeeder extends TokenFeeder
 		return m_builder.createTupleFromString(parts);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // OF

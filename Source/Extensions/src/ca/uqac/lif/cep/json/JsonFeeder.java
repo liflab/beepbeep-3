@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.json;
 
-import ca.uqac.lif.cep.Function;
 import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.UnaryFunction;
 import ca.uqac.lif.json.JsonElement;
@@ -29,15 +28,9 @@ import ca.uqac.lif.json.JsonParser.JsonParseException;
  */
 public class JsonFeeder extends FunctionProcessor
 {
-	/**
-	 * The function associated to this feeder. All instances
-	 * of feeder share the same function.
-	 */
-	private static final transient Function s_function = new JsonParsingFunction();
-	
 	public JsonFeeder()
 	{
-		super(s_function);
+		super(JsonParsingFunction.instance);
 	}
 	
 	/**
@@ -46,14 +39,19 @@ public class JsonFeeder extends FunctionProcessor
 	public static class JsonParsingFunction extends UnaryFunction<String,JsonElement> 
 	{
 		/**
+		 * Instance of the function
+		 */
+		public static JsonParsingFunction instance = new JsonParsingFunction();
+		
+		/**
 		 * The parser used to parse the elements. All instances of the
 		 * function share the same parser.
 		 */
 		protected static final JsonParser s_parser = new JsonParser();
 		
-		public JsonParsingFunction()
+		private JsonParsingFunction()
 		{
-			super();
+			super(String.class, JsonElement.class);
 		}
 		
 		@Override

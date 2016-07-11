@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.util.CacheMap;
 
 public class NumberExpression extends ConstantExpression
@@ -31,7 +32,7 @@ public class NumberExpression extends ConstantExpression
 		m_number = n;
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		float n = EmlNumber.parseFloat(stack.pop());
 		stack.push(new NumberExpression(n));

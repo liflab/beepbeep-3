@@ -28,7 +28,7 @@ public class BagUnion extends CumulativeFunction<Multiset>
 		super(MultisetUnion.instance);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // UNION
 		stack.pop(); // BAG

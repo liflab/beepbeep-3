@@ -1,6 +1,7 @@
 package ca.uqac.lif.cep.numbers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -9,20 +10,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Constant;
-import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.CumulativeFunction;
 import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
-import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.numbers.Division;
-import ca.uqac.lif.cep.numbers.IsGreaterThan;
-import ca.uqac.lif.cep.numbers.Power;
 
 public class MathTest
 {
@@ -33,7 +31,7 @@ public class MathTest
 	}
 	
 	@Test
-	public void testSumPush()
+	public void testSumPush() throws ConnectorException
 	{
 		QueueSource cp = new QueueSource(1, 1);
 		Sum cs = new Sum();
@@ -63,7 +61,7 @@ public class MathTest
 	}
 	
 	@Test
-	public void testSumPull()
+	public void testSumPull() throws ConnectorException
 	{
 		QueueSource cp = new QueueSource(1, 1);
 		Sum cs = new Sum();
@@ -93,7 +91,7 @@ public class MathTest
 	}
 
 	@Test
-	public void testPower()
+	public void testPower() throws ConnectorException
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -136,7 +134,7 @@ public class MathTest
 	}
 	
 	@Test
-	public void testStatisticalMomentPull1()
+	public void testStatisticalMomentPull1() throws ConnectorException
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -168,7 +166,7 @@ public class MathTest
 	}
 	
 	@Test
-	public void testStatisticalMomentPush1()
+	public void testStatisticalMomentPush1() throws ConnectorException
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -199,7 +197,7 @@ public class MathTest
 		} 
 	}
 	
-	protected static void setupStatisticalMoment(Processor source, Processor sink, int n)
+	protected static void setupStatisticalMoment(Processor source, Processor sink, int n) throws ConnectorException
 	{
 		Fork fork = new Fork(2);
 		Connector.connect(source, fork);
@@ -227,7 +225,7 @@ public class MathTest
 		Connector.connect(div, sink);
 	}
 	
-	protected static void setupSumIfGreater(Processor source, Processor sink)
+	protected static void setupSumIfGreater(Processor source, Processor sink) throws ConnectorException
 	{
 		Window win = new Window(new Sum(), 2);
 		Connector.connect(source, win);
@@ -245,7 +243,7 @@ public class MathTest
 	}
 
 	@Test
-	public void testSumIfGreaterPush()
+	public void testSumIfGreaterPush() throws ConnectorException
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -286,7 +284,7 @@ public class MathTest
 	}
 	
 	@Test
-	public void testSumIfGreaterPullHard()
+	public void testSumIfGreaterPullHard() throws ConnectorException
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);

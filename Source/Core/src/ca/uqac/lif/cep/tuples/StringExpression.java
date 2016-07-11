@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.util.CacheMap;
 
 public class StringExpression extends ConstantExpression
@@ -31,7 +32,7 @@ public class StringExpression extends ConstantExpression
 		m_string = s;
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String s = EmlString.parseString(stack.pop());
 		StringExpression s_exp = new StringExpression(s);

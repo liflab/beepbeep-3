@@ -18,12 +18,16 @@
 
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Queue;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.ProcessorTest.Sum;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
@@ -40,7 +44,7 @@ import ca.uqac.lif.cep.numbers.NumberGrammar;
 public class WindowTest 
 {
 	@Test
-	public void testWindowPull1()
+	public void testWindowPull1() throws ConnectorException
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
@@ -59,7 +63,7 @@ public class WindowTest
 	}
 	
 	@Test
-	public void testWindowPull2()
+	public void testWindowPull2() throws ConnectorException
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
@@ -81,7 +85,7 @@ public class WindowTest
 
 	
 	@Test
-	public void testWindowPush1()
+	public void testWindowPush1() throws ConnectorException
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
@@ -117,7 +121,7 @@ public class WindowTest
 	}
 	
 	@Test
-	public void testGrammar1() throws ParseException
+	public void testGrammar1() throws ParseException, ConnectorException
 	{
 		Interpreter my_int = new Interpreter();
 		my_int.extendGrammar(NumberGrammar.class);

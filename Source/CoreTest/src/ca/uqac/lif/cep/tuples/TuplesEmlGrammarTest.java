@@ -17,21 +17,23 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.bullwinkle.BnfParser;
 import ca.uqac.lif.bullwinkle.BnfParser.InvalidGrammarException;
+import ca.uqac.lif.bullwinkle.BnfParser.ParseException;
 import ca.uqac.lif.bullwinkle.ParseNode;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.EplGrammar;
 import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
-import ca.uqac.lif.cep.tuples.TupleGrammar;
-import ca.uqac.lif.bullwinkle.BnfParser.ParseException;
 import ca.uqac.lif.util.PackageFileReader;
 
 public class TuplesEmlGrammarTest
@@ -75,7 +77,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension1() throws ParseException
+	public void testExtension1() throws ParseException, ConnectorException
 	{
 		String expression = "0";
 		ParseNode result = shouldParse(expression, "<eml_number>");
@@ -83,7 +85,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension2() throws ParseException
+	public void testExtension2() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT p FROM (0)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -91,7 +93,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension3() throws ParseException
+	public void testExtension3() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT q AS p FROM (0)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -99,7 +101,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension4a() throws ParseException
+	public void testExtension4a() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT q FROM (0 AS t1)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -107,7 +109,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension4b() throws ParseException
+	public void testExtension4b() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT q AS att FROM (0 AS t1)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -115,14 +117,14 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension5() throws ParseException
+	public void testExtension5() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT 0 AS att FROM 0 AS";
 		shouldNotParse(expression, "<eml_select>");
 	}
 
 	@Test
-	public void testExtension6() throws ParseException
+	public void testExtension6() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT 0 AS att FROM (0 AS t1, 1 AS t2)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -130,7 +132,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension7() throws ParseException
+	public void testExtension7() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT 0 AS att, 1 AS att2 FROM (0 AS t1)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -138,7 +140,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension8() throws ParseException
+	public void testExtension8() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT (0) + (1) AS att, 1 AS att2 FROM (0 AS t1)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -146,7 +148,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension9() throws ParseException
+	public void testExtension9() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT t1.p AS att, 1 AS att2 FROM (0 AS t1)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -154,7 +156,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension10() throws ParseException
+	public void testExtension10() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT t1.p AS att, \"tango\" AS att2 FROM (0 AS t1, (SELECT p FROM (0)) AS t3)";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -162,7 +164,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension11() throws ParseException
+	public void testExtension11() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT p FROM (SELECT q FROM (0))";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -170,7 +172,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension12() throws ParseException
+	public void testExtension12() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT p FROM (SELECT q FROM (0))";
 		ParseNode result = shouldParse(expression, "<eml_select>");
@@ -178,7 +180,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension13() throws ParseException
+	public void testExtension13() throws ParseException, ConnectorException
 	{
 		String expression = "0";
 		ParseNode result = shouldParse(expression, "<eml_att_expr>");
@@ -186,7 +188,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension14() throws ParseException
+	public void testExtension14() throws ParseException, ConnectorException
 	{
 		String expression = "(0) WHERE (a) = (b)";
 		ParseNode result = shouldParse(expression, "<eml_where>");
@@ -194,7 +196,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension15a() throws ParseException
+	public void testExtension15a() throws ParseException, ConnectorException
 	{
 		String expression = "(THE TUPLES OF FILE \"tuples1.csv\") WHERE (a) = (0)";
 		m_parser.setDebugMode(false);
@@ -203,7 +205,7 @@ public class TuplesEmlGrammarTest
 	}
 
 	@Test
-	public void testExtension15b() throws ParseException
+	public void testExtension15b() throws ParseException, ConnectorException
 	{
 		String expression = "(THE TUPLES OF FILE \"tuples1.csv\") WHERE (a) = (0)";
 		ParseNode result = shouldParse(expression, "<processor>");
@@ -211,7 +213,7 @@ public class TuplesEmlGrammarTest
 	}
 	
 	@Test
-	public void testExtension16() throws ParseException
+	public void testExtension16() throws ParseException, ConnectorException
 	{
 		String expression = "COMBINE (SELECT x FROM (0)) WITH ADDITION";
 		ParseNode result = shouldParse(expression, "<processor>");
@@ -219,7 +221,7 @@ public class TuplesEmlGrammarTest
 	}
 	
 	@Test
-	public void testExtension17a() throws ParseException
+	public void testExtension17a() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT q FROM (((0) WHERE (a) = (\"MSFT\")))";
 		m_parser.setDebugMode(false);
@@ -228,7 +230,7 @@ public class TuplesEmlGrammarTest
 	}
 	
 	@Test
-	public void testExtension18() throws ParseException
+	public void testExtension18() throws ParseException, ConnectorException
 	{
 		String expression = "(0) WHERE (*) = (0)";
 		m_parser.setDebugMode(false);

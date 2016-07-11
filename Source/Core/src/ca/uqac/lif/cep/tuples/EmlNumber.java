@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 
 public abstract class EmlNumber extends EmlConstant
@@ -61,7 +62,7 @@ public abstract class EmlNumber extends EmlConstant
 		return m_number;
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o = stack.pop();
 		if (o instanceof Processor)

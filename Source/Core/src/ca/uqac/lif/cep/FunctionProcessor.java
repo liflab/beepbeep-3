@@ -20,7 +20,10 @@ package ca.uqac.lif.cep;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector.ConnectorException;
 
 /**
  * Applies a function to input events to produce output events. This 
@@ -67,7 +70,7 @@ public class FunctionProcessor extends SingleProcessor
 		return out;
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException, ConnectorException
 	{
 		// Principle: pop processors from the stack and count them,
 		// until we pop the Computable. The computable tells us how
@@ -105,6 +108,20 @@ public class FunctionProcessor extends SingleProcessor
 			Connector.connect(p, out, 0, i);
 		}
 		stack.push(out);
+	}
+	
+	@Override
+	public final void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+	{
+		// The type is determined by that of the underlying function
+		m_function.getInputTypesFor(classes, index);
+	}
+	
+	@Override
+	public final Class<?> getOutputTypeFor(int index)
+	{
+		// The type is determined by that of the underlying function
+		return m_function.getOutputTypeFor(index);
 	}
 
 }

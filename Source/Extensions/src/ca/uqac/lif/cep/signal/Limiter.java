@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.signal;
 import java.util.Queue;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.tuples.EmlNumber;
 
@@ -61,7 +62,7 @@ public class Limiter extends SingleProcessor
 		return wrapObject(value);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		// TODO Auto-generated method stub
 	}

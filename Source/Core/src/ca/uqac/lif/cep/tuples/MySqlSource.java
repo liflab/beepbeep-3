@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.Source;
 
 /**
@@ -176,7 +177,7 @@ public class MySqlSource extends Source
 		return null;
 	}
 
-	public static void build(Stack<Object> stack) 
+	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		String password = (String) stack.pop();
 		stack.pop(); // PASSWORD
