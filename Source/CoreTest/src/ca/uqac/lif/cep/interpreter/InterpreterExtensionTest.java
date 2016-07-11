@@ -76,9 +76,11 @@ public class InterpreterExtensionTest
 	}
 	
 	/*
-	 * This test has been removed, as it tests a grammar extension on
+	 * This tests a grammar extension on
 	 * a syntactically valid, but semantically invalid query. One cannot
-	 * apply a constant on a window
+	 * apply a constant on a window. It will fail if checkBounds is set to
+	 * true on Connector.
+	 */
 	@Test
 	public void testExtensionNumber3() throws ParseException, ConnectorException
 	{
@@ -87,7 +89,6 @@ public class InterpreterExtensionTest
 		assertNotNull(result);
 		assertTrue(result instanceof Window);
 	}
-	*/
 	
 	@Test
 	public void testExtensionNumber4() throws ParseException, ConnectorException
