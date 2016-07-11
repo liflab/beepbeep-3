@@ -20,11 +20,11 @@ package ca.uqac.lif.cep;
 import java.util.Queue;
 
 /**
- * Returns the same event over and over
+ * Returns the same event over and over when pulled
  * 
  * @author Sylvain Hallé
  */
-public class Constant extends SingleProcessor
+public class PullConstant extends SingleProcessor
 {
 	/**
 	 * The event to return
@@ -35,7 +35,7 @@ public class Constant extends SingleProcessor
 	 * Creates a constant processor
 	 * @param o The event to return
 	 */
-	public Constant(Object o)
+	public PullConstant(Object o)
 	{
 		super(0, 1);
 		m_toReturn = o;
@@ -48,8 +48,8 @@ public class Constant extends SingleProcessor
 	}
 
 	@Override
-	public Constant clone() 
+	public PullConstant clone() 
 	{
-		return new Constant(m_toReturn);
+		return new PullConstant(m_toReturn);
 	}
 }

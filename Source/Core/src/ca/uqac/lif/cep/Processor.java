@@ -310,7 +310,7 @@ public abstract class Processor implements Cloneable
 		{
 			return (Processor) o;
 		}
-		return new Constant(o);
+		return new PullConstant(o);
 	}
 	
 	@Override

@@ -62,6 +62,12 @@ public class Connector
 	public static final transient boolean s_checkForTypes = true;
 	
 	/**
+	 * Whether the connector checks that the processors are connected
+	 * using in/out indexes within the bounds of their arity
+	 */
+	public static final transient boolean s_checkForBounds = false;
+	
+	/**
 	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
 	 * <i>j</i>-th input of <tt>p2</tt>
 	 * @param p1 The first processor
@@ -171,10 +177,11 @@ public class Connector
 	 * @throws ConnectorException An exception describing why the connection
 	 *   cannot be mande
 	 */
+	@SuppressWarnings("unused")
 	protected static void checkForException(Processor p1, Processor p2, int i, int j) throws ConnectorException
 	{
 		Class<?> out_class = p1.getOutputType(i);
-		if (out_class == null)
+		if (s_checkForBounds && out_class == null)
 		{
 			// p1 has no output, so how would you connect it to p2?
 			throw new IndexOutOfBoundsException(p1, p2, i, j);
@@ -182,8 +189,17 @@ public class Connector
 		/*@NotNull*/ Set<Class<?>> in_classes = p2.getInputType(j);
 		if (in_classes.isEmpty())
 		{
-			// p2 has no input, so how would you connect it to p1?
-			throw new IndexOutOfBoundsException(p1, p2, i, j);			
+			if (s_checkForBounds)
+			{
+				// p2 has no input, so how would you connect it to p1?
+				throw new IndexOutOfBoundsException(p1, p2, i, j);
+			}
+			else
+			{
+				// We don't mind that we connect an output to something
+				// that has no input
+				return;
+			}
 		}
 		for (Class<?> in_class : in_classes)
 		{

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Constant;
+import ca.uqac.lif.cep.Mutator;
 import ca.uqac.lif.cep.CumulativeFunction;
 import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Fork;
@@ -206,7 +206,7 @@ public class MathTest
 			// Left part: sum of x^n
 			Fork fork2 = new Fork(2);
 			Connector.connect(fork, fork2, 0, 0);
-			Constant exponent = new Constant(n);
+			Mutator exponent = new Mutator(n, 1);
 			Connector.connect(fork2, exponent, 0, 0);
 			FunctionProcessor pow = new FunctionProcessor(new Power());
 			Connector.connect(fork2, pow, 1, 0);
@@ -216,7 +216,7 @@ public class MathTest
 		Sum sum_right = new Sum();
 		{
 			// Right part: sum of 1
-			Constant one = new Constant(1);
+			Mutator one = new Mutator(1, 1);
 			Connector.connect(fork, one, 1, 0);
 			Connector.connect(one, sum_right);
 		}
@@ -232,7 +232,7 @@ public class MathTest
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
 		FunctionProcessor greater = new FunctionProcessor(IsGreaterThan.instance);
-		Constant five = new Constant(5);
+		Mutator five = new Mutator(5, 1);
 		Connector.connect(fork, five, 0, 0);
 		Connector.connect(fork, greater, 1, 0);
 		Connector.connect(five, greater, 0, 1);

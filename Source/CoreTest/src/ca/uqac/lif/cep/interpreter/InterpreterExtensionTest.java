@@ -75,6 +75,10 @@ public class InterpreterExtensionTest
 		assertTrue(o instanceof EmlNumber);
 	}
 	
+	/*
+	 * This test has been removed, as it tests a grammar extension on
+	 * a syntactically valid, but semantically invalid query. One cannot
+	 * apply a constant on a window
 	@Test
 	public void testExtensionNumber3() throws ParseException, ConnectorException
 	{
@@ -83,6 +87,7 @@ public class InterpreterExtensionTest
 		assertNotNull(result);
 		assertTrue(result instanceof Window);
 	}
+	*/
 	
 	@Test
 	public void testExtensionNumber4() throws ParseException, ConnectorException

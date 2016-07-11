@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 
 /**
- * Unit tests for a few simple processors: {@link Constant}, 
+ * Unit tests for a few simple processors: {@link PullConstant}, 
  * {@link Passthrough}
  * @author Sylvain Hallé
  */
@@ -37,7 +37,7 @@ public class SimpleTests
 	public void testConstant() throws ConnectorException
 	{
 		String out = null;
-		Constant c = new Constant("A");
+		PullConstant c = new PullConstant("A");
 		TypedPullable<String> p = new TypedPullable<String>(c.getPullableOutput(0));
 		out = p.pull();
 		assertEquals("A", out);

@@ -22,13 +22,13 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Constant;
+import ca.uqac.lif.cep.PullConstant;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Repeatedly outputs the first event it has received. <code>Freeze</code>
- * works a bit like {@link Constant}; however, while <code>Constant</code>
+ * works a bit like {@link PullConstant}; however, while <code>Constant</code>
  * is given the event to output, <code>Freeze</code> waits for a first event,
  * outputs it, and then outputs that event whenever some new input comes in.
  * 

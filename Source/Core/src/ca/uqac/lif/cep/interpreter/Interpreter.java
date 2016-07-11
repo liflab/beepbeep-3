@@ -25,7 +25,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import ca.uqac.lif.bullwinkle.BnfParser;
@@ -44,7 +46,6 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.SmartFork;
 import ca.uqac.lif.cep.epl.EplGrammar;
 import ca.uqac.lif.cep.util.PackageFileReader;
-import ca.uqac.lif.util.EmptyException;
 
 public class Interpreter implements ParseNodeVisitor
 {
@@ -107,6 +108,11 @@ public class Interpreter implements ParseNodeVisitor
 	 * the buildable class whose syntax it defines
 	 */
 	protected Map<String, Class<?>> m_associations;
+	
+	/**
+	 * A set of exceptions encountered when parsing the expressions
+	 */
+	protected Set<Exception> m_lastExceptions;
 
 	/**
 	 * Instantiates an interpreter and prepares it to parse expressions
@@ -121,6 +127,7 @@ public class Interpreter implements ParseNodeVisitor
 		m_processorDefinitions = new HashMap<String, GroupProcessor>();
 		m_symbolDefinitions = new HashMap<String, Object>();
 		m_processorForks = new HashMap<String, SmartFork>();
+		m_lastExceptions = new HashSet<Exception>();
 		extendGrammar(BootstrapGrammar.class);
 		m_parser.setStartRule("<S>");
 		extendGrammar(EplGrammar.class);
@@ -144,9 +151,6 @@ public class Interpreter implements ParseNodeVisitor
 	@SuppressWarnings("unchecked")
 	public Interpreter(Class<?>  ... extensions)
 	{
-		/*
-		 *
-		 */
 		this();
 		for (Class<?> ext : extensions)
 		{
@@ -165,6 +169,7 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		super();
 		m_parser = new BnfParser(i.m_parser);
+		m_lastExceptions = new HashSet<Exception>();
 		m_nodes = new GroupStack<Object>();
 		m_nodes.addAll(i.m_nodes);
 		m_associations = new HashMap<String,Class<?>>();
@@ -277,6 +282,7 @@ public class Interpreter implements ParseNodeVisitor
 	public void reset()
 	{
 		m_nodes.clear();
+		m_lastExceptions.clear();
 	}
 
 	/**
@@ -341,8 +347,7 @@ public class Interpreter implements ParseNodeVisitor
 					} 
 					catch (ConnectorException e) 
 					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						m_lastExceptions.add(e);
 					}
 					m_processorForks.put(node_name, f);
 				}
@@ -362,8 +367,7 @@ public class Interpreter implements ParseNodeVisitor
 				} 
 				catch (ConnectorException e) 
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					m_lastExceptions.add(e);
 				}
 				m_nodes.push(pt);
 			}
@@ -380,7 +384,22 @@ public class Interpreter implements ParseNodeVisitor
 			if (m_associations.containsKey(node_name))
 			{
 				// Production rule for something buildable from stack contents
-				visitAssociation(node);
+				try 
+				{
+					visitAssociation(node);
+				} 
+				catch (IllegalAccessException e) 
+				{
+					m_lastExceptions.add(e);
+				} 
+				catch (IllegalArgumentException e)
+				{
+					m_lastExceptions.add(e);
+				} 
+				catch (PipingParseException e)
+				{
+					m_lastExceptions.add(e);
+				}
 			}
 			else if (m_userDefinedAssociations.containsKey(node_name))
 			{
@@ -416,27 +435,23 @@ public class Interpreter implements ParseNodeVisitor
 		}
 	}
 
-	protected void visitAssociation(ParseNode node)
+	protected void visitAssociation(ParseNode node) throws IllegalAccessException, IllegalArgumentException, PipingParseException
 	{
 		// The node's name appears to refer to a Buildable object
 		String node_name = node.getToken();
 		Class<?> obj = m_associations.get(node_name);
 		Method m = getStaticMethod(obj, "build", Stack.class);
-		try
+		try 
 		{
 			m.invoke(null, m_nodes);
-		} catch (IllegalAccessException e)
+		} 
+		catch (InvocationTargetException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Throwable th = e.getTargetException();
+			if (th instanceof Exception)
+			{
+				m_lastExceptions.add((Exception) th);
+			}
 		}
 	}
 
@@ -449,18 +464,24 @@ public class Interpreter implements ParseNodeVisitor
 		try
 		{
 			m.invoke(obj, m_nodes);
-		} catch (IllegalAccessException e)
+		} 
+		catch (IllegalAccessException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IllegalArgumentException e)
+		} 
+		catch (IllegalArgumentException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvocationTargetException e)
+		} 		
+		catch (InvocationTargetException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Throwable th = e.getTargetException();
+			if (th instanceof Exception)
+			{
+				m_lastExceptions.add((Exception) th);
+			}
 		}
 	}
 
@@ -584,10 +605,18 @@ public class Interpreter implements ParseNodeVisitor
 		return parseQuery(property);
 	}
 
-	protected Object parseStatement(ParseNode root)
+	protected Object parseStatement(ParseNode root) throws ParseException
 	{
 		reset();
 		root.postfixAccept(this);
+		if (!m_lastExceptions.isEmpty())
+		{
+			// An exception occurred when traversing the parse tree
+			for (Exception e : m_lastExceptions)
+			{
+				throw new PipingParseException(e);
+			}
+		}
 		if (m_nodes.isEmpty())
 		{
 			return null;
@@ -605,7 +634,7 @@ public class Interpreter implements ParseNodeVisitor
 		m_parser.addRule(rule);
 	}
 
-	public static class ParseException extends EmptyException
+	public static class ParseException extends Exception
 	{
 		/**
 		 * Dummy UID
@@ -710,5 +739,38 @@ public class Interpreter implements ParseNodeVisitor
 	public void setDebugMode(boolean b)
 	{
 		m_parser.setDebugMode(b);
+	}
+	
+	/**
+	 * Exception thrown when building the chain of processors from
+	 * the parse tree
+	 */
+	public static class PipingParseException extends ParseException
+	{
+		protected final Exception m_exception;
+		
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		PipingParseException(Exception e)
+		{
+			super(null);
+			m_exception = e;
+		}
+		
+		@Override
+		public String getMessage()
+		{
+			return m_exception.getMessage();
+		}
+		
+		@Override
+		public Throwable getCause()
+		{
+			return m_exception;
+		}
+		
 	}
 }
