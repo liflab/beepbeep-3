@@ -22,6 +22,13 @@
 var boxes = [];
 
 /**
+ * The set of processor settings currently in use in the editor.
+ * There should be a 1-1 correspondence between a processor box
+ * and a setting.
+ */
+var settings = [];
+
+/**
  * The stack of elements that have been clicked since the last action
  */
 var selected = [];
@@ -207,7 +214,7 @@ function settings_div(data)
 	});
 	cancel.appendTo(div);
 	var create = jQuery("<button/>").html("Create");
-
+	
 	create.appendTo(div);
 	
 	/*div.dialog({
