@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Configuration file for AntRun.
+  
+  Use this file to override the default properties contained
+  in build.xml. For example, to override the build.jar.filename
+  property (which sets the name of the compiled jar file), add
+  an element
+  
+  <jar>
+    <filename>foo</filename>
+  </jar>
+  
+  inside the <build> element.
+  
+  **Caveat emptor:** in some cases, changing this file and running ant
+  again will result in Ant using a cached version of the old file! Run
+  "ant dummy" to make sure that the correct data is being read. Otherwise
+  you might need to run "ant clean" and start over.
+-->
+<build>
+  <!-- Uncomment any of these if you want to override the build
+       script's default values -->
+
+  <!-- The project's name -->
+  <name>WebSocket extension for BeepBeep 3</name>
+  
+  <!-- The project's version number -->
+  <version>0.3-alpha</version>
+  
+  <!-- The project's author. Currently this only
+  shows up in the footer of the Javadoc documentation. -->
+  <author>Sylvain Hall&#233;</author>
+  
+  <!-- The project's main class -->
+  <mainclass>ca.uqac.lif.cep.io.websocket.PackageExtension</mainclass>
+  
+  <!-- Installation folders -->
+  <srcdir>src</srcdir>
+  <bindir>bin</bindir>
+  <docdir>doc</docdir>
+  <test>
+    <srcdir>src</srcdir>
+    <bindir>bin</bindir>
+  </test>
+  
+  <!-- Output jar -->
+  <jar>
+    <filename>../ext-websocket.jar</filename>
+    <withdoc>false</withdoc>
+  </jar>
+  
+  <!--
+    Write JAR dependencies here.
+  -->
+  <dependencies>
+    <dependency>
+      <!--
+      Bullwinkle. Used to parse Cornipickle statements.
+      -->
+      <name>Bullwinkle</name>
+      <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
+      <files>
+        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.2/bullwinkle-1.2.zip</zip>
+      </files>
+    </dependency>
+  </dependencies>
+</build>

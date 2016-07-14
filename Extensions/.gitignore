@@ -12,6 +12,9 @@
 **/bin/**
 **/tmp/**
 **/tmp/**/*
+**/doc
+**/lib
+**/html
 *.tmp
 *.bak
 *.swp
