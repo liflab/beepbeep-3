@@ -19,7 +19,22 @@ Download the sources for BeepBeep from
 [Bitbucket](http://bitbucket.org.com/sylvainhalle/cornipickle) or clone the
 repository using Git:
 
-    git@bitbucket.org:sylvainhalle/beepbeep-3.git
+    git@bitbucket.org:liflab/beepbeep-3.git
+
+### Repository structure
+
+The repository is separated across the following folders:
+
+- `Engine` contains the source files for BeepBeep's core. Compiling the project
+  contained in that folder generates the file `beepbeep-3.jar`, which is the
+  minimal file you need to run BeepBeep on your system.
+- `Extensions` contains a number of projects producing various independent
+  extensions to BeepBeep. Each project is also independent from the others, and
+  can be built separately. All projects require `beepbeep-3.jar` in their
+  classpath in order to compile and run.
+- `Editor` is a web-based graphical editor to create chains of BeepBeep
+  processors. This project is under heavy construction, and at the moment is
+  far less mature than the engine and its extensions.
 
 ### Installing dependencies
 

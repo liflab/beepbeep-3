@@ -1,5 +1,7 @@
 package ca.uqac.lif.cep.editor;
 
+import ca.uqac.lif.cep.ProcessorSettings;
+
 public abstract class PaletteEntry
 {
 	/**

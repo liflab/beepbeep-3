@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import ca.uqac.lif.cep.ProcessorSettings;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 import ca.uqac.lif.jerrydog.RequestCallback;

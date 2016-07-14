@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.editor;
 
 import ca.uqac.lif.cep.FileHelper;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorSettings;
 import ca.uqac.lif.cep.editor.EditorBox.Coordinate.Orientation;
 
 /**

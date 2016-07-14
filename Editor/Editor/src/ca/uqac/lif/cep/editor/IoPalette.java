@@ -6,8 +6,9 @@ import java.io.FileNotFoundException;
 
 import ca.uqac.lif.cep.FileHelper;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.editor.ProcessorSettings.Setting;
-import ca.uqac.lif.cep.editor.ProcessorSettings.StringSetting;
+import ca.uqac.lif.cep.ProcessorSettings;
+import ca.uqac.lif.cep.ProcessorSettings.Setting;
+import ca.uqac.lif.cep.ProcessorSettings.StringSetting;
 import ca.uqac.lif.cep.io.FileWriter;
 import ca.uqac.lif.cep.io.StreamReader;
 

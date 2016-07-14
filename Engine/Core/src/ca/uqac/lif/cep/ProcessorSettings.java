@@ -1,4 +1,4 @@
-package ca.uqac.lif.cep.editor;
+package ca.uqac.lif.cep;
 
 import java.util.ArrayList;
 import java.util.List;
