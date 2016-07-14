@@ -8,6 +8,7 @@ import java.io.InputStream;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
@@ -15,7 +16,7 @@ import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.util.StringUtils;
 import ca.uqac.lif.util.PackageFileReader;
 
-public class InputTest
+public class InputTest extends BeepBeepUnitTest
 {
 
 	@Before

@@ -29,6 +29,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -43,7 +44,7 @@ import ca.uqac.lif.cep.tuples.TupleGrammar;
  * Unit tests for classes of the epl package.
  * @author Sylvain Hallé
  */
-public class EplTest 
+public class EplTest extends BeepBeepUnitTest 
 {
 	protected InterpreterTestFrontEnd m_interpreter;
 

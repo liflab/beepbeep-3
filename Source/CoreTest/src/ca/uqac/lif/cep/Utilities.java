@@ -24,7 +24,7 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-public class Utilities 
+public class Utilities extends BeepBeepUnitTest 
 {
 	@Test
 	public void dummyTest()

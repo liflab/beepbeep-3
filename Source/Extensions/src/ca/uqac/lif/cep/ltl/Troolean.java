@@ -1,8 +1,30 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.BinaryFunction;
 import ca.uqac.lif.cep.UnaryFunction;
 
+/**
+ * Implementation of a three-valued logic. The "Troolean" type
+ * has three value: TRUE, FALSE and INCONCLUSIVE (which can also
+ * stand for UNKNOWN).
+ */
 public class Troolean 
 {
 	/**
@@ -140,7 +162,7 @@ public class Troolean
 	/**
 	 * Logical conjunction lifted into a binary function
 	 */
-	public static class TrooleanAnd extends BinaryFunction<Value,Value,Value>
+	private static class TrooleanAnd extends BinaryFunction<Value,Value,Value>
 	{
 		TrooleanAnd()
 		{
@@ -164,7 +186,7 @@ public class Troolean
 	/**
 	 * Logical disjunction lifted into a binary function
 	 */
-	public static class TrooleanOr extends BinaryFunction<Value,Value,Value>
+	private static class TrooleanOr extends BinaryFunction<Value,Value,Value>
 	{
 		TrooleanOr()
 		{
@@ -187,7 +209,7 @@ public class Troolean
 	/**
 	 * Logical negation lifted into an unary function
 	 */
-	public static class TrooleanNot extends UnaryFunction<Value,Value>
+	private static class TrooleanNot extends UnaryFunction<Value,Value>
 	{
 		TrooleanNot()
 		{

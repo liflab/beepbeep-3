@@ -15,17 +15,17 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.examples.simple;
+package examples.telegraphcq;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.tuples.*;
-import ca.uqac.lif.cep.interpreter.*;
+import ca.uqac.lif.cep.tuples.Tuple;
+import ca.uqac.lif.cep.tuples.TupleGrammar;
+import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
 
-public class Main 
+public class Example1 
 {
-
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		// Instantiate an empty interpreter
 		Interpreter my_int = new Interpreter();
@@ -38,17 +38,16 @@ public class Main
 		my_int.executeQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH SUM");
 		my_int.executeQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH SUM");
 		my_int.executeQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM (THE SUM OF (@P) AS T, THE COUNT OF (@P) AS U)");
+
+		// Name the input trace
+		my_int.executeQuery("ClosingStockPrices IS THE processor THE TUPLES OF FILE \"ClosingStockPrices.csv\"");
 		
-		// Create a trace
-		my_int.executeQuery("MY TRACE IS THE processor SELECT SIN(x) FROM (THE COUNT OF (1))");
-		
-		// Do something with this trace
-		Pullable result = my_int.executeQuery("THE AVERAGE OF (MY TRACE)");
-		for (int i = 0; i < 10; i++)
+		// Read tuples from a file
+		Pullable result = my_int.executeQuery("EVERY 5TH OF (APPLY (THE AVERAGE OF (0)) ON (SELECT closingPrice FROM (((SELECT closingPrice, stockSymbol FROM (ClosingStockPrices)) WHERE (stockSymbol) = (\"MSFT\")))) ON A WINDOW OF 5)");
+		while (result.hasNextHard() != Pullable.NextStatus.NO)
 		{
-			Float t = (Float) result.pull();
-			System.out.println(t);
+			Tuple t = (Tuple) result.pull();
+			System.out.println(t);			
 		}
 	}
-
 }

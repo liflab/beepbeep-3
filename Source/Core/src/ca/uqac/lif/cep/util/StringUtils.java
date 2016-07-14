@@ -20,6 +20,9 @@ package ca.uqac.lif.cep.util;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+/**
+ * A few utility methods for manipulating character strings
+ */
 public class StringUtils
 {
   /**

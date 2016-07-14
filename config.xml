@@ -26,7 +26,7 @@
   <name>BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.2.2-alpha</version>
+  <version>0.3-alpha</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -38,6 +38,7 @@
   <!-- Output jar -->
   <jar>
     <filename>beepbeep3.jar</filename>
+    <withdoc>false</withdoc>
   </jar>
   
   <!--
@@ -52,26 +53,6 @@
       <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
       <files>
         <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.2/bullwinkle-1.2.zip</zip>
-      </files>
-    </dependency>
-    <dependency>
-      <!--
-      JTransforms. Used for FFT.
-      -->
-      <name>JTransforms</name>
-      <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
-      <files>
-        <jar>http://search.maven.org/remotecontent?filepath=com/github/wendykierp/JTransforms/3.0/JTransforms-3.0.jar</jar>
-      </files>
-    </dependency>
-    <dependency>
-      <!--
-      JLargeArrays. Dependency used by JTransforms.
-      -->
-      <name>JLargeArrays</name>
-      <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
-      <files>
-        <jar>http://search.maven.org/remotecontent?filepath=pl/edu/icm/JLargeArrays/1.2/JLargeArrays-1.2.jar</jar>
       </files>
     </dependency>
   </dependencies>

@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pushable;
@@ -34,11 +35,10 @@ import ca.uqac.lif.json.JsonParser;
 import ca.uqac.lif.json.JsonParser.JsonParseException;
 
 /**
- * Unit tests for the JsonFeeder and JPathEvaluator
- * @author Sylvain
- *
+ * Unit tests for the {@link JsonFeeder} and {@link JPathEvaluator}
+ * @author Sylvain Hallé
  */
-public class JsonTest 
+public class JsonTest extends BeepBeepUnitTest 
 {
 	protected static JsonParser s_parser = new JsonParser();
 	

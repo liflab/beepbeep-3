@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.epl.QueueSink;
  * {@link Passthrough}
  * @author Sylvain Hallé
  */
-public class SimpleTests
+public class SimpleTests extends BeepBeepUnitTest
 {
 	@Test
 	public void testConstant() throws ConnectorException

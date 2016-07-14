@@ -33,7 +33,7 @@ import ca.uqac.lif.cep.epl.QueueSourceBatch;
  * Unit tests for {@link Fork} and {@link SmartFork}
  * @author Sylvain Hallé
  */
-public class ForkTest 
+public class ForkTest extends BeepBeepUnitTest
 {
 	@SuppressWarnings("unchecked")
 	@Test

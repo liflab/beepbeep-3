@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.CumulativeFunction;
 import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Processor;
@@ -41,7 +42,7 @@ import ca.uqac.lif.cep.numbers.NumberGrammar;
  * Unit tests for the {@link Slicer} processor.
  * @author Sylvain Hallé
  */
-public class SlicerTest
+public class SlicerTest extends BeepBeepUnitTest
 {
 	@Test
 	public void testSlicer1() throws ConnectorException

@@ -7,7 +7,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSource;
 
-public class PullableTest 
+public class PullableTest extends BeepBeepUnitTest
 {
 	@Test
 	public void testTypedPullable1() throws ConnectorException

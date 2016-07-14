@@ -36,7 +36,7 @@ import ca.uqac.lif.cep.numbers.Addition;
  * Unit tests for the {@link GroupProcessor}.
  * @author Sylvain Hallé
  */
-public class GroupTest 
+public class GroupTest extends BeepBeepUnitTest 
 {
 	@Test
 	public void testGroup1() throws ConnectorException

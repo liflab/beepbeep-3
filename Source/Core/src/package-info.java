@@ -1,8 +1,8 @@
 
 /**
- * 
+ * Blabla
  */
 /**
- * @author Sylvain
+ * @author Sylvain Hallé
  *
  */

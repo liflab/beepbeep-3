@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -19,7 +20,7 @@ import ca.uqac.lif.cep.epl.QueueSource;
  * Unit tests for the {@link TokenFeeder} class 
  * @author Sylvain Hallé
  */
-public class TokenFeederTest 
+public class TokenFeederTest extends BeepBeepUnitTest 
 {
 	@Test
 	public void testTokenFeederPush1() throws ConnectorException

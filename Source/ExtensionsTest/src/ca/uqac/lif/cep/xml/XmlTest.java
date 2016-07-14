@@ -26,6 +26,7 @@ import java.util.Collection;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pushable;
@@ -35,7 +36,11 @@ import ca.uqac.lif.xml.XPathExpression.XPathParseException;
 import ca.uqac.lif.xml.XmlElement;
 import ca.uqac.lif.xml.XmlElement.XmlParseException;
 
-public class XmlTest 
+/**
+ * Unit tests for the XML processors
+ * @author Sylvain Hallé
+ */
+public class XmlTest extends BeepBeepUnitTest
 {
 
 	@Test

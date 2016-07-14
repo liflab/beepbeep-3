@@ -41,7 +41,7 @@ import ca.uqac.lif.cep.numbers.NumberGrammar;
  * Unit tests for the {@link Window}.
  * @author Sylvain Hallé
  */
-public class WindowTest 
+public class WindowTest extends BeepBeepUnitTest 
 {
 	@Test
 	public void testWindowPull1() throws ConnectorException

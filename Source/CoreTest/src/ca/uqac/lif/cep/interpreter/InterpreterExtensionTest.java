@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.epl.CountDecimate;
@@ -41,7 +42,7 @@ import ca.uqac.lif.cep.numbers.NumberGrammar;
  * @author Sylvain Hallé
  *
  */
-public class InterpreterExtensionTest
+public class InterpreterExtensionTest extends BeepBeepUnitTest
 {
 	protected InterpreterTestFrontEnd m_interpreter;
 	

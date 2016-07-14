@@ -19,7 +19,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
  * and {@link CumulativeFunction}.
  * @author Sylvain Hallé
  */
-public class FunctionTest 
+public class FunctionTest extends BeepBeepUnitTest 
 {
 	@Test
 	public void testAdditionOnce() throws ConnectorException

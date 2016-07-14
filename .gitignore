@@ -14,6 +14,7 @@
 /lib/
 /deps/
 /tests/
+/html/
 
 # Top-level jar, but not jars in subfolders (if any)
 *.jar

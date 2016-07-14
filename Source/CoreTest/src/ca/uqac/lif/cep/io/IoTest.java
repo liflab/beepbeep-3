@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2015 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -27,6 +27,7 @@ import java.io.InputStream;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
@@ -35,7 +36,11 @@ import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.util.StringUtils;
 import ca.uqac.lif.util.PackageFileReader;
 
-public class IoTest
+/**
+ * Unit tests for input-output processors
+ * @author Sylvain Hallé
+ */
+public class IoTest extends BeepBeepUnitTest
 {
 
 	@Before

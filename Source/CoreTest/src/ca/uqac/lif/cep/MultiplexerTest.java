@@ -33,7 +33,7 @@ import ca.uqac.lif.cep.epl.QueueSource;
  * Unit tests for the {@link Multiplexer} class
  * @author Sylvain Hallé
  */
-public class MultiplexerTest 
+public class MultiplexerTest extends BeepBeepUnitTest 
 {
 	@Test
 	public void testMultiplexerPush() throws ConnectorException

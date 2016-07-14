@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.epl.QueueSink;
  * Unit tests for the {@link Connector} class
  * @author Sylvain Hallé
  */
-public class ConnectorTest 
+public class ConnectorTest extends BeepBeepUnitTest
 {
 	@Test
 	public void testTwoUnary() throws ConnectorException
