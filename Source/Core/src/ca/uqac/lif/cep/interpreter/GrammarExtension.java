@@ -78,6 +78,7 @@ public abstract class GrammarExtension
 	public final Map<String,Class<?>> getAssociations()
 	{
 		Map<String,Class<?>> out = new HashMap<String,Class<?>>();
+		ClassLoader loader = getClass().getClassLoader();
 		String file_contents = PackageFileReader.readPackageFile(m_classReference, s_associationsFilename);
 		if (file_contents == null || file_contents.isEmpty())
 		{
@@ -101,7 +102,7 @@ public abstract class GrammarExtension
 			String class_name = parts[1].trim();
 			try 
 			{
-				Class<?> c = Class.forName(class_name);
+				Class<?> c = loader.loadClass(class_name);
 				out.put(non_terminal, c);
 			} 
 			catch (ClassNotFoundException e)
