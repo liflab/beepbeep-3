@@ -40,6 +40,7 @@ import ca.uqac.lif.bullwinkle.ParseNodeVisitor;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;

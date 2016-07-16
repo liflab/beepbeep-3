@@ -19,8 +19,8 @@ package ca.uqac.lif.cep.editor;
 
 import java.util.Map;
 
-import ca.uqac.lif.cep.interpreter.Palette;
-import ca.uqac.lif.cep.interpreter.Palette.PaletteEntry;
+import ca.uqac.lif.cep.Palette;
+import ca.uqac.lif.cep.Palette.PaletteEntry;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;

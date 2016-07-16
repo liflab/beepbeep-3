@@ -23,8 +23,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 import ca.uqac.lif.cep.ProcessorBox;
 import ca.uqac.lif.cep.ProcessorSettings;
-import ca.uqac.lif.cep.interpreter.Palette;
-import ca.uqac.lif.cep.interpreter.Palette.PaletteEntry;
+import ca.uqac.lif.cep.Palette;
+import ca.uqac.lif.cep.Palette.PaletteEntry;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 import ca.uqac.lif.jerrydog.RequestCallback;

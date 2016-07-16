@@ -15,15 +15,12 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.interpreter;
+package ca.uqac.lif.cep;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.ProcessorBox;
-import ca.uqac.lif.cep.ProcessorSettings;
 import ca.uqac.lif.cep.util.PackageFileReader;
 
 /**

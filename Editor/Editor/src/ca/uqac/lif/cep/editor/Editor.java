@@ -22,8 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.ProcessorBox;
-import ca.uqac.lif.cep.interpreter.Palette;
 import ca.uqac.lif.jerrydog.InnerFileServer;
 
 public class Editor extends InnerFileServer 

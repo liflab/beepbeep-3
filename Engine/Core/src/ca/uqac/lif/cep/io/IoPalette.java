@@ -3,12 +3,12 @@ package ca.uqac.lif.cep.io;
 import java.io.File;
 
 import ca.uqac.lif.cep.FileHelper;
+import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorBox;
 import ca.uqac.lif.cep.ProcessorSettings;
 import ca.uqac.lif.cep.ProcessorSettings.Setting;
 import ca.uqac.lif.cep.ProcessorSettings.StringSetting;
-import ca.uqac.lif.cep.interpreter.Palette;
 
 public class IoPalette extends Palette
 {

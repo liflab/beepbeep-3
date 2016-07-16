@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.interpreter;
 
+import ca.uqac.lif.cep.Palette;
+
 
 public class BootstrapGrammar extends Palette
 {

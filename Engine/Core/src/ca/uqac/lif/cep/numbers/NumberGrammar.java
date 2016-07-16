@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import ca.uqac.lif.cep.interpreter.Palette;
+import ca.uqac.lif.cep.Palette;
 
 public class NumberGrammar extends Palette
 {

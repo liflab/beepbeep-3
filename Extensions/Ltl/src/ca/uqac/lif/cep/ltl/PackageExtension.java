@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.FileHelper;
-import ca.uqac.lif.cep.interpreter.Palette;
+import ca.uqac.lif.cep.Palette;
 
 public class PackageExtension extends Palette
 {

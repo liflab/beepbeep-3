@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.editor;
 import java.util.List;
 
 import ca.uqac.lif.azrael.SerializerException;
-import ca.uqac.lif.cep.interpreter.Palette;
+import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
