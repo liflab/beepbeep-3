@@ -1,16 +1,14 @@
-package ca.uqac.lif.cep.editor;
+package ca.uqac.lif.cep.io;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import ca.uqac.lif.cep.FileHelper;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorBox;
 import ca.uqac.lif.cep.ProcessorSettings;
 import ca.uqac.lif.cep.ProcessorSettings.Setting;
 import ca.uqac.lif.cep.ProcessorSettings.StringSetting;
-import ca.uqac.lif.cep.io.FileWriter;
-import ca.uqac.lif.cep.io.StreamReader;
+import ca.uqac.lif.cep.interpreter.Palette;
 
 public class IoPalette extends Palette
 {
@@ -19,8 +17,7 @@ public class IoPalette extends Palette
 	 */
 	public IoPalette()
 	{
-		super();
-		setName("I/O");
+		super(IoPalette.class, "I/0");
 		add(new StreamReaderPaletteEntry());
 		add(new FileWriterPaletteEntry());
 	}
@@ -32,24 +29,7 @@ public class IoPalette extends Palette
 	{
 		public StreamReaderPaletteEntry()
 		{
-			super("Stream reader", FileHelper.internalFileToBytes(IoPalette.class, "StreamReader.png"));
-		}
-
-		@Override
-		public EditorBox newEditorBox(ProcessorSettings settings) 
-		{
-			Setting s_filename = settings.get("Filename");
-			String filename = (String) s_filename.getValue();
-			try 
-			{
-				return new StreamReaderEditorBox(new StreamReader(new FileInputStream(new File(filename))), image);
-			} 
-			catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			super("Stream reader", StreamReader.class, FileHelper.internalFileToBytes(IoPalette.class, "StreamReader.png"));
 		}
 		
 		@Override
@@ -60,7 +40,7 @@ public class IoPalette extends Palette
 			return settings;
 		}
 		
-		protected static class StreamReaderEditorBox extends EditorBox
+		protected static class StreamReaderEditorBox extends ProcessorBox
 		{
 			public StreamReaderEditorBox(Processor p, byte[] image) 
 			{
@@ -81,15 +61,15 @@ public class IoPalette extends Palette
 	{
 		public FileWriterPaletteEntry()
 		{
-			super("File writer", FileHelper.internalFileToBytes(IoPalette.class, "FileWriter.png"));
+			super("File writer", FileWriter.class, FileHelper.internalFileToBytes(IoPalette.class, "FileWriter.png"));
 		}
 
 		@Override
-		public EditorBox newEditorBox(ProcessorSettings settings) 
+		public ProcessorBox newEditorBox(ProcessorSettings settings) 
 		{
 			Setting s_filename = settings.get("filename");
 			String filename = (String) s_filename.getValue();
-			return new FileWriterEditorBox(new FileWriter(new File(filename), false), image);
+			return new FileWriterEditorBox(new FileWriter(new File(filename), false), m_image);
 		}
 		
 		@Override
@@ -100,7 +80,7 @@ public class IoPalette extends Palette
 			return settings;
 		}
 		
-		protected static class FileWriterEditorBox extends EditorBox
+		protected static class FileWriterEditorBox extends ProcessorBox
 		{
 			public FileWriterEditorBox(Processor p, byte[] image) 
 			{

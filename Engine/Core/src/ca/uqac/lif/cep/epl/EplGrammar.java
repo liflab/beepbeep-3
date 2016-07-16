@@ -17,9 +17,9 @@
  */
 package ca.uqac.lif.cep.epl;
 
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
+import ca.uqac.lif.cep.interpreter.Palette;
 
-public class EplGrammar extends GrammarExtension
+public class EplGrammar extends Palette
 {
 	public EplGrammar()
 	{

@@ -17,9 +17,9 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
+import ca.uqac.lif.cep.interpreter.Palette;
 
-public class NumberGrammar extends GrammarExtension
+public class NumberGrammar extends Palette
 {
 	public NumberGrammar()
 	{

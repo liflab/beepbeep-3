@@ -21,12 +21,16 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import ca.uqac.lif.cep.ProcessorBox;
 import ca.uqac.lif.cep.ProcessorSettings;
+import ca.uqac.lif.cep.interpreter.Palette;
+import ca.uqac.lif.cep.interpreter.Palette.PaletteEntry;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 import ca.uqac.lif.jerrydog.RequestCallback;
 import ca.uqac.lif.json.JsonElement;
-import ca.uqac.lif.json.JsonParser;
+import ca.uqac.lif.json.JsonMap;
+import ca.uqac.lif.json.JsonNumber;
 import ca.uqac.lif.json.JsonParser.JsonParseException;
 
 public class NewProcessor extends EditorCallback
@@ -52,8 +56,9 @@ public class NewProcessor extends EditorCallback
 			response.setCode(CallbackResponse.HTTP_BAD_REQUEST);
 			return response;
 		}
-		
-		int palette_id = Integer.parseInt(params.get("palette").trim());
+		assert json instanceof JsonMap;
+		JsonMap params_map = (JsonMap) json;
+		int palette_id = ((JsonNumber) params_map.get("palette")).numberValue().intValue();
 		Palette palette = m_editor.getPalette(palette_id);
 		if (palette == null)
 		{
@@ -70,7 +75,7 @@ public class NewProcessor extends EditorCallback
 			return response;
 		}
 		ProcessorSettings settings = entry.getSettings();
-		EditorBox box = entry.newEditorBox(settings);
+		ProcessorBox box = entry.newEditorBox(settings);
 		if (params.containsKey("x") && params.containsKey("y"))
 		{
 			box.setX(Float.parseFloat(params.get("x").trim()));

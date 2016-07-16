@@ -31,9 +31,9 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.interpreter.Palette;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.util.StringUtils;
 import ca.uqac.lif.util.PackageFileReader;
@@ -46,7 +46,7 @@ public class TuplesEmlBuildTest extends BeepBeepUnitTest
 	public void setUp()
 	{
 		m_interpreter = new Interpreter();		
-		GrammarExtension ext = new TupleGrammar();
+		Palette ext = new TupleGrammar();
 		m_interpreter.extendGrammar(ext);
 	}
 	

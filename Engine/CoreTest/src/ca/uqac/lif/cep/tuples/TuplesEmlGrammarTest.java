@@ -31,8 +31,8 @@ import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.EplGrammar;
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Palette;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.util.PackageFileReader;
@@ -49,22 +49,22 @@ public class TuplesEmlGrammarTest extends BeepBeepUnitTest
 			m_parser = new BnfParser();
 			m_parser.setGrammar(PackageFileReader.readPackageFile(Interpreter.class, "eml.bnf"));
 			{
-				GrammarExtension ext = new EplGrammar();
+				Palette ext = new EplGrammar();
 				String productions = ext.getGrammar();
 				m_parser.setGrammar(productions);
 			}
 			{
-				GrammarExtension ext = new NumberGrammar();
+				Palette ext = new NumberGrammar();
 				String productions = ext.getGrammar();
 				m_parser.setGrammar(productions);
 			}
 			{
-				GrammarExtension ext = new StreamGrammar();
+				Palette ext = new StreamGrammar();
 				String productions = ext.getGrammar();
 				m_parser.setGrammar(productions);
 			}
 			{
-				GrammarExtension ext = new TupleGrammar();
+				Palette ext = new TupleGrammar();
 				String productions = ext.getGrammar();
 				m_parser.setGrammar(productions);
 			}

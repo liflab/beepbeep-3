@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.editor;
 
 import java.util.Map;
 
+import ca.uqac.lif.cep.interpreter.Palette;
+import ca.uqac.lif.cep.interpreter.Palette.PaletteEntry;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
@@ -53,7 +55,7 @@ public class PaletteButton extends EditorCallback
 			response.setCode(CallbackResponse.HTTP_NOT_FOUND);
 			return response;
 		}
-		byte[] image = entry.image;
+		byte[] image = entry.m_image;
 		if (image == null)
 		{
 			// No image

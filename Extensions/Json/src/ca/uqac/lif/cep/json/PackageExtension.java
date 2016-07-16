@@ -17,9 +17,9 @@
  */
 package ca.uqac.lif.cep.json;
 
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
+import ca.uqac.lif.cep.interpreter.Palette;
 
-public class PackageExtension extends GrammarExtension
+public class PackageExtension extends Palette
 {
 	public PackageExtension()
 	{

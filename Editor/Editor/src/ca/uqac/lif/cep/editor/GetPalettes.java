@@ -19,9 +19,13 @@ package ca.uqac.lif.cep.editor;
 
 import java.util.List;
 
+import ca.uqac.lif.azrael.SerializerException;
+import ca.uqac.lif.cep.interpreter.Palette;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
+import ca.uqac.lif.json.JsonElement;
+import ca.uqac.lif.json.JsonList;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -37,21 +41,24 @@ public class GetPalettes extends EditorCallback
 	{
 		CallbackResponse response = new CallbackResponse(t);
 		List<Palette> palettes = m_editor.getPalettes();
-		StringBuilder out = new StringBuilder(); 
-		out.append("[");
-		for (int i = 0; i < palettes.size(); i++)
+		JsonList list = new JsonList();
+		try 
 		{
-			if (i > 0)
+			for (int i = 0; i < palettes.size(); i++)
 			{
-				out.append(",");
+				Palette pal = palettes.get(i);
+				JsonElement pal_json = m_serializer.serialize(pal);
+				list.add(pal_json);
 			}
-			Palette pal = palettes.get(i);
-			out.append(pal.toJson());
 		}
-		out.append("]");
+		catch (SerializerException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		response.setCode(CallbackResponse.HTTP_OK);
 		response.setContentType(ContentType.JSON);
-		response.setContents(out.toString());
+		response.setContents(list.toString());
 		return response;
 	}
 }

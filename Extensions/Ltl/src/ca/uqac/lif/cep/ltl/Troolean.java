@@ -22,7 +22,7 @@ import ca.uqac.lif.cep.UnaryFunction;
 
 /**
  * Implementation of a three-valued logic. The "Troolean" type
- * has three value: TRUE, FALSE and INCONCLUSIVE (which can also
+ * has three values: TRUE, FALSE and INCONCLUSIVE (which can also
  * stand for UNKNOWN).
  */
 public class Troolean 

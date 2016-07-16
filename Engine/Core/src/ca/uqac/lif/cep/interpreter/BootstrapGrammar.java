@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.interpreter;
 
 
-public class BootstrapGrammar extends GrammarExtension
+public class BootstrapGrammar extends Palette
 {
 	public BootstrapGrammar()
 	{

@@ -22,6 +22,7 @@ import java.util.Map;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorBox;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;
 
@@ -43,8 +44,8 @@ public class ConnectProcessors extends EditorCallback
 		int in_nb = Integer.parseInt(params.get("input-nb").trim());
 		int out_id = Integer.parseInt(params.get("output-id").trim());
 		int out_nb = Integer.parseInt(params.get("output-nb").trim());
-		EditorBox in_box = m_editor.getBox(in_id);
-		EditorBox out_box = m_editor.getBox(out_id);
+		ProcessorBox in_box = m_editor.getBox(in_id);
+		ProcessorBox out_box = m_editor.getBox(out_id);
 		if (in_box == null || out_box == null)
 		{
 			// Box not found

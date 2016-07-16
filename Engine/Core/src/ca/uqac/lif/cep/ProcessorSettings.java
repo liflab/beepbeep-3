@@ -1,18 +1,40 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.uqac.lif.json.JsonElement;
-import ca.uqac.lif.json.JsonList;
-import ca.uqac.lif.json.JsonMap;
-
+/**
+ * Representation of a set of parameters regulating the instantiation and the
+ * operation of a processor.
+ * 
+ * @author Sylvain Hallé
+ *
+ */
 public class ProcessorSettings 
 {
 	/**
-	 * The settings associated to a processor type
+	 * The settings associated to a processor type. Note that this is not a
+	 * set, since we might want the settings to be displayed always in the
+	 * same order (for example in some GUI).
 	 */
-	List<Setting> m_settings;
+	protected final List<Setting> m_settings;
 	
 	/**
 	 * Creates a new empty set of processor settings
@@ -49,20 +71,6 @@ public class ProcessorSettings
 	{
 		m_settings.add(s);
 		return this;
-	}
-	
-	/**
-	 * Produces a JSON structure for this set of settings
-	 * @return A well-formed JSON string
-	 */
-	public JsonElement toJson()
-	{
-		JsonList list = new JsonList();
-		for (Setting s : m_settings)
-		{
-			list.add(s.toJson());
-		}
-		return list;
 	}
 
 	/**
@@ -152,27 +160,6 @@ public class ProcessorSettings
 		public void setValue(Object o)
 		{
 			m_value = o;
-		}
-		
-		/**
-		 * Produces a JSON structure for this setting
-		 * @return A well-formed JSON string
-		 */
-		public JsonElement toJson()
-		{
-			JsonMap map = new JsonMap();
-			map.put("name", m_name);
-			map.put("type", m_type.getName());
-			map.put("mandatory", m_mandatory);
-			if (m_value != null)
-			{
-				map.put("value", m_value);
-			}
-			else
-			{
-				map.put("value", "null");
-			}
-			return map;
 		}
 	}
 	

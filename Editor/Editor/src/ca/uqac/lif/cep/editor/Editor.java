@@ -22,11 +22,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import ca.uqac.lif.cep.ProcessorBox;
+import ca.uqac.lif.cep.interpreter.Palette;
 import ca.uqac.lif.jerrydog.InnerFileServer;
 
 public class Editor extends InnerFileServer 
 {
-	protected Set<EditorBox> m_boxes;
+	protected Set<ProcessorBox> m_boxes;
 	
 	protected List<Palette> m_palettes;
 	
@@ -38,7 +40,7 @@ public class Editor extends InnerFileServer
 	public Editor() 
 	{
 		super(Editor.class);
-		m_boxes = new HashSet<EditorBox>();
+		m_boxes = new HashSet<ProcessorBox>();
 		m_palettes = new LinkedList<Palette>();
 		setServerPort(31313);
 		setUserAgent("BeepBeep 3 editor");
@@ -86,7 +88,7 @@ public class Editor extends InnerFileServer
 	 * @param box The box
 	 * @return This editor
 	 */
-	public Editor add(EditorBox box)
+	public Editor add(ProcessorBox box)
 	{
 		m_boxes.add(box);
 		return this;
@@ -97,9 +99,9 @@ public class Editor extends InnerFileServer
 	 * @param id The ID
 	 * @return The processor, or null if not found
 	 */
-	public EditorBox getBox(int id)
+	public ProcessorBox getBox(int id)
 	{
-		for (EditorBox p : m_boxes)
+		for (ProcessorBox p : m_boxes)
 		{
 			if (p.getProcessor().getId() == id)
 			{

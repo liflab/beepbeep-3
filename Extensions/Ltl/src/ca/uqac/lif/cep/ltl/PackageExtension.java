@@ -17,13 +17,20 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
+import ca.uqac.lif.cep.FileHelper;
+import ca.uqac.lif.cep.interpreter.Palette;
 
-public class PackageExtension extends GrammarExtension
+public class PackageExtension extends Palette
 {
 	public PackageExtension()
 	{
-		super(PackageExtension.class, "Linear Temporal Logic extension\n"
-				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutim");
+		super(PackageExtension.class, "Linear Temporal Logic palette\n"
+				+ "(C) 2015-2016 Sylvain Hallé, Université du Québec à Chicoutim");
+		add(new PaletteEntry("And", And.class, FileHelper.internalFileToBytes(PackageExtension.class, "And.png")));
+		add(new PaletteEntry("Or", Or.class, FileHelper.internalFileToBytes(PackageExtension.class, "Or.png")));
+		add(new PaletteEntry("Next", Next.class, FileHelper.internalFileToBytes(PackageExtension.class, "Next.png")));
+		add(new PaletteEntry("Not", Not.class, FileHelper.internalFileToBytes(PackageExtension.class, "Not.png")));
+		add(new PaletteEntry("Eventually", Eventually.class, FileHelper.internalFileToBytes(PackageExtension.class, "Eventually.png")));
+		add(new PaletteEntry("Globally", Eventually.class, FileHelper.internalFileToBytes(PackageExtension.class, "Globally.png")));
 	}
 }

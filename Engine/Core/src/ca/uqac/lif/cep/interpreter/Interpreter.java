@@ -154,9 +154,9 @@ public class Interpreter implements ParseNodeVisitor
 		this();
 		for (Class<?> ext : extensions)
 		{
-			if (ext.isAssignableFrom(GrammarExtension.class))
+			if (ext.isAssignableFrom(Palette.class))
 			{
-				extendGrammar((Class<? extends GrammarExtension>) ext);	
+				extendGrammar((Class<? extends Palette>) ext);	
 			}
 		}
 	}
@@ -189,11 +189,11 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param c A grammar extension class to add to the interpreter
 	 * @return This interpreter
 	 */
-	public Interpreter extendGrammar(Class<? extends GrammarExtension> c)
+	public Interpreter extendGrammar(Class<? extends Palette> c)
 	{
 		try 
 		{
-			GrammarExtension ext = c.newInstance();
+			Palette ext = c.newInstance();
 			extendGrammar(ext);
 		} 
 		catch (InstantiationException e) 
@@ -212,7 +212,7 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param ext The grammar extension to add to the interpreter
 	 * @return This interpreter
 	 */
-	public Interpreter extendGrammar(GrammarExtension ext)
+	public Interpreter extendGrammar(Palette ext)
 	{
 		// Adds the associations
 		Map<String,Class<?>> associations = ext.getAssociations();

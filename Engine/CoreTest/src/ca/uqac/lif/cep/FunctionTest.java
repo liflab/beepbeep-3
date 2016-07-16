@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Palette;
 
 /**
  * Unit tests for {@link Function}, {@link UnaryFunction}, {@link BinaryFunction}
@@ -216,7 +216,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		}
 	}
 	
-	public static class DummyGrammarExtension extends GrammarExtension
+	public static class DummyGrammarExtension extends Palette
 	{
 		public DummyGrammarExtension()
 		{

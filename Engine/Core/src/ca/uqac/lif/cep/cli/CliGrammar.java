@@ -17,9 +17,9 @@
  */
 package ca.uqac.lif.cep.cli;
 
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
+import ca.uqac.lif.cep.interpreter.Palette;
 
-public class CliGrammar extends GrammarExtension
+public class CliGrammar extends Palette
 {
 	public CliGrammar()
 	{

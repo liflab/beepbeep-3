@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import ca.uqac.lif.cep.ProcessorBox;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.RequestCallback;
 
@@ -39,7 +40,7 @@ public class MoveBox extends EditorCallback
 		int proc_id = Integer.parseInt(params.get("id").trim());
 		float x = Float.parseFloat(params.get("x").trim());
 		float y = Float.parseFloat(params.get("y").trim());
-		EditorBox box = m_editor.getBox(proc_id);
+		ProcessorBox box = m_editor.getBox(proc_id);
 		if (box == null)
 		{
 			// Box not found

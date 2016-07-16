@@ -21,7 +21,10 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import ca.uqac.lif.cep.ProcessorBox;
 import ca.uqac.lif.cep.ProcessorSettings;
+import ca.uqac.lif.cep.interpreter.Palette;
+import ca.uqac.lif.cep.interpreter.Palette.PaletteEntry;
 import ca.uqac.lif.jerrydog.CallbackResponse;
 import ca.uqac.lif.jerrydog.CallbackResponse.ContentType;
 import ca.uqac.lif.jerrydog.RequestCallback;
@@ -55,7 +58,7 @@ public class GetSettings extends EditorCallback
 			return response;
 		}
 		ProcessorSettings settings = entry.getSettings();
-		EditorBox box = entry.newEditorBox(settings);
+		ProcessorBox box = entry.newEditorBox(settings);
 		response.setCode(CallbackResponse.HTTP_OK);
 		response.setContentType(ContentType.JSON);
 		response.setContents(box.toJson().toString());

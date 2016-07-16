@@ -17,9 +17,9 @@
  */
 package ca.uqac.lif.cep.io;
 
-import ca.uqac.lif.cep.interpreter.GrammarExtension;
+import ca.uqac.lif.cep.interpreter.Palette;
 
-public class StreamGrammar extends GrammarExtension
+public class StreamGrammar extends Palette
 {
 	public StreamGrammar()
 	{
