@@ -17,29 +17,18 @@
  */
 package ca.uqac.lif.cep.sets;
 
-import ca.uqac.lif.cep.BinaryFunction;
-
-public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset> 
+/**
+ * Evaluates if the first set is a superset or is equal to the second set.
+ * 
+ * @author Sylvain Hallé
+ */
+public class IsSupersetOrEqual extends IsSubsetOrEqual
 {
-	/**
-	 * A static instance of the function
-	 */
-	public static final transient MultisetUnion instance = new MultisetUnion();
-	
-	private MultisetUnion()
-	{
-		super(Multiset.class, Multiset.class, Multiset.class);
-	}
+	public static final transient IsSupersetOrEqual instance = new IsSupersetOrEqual();
 	
 	@Override
-	public Multiset evaluate(Multiset x, Multiset y) 
+	public Boolean evaluate(Object x, Object y)
 	{
-		return x.addAll(y);
-	}
-
-	@Override
-	public Multiset getStartValue() 
-	{
-		return new Multiset();
+		return super.evaluate(y, x);
 	}
 }

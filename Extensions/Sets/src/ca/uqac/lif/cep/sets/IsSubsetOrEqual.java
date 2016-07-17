@@ -17,29 +17,33 @@
  */
 package ca.uqac.lif.cep.sets;
 
+import java.util.Set;
+
 import ca.uqac.lif.cep.BinaryFunction;
 
-public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset> 
+/**
+ * Evaluates if the first set is a subset or is equal to the second set.
+ * 
+ * @author Sylvain Hallé
+ */
+public class IsSubsetOrEqual extends BinaryFunction<Object,Object,Boolean>
 {
-	/**
-	 * A static instance of the function
-	 */
-	public static final transient MultisetUnion instance = new MultisetUnion();
+	public static final transient IsSubsetOrEqual instance = new IsSubsetOrEqual();
 	
-	private MultisetUnion()
+	IsSubsetOrEqual()
 	{
-		super(Multiset.class, Multiset.class, Multiset.class);
-	}
-	
-	@Override
-	public Multiset evaluate(Multiset x, Multiset y) 
-	{
-		return x.addAll(y);
+		super(Object.class, Object.class, Boolean.class);
 	}
 
 	@Override
-	public Multiset getStartValue() 
+	public Boolean evaluate(Object x, Object y)
 	{
-		return new Multiset();
+		if (x instanceof Set<?> && y instanceof Set<?>)
+		{
+			Set<?> set_x = (Set<?>) x;
+			Set<?> set_y = (Set<?>) y;
+			return set_y.containsAll(set_x);
+		}
+		return false;
 	}
 }

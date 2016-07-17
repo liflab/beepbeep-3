@@ -17,14 +17,16 @@
  */
 package ca.uqac.lif.cep.sets;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * A set where each element can be present more than once
  */
-public class Multiset
+public class Multiset implements Set<Object>
 {
 	/**
 	 * The map used to store the relation between each element and its
@@ -160,6 +162,7 @@ public class Multiset
 	 * Gets the size of the multiset
 	 * @return The size
 	 */
+	@Override
 	public int size()
 	{
 		int size = 0;
@@ -170,19 +173,84 @@ public class Multiset
 		return size;
 	}
 	
-	/**
-	 * Removes all elements of this multiset
-	 * @return This multiset (now empty)
-	 */
-	public Multiset clear()
+	@Override
+	public void clear()
 	{
 		m_map.clear();
-		return this;
 	}
 	
 	@Override
 	public String toString()
 	{
 		return m_map.toString();
+	}
+
+	@Override
+	public boolean add(Object arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends Object> arg0) 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> arg0) 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Iterator<Object> iterator() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean remove(Object arg0) 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> arg0) 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> arg0) 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object[] toArray() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T[] toArray(T[] arg0) 
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
