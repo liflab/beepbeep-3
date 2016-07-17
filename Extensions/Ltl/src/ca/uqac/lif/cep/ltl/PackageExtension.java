@@ -19,6 +19,9 @@ package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.FileHelper;
 import ca.uqac.lif.cep.Palette;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorBox;
+import ca.uqac.lif.cep.ProcessorSettings;
 
 public class PackageExtension extends Palette
 {
@@ -26,11 +29,172 @@ public class PackageExtension extends Palette
 	{
 		super(PackageExtension.class, "Linear Temporal Logic palette\n"
 				+ "(C) 2015-2016 Sylvain Hallé, Université du Québec à Chicoutim");
-		add(new PaletteEntry("And", And.class, FileHelper.internalFileToBytes(PackageExtension.class, "And.png")));
-		add(new PaletteEntry("Or", Or.class, FileHelper.internalFileToBytes(PackageExtension.class, "Or.png")));
-		add(new PaletteEntry("Next", Next.class, FileHelper.internalFileToBytes(PackageExtension.class, "Next.png")));
-		add(new PaletteEntry("Not", Not.class, FileHelper.internalFileToBytes(PackageExtension.class, "Not.png")));
-		add(new PaletteEntry("Eventually", Eventually.class, FileHelper.internalFileToBytes(PackageExtension.class, "Eventually.png")));
-		add(new PaletteEntry("Globally", Eventually.class, FileHelper.internalFileToBytes(PackageExtension.class, "Globally.png")));
+		add(new AndPaletteEntry());
+		add(new OrPaletteEntry());
+		add(new NextPaletteEntry());
+		add(new NotPaletteEntry());
+		add(new EventuallyPaletteEntry());
+		add(new GloballyPaletteEntry());
+		add(new UntilPaletteEntry());
+	}
+	
+	/**
+	 * Palette entry to create a new instance of AND
+	 */
+	protected static class AndPaletteEntry extends PaletteEntry
+	{
+		public AndPaletteEntry()
+		{
+			super("And", And.class, FileHelper.internalFileToBytes(PackageExtension.class, "And.png"));
+		}
+
+		@Override
+		public ProcessorBox newEditorBox(ProcessorSettings settings) 
+		{
+			return new BinaryProcessorBox(new And(), m_image);
+		}
+	}
+	
+	/**
+	 * Palette entry to create a new instance of OR
+	 */
+	protected static class OrPaletteEntry extends PaletteEntry
+	{
+		public OrPaletteEntry()
+		{
+			super("Or", Or.class, FileHelper.internalFileToBytes(PackageExtension.class, "Or.png"));
+		}
+
+		@Override
+		public ProcessorBox newEditorBox(ProcessorSettings settings)
+		{
+			return new BinaryProcessorBox(new Or(), m_image);
+		}
+	}
+	
+	/**
+	 * Palette entry to create a new instance of U
+	 */
+	protected static class UntilPaletteEntry extends PaletteEntry
+	{
+		public UntilPaletteEntry()
+		{
+			super("Until", Until.class, FileHelper.internalFileToBytes(PackageExtension.class, "Until.png"));
+		}
+
+		@Override
+		public ProcessorBox newEditorBox(ProcessorSettings settings)
+		{
+			return new BinaryProcessorBox(new Until(), m_image);
+		}
+	}
+	
+	/**
+	 * Palette entry to create a new instance of NOT
+	 */
+	protected static class NotPaletteEntry extends PaletteEntry
+	{
+		public NotPaletteEntry()
+		{
+			super("Not", Not.class, FileHelper.internalFileToBytes(PackageExtension.class, "Not.png"));
+		}
+
+		@Override
+		public ProcessorBox newEditorBox(ProcessorSettings settings)
+		{
+			return new UnaryProcessorBox(new Not(), m_image);
+		}
+	}
+	
+	/**
+	 * Palette entry to create a new instance of F
+	 */
+	protected static class EventuallyPaletteEntry extends PaletteEntry
+	{
+		public EventuallyPaletteEntry()
+		{
+			super("Eventually", Eventually.class, FileHelper.internalFileToBytes(PackageExtension.class, "Eventually.png"));
+		}
+
+		@Override
+		public ProcessorBox newEditorBox(ProcessorSettings settings)
+		{
+			return new UnaryProcessorBox(new Eventually(), m_image);
+		}
+	}
+	
+	/**
+	 * Palette entry to create a new instance of G
+	 */
+	protected static class GloballyPaletteEntry extends PaletteEntry
+	{
+		public GloballyPaletteEntry()
+		{
+			super("Globally", Globally.class, FileHelper.internalFileToBytes(PackageExtension.class, "Globally.png"));
+		}
+
+		@Override
+		public ProcessorBox newEditorBox(ProcessorSettings settings)
+		{
+			return new UnaryProcessorBox(new Globally(), m_image);
+		}
+	}
+	
+	/**
+	 * Palette entry to create a new instance of X
+	 */
+	protected static class NextPaletteEntry extends PaletteEntry
+	{
+		public NextPaletteEntry()
+		{
+			super("Next", Next.class, FileHelper.internalFileToBytes(PackageExtension.class, "Next.png"));
+		}
+
+		@Override
+		public ProcessorBox newEditorBox(ProcessorSettings settings)
+		{
+			return new UnaryProcessorBox(new Next(), m_image);
+		}
+	}
+
+	/**
+	 * Generic editor box for all palette entries with a binary processor
+	 */
+	protected static class BinaryProcessorBox extends ProcessorBox
+	{
+		public BinaryProcessorBox(Processor p, byte[] image) 
+		{
+			super(p, image);
+			setSize(61, 76);
+			Coordinate[] inputs = {
+					new Coordinate(22, 10, Coordinate.Orientation.UP),
+					new Coordinate(22, 67, Coordinate.Orientation.DOWN)
+			};
+			Coordinate[] outputs = {
+					new Coordinate(52, 40, Coordinate.Orientation.RIGHT)
+			};
+			setInputPoints(inputs);
+			setOutputPoints(outputs);
+		}
+	}
+	
+	/**
+	 * Generic editor box for all palette entries with an unary processor
+	 */
+	protected static class UnaryProcessorBox extends ProcessorBox
+	{
+		public UnaryProcessorBox(Processor p, byte[] image) 
+		{
+			super(p, image);
+			setSize(87, 44);
+			Coordinate[] inputs = {
+					new Coordinate(7, 21, Coordinate.Orientation.LEFT),
+			};
+			Coordinate[] outputs = {
+					new Coordinate(78, 21, Coordinate.Orientation.RIGHT)
+			};
+			setInputPoints(inputs);
+			setOutputPoints(outputs);
+		}
 	}
 }
