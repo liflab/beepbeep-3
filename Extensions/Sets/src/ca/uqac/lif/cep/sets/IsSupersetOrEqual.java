@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.sets;
 
+import java.util.Set;
+
 /**
  * Evaluates if the first set is a superset or is equal to the second set.
  * 
@@ -26,8 +28,9 @@ public class IsSupersetOrEqual extends IsSubsetOrEqual
 {
 	public static final transient IsSupersetOrEqual instance = new IsSupersetOrEqual();
 	
+	@SuppressWarnings("rawtypes")
 	@Override
-	public Boolean evaluate(Object x, Object y)
+	public Boolean evaluate(Set x, Set y)
 	{
 		return super.evaluate(y, x);
 	}

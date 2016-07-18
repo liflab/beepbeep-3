@@ -22,6 +22,20 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.CumulativeFunction;
 
+/**
+ * Accumulates the received events cumulatively into a multiset.
+ * <p>
+ * <b>Example:</b> suppose the input events are integers. From the input
+ * trace
+ * <pre>
+ * 0, 1, 2, 1, 3, ...
+ * </pre>
+ * the processor will produce the output trace
+ * <pre>
+ * {0}, {0, 1}, {0, 1, 2}, {0, 1, 1, 2}, {0, 1, 1, 2, 3}, ...
+ * </pre>
+ * @author Sylvain Hallé
+ */
 public class BagUnion extends CumulativeFunction<Multiset>
 {
 	public BagUnion()
