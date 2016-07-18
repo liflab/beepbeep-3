@@ -19,27 +19,26 @@ package ca.uqac.lif.cep.sets;
 
 import java.util.Set;
 
-import ca.uqac.lif.cep.BinaryFunction;
+import ca.uqac.lif.cep.UnaryFunction;
 
 /**
- * Evaluates if the first set is a subset or is equal to the second set.
+ * Evaluates the cardinality of a set or a multiset
  * 
  * @author Sylvain Hallé
  */
 @SuppressWarnings("rawtypes")
-public class IsSubsetOrEqual extends BinaryFunction<Set,Set,Boolean>
+public class Cardinality extends UnaryFunction<Set, Integer>
 {
-	public static final transient IsSubsetOrEqual instance = new IsSubsetOrEqual();
+	public static final transient Cardinality instance = new Cardinality();
 	
-	IsSubsetOrEqual()
+	private Cardinality()
 	{
-		super(Set.class, Set.class, Boolean.class);
+		super(Set.class, Integer.class);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Boolean getValue(Set x, Set y)
+	public Integer getValue(Set x) 
 	{
-		return y.containsAll(x);
+		return x.size();
 	}
 }

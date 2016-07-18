@@ -62,7 +62,7 @@ public class JPathEvaluator extends FunctionProcessor
 		}
 		
 		@Override
-		public /*@Null*/ JsonElement evaluate(/*@NonNull*/ JsonElement x)
+		public /*@Null*/ JsonElement getValue(/*@NonNull*/ JsonElement x)
 		{
 			return JsonPath.get(x,  m_path);
 		}

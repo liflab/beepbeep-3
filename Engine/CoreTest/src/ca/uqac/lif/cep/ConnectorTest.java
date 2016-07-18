@@ -146,7 +146,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 		
 		@Override
-		public Integer evaluate(Integer x) 
+		public Integer getValue(Integer x) 
 		{
 			return x + 10;
 		}

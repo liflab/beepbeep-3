@@ -45,7 +45,7 @@ public class Addition extends BinaryFunction<Number,Number,Number>
 	}
 
 	@Override
-	public Number evaluate(Number x, Number y) 
+	public Number getValue(Number x, Number y) 
 	{
 		return x.floatValue() + y.floatValue();
 	}

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 
 import org.junit.Test;
@@ -24,7 +26,7 @@ public class FunctionTest extends BeepBeepUnitTest
 	public void testAdditionOnce() throws ConnectorException
 	{
 		DummyUnaryFunction duf = new DummyUnaryFunction();
-		Integer i = duf.evaluate(0);
+		Integer i = duf.getValue(0);
 		assertNotNull(i);
 		assertEquals(0, i.intValue());
 	}
@@ -33,13 +35,28 @@ public class FunctionTest extends BeepBeepUnitTest
 	public void testAddition() throws ConnectorException
 	{
 		DummyAdditionFunction add = new DummyAdditionFunction();
-		Integer i = add.evaluate(2, 3);
+		Integer i = add.getValue(2, 3);
 		assertNotNull(i);
 		assertEquals(5, i.intValue());
 		add.reset();
-		i = add.evaluate(2, 3);
+		i = add.getValue(2, 3);
 		assertNotNull(i);
 		assertEquals(5, i.intValue());
+	}
+	
+	@Test
+	public void testAdditionPlaceaholder() throws ConnectorException
+	{
+		DummyAdditionFunction add = new DummyAdditionFunction();
+		Object[] arguments = new Object[2];
+		arguments[0] = 2;
+		arguments[1] = new Function.ArgumentPlaceholder("x");
+		Map<String,Object> context = new HashMap<String,Object>();
+		context.put("x", 3);
+		Object[] result = add.evaluate(arguments, context);
+		assertEquals(1, result.length);
+		assertNotNull(result[0]);
+		assertEquals(5, result[0]);
 	}
 
 	@Test
@@ -54,6 +71,38 @@ public class FunctionTest extends BeepBeepUnitTest
 			for (int i = 1; i <= 5; i++)
 			{
 				in.push(i);
+				Queue<Object> out = sink.getQueue(0);
+				assertFalse(out.isEmpty());
+				Object o = out.remove();
+				assertNotNull(o);
+				assertTrue("Expected Integer, got " + out.getClass().getName(), o instanceof Integer);
+				assertEquals(i, ((Integer) o).intValue());
+			}
+			fp.reset();
+		}
+	}
+	
+	@Test
+	public void testUnaryAsProcessorPlaceholder() throws ConnectorException
+	{
+		FunctionProcessor fp = new FunctionProcessor(new DummyUnaryFunction());
+		Pushable in = fp.getPushableInput(0);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(fp,  sink);
+		Function.ArgumentPlaceholder ap = new Function.ArgumentPlaceholder("x");
+		for (int j = 0; j < 2; j++)
+		{
+			for (int i = 1; i <= 5; i++)
+			{
+				fp.setContext("x", i);
+				if (i % 2 == 0)
+				{
+					in.push(ap);
+				}
+				else
+				{
+					in.push(i);
+				}
 				Queue<Object> out = sink.getQueue(0);
 				assertFalse(out.isEmpty());
 				Object o = out.remove();
@@ -143,7 +192,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		Integer i;
 		for (int c = 1; c <= 10; c++)
 		{
-			i = cf.evaluate(1);
+			i = cf.getValue(1);
 			assertEquals(c, i.intValue());
 		}
 	}
@@ -155,7 +204,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		Integer i;
 		for (int c = 1; c <= 10; c++)
 		{
-			i = cf.evaluate(1);
+			i = cf.getValue(1);
 			assertEquals(c, i.intValue());
 		}
 	}
@@ -175,7 +224,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		}
 		
 		@Override
-		public Integer evaluate(Integer x) 
+		public Integer getValue(Integer x) 
 		{
 			return x;
 		}
@@ -189,7 +238,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		}
 		
 		@Override
-		public Integer evaluate(Integer x, Integer y) 
+		public Integer getValue(Integer x, Integer y) 
 		{
 			return x.intValue() + y.intValue();
 		}
@@ -209,7 +258,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		}
 		
 		@Override
-		public Integer evaluate(Integer x, Integer y) 
+		public Integer getValue(Integer x, Integer y) 
 		{
 			return x.intValue() + y.intValue();
 		}

@@ -43,7 +43,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 	}
 
 	@Override
-	public T evaluate(T x) 
+	public T getValue(T x) 
 	{
 		if (m_lastValue == null)
 		{
@@ -52,7 +52,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 			m_lastValue = x;
 			return x;
 		}
-		T value = m_function.evaluate(m_lastValue, x);
+		T value = m_function.getValue(m_lastValue, x);
 		m_lastValue = value;
 		return value;
 	}

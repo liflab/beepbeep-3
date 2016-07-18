@@ -41,7 +41,7 @@ public class Power extends BinaryFunction<Number,Number,Number>
 	}
 
 	@Override
-	public Number evaluate(Number x, Number y) 
+	public Number getValue(Number x, Number y) 
 	{
 		return Math.pow(x.floatValue(), y.floatValue());
 	}

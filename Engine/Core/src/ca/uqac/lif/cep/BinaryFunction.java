@@ -8,7 +8,7 @@ import java.util.Set;
  * @param <V> The type of the second input
  * @param <U> The type of the output
  */
-public abstract class BinaryFunction<T,V,U> implements Function 
+public abstract class BinaryFunction<T,V,U> extends Function 
 {
 	/**
 	 * The class of the first input
@@ -45,7 +45,7 @@ public abstract class BinaryFunction<T,V,U> implements Function
 	public /*@NonNull*/ Object[] compute(/*@NonNull*/ Object[] inputs) 
 	{
 		Object[] out = new Object[1];
-		out[0] = evaluate((T) inputs[0], (V) inputs[1]);
+		out[0] = getValue((T) inputs[0], (V) inputs[1]);
 		return out;
 	}
 	
@@ -55,7 +55,7 @@ public abstract class BinaryFunction<T,V,U> implements Function
 	 * @param y The second argument
 	 * @return The return value of the function
 	 */
-	public abstract U evaluate(T x, V y); 
+	public abstract U getValue(T x, V y); 
 
 	@Override
 	public final int getInputArity() 

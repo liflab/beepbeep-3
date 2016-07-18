@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,12 +25,72 @@ import java.util.Set;
  * 
  * @author Sylvain Hallé
  */
-public interface Function extends Cloneable
+public abstract class Function implements Cloneable
 {
 	/**
 	 * The maximum input arity that a function can have
 	 */
 	public static int s_maxInputArity = 10;
+
+	/**
+	 * Evaluates the outputs of the function, given some inputs
+	 * @param inputs The arguments of the function. The size of the array
+	 *   should be equal to the function's declared input arity.
+	 * @param context The context in which the evaluation is done. If the
+	 *   function's arguments contains placeholders, they will be replaced
+	 *   by the corresponding object fetched from this map before
+	 *   calling {@link #compute(Object[])}
+	 * @return The outputs of the function. The size of the array returned
+	 *   should be equal to the function's declared output arity.
+	 */
+	public final Object[] evaluate(Object[] inputs, Map<String,Object> context)
+	{
+		// If no context is given, call compute() straight away
+		if (context == null)
+		{
+			return compute(inputs);
+		}
+		Object[] concrete_inputs = new Object[inputs.length];
+		// Check each of the concrete inputs if it is a placeholder
+		for (int i = 0; i < inputs.length; i++)
+		{
+			Object argument = inputs[i];
+			if (argument instanceof ArgumentPlaceholder)
+			{
+				// If so, fetch concrete object in context
+				ArgumentPlaceholder ap = (ArgumentPlaceholder) argument;
+				String ap_name = ap.getName();
+				if (context.containsKey(ap_name))
+				{
+					concrete_inputs[i] = context.get(ap_name);
+				}
+				else
+				{
+					// If we didn't find the value in the context, leave the argument
+					// as is and hope the function will know what to do with it
+					concrete_inputs[i] = argument;
+				}
+			}
+			else
+			{
+				concrete_inputs[i] = argument;
+			}
+		}
+		// Call compute() with concrete inputs
+		return compute(concrete_inputs);
+	}
+
+	/**
+	 * Evaluates the outputs of the function, given some inputs
+	 * @param inputs The arguments of the function. The size of the array
+	 *   should be equal to the function's declared input arity.
+	 * @return The outputs of the function. The size of the array returned
+	 *   should be equal to the function's declared output arity.
+	 */
+	public final Object[] evaluate(Object[] inputs)
+	{
+		return compute(inputs);
+	}
 	
 	/**
 	 * Computes the outputs of the function, given some inputs
@@ -38,14 +99,14 @@ public interface Function extends Cloneable
 	 * @return The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
 	 */
-	public Object[] compute(Object[] inputs);
+	public abstract Object[] compute(Object[] inputs);
 	
 	/**
 	 * Gets the function's input arity, i.e. the number of arguments
 	 * it takes.
 	 * @return The input arity
 	 */
-	public int getInputArity();
+	public abstract int getInputArity();
 	
 	/**
 	 * Gets the function's output arity, i.e. the number of elements
@@ -53,19 +114,19 @@ public interface Function extends Cloneable
 	 * arity of 1.)
 	 * @return The output arity
 	 */
-	public int getOutputArity();
+	public abstract int getOutputArity();
 	
 	/**
 	 * Resets the function to its initial state. In the case of a
 	 * stateless function, nothing requires to be done.
 	 */
-	public void reset();
+	public abstract void reset();
 	
 	/**
 	 * Creates a copy of the function
 	 * @return The copy
 	 */
-	public Function clone();
+	public abstract Function clone();
 	
 	/**
 	 * Populates the set of classes accepted by the function for its
@@ -73,7 +134,7 @@ public interface Function extends Cloneable
 	 * @param classes The set of to fill with classes
 	 * @param index The index of the input to query
 	 */
-	public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index);
+	public abstract void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index);
 	
 	/**
 	 * Returns the type of the events produced by the function for its
@@ -81,5 +142,48 @@ public interface Function extends Cloneable
 	 * @param index The index of the output to query
 	 * @return The type of the output
 	 */	
-	public Class<?> getOutputTypeFor(int index);
+	public abstract Class<?> getOutputTypeFor(int index);
+	
+	public static class ArgumentPlaceholder
+	{
+		/**
+		 * The name of this placeholder
+		 */
+		private final String m_name;
+		
+		/**
+		 * Creates a new argument placeholder
+		 * @param name The name of this placeholder
+		 */
+		public ArgumentPlaceholder(String name)
+		{
+			super();
+			m_name = name;
+		}
+		
+		/**
+		 * Gets the name of this placeholder
+		 * @return The name
+		 */
+		public String getName()
+		{
+			return m_name;
+		}
+		
+		@Override
+		public int hashCode()
+		{
+			return m_name.hashCode();
+		}
+		
+		@Override
+		public boolean equals(Object o)
+		{
+			if (o == null || !(o instanceof ArgumentPlaceholder))
+			{
+				return false;
+			}
+			return m_name.compareTo(((ArgumentPlaceholder) o).m_name) == 0;
+		}
+	}
 }

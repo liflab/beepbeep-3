@@ -18,7 +18,9 @@
 package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -93,6 +95,11 @@ public abstract class Processor implements Cloneable
 	 * The unique ID given to this processor instance 
 	 */
 	protected int m_uniqueId;
+	
+	/**
+	 * The context in which the processor is instantiated
+	 */
+	protected Map<String,Object> m_context;
 
 	/**
 	 * Initializes a processor. This has for effect of executing the basic
@@ -130,6 +137,63 @@ public abstract class Processor implements Cloneable
 		}
 		m_inputPullables = new Pullable[m_inputArity];
 		m_outputPushables = new Pushable[m_outputArity];
+		// The context object
+		m_context = null;
+	}
+	
+	/**
+	 * Creates a new empty context map
+	 * @return The context map
+	 */
+	protected final Map<String,Object> newContext()
+	{
+		return new HashMap<String,Object>();
+	}
+	
+	/**
+	 * Retrieves an object from the processor's context
+	 * @param key The key associated to that object
+	 * @return The object, or <code>null</code> if no object exists
+	 *   with such key
+	 */
+	public final Object getContext(String key)
+	{
+		if (m_context == null || !m_context.containsKey(key))
+		{
+			return null;
+		}
+		return m_context.get(key);
+	}
+	
+	/**
+	 * Adds an object to the processor's context
+	 * @param key The key associated to that object
+	 * @param value The object
+	 */
+	public final void setContext(String key, Object value)
+	{
+		// As the context map is created only on demand, we must first
+		// check if a map already exists and create it if not
+		if (m_context == null)
+		{
+			m_context = newContext();
+		}
+		m_context.put(key, value);
+	}
+	
+	/**
+	 * Adds a complete context to this processor
+	 * @param context The context to add
+	 */
+	public final void setContext(Map<String,Object> context)
+	{
+		// As the context map is created only on demand, we must first
+		// check if a map already exists and create it if not
+		if (m_context == null)
+		{
+			m_context = newContext();
+		}
+		m_context.putAll(context);		
 	}
 
 	@Override

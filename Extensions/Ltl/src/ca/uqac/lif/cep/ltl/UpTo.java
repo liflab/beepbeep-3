@@ -63,8 +63,8 @@ public class UpTo extends SingleProcessor
 		Value right = Troolean.trooleanValue(input[1]);
 		if (m_currentValue == Value.INCONCLUSIVE)
 		{
-			Value v_left = m_left.evaluate(left);
-			Value v_right = m_right.evaluate(right);
+			Value v_left = m_left.getValue(left);
+			Value v_right = m_right.getValue(right);
 			if (v_right == Value.TRUE)
 			{
 				m_currentValue = Value.TRUE;

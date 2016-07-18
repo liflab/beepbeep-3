@@ -48,7 +48,7 @@ public class XmlFeeder extends FunctionProcessor
 		}
 		
 		@Override
-		public /*@Nullable*/ XmlElement evaluate(String x)
+		public /*@Nullable*/ XmlElement getValue(String x)
 		{
 			try 
 			{

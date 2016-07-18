@@ -32,7 +32,7 @@ public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset>
 	}
 	
 	@Override
-	public Multiset evaluate(Multiset x, Multiset y) 
+	public Multiset getValue(Multiset x, Multiset y) 
 	{
 		return x.addAll(y);
 	}

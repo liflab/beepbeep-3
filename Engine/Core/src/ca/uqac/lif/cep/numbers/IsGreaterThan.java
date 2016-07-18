@@ -41,7 +41,7 @@ public class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
 	}
 
 	@Override
-	public Boolean evaluate(Number x, Number y) 
+	public Boolean getValue(Number x, Number y) 
 	{
 		return x.floatValue() > y.floatValue();
 	}

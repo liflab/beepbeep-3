@@ -55,7 +55,7 @@ public class JsonFeeder extends FunctionProcessor
 		}
 		
 		@Override
-		public /*@Nullable*/ JsonElement evaluate(String x)
+		public /*@Nullable*/ JsonElement getValue(String x)
 		{
 			try 
 			{

@@ -170,7 +170,7 @@ public class Troolean
 		}
 		
 		@Override
-		public Value evaluate(Value x, Value y) 
+		public Value getValue(Value x, Value y) 
 		{
 			return and(x, y);
 		}
@@ -194,7 +194,7 @@ public class Troolean
 		}
 		
 		@Override
-		public Value evaluate(Value x, Value y) 
+		public Value getValue(Value x, Value y) 
 		{
 			return or(x, y);
 		}
@@ -217,7 +217,7 @@ public class Troolean
 		}
 		
 		@Override
-		public Value evaluate(Value x) 
+		public Value getValue(Value x) 
 		{
 			return not(x);
 		}		

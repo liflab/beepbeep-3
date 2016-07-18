@@ -477,7 +477,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 		}
 		
 		@Override
-		public Boolean evaluate(Number x) 
+		public Boolean getValue(Number x) 
 		{
 			return x.floatValue() % 2 == 0;
 		}

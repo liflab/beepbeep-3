@@ -60,7 +60,7 @@ public class FunctionProcessor extends SingleProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		return wrapVector(m_function.compute(inputs));
+		return wrapVector(m_function.evaluate(inputs, m_context));
 	}
 	
 	@Override

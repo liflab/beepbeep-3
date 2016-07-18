@@ -57,7 +57,7 @@ public class XPathEvaluator extends FunctionProcessor
 		}
 		
 		@Override
-		public /*@NonNull*/ Collection<XmlElement> evaluate(/*NonNull*/ XmlElement x)
+		public /*@NonNull*/ Collection<XmlElement> getValue(/*NonNull*/ XmlElement x)
 		{
 			return m_expression.evaluate(x);
 		}

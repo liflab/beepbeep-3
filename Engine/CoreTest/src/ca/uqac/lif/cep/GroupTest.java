@@ -380,7 +380,7 @@ public class GroupTest extends BeepBeepUnitTest
 		}
 		
 		@Override
-		public Number evaluate(Number x)
+		public Number getValue(Number x)
 		{
 			return x.intValue() + m_increment;
 		}	

@@ -107,9 +107,19 @@ public class Multiset implements Set<Object>
 		{
 			m_map.put(o, 1);
 		}
-		int cardinality = m_map.get(o);
-		m_map.put(o,  cardinality + 1);
+		else
+		{
+			int cardinality = m_map.get(o);
+			m_map.put(o,  cardinality + 1);
+		}
 		return this;
+	}
+	
+	@Override
+	public boolean add(Object o)
+	{
+		addElement(o);
+		return true;
 	}
 	
 	/**
@@ -186,16 +196,18 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean add(Object arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean addAll(Collection<? extends Object> arg0) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		if (arg0 instanceof Multiset)
+		{
+			addAll((Multiset) arg0);
+			return true;
+		}
+		for (Object o : arg0)
+		{
+			addElement(o);
+		}
+		return true;
 	}
 
 	@Override
@@ -208,8 +220,7 @@ public class Multiset implements Set<Object>
 	@Override
 	public boolean isEmpty() 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return m_map.keySet().isEmpty();
 	}
 
 	@Override
@@ -222,8 +233,12 @@ public class Multiset implements Set<Object>
 	@Override
 	public boolean remove(Object arg0) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		if (!contains(arg0))
+		{
+			return false;
+		}
+		removeElement(arg0);
+		return true;
 	}
 
 	@Override
@@ -243,8 +258,7 @@ public class Multiset implements Set<Object>
 	@Override
 	public Object[] toArray() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return m_map.values().toArray();
 	}
 
 	@Override

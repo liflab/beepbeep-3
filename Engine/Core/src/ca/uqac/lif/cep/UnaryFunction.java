@@ -24,7 +24,7 @@ import java.util.Set;
  * @param <T> The type of the input
  * @param <U> The type of the output
  */
-public abstract class UnaryFunction<T,U> implements Function 
+public abstract class UnaryFunction<T,U> extends Function 
 {
 	/**
 	 * The class of the input
@@ -54,7 +54,7 @@ public abstract class UnaryFunction<T,U> implements Function
 	public Object[] compute(/*@NonNull*/ Object[] inputs) 
 	{
 		Object[] out = new Object[1];
-		out[0] = evaluate((T) inputs[0]);
+		out[0] = getValue((T) inputs[0]);
 		return out;
 	}
 	
@@ -63,7 +63,7 @@ public abstract class UnaryFunction<T,U> implements Function
 	 * @param x The argument
 	 * @return The return value of the function
 	 */
-	public abstract U evaluate(T x); 
+	public abstract U getValue(T x); 
 
 	@Override
 	public final int getInputArity() 

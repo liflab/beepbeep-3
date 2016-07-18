@@ -47,7 +47,7 @@ public class WindowFunctionTest
 		}
 
 		@Override
-		public Integer evaluate(Integer x, Integer y) 
+		public Integer getValue(Integer x, Integer y) 
 		{
 			return x.intValue() + y.intValue();
 		}
