@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.sets;
 
-import ca.uqac.lif.cep.BinaryFunction;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset> 
 {

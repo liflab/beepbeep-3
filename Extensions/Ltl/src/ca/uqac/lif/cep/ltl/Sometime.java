@@ -17,8 +17,8 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import ca.uqac.lif.cep.CumulativeFunction;
-import ca.uqac.lif.cep.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**

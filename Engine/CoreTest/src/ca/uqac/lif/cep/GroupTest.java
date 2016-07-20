@@ -30,6 +30,8 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.numbers.Addition;
 
 /**

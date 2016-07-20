@@ -15,10 +15,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.functions;
 
-import java.util.Map;
 import java.util.Set;
+
+import ca.uqac.lif.cep.Context;
 
 /**
  * Represents a stateless <i>m</i>-to-<i>n</i> function.
@@ -43,42 +44,7 @@ public abstract class Function implements Cloneable
 	 * @return The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
 	 */
-	public final Object[] evaluate(Object[] inputs, Map<String,Object> context)
-	{
-		// If no context is given, call compute() straight away
-		if (context == null)
-		{
-			return compute(inputs);
-		}
-		Object[] concrete_inputs = new Object[inputs.length];
-		// Check each of the concrete inputs if it is a placeholder
-		for (int i = 0; i < inputs.length; i++)
-		{
-			Object argument = inputs[i];
-			if (argument instanceof ArgumentPlaceholder)
-			{
-				// If so, fetch concrete object in context
-				ArgumentPlaceholder ap = (ArgumentPlaceholder) argument;
-				String ap_name = ap.getName();
-				if (context.containsKey(ap_name))
-				{
-					concrete_inputs[i] = context.get(ap_name);
-				}
-				else
-				{
-					// If we didn't find the value in the context, leave the argument
-					// as is and hope the function will know what to do with it
-					concrete_inputs[i] = argument;
-				}
-			}
-			else
-			{
-				concrete_inputs[i] = argument;
-			}
-		}
-		// Call compute() with concrete inputs
-		return compute(concrete_inputs);
-	}
+	public abstract Object[] evaluate(Object[] inputs, Context context);
 
 	/**
 	 * Evaluates the outputs of the function, given some inputs
@@ -87,19 +53,7 @@ public abstract class Function implements Cloneable
 	 * @return The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
 	 */
-	public final Object[] evaluate(Object[] inputs)
-	{
-		return compute(inputs);
-	}
-	
-	/**
-	 * Computes the outputs of the function, given some inputs
-	 * @param inputs The arguments of the function. The size of the array
-	 *   should be equal to the function's declared input arity.
-	 * @return The outputs of the function. The size of the array returned
-	 *   should be equal to the function's declared output arity.
-	 */
-	public abstract Object[] compute(Object[] inputs);
+	public abstract Object[] evaluate(Object[] inputs);
 	
 	/**
 	 * Gets the function's input arity, i.e. the number of arguments
@@ -142,48 +96,5 @@ public abstract class Function implements Cloneable
 	 * @param index The index of the output to query
 	 * @return The type of the output
 	 */	
-	public abstract Class<?> getOutputTypeFor(int index);
-	
-	public static class ArgumentPlaceholder
-	{
-		/**
-		 * The name of this placeholder
-		 */
-		private final String m_name;
-		
-		/**
-		 * Creates a new argument placeholder
-		 * @param name The name of this placeholder
-		 */
-		public ArgumentPlaceholder(String name)
-		{
-			super();
-			m_name = name;
-		}
-		
-		/**
-		 * Gets the name of this placeholder
-		 * @return The name
-		 */
-		public String getName()
-		{
-			return m_name;
-		}
-		
-		@Override
-		public int hashCode()
-		{
-			return m_name.hashCode();
-		}
-		
-		@Override
-		public boolean equals(Object o)
-		{
-			if (o == null || !(o instanceof ArgumentPlaceholder))
-			{
-				return false;
-			}
-			return m_name.compareTo(((ArgumentPlaceholder) o).m_name) == 0;
-		}
-	}
+	public abstract Class<?> getOutputTypeFor(int index);	
 }

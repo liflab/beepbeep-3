@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.sets;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.CumulativeFunction;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
 
 /**
  * Accumulates the received events cumulatively into a multiset.

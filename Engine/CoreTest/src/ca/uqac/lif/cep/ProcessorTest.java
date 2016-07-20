@@ -33,6 +33,10 @@ import ca.uqac.lif.cep.epl.CountDecimate;
 import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.numbers.Addition;
 
 public class ProcessorTest extends BeepBeepUnitTest

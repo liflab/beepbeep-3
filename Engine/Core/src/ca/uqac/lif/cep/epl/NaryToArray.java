@@ -15,41 +15,33 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.numbers;
+package ca.uqac.lif.cep.epl;
 
-import java.util.Stack;
+import java.util.Queue;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.SingleProcessor;
 
-public class Multiplication extends BinaryFunction<Number,Number,Number>
+/**
+ * Converts <i>n</i> input traces into a single output trace, whose events are
+ * arrays of <i>n</i> elements
+ * @author Sylvain Hallé
+ */
+public class NaryToArray extends SingleProcessor
 {
-	/**
-	 * Static reference to a single instance of the function
-	 */
-	public static final transient Multiplication instance = new Multiplication();
-	
-	private Multiplication()
+	public NaryToArray(int in_arity)
 	{
-		super(Number.class, Number.class, Number.class);
-	}
-	
-	public static void build(Stack<Object> stack) throws ConnectorException
-	{
-		stack.pop();
-		stack.push(instance);
+		super(in_arity, 1);
 	}
 
 	@Override
-	public Number getValue(Number x, Number y) 
+	protected Queue<Object[]> compute(Object[] inputs) 
 	{
-		return x.floatValue() * y.floatValue();
+		return wrapObject(inputs);
 	}
 
 	@Override
-	public Number getStartValue() 
+	public NaryToArray clone() 
 	{
-		return 1;
+		return new NaryToArray(getInputArity());
 	}
-
 }

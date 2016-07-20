@@ -19,7 +19,7 @@ package ca.uqac.lif.cep.sets;
 
 import java.util.Set;
 
-import ca.uqac.lif.cep.UnaryFunction;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
  * Evaluates the cardinality of a set or a multiset

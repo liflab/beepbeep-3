@@ -17,8 +17,8 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import ca.uqac.lif.cep.BinaryFunction;
-import ca.uqac.lif.cep.UnaryFunction;
+import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
  * Implementation of a three-valued logic. The "Troolean" type
@@ -65,6 +65,39 @@ public class Troolean
 		}
 		return Value.TRUE;
 	}
+	
+	public static Value and(Value[] values)
+	{
+		for (Value v : values)
+		{
+			if (v == Value.FALSE)
+			{
+				return Value.FALSE;
+			}
+			if (v == Value.INCONCLUSIVE)
+			{
+				return Value.INCONCLUSIVE;
+			}
+		}
+		return Value.TRUE;
+	}
+	
+	public static Value or(Value[] values)
+	{
+		for (Value v : values)
+		{
+			if (v == Value.TRUE)
+			{
+				return Value.TRUE;
+			}
+			if (v == Value.INCONCLUSIVE)
+			{
+				return Value.INCONCLUSIVE;
+			}
+		}
+		return Value.FALSE;
+	}
+
 	
 	/**
 	 * Computes the logical conjunction of two values

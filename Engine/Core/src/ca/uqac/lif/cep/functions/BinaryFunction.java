@@ -1,4 +1,4 @@
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
 
@@ -8,7 +8,7 @@ import java.util.Set;
  * @param <V> The type of the second input
  * @param <U> The type of the output
  */
-public abstract class BinaryFunction<T,V,U> extends Function 
+public abstract class BinaryFunction<T,V,U> extends SimpleFunction 
 {
 	/**
 	 * The class of the first input

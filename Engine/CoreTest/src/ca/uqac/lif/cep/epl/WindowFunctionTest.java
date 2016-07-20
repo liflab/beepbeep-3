@@ -6,9 +6,9 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BinaryFunction;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.Pushable;
 
 /**

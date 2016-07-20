@@ -15,41 +15,10 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.numbers;
 
-import java.util.Stack;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.BinaryFunction;
-
-public class Multiplication extends BinaryFunction<Number,Number,Number>
-{
-	/**
-	 * Static reference to a single instance of the function
-	 */
-	public static final transient Multiplication instance = new Multiplication();
-	
-	private Multiplication()
-	{
-		super(Number.class, Number.class, Number.class);
-	}
-	
-	public static void build(Stack<Object> stack) throws ConnectorException
-	{
-		stack.pop();
-		stack.push(instance);
-	}
-
-	@Override
-	public Number getValue(Number x, Number y) 
-	{
-		return x.floatValue() * y.floatValue();
-	}
-
-	@Override
-	public Number getStartValue() 
-	{
-		return 1;
-	}
-
-}
+/**
+ * Functions and function trees
+ * 
+ * @author Sylvain Hallé
+ */
+package ca.uqac.lif.cep.functions;

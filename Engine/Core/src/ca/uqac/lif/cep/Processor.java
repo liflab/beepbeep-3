@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Queue;
@@ -95,11 +94,11 @@ public abstract class Processor implements Cloneable
 	 * The unique ID given to this processor instance 
 	 */
 	protected int m_uniqueId;
-	
+
 	/**
 	 * The context in which the processor is instantiated
 	 */
-	protected Map<String,Object> m_context;
+	protected Context m_context;
 
 	/**
 	 * Initializes a processor. This has for effect of executing the basic
@@ -140,16 +139,16 @@ public abstract class Processor implements Cloneable
 		// The context object
 		m_context = null;
 	}
-	
+
 	/**
 	 * Creates a new empty context map
 	 * @return The context map
 	 */
-	protected final Map<String,Object> newContext()
+	protected final Context newContext()
 	{
-		return new HashMap<String,Object>();
+		return new Context();
 	}
-	
+
 	/**
 	 * Retrieves an object from the processor's context
 	 * @param key The key associated to that object
@@ -164,7 +163,7 @@ public abstract class Processor implements Cloneable
 		}
 		return m_context.get(key);
 	}
-	
+
 	/**
 	 * Adds an object to the processor's context
 	 * @param key The key associated to that object
@@ -180,7 +179,7 @@ public abstract class Processor implements Cloneable
 		}
 		m_context.put(key, value);
 	}
-	
+
 	/**
 	 * Adds a complete context to this processor
 	 * @param context The context to add
@@ -189,11 +188,14 @@ public abstract class Processor implements Cloneable
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
-		if (m_context == null)
+		if (context != null)
 		{
-			m_context = newContext();
+			if (m_context == null)
+			{
+				m_context = newContext();
+			}
+			m_context.putAll(context);
 		}
-		m_context.putAll(context);		
 	}
 
 	@Override
@@ -274,7 +276,7 @@ public abstract class Processor implements Cloneable
 			m_inputPullables[i] = p;
 		}
 	}
-	
+
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's
 	 * <i>i</i>-th input
@@ -360,7 +362,7 @@ public abstract class Processor implements Cloneable
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Extracts a processor out of the object passed as an argument. A
 	 * instance of Processor will be returned as is, while other objects
@@ -376,10 +378,10 @@ public abstract class Processor implements Cloneable
 		}
 		return new PullConstant(o);
 	}
-	
+
 	@Override
 	public abstract Processor clone();
-	
+
 	/**
 	 * Gets the type of events the processor accepts for its <i>i</i>-th
 	 * input trace. Note that this method returns a <em>set</em>, in the case
@@ -400,7 +402,7 @@ public abstract class Processor implements Cloneable
 		}
 		return classes;
 	}
-	
+
 	/**
 	 * Populates the set of classes accepted by the processor for its
 	 * <i>i</i>-th input
@@ -411,7 +413,7 @@ public abstract class Processor implements Cloneable
 	{
 		classes.add(Object.class);
 	}
-	
+
 	/**
 	 * Gets the type of events the processor produces for its <i>i</i>-th
 	 * output trace. 
@@ -428,7 +430,7 @@ public abstract class Processor implements Cloneable
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the type of the events produced by the processor for its
 	 * <i>i</i>-th output

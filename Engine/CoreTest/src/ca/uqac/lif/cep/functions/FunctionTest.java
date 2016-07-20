@@ -1,18 +1,27 @@
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.functions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Queue;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.BeepBeepUnitTest;
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.Palette;
+import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
+import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 
 /**
@@ -50,8 +59,8 @@ public class FunctionTest extends BeepBeepUnitTest
 		DummyAdditionFunction add = new DummyAdditionFunction();
 		Object[] arguments = new Object[2];
 		arguments[0] = 2;
-		arguments[1] = new Function.ArgumentPlaceholder("x");
-		Map<String,Object> context = new HashMap<String,Object>();
+		arguments[1] = new ArgumentPlaceholder("x");
+		Context context = new Context();
 		context.put("x", 3);
 		Object[] result = add.evaluate(arguments, context);
 		assertEquals(1, result.length);
@@ -89,7 +98,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		Pushable in = fp.getPushableInput(0);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fp,  sink);
-		Function.ArgumentPlaceholder ap = new Function.ArgumentPlaceholder("x");
+		ArgumentPlaceholder ap = new ArgumentPlaceholder("x");
 		for (int j = 0; j < 2; j++)
 		{
 			for (int i = 1; i <= 5; i++)

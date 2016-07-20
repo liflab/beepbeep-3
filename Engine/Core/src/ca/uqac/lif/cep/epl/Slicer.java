@@ -24,7 +24,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Function;
+import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -76,7 +76,7 @@ public class Slicer extends SingleProcessor
 	protected Queue<Object[]> compute(Object[] inputs) 
 	{
 		int output_arity = getOutputArity();
-		Object[] f_value = m_slicingFunction.compute(inputs);
+		Object[] f_value = m_slicingFunction.evaluate(inputs);
 		Object slice_id = f_value[0];
 		if (!m_slices.containsKey(slice_id))
 		{

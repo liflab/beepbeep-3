@@ -17,8 +17,8 @@
  */
 package ca.uqac.lif.cep.xml;
 
-import ca.uqac.lif.cep.FunctionProcessor;
-import ca.uqac.lif.cep.UnaryFunction;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.xml.XmlElement;
 import ca.uqac.lif.xml.XmlElement.XmlParseException;
 

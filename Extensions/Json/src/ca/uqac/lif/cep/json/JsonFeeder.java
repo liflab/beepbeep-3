@@ -17,8 +17,8 @@
  */
 package ca.uqac.lif.cep.json;
 
-import ca.uqac.lif.cep.FunctionProcessor;
-import ca.uqac.lif.cep.UnaryFunction;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonParser;
 import ca.uqac.lif.json.JsonParser.JsonParseException;

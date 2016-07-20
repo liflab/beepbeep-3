@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -21,14 +21,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Function;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.functions.Function;
 
 /**
  * Takes a sliding window of <i>n</i> successive input events,
  * passes them to an <i>n</i>-ary function and outputs the result.
  * This currently only works for functions with an output arity of 1.
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  */
 public class WindowFunction extends SingleProcessor
 {
@@ -77,11 +77,11 @@ public class WindowFunction extends SingleProcessor
 		if (size == m_width + 1)
 		{
 			m_window.remove(0);
-			return wrapObject(m_function.compute(m_window.toArray())[0]);
+			return wrapObject(m_function.evaluate(m_window.toArray())[0]);
 		}
 		if (size == m_width)
 		{
-			return wrapObject(m_function.compute(m_window.toArray())[0]);
+			return wrapObject(m_function.evaluate(m_window.toArray())[0]);
 		}
 		return null;
 	}

@@ -19,8 +19,8 @@ package ca.uqac.lif.cep.numbers;
 
 import java.util.Stack;
 
-import ca.uqac.lif.cep.BinaryFunction;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 public class Power extends BinaryFunction<Number,Number,Number>
 {

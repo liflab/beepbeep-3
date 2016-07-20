@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
 
@@ -24,7 +24,7 @@ import java.util.Set;
  * @param <T> The type of the input
  * @param <U> The type of the output
  */
-public abstract class UnaryFunction<T,U> extends Function 
+public abstract class UnaryFunction<T,U> extends SimpleFunction 
 {
 	/**
 	 * The class of the input

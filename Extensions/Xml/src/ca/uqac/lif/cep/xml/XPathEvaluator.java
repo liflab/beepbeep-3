@@ -19,8 +19,8 @@ package ca.uqac.lif.cep.xml;
 
 import java.util.Collection;
 
-import ca.uqac.lif.cep.FunctionProcessor;
-import ca.uqac.lif.cep.UnaryFunction;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.xml.XPathExpression;
 import ca.uqac.lif.xml.XmlElement;
 

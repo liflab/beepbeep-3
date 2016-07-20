@@ -19,7 +19,7 @@ package ca.uqac.lif.cep.sets;
 
 import java.util.Set;
 
-import ca.uqac.lif.cep.BinaryFunction;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
  * Evaluates if the first set is a subset or is equal to the second set.

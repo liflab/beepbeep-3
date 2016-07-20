@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.functions;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +23,9 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 
 /**

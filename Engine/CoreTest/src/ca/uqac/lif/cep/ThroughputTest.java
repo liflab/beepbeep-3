@@ -28,6 +28,8 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.numbers.Addition;
 
 public class ThroughputTest extends BeepBeepUnitTest

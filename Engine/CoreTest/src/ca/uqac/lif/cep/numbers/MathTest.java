@@ -30,15 +30,15 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Mutator;
-import ca.uqac.lif.cep.CumulativeFunction;
-import ca.uqac.lif.cep.CumulativeProcessor;
 import ca.uqac.lif.cep.Fork;
-import ca.uqac.lif.cep.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.epl.Filter;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.epl.Window;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
 
 /**
  * Unit tests for basic arithmetic functions
