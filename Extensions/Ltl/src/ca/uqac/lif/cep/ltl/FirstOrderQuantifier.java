@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -24,13 +24,13 @@ public abstract class FirstOrderQuantifier extends Spawn
 {
 	protected String m_variableName;
 	
-	protected Function m_domainFunction;
+	//protected Function m_domainFunction;
 	
-	public FirstOrderQuantifier(Processor p, Function split_function, String var_name, Function domain)
+	public FirstOrderQuantifier(String var_name, Function split_function, Processor p)
 	{
 		super(p, split_function);
 		m_variableName = var_name;
-		m_domainFunction = domain;
+		//m_domainFunction = domain;
 	}
 
 	@Override
@@ -38,8 +38,9 @@ public abstract class FirstOrderQuantifier extends Spawn
 	{
 		Object[] input = new Object[1];
 		input[0] = slice;
-		Object[] values = m_domainFunction.evaluate(input, m_context);
-		Object value = values[0];
-		p.setContext(m_variableName, value);
+		//Object[] values = m_domainFunction.evaluate(input, m_context);
+		//Object value = values[0];
+		//p.setContext(m_variableName, value);
+		p.setContext(m_variableName, slice);
 	}
 }

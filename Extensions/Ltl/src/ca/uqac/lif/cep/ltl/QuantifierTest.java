@@ -33,7 +33,7 @@ public class QuantifierTest
 		tree.setChild(0, new TracePlaceholder(0));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll(gt, new DummyCollectionFunction(), "x", new DummyDomainFunction());
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
 		Pushable in = fa.getPushableInput(0);
@@ -53,7 +53,7 @@ public class QuantifierTest
 		tree.setChild(0, new TracePlaceholder(0));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll(gt, new DummyCollectionFunction(), "x", new DummyDomainFunction());
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
 		Pushable in = fa.getPushableInput(0);
@@ -68,9 +68,47 @@ public class QuantifierTest
 		assertFalse(queue.isEmpty());
 		output = queue.remove();
 		assertEquals(Troolean.Value.FALSE, (Troolean.Value) output);
-
+	}
+	
+	@Test
+	public void testExists1() throws ConnectorException
+	{
+		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		tree.setChild(0, new TracePlaceholder(0));
+		tree.setChild(1, new ArgumentPlaceholder("x"));
+		FunctionProcessor gt = new FunctionProcessor(tree);
+		Exists fa = new Exists("x", new DummyCollectionFunction(), gt);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(fa, sink);
+		Pushable in = fa.getPushableInput(0);
+		Queue<Object> queue = sink.getQueue(0);
+		in.push(0);
+		assertFalse(queue.isEmpty());
+		Object output = queue.remove();
+		assertNotNull(output);
+		assertTrue(output instanceof Troolean.Value);
+		assertEquals(Troolean.Value.FALSE, (Troolean.Value) output);
 	}
 
+	@Test
+	public void testExists2() throws ConnectorException
+	{
+		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		tree.setChild(0, new TracePlaceholder(0));
+		tree.setChild(1, new ArgumentPlaceholder("x"));
+		FunctionProcessor gt = new FunctionProcessor(tree);
+		Exists fa = new Exists("x", new DummyCollectionFunction(), gt);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(fa, sink);
+		Pushable in = fa.getPushableInput(0);
+		Queue<Object> queue = sink.getQueue(0);
+		in.push(2);
+		assertFalse(queue.isEmpty());
+		Object output = queue.remove();
+		assertNotNull(output);
+		assertTrue(output instanceof Troolean.Value);
+		assertEquals(Troolean.Value.TRUE, (Troolean.Value) output);
+	}
 
 	@SuppressWarnings("rawtypes")
 	public static class DummyCollectionFunction extends UnaryFunction<Object,Set>

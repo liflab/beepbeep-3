@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -23,9 +23,9 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class Exists extends FirstOrderQuantifier
 {
-	public Exists(Processor p, Function split_function, String var_name, Function domain)
+	public Exists(String var_name, Function split_function, Processor p)
 	{
-		super(p, split_function, var_name, domain);
+		super(var_name, split_function, p);
 	}
 
 	@Override
