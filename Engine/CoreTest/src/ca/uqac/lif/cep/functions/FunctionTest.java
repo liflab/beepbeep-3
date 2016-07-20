@@ -54,7 +54,7 @@ public class FunctionTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testAdditionPlaceaholder() throws ConnectorException
+	public void testAdditionPlaceholder() throws ConnectorException
 	{
 		DummyAdditionFunction add = new DummyAdditionFunction();
 		Object[] arguments = new Object[2];

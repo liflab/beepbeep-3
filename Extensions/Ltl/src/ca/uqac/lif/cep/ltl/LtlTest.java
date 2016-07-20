@@ -34,9 +34,9 @@ import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
+import ca.uqac.lif.cep.ltl.Troolean.Value;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tuples.TupleGrammar;
-import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Unit tests for the LTL operators

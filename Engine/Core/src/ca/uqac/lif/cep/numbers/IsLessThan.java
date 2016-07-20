@@ -22,14 +22,14 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
-public class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
+public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
 {
 	/**
 	 * A static instance of the function
 	 */
-	public static final transient IsGreaterThan instance = new IsGreaterThan();
+	public static final transient IsLessThan instance = new IsLessThan();
 	
-	private IsGreaterThan()
+	private IsLessThan()
 	{
 		super(Number.class, Number.class, Boolean.class);
 	}
@@ -37,13 +37,13 @@ public class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop();
-		stack.push(IsGreaterThan.instance);
+		stack.push(IsLessThan.instance);
 	}
 
 	@Override
 	public Boolean getValue(Number x, Number y) 
 	{
-		return x.floatValue() > y.floatValue();
+		return x.floatValue() < y.floatValue();
 	}
 
 	@Override

@@ -83,7 +83,16 @@ public class FunctionTree extends Function
 	@Override
 	public int getInputArity()
 	{
-		return m_function.getInputArity();
+		int max_arity = 0;
+		for (Function child : m_children)
+		{
+			if (child instanceof TracePlaceholder)
+			{
+				max_arity = Math.max(max_arity, ((TracePlaceholder) child).getIndex() + 1);
+			}
+		}
+		return max_arity;
+		//return m_function.getInputArity();
 	}
 
 	@Override
