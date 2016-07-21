@@ -22,6 +22,7 @@ import java.util.Collection;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.xml.XPathExpression;
+import ca.uqac.lif.xml.XPathExpression.XPathParseException;
 import ca.uqac.lif.xml.XmlElement;
 
 public class XPathEvaluator extends FunctionProcessor
@@ -40,6 +41,13 @@ public class XPathEvaluator extends FunctionProcessor
 		 * The XPath expression this function evaluates
 		 */
 		private final XPathExpression m_expression;
+		
+		@SuppressWarnings("unchecked")
+		public XPathFunction(String exp)
+		{
+			super(XmlElement.class, (Class<Collection<XmlElement>>) (Object) Collection.class);
+			m_expression = parseExpression(exp);
+		}
 		
 		/**
 		 * Creates a new XPath function
@@ -60,6 +68,31 @@ public class XPathEvaluator extends FunctionProcessor
 		public /*@NonNull*/ Collection<XmlElement> getValue(/*NonNull*/ XmlElement x)
 		{
 			return m_expression.evaluate(x);
+		}
+		
+		/**
+		 * Parses an XPath expression from a string
+		 * @param s The string to parse
+		 * @return An expression, or <code>null</code> if the parsing failed
+		 */
+		protected XPathExpression parseExpression(String s)
+		{
+			XPathExpression out =  null;
+			try 
+			{
+				out = XPathExpression.parse(s);
+			} 
+			catch (XPathParseException e) 
+			{
+				// Silently fail
+			}
+			return out;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return m_expression.toString();
 		}
 	}
 }
