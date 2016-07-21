@@ -134,4 +134,28 @@ public class FunctionTree extends Function
 	{
 		return m_function.getOutputTypeFor(index);
 	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		if (m_children.length == 2)
+		{
+			out.append("[").append(m_children[0]).append("]").append(m_function).append("[").append(m_children[1]).append("]");
+		}
+		else
+		{
+			out.append(m_function).append("[");
+			for (int i = 0; i < m_children.length; i++)
+			{
+				if (i > 0)
+				{
+					out.append(",");
+				}
+				out.append(m_children[i]);
+			}
+			out.append("]");
+		}
+		return out.toString();
+	}
 }
