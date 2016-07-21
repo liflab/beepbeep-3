@@ -78,8 +78,19 @@ public abstract class Function implements Cloneable
 	
 	/**
 	 * Creates a copy of the function
+	 * @param context The context in which to clone this function
 	 * @return The copy
 	 */
+	public Function clone(Context context)
+	{
+		return clone();
+	}
+	
+	/**
+	 * Creates a copy of the function
+	 * @return The copy
+	 */
+	@Override
 	public abstract Function clone();
 	
 	/**
@@ -97,4 +108,23 @@ public abstract class Function implements Cloneable
 	 * @return The type of the output
 	 */	
 	public abstract Class<?> getOutputTypeFor(int index);	
+	
+	/**
+	 * Sets a context for the evaluation of this function
+	 * @param context The context
+	 */
+	public void setContext(Context context)
+	{
+		// Do nothing
+	}
+	
+	/**
+	 * Sets a context for the evaluation of this function
+	 * @param key The key
+	 * @param value The value
+	 */
+	public void setContext(String key, Object value)
+	{
+		// Do nothing
+	}
 }

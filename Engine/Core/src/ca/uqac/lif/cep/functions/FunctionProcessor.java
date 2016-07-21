@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -69,7 +70,7 @@ public class FunctionProcessor extends SingleProcessor
 	@Override
 	public FunctionProcessor clone()
 	{
-		FunctionProcessor out = new FunctionProcessor(m_function.clone());
+		FunctionProcessor out = new FunctionProcessor(m_function.clone(m_context));
 		return out;
 	}
 	
@@ -126,5 +127,18 @@ public class FunctionProcessor extends SingleProcessor
 		// The type is determined by that of the underlying function
 		return m_function.getOutputTypeFor(index);
 	}
-
+	
+	@Override
+	public void setContext(Context context)
+	{
+		super.setContext(context);
+		m_function.setContext(context);
+	}
+	
+	@Override
+	public void setContext(String key, Object value)
+	{
+		super.setContext(key, value);
+		m_function.setContext(key, value);
+	}
 }

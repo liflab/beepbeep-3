@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -169,7 +168,7 @@ public abstract class Processor implements Cloneable
 	 * @param key The key associated to that object
 	 * @param value The object
 	 */
-	public final void setContext(String key, Object value)
+	public void setContext(String key, Object value)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -184,7 +183,7 @@ public abstract class Processor implements Cloneable
 	 * Adds a complete context to this processor
 	 * @param context The context to add
 	 */
-	public final void setContext(Map<String,Object> context)
+	public void setContext(Context context)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not

@@ -109,6 +109,10 @@ public class FunctionTree extends Function
 			{
 				max_arity = Math.max(max_arity, ((TracePlaceholder) child).getIndex() + 1);
 			}
+			else
+			{
+				max_arity = Math.max(max_arity, child.getInputArity());
+			}
 		}
 		return max_arity;
 		//return m_function.getInputArity();
@@ -176,5 +180,27 @@ public class FunctionTree extends Function
 			out.append("]");
 		}
 		return out.toString();
+	}
+	
+	@Override
+	public void setContext(Context context)
+	{
+		super.setContext(context);
+		m_function.setContext(context);
+		for (Function f : m_children)
+		{
+			f.setContext(context);
+		}
+	}
+	
+	@Override
+	public void setContext(String key, Object value)
+	{
+		super.setContext(key, value);
+		m_function.setContext(key, value);
+		for (Function f : m_children)
+		{
+			f.setContext(key, value);
+		}
 	}
 }
