@@ -17,127 +17,14 @@
  */
 package ca.uqac.lif.cep.xml;
 
-import java.util.Collection;
 
 import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.xml.TextElement;
 import ca.uqac.lif.xml.XPathExpression;
-import ca.uqac.lif.xml.XPathExpression.XPathParseException;
-import ca.uqac.lif.xml.XmlElement;
 
 public class XPathEvaluator extends FunctionProcessor
 {	
 	public XPathEvaluator(XPathExpression exp)
 	{
 		super(new XPathFunction(exp));
-	}
-	
-	/**
-	 * Function that converts a string into an XML element
-	 */
-	public static class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElement>> 
-	{
-		/**
-		 * The XPath expression this function evaluates
-		 */
-		private final XPathExpression m_expression;
-		
-		@SuppressWarnings("unchecked")
-		public XPathFunction(String exp)
-		{
-			super(XmlElement.class, (Class<Collection<XmlElement>>) (Object) Collection.class);
-			m_expression = parseExpression(exp);
-		}
-		
-		/**
-		 * Creates a new XPath function
-		 * @param exp The XPath expression to evaluate
-		 */
-		@SuppressWarnings("unchecked")
-		public XPathFunction(XPathExpression exp)
-		{
-			/* The double cast below is a bit of trickery to pass the
-			 * runtime type of the collection. It was found here:
-			 * http://stackoverflow.com/a/30754982
-			 */
-			super(XmlElement.class, (Class<Collection<XmlElement>>) (Object) Collection.class);
-			m_expression = exp;
-		}
-		
-		@Override
-		public /*@NonNull*/ Collection<XmlElement> getValue(/*NonNull*/ XmlElement x)
-		{
-			return m_expression.evaluate(x);
-		}
-		
-		/**
-		 * Parses an XPath expression from a string
-		 * @param s The string to parse
-		 * @return An expression, or <code>null</code> if the parsing failed
-		 */
-		public static XPathExpression parseExpression(String s)
-		{
-			XPathExpression out =  null;
-			try 
-			{
-				out = XPathExpression.parse(s);
-			} 
-			catch (XPathParseException e) 
-			{
-				// Silently fail
-			}
-			return out;
-		}
-		
-		@Override
-		public String toString()
-		{
-			return m_expression.toString();
-		}
-	}
-	
-	/**
-	 * Utility function to evaluate an XPath expression, ending with 
-	 * a <code>text()</code> element
-	 */
-	public static class XPathFunctionGetText extends UnaryFunction<XmlElement,String>
-	{	
-		/**
-		 * The expression to evaluate
-		 */
-		protected final XPathExpression m_expression;
-		
-		public XPathFunctionGetText(String exp)
-		{
-			super(XmlElement.class, String.class);
-			m_expression = XPathFunction.parseExpression(exp);
-		}
-		
-		public XPathFunctionGetText(XPathExpression exp)
-		{
-			super(XmlElement.class, String.class);
-			m_expression = exp;
-		}
-
-		@Override
-		public String getValue(XmlElement x)
-		{
-			Collection<XmlElement> col = m_expression.evaluate(x);
-			for (XmlElement xe : col)
-			{
-				if (xe instanceof TextElement)
-				{
-					return ((TextElement) xe).getText();
-				}
-			}
-			return null;
-		}
-		
-		@Override
-		public String toString()
-		{
-			return m_expression.toString();
-		}
 	}
 }
