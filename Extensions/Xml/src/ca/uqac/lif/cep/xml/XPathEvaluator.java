@@ -21,6 +21,7 @@ import java.util.Collection;
 
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.xml.TextElement;
 import ca.uqac.lif.xml.XPathExpression;
 import ca.uqac.lif.xml.XPathExpression.XPathParseException;
 import ca.uqac.lif.xml.XmlElement;
@@ -75,7 +76,7 @@ public class XPathEvaluator extends FunctionProcessor
 		 * @param s The string to parse
 		 * @return An expression, or <code>null</code> if the parsing failed
 		 */
-		protected XPathExpression parseExpression(String s)
+		public static XPathExpression parseExpression(String s)
 		{
 			XPathExpression out =  null;
 			try 
@@ -87,6 +88,50 @@ public class XPathEvaluator extends FunctionProcessor
 				// Silently fail
 			}
 			return out;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return m_expression.toString();
+		}
+	}
+	
+	/**
+	 * Utility function to evaluate an XPath expression, ending with 
+	 * a <code>text()</code> element
+	 */
+	public static class XPathFunctionGetText extends UnaryFunction<XmlElement,String>
+	{	
+		/**
+		 * The expression to evaluate
+		 */
+		protected final XPathExpression m_expression;
+		
+		public XPathFunctionGetText(String exp)
+		{
+			super(XmlElement.class, String.class);
+			m_expression = XPathFunction.parseExpression(exp);
+		}
+		
+		public XPathFunctionGetText(XPathExpression exp)
+		{
+			super(XmlElement.class, String.class);
+			m_expression = exp;
+		}
+
+		@Override
+		public String getValue(XmlElement x)
+		{
+			Collection<XmlElement> col = m_expression.evaluate(x);
+			for (XmlElement xe : col)
+			{
+				if (xe instanceof TextElement)
+				{
+					return ((TextElement) xe).getText();
+				}
+			}
+			return null;
 		}
 		
 		@Override
