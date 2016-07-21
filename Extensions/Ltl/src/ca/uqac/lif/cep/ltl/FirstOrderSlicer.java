@@ -36,6 +36,8 @@ public abstract class FirstOrderSlicer extends GroupProcessor
 		CumulativeProcessor merge = new CumulativeProcessor(getMergeFunction());
 		Connector.connect(slicer, merge);
 		addProcessors(slicer, merge);
+		associateInput(0, slicer, 0);
+		associateOutput(0, merge, 0);
 	}
 	
 	protected abstract CumulativeFunction<Value> getMergeFunction(); 
