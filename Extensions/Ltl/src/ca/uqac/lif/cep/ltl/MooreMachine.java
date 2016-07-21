@@ -237,6 +237,13 @@ public class MooreMachine extends SingleProcessor
 		{
 			return 0;
 		}
+		
+		@Override
+		public Transition clone()
+		{
+			Transition out = new Transition(this);
+			return out;
+		}
 	}
 	
 	/**
@@ -274,6 +281,12 @@ public class MooreMachine extends SingleProcessor
 		{
 			return m_destination;
 		}
+		
+		@Override
+		public TransitionOtherwise clone()
+		{
+			return new TransitionOtherwise(this);
+		}
 	}
 	
 	@Override
@@ -289,8 +302,9 @@ public class MooreMachine extends SingleProcessor
 			List<Transition> new_lt = new ArrayList<Transition>();
 			for (Transition t : lt)
 			{
-				new_lt.add(new Transition(t));
+				new_lt.add(t.clone());
 			}
+			out.m_relation.put(k, new_lt);
 		}
 		return out;
 	}
