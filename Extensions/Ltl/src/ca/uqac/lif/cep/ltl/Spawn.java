@@ -275,29 +275,19 @@ public class Spawn extends Processor
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected void spawn(Object o)
 	{
-		Object[] inputs = new Object[1];
-		inputs[0] = o;
-		Object[] function_value = m_splitFunction.evaluate(inputs, m_context);
-		Collection<Object> values = null;
-		if (function_value[0] instanceof Collection)
-		{
-			values = (Collection<Object>) function_value[0];
-		}
-		else
-		{
-			values = new HashSet<Object>();
-			values.add(function_value[0]);
-		}		
 		try 
 		{
+			Collection<?> values = getDomain(o);
 			int size = values.size();
+			// Create a fork for as many values in the domain
 			m_fork = new SmartFork(values.size());
 			m_inputPushable.setPushable(m_fork.getPushableInput(0));
 			m_instances = new Processor[size];
+			// Create a join to collate the output of each spawned instance
 			m_joinProcessor = new NaryToArray(size);
+			// Spawn one new internal processor per value
 			int i = 0;
 			for (Object slice : values)
 			{
@@ -305,7 +295,9 @@ public class Spawn extends Processor
 				new_p.setContext(m_context);
 				addContextFromSlice(new_p, slice);
 				m_instances[i] = new_p;
+				// Connect its input to the fork
 				Connector.connect(m_fork, new_p, i, 0);
+				// Connect its output to the join
 				Connector.connect(new_p, m_joinProcessor, 0, i);
 				i++;
 			}
@@ -317,6 +309,40 @@ public class Spawn extends Processor
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected /*@NotNull*/ Collection<Object> getDomain(Object o)
+	{
+		/* TODO: there are *lots* of null checks in this method, just to
+		 * fend off whatever the split function returns. A couple of these
+		 * checks could probably be removed, given the proper preconditions.
+		 */
+		Object[] inputs = new Object[1];
+		inputs[0] = o;
+		Object[] function_value = m_splitFunction.evaluate(inputs, m_context);
+		Collection<Object> values = new HashSet<Object>();
+		Object value = function_value[0];
+		if (value == null)
+		{
+			return values;
+		}
+		if (value instanceof Collection)
+		{
+			Collection<Object> coll = (Collection<Object>) value;
+			for (Object element : coll)
+			{
+				if (element != null)
+				{
+					values.add(element);
+				}
+			}
+		}
+		else
+		{
+			values.add(function_value[0]);
+		}
+		return values;
 	}
 
 	public void addContextFromSlice(Processor p, Object slice)
