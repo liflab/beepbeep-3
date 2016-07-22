@@ -25,25 +25,33 @@ public class ForAll extends FirstOrderQuantifier
 {
 	public ForAll(String var_name, Function split_function, Processor p)
 	{
-		super(var_name, split_function, p);
+		super(var_name, split_function, p, ArrayAnd.instance);
 	}
 
 	@Override
-	public Object evaluate(Object[] values) 
+	public ForAll clone() 
 	{
-		Value[] t_values = new Value[values.length];
-		for (int i = 0; i < values.length; i++)
+		ForAll out = new ForAll(m_variableName, m_splitFunction.clone(m_context), m_processor.clone());
+		return out;
+	}
+	
+	public static class ArrayAnd extends ArrayTroolean
+	{
+		public static final transient ArrayAnd instance = new ArrayAnd();
+		
+		@Override
+		public Value[] compute(Object[] inputs)
 		{
-			t_values[i] = Troolean.trooleanValue(values[i]);
+			Value[] out = new Value[1];
+			Object[] val_array = (Object[]) inputs[0];
+			out[0] = Troolean.and(Troolean.trooleanValues(val_array));
+			return out;
 		}
-		return Troolean.and(t_values);
-	}
 
-	@Override
-	public Processor clone() 
-	{
-		// TODO Auto-generated method stub
-		return null;
+		@Override
+		public Function clone()
+		{
+			return this;
+		}
 	}
-
 }

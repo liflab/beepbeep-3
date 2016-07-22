@@ -25,25 +25,35 @@ public class Exists extends FirstOrderQuantifier
 {
 	public Exists(String var_name, Function split_function, Processor p)
 	{
-		super(var_name, split_function, p);
+		super(var_name, split_function, p, ArrayOr.instance);
 	}
 
 	@Override
-	public Object evaluate(Object[] values) 
+	public Exists clone() 
 	{
-		Value[] t_values = new Value[values.length];
-		for (int i = 0; i < values.length; i++)
+		Exists out = new Exists(m_variableName, m_splitFunction.clone(m_context), m_processor.clone());
+		return out;
+	}
+	
+	public static class ArrayOr extends ArrayTroolean
+	{
+		public static final transient ArrayOr instance = new ArrayOr();
+		
+		@Override
+		public Value[] compute(Object[] inputs)
 		{
-			t_values[i] = Troolean.trooleanValue(values[i]);
+			Value[] out = new Value[1];
+			Object[] val_array = (Object[]) inputs[0];
+			out[0] = Troolean.or(Troolean.trooleanValues(val_array));
+			return out;
 		}
-		return Troolean.or(t_values);
+
+		@Override
+		public Function clone()
+		{
+			return this;
+		}
 	}
 
-	@Override
-	public Processor clone() 
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

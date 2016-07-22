@@ -141,4 +141,19 @@ public class FunctionProcessor extends SingleProcessor
 		super.setContext(key, value);
 		m_function.setContext(key, value);
 	}
+	
+	@Override
+	public String toString()
+	{
+		return m_function.toString();
+	}
+	
+	/**
+	 * Gets the function associated to that processor
+	 * @return The function
+	 */
+	public Function getFunction()
+	{
+		return m_function;
+	}
 }

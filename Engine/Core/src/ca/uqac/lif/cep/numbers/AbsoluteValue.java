@@ -40,4 +40,10 @@ public class AbsoluteValue extends UnaryFunction<Number,Number>
 	{
 		return Math.abs(x.floatValue());
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "ABS";
+	}
 }

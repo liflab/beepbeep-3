@@ -52,4 +52,10 @@ public class Multiplication extends BinaryFunction<Number,Number,Number>
 		return 1;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "*";
+	}
+
 }

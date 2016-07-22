@@ -51,4 +51,11 @@ public class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
 	{
 		return false;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return ">";
+	}
+
 }

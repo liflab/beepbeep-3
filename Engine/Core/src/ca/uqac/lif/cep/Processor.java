@@ -48,7 +48,7 @@ public abstract class Processor implements Cloneable
 	 * The processor's input arity, i.e. the number of input events it requires
 	 * to produce an output
 	 */
-	protected final int m_inputArity;
+	protected int m_inputArity;
 
 	/**
 	 * The processor's output arity, i.e. the number of output
@@ -61,7 +61,7 @@ public abstract class Processor implements Cloneable
 	 * be stored before the processor consumes them. There are as many
 	 * input queues as the input arity of the processor.
 	 */
-	protected final Queue<Object>[] m_inputQueues;
+	protected Queue<Object>[] m_inputQueues;
 
 	/**
 	 * An array of output event queues. This is where the output events will

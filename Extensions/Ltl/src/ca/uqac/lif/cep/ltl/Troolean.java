@@ -191,6 +191,23 @@ public class Troolean
 		}
 		return Value.INCONCLUSIVE;
 	}
+	
+	/**
+	 * Converts an array of objects into an array of Trooleans.
+	 * Each element is converted by calling {@link #trooleanValue(Object)}
+	 * on it.
+	 * @param values The original array of objects
+	 * @return The array of Troolean values
+	 */
+	public static Value[] trooleanValues(Object[] values)
+	{
+		Value[] out_values = new Value[values.length];
+		for (int i = 0; i < values.length; i++)
+		{
+			out_values[i] = trooleanValue(values[i]);
+		}
+		return out_values;
+	}
 
 	/**
 	 * Logical conjunction lifted into a binary function

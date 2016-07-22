@@ -17,8 +17,11 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.Set;
+
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SimpleFunction;
 
 public abstract class FirstOrderQuantifier extends Spawn 
 {
@@ -26,9 +29,9 @@ public abstract class FirstOrderQuantifier extends Spawn
 	
 	//protected Function m_domainFunction;
 	
-	public FirstOrderQuantifier(String var_name, Function split_function, Processor p)
+	public FirstOrderQuantifier(String var_name, Function split_function, Processor p, Function combine_function)
 	{
-		super(p, split_function);
+		super(p, split_function, combine_function);
 		m_variableName = var_name;
 		//m_domainFunction = domain;
 	}
@@ -38,9 +41,39 @@ public abstract class FirstOrderQuantifier extends Spawn
 	{
 		Object[] input = new Object[1];
 		input[0] = slice;
-		//Object[] values = m_domainFunction.evaluate(input, m_context);
-		//Object value = values[0];
-		//p.setContext(m_variableName, value);
 		p.setContext(m_variableName, slice);
+	}
+	
+	public static abstract class ArrayTroolean extends SimpleFunction
+	{
+		@Override
+		public int getInputArity() 
+		{
+			return 1;
+		}
+
+		@Override
+		public int getOutputArity()
+		{
+			return 1;
+		}
+
+		@Override
+		public void reset()
+		{
+			// Nothing to do
+		}
+
+		@Override
+		public void getInputTypesFor(Set<Class<?>> classes, int index)
+		{
+			classes.add(Troolean.Value.class);
+		}
+
+		@Override
+		public Class<?> getOutputTypeFor(int index)
+		{
+			return Troolean.Value.class;
+		}
 	}
 }

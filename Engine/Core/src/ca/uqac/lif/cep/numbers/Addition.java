@@ -55,5 +55,10 @@ public class Addition extends BinaryFunction<Number,Number,Number>
 	{
 		return 0;
 	}
-
+	
+	@Override
+	public String toString()
+	{
+		return "+";
+	}
 }

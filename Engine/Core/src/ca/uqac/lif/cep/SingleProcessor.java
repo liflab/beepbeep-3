@@ -59,7 +59,7 @@ public abstract class SingleProcessor extends Processor
 	}
 
 	@Override
-	public final Pullable getPullableOutput(int index)
+	public Pullable getPullableOutput(int index)
 	{
 		if (index >= 0 && index < m_outputArity)
 		{
@@ -159,6 +159,7 @@ public abstract class SingleProcessor extends Processor
 						for (int i = 0; i < m_outputPushables.length; i++)
 						{
 							Pushable p = m_outputPushables[i];
+							assert p != null;
 							p.push(evt[i]);
 						}
 					}

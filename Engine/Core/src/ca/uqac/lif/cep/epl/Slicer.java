@@ -139,6 +139,6 @@ public class Slicer extends SingleProcessor
 	@Override
 	public Slicer clone()
 	{
-		return new Slicer(m_slicingFunction.clone(), m_processor.clone());
+		return new Slicer(m_slicingFunction.clone(m_context), m_processor.clone());
 	}
 }

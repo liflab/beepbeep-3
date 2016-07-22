@@ -1,42 +1,33 @@
-/*
-    BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ca.uqac.lif.cep.ltl;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.HashSet;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SmartFork;
 import ca.uqac.lif.cep.epl.NaryToArray;
-import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
 
-public abstract class Spawn extends SingleProcessor 
-{
+public class Spawn extends Processor
+{	
 	/**
 	 * The internal processor to evaluate the quantifier on
 	 */
 	protected Processor m_processor;
-	
+
+	/**
+	 * The function to evaluate to create each instance of the quantifier.
+	 * This function must return a <code>Collection</code> of objects;
+	 * one instance of the internal processor will be created for each
+	 * element of the collection.
+	 */
+	protected Function m_splitFunction;
+
 	/**
 	 * Each instance of the processor spawned by the evaluation of the
 	 * quantifier
@@ -44,121 +35,299 @@ public abstract class Spawn extends SingleProcessor
 	protected Processor[] m_instances;
 	
 	/**
+	 * The fork used to split the input to the multiple instances of the
+	 * processor
+	 */
+	protected SmartFork m_fork;
+
+	/**
 	 * The passthrough synchronizing the output of each processor instance
 	 */
-	protected NaryToArray m_join;
+	protected NaryToArray m_joinProcessor;
+
+	/**
+	 * The function processor used to combine the values of each
+	 * instance 
+	 */
+	protected FunctionProcessor m_combineProcessor;
 	
 	/**
-	 * The sink collecting the output of each processor instance
+	 * The pushable that will detect when the first event comes
 	 */
-	protected QueueSink m_sink;
+	protected SentinelPushable m_inputPushable;
 	
 	/**
-	 * The function to evaluate to create each instance of the quantifier.
-	 * This function must return a <code>Collection</code> of objects;
-	 * one instance of the internal processor will be created for each
-	 * element of the collection.
+	 * The pullable that will detect when the first event is requested
 	 */
-	protected Function m_function;
+	protected SentinelPullable m_outputPullable;
 	
-	/**
-	 * Instantiates a new quantifier
-	 * @param p The processor to evaluate the quantifier on
-	 */
-	public Spawn(Processor p, Function split_function)
+	private Spawn()
 	{
-		super(p.getInputArity(), 1);
+		super(1, 1);
+	}
+
+	public Spawn(Processor p, Function split_function, Function combine_function)
+	{
+		super(1, 1);
 		m_processor = p;
+		m_splitFunction = split_function;
+		m_combineProcessor = new FunctionProcessor(combine_function);
 		m_instances = null;
-		m_function = split_function;
+		m_fork = null;
+		m_inputPushable = new SentinelPushable();
+		m_outputPullable = new SentinelPullable();
 	}
 	
 	@Override
-	public Queue<Object[]> compute(Object[] inputs)
+	public Pushable getPushableInput(int index)
 	{
-		if (m_instances == null)
+		if (index != 0)
 		{
-			spawn(inputs);
+			return null;
 		}
-		// Pass current event to each processor
-		for (Processor p : m_instances)
-		{
-			for (int i = 0; i < inputs.length; i++)
-			{
-				Pushable pushable = p.getPushableInput(i);
-				pushable.push(inputs[i]);
-			}
-		}
-		// Retrieve event from each queue
-		Queue<Object> queue = m_sink.getQueue(0);
-		Queue<Object[]> out_queue = new LinkedList<Object[]>();
-		while (!queue.isEmpty())
-		{
-			Object[] values = (Object[]) queue.remove();
-			Object o = evaluate(values);
-			Object[] o_a = new Object[1];
-			o_a[0] = o;
-			out_queue.add(o_a);
-		}
-		return out_queue;
+		return m_inputPushable;
 	}
 	
-	/**
-	 * From the current input events, creates one instance of the internal
-	 * processor for each slice computed by the slicing function
-	 * @param inputs The input events
-	 */
-	protected void spawn(Object[] inputs)
+	@Override
+	public void setPullableInput(int index, Pullable p)
 	{
-		Object[] function_value = m_function.evaluate(inputs, m_context);
+		m_inputPushable.setPullable(p);
+	}
+	
+	@Override
+	public Pullable getPullableOutput(int index)
+	{
+		if (index != 0)
+		{
+			return null;
+		}
+		return m_outputPullable;
+	}
+	
+	@Override
+	public void setPushableOutput(int index, Pushable p)
+	{
+		//m_outputPullable.setPushable(p);
+		m_outputPullable.setPushable(p);
+	}
+	
+	protected class SentinelPushable implements Pushable
+	{
+		protected Pushable m_pushable = null;
+		
+		protected Pullable m_pullable = null;
+		
+		public SentinelPushable()
+		{
+			super();
+		}
+		
+		public void setPushable(Pushable p)
+		{
+			m_pushable = p;
+			if (m_fork != null && m_pullable != null)
+			{
+				m_fork.setPullableInput(0, m_pullable);
+			}
+		}
+
+		@Override
+		public Pushable push(Object o)
+		{
+			if (m_pushable == null)
+			{
+				spawn(o);
+			}
+			return m_pushable.push(o);
+		}
+
+		@Override
+		public int getPushCount()
+		{
+			if (m_pushable == null)
+			{
+				return 0;
+			}
+			return m_pushable.getPushCount();
+		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return Spawn.this;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return 0;
+		}
+		
+		public void setPullable(Pullable p)
+		{
+			m_pullable = p;
+			if (m_fork != null)
+			{
+				m_fork.setPullableInput(0, m_pullable);
+			}
+		}
+		
+		public Pullable getPullable()
+		{
+			return m_pullable;
+		}
+	}
+	
+	protected class SentinelPullable implements Pullable
+	{
+		protected Pullable m_pullable = null;
+		
+		protected Pushable m_pushable = null;
+		
+		public SentinelPullable()
+		{
+			super();
+		}
+		
+		@Override
+		public Object pull()
+		{
+			if (m_pullable == null)
+			{
+				Object o = m_inputPushable.getPullable().pullHard();
+				spawn(o);
+			}
+			return m_pullable.pull();
+		}
+
+		@Override
+		public Object pullHard()
+		{
+			if (m_pullable == null)
+			{
+				Object o = m_inputPushable.getPullable().pullHard();
+				spawn(o);
+			}
+			return m_pullable.pullHard();
+		}
+
+		@Override
+		public NextStatus hasNext()
+		{
+			if (m_pullable == null)
+			{
+				Object o = m_inputPushable.getPullable().pullHard();
+				spawn(o);
+			}
+			return m_pullable.hasNext();
+		}
+
+		@Override
+		public NextStatus hasNextHard()
+		{
+			if (m_pullable == null)
+			{
+				Object o = m_inputPushable.getPullable().pullHard();
+				spawn(o);
+			}
+			return m_pullable.hasNextHard();
+		}
+
+		@Override
+		public int getPullCount() 
+		{
+			return m_pullable.getPullCount();
+		}
+
+		@Override
+		public Processor getProcessor()
+		{
+			return Spawn.this;
+		}
+
+		@Override
+		public int getPosition()
+		{
+			return 0;
+		}
+		
+		public void setPullable(Pullable p)
+		{
+			m_pullable = p;
+			if (m_combineProcessor != null && m_pushable != null)
+			{
+				m_combineProcessor.setPushableOutput(0, m_pushable);
+			}
+		}
+		
+		public void setPushable(Pushable p)
+		{
+			m_pushable = p;
+			if (m_combineProcessor != null)
+			{
+				m_combineProcessor.setPushableOutput(0, m_pushable);
+			}
+		}
+		
+		public Pushable getPushable()
+		{
+			return m_pushable;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void spawn(Object o)
+	{
+		Object[] inputs = new Object[1];
+		inputs[0] = o;
+		Object[] function_value = m_splitFunction.evaluate(inputs, m_context);
+		Collection<Object> values = null;
 		if (function_value[0] instanceof Collection)
 		{
-			Collection<?> collection = (Collection<?>) function_value[0];
-			m_instances = new Processor[collection.size()];
-			m_join = new NaryToArray(collection.size());
-			m_sink = new QueueSink(1);
-			int i = 0;
-			for (Object slice : collection)
-			{
-				createAndConnect(i++, slice);
-			}
-			try 
-			{
-				Connector.connect(m_join, m_sink);
-			} 
-			catch (ConnectorException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			values = (Collection<Object>) function_value[0];
 		}
 		else
 		{
-			// The function returned a single element which is not a
-			// collection: create a single instance with that value
-			m_instances = new Processor[1];
-			createAndConnect(0, function_value);
-		}
-	}
-	
-	protected void createAndConnect(int index, Object slice)
-	{
-		Processor new_p = m_processor.clone();
-		new_p.setContext(m_context);
-		addContextFromSlice(new_p, slice);
-		m_instances[index] = new_p;
+			values = new HashSet<Object>();
+			values.add(function_value[0]);
+		}		
 		try 
 		{
-			Connector.connect(new_p, m_join, 0, index);
-		} 
+			int size = values.size();
+			m_fork = new SmartFork(values.size());
+			m_inputPushable.setPushable(m_fork.getPushableInput(0));
+			m_instances = new Processor[size];
+			m_joinProcessor = new NaryToArray(size);
+			int i = 0;
+			for (Object slice : values)
+			{
+				Processor new_p = m_processor.clone();
+				new_p.setContext(m_context);
+				addContextFromSlice(new_p, slice);
+				m_instances[i] = new_p;
+				Connector.connect(m_fork, new_p, i, 0);
+				Connector.connect(new_p, m_joinProcessor, 0, i);
+				i++;
+			}
+			Connector.connect(m_joinProcessor, m_combineProcessor, 0, 0);
+			m_outputPullable.setPullable(m_combineProcessor.getPullableOutput(0));
+		}
 		catch (ConnectorException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	public void addContextFromSlice(Processor p, Object slice)
+	{
+		// Do nothing
+	}
 	
-	public abstract void addContextFromSlice(Processor p, Object slice);
-	
-	public abstract Object evaluate(Object[] values);
+	@Override
+	public Spawn clone()
+	{
+		Spawn out = new Spawn(m_processor.clone(), m_splitFunction.clone(), m_combineProcessor.getFunction().clone());
+		return out;
+	}
 }
