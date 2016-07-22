@@ -43,6 +43,11 @@ public class Troolean
 	public static final transient TrooleanOr OR_FUNCTION = new TrooleanOr();
 	
 	/**
+	 * Static reference to the Implies function
+	 */
+	public static final transient TrooleanImplies IMPLIES_FUNCTION = new TrooleanImplies();
+	
+	/**
 	 * Static reference to the negation function
 	 */
 	public static final transient TrooleanNot NOT_FUNCTION = new TrooleanNot();
@@ -114,6 +119,44 @@ public class Troolean
 		if (x == Value.INCONCLUSIVE || y == Value.INCONCLUSIVE)
 		{
 			return Value.INCONCLUSIVE;
+		}
+		return Value.FALSE;
+	}
+	
+	/**
+	 * Computes the logical implication of two values
+	 * @param a The first value
+	 * @param b The second value
+	 * @return The result
+	 */
+	public static Value implies(Value x, Value y)
+	{
+		if (x == Value.FALSE || y == Value.TRUE)
+		{
+			return Value.TRUE;
+		}
+		if (x == Value.INCONCLUSIVE || y == Value.INCONCLUSIVE)
+		{
+			return Value.INCONCLUSIVE;
+		}
+		return Value.FALSE;
+	}
+
+	/*
+	 * Implies does not make much sense with more than two arguments...
+	 */
+	public static Value implies(Value[] values)
+	{
+		for (Value v : values)
+		{
+			if (v == Value.FALSE)
+			{
+				return Value.TRUE;
+			}
+			if (v == Value.INCONCLUSIVE)
+			{
+				return Value.INCONCLUSIVE;
+			}
 		}
 		return Value.FALSE;
 	}
@@ -247,6 +290,29 @@ public class Troolean
 		public Value getValue(Value x, Value y) 
 		{
 			return or(x, y);
+		}
+		
+		@Override
+		public Value getStartValue()
+		{
+			return Value.INCONCLUSIVE;
+		}
+	}
+	
+	/**
+	 * Logical disjunction lifted into a binary function
+	 */
+	private static class TrooleanImplies extends BinaryFunction<Value,Value,Value>
+	{
+		TrooleanImplies()
+		{
+			super(Value.class, Value.class, Value.class);
+		}
+		
+		@Override
+		public Value getValue(Value x, Value y) 
+		{
+			return implies(x, y);
 		}
 		
 		@Override
