@@ -86,7 +86,7 @@ public class QuantifierTest
 		in.push(10);
 		assertFalse(queue.isEmpty());
 		output = queue.remove();
-		assertEquals(Troolean.Value.FALSE, (Troolean.Value) output);
+		assertEquals(Troolean.Value.TRUE, (Troolean.Value) output);
 	}
 	
 	@Test
@@ -147,6 +147,24 @@ public class QuantifierTest
 		assertNotNull(output);
 		assertTrue(output instanceof Troolean.Value);
 		assertEquals(Troolean.Value.TRUE, (Troolean.Value) output);
+	}
+	
+	@Test
+	public void testForAllPull5() throws ConnectorException
+	{
+		QueueSource source = new QueueSource(0, 1);
+		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		tree.setChild(0, new ArgumentPlaceholder("y"));
+		tree.setChild(1, new ArgumentPlaceholder("x"));
+		FunctionProcessor gt = new FunctionProcessor(tree);
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(2), gt);
+		ForAll fa2 = new ForAll("y", new DummyCollectionFunction(1), fa);
+		Connector.connect(source, fa2);
+		Pullable out = fa2.getPullableOutput(0);
+		Object output = out.pullHard();
+		assertNotNull(output);
+		assertTrue(output instanceof Troolean.Value);
+		assertEquals(Troolean.Value.FALSE, (Troolean.Value) output);
 	}
 	
 	@Test

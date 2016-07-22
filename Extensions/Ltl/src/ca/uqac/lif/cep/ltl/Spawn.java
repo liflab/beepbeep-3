@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
@@ -72,10 +73,12 @@ public class Spawn extends Processor
 		m_processor = p;
 		m_splitFunction = split_function;
 		m_combineProcessor = new FunctionProcessor(combine_function);
+		m_combineProcessor.setContext(m_context);
 		m_instances = null;
 		m_fork = null;
 		m_inputPushable = new SentinelPushable();
 		m_outputPullable = new SentinelPullable();
+		//m_processor.setPullableInput(0, m_outputPullable);
 	}
 	
 	@Override
@@ -86,6 +89,20 @@ public class Spawn extends Processor
 			return null;
 		}
 		return m_inputPushable;
+	}
+	
+	@Override
+	public void setContext(Context context)
+	{
+		super.setContext(context);
+		m_combineProcessor.setContext(context);
+	}
+	
+	@Override
+	public void setContext(String key, Object value)
+	{
+		super.setContext(key, value);
+		m_combineProcessor.setContext(key, value);
 	}
 	
 	@Override
@@ -196,6 +213,9 @@ public class Spawn extends Processor
 			{
 				Object o = m_inputPushable.getPullable().pullHard();
 				spawn(o);
+				// Re-put o in fork's queue so that it can process it
+				m_fork.putInQueue(o);
+				//m_fork.getPushableInput(0).push(o);
 			}
 			return m_pullable.pull();
 		}
@@ -206,7 +226,11 @@ public class Spawn extends Processor
 			if (m_pullable == null)
 			{
 				Object o = m_inputPushable.getPullable().pullHard();
+				System.out.println("Getting " + o);
 				spawn(o);
+				// Re-put o in fork's queue so that it can process it
+				m_fork.putInQueue(o);
+				//m_fork.getPushableInput(0).push(o);
 			}
 			return m_pullable.pullHard();
 		}
@@ -218,6 +242,9 @@ public class Spawn extends Processor
 			{
 				Object o = m_inputPushable.getPullable().pullHard();
 				spawn(o);
+				// Re-put o in fork's queue so that it can process it
+				m_fork.putInQueue(o);
+				//m_fork.getPushableInput(0).push(o);
 			}
 			return m_pullable.hasNext();
 		}
@@ -229,6 +256,9 @@ public class Spawn extends Processor
 			{
 				Object o = m_inputPushable.getPullable().pullHard();
 				spawn(o);
+				// Re-put o in fork's queue so that it can process it
+				m_fork.putInQueue(o);
+				//m_fork.getPushableInput(0).push(o);
 			}
 			return m_pullable.hasNextHard();
 		}
@@ -287,6 +317,7 @@ public class Spawn extends Processor
 			m_instances = new Processor[size];
 			// Create a join to collate the output of each spawned instance
 			m_joinProcessor = new NaryToArray(size);
+			m_joinProcessor.setContext(m_context);
 			// Spawn one new internal processor per value
 			int i = 0;
 			for (Object slice : values)
@@ -353,7 +384,8 @@ public class Spawn extends Processor
 	@Override
 	public Spawn clone()
 	{
-		Spawn out = new Spawn(m_processor.clone(), m_splitFunction.clone(), m_combineProcessor.getFunction().clone());
+		Spawn out = new Spawn(m_processor.clone(), m_splitFunction.clone(m_context), m_combineProcessor.getFunction().clone(m_context));
+		out.setContext(m_context);
 		return out;
 	}
 }

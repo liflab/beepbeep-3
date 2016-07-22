@@ -31,7 +31,8 @@ public class Exists extends FirstOrderQuantifier
 	@Override
 	public Exists clone() 
 	{
-		Exists out = new Exists(m_variableName, m_splitFunction.clone(m_context), m_processor.clone());
+		Exists out = new Exists(m_variableName, m_spawn.m_splitFunction.clone(m_context), m_spawn.m_processor.clone());
+		out.setContext(m_context);
 		return out;
 	}
 	
@@ -55,5 +56,9 @@ public class Exists extends FirstOrderQuantifier
 		}
 	}
 
-
+	@Override
+	public String toString()
+	{
+		return "exists " + m_variableName + " in " + m_spawn.m_splitFunction.toString();
+	}
 }

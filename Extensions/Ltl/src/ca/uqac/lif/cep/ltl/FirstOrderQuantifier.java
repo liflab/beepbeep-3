@@ -17,31 +17,91 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.Set;
 
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.SimpleFunction;
+import ca.uqac.lif.cep.ltl.Troolean.Value;
 
-public abstract class FirstOrderQuantifier extends Spawn 
+public abstract class FirstOrderQuantifier extends GroupProcessor 
 {
 	protected String m_variableName;
 	
-	//protected Function m_domainFunction;
+	protected FirstOrderSpawn m_spawn;
 	
 	public FirstOrderQuantifier(String var_name, Function split_function, Processor p, Function combine_function)
 	{
-		super(p, split_function, combine_function);
-		m_variableName = var_name;
-		//m_domainFunction = domain;
+		super(1, 1);
+		m_spawn = new FirstOrderSpawn(var_name, split_function, p, combine_function);
+		addProcessor(m_spawn);
+		SentinelPassthrough spt = new SentinelPassthrough();
+		addProcessor(spt);
+		try 
+		{
+			Connector.connect(m_spawn, spt);
+		} 
+		catch (ConnectorException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		associateInput(0, m_spawn, 0);
+		associateOutput(0, spt, 0);
 	}
-
-	@Override
-	public void addContextFromSlice(Processor p, Object slice) 
+	
+	protected class FirstOrderSpawn extends Spawn
 	{
-		Object[] input = new Object[1];
-		input[0] = slice;
-		p.setContext(m_variableName, slice);
+		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function)
+		{
+			super(p, split_function, combine_function);
+			m_variableName = var_name;
+			//m_domainFunction = domain;
+		}
+
+		@Override
+		public void addContextFromSlice(Processor p, Object slice) 
+		{
+			Object[] input = new Object[1];
+			input[0] = slice;
+			p.setContext(m_variableName, slice);
+		}
+	}
+	
+	protected class SentinelPassthrough extends SingleProcessor
+	{
+		protected Troolean.Value m_definiteValue = Value.INCONCLUSIVE;
+		
+		public SentinelPassthrough()
+		{
+			super(1, 1);
+		}
+
+		@Override
+		protected Queue<Object[]> compute(Object[] inputs)
+		{
+			if (m_definiteValue == Value.INCONCLUSIVE && ((Troolean.Value) inputs[0]) != Value.INCONCLUSIVE)
+			{
+				m_definiteValue = (Troolean.Value) inputs[0];
+			}
+			if (m_definiteValue != Value.INCONCLUSIVE)
+			{
+				return wrapObject(m_definiteValue);
+			}
+			return new ArrayDeque<Object[]>();
+		}
+
+		@Override
+		public SentinelPassthrough clone() 
+		{
+			return new SentinelPassthrough();
+		}
 	}
 	
 	public static abstract class ArrayTroolean extends SimpleFunction
@@ -76,4 +136,5 @@ public abstract class FirstOrderQuantifier extends Spawn
 			return Troolean.Value.class;
 		}
 	}
+
 }

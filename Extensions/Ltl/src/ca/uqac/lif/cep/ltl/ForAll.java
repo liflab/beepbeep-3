@@ -31,7 +31,8 @@ public class ForAll extends FirstOrderQuantifier
 	@Override
 	public ForAll clone() 
 	{
-		ForAll out = new ForAll(m_variableName, m_splitFunction.clone(m_context), m_processor.clone());
+		ForAll out = new ForAll(m_variableName, m_spawn.m_splitFunction.clone(m_context), m_spawn.m_processor.clone());
+		out.setContext(m_context);
 		return out;
 	}
 	
@@ -53,5 +54,11 @@ public class ForAll extends FirstOrderQuantifier
 		{
 			return this;
 		}
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "forall " + m_variableName + " in " + m_spawn.m_splitFunction.toString();
 	}
 }

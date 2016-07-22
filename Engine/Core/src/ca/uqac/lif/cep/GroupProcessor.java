@@ -301,6 +301,7 @@ public class GroupProcessor extends Processor
 				start = p;
 			}
 			Processor clone_p = p.clone();
+			clone_p.setContext(p.m_context);
 			new_procs.put(p.getId(), clone_p);
 			group.addProcessor(clone_p);
 		}
@@ -358,6 +359,23 @@ public class GroupProcessor extends Processor
 				}
 			}
 		}
-
+	}
+	
+	@Override
+	public void setContext(Context context)
+	{
+		for (Processor p : m_processors)
+		{
+			p.setContext(context);
+		}
+	}
+	
+	@Override
+	public void setContext(String key, Object value)
+	{
+		for (Processor p : m_processors)
+		{
+			p.setContext(key, value);
+		}
 	}
 }

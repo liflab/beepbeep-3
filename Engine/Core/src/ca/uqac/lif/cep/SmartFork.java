@@ -103,6 +103,17 @@ public final class SmartFork extends Processor
 		}
 		m_timeSinceLastClean = 0;
 	}
+	
+	/**
+	 * Directly puts an event in the fork's input queue. Note that
+	 * this bypasses the normal flow of events between processors, and
+	 * should be used with much caution.
+	 * @param o The event to insert 
+	 */
+	public void putInQueue(Object o)
+	{
+		m_inputEvents.add(o);
+	}
 
 	@Override
 	public Pushable getPushableInput(int index)
