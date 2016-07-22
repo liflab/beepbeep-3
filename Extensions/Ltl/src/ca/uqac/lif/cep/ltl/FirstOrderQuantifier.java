@@ -24,6 +24,7 @@ import java.util.Set;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
@@ -34,26 +35,33 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 {
 	protected String m_variableName;
 	
+	protected SentinelIn m_sentinelIn;
+	
 	protected FirstOrderSpawn m_spawn;
+	
+	protected SentinelOut m_sentinelOut;
 	
 	public FirstOrderQuantifier(String var_name, Function split_function, Processor p, Function combine_function)
 	{
 		super(1, 1);
+		m_sentinelIn = new SentinelIn();
+		addProcessor(m_sentinelIn);
 		m_spawn = new FirstOrderSpawn(var_name, split_function, p, combine_function);
 		addProcessor(m_spawn);
-		SentinelPassthrough spt = new SentinelPassthrough();
-		addProcessor(spt);
+		m_sentinelOut = new SentinelOut();
+		addProcessor(m_sentinelOut);
 		try 
 		{
-			Connector.connect(m_spawn, spt);
+			Connector.connect(m_sentinelIn, m_spawn);
+			Connector.connect(m_spawn, m_sentinelOut);
 		} 
 		catch (ConnectorException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		associateInput(0, m_spawn, 0);
-		associateOutput(0, spt, 0);
+		associateInput(0, m_sentinelIn, 0);
+		associateOutput(0, m_sentinelOut, 0);
 	}
 	
 	protected class FirstOrderSpawn extends Spawn
@@ -74,11 +82,25 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 		}
 	}
 	
-	protected class SentinelPassthrough extends SingleProcessor
+	protected class SentinelIn extends Passthrough
+	{
+		public SentinelIn()
+		{
+			super(1);
+		}
+
+		@Override
+		public SentinelIn clone() 
+		{
+			return new SentinelIn();
+		}
+	}
+	
+	protected class SentinelOut extends SingleProcessor
 	{
 		protected Troolean.Value m_definiteValue = Value.INCONCLUSIVE;
 		
-		public SentinelPassthrough()
+		public SentinelOut()
 		{
 			super(1, 1);
 		}
@@ -86,21 +108,34 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 		@Override
 		protected Queue<Object[]> compute(Object[] inputs)
 		{
-			if (m_definiteValue == Value.INCONCLUSIVE && ((Troolean.Value) inputs[0]) != Value.INCONCLUSIVE)
-			{
-				m_definiteValue = (Troolean.Value) inputs[0];
-			}
 			if (m_definiteValue != Value.INCONCLUSIVE)
 			{
+				return wrapObject(m_definiteValue);
+			}
+			if (inputs[0] instanceof Troolean.Value && ((Troolean.Value) inputs[0]) != Value.INCONCLUSIVE)
+			{
+				m_definiteValue = (Troolean.Value) inputs[0];
+				// Bypass the first-order quantifier once a definite
+				// value was obtained. This is done by repiping the "in" sentinel
+				// directly to the "out" sentinel
+				try 
+				{
+					Connector.connect(m_sentinelIn, this);
+				} 
+				catch (ConnectorException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				return wrapObject(m_definiteValue);
 			}
 			return new ArrayDeque<Object[]>();
 		}
 
 		@Override
-		public SentinelPassthrough clone() 
+		public SentinelOut clone() 
 		{
-			return new SentinelPassthrough();
+			return new SentinelOut();
 		}
 	}
 	
