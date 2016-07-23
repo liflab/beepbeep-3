@@ -15,47 +15,43 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.ltl;
+package ca.uqac.lif.cep.numbers;
 
-import java.util.Stack;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.Processor;
-
-public class Implies extends FunctionProcessor 
+/**
+ * Computes the signum of its argument
+ * @author Sylvain Hallé
+ */
+public class Signum extends UnaryFunction<Number,Number> 
 {
-	public Implies()
-	{
-		super(Troolean.IMPLIES_FUNCTION);
-	}
+	/**
+	 * A static instance of absolute value
+	 */
+	public static final transient Signum instance = new Signum();
 	
-	public static void build(Stack<Object> stack) throws ConnectorException 
+	private Signum()
 	{
-		stack.pop(); // (
-		Processor right = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // op
-		stack.pop(); // (
-		Processor left = (Processor) stack.pop();
-		stack.pop(); // )
-		Implies op = new Implies();
-		Connector.connect(left, op, 0, 0);
-		Connector.connect(right, op, 0, 1);
-		stack.push(op);
+		super(Number.class, Number.class);
 	}
-	
+
 	@Override
-	public Implies clone()
+	public Number getValue(Number x)
 	{
-		return new Implies();
+		if (x.floatValue() < 0)
+		{
+			return -1;
+		}
+		if (x.floatValue() > 0)
+		{
+			return 1;
+		}
+		return 0;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "IMPLIES";
+		return "SIG";
 	}
-
 }

@@ -249,6 +249,32 @@ public class GroupTest extends BeepBeepUnitTest
 		assertTrue(queue2.isEmpty());
 	}
 	
+	/**
+	 * Try to clone a group processor that is already connected
+	 * to something else
+	 * @throws ConnectorException
+	 */
+	@Test
+	public void testClone5() throws ConnectorException
+	{
+		Passthrough pt1 = new Passthrough(2);
+		Passthrough pt2 = new Passthrough(2);
+		Connector.connect(pt1, pt2, 0, 1);
+		Connector.connect(pt1, pt2, 1, 0);
+		GroupProcessor gp = new GroupProcessor(2, 2);
+		gp.addProcessor(pt1);
+		gp.addProcessor(pt2);
+		gp.associateInput(0, pt1, 0);
+		gp.associateInput(1, pt1, 1);
+		gp.associateOutput(0, pt2, 0);
+		gp.associateOutput(1, pt2, 1);
+		QueueSource qs = new QueueSource(0, 2);
+		Connector.connect(qs, gp);
+		GroupProcessor gp_clone = gp.clone();
+		QueueSource qs2 = new QueueSource(100, 2);
+		Connector.connect(qs2, gp_clone);
+	}
+	
 	@Test
 	public void testGroupPull1() throws ConnectorException
 	{

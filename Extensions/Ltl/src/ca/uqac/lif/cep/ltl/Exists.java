@@ -23,6 +23,11 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class Exists extends FirstOrderQuantifier
 {
+	Exists()
+	{
+		super();
+	}
+	
 	public Exists(String var_name, Function split_function, Processor p)
 	{
 		super(var_name, split_function, p, ArrayOr.instance);
@@ -31,7 +36,9 @@ public class Exists extends FirstOrderQuantifier
 	@Override
 	public Exists clone() 
 	{
-		Exists out = new Exists(m_variableName, m_spawn.m_splitFunction.clone(m_context), m_spawn.m_processor.clone());
+		Exists out = new Exists();
+		super.cloneInto(out);
+		out.m_variableName = m_variableName;
 		out.setContext(m_context);
 		return out;
 	}

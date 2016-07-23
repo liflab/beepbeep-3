@@ -286,11 +286,9 @@ public class GroupProcessor extends Processor
 		}
 		return null;
 	}
-
-	@Override
-	public GroupProcessor clone()
+	
+	public Map<Integer,Processor> cloneInto(GroupProcessor group)
 	{
-		GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
 		Map<Integer,Processor> new_procs = new HashMap<Integer,Processor>();
 		Processor start = null;
 		// Clone every processor of the original group
@@ -322,6 +320,14 @@ public class GroupProcessor extends Processor
 		// Re-pipe the internal processors like in the original group
 		CopyCrawler cc = new CopyCrawler(new_procs);
 		cc.crawl(start);
+		return new_procs;
+	}
+
+	@Override
+	public GroupProcessor clone()
+	{
+		GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
+		cloneInto(group);
 		return group;
 	}
 
@@ -348,31 +354,38 @@ public class GroupProcessor extends Processor
 					int j = push.getPosition();
 					Processor new_p = m_correspondences.get(p.getId());
 					Processor new_target = m_correspondences.get(target.getId());
-					try 
+					if (new_p != null && new_target != null)
 					{
-						Connector.connect(new_p, new_target, i, j);
-					} 
-					catch (ConnectorException e) 
-					{
-						e.printStackTrace();
+						// new_p and new_target may be null if they refer to a processor
+						// outside of the group
+						try 
+						{
+							Connector.connect(new_p, new_target, i, j);
+						} 
+						catch (ConnectorException e) 
+						{
+							e.printStackTrace();
+						}
 					}
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void setContext(Context context)
 	{
+		super.setContext(context);
 		for (Processor p : m_processors)
 		{
 			p.setContext(context);
 		}
 	}
-	
+
 	@Override
 	public void setContext(String key, Object value)
 	{
+		super.setContext(key, value);
 		for (Processor p : m_processors)
 		{
 			p.setContext(key, value);

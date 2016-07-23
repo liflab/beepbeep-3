@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.ltl;
 
 import java.util.ArrayDeque;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -40,6 +41,11 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 	protected FirstOrderSpawn m_spawn;
 	
 	protected SentinelOut m_sentinelOut;
+	
+	FirstOrderQuantifier()
+	{
+		super(1, 1);
+	}
 	
 	public FirstOrderQuantifier(String var_name, Function split_function, Processor p, Function combine_function)
 	{
@@ -64,6 +70,28 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 		associateOutput(0, m_sentinelOut, 0);
 	}
 	
+	public Map<Integer,Processor> cloneInto(FirstOrderQuantifier q)
+	{
+		Map<Integer,Processor> map = super.cloneInto(q);
+		q.m_sentinelIn = (SentinelIn) map.get(m_sentinelIn.getId());
+		q.m_sentinelOut = (SentinelOut) map.get(m_sentinelOut.getId());
+		q.m_spawn = (FirstOrderSpawn) map.get(m_spawn.getId());
+		q.m_variableName = m_variableName;
+		try 
+		{
+			Connector.connect(q.m_sentinelIn, q.m_spawn);
+			Connector.connect(q.m_spawn, q.m_sentinelOut);
+		} 
+		catch (ConnectorException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		q.associateInput(0, q.m_sentinelIn, 0);
+		q.associateOutput(0, q.m_sentinelOut, 0);
+		return map;
+	}
+	
 	protected class FirstOrderSpawn extends Spawn
 	{
 		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function)
@@ -79,6 +107,12 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 			Object[] input = new Object[1];
 			input[0] = slice;
 			p.setContext(m_variableName, slice);
+		}
+
+		@Override
+		public FirstOrderSpawn clone()
+		{
+			return new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), m_processor.clone(), m_combineProcessor.getFunction().clone(m_context));
 		}
 	}
 	

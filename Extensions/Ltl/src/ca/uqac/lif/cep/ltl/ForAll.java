@@ -23,6 +23,11 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class ForAll extends FirstOrderQuantifier
 {
+	ForAll()
+	{
+		super();
+	}
+	
 	public ForAll(String var_name, Function split_function, Processor p)
 	{
 		super(var_name, split_function, p, ArrayAnd.instance);
@@ -31,8 +36,8 @@ public class ForAll extends FirstOrderQuantifier
 	@Override
 	public ForAll clone() 
 	{
-		ForAll out = new ForAll(m_variableName, m_spawn.m_splitFunction.clone(m_context), m_spawn.m_processor.clone());
-		out.setContext(m_context);
+		ForAll out = new ForAll();
+		super.cloneInto(out);
 		return out;
 	}
 	

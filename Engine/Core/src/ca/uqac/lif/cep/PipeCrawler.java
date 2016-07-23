@@ -56,7 +56,8 @@ public abstract class PipeCrawler
 			int in_arity = proc.getInputArity();
 			for (int i = 0; i < in_arity; i++)
 			{
-				Pushable p = proc.getPushableOutput(i);
+				Pushable p = proc.getPushableInput(i);
+				//Pushable p = proc.getPushableOutput(i);
 				if (p != null)
 				{
 					Processor target = p.getProcessor();
@@ -69,7 +70,8 @@ public abstract class PipeCrawler
 			int out_arity = proc.getOutputArity();
 			for (int i = 0; i < out_arity; i++)
 			{
-				Pullable p = proc.getPullableInput(i);
+				//Pullable p = proc.getPullableInput(i);
+				Pullable p = proc.getPullableOutput(i);
 				if (p != null)
 				{
 					Processor target = p.getProcessor();
