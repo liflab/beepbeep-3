@@ -9,12 +9,16 @@ import java.util.Set;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.SmartFork;
 import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.Equals;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.TracePlaceholder;
@@ -205,6 +209,99 @@ public class QuantifierTest
 		assertNotNull(output);
 		assertTrue(output instanceof Troolean.Value);
 		assertEquals(Troolean.Value.TRUE, (Troolean.Value) output);
+	}
+	
+	@Test
+	public void testGroupClone1() throws ConnectorException
+	{
+		Pullable p;
+		Object o;
+		Implies imp = new Implies();
+		SmartFork fork = new SmartFork(2);
+		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
+		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
+		Connector.connect(fork, left, 0, 0);
+		Connector.connect(fork, right, 1, 0);
+		Connector.connect(left, imp, 0, 0);
+		Connector.connect(right, imp, 0, 1);
+		GroupProcessor gp = new GroupProcessor(1, 1);
+		gp.addProcessors(imp, fork, left, right);
+		gp.associateInput(0, fork, 0);
+		gp.associateOutput(0, imp, 0);
+		// Check that first group works
+		QueueSource source1 = new QueueSource(0, 1);
+		Connector.connect(source1, gp);
+		p = gp.getPullableOutput(0);
+		o = p.pullHard();
+		assertEquals(o, Troolean.Value.TRUE);
+		// Now clone and re-check
+		GroupProcessor gp_clone = gp.clone();
+		QueueSource source2 = new QueueSource(0, 1);
+		Connector.connect(source2, gp_clone);
+		p = gp_clone.getPullableOutput(0);
+		o = p.pullHard();
+		assertEquals(o, Troolean.Value.TRUE);
+	}
+	
+	@Test
+	public void testGroupClone2() throws ConnectorException
+	{
+		Pullable p;
+		Object o;
+		Implies imp = new Implies();
+		SmartFork fork = new SmartFork(2);
+		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
+		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new ArgumentPlaceholder("x"))));
+		Connector.connect(fork, left, 0, 0);
+		Connector.connect(fork, right, 1, 0);
+		Connector.connect(left, imp, 0, 0);
+		Connector.connect(right, imp, 0, 1);
+		GroupProcessor gp = new GroupProcessor(1, 1);
+		gp.addProcessors(imp, fork, left, right);
+		gp.associateInput(0, fork, 0);
+		gp.associateOutput(0, imp, 0);
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), gp);
+		// Check that first group works
+		QueueSource source1 = new QueueSource(0, 1);
+		Connector.connect(source1, fa);
+		p = fa.getPullableOutput(0);
+		o = p.pullHard();
+		assertEquals(o, Troolean.Value.FALSE);
+		// Now clone and re-check
+		ForAll gp_clone = fa.clone();
+		QueueSource source2 = new QueueSource(0, 1);
+		Connector.connect(source2, gp_clone);
+		p = gp_clone.getPullableOutput(0);
+		o = p.pullHard();
+		assertEquals(o, Troolean.Value.FALSE);
+	}
+	
+	@Test
+	public void testGroupClone3() throws ConnectorException
+	{
+		Pullable p;
+		Object o;
+		Passthrough pt = new Passthrough(1);
+		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
+		Connector.connect(pt, fa);
+		GroupProcessor gp = new GroupProcessor(1, 1);
+		gp.addProcessors(pt, fa);
+		gp.associateInput(0, pt, 0);
+		gp.associateOutput(0, fa, 0);
+		// Check that first group works
+		QueueSource source1 = new QueueSource(0, 1);
+		Connector.connect(source1, fa);
+		p = fa.getPullableOutput(0);
+		o = p.pullHard();
+		assertEquals(o, Troolean.Value.TRUE);
+		// Now clone and re-check
+		ForAll gp_clone = fa.clone();
+		QueueSource source2 = new QueueSource(0, 1);
+		Connector.connect(source2, gp_clone);
+		p = gp_clone.getPullableOutput(0);
+		o = p.pullHard();
+		assertEquals(o, Troolean.Value.TRUE);
 	}
 
 	@SuppressWarnings("rawtypes")

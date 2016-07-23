@@ -54,10 +54,11 @@ public abstract class PipeCrawler
 			visit(proc);
 			visited.add(proc);
 			int in_arity = proc.getInputArity();
-			for (int i = 0; i < in_arity; i++)
+			int out_arity = proc.getOutputArity();
+			for (int i = 0; i < out_arity; i++)
 			{
-				Pushable p = proc.getPushableInput(i);
-				//Pushable p = proc.getPushableOutput(i);
+				//Pushable p = proc.getPushableInput(i);
+				Pushable p = proc.getPushableOutput(i);
 				if (p != null)
 				{
 					Processor target = p.getProcessor();
@@ -67,11 +68,10 @@ public abstract class PipeCrawler
 					}
 				}
 			}
-			int out_arity = proc.getOutputArity();
-			for (int i = 0; i < out_arity; i++)
+			for (int i = 0; i < in_arity; i++)
 			{
-				//Pullable p = proc.getPullableInput(i);
-				Pullable p = proc.getPullableOutput(i);
+				Pullable p = proc.getPullableInput(i);
+				//Pullable p = proc.getPullableOutput(i);
 				if (p != null)
 				{
 					Processor target = p.getProcessor();

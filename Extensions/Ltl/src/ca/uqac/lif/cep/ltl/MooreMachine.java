@@ -178,6 +178,7 @@ public class MooreMachine extends SingleProcessor
 	protected Queue<Object[]> fire(Transition t)
 	{
 		m_currentState = t.getDestination();
+		System.out.println(t);
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
@@ -286,6 +287,12 @@ public class MooreMachine extends SingleProcessor
 		public TransitionOtherwise clone()
 		{
 			return new TransitionOtherwise(this);
+		}
+		
+		@Override
+		public String toString()
+		{
+			return "* -> " + m_destination;
 		}
 	}
 	

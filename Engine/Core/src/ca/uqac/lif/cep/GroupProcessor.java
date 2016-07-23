@@ -220,13 +220,15 @@ public class GroupProcessor extends Processor
 	@Override
 	public final Pushable getPushableInput(int index)
 	{
-		return m_inputPushables.get(index);
+		return new ProxyPushable(m_inputPushables.get(index), index);
+		//return m_inputPushables.get(index);
 	}
 
 	@Override
 	public final Pullable getPullableOutput(int index)
 	{
-		return m_outputPullables.get(index);
+		return new ProxyPullable(m_outputPullables.get(index), index);
+		//return m_outputPullables.get(index);
 	}
 
 	@Override
@@ -391,4 +393,85 @@ public class GroupProcessor extends Processor
 			p.setContext(key, value);
 		}
 	}
+	
+	public class ProxyPullable implements Pullable
+	{
+		protected Pullable m_pullable;
+		
+		public Object pull() {
+			return m_pullable.pull();
+		}
+
+		public Object pullHard() {
+			return m_pullable.pullHard();
+		}
+
+		public NextStatus hasNext() {
+			return m_pullable.hasNext();
+		}
+
+		public NextStatus hasNextHard() {
+			return m_pullable.hasNextHard();
+		}
+
+		public int getPullCount() {
+			return m_pullable.getPullCount();
+		}
+
+		public Processor getProcessor() {
+			return GroupProcessor.this;
+		}
+
+		public int getPosition() {
+			return m_position;
+		}
+
+		protected int m_position = 0;	
+		
+		public ProxyPullable(Pullable p, int position)
+		{
+			super();
+			m_pullable = p;
+			m_position = position;
+		}
+	}
+	
+	public class ProxyPushable implements Pushable
+	{
+		protected Pushable m_pushable;
+		
+		protected int m_position = 0;
+		
+		public ProxyPushable(Pushable p, int position)
+		{
+			super();
+			m_pushable = p;
+			m_position = position;
+		}
+
+		@Override
+		public Pushable push(Object o)
+		{
+			return m_pushable.push(o);
+		}
+
+		@Override
+		public int getPushCount() 
+		{
+			return m_pushable.getPushCount();
+		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return GroupProcessor.this;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return m_position;
+		}
+	}
+	
 }
