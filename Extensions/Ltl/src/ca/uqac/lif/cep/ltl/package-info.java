@@ -18,12 +18,15 @@
 
 /**
  * Processors to express complex patterns over sequences of events
- * with Linear Temporal Logic.
- * Temporal operators have processors in two versions: Boolean and
- * <em>Troolean</em>.
+ * with a first-order extension of Linear Temporal Logic called
+ * LTL-FO+.
+ * <p>
+ * Temporal operators and quantifiers have processors in two versions:
+ * Boolean and <em>Troolean</em>.
  * <p>
  * Boolean processors are called {@link Globally}, {@link Eventually}
- * {@link Until} and {@link Next}. If a<sub>0</sub> a<sub>1</sub>
+ * {@link Until}, {@link Next}, {@link ForAll} and {@link Exists}.
+ * If a<sub>0</sub> a<sub>1</sub>
  * a<sub>2</sub> &hellip; is an input trace, the processor Globally
  * produces an output trace b<sub>0</sub> b<sub>1</sub>
  * b<sub>2</sub> &hellip; such that b<sub>i</sub> = false if and only
@@ -32,7 +35,8 @@
  * <b>G</b> &phi; on the input trace, starting at the i-th event.
  * <p>
  * Troolean processors are called {@link Always}, {@link Sometime},
- * {@link UpTo} and {@link After}. If a<sub>0</sub> a<sub>1</sub>
+ * {@link UpTo}, {@link After}, {@link Every} and {@link Some}.
+ * If a<sub>0</sub> a<sub>1</sub>
  * a<sub>2</sub> &hellip; is an input trace, the processor Always
  * produces an output trace b<sub>0</sub> b<sub>1</sub>
  * b<sub>2</sub> &hellip; such that b<sub>i</sub> = false if there exists

@@ -32,7 +32,7 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.SimpleFunction;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
-public abstract class FirstOrderQuantifier extends GroupProcessor 
+public abstract class TrooleanQuantifier extends GroupProcessor 
 {
 	protected String m_variableName;
 	
@@ -42,17 +42,21 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 	
 	protected SentinelOut m_sentinelOut;
 	
-	FirstOrderQuantifier()
+	protected Troolean.Value m_valueIfEmptyDomain;
+	
+	TrooleanQuantifier()
 	{
 		super(1, 1);
+		m_valueIfEmptyDomain = Troolean.Value.TRUE;
 	}
 	
-	public FirstOrderQuantifier(String var_name, Function split_function, Processor p, Function combine_function)
+	public TrooleanQuantifier(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
 	{
 		super(1, 1);
+		m_valueIfEmptyDomain = Troolean.Value.TRUE;
 		m_sentinelIn = new SentinelIn();
 		addProcessor(m_sentinelIn);
-		m_spawn = new FirstOrderSpawn(var_name, split_function, p, combine_function);
+		m_spawn = new FirstOrderSpawn(var_name, split_function, p, combine_function, value_empty);
 		addProcessor(m_spawn);
 		m_sentinelOut = new SentinelOut();
 		addProcessor(m_sentinelOut);
@@ -70,7 +74,7 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 		associateOutput(0, m_sentinelOut, 0);
 	}
 	
-	public Map<Integer,Processor> cloneInto(FirstOrderQuantifier q)
+	public Map<Integer,Processor> cloneInto(TrooleanQuantifier q)
 	{
 		Map<Integer,Processor> map = super.cloneInto(q);
 		q.m_sentinelIn = (SentinelIn) map.get(m_sentinelIn.getId());
@@ -94,10 +98,11 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 	
 	protected class FirstOrderSpawn extends Spawn
 	{
-		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function)
+		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
 		{
 			super(p, split_function, combine_function);
 			m_variableName = var_name;
+			m_valueIfEmptyDomain = value_empty;
 			//m_domainFunction = domain;
 		}
 
@@ -112,7 +117,7 @@ public abstract class FirstOrderQuantifier extends GroupProcessor
 		@Override
 		public FirstOrderSpawn clone()
 		{
-			return new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), m_processor.clone(), m_combineProcessor.getFunction().clone(m_context));
+			return new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), m_processor.clone(), m_combineProcessor.getFunction().clone(m_context), m_valueIfEmptyDomain);
 		}
 	}
 	

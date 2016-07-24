@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.Mutator;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
@@ -62,6 +63,16 @@ public class Spawn extends Processor
 	 */
 	protected SentinelPullable m_outputPullable;
 	
+	/**
+	 * Whether the split function generated any values
+	 */
+	protected boolean m_emptyDomain = false;
+	
+	/**
+	 * The value to output if the spawn ranges over the empty set
+	 */
+	protected Object m_valueIfEmptyDomain = null;
+	
 	private Spawn()
 	{
 		super(1, 1);
@@ -79,6 +90,15 @@ public class Spawn extends Processor
 		m_inputPushable = new SentinelPushable();
 		m_outputPullable = new SentinelPullable();
 		//m_processor.setPullableInput(0, m_outputPullable);
+	}
+	
+	/**
+	 * Sets the value to output if the spawn ranges over the empty set
+	 * @param value The value
+	 */
+	public void setValueIfEmptyDomain(Object value)
+	{
+		m_valueIfEmptyDomain = value;
 	}
 	
 	@Override
@@ -307,41 +327,54 @@ public class Spawn extends Processor
 		}
 	}
 	
-	protected void spawn(Object o)
+	protected boolean spawn(Object o)
 	{
 		try 
 		{
 			Collection<?> values = getDomain(o);
 			int size = values.size();
-			// Create a fork for as many values in the domain
-			m_fork = new SmartFork(values.size());
-			m_inputPushable.setPushable(m_fork.getPushableInput(0));
-			m_instances = new Processor[size];
-			// Create a join to collate the output of each spawned instance
-			m_joinProcessor = new NaryToArray(size);
-			m_joinProcessor.setContext(m_context);
-			// Spawn one new internal processor per value
-			int i = 0;
-			for (Object slice : values)
+			if (size == 0)
 			{
-				Processor new_p = m_processor.clone();
-				new_p.setContext(m_context);
-				addContextFromSlice(new_p, slice);
-				m_instances[i] = new_p;
-				// Connect its input to the fork
-				Connector.connect(m_fork, new_p, i, 0);
-				// Connect its output to the join
-				Connector.connect(new_p, m_joinProcessor, 0, i);
-				i++;
+				// Domain is empty: processor returns a fixed value
+				Mutator mutator = new Mutator(m_valueIfEmptyDomain, 1);
+				m_inputPushable.setPushable(mutator.getPushableInput(0));
+				mutator.setPullableInput(0, m_inputPushable.getPullable());
+				m_outputPullable.setPullable(mutator.getPullableOutput(0));
+				mutator.setPushableOutput(0, m_outputPullable.getPushable());
 			}
-			Connector.connect(m_joinProcessor, m_combineProcessor, 0, 0);
-			m_outputPullable.setPullable(m_combineProcessor.getPullableOutput(0));
+			else
+			{
+				// Create a fork for as many values in the domain
+				m_fork = new SmartFork(values.size());
+				m_inputPushable.setPushable(m_fork.getPushableInput(0));
+				m_instances = new Processor[size];
+				// Create a join to collate the output of each spawned instance
+				m_joinProcessor = new NaryToArray(size);
+				m_joinProcessor.setContext(m_context);
+				// Spawn one new internal processor per value
+				int i = 0;
+				for (Object slice : values)
+				{
+					Processor new_p = m_processor.clone();
+					new_p.setContext(m_context);
+					addContextFromSlice(new_p, slice);
+					m_instances[i] = new_p;
+					// Connect its input to the fork
+					Connector.connect(m_fork, new_p, i, 0);
+					// Connect its output to the join
+					Connector.connect(new_p, m_joinProcessor, 0, i);
+					i++;
+				}
+				Connector.connect(m_joinProcessor, m_combineProcessor, 0, 0);
+				m_outputPullable.setPullable(m_combineProcessor.getPullableOutput(0));
+			}
 		}
 		catch (ConnectorException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return true;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -388,6 +421,7 @@ public class Spawn extends Processor
 	{
 		Spawn out = new Spawn(m_processor.clone(), m_splitFunction.clone(m_context), m_combineProcessor.getFunction().clone(m_context));
 		out.setContext(m_context);
+		out.m_valueIfEmptyDomain = m_valueIfEmptyDomain;
 		return out;
 	}
 }

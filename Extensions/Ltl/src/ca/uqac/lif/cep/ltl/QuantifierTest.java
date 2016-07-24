@@ -39,7 +39,7 @@ public class QuantifierTest
 		tree.setChild(0, new TracePlaceholder(0));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), gt);
+		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
 		Pushable in = fa.getPushableInput(0);
@@ -60,7 +60,7 @@ public class QuantifierTest
 		tree.setChild(0, new TracePlaceholder(0));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), gt);
+		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Connector.connect(source, fa);
 		Pullable out = fa.getPullableOutput(0);
 		Object output = out.pullHard();
@@ -76,7 +76,7 @@ public class QuantifierTest
 		tree.setChild(0, new TracePlaceholder(0));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), gt);
+		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
 		Pushable in = fa.getPushableInput(0);
@@ -100,8 +100,8 @@ public class QuantifierTest
 		tree.setChild(0, new ArgumentPlaceholder("x"));
 		tree.setChild(1, new ArgumentPlaceholder("y"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), gt);
-		Exists fa2 = new Exists("y", new DummyCollectionFunction(1, 2, 3), fa);
+		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
+		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa2, sink);
 		Pushable in = fa2.getPushableInput(0);
@@ -122,8 +122,8 @@ public class QuantifierTest
 		tree.setChild(0, new ArgumentPlaceholder("x"));
 		tree.setChild(1, new ArgumentPlaceholder("y"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), gt);
-		Exists fa2 = new Exists("y", new DummyCollectionFunction(1, 2, 3), fa);
+		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
+		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
 		Connector.connect(source, fa2);
 		Pullable out = fa2.getPullableOutput(0);
 		Object output = out.pull();
@@ -139,8 +139,8 @@ public class QuantifierTest
 		tree.setChild(0, new ArgumentPlaceholder("y"));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), gt);
-		Exists fa2 = new Exists("y", new DummyCollectionFunction(2, 3, 4), fa);
+		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
+		Some fa2 = new Some("y", new DummyCollectionFunction(2, 3, 4), fa);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa2, sink);
 		Pushable in = fa2.getPushableInput(0);
@@ -161,8 +161,8 @@ public class QuantifierTest
 		tree.setChild(0, new ArgumentPlaceholder("y"));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(2), gt);
-		ForAll fa2 = new ForAll("y", new DummyCollectionFunction(1), fa);
+		Every fa = new Every("x", new DummyCollectionFunction(2), gt);
+		Every fa2 = new Every("y", new DummyCollectionFunction(1), fa);
 		Connector.connect(source, fa2);
 		Pullable out = fa2.getPullableOutput(0);
 		Object output = out.pullHard();
@@ -178,7 +178,7 @@ public class QuantifierTest
 		tree.setChild(0, new TracePlaceholder(0));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		Exists fa = new Exists("x", new DummyCollectionFunction(1, 2, 3), gt);
+		Some fa = new Some("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
 		Pushable in = fa.getPushableInput(0);
@@ -198,7 +198,7 @@ public class QuantifierTest
 		tree.setChild(0, new TracePlaceholder(0));
 		tree.setChild(1, new ArgumentPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
-		Exists fa = new Exists("x", new DummyCollectionFunction(1, 2, 3), gt);
+		Some fa = new Some("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
 		Pushable in = fa.getPushableInput(0);
@@ -260,7 +260,7 @@ public class QuantifierTest
 		gp.addProcessors(imp, fork, left, right);
 		gp.associateInput(0, fork, 0);
 		gp.associateOutput(0, imp, 0);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), gp);
+		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gp);
 		// Check that first group works
 		QueueSource source1 = new QueueSource(0, 1);
 		Connector.connect(source1, fa);
@@ -268,7 +268,7 @@ public class QuantifierTest
 		o = p.pullHard();
 		assertEquals(o, Troolean.Value.FALSE);
 		// Now clone and re-check
-		ForAll gp_clone = fa.clone();
+		Every gp_clone = fa.clone();
 		QueueSource source2 = new QueueSource(0, 1);
 		Connector.connect(source2, gp_clone);
 		p = gp_clone.getPullableOutput(0);
@@ -283,7 +283,7 @@ public class QuantifierTest
 		Object o;
 		Passthrough pt = new Passthrough(1);
 		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
+		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), left);
 		Connector.connect(pt, fa);
 		GroupProcessor gp = new GroupProcessor(1, 1);
 		gp.addProcessors(pt, fa);
@@ -296,7 +296,7 @@ public class QuantifierTest
 		o = p.pullHard();
 		assertEquals(o, Troolean.Value.TRUE);
 		// Now clone and re-check
-		ForAll gp_clone = fa.clone();
+		Every gp_clone = fa.clone();
 		QueueSource source2 = new QueueSource(0, 1);
 		Connector.connect(source2, gp_clone);
 		p = gp_clone.getPullableOutput(0);
