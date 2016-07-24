@@ -83,7 +83,7 @@ public class FunctionTree extends Function
 	}
 	
 	@Override
-	public final Object[] evaluate(Object[] inputs, Context context)
+	public Object[] evaluate(Object[] inputs, Context context)
 	{
 		Object[] values = new Object[m_children.length];
 		for (int i = 0; i < values.length; i++)
@@ -94,7 +94,7 @@ public class FunctionTree extends Function
 	}
 	
 	@Override
-	public final Object[] evaluate(Object[] inputs)
+	public Object[] evaluate(Object[] inputs)
 	{
 		return evaluate(inputs, null);
 	}
