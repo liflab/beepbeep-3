@@ -251,7 +251,8 @@ public class GroupTest extends BeepBeepUnitTest
 	
 	/**
 	 * Try to clone a group processor that is already connected
-	 * to something else
+	 * to something else. The goal of this test is only to check
+	 * that the call to <code>clone()</code> does not throw an exception.
 	 * @throws ConnectorException
 	 */
 	@Test
@@ -273,6 +274,49 @@ public class GroupTest extends BeepBeepUnitTest
 		GroupProcessor gp_clone = gp.clone();
 		QueueSource qs2 = new QueueSource(100, 2);
 		Connector.connect(qs2, gp_clone);
+	}
+	
+	/**
+	 * Clone a group within a group
+	 * @throws ConnectorException 
+	 */
+	@Test
+	public void testClone6() throws ConnectorException
+	{
+		Object o = null;
+		GroupIn g_within = new GroupIn(1, 1);
+		{
+			PassthroughIn pt = new PassthroughIn(1);
+			g_within.addProcessor(pt);
+			g_within.associateInput(0, pt, 0);
+			g_within.associateOutput(0, pt, 0);
+		}
+		GroupProcessor g_out = new GroupProcessor(1, 1);
+		g_out.addProcessor(g_within);
+		Passthrough pt = new Passthrough(1);
+		g_out.addProcessor(pt);
+		Connector.connect(pt, g_within);
+		g_out.associateInput(0, pt, 0);
+		g_out.associateOutput(0, g_within, 0);
+		// Check that this piping works
+		{
+			QueueSource qs = new QueueSource(0, 1);
+			Connector.connect(qs, g_out);
+			Pullable pull1 = g_out.getPullableOutput(0);
+			o = pull1.pullHard();
+			assertNotNull(o);
+			assertEquals(0, ((Number) o).intValue());
+		}
+		// Now clone
+		GroupProcessor g_clone = g_out.clone();
+		{
+			QueueSource qs = new QueueSource(0, 1);
+			Connector.connect(qs, g_clone);
+			Pullable pull1 = g_clone.getPullableOutput(0);
+			o = pull1.pullHard();
+			assertNotNull(o);
+			assertEquals(0, ((Number) o).intValue());
+		}
 	}
 	
 	@Test
@@ -414,4 +458,34 @@ public class GroupTest extends BeepBeepUnitTest
 		}	
 	}
 
+	public static class PassthroughIn extends Passthrough
+	{
+
+		public PassthroughIn(int arity) 
+		{
+			super(arity);
+		}
+		
+		public PassthroughIn clone()
+		{
+			return new PassthroughIn(getInputArity());
+		}
+		
+	}
+	
+	public static class GroupIn extends GroupProcessor
+	{
+
+		public GroupIn(int in_arity, int out_arity) {
+			super(in_arity, out_arity);
+			// TODO Auto-generated constructor stub
+		}
+		
+		public GroupIn clone()
+		{
+			GroupIn in = new GroupIn(getInputArity(), getOutputArity());
+			super.cloneInto(in);
+			return in;
+		}
+	}
 }

@@ -282,11 +282,15 @@ public class GroupProcessor extends Processor
 	@Override
 	public final Pushable getPushableOutput(int index)
 	{
-		if (index < m_outputPushables.length)
-		{
-			return m_outputPushables[index];
-		}
-		return null;
+		ProcessorAssociation a = m_outputPushableAssociations.get(index);
+		return a.m_processor.getPushableOutput(a.m_ioNumber);
+	}
+	
+	@Override
+	public final Pullable getPullableInput(int index)
+	{
+		ProcessorAssociation a = m_inputPullableAssociations.get(index);
+		return a.m_processor.getPullableInput(a.m_ioNumber);
 	}
 	
 	public Map<Integer,Processor> cloneInto(GroupProcessor group)
