@@ -96,6 +96,7 @@ public class Spawn extends Processor
 	{
 		super.setContext(context);
 		m_combineProcessor.setContext(context);
+		m_splitFunction.setContext(context);
 	}
 	
 	@Override
@@ -103,6 +104,7 @@ public class Spawn extends Processor
 	{
 		super.setContext(key, value);
 		m_combineProcessor.setContext(key, value);
+		m_splitFunction.setContext(key, value);
 	}
 	
 	@Override

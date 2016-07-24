@@ -302,6 +302,8 @@ public class QuantifierTest
 		p = gp_clone.getPullableOutput(0);
 		o = p.pullHard();
 		assertEquals(o, Troolean.Value.TRUE);
+		o = p.pullHard();
+		assertEquals(o, Troolean.Value.TRUE);
 	}
 
 	@SuppressWarnings("rawtypes")

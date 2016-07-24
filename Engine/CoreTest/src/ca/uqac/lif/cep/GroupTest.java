@@ -319,6 +319,51 @@ public class GroupTest extends BeepBeepUnitTest
 		}
 	}
 	
+	/**
+	 * Clone a group within a group.
+	 * The difference with {@link #testClone6()} is that the
+	 * group and the passthrough are in the reverse order.
+	 * @throws ConnectorException 
+	 */
+	@Test
+	public void testClone7() throws ConnectorException
+	{
+		Object o = null;
+		GroupIn g_within = new GroupIn(1, 1);
+		{
+			PassthroughIn pt = new PassthroughIn(1);
+			g_within.addProcessor(pt);
+			g_within.associateInput(0, pt, 0);
+			g_within.associateOutput(0, pt, 0);
+		}
+		GroupProcessor g_out = new GroupProcessor(1, 1);
+		g_out.addProcessor(g_within);
+		Passthrough pt = new Passthrough(1);
+		g_out.addProcessor(pt);
+		Connector.connect(g_within, pt);
+		g_out.associateInput(0, g_within, 0);
+		g_out.associateOutput(0, pt, 0);
+		// Check that this piping works
+		{
+			QueueSource qs = new QueueSource(0, 1);
+			Connector.connect(qs, g_out);
+			Pullable pull1 = g_out.getPullableOutput(0);
+			o = pull1.pullHard();
+			assertNotNull(o);
+			assertEquals(0, ((Number) o).intValue());
+		}
+		// Now clone
+		GroupProcessor g_clone = g_out.clone();
+		{
+			QueueSource qs = new QueueSource(0, 1);
+			Connector.connect(qs, g_clone);
+			Pullable pull1 = g_clone.getPullableOutput(0);
+			o = pull1.pullHard();
+			assertNotNull(o);
+			assertEquals(0, ((Number) o).intValue());
+		}
+	}
+	
 	@Test
 	public void testGroupPull1() throws ConnectorException
 	{
