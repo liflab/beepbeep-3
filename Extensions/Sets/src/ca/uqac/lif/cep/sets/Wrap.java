@@ -17,41 +17,29 @@
  */
 package ca.uqac.lif.cep.sets;
 
-import java.util.Stack;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * Accumulates the received events cumulatively into a multiset.
- * <p>
- * <b>Example:</b> suppose the input events are integers. From the input
- * trace
- * <pre>
- * 0, 1, 2, 1, 3, ...
- * </pre>
- * the processor will produce the output trace
- * <pre>
- * {0}, {0, 1}, {0, 1, 2}, {0, 1, 1, 2}, {0, 1, 1, 2, 3}, ...
- * </pre>
+ * Wraps the input into a multiset.
  * @author Sylvain Hallé
  */
-public class BagUnion extends CumulativeFunction<Multiset>
+public class Wrap extends UnaryFunction<Object,Multiset> 
 {
 	/**
-	 * A single instance of bag union
+	 * An instance of the peel function
 	 */
-	public static final transient BagUnion instance = new BagUnion();
+	public static final transient Wrap instance = new Wrap();
 	
-	BagUnion()
+	private Wrap()
 	{
-		super(MultisetUnion.instance);
+		super(Object.class, Multiset.class);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	@Override
+	public Multiset getValue(Object x) 
 	{
-		stack.pop(); // UNION
-		stack.pop(); // BAG
-		stack.push(new BagUnion());
+		Multiset set = new Multiset();
+		set.add(x);
+		return set;
 	}
 }
