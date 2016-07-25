@@ -25,7 +25,8 @@ import java.util.Vector;
  * <code>QueueSource</code> a list of events, and that source sends
  * these events as its input one by one. When reaching the end of
  * the list, the source returns to the beginning and keeps feeding
- * events from the list endlessly.
+ * events from the list endlessly. This behaviour can be changed
+ * with {@link #loop(boolean)}.
  * 
  * @author Sylvain Hallé
  */
@@ -35,6 +36,11 @@ public class QueueSource extends Source
 	 * The events to repeat endlessly
 	 */
 	protected Vector<Object> m_events;
+	
+	/**
+	 * Whether to loop over the events endlessly
+	 */
+	protected boolean m_loop = true;
 	
 	/**
 	 * The index of the next event to produce
@@ -53,13 +59,39 @@ public class QueueSource extends Source
 	{
 		m_events = queue;
 	}
+	
+	/**
+	 * Sets whether to loop over the events endlessly
+	 * @param b Set to <code>true</code> to loop over the events
+	 * endlessly (default), or <code>false</code> to play them
+	 * only once.
+	 * @return This queue source
+	 */
+	public QueueSource loop(boolean b)
+	{
+		m_loop = b;
+		return this;
+	}
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
+		int size = m_events.size();
+		if (m_index >= size)
+		{
+			return null;
+		}
 		Object[] output = new Object[getOutputArity()];
 		Object event = m_events.get(m_index);
-		m_index = (m_index + 1) % m_events.size();
+		if (m_loop)
+		{
+			m_index = (m_index + 1) % size;
+		}
+		else
+		{
+			// If we don't loop, play the events only once
+			m_index++;
+		}
 		for (int i = 0; i < getOutputArity(); i++)
 		{
 			output[i] = event;
