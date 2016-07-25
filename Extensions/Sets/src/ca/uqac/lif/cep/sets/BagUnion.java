@@ -39,11 +39,10 @@ import ca.uqac.lif.cep.functions.CumulativeFunction;
 public class BagUnion extends CumulativeFunction<Multiset>
 {
 	/**
-	 * A single instance of bag union
+	 * Note that BagUnion <strong>cannot</strong> have a single static
+	 * instance, as a cumulative function has a memory
 	 */
-	public static final transient BagUnion instance = new BagUnion();
-	
-	BagUnion()
+	public BagUnion()
 	{
 		super(MultisetUnion.instance);
 	}

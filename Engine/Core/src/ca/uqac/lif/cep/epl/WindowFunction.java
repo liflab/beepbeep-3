@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.epl;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -83,7 +84,7 @@ public class WindowFunction extends SingleProcessor
 		{
 			return wrapObject(m_function.evaluate(m_window.toArray())[0]);
 		}
-		return null;
+		return new ArrayDeque<Object[]>();
 	}
 
 	@Override

@@ -285,7 +285,12 @@ public abstract class SingleProcessor extends Processor
 				// Compute output event(s)
 				Queue<Object[]> computed = compute(inputs);
 				NextStatus status_to_return = NextStatus.NO;
-				if (computed != null && !computed.isEmpty())
+				if (computed == null)
+				{
+					// No output will ever be returned: stop there
+					return NextStatus.NO;
+				}
+				if (!computed.isEmpty())
 				{
 					// We computed an output event; add it to the output queue
 					// and answer YES
@@ -299,6 +304,11 @@ public abstract class SingleProcessor extends Processor
 								queue.add(evt[i]);
 							}
 							status_to_return = NextStatus.YES;
+						}
+						else
+						{
+							// This source will NEVER output anything again
+							return NextStatus.NO;
 						}
 					}
 					if (status_to_return == NextStatus.YES)

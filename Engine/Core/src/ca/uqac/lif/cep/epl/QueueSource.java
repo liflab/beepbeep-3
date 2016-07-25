@@ -72,6 +72,12 @@ public class QueueSource extends Source
 		m_loop = b;
 		return this;
 	}
+	
+	/*@Override
+	public Pullable getPullableOutput(int index)
+	{
+		return new SentinelPullable(index);
+	}*/
 
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
@@ -113,5 +119,4 @@ public class QueueSource extends Source
 		out.setEvents(m_events);
 		return out;
 	}
-
 }

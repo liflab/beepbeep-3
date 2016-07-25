@@ -22,6 +22,7 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.Pullable.NextStatus;
 
 /**
  * Joins multiple traces as a single one. The splicer is given
@@ -118,6 +119,13 @@ public class Splicer extends Source
 			boolean has_null = false;
 			for (int i = 0; i < m_pullables.length; i++)
 			{
+				NextStatus status = m_pullables[i].hasNextHard();
+				if (status == NextStatus.NO)
+				{
+					// No use in trying further
+					has_null = true;
+					break;
+				}
 				Object o = m_pullables[i].pullHard();
 				if (o == null)
 				{
@@ -140,8 +148,8 @@ public class Splicer extends Source
 	}
 
 	@Override
-	public Processor clone() {
-		// TODO Auto-generated method stub
-		return null;
+	public Splicer clone() 
+	{
+		return new Splicer(m_processors);
 	}
 }

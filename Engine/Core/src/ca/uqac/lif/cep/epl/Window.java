@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.epl;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -139,6 +140,12 @@ public class Window extends SingleProcessor
 				}
 				out = m_sink.getLast();
 			}
+		}
+		if (out == null)
+		{
+			// Don't return null, otherwise it would signal that no
+			// event will every be produced in the future
+			return new ArrayDeque<Object[]>();
 		}
 		return wrapVector(out);
 	}

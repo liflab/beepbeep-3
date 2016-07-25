@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.epl;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -69,7 +70,7 @@ public class Trim extends SingleProcessor
 		{
 			return wrapVector(inputs);
 		}
-		return null;
+		return new ArrayDeque<Object[]>();
 	}
 	
 	public static void build(Stack<Object> stack) throws ConnectorException

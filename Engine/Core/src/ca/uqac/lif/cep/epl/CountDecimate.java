@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.epl;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -71,6 +72,10 @@ public class CountDecimate extends SingleProcessor
 			out = inputs;
 		}
 		m_current = (m_current + 1) % m_interval;
+		if (out == null)
+		{
+			return new ArrayDeque<Object[]>();
+		}
 		return wrapVector(out);
 	}
 	

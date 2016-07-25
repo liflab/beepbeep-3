@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.epl;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -49,7 +50,8 @@ public class Filter extends SingleProcessor
 		}
 		else
 		{
-			out[0] = null;
+			// Don't output null, but rather an empty queue
+			return new ArrayDeque<Object[]>();
 		}
 		return wrapVector(out);
 	}
