@@ -17,9 +17,12 @@
  */
 package ca.uqac.lif.cep.epl;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
@@ -39,6 +42,12 @@ import ca.uqac.lif.cep.SingleProcessor;
  * When an event <i>e</i> arrives, the slicer evaluates
  * <i>c</i> = <i>f</i>(<i>e</i>). This value determines to what instance
  * of <i>p</i> the event will be dispatched.
+ * <p>
+ * The function <i>f</i> may return <code>null</code>, or the special
+ * object {@link AllSlices}. This indicates that no new slice must
+ * be created, but that the incoming event must be dispatched to
+ * <em>all</em> slices one by one. In such a case, the output of
+ * every slice on that event is sent out, in no particular order.
  *  
  * @author Sylvain Hallé
  */
@@ -48,21 +57,21 @@ public class Slicer extends SingleProcessor
 	 * The slicing function
 	 */
 	protected Function m_slicingFunction = null;
-	
+
 	/**
 	 * The internal processor
 	 */
 	protected Processor m_processor = null;
-	
+
 	protected Map<Object,Processor> m_slices;
-	
+
 	protected Map<Object,QueueSink> m_sinks; 
 
 	Slicer()
 	{
 		super(1, 1);
 	}
-	
+
 	public Slicer(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc)
 	{
 		super(proc.getInputArity(), proc.getOutputArity());
@@ -78,39 +87,59 @@ public class Slicer extends SingleProcessor
 		int output_arity = getOutputArity();
 		Object[] f_value = m_slicingFunction.evaluate(inputs);
 		Object slice_id = f_value[0];
-		if (!m_slices.containsKey(slice_id))
+		Set<Object> slices_to_process = new HashSet<Object>();
+		if (slice_id instanceof AllSlices || slice_id == null)
 		{
-			// First time we see this value: create new slice
-			Processor p = m_processor.clone();
-			m_slices.put(slice_id, p);
-			QueueSink sink = new QueueSink(output_arity);
-			try 
+			slices_to_process.addAll(m_slices.keySet());
+		}
+		else
+		{
+			if (!m_slices.containsKey(slice_id))
 			{
-				Connector.connect(p, sink);
-			} 
-			catch (ConnectorException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// First time we see this value: create new slice
+				Processor p = m_processor.clone();
+				m_slices.put(slice_id, p);
+				addContextFromSlice(p, slice_id);
+				QueueSink sink = new QueueSink(output_arity);
+				try 
+				{
+					Connector.connect(p, sink);
+				} 
+				catch (ConnectorException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				m_sinks.put(slice_id, sink);
 			}
-			m_sinks.put(slice_id, sink);
+			slices_to_process.add(slice_id);
 		}
-		// Find processor corresponding to that slice
-		Processor slice_p = m_slices.get(slice_id);
-		QueueSink sink_p = m_sinks.get(slice_id);
-		// Push the input into the processor
-		for (int i = 0; i < inputs.length; i++)
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		for (Object s_id : slices_to_process)
 		{
+			// Find processor corresponding to that slice
+			Processor slice_p = m_slices.get(s_id);
+			QueueSink sink_p = m_sinks.get(s_id);
+			// Push the input into the processor
+			for (int i = 0; i < inputs.length; i++)
+			{
 
-			Object o_i = inputs[i];
-			Pushable p = slice_p.getPushableInput(i);
-			p.push(o_i);
+				Object o_i = inputs[i];
+				Pushable p = slice_p.getPushableInput(i);
+				p.push(o_i);
+			}
+			// Collect the output from that processor
+			Object[] out = sink_p.remove();
+			out_queue.add(out);
 		}
-		// Collect the output from that processor
-		Object[] out = sink_p.remove();
-		return wrapVector(out);
+		return out_queue;
 	}
 	
+	public void addContextFromSlice(Processor p, Object slice)
+	{
+		// Do nothing
+	}
+
 	@Override
 	public void reset()
 	{
@@ -118,7 +147,7 @@ public class Slicer extends SingleProcessor
 		m_slices.clear();
 		m_slicingFunction.reset();
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Function f = (Function) stack.pop();
@@ -135,10 +164,24 @@ public class Slicer extends SingleProcessor
 		Connector.connect(p1, out);
 		stack.push(out);
 	}
-	
+
 	@Override
 	public Slicer clone()
 	{
 		return new Slicer(m_slicingFunction.clone(m_context), m_processor.clone());
+	}
+
+	/**
+	 * Dummy object telling the slicer that the event must be sent to
+	 * all slices
+	 */
+	public static class AllSlices
+	{
+		public static final transient AllSlices instance = new AllSlices();
+		
+		AllSlices()
+		{
+			super();
+		}
 	}
 }

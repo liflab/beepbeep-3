@@ -29,10 +29,13 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public abstract class FirstOrderSlicer extends GroupProcessor
 {
-	FirstOrderSlicer(Function slicing_function, Processor p) throws ConnectorException
+	protected String m_variableName;
+	
+	FirstOrderSlicer(String variable_name, Function slicing_function, Processor p) throws ConnectorException
 	{
 		super(1, 1);
-		Slicer slicer = new Slicer(slicing_function, p);
+		m_variableName = variable_name;
+		ContextSlicer slicer = new ContextSlicer(slicing_function, p);
 		CumulativeProcessor merge = new CumulativeProcessor(getMergeFunction());
 		Connector.connect(slicer, merge);
 		addProcessors(slicer, merge);
@@ -40,5 +43,34 @@ public abstract class FirstOrderSlicer extends GroupProcessor
 		associateOutput(0, merge, 0);
 	}
 	
-	protected abstract CumulativeFunction<Value> getMergeFunction(); 
+	FirstOrderSlicer(Function slicing_function, Processor p) throws ConnectorException
+	{
+		this(null, slicing_function, p);
+	}
+	
+	protected abstract CumulativeFunction<Value> getMergeFunction();
+	
+	protected class ContextSlicer extends Slicer
+	{
+		public ContextSlicer(Function func, Processor proc) 
+		{
+			super(func, proc);
+		}
+		
+		@Override
+		public void addContextFromSlice(Processor p, Object slice)
+		{
+			if (m_variableName != null)
+			{
+				p.setContext(m_variableName, slice);
+			}
+		}
+		
+		@Override
+		public ContextSlicer clone()
+		{
+			return new ContextSlicer(getMergeFunction(), m_processor);
+		}
+		
+	}
 }

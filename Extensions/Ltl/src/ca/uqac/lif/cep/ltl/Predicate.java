@@ -225,6 +225,16 @@ public class Predicate extends SimpleFunction
 			m_arguments = new PredicateArgument(arguments);
 			m_value = value;
 		}
+		
+		public String getName()
+		{
+			return m_name;
+		}
+		
+		public Object getArgument(int index)
+		{
+			return m_arguments.get(index);
+		}
 	}
 	
 	public static class PredicateTupleReader extends FunctionProcessor
@@ -341,6 +351,10 @@ public class Predicate extends SimpleFunction
 			if (m_position == 0)
 			{
 				return x.m_name;
+			}
+			if (m_position > x.m_arguments.size())
+			{
+				return null;
 			}
 			return x.m_arguments.get(m_position - 1);
 		}

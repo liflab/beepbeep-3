@@ -25,6 +25,11 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class ForAllSlices extends FirstOrderSlicer
 {
+	public ForAllSlices(String variable_name, Function slice_function, Processor p) throws ConnectorException 
+	{
+		super(variable_name, slice_function, p);
+	}
+	
 	public ForAllSlices(Function slice_function, Processor p) throws ConnectorException 
 	{
 		super(slice_function, p);

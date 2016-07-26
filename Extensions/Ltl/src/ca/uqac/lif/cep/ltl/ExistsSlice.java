@@ -25,6 +25,11 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class ExistsSlice extends FirstOrderSlicer
 {
+	public ExistsSlice(String variable_name, Function slice_function, Processor p) throws ConnectorException 
+	{
+		super(slice_function, p);
+	}
+	
 	public ExistsSlice(Function slice_function, Processor p) throws ConnectorException 
 	{
 		super(slice_function, p);
