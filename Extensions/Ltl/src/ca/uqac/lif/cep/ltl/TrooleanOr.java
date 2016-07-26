@@ -24,27 +24,32 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
-public class Not extends FunctionProcessor 
+public class TrooleanOr extends FunctionProcessor 
 {
-	public Not()
+	public TrooleanOr()
 	{
-		super(Troolean.NOT_FUNCTION);
+		super(Troolean.OR_FUNCTION);
 	}
 	
 	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
+		Processor right = (Processor) stack.pop();
 		stack.pop(); // )
-		stack.pop(); // NOT
-		Not op = new Not();
-		Connector.connect(p, op);
+		stack.pop(); // op
+		stack.pop(); // (
+		Processor left = (Processor) stack.pop();
+		stack.pop(); // )
+		TrooleanOr op = new TrooleanOr();
+		Connector.connect(left, op, 0, 0);
+		Connector.connect(right, op, 0, 1);
 		stack.push(op);
 	}
 	
 	@Override
-	public Not clone()
+	public TrooleanOr clone()
 	{
-		return new Not();
+		return new TrooleanOr();
 	}
+
 }

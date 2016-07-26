@@ -24,38 +24,27 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
-public class Implies extends FunctionProcessor 
+public class TrooleanNot extends FunctionProcessor 
 {
-	public Implies()
+	public TrooleanNot()
 	{
-		super(Troolean.IMPLIES_FUNCTION);
+		super(Troolean.NOT_FUNCTION);
 	}
 	
 	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
 		stack.pop(); // (
-		Processor right = (Processor) stack.pop();
+		Processor p = (Processor) stack.pop();
 		stack.pop(); // )
-		stack.pop(); // op
-		stack.pop(); // (
-		Processor left = (Processor) stack.pop();
-		stack.pop(); // )
-		Implies op = new Implies();
-		Connector.connect(left, op, 0, 0);
-		Connector.connect(right, op, 0, 1);
+		stack.pop(); // NOT
+		TrooleanNot op = new TrooleanNot();
+		Connector.connect(p, op);
 		stack.push(op);
 	}
 	
 	@Override
-	public Implies clone()
+	public TrooleanNot clone()
 	{
-		return new Implies();
+		return new TrooleanNot();
 	}
-	
-	@Override
-	public String toString()
-	{
-		return "IMPLIES";
-	}
-
 }

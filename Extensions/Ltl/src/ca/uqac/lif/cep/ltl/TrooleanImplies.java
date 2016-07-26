@@ -24,11 +24,11 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
-public class Or extends FunctionProcessor 
+public class TrooleanImplies extends FunctionProcessor 
 {
-	public Or()
+	public TrooleanImplies()
 	{
-		super(Troolean.OR_FUNCTION);
+		super(Troolean.IMPLIES_FUNCTION);
 	}
 	
 	public static void build(Stack<Object> stack) throws ConnectorException 
@@ -40,16 +40,22 @@ public class Or extends FunctionProcessor
 		stack.pop(); // (
 		Processor left = (Processor) stack.pop();
 		stack.pop(); // )
-		Or op = new Or();
+		TrooleanImplies op = new TrooleanImplies();
 		Connector.connect(left, op, 0, 0);
 		Connector.connect(right, op, 0, 1);
 		stack.push(op);
 	}
 	
 	@Override
-	public Or clone()
+	public TrooleanImplies clone()
 	{
-		return new Or();
+		return new TrooleanImplies();
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "IMPLIES";
 	}
 
 }

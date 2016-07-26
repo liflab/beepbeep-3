@@ -207,7 +207,7 @@ public class LtlTest extends BeepBeepUnitTest
 		input_events.add(Value.TRUE);
 		input_events.add(Value.FALSE);
 		src.setEvents(input_events);
-		Not g = new Not();
+		TrooleanNot g = new TrooleanNot();
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
@@ -242,7 +242,7 @@ public class LtlTest extends BeepBeepUnitTest
 			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
-		And g = new And();
+		TrooleanAnd g = new TrooleanAnd();
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
@@ -274,7 +274,7 @@ public class LtlTest extends BeepBeepUnitTest
 			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
-		And g = new And();
+		TrooleanAnd g = new TrooleanAnd();
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
@@ -306,7 +306,7 @@ public class LtlTest extends BeepBeepUnitTest
 			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
-		Or g = new Or();
+		TrooleanOr g = new TrooleanOr();
 		Connector.connect(src_left, g, 0, 0);
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);

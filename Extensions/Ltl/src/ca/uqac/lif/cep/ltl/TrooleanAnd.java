@@ -24,9 +24,9 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
-public class And extends FunctionProcessor 
+public class TrooleanAnd extends FunctionProcessor 
 {
-	public And()
+	public TrooleanAnd()
 	{
 		super(Troolean.AND_FUNCTION);
 	}
@@ -40,15 +40,15 @@ public class And extends FunctionProcessor
 		stack.pop(); // (
 		Processor left = (Processor) stack.pop();
 		stack.pop(); // )
-		And op = new And();
+		TrooleanAnd op = new TrooleanAnd();
 		Connector.connect(left, op, 0, 0);
 		Connector.connect(right, op, 0, 1);
 		stack.push(op);
 	}
 
 	@Override
-	public And clone()
+	public TrooleanAnd clone()
 	{
-		return new And();
+		return new TrooleanAnd();
 	}
 }

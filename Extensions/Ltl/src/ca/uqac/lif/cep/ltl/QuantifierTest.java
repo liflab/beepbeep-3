@@ -216,7 +216,7 @@ public class QuantifierTest
 	{
 		Pullable p;
 		Object o;
-		Implies imp = new Implies();
+		TrooleanImplies imp = new TrooleanImplies();
 		SmartFork fork = new SmartFork(2);
 		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
 		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
@@ -248,7 +248,7 @@ public class QuantifierTest
 	{
 		Pullable p;
 		Object o;
-		Implies imp = new Implies();
+		TrooleanImplies imp = new TrooleanImplies();
 		SmartFork fork = new SmartFork(2);
 		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
 		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new ArgumentPlaceholder("x"))));
