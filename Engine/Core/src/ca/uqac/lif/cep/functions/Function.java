@@ -20,13 +20,14 @@ package ca.uqac.lif.cep.functions;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.Contextualizable;
 
 /**
  * Represents a stateless <i>m</i>-to-<i>n</i> function.
  * 
  * @author Sylvain Hallé
  */
-public abstract class Function implements Cloneable
+public abstract class Function implements Cloneable, Contextualizable
 {
 	/**
 	 * The maximum input arity that a function can have
@@ -109,22 +110,21 @@ public abstract class Function implements Cloneable
 	 */	
 	public abstract Class<?> getOutputTypeFor(int index);	
 	
-	/**
-	 * Sets a context for the evaluation of this function
-	 * @param context The context
-	 */
+	@Override
 	public void setContext(Context context)
 	{
 		// Do nothing
 	}
 	
-	/**
-	 * Sets a context for the evaluation of this function
-	 * @param key The key
-	 * @param value The value
-	 */
+	@Override
 	public void setContext(String key, Object value)
 	{
 		// Do nothing
+	}
+	
+	@Override
+	public Context getContext()
+	{
+		return null;
 	}
 }

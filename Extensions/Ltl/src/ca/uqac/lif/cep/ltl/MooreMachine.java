@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
@@ -153,17 +154,17 @@ public class MooreMachine extends SingleProcessor
 			}
 			else
 			{
-				if (t.isFired(inputs))
+				if (t.isFired(inputs, m_context))
 				{
 					// This transition fires: move to that state
-					return fire(t);
+					return fire(t, inputs);
 				}
 			}
 		}
 		if (otherwise != null)
 		{
 			// No "normal" transition has fired, but we have an "otherwise": fire it
-			return fire(otherwise);
+			return fire(otherwise, inputs);
 		}
 		// Screwed: no transition defined for this input
 		return null;
@@ -172,13 +173,16 @@ public class MooreMachine extends SingleProcessor
 	/**
 	 * Fires a transition and updates the machine's state
 	 * @param t The transition to fire
+	 * @param inputs The inputs that caused the transition to fire
 	 * @return Any output symbol associated with the destination state,
 	 *   <code>null</code> otherwise
 	 */
-	protected Queue<Object[]> fire(Transition t)
+	protected Queue<Object[]> fire(Transition t, Object[] inputs)
 	{
 		m_currentState = t.getDestination();
+		t.modifyContext(inputs, this);
 		System.out.println(t);
+		System.out.println(m_context);
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
@@ -214,10 +218,11 @@ public class MooreMachine extends SingleProcessor
 		/**
 		 * Determines if the transition fires for the given input
 		 * @param inputs The input events
+		 * @param context The context for the evaluation
 		 * @return <code>true</code> if the transition fires, <code>false</code>
 		 *   otherwise
 		 */
-		public boolean isFired(Object[] inputs)
+		public boolean isFired(Object[] inputs, Context context)
 		{
 			return false;
 		}
@@ -226,6 +231,14 @@ public class MooreMachine extends SingleProcessor
 		 * Resets the state of the transition
 		 */
 		public void reset()
+		{
+			// Do nothing
+		}
+		
+		/**
+		 * Modifies the context of the state machine
+		 */
+		public void modifyContext(Object[] inputs, MooreMachine machine)
 		{
 			// Do nothing
 		}
@@ -272,7 +285,7 @@ public class MooreMachine extends SingleProcessor
 		}
 		
 		@Override
-		public boolean isFired(Object[] inputs)
+		public boolean isFired(Object[] inputs, Context context)
 		{
 			return true;
 		}

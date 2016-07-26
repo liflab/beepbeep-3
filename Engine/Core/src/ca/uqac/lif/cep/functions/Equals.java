@@ -35,6 +35,10 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 	@Override
 	public Boolean getValue(Object x, Object y) 
 	{
+		if (x == null || y == null)
+		{
+			return false;
+		}
 		if (x instanceof Collection && y instanceof Collection)
 		{
 			Collection<?> set_x = (Collection<?>) x;

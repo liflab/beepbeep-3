@@ -26,7 +26,7 @@ public class ArgumentPlaceholder extends Function
 	/**
 	 * The name of this placeholder
 	 */
-	private final String m_name;
+	protected final String m_name;
 
 	/**
 	 * Creates a new argument placeholder

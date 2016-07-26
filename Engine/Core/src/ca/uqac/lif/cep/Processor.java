@@ -42,7 +42,7 @@ import java.util.Set;
  * @author Sylvain Hallé
  *
  */
-public abstract class Processor implements Cloneable
+public abstract class Processor implements Cloneable, Contextualizable
 {
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires
@@ -162,12 +162,20 @@ public abstract class Processor implements Cloneable
 		}
 		return m_context.get(key);
 	}
+	
+	@Override
+	public Context getContext()
+	{
+		// As the context map is created only on demand, we must first
+		// check if a map already exists and create it if not
+		if (m_context == null)
+		{
+			m_context = newContext();
+		}
+		return m_context;
+	}
 
-	/**
-	 * Adds an object to the processor's context
-	 * @param key The key associated to that object
-	 * @param value The object
-	 */
+	@Override
 	public void setContext(String key, Object value)
 	{
 		// As the context map is created only on demand, we must first
@@ -179,10 +187,7 @@ public abstract class Processor implements Cloneable
 		m_context.put(key, value);
 	}
 
-	/**
-	 * Adds a complete context to this processor
-	 * @param context The context to add
-	 */
+	@Override
 	public void setContext(Context context)
 	{
 		// As the context map is created only on demand, we must first

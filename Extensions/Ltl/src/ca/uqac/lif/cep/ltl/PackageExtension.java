@@ -45,13 +45,13 @@ public class PackageExtension extends Palette
 	{
 		public AndPaletteEntry()
 		{
-			super("And", And.class, FileHelper.internalFileToBytes(PackageExtension.class, "And.png"));
+			super("And", TrooleanAnd.class, FileHelper.internalFileToBytes(PackageExtension.class, "And.png"));
 		}
 
 		@Override
 		public ProcessorBox newEditorBox(ProcessorSettings settings) 
 		{
-			return new BinaryProcessorBox(new And(), m_image);
+			return new BinaryProcessorBox(new TrooleanAnd(), m_image);
 		}
 	}
 	
@@ -62,13 +62,13 @@ public class PackageExtension extends Palette
 	{
 		public OrPaletteEntry()
 		{
-			super("Or", Or.class, FileHelper.internalFileToBytes(PackageExtension.class, "Or.png"));
+			super("Or", TrooleanOr.class, FileHelper.internalFileToBytes(PackageExtension.class, "Or.png"));
 		}
 
 		@Override
 		public ProcessorBox newEditorBox(ProcessorSettings settings)
 		{
-			return new BinaryProcessorBox(new Or(), m_image);
+			return new BinaryProcessorBox(new TrooleanOr(), m_image);
 		}
 	}
 	
@@ -96,13 +96,13 @@ public class PackageExtension extends Palette
 	{
 		public NotPaletteEntry()
 		{
-			super("Not", Not.class, FileHelper.internalFileToBytes(PackageExtension.class, "Not.png"));
+			super("Not", TrooleanNot.class, FileHelper.internalFileToBytes(PackageExtension.class, "Not.png"));
 		}
 
 		@Override
 		public ProcessorBox newEditorBox(ProcessorSettings settings)
 		{
-			return new UnaryProcessorBox(new Not(), m_image);
+			return new UnaryProcessorBox(new TrooleanNot(), m_image);
 		}
 	}
 	
