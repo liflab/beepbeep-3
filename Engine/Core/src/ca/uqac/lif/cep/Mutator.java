@@ -48,8 +48,8 @@ public class Mutator extends SingleProcessor
 	}
 
 	@Override
-	public PullConstant clone() 
+	public Mutator clone() 
 	{
-		return new PullConstant(m_toReturn);
+		return new Mutator(m_toReturn, getInputArity());
 	}
 }
