@@ -17,6 +17,9 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.ContextAssignment;
 import ca.uqac.lif.cep.functions.Function;
@@ -25,14 +28,15 @@ import ca.uqac.lif.cep.ltl.MooreMachine.Transition;
 /**
  * Transition for a Moore Machine where the guard is a function
  * returning a <code>boolean</code>, and the context modification
- * is a {@link ca.uqac.lif.cep.functions.ContextAssignment}
+ * is a list of {@link ca.uqac.lif.cep.functions.ContextAssignment}s.
+ * 
  * @author Sylvain Hallé
  */
 public class FunctionTransition extends Transition
 {
 	protected Function m_function;
 	
-	protected ContextAssignment m_assignment;
+	protected List<ContextAssignment> m_assignments;
 
 	protected int m_destination = -1;
 	
@@ -46,12 +50,28 @@ public class FunctionTransition extends Transition
 		super();
 		m_function = function;
 		m_destination = destination;
-		m_assignment = asg;
+		m_assignments = new ArrayList<ContextAssignment>();
+		m_assignments.add(asg);
+	}
+	
+	public FunctionTransition(Function function, int destination, ContextAssignment ... asgs)
+	{
+		super();
+		m_function = function;
+		m_destination = destination;
+		m_assignments = new ArrayList<ContextAssignment>();
+		for (ContextAssignment asg : asgs)
+		{
+			m_assignments.add(asg);
+		}
 	}
 	
 	public FunctionTransition(Function function, int destination)
 	{
-		this(function, destination, null);
+		super();
+		m_function = function;
+		m_destination = destination;
+		m_assignments = new ArrayList<ContextAssignment>();
 	}
 
 	@Override
@@ -71,17 +91,18 @@ public class FunctionTransition extends Transition
 	@Override
 	public void modifyContext(Object[] inputs, MooreMachine machine)
 	{
-		if (m_assignment == null)
+		for (ContextAssignment asg : m_assignments)
 		{
-			return;
+			asg.assign(inputs, machine);
 		}
-		m_assignment.assign(inputs, machine);
 	}
 	
 	@Override
 	public FunctionTransition clone()
 	{
-		return new FunctionTransition(m_function, m_destination, m_assignment);
+		FunctionTransition out = new FunctionTransition(m_function, m_destination);
+		out.m_assignments.addAll(m_assignments);
+		return out;
 	}
 	
 	@Override
@@ -89,9 +110,9 @@ public class FunctionTransition extends Transition
 	{
 		StringBuilder out = new StringBuilder();
 		out.append(m_function).append(" -> ").append(m_destination);
-		if (m_assignment != null)
+		if (!m_assignments.isEmpty())
 		{
-			out.append(" / ").append(m_assignment);
+			out.append(" / ").append(m_assignments);
 		}
 		return out.toString();
 	}

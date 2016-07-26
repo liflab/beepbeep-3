@@ -13,6 +13,7 @@ import ca.uqac.lif.cep.functions.ConstantFunction;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.SimpleFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.cep.numbers.NumberCast;
 
 public class Predicate extends SimpleFunction
 {
@@ -322,5 +323,65 @@ public class Predicate extends SimpleFunction
 			out[0] = this;
 			return out;
 		}
+	}
+	
+	public static class PredicateGet extends UnaryFunction<PredicateTuple,Object>
+	{
+		protected int m_position;
+		
+		public PredicateGet(int position)
+		{
+			super(PredicateTuple.class, Object.class);
+			m_position = position;
+		}
+
+		@Override
+		public Object getValue(PredicateTuple x) 
+		{
+			if (m_position == 0)
+			{
+				return x.m_name;
+			}
+			return x.m_arguments.get(m_position - 1);
+		}
+		
+		@Override
+		public PredicateGet clone()
+		{
+			return new PredicateGet(m_position);
+		}
+	}
+	
+	public static class PredicateGetNumber extends UnaryFunction<PredicateTuple,Number>
+	{
+		protected int m_position;
+		
+		public PredicateGetNumber(int position)
+		{
+			super(PredicateTuple.class, Number.class);
+			m_position = position;
+		}
+
+		@Override
+		public Number getValue(PredicateTuple x) 
+		{
+			if (m_position == 0)
+			{
+				// This is the predicate's name!
+				return 0;
+			}
+			if (m_position > x.m_arguments.size())
+			{
+				// > and not >=, as we use position - 1 below
+				return -1;
+			}
+			return NumberCast.getNumber(x.m_arguments.get(m_position - 1));
+		}
+		
+		@Override
+		public PredicateGetNumber clone()
+		{
+			return new PredicateGetNumber(m_position);
+		}		
 	}
 }
