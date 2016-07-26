@@ -23,6 +23,11 @@ import ca.uqac.lif.xml.XPathExpression;
 
 public class XPathEvaluator extends FunctionProcessor
 {	
+	public XPathEvaluator(String exp)
+	{
+		super(new XPathFunction(exp));
+	}
+	
 	public XPathEvaluator(XPathExpression exp)
 	{
 		super(new XPathFunction(exp));

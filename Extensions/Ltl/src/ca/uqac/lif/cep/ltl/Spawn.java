@@ -248,7 +248,7 @@ public class Spawn extends Processor
 			if (m_pullable == null)
 			{
 				Object o = m_inputPushable.getPullable().pullHard();
-				System.out.println("Getting " + o);
+				//System.out.println("Getting " + o);
 				spawn(o);
 				// Re-put o in fork's queue so that it can process it
 				m_fork.putInQueue(o);
