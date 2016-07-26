@@ -42,4 +42,10 @@ public class Wrap extends UnaryFunction<Object,Multiset>
 		set.add(x);
 		return set;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "wrap";
+	}
 }

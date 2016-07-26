@@ -17,38 +17,38 @@
  */
 package ca.uqac.lif.cep.sets;
 
+import java.util.Set;
+
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
-public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset> 
+/**
+ * Evaluates the cardinality of a set or a multiset
+ * 
+ * @author Sylvain Hallé
+ */
+@SuppressWarnings("rawtypes")
+public class Contains extends BinaryFunction<Set, Object, Boolean>
 {
-	/**
-	 * A static instance of the function
-	 */
-	public static final transient MultisetUnion instance = new MultisetUnion();
+	public static final transient Contains instance = new Contains();
 	
-	private MultisetUnion()
+	private Contains()
 	{
-		super(Multiset.class, Multiset.class, Multiset.class);
-	}
-	
-	@Override
-	public Multiset getValue(Multiset x, Multiset y) 
-	{
-		Multiset out = new Multiset();
-		out.addAll(x);
-		out.addAll(y);
-		return out;
+		super(Set.class, Object.class, Boolean.class);
 	}
 
 	@Override
-	public Multiset getStartValue() 
+	public Boolean getValue(Set x, Object y) 
 	{
-		return new Multiset();
+		if (x == null || y == null)
+		{
+			return false;
+		}
+		return x.contains(y);
 	}
 	
 	@Override
 	public String toString()
 	{
-		return " U ";
+		return "contains";
 	}
 }
