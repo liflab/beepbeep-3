@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.epl;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -61,6 +63,11 @@ public class StateSlicer extends SingleProcessor
 	 * The internal processor
 	 */
 	protected Processor m_processor = null;
+	
+	/**
+	 * The cleaning function
+	 */
+	protected Function m_cleaningFunction = null;
 
 	protected Map<Object,Processor> m_slices;
 
@@ -70,20 +77,32 @@ public class StateSlicer extends SingleProcessor
 	 * The last value output by the processor for each slice
 	 */
 	protected Map<Object,Object> m_lastSliceValue;
+	
+	/**
+	 * The values of the slices that are no longer changing
+	 */
+	protected List<Object> m_fixedValues;
 
 	StateSlicer()
 	{
 		super(1, 1);
 	}
 
-	public StateSlicer(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc)
+	public StateSlicer(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc, /*@Null*/ Function clean_func)
 	{
 		super(proc.getInputArity(), proc.getOutputArity());
 		m_processor = proc;
 		m_slicingFunction = func;
+		m_cleaningFunction = clean_func;
 		m_slices = new HashMap<Object,Processor>();
 		m_sinks = new HashMap<Object,QueueSink>();
 		m_lastSliceValue = new HashMap<Object,Object>();
+		m_fixedValues = new LinkedList<Object>();
+	}
+	
+	public StateSlicer(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc)
+	{
+		this(func, proc, null);
 	}
 
 	@Override
@@ -116,6 +135,8 @@ public class StateSlicer extends SingleProcessor
 					e.printStackTrace();
 				}
 				m_sinks.put(slice_id, sink);
+				// Put dummy value temporarily
+				m_lastSliceValue.put(slice_id,  null);
 			}
 			slices_to_process.add(slice_id);
 		}
@@ -127,20 +148,42 @@ public class StateSlicer extends SingleProcessor
 			// Push the input into the processor
 			for (int i = 0; i < inputs.length; i++)
 			{
-
 				Object o_i = inputs[i];
 				Pushable p = slice_p.getPushableInput(i);
 				p.push(o_i);
 			}
 			// Collect the output from that processor
 			Object[] out = sink_p.remove();
-			m_lastSliceValue.put(s_id, out[0]);
+			// Can we clean that slice?
+			Object[] can_clean = null;
+			if (m_cleaningFunction != null)
+			{
+				can_clean = m_cleaningFunction.evaluate(out);
+			}
+			if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (boolean) can_clean[0] == true)
+			{
+				// Add that value to the fixed values
+				m_fixedValues.add(out[0]);
+				// ...and remove the slice from the active slices
+				m_lastSliceValue.remove(s_id);
+				m_slices.remove(s_id);
+				m_sinks.remove(s_id);
+			}
+			else
+			{
+				m_lastSliceValue.put(s_id, out[0]);
+			}			
 		}
-		Object[] values = new Object[m_lastSliceValue.keySet().size()];
+		int fixed_size = m_fixedValues.size();
+		Object[] values = new Object[m_lastSliceValue.keySet().size() + fixed_size];
 		int i = 0;
 		for (Object s_id : m_lastSliceValue.keySet())
 		{
 			values[i++] = m_lastSliceValue.get(s_id);
+		}
+		for (Object f_id : m_fixedValues)
+		{
+			values[i++] = f_id;
 		}
 		return wrapObject(values);
 	}
@@ -156,6 +199,24 @@ public class StateSlicer extends SingleProcessor
 		super.reset();
 		m_slices.clear();
 		m_slicingFunction.reset();
+	}
+	
+	/**
+	 * Gets the number of slices the slicer currently handles
+	 * @return The number of slices
+	 */
+	public int getActiveSliceCount()
+	{
+		return m_slices.size();
+	}
+	
+	/**
+	 * Gets the number of slices that have been cleaned up by the slicer
+	 * @return The number of slices
+	 */
+	public int getClosedSliceCount()
+	{
+		return m_fixedValues.size();
 	}
 
 	public static void build(Stack<Object> stack) throws ConnectorException
@@ -178,7 +239,7 @@ public class StateSlicer extends SingleProcessor
 	@Override
 	public StateSlicer clone()
 	{
-		return new StateSlicer(m_slicingFunction.clone(m_context), m_processor.clone());
+		return new StateSlicer(m_slicingFunction.clone(m_context), m_processor.clone(), m_cleaningFunction.clone());
 	}
 
 	/**
