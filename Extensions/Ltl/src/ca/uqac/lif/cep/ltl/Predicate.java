@@ -181,7 +181,12 @@ public class Predicate extends SimpleFunction
 		@Override
 		public int hashCode()
 		{
-			return 0;
+			int value = 0;
+			for (Object o : this)
+			{
+				value += o.hashCode();
+			}
+			return value;
 		}
 		
 		@Override
