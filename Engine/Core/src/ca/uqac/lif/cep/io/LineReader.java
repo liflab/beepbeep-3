@@ -19,17 +19,27 @@ public class LineReader extends SingleProcessor
 	 * The scanner to read from
 	 */
 	protected Scanner m_scanner;
-	
+
 	/**
 	 * The file to read from
 	 */
 	protected File m_file;
-	
+
+	/**
+	 * Whether to update a status line about the number of lines read
+	 */
+	public static boolean s_printStatus = false;
+
+	/**
+	 * The number of lines read from the input
+	 */
+	protected int m_lineCount = 0;
+
 	/**
 	 * Whether to add a carriage return at the end of each line
 	 */
 	protected boolean m_addCrlf = true;
-	
+
 	public LineReader(File f)
 	{
 		super(0, 1);
@@ -43,7 +53,7 @@ public class LineReader extends SingleProcessor
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*@Override
 	public Pullable getPullableOutput(int index)
 	{
@@ -55,6 +65,14 @@ public class LineReader extends SingleProcessor
 	{
 		if (m_scanner.hasNextLine())
 		{
+			if (s_printStatus)
+			{
+				m_lineCount++;
+				if (m_lineCount % 1000 == 0)
+				{
+					System.out.print("Lines read: " + m_lineCount + "    \r");
+				}
+			}
 			String line = m_scanner.nextLine();
 			if (m_addCrlf)
 			{

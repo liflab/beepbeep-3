@@ -54,7 +54,7 @@ public class CommandLine
 		boolean exit = false;
 		stdout.setForegroundColor(Color.LIGHT_GRAY);
 		stdout.println("BeepBeep 3 - A versatile event stream processor");
-		stdout.println("(C) 2008-2015 Sylvain Hallé et al., Université du Québec à Chicoutimi");
+		stdout.println("(C) 2008-2016 Sylvain Hallé et al., Université du Québec à Chicoutimi");
 		stdout.println("This program comes with ABSOLUTELY NO WARRANTY.");
 		stdout.println("This is a free software, and you are welcome to redistribute it");
 		stdout.println("under certain conditions. See the file LICENSE for details.\n");

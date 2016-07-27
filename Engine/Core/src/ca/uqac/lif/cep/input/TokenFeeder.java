@@ -28,6 +28,16 @@ public abstract class TokenFeeder extends SingleProcessor
 
 	protected String m_separatorBegin;
 	protected String m_separatorEnd;
+	
+	/**
+	 * Whether to update a status line about the number of lines read
+	 */
+	public static boolean s_printStatus = false;
+
+	/**
+	 * The number of tokens output so far
+	 */
+	protected int m_tokenCount = 0;
 
 	public TokenFeeder()
 	{
@@ -74,6 +84,14 @@ public abstract class TokenFeeder extends SingleProcessor
 			{
 				if (!(token instanceof NoToken))
 				{
+					if (s_printStatus)
+					{
+						m_tokenCount++;
+						if (m_tokenCount % 1000 == 0)
+						{
+							System.out.print("Tokens fed: " + m_tokenCount + "    \r");
+						}
+					}
 					Object[] to_fill = new Object[1];
 					to_fill[0] = token;
 					out.add(to_fill);
