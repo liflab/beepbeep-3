@@ -21,7 +21,7 @@ public class Predicate extends SimpleFunction
 	 * The predicate's name
 	 */
 	protected String m_name = null;
-	
+
 	/**
 	 * The predicate's domain for each of its arguments
 	 */
@@ -31,12 +31,12 @@ public class Predicate extends SimpleFunction
 	 * The predicate's domain name for each of its arguments
 	 */
 	protected String[] m_domainNames;
-	
+
 	/**
 	 * The definition of this predicate
 	 */
 	protected Map<PredicateArgument,Troolean.Value> m_definition;
-	
+
 	public Predicate(String name, String ...domain_names)
 	{
 		super();
@@ -49,7 +49,7 @@ public class Predicate extends SimpleFunction
 		}
 		m_definition = new HashMap<PredicateArgument,Troolean.Value>();
 	}
-	
+
 	public void updateDefinition(Object[] inputs, Troolean.Value value)
 	{
 		PredicateArgument arg = new PredicateArgument(inputs);
@@ -61,7 +61,7 @@ public class Predicate extends SimpleFunction
 			m_domains.get(domain_name).add(domain_value);
 		}
 	}
-	
+
 	public void updateDefinition(PredicateTuple tuple)
 	{
 		m_definition.put(tuple.m_arguments, tuple.m_value);
@@ -72,7 +72,7 @@ public class Predicate extends SimpleFunction
 			m_domains.get(domain_name).add(domain_value);
 		}
 	}
-	
+
 	public Set<Object> getValuesForDomain(String domain_name)
 	{
 		if (!m_domains.containsKey(domain_name))
@@ -81,12 +81,12 @@ public class Predicate extends SimpleFunction
 		}
 		return m_domains.get(domain_name);
 	}
-	
+
 	public Set<String> getDomainNames()
 	{
 		return m_domains.keySet();
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -100,13 +100,16 @@ public class Predicate extends SimpleFunction
 	{
 		Object[] value = new Object[1];
 		PredicateArgument arg = new PredicateArgument(inputs);
-		if (!m_definition.containsKey(arg))
+		for (PredicateArgument def_arg : m_definition.keySet())
 		{
-			// Closed world assumption
-			value[0] = Troolean.Value.FALSE;
-			return value;
+			if (arg.matches(def_arg))
+			{
+				value[0] = m_definition.get(def_arg);
+				return value;				
+			}
 		}
-		value[0] = m_definition.get(arg);
+		// No match: closed world assumption
+		value[0] = Troolean.Value.FALSE;
 		return value;
 	}
 
@@ -136,7 +139,7 @@ public class Predicate extends SimpleFunction
 		pred.m_domains.putAll(m_domains);
 		return pred;
 	}
-	
+
 	@Override
 	public Predicate clone(Context context) 
 	{
@@ -161,14 +164,14 @@ public class Predicate extends SimpleFunction
 	{
 		return Troolean.Value.class;
 	}
-	
+
 	public static class PredicateArgument extends Vector<Object>
 	{
 		/**
 		 * Dummy UID
 		 */
 		private static final long serialVersionUID = 1L;
-		
+
 		public PredicateArgument(Object[] values)
 		{
 			super(values.length);
@@ -178,6 +181,21 @@ public class Predicate extends SimpleFunction
 			}
 		}
 		
+		public boolean matches(PredicateArgument arg)
+		{
+			for (int i = 0; i < size(); i++)
+			{
+				Object o1 = get(i);
+				Object o2 = arg.get(i);
+				// TODO: detect wildcards better
+				if (o1.toString().compareTo("_") != 0 && o2.toString().compareTo("_") != 0 && !(o1.equals(o2)))
+				{
+					return false;
+				}
+			}
+			return true;			
+		}
+
 		@Override
 		public int hashCode()
 		{
@@ -188,7 +206,7 @@ public class Predicate extends SimpleFunction
 			}
 			return value;
 		}
-		
+
 		@Override
 		public boolean equals(Object o)
 		{
@@ -205,8 +223,7 @@ public class Predicate extends SimpleFunction
 			{
 				Object o1 = get(i);
 				Object o2 = v.get(i);
-				// TODO: detect wildcards better
-				if (o1.toString().compareTo("_") != 0 && o2.toString().compareTo("_") != 0 && !(o1.equals(o2)))
+				if (!o1.equals(o2))
 				{
 					return false;
 				}
@@ -214,15 +231,15 @@ public class Predicate extends SimpleFunction
 			return true;
 		}
 	}
-	
+
 	public static class PredicateTuple
 	{
 		protected PredicateArgument m_arguments;
-		
+
 		protected Troolean.Value m_value;
-		
+
 		protected String m_name;
-		
+
 		public PredicateTuple(String name, Troolean.Value value, Object[] arguments)
 		{
 			super();
@@ -230,36 +247,36 @@ public class Predicate extends SimpleFunction
 			m_arguments = new PredicateArgument(arguments);
 			m_value = value;
 		}
-		
+
 		public String getName()
 		{
 			return m_name;
 		}
-		
+
 		public Object getArgument(int index)
 		{
 			return m_arguments.get(index);
 		}
 	}
-	
+
 	public static class PredicateTupleReader extends FunctionProcessor
 	{
 		public PredicateTupleReader()
 		{
 			super(PredicateTupleConversion.instance);
 		}
-		
+
 		@Override
 		public PredicateTupleReader clone()
 		{
 			return new PredicateTupleReader();
 		}
 	}
-	
+
 	public static class PredicateTupleConversion extends UnaryFunction<Object,PredicateTuple>
 	{
 		public static final transient PredicateTupleConversion instance = new PredicateTupleConversion();
-		
+
 		PredicateTupleConversion()
 		{
 			super(Object.class, PredicateTuple.class);
@@ -316,21 +333,21 @@ public class Predicate extends SimpleFunction
 				return new PredicateTuple("", Troolean.Value.FALSE, null);
 			}
 		}
-		
+
 		@Override
 		public PredicateTupleConversion clone()
 		{
 			return this;
 		}
 	}
-	
+
 	public static class Wildcard extends ConstantFunction
 	{
 		public Wildcard()
 		{
 			super("_");
 		}
-		
+
 		@Override
 		public Object[] evaluate(Object[] inputs, Context context)
 		{
@@ -339,11 +356,11 @@ public class Predicate extends SimpleFunction
 			return out;
 		}
 	}
-	
+
 	public static class PredicateGet extends UnaryFunction<PredicateTuple,Object>
 	{
 		protected int m_position;
-		
+
 		public PredicateGet(int position)
 		{
 			super(PredicateTuple.class, Object.class);
@@ -363,18 +380,18 @@ public class Predicate extends SimpleFunction
 			}
 			return x.m_arguments.get(m_position - 1);
 		}
-		
+
 		@Override
 		public PredicateGet clone()
 		{
 			return new PredicateGet(m_position);
 		}
 	}
-	
+
 	public static class PredicateGetNumber extends UnaryFunction<PredicateTuple,Number>
 	{
 		protected int m_position;
-		
+
 		public PredicateGetNumber(int position)
 		{
 			super(PredicateTuple.class, Number.class);
@@ -396,7 +413,7 @@ public class Predicate extends SimpleFunction
 			}
 			return NumberCast.getNumber(x.m_arguments.get(m_position - 1));
 		}
-		
+
 		@Override
 		public PredicateGetNumber clone()
 		{
