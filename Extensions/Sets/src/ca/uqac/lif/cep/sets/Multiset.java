@@ -139,7 +139,7 @@ public class Multiset implements Set<Object>
 	/**
 	 * Gets the (normal) set of all elements in this multiset.
 	 * In other words, turns this multiset into a regular set. 
-	 * @return The set of elmeents
+	 * @return The set of elements
 	 */
 	public Set<Object> keySet()
 	{
@@ -149,20 +149,21 @@ public class Multiset implements Set<Object>
 	/**
 	 * Removes an element from this multiset
 	 * @param o The element
+	 * @param times The number of times to remove this element
 	 * @return This multiset
 	 */
-	public Multiset removeElement(Object o)
+	public Multiset removeElement(Object o, int times)
 	{
 		if (m_map.containsKey(o))
 		{
 			int cardinality = m_map.get(o);
-			if (cardinality == 1)
+			if (cardinality <= times)
 			{
 				m_map.remove(o);
 			}
 			else
 			{
-				m_map.put(o,  cardinality - 1);
+				m_map.put(o, cardinality - times);
 			}
 		}
 		return this;
@@ -213,8 +214,30 @@ public class Multiset implements Set<Object>
 	@Override
 	public boolean containsAll(Collection<?> arg0) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		if (arg0 instanceof Multiset)
+		{
+			Multiset set = (Multiset) arg0;
+			for (Object o : set.keySet())
+			{
+				if (m_map.get(o) < set.get(o))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		else
+		{
+			// Normal set
+			for (Object o : arg0)
+			{
+				if (!contains(o))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 	@Override
@@ -226,33 +249,103 @@ public class Multiset implements Set<Object>
 	@Override
 	public Iterator<Object> iterator() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return keySet().iterator();
 	}
 
 	@Override
 	public boolean remove(Object arg0) 
 	{
+		return remove(arg0, 1);
+	}
+	
+	/**
+	 * Removes an element a number of times
+	 * @param arg0 The element
+	 * @param times The number of times to remove it
+	 * @return true if the element was removed at least once,
+	 *   false otherwise
+	 */
+	public boolean remove(Object arg0, int times) 
+	{
 		if (!contains(arg0))
 		{
 			return false;
 		}
-		removeElement(arg0);
+		removeElement(arg0, times);
 		return true;
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> arg0) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		boolean removed = false;
+		if (arg0 instanceof Multiset)
+		{
+			Multiset set = (Multiset) arg0;
+			for (Object o : set.keySet())
+			{
+				// Look out: the call must be on the LHS. Otherwise,
+				// if removed == true, the call would never be evaluated.
+				removed = remove(o, set.get(o)) || removed;
+			}
+		}
+		else
+		{
+			// Normal collection
+			for (Object o : arg0)
+			{
+				removed = remove(o, 1) || removed;
+			}
+		}
+		return removed;
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> arg0) 
 	{
-		// TODO Auto-generated method stub
-		return false;
+		boolean changed = false;
+		if (arg0 instanceof Multiset)
+		{
+			Multiset set = (Multiset) arg0;
+			for (Object o : set.keySet())
+			{
+				int target_card = set.get(o);
+				if (m_map.get(o) > target_card)
+				{
+					changed = true;
+					m_map.put(o, target_card);
+				}
+			}
+			for (Object o : m_map.keySet())
+			{
+				if (!set.contains(o))
+				{
+					m_map.remove(o);
+					changed = true;
+				}
+			}
+		}
+		else
+		{
+			// Normal set
+			for (Object o : arg0)
+			{
+				if (get(o) > 1)
+				{
+					m_map.put(o, 1);
+					changed = true;
+				}
+			}
+			for (Object o : m_map.keySet())
+			{
+				if (!arg0.contains(o))
+				{
+					m_map.remove(o);
+					changed = true;
+				}
+			}
+		}
+		return changed;
 	}
 
 	@Override
