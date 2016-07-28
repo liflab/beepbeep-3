@@ -15,15 +15,15 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.ltl;
+package ca.uqac.lif.cep.fsm;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.fsm.MooreMachine.Transition;
 import ca.uqac.lif.cep.functions.ContextAssignment;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.ltl.MooreMachine.Transition;
 
 /**
  * Transition for a Moore Machine where the guard is a function
