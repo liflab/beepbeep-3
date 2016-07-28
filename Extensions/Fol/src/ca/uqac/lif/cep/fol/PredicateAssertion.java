@@ -137,5 +137,23 @@ public class PredicateAssertion extends Function
 	public Class<?> getOutputTypeFor(int index)
 	{
 		return Boolean.class;
-	}	
+	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append(m_predicateName).append("(");
+		for (int i = 0; i < m_arguments.length; i++)
+		{
+			if (i > 0)
+			{
+				out.append(",");
+			}
+			out.append(m_arguments[i]);
+		}
+		out.append(")");
+		return out.toString();
+	}
+
 }

@@ -21,4 +21,11 @@ public class ExistsFunction extends QuantifierFunction
 	{
 		return new ExistsFunction(m_variableName, m_domainName, m_expression.clone(context));
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "exists " + m_variableName + " in " + m_domainName + " : " + m_expression;
+	}
+
 }

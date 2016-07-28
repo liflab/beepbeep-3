@@ -21,4 +21,10 @@ public class ForAllFunction extends QuantifierFunction
 	{
 		return new ForAllFunction(m_variableName, m_domainName, m_expression.clone(context));
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "forall " + m_variableName + " in " + m_domainName + " : " + m_expression;
+	}
 }
