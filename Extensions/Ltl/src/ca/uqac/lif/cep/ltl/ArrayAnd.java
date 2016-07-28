@@ -12,8 +12,7 @@ public class ArrayAnd extends ArrayTroolean
 	public Value[] compute(Object[] inputs)
 	{
 		Value[] out = new Value[1];
-		Object[] val_array = (Object[]) inputs[0];
-		out[0] = Troolean.and(Troolean.trooleanValues(val_array));
+		out[0] = Troolean.and(Troolean.trooleanValues(inputs[0]));
 		return out;
 	}
 

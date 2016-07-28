@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.cep.util.Arrays;
 
 /**
  * Implementation of a three-valued logic. The "Troolean" type
@@ -53,25 +54,11 @@ public class Troolean
 	public static final transient TrooleanNot NOT_FUNCTION = new TrooleanNot();
 
 	/**
-	 * Computes the logical conjunction of two values
-	 * @param x The first value
-	 * @param y The second value
+	 * Computes the logical conjunction of the values
+	 * @param values The values
 	 * @return The result
 	 */
-	public static Value and(Value x, Value y)
-	{
-		if (x == Value.FALSE || y == Value.FALSE)
-		{
-			return Value.FALSE;
-		}
-		if (x == Value.INCONCLUSIVE || y == Value.INCONCLUSIVE)
-		{
-			return Value.INCONCLUSIVE;
-		}
-		return Value.TRUE;
-	}
-	
-	public static Value and(Value[] values)
+	public static Value and(Value ... values)
 	{
 		for (Value v : values)
 		{
@@ -87,7 +74,12 @@ public class Troolean
 		return Value.TRUE;
 	}
 	
-	public static Value or(Value[] values)
+	/**
+	 * Computes the logical disjunction of the values
+	 * @param values The values
+	 * @return The result
+	 */
+	public static Value or(Value ... values)
 	{
 		for (Value v : values)
 		{
@@ -99,26 +91,6 @@ public class Troolean
 			{
 				return Value.INCONCLUSIVE;
 			}
-		}
-		return Value.FALSE;
-	}
-
-	
-	/**
-	 * Computes the logical conjunction of two values
-	 * @param a The first value
-	 * @param b The second value
-	 * @return The result
-	 */
-	public static Value or(Value x, Value y)
-	{
-		if (x == Value.TRUE || y == Value.TRUE)
-		{
-			return Value.TRUE;
-		}
-		if (x == Value.INCONCLUSIVE || y == Value.INCONCLUSIVE)
-		{
-			return Value.INCONCLUSIVE;
 		}
 		return Value.FALSE;
 	}
@@ -186,9 +158,13 @@ public class Troolean
 	 * <li><tt>null</tt> evaluates to INCONCLUSIVE</li>
 	 * <li>Ordinary Booleans evaluate to their corresponding value</li>
 	 * <li>Ordinary Trooleans evaluate to their corresponding value</li>
-	 * <li>The strings "1", "true" and "T" evaluate to TRUE</li>
-	 * <li>The strings "0", "false" and "F" evaluate to FALSE</li> 
+	 * <li>The strings "1", "true" and "T" evaluate to TRUE 
+	 *   (case insensitive)</li>
+	 * <li>The strings "0", "false" and "F" evaluate to FALSE (case 
+	 *   insensitive)</li>
 	 * <li>All other strings evaluate to INCONCLUSIVE</li>
+	 * <li>The number 0 evaluates to FALSE</li>
+	 * <li>Other numbers evaluate to TRUE</li>
 	 * <li>All other objects evaluate to INCONCLUSIVE</li>
 	 * </ul>
 	 * @param b The object
@@ -232,22 +208,31 @@ public class Troolean
 				return Value.INCONCLUSIVE;
 			}
 		}
+		if (o instanceof Number)
+		{
+			if (((Number) o).floatValue() == 0)
+			{
+				return Value.FALSE;
+			}
+			return Value.TRUE;
+		}
 		return Value.INCONCLUSIVE;
 	}
-	
+
 	/**
 	 * Converts an array of objects into an array of Trooleans.
 	 * Each element is converted by calling {@link #trooleanValue(Object)}
 	 * on it.
-	 * @param values The original array of objects
+	 * @param values The original array or collection of objects
 	 * @return The array of Troolean values
 	 */
-	public static Value[] trooleanValues(Object[] values)
+	public static Value[] trooleanValues(Object values)
 	{
-		Value[] out_values = new Value[values.length];
-		for (int i = 0; i < values.length; i++)
+		Object[] o_values = Arrays.toObjectArray(values);
+		Value[] out_values = new Value[o_values.length];
+		for (int i = 0; i < o_values.length; i++)
 		{
-			out_values[i] = trooleanValue(values[i]);
+			out_values[i] = trooleanValue(o_values[i]);
 		}
 		return out_values;
 	}
