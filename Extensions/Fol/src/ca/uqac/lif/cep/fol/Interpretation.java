@@ -74,6 +74,26 @@ public class Interpretation
 	}
 	
 	/**
+	 * Creates a copy of an interpretation
+	 * @param inter The interpretation to copy
+	 */
+	public Interpretation(Interpretation inter)
+	{
+		super();
+		for (String domain_name : inter.m_domains.keySet())
+		{
+			HashSet<Object> values = new HashSet<Object>();
+			values.addAll(inter.m_domains.get(domain_name));
+			m_domains.put(domain_name, values);
+		}
+		for (String pred_name : inter.m_predicates.keySet())
+		{
+			Predicate new_p = new Predicate(inter.m_predicates.get(pred_name));
+			m_predicates.put(pred_name, new_p);
+		}
+	}
+	
+	/**
 	 * Gets the set of values of the given domain
 	 * @param domain_name The name of the domain
 	 * @return The set of values. An empty set is returned if no
@@ -122,8 +142,34 @@ public class Interpretation
 			pred.m_definition.put(tuple.m_arguments, tuple.m_value);
 			for (int i = 0; i < pred.m_domainNames.length; i++)
 			{
-				
+				addToDomain(pred.m_domainNames[i], tuple.m_arguments.m_values[i]);
 			}
+		}
+	}
+	
+	public void addPredicate(Predicate p)
+	{
+		m_predicates.put(p.m_name, p);
+		for (String domain_name : p.m_domainNames)
+		{
+			if (!m_domains.containsKey(domain_name))
+			{
+				m_domains.put(domain_name, new HashSet<Object>());
+			}
+		}
+	}
+	
+	public void clear()
+	{
+		for (String predicate_name : m_predicates.keySet())
+		{
+			// Clear predicates
+			m_predicates.get(predicate_name).clear();
+		}
+		for (String domain_name : m_domains.keySet())
+		{
+			// Clear domains
+			m_domains.put(domain_name, new HashSet<Object>());
 		}
 	}
 }

@@ -26,4 +26,18 @@ public class Context extends HashMap<String,Object>
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	public Context()
+	{
+		super();
+	}
+	
+	public Context(Context c)
+	{
+		super();
+		if (c != null)
+		{
+			putAll(c);
+		}
+	}
+	
 }

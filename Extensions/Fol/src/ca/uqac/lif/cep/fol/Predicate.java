@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.fol;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,11 +31,6 @@ public class Predicate extends SimpleFunction
 	 * The predicate's name
 	 */
 	protected String m_name = null;
-
-	/**
-	 * The predicate's domain for each of its arguments
-	 */
-	protected Map<String,Set<Object>> m_domains;
 
 	/**
 	 * The predicate's domain name for each of its arguments
@@ -53,49 +47,36 @@ public class Predicate extends SimpleFunction
 		super();
 		m_name = name;
 		m_domainNames = domain_names;
-		m_domains = new HashMap<String,Set<Object>>();
-		for (String d_name : domain_names)
-		{
-			m_domains.put(d_name, new HashSet<Object>());
-		}
 		m_definition = new HashMap<PredicateArgument,Boolean>();
+	}
+	
+	public Predicate(Predicate pred)
+	{
+		m_name = pred.m_name;
+		m_domainNames = pred.m_domainNames;
+		m_definition = new HashMap<PredicateArgument,Boolean>();
+		m_definition.putAll(pred.m_definition);
 	}
 
 	public void updateDefinition(Object[] inputs, boolean value)
 	{
 		PredicateArgument arg = new PredicateArgument(inputs);
 		m_definition.put(arg, value);
-		for (int i = 0; i < m_domainNames.length; i++)
-		{
-			String domain_name = m_domainNames[i];
-			Object domain_value = arg.get(i);
-			m_domains.get(domain_name).add(domain_value);
-		}
 	}
 
 	public void updateDefinition(PredicateTuple tuple)
 	{
 		m_definition.put(tuple.m_arguments, tuple.m_value);
-		for (int i = 0; i < m_domainNames.length; i++)
-		{
-			String domain_name = m_domainNames[i];
-			Object domain_value = tuple.m_arguments.get(i);
-			m_domains.get(domain_name).add(domain_value);
-		}
 	}
 
-	public Set<Object> getValuesForDomain(String domain_name)
+	public String[] getDomainNames()
 	{
-		if (!m_domains.containsKey(domain_name))
-		{
-			return new HashSet<Object>();
-		}
-		return m_domains.get(domain_name);
+		return m_domainNames;
 	}
-
-	public Set<String> getDomainNames()
+	
+	public void clear()
 	{
-		return m_domains.keySet();
+		m_definition.clear();
 	}
 
 	@Override
@@ -127,7 +108,7 @@ public class Predicate extends SimpleFunction
 	@Override
 	public int getInputArity() 
 	{
-		return m_domains.size();
+		return m_domainNames.length;
 	}
 
 	@Override
@@ -147,7 +128,6 @@ public class Predicate extends SimpleFunction
 	{
 		Predicate pred = new Predicate(m_name, m_domainNames);
 		pred.m_definition.putAll(m_definition);
-		pred.m_domains.putAll(m_domains);
 		return pred;
 	}
 
@@ -156,7 +136,6 @@ public class Predicate extends SimpleFunction
 	{
 		Predicate pred = new Predicate(m_name, m_domainNames);
 		pred.m_definition.putAll(m_definition);
-		pred.m_domains.putAll(m_domains);
 		pred.setContext(context);
 		return pred;
 	}
@@ -164,7 +143,7 @@ public class Predicate extends SimpleFunction
 	@Override
 	public void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
-		if (index >= 0 && index < m_domains.size())
+		if (index >= 0 && index < m_domainNames.length)
 		{
 			classes.add(Object.class);
 		}

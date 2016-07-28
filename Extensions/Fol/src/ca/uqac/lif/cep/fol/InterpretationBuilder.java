@@ -17,27 +17,17 @@
  */
 package ca.uqac.lif.cep.fol;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
 public class InterpretationBuilder extends SingleProcessor 
 {
-	protected Map<String,Predicate> m_predicates;
-	
-	protected Set<String> m_domainNames;
-	
 	protected Interpretation m_interpretation;
 	
 	public InterpretationBuilder()
 	{
 		super(1, 1);
-		m_predicates = new HashMap<String,Predicate>();
-		m_domainNames = new HashSet<String>();
 		m_interpretation = new Interpretation();
 	}
 	
@@ -45,8 +35,7 @@ public class InterpretationBuilder extends SingleProcessor
 	{
 		for (Predicate p : preds)
 		{
-			m_predicates.put(p.m_name, p);
-			m_domainNames.addAll(p.getDomainNames());
+			m_interpretation.addPredicate(p);
 		}
 		return this;
 	}
@@ -55,7 +44,7 @@ public class InterpretationBuilder extends SingleProcessor
 	public void reset()
 	{
 		super.reset();
-		m_predicates.clear();
+		m_interpretation.clear();
 	}
 	
 	@Override
@@ -63,11 +52,7 @@ public class InterpretationBuilder extends SingleProcessor
 	{
 		InterpretationBuilder out = new InterpretationBuilder();
 		out.setContext(m_context);
-		for (String name : m_predicates.keySet())
-		{
-			Predicate new_p = m_predicates.get(name).clone(m_context);
-			out.m_predicates.put(name, new_p);
-		}
+		out.m_interpretation = new Interpretation(m_interpretation);
 		return out;
 	}
 
@@ -77,27 +62,9 @@ public class InterpretationBuilder extends SingleProcessor
 		Object o = inputs[0];
 		if (o instanceof PredicateTuple)
 		{
-			PredicateTuple tuple = (PredicateTuple) o;
-			String pred_name = tuple.m_name;
-			if (m_predicates.containsKey(pred_name))
-			{
-				Predicate pred = m_predicates.get(pred_name);
-				pred.updateDefinition(tuple);
-			}
+			m_interpretation.addPredicateTuple((PredicateTuple) o); 
 		}
 		return wrapObject(m_interpretation);
-		/*Map<String,Set<Object>> domain_defs = new HashMap<String,Set<Object>>();
-		for (String domain_name : m_domainNames)
-		{
-			Set<Object> domain = new HashSet<Object>();
-			for (Predicate pred : m_predicates.values())
-			{
-				domain.addAll(pred.getValuesForDomain(domain_name));
-			}
-			domain_defs.put(domain_name, domain);
-		}
-		Interpretation inter = new Interpretation(domain_defs, m_predicates);
-		return wrapObject(inter);*/
 	}
 	
 }
