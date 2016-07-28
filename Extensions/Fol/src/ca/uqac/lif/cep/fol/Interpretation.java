@@ -117,7 +117,7 @@ public class Interpretation
 	public void addToDomain(String domain_name, Object value)
 	{
 		Set<Object> values = null;
-		if (m_domains.containsKey(domain_name))
+		if (!m_domains.containsKey(domain_name))
 		{
 			values = new HashSet<Object>();
 		}
