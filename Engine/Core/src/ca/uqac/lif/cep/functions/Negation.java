@@ -14,4 +14,10 @@ public class Negation extends UnaryFunction<Boolean,Boolean>
 	{
 		return !x.booleanValue();
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "!";
+	}
 }

@@ -181,8 +181,8 @@ public class MooreMachine extends SingleProcessor
 	{
 		m_currentState = t.getDestination();
 		t.modifyContext(inputs, this);
-		//System.out.println(t);
-		//System.out.println(m_context);
+		System.out.println(t);
+		System.out.println(m_context);
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
