@@ -25,20 +25,23 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
-public class PredicateBuilder extends SingleProcessor 
+public class InterpretationBuilder extends SingleProcessor 
 {
 	protected Map<String,Predicate> m_predicates;
 	
 	protected Set<String> m_domainNames;
 	
-	public PredicateBuilder()
+	protected Interpretation m_interpretation;
+	
+	public InterpretationBuilder()
 	{
 		super(1, 1);
 		m_predicates = new HashMap<String,Predicate>();
 		m_domainNames = new HashSet<String>();
+		m_interpretation = new Interpretation();
 	}
 	
-	public PredicateBuilder add(Predicate ... preds)
+	public InterpretationBuilder add(Predicate ... preds)
 	{
 		for (Predicate p : preds)
 		{
@@ -56,9 +59,9 @@ public class PredicateBuilder extends SingleProcessor
 	}
 	
 	@Override
-	public PredicateBuilder clone()
+	public InterpretationBuilder clone()
 	{
-		PredicateBuilder out = new PredicateBuilder();
+		InterpretationBuilder out = new InterpretationBuilder();
 		out.setContext(m_context);
 		for (String name : m_predicates.keySet())
 		{
@@ -82,7 +85,8 @@ public class PredicateBuilder extends SingleProcessor
 				pred.updateDefinition(tuple);
 			}
 		}
-		Map<String,Set<Object>> domain_defs = new HashMap<String,Set<Object>>();
+		return wrapObject(m_interpretation);
+		/*Map<String,Set<Object>> domain_defs = new HashMap<String,Set<Object>>();
 		for (String domain_name : m_domainNames)
 		{
 			Set<Object> domain = new HashSet<Object>();
@@ -93,7 +97,7 @@ public class PredicateBuilder extends SingleProcessor
 			domain_defs.put(domain_name, domain);
 		}
 		Interpretation inter = new Interpretation(domain_defs, m_predicates);
-		return wrapObject(inter);
+		return wrapObject(inter);*/
 	}
 	
 }

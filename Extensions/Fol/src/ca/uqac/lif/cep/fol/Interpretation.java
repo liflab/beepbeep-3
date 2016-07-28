@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.fol;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -45,6 +46,16 @@ public class Interpretation
 	 * is the corresponding {@link Predicate} object.
 	 */
 	protected Map<String,Predicate> m_predicates;
+	
+	/**
+	 * Creates a new empty interpretation
+	 */
+	public Interpretation()
+	{
+		super();
+		m_domains = new HashMap<String,Set<Object>>();
+		m_predicates = new HashMap<String,Predicate>();
+	}
 	
 	/**
 	 * Creates a new interpretation
@@ -76,5 +87,43 @@ public class Interpretation
 			return new HashSet<Object>();
 		}
 		return m_domains.get(domain_name);
+	}
+	
+	/**
+	 * Adds a new value to a domain
+	 * @param domain_name The name of the domain
+	 * @param value The value to add
+	 */
+	public void addToDomain(String domain_name, Object value)
+	{
+		Set<Object> values = null;
+		if (m_domains.containsKey(domain_name))
+		{
+			values = new HashSet<Object>();
+		}
+		else
+		{
+			values = m_domains.get(domain_name);
+		}
+		values.add(value);
+		m_domains.put(domain_name, values);
+	}
+	
+	/**
+	 * Adds a new predicate tuple to the definition of some predicate.
+	 * This also updates the domains
+	 * @param tuple The tuple to add
+	 */
+	public void addPredicateTuple(PredicateTuple tuple)
+	{
+		if (m_predicates.containsKey(tuple.m_name))
+		{
+			Predicate pred = m_predicates.get(tuple.m_name);
+			pred.m_definition.put(tuple.m_arguments, tuple.m_value);
+			for (int i = 0; i < pred.m_domainNames.length; i++)
+			{
+				
+			}
+		}
 	}
 }
