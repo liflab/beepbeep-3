@@ -195,7 +195,7 @@ public class Predicate extends SimpleFunction
 		
 		public Object get(int index)
 		{
-			if (index < 0 || index > m_values.length)
+			if (index < 0 || index >= m_values.length)
 			{
 				return null;
 			}

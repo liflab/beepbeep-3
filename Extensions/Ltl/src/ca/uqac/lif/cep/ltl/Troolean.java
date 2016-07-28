@@ -226,7 +226,7 @@ public class Troolean
 	 * @param values The original array or collection of objects
 	 * @return The array of Troolean values
 	 */
-	public static Value[] trooleanValues(Object values)
+	public static Value[] trooleanValues(Object[] values)
 	{
 		Object[] o_values = Arrays.toObjectArray(values);
 		Value[] out_values = new Value[o_values.length];

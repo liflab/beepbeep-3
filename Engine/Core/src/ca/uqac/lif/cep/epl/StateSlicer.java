@@ -17,6 +17,9 @@
  */
 package ca.uqac.lif.cep.epl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -42,13 +45,16 @@ import ca.uqac.lif.cep.SingleProcessor;
  * <p>
  * When an event <i>e</i> arrives, the slicer evaluates
  * <i>c</i> = <i>f</i>(<i>e</i>). This value determines to what instance
- * of <i>p</i> the event will be dispatched.
+ * of <i>p</i> the event will be dispatched. If no slice with such
+ * value currently exists, a new instance of <i>p</i> will
+ * be created. The processor then outputs
+ * a <code>Collection</code> object (typically a set) containing the
+ * <em>last</em> events returned by every slice.
  * <p>
  * The function <i>f</i> may return <code>null</code>, or the special
- * object {@link AllSlices}. This indicates that no new slice must
+ * object {@link ToAllSlices}. This indicates that no new slice must
  * be created, but that the incoming event must be dispatched to
- * <em>all</em> slices one by one. In such a case, the output of
- * every slice on that event is sent out, in no particular order.
+ * <em>all</em> slices one by one.
  *  
  * @author Sylvain Hallé
  */
@@ -76,7 +82,12 @@ public class StateSlicer extends SingleProcessor
 	/**
 	 * The last value output by the processor for each slice
 	 */
-	protected Map<Object,Object> m_lastSliceValue;
+	protected List<Object> m_lastValues;
+	
+	/**
+	 * A map between slices and their index in the various arrays 
+	 */
+	protected Map<Object,Integer> m_sliceIndices;
 	
 	/**
 	 * The values of the slices that are no longer changing
@@ -96,7 +107,8 @@ public class StateSlicer extends SingleProcessor
 		m_cleaningFunction = clean_func;
 		m_slices = new HashMap<Object,Processor>();
 		m_sinks = new HashMap<Object,QueueSink>();
-		m_lastSliceValue = new HashMap<Object,Object>();
+		m_sliceIndices = new HashMap<Object,Integer>();
+		m_lastValues = new ArrayList<Object>();
 		m_fixedValues = new LinkedList<Object>();
 	}
 	
@@ -112,7 +124,7 @@ public class StateSlicer extends SingleProcessor
 		Object[] f_value = m_slicingFunction.evaluate(inputs);
 		Object slice_id = f_value[0];
 		Set<Object> slices_to_process = new HashSet<Object>();
-		if (slice_id instanceof AllSlices || slice_id == null)
+		if (slice_id instanceof ToAllSlices || slice_id == null)
 		{
 			slices_to_process.addAll(m_slices.keySet());
 		}
@@ -136,7 +148,8 @@ public class StateSlicer extends SingleProcessor
 				}
 				m_sinks.put(slice_id, sink);
 				// Put dummy value temporarily
-				m_lastSliceValue.put(slice_id,  null);
+				m_lastValues.add(null);
+				m_sliceIndices.put(slice_id, m_lastValues.size() - 1);
 			}
 			slices_to_process.add(slice_id);
 		}
@@ -156,7 +169,7 @@ public class StateSlicer extends SingleProcessor
 			Object[] out = sink_p.remove();
 			// Can we clean that slice?
 			Object[] can_clean = null;
-			if (m_cleaningFunction != null)
+			/*if (m_cleaningFunction != null)
 			{
 				can_clean = m_cleaningFunction.evaluate(out);
 			}
@@ -169,28 +182,42 @@ public class StateSlicer extends SingleProcessor
 				m_slices.remove(s_id);
 				m_sinks.remove(s_id);
 			}
-			else
-			{
-				m_lastSliceValue.put(s_id, out[0]);
-			}			
+			else*/
+			//{
+			m_lastValues.set(m_sliceIndices.get(s_id), out[0]);
+			//}			
 		}
-		int fixed_size = m_fixedValues.size();
-		Object[] values = new Object[m_lastSliceValue.keySet().size() + fixed_size];
-		int i = 0;
-		for (Object s_id : m_lastSliceValue.keySet())
-		{
-			values[i++] = m_lastSliceValue.get(s_id);
-		}
-		for (Object f_id : m_fixedValues)
-		{
-			values[i++] = f_id;
-		}
-		return wrapObject(values);
+		//Collection<Object> values = newCollection();
+		//values.addAll(m_lastValues);
+		//return wrapObject(values);
+		return wrapObject(m_lastValues);
+		//values.addAll(m_fixedValues);
+		
 	}
 	
+	/**
+	 * Gets a new empty instance of the collection used to contain the
+	 * last returned value in each slice. By default, this collection
+	 * is a set, but descendants of this class may override this method
+	 * to provide a more appropriate type of collection.
+	 * @return The collection
+	 */
+	public Collection<Object> newCollection()
+	{
+		return new ArrayList<Object>(m_lastValues.size());
+	}
+	
+	/**
+	 * Adds elements to the context of a newly created slice.
+	 * By default, nothing is done. Descendants of this class may
+	 * want to add context elements to the processor, based on the
+	 * value of the newly created slice.
+	 * @param p The newly created processor
+	 * @param slice The value associated to the slice
+	 */
 	public void addContextFromSlice(Processor p, Object slice)
 	{
-		// Do nothing
+		// By default, do nothing
 	}
 
 	@Override
@@ -199,6 +226,7 @@ public class StateSlicer extends SingleProcessor
 		super.reset();
 		m_slices.clear();
 		m_slicingFunction.reset();
+		m_cleaningFunction.reset();
 	}
 	
 	/**
@@ -243,14 +271,14 @@ public class StateSlicer extends SingleProcessor
 	}
 
 	/**
-	 * Dummy object telling the slicer that the event must be sent to
+	 * Dummy object telling the slicer that an event must be sent to
 	 * all slices
 	 */
-	public static class AllSlices
+	public static class ToAllSlices
 	{
-		public static final transient AllSlices instance = new AllSlices();
+		public static final transient ToAllSlices instance = new ToAllSlices();
 		
-		AllSlices()
+		private ToAllSlices()
 		{
 			super();
 		}
