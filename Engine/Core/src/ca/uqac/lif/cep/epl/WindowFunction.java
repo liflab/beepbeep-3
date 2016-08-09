@@ -78,11 +78,13 @@ public class WindowFunction extends SingleProcessor
 		if (size == m_width + 1)
 		{
 			m_window.remove(0);
-			return wrapObject(m_function.evaluate(m_window.toArray())[0]);
+			Object value = m_function.evaluate(m_window.toArray())[0];
+			return wrapObject(value);
 		}
 		if (size == m_width)
 		{
-			return wrapObject(m_function.evaluate(m_window.toArray())[0]);
+			Object value = m_function.evaluate(m_window.toArray())[0];
+			return wrapObject(value);
 		}
 		return new ArrayDeque<Object[]>();
 	}

@@ -30,9 +30,15 @@ public abstract class QuantifierFunction extends Function
 		Interpretation inter = (Interpretation) inputs[0];
 		Object[] out = new Object[1];
 		Set<Object> values = inter.getDomain(m_domainName);
+		int dom_count = 0;
+		Context new_context = new Context(context);
 		for (Object value : values)
 		{
-			Context new_context = new Context(context);
+			dom_count++;
+			if (m_variableName.compareTo("v") == 0 && dom_count % 1 == 0)
+			{
+				System.out.println("Dom: " + dom_count);
+			}
 			new_context.put(m_variableName, value);
 			Object[] return_values = m_expression.evaluate(inputs, new_context);
 			if (return_values != null && return_values.length > 0 

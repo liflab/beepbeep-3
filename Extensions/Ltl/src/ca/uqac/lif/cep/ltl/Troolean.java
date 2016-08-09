@@ -60,6 +60,7 @@ public class Troolean
 	 */
 	public static Value and(Value ... values)
 	{
+		boolean inc_seen = false;
 		for (Value v : values)
 		{
 			if (v == Value.FALSE)
@@ -68,8 +69,12 @@ public class Troolean
 			}
 			if (v == Value.INCONCLUSIVE)
 			{
-				return Value.INCONCLUSIVE;
+				inc_seen = true;
 			}
+		}
+		if (inc_seen)
+		{
+			return Value.INCONCLUSIVE;
 		}
 		return Value.TRUE;
 	}
@@ -81,6 +86,7 @@ public class Troolean
 	 */
 	public static Value or(Value ... values)
 	{
+		boolean inc_seen = false;
 		for (Value v : values)
 		{
 			if (v == Value.TRUE)
@@ -89,8 +95,12 @@ public class Troolean
 			}
 			if (v == Value.INCONCLUSIVE)
 			{
-				return Value.INCONCLUSIVE;
+				inc_seen = true;
 			}
+		}
+		if (inc_seen)
+		{
+			return Value.INCONCLUSIVE;
 		}
 		return Value.FALSE;
 	}
