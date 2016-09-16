@@ -173,7 +173,6 @@ public class Connector
 	 * @param p2 The second processor
 	 * @param i The index of the output on the first processor
 	 * @param j The index of the input on the second processor
-	 * @return true if the types are compatible, false otherwise
 	 * @throws ConnectorException An exception describing why the connection
 	 *   cannot be mande
 	 */

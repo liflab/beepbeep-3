@@ -186,7 +186,7 @@ public abstract class Palette
 	/**
 	 * Returns a palette entry for a processor at a given position
 	 * in the palette
-	 * @param name The processor's index
+	 * @param index The index of the entry
 	 * @return The palette entry, or null if not found
 	 */
 	public final PaletteEntry getEntry(int index)

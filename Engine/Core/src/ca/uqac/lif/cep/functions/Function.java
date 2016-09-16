@@ -41,7 +41,7 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * @param context The context in which the evaluation is done. If the
 	 *   function's arguments contains placeholders, they will be replaced
 	 *   by the corresponding object fetched from this map before
-	 *   calling {@link #compute(Object[])}
+	 *   evaluating the function
 	 * @return The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
 	 */

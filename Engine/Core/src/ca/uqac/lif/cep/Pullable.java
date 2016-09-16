@@ -53,7 +53,7 @@ package ca.uqac.lif.cep;
  * <li>One obtains a reference to one of a processor's pullables. This
  *   can be done explicitly, e.g. by calling
  *   {@link Processor#getPullableOutput(int)}, or implicitly, for example
- *   through every call to {@link Connector#connect(Processor, Processor)}.</li>
+ *   through every call to {@link Connector#connect(Processor...)}.</li>
  * <li>At various moments, one calls {@link #hasNext()} (or
  *   {@link #hasNextHard()} to check if events are available</li>
  * <li>One calls {@link #pull()} (or {@link #pullHard()} to produce the next

@@ -33,8 +33,8 @@ public class TracePlaceholder extends Function
 	private final int m_index;
 
 	/**
-	 * Creates a new argument placeholder
-	 * @param name The name of this placeholder
+	 * Creates a new trace placeholder
+	 * @param index The index of the trace this placeholder represents
 	 */
 	public TracePlaceholder(int index)
 	{
