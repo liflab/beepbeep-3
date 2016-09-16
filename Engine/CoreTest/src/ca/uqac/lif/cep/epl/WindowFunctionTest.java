@@ -13,7 +13,7 @@ import ca.uqac.lif.cep.Pushable;
 
 /**
  * Unit tests for the {@link WindowFunction} processor
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  */
 public class WindowFunctionTest
 {
