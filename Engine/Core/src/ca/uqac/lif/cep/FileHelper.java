@@ -1,24 +1,25 @@
 /*
-  ParkBench, a versatile benchmark environment
-  Copyright (C) 2015-2016 Sylvain Hallé
-  
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,8 +27,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-
-import ca.uqac.lif.jerrydog.InnerFileServer;
 
 /**
  * A number of helpful utilities to read, write and manage files
@@ -257,7 +256,7 @@ public class FileHelper
     byte[] file_contents = null;
     if (in != null)
     {
-      file_contents = InnerFileServer.readBytes(in);
+      file_contents = readBytes(in);
     }
     return file_contents;
   }
@@ -310,6 +309,26 @@ public class FileHelper
         scanner.close();
     }
     return out.toString();
+  }
+  
+  public static byte[] readBytes(InputStream is)
+  {
+    int nRead;
+    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+    byte[] data = new byte[2048];
+    try
+    {
+      while ((nRead = is.read(data, 0, data.length)) != -1)
+      {
+        buffer.write(data, 0, nRead);
+      }
+      buffer.flush();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+    return buffer.toByteArray();
   }
 
 }
