@@ -175,7 +175,7 @@ public class StateSlicer extends SingleProcessor
 				{
 					can_clean = m_cleaningFunction.evaluate(out);
 				}
-				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (boolean) (can_clean[0]) == true)
+				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]) == true)
 				{
 					// Yes: set the processor for that slice to null so it
 					// can be garbage collected
