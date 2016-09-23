@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.1.5"/>
+  <property name="antrun.version" value="1.1.6"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -148,7 +148,9 @@
       includeantruntime="false">
       <classpath>
         <pathelement location="${build.bindir}"/>
-        <pathelement path="${build.depdir}"/>
+        <fileset dir="${build.depdir}">
+          <include name="*.jar"/>
+        </fileset>
         <pathelement path="${java.class.path}"/>
       </classpath>
     </javac>
@@ -170,7 +172,9 @@
       includeantruntime="false">
       <classpath>
         <pathelement location="${build.bindir}"/>
-        <pathelement location="${build.depdir}"/>
+        <fileset dir="${build.depdir}">
+          <include name="*.jar"/>
+        </fileset>
         <pathelement path="${java.class.path}"/>
         <pathelement location="${build.libdir}/${junit.jarname}"/>
         <pathelement location="${build.libdir}/${junit.hamcrest}"/>
@@ -225,7 +229,7 @@
 	  </manifest>
 	  <fileset dir="${build.bindir}"/>
 	  <zipgroupfileset dir="${build.depdir}">
-	    <include name="*" if="${build.jar.withdeps}"/>
+	    <include name="**/*.jar" if="${build.jar.withdeps}"/>
 	  </zipgroupfileset>
 	  <fileset dir="${build.srcdir}">
 	    <include name="*" if="${build.jar.withsrc}"/>

@@ -38,7 +38,8 @@
   <!-- Installation folders -->
   <srcdir>Core/src</srcdir>
   <bindir>Core/bin</bindir>
-  <docdir>Core/doc</docdir>
+  <docdir>doc</docdir>
+  <depdir>dep</depdir>
   <test>
     <srcdir>CoreTest/src</srcdir>
     <bindir>CoreTest/bin</bindir>
@@ -48,6 +49,7 @@
   <jar>
     <filename>beepbeep-3.jar</filename>
     <withdoc>false</withdoc>
+    <withdeps>true</withdeps>
   </jar>
   
   <!--
@@ -61,7 +63,7 @@
       <name>Bullwinkle</name>
       <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
       <files>
-        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.2.2/bullwinkle-1.2.2.zip</zip>
+        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.2.3/bullwinkle-1.2.3.zip</zip>
       </files>
     </dependency>
   </dependencies>

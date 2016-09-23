@@ -12,7 +12,7 @@
 # Auto-generated folders
 **/doc/
 lib/
-/deps/
+/dep/
 /tests/
 /html/
 
