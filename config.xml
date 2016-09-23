@@ -46,7 +46,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../beepbeep-3.jar</filename>
+    <filename>beepbeep-3.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   
@@ -61,7 +61,7 @@
       <name>Bullwinkle</name>
       <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
       <files>
-        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.2/bullwinkle-1.2.zip</zip>
+        <zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.2.2/bullwinkle-1.2.2.zip</zip>
       </files>
     </dependency>
   </dependencies>
