@@ -1,7 +1,0 @@
-# -----------------------------------------
-# Class associations for the EML
-# -----------------------------------------
-
-<gp_heatmap>,ca.uqac.lif.cep.gnuplot.GnuplotHeatMap
-<gp_scatterplot>,ca.uqac.lif.cep.gnuplot.GnuplotScatterplot
-<gp_caller>,ca.uqac.lif.cep.gnuplot.GnuplotCalller

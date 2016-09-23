@@ -10,8 +10,8 @@
 *.old
 
 # Auto-generated folders
-/doc/
-/lib/
+**/doc/
+lib/
 /deps/
 /tests/
 /html/

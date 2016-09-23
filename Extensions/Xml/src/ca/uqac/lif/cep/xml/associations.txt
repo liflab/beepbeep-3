@@ -1,6 +1,0 @@
-# -----------------------------------------
-# Class associations for the EML
-# -----------------------------------------
-
-<xml_feeder>,ca.uqac.lif.cep.xml.XmlFeeder
-<p_xpath>,ca.uqac.lif.cep.xml.XPathEvaluator
