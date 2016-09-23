@@ -204,7 +204,9 @@
       <link href="http://docs.oracle.com/javase/6/docs/api/"/>
       <classpath>
         <pathelement location="${build.bindir}"/>
-        <pathelement location="${build.depdir}"/>
+        <fileset dir="${build.depdir}">
+          <include name="*.jar"/>
+        </fileset>
         <pathelement path="${java.class.path}"/>
         <pathelement location="${build.libdir}/${junit.jarname}"/>
         <pathelement location="${build.libdir}/${junit.hamcrest}"/>
