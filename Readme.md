@@ -14,17 +14,12 @@ Repository structure                                           {#structure}
 
 The repository is separated across the following folders.
 
-### Engine
-
-`Engine` contains the source files for BeepBeep's core. It is separated in
-two projects:
-
 - `Core`: main source files
 - `CoreTest`: test source files. You need to compile these files only
   if you want to run BeepBeep's unit tests.
 
-Compiling the project contained in that folder generates the file
-`beepbeep-3.jar`, which is the minimal file you need to run BeepBeep on
+Compiling the project contained in the present repository generates the
+file `beepbeep-3.jar`, which is the minimal file you need to run BeepBeep on
 your system.
 
 BeepBeep tries to have as few dependencies as possible. However, the
@@ -32,38 +27,14 @@ following companion library needs to be installed for BeepBeep to
 compile and run:
 
 - The [Bullwinkle parser](https://github.com/sylvainhalle/Bullwinkle),
-  an on-the-fly parser for BNF grammars *(tested with version 1.2)*
+  an on-the-fly parser for BNF grammars *(tested with version 1.2.2)*
 
 ### Extensions
 
-`Extensions` contains a number of projects producing various independent
-extensions to BeepBeep. Each project is also independent from the others, and
-can be built separately. All projects require `beepbeep-3.jar` in their
-classpath (or alternately, must point to the `Core` source files) in order to
-compile and run.
-
-At the moment, the folder contains the following extensions:
-
-- `Gnuplot`: for drawing plots from event streams
-- `Jdbc`: for using BeepBeep as a JDBC driver
-- `Json`: to read and write events in the JSON format
-- `Ltl`: to express properties in Linear Temporal Logic
-- `Sets`: to manipulate streams of sets
-- `Signal`: basic signal processing functions (peak detection, etc.)
-- `WebSocket`: to read/write events from/to a web socket
-- `Xml`: to read and write events in the JSON format
-
-Depending on the projects, additional dependencies may need to be
-downloaded and installed. Please refer to the `Readme.md` file of each
-particular project (if any) for more information on compiling and
-building these extensions.
-
-### Editor
-
-`Editor` is a web-based graphical editor to create chains of BeepBeep
-processors. This project is under heavy construction (in other words, it
-doesn't work yet), and at the moment is far less mature than the engine
-and its extensions.
+BeepBeep's engine contains very few processors. In typical use cases,
+these basic functionalities are extended by using one or more extra
+*palettes*, such as those found in the
+[BeepBeep palette repository](https://github.com/liflab/beepbeep-3-palettes).
 
 Compiling and Installing BeepBeep 3                              {#install}
 -----------------------------------
@@ -116,14 +87,12 @@ is runnable and stand-alone, or can be used as a library, so it can be moved
 around to the location of your choice.
 
 In addition, the script generates in the `doc` folder the Javadoc
-documentation for using BeepBeep. This documentation is also embedded in
-the JAR file. To show documentation in Eclipse, right-click on the jar,
-click "Properties", then fill the Javadoc location (which is the JAR
-itself).
+documentation for using BeepBeep. To show documentation in Eclipse,
+right-click on the jar, click "Properties", then fill the Javadoc location.
 
 ### Testing
 
-Each project can test itself by running:
+BeepBeep can test itself by running:
 
     ant test
 
@@ -138,21 +107,20 @@ Developing BeepBeep using Eclipse                                {#eclipse}
 
 If you wish to develop BeepBeep, here is a suggested setup using Eclipse.
 
-- Create a new empty workspace. You may use the root of the repository as
-  the workspace's folder.
-- Create new projects for each of the folders `Engine/Core`,
-  `Engine/CoreTest`, and optionally, any of the `Extensions/xxx` folders
-  you with to develop. Note that these projects are not located in the
+- Create a new empty workspace (preferably in a new, empty folder).
+- Create new projects for each of the folders `Core`,
+  `CoreTest`, and optionally, any of the palette folders you with to develop.
+  Note that these projects will not be located in the
   default location with respect to the workspace; you need to uncheck
-  the "Use default location" option and fetch their folder manually.
+  the "Use default location" option and fetch them manually.
   
 Then, setup the build path for each project:
 
-- `Engine/Core` requires the Bullwinkle library (see above)
-- `Engine/CoreTest` depends on `Core` and requires the JUnit 4 library
-- Each of the `Extensions/xxx` depend on `Core` and require the JUnit
+- `Core` requires the Bullwinkle library (see above)
+- `CoreTest` depends on `Core` and requires the JUnit 4 library
+- Each of the palette folders depend on `Core` and require the JUnit
   4 library
-- In addition, some of the `Extensions` projects may have other
+- In addition, some of the palette projects may have other
   dependencies; please refer to their individual documentation
 
 Warning                                                          {#warning}
@@ -164,5 +132,9 @@ restructured, the API may change, and so on. This is R&D!
 About the author                                                   {#about}
 ----------------
 
-BeepBeep 3 was written by Sylvain Hallé, associate professor at Université
-du Québec à Chicoutimi, Canada.
+BeepBeep 3 was written by [Sylvain Hallé](http://leduotang.ca/sylvain),
+associate professor at Université du Québec à Chicoutimi, Canada. Part of
+this work has been funded by the Canada Research Chair in Specification,
+testing and verification of software systems and the
+[Natural Sciences and Engineering Research Council
+of Canada](http://nserc-crsng.gc.ca).
