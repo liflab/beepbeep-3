@@ -1,7 +1,7 @@
 BeepBeep 3: an expressive query processor for event streams
 ===========================================================
 
-[![Build Status](https://semaphoreci.com/api/v1/projects/3743199c-0aa3-44d7-aac7-ee8219d22298/468154/badge.svg)](https://semaphoreci.com/sylvainhalle/beepbeep-3)
+[![Build Status](https://semaphoreci.com/api/v1/sylvainhalle/beepbeep-3/branches/master/badge.svg)](https://semaphoreci.com/sylvainhalle/beepbeep-3)
 
 BeepBeep is an event stream query engine. It can take as input various
 sources of *events*, pipe them through various *processors*, and produce
@@ -134,7 +134,7 @@ About the author                                                   {#about}
 
 BeepBeep 3 was written by [Sylvain Hallé](http://leduotang.ca/sylvain),
 associate professor at Université du Québec à Chicoutimi, Canada. Part of
-this work has been funded by the Canada Research Chair in Specification,
-testing and verification of software systems and the
+this work has been funded by the Canada Research Chair in Software
+Specification, Testing and Verification and the
 [Natural Sciences and Engineering Research Council
 of Canada](http://nserc-crsng.gc.ca).
