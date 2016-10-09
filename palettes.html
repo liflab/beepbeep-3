@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<!--
+	Verti by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+--><html>
+<head>
+		<title>Palettes - BeepBeep 3</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css">
+		<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+		<link rel="stylesheet" href="assets/css/custom.css">
+		<meta name="author" content="Laboratoire d'informatique formelle">
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<header id="header" class="container">
+
+						<!-- Logo -->
+							<div id="logo">
+								<h1><a href="index.html">BeepBeep 3</a></h1>
+								<!--<span>by HTML5 UP</span>-->
+							</div>
+
+						<!-- Nav -->
+						<nav id="nav">
+	<ul>
+		<li><a href="index.html">Home</a></li>
+		<li><a href="quickintro.html">In 5 minutes</a></li>
+		<li class="current">
+<a href="features.html">Features</a>
+			<ul>
+			  <li class="current"><a href="use-cases.html">Examples of uses</a></li>
+				<li class="current"><a href="palettes.html">Available extensions</a></li>
+			</ul>
+		</li>
+		<li><a href="get.html">Get BeepBeep</a></li>
+		<li>
+<a href="documentation.html">Documentation</a>
+		  <ul>
+		    <li><a href="guide/index.html">User Guide</a></li>
+		    <li><a href="javadoc/index.html">API Reference</a></li>
+		  </ul>
+		</li>
+	</ul>
+</nav>
+<!-- :indentSize=2:tabSize=2: -->
+
+
+					</header>
+				</div>
+<!-- Main -->
+<div id="main-wrapper">
+	<div class="container">
+				<div id="content">
+
+					<!-- Content -->
+						<article>
+							<h2>Palettes</h2>
+
+<p>BeepBeep was designed from the start to be easily extensible. As was discussed earlier,
+it consists of only a small core of built-in processors and functions. The rest of its
+functionalities are implemented through custom processors and grammar extensions,
+grouped in packages called palettes. Concretely, a palette is implemented as a JAR file
+that is loaded with BeepBeep's main program to extend its functionalities in a particular
+way. Users can also create their own new processors, and extend the eSQL grammar so
+that these processors can be integrated in queries.</p>
+
+<p>This modular organization has three advantages. First, they are a flexible and generic
+way to extend the engine to various application domains, in ways unforeseen by its
+original designers. Second, they make the engine's core (and each palette individually)
+relatively small and self-contained, easing the development and debugging process.4
+Finally, it is hoped that BeepBeep's palette architecture, combined with its simple
+extension mechanisms, will help third-party users contribute to the BeepBeep ecosystem
+by developing and distributing extensions suited to their own needs.</p>
+
+<p>We describe a few of the palettes that have already been developed for BeepBeep
+in the recent past. These processors are available alongside BeepBeep from the <a href="https://github.com/liflab/beepbeep-3-palettes">palette repository</a>
+software repository.</p>
+
+<ul>
+<li>
+<strong>LTL-FO+</strong>: This palette provides processors for evaluating all operators of Linear Temporal Logic
+(LTL), in addition to the first-order quantification defined in LTL-FO + (and present in
+previous versions of BeepBeep)</li>
+<li>
+<strong>FSM</strong>: This palette allows one to define a Moore machine, a special case of finite-state machine
+where each state is associated to an output symbol. This Moore machine allows its
+transitions to be guarded by arbitrary functions; hence it can operate on traces of events
+of any type.</li>
+<li>
+<strong>Gnuplot</strong>: This palette allows the conversion of events into input files for the Gnuplot
+application. For example, an event that is a set of (x, y) coordinates can be transformed
+into a text file producing a 2D scatterplot of these points. An additional processor can
+receive these strings of text, call Gnuplot in the background and retrieve its output.
+The events of the output trace, in this case, are binary strings containing image files.5</li>
+<li>
+<strong>Tuples</strong>: This palette provides the implementation of the named tuple event type. A named
+tuple is a map between names (i.e. Strings) and arbitrary objects. In addition, the
+palette includes a few utility functions for manipulating tuples. The Select processor
+allows a tuple to be created by naming and combining the contents of multiple input
+events. The From processor transforms input events from multiple traces into an array
+(which can be used by Select), and the Where processor internally duplicates an
+input trace and sends it into a Filter evaluating some function. Combined together,
+these processors provide the same kind of functionality as the SQL-like SELECT
+statement of other CEP engines.</li>
+<li>
+<strong>XML, JSON and CSV</strong>: This palette provides a processor that converts text events into
+parsed XML documents. It also contains a Function object that can evaluate
+an XPath expression on an XML document. Another palette provides the same
+functionalities for events in the JSON and the CSV format.</li>
+</ul>
+
+<!-- :wrap=soft: -->
+						</article>
+
+				</div>
+			</div>
+</div>
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 6u(medium) 12u$(small)">
+
+								<!-- Links -->
+									<section class="widget links">
+										<h3>Made at LIF</h3>
+										<img src="http://liflab.github.io/beepbeep-3/images/logo-shadow.png" alt="LIF"><br>
+										BeepBeep was developed through the research done at <a href="http://liflab.ca">LIF</a>, the Formal Computer Science Laboratory in <a href="http://www.uqac.ca/">Universit&eacute; du Qu&eacute;bec &agrave; Chicoutimi</a>, Canada.
+									</section>
+
+							</div>
+							<div class="3u 6u$(medium) 12u$(small)">
+
+								<!-- Links -->
+									<section class="widget links">
+										<h3>Interested?</h3>
+										<p>BeepBeep is free software, released under the
+										<a href="https://www.gnu.org/copyleft/lesser.html">GNU LGPL</a>.
+										This means you can include it as a library in any project,
+										including closed-source commercial software.</p>
+									</section>
+
+							</div>
+
+							<div class="3u 6u$(medium) 12u$(small)">
+
+								<!-- Contact -->
+									<section class="widget contact last">
+										<h3>Contact Us</h3>
+										<ul>
+											<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>-->
+											<li><a href="https://www.facebook.com/liflab" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+											<!--<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+											<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+											<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>-->
+										</ul>
+										<p>Universit&eacute; du Qu&eacute;bec &agrave; Chicoutimi<br>
+										Chicoutimi, QC G7H 2B1<br>
+										Canada</p>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; 2015-2016 Laboratoire d'informatique formelle. All rights reserved</li>
+<li>Design: <a href="http://html5up.net">HTML5 UP</a>
+</li>
+<li>This site is generated by <a href="http://github.com/sylvainhalle/FantasticWindmill">Fantastic Windmill</a>
+</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+			</div>
+
+		<!-- Scripts -->
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			<!--
+You are viewing a page using the REMOTE version of the site.
+Insert here whatever HTML/PHP code you'd like to have in the pages on
+your server only.
+-->
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//leduotang.ca/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//leduotang.ca/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+
+	
+
+
+
+</body>
+</html><!-- :indentSize=2:tabSize=2: --><!-- :indentSize=2:tabSize=2: -->
