@@ -12,6 +12,7 @@
 # Auto-generated folders
 **/doc/
 lib/
+doxygen/
 /dep/
 /tests/
 /html/
