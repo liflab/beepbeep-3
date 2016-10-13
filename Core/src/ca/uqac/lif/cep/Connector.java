@@ -71,25 +71,37 @@ public class Connector
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's unique input
 	 */
-	public static final int TOP = 0;
+	public static final int INPUT = 0;
 	
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's unique output
 	 */
-	public static final int BOTTOM = 0;
+	public static final int OUTPUT = 0;
 	
 	/**
 	 * Constant used to replace the value 0 when referring to
-	 * a processor's first input
+	 * a processor's first input or output
 	 */
 	public static final int LEFT = 0;
 	
 	/**
+	 * Constant used to replace the value 0 when referring to
+	 * a processor's first input or output
+	 */
+	public static final int TOP = 0;
+	
+	/**
 	 * Constant used to replace the value 1 when referring to
-	 * a processor's first input
+	 * a processor's first input or output
 	 */
 	public static final int RIGHT = 1;
+	
+	/**
+	 * Constant used to replace the value 1 when referring to
+	 * a processor's first input or output
+	 */
+	public static final int BOTTOM = 1;
 	
 	/**
 	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
@@ -117,6 +129,22 @@ public class Connector
 		Pushable p2_in = p2.getPushableInput(j);
 		p1.setPushableOutput(i, p2_in);
 		return p2;
+	}
+	
+	/**
+	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
+	 * <i>j</i>-th input of <tt>p2</tt>
+	 * @param p1 The first processor
+	 * @param p2 The second processor
+	 * @param i The output number of the first processor
+	 * @param j The input number of the second processor
+	 * @return A reference to processor p2
+	 * @throws ConnectorException If the input/output types of the processors
+	 *   to connect are incompatible
+	 */
+	public static Processor connect(Processor p1, int i, Processor p2, int j) throws ConnectorException
+	{
+		return connect(p1, p2, i, j);
 	}
 	
 	/**

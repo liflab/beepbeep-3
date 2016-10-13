@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.uqac.lif.cep.objectfactory.SettingsSet;
 import ca.uqac.lif.cep.util.PackageFileReader;
 
 /**
@@ -236,12 +237,14 @@ public abstract class Palette
 		}
 		
 		/**
-		 * Gets the settings associated to this palette entry
+		 * Gets the settings associated to this palette entry.
+		 * This generic method should be overridden by any processor
+		 * that wishes to be instantiated through this mechanism.
 		 * @return The settings
 		 */
-		public ProcessorSettings getSettings()
+		public SettingsSet getSettings()
 		{
-			return new ProcessorSettings();
+			return new SettingsSet(Object.class);
 		}
 	}
 }

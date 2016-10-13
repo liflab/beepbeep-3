@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.objectfactory.IntegerSetting;
+import ca.uqac.lif.cep.objectfactory.SettingsSet;
 
 /**
  * Merges the contents of multiple traces into a single trace.
@@ -269,6 +271,30 @@ public class Multiplexer extends Processor
 		{
 			return m_index;
 		}
+	}
+	
+	/**
+	 * Gets the set of initial settings for this processor
+	 * @return The set of settings
+	 */
+	public static SettingsSet getInitialSettings()
+	{
+		SettingsSet set = new SettingsSet(Window.class);
+		set.add(new IntegerSetting("in-arity", true, "The input arity of the multiplexer"));
+		return set;
+	}
+
+	/**
+	 * Creates a new instance of this object based on a set of
+	 * instantiation settings
+	 * @param s The settings
+	 * @return A new instance of the object
+	 */
+	public static Multiplexer getNewInstance(SettingsSet s) throws InstantiationException
+	{
+		int in_arity = ((IntegerSetting) s.get("in-arity")).getIntValue();
+		Multiplexer out = new Multiplexer(in_arity);
+		return out;
 	}
 
 }

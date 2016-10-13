@@ -22,6 +22,8 @@ import java.util.Queue;
 
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.objectfactory.IntegerSetting;
+import ca.uqac.lif.cep.objectfactory.SettingsSet;
 
 /**
  * Duplicates an input trace into two or more output traces.
@@ -77,5 +79,29 @@ public class Fork extends SingleProcessor
 			out_pushables[i] = m_outputPushables[i];
 		}
 		m_outputPushables = out_pushables;
+	}
+	
+	/**
+	 * Gets the set of initial settings for this processor
+	 * @return The set of settings
+	 */
+	public static SettingsSet getInitialSettings()
+	{
+		SettingsSet set = new SettingsSet(Window.class);
+		set.add(new IntegerSetting("branches", true, "The number of branches in which the output is to be split"));
+		return set;
+	}
+
+	/**
+	 * Creates a new instance of this object based on a set of
+	 * instantiation settings
+	 * @param s The settings
+	 * @return A new instance of the object
+	 */
+	public static Fork getNewInstance(SettingsSet s) throws InstantiationException
+	{
+		int branches = ((IntegerSetting) s.get("branches")).getIntValue();
+		Fork out = new Fork(branches);
+		return out;
 	}
 }

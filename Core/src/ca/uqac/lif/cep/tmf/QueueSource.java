@@ -55,6 +55,13 @@ public class QueueSource extends Source
 		m_index = 0;
 	}
 	
+	public QueueSource(int arity)
+	{
+		super(arity);
+		m_events = new Vector<Object>();
+		m_index = 0;
+	}
+	
 	public void setEvents(Vector<Object> queue)
 	{
 		m_events = queue;

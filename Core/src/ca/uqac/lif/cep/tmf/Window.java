@@ -28,6 +28,9 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.objectfactory.IntegerSetting;
+import ca.uqac.lif.cep.objectfactory.Setting;
+import ca.uqac.lif.cep.objectfactory.SettingsSet;
 
 /**
  * Simulates the application of a "sliding window" to a trace.
@@ -198,5 +201,31 @@ public class Window extends SingleProcessor
 	public Window clone()
 	{
 		return new Window(m_processor.clone(), m_width);
+	}
+	
+	/**
+	 * Gets the set of initial settings for this processor
+	 * @return The set of settings
+	 */
+	public static SettingsSet getInitialSettings()
+	{
+		SettingsSet set = new SettingsSet(Window.class);
+		set.add(new IntegerSetting("width", true, "The width over which the window is computed"));
+		set.add(new Setting("processor", Processor.class, true, "The processor called over each window"));
+		return set;
+	}
+
+	/**
+	 * Creates a new instance of this object based on a set of
+	 * instantiation settings
+	 * @param s The settings
+	 * @return A new instance of the object
+	 */
+	public static Window getNewInstance(SettingsSet s) throws InstantiationException
+	{
+		int width = ((IntegerSetting) s.get("width")).getIntValue();
+		Processor proc = (Processor) s.get("processor").getValue();
+		Window out = new Window(proc, width);
+		return out;
 	}
 }
