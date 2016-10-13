@@ -28,11 +28,12 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.QueueSink;
-import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
  * Unit tests for the {@link GroupProcessor}.

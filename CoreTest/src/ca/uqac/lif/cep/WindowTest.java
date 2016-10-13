@@ -29,13 +29,13 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.ProcessorTest.Sum;
-import ca.uqac.lif.cep.epl.QueueSink;
-import ca.uqac.lif.cep.epl.QueueSource;
-import ca.uqac.lif.cep.epl.Window;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.numbers.EmlNumber;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
+import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.tmf.Window;
 
 /**
  * Unit tests for the {@link Window}.

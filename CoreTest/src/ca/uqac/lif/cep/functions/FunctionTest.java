@@ -15,7 +15,6 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
@@ -23,6 +22,7 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.tmf.QueueSink;
 
 /**
  * Unit tests for {@link Function}, {@link UnaryFunction}, {@link BinaryFunction}

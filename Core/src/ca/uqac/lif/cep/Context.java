@@ -19,6 +19,11 @@ package ca.uqac.lif.cep;
 
 import java.util.HashMap;
 
+/**
+ * Associative map used by processors to store persistent data 
+ * @author Sylvain Hallé
+ *
+ */
 public class Context extends HashMap<String,Object> 
 {
 	/**

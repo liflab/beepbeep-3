@@ -198,6 +198,9 @@
              author="true"
              version="true"
              use="true"
+             Encoding="utf8"
+             docencoding="utf8"
+             charset="utf8"
              windowtitle="${build.name} Documentation">
       <doctitle><![CDATA[<h1>]]>${build.name}<![CDATA[ Documentation</h1>]]></doctitle>
       <bottom><![CDATA[<i>Copyright&nbsp;&#169; ]]>${build.author}<![CDATA[. All Rights Reserved.</i>]]></bottom>

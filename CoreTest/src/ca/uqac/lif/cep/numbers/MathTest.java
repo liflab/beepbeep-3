@@ -29,16 +29,16 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
-import ca.uqac.lif.cep.Mutator;
-import ca.uqac.lif.cep.Fork;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.epl.Filter;
-import ca.uqac.lif.cep.epl.QueueSink;
-import ca.uqac.lif.cep.epl.QueueSource;
-import ca.uqac.lif.cep.epl.Window;
+import ca.uqac.lif.cep.functions.ConstantFunction;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.tmf.Filter;
+import ca.uqac.lif.cep.tmf.Fork;
+import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.tmf.Window;
 
 /**
  * Unit tests for basic arithmetic functions
@@ -228,7 +228,7 @@ public class MathTest extends BeepBeepUnitTest
 			// Left part: sum of x^n
 			Fork fork2 = new Fork(2);
 			Connector.connect(fork, fork2, 0, 0);
-			Mutator exponent = new Mutator(n, 1);
+			FunctionProcessor exponent = new FunctionProcessor(new ConstantFunction(1));
 			Connector.connect(fork2, exponent, 0, 0);
 			FunctionProcessor pow = new FunctionProcessor(new Power());
 			Connector.connect(fork2, pow, 1, 0);
@@ -238,7 +238,7 @@ public class MathTest extends BeepBeepUnitTest
 		Sum sum_right = new Sum();
 		{
 			// Right part: sum of 1
-			Mutator one = new Mutator(1, 1);
+			FunctionProcessor one = new FunctionProcessor(new ConstantFunction(1));
 			Connector.connect(fork, one, 1, 0);
 			Connector.connect(one, sum_right);
 		}
@@ -254,7 +254,7 @@ public class MathTest extends BeepBeepUnitTest
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
 		FunctionProcessor greater = new FunctionProcessor(IsGreaterThan.instance);
-		Mutator five = new Mutator(5, 1);
+		FunctionProcessor five = new FunctionProcessor(new ConstantFunction(5));
 		Connector.connect(fork, five, 0, 0);
 		Connector.connect(fork, greater, 1, 0);
 		Connector.connect(five, greater, 0, 1);

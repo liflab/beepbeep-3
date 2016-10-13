@@ -1,6 +1,6 @@
 /*
-    ParkBench, a versatile benchmark environment
-    Copyright (C) 2015 Sylvain Hallé
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -24,6 +24,12 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Vector;
 
+/**
+ * Utility class to run commands on the command line and fetch their
+ * output.
+ * @author Sylvain Hallé
+ *
+ */
 public class CommandRunner extends Thread
 {
 	protected String[] m_command;

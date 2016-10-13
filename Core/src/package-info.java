@@ -1,8 +1,0 @@
-
-/**
- * Blabla
- */
-/**
- * @author Sylvain Hallé
- *
- */

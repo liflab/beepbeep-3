@@ -337,6 +337,11 @@ public class GroupProcessor extends Processor
 		return group;
 	}
 
+	/**
+	 * Crawler that creates copies (clones) of whatever it encounters
+	 * on its way
+	 * @author Sylvain Hallé
+	 */
 	protected static class CopyCrawler extends PipeCrawler
 	{
 		Map<Integer,Processor> m_correspondences;

@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Implementation of an immutable map
+ * Implementation of an immutable map.
  * <ul>
  * <li>After its instantiation, the object is <em>immutable</em>: all
  *  its fields are declared <code>private final</code> and no method
@@ -123,6 +123,11 @@ public final class CacheMap<T> implements Map<String,T>
 		return (T) m_values[index];
 	}
 	
+	/**
+	 * Get the index of a key in the current map
+	 * @param s The key
+	 * @return The index of that key, or -1 if key does not exist
+	 */
 	public final int getIndexOf(String s)
 	{
 		for (int i = 0; i < m_keys.length; i++)

@@ -32,14 +32,14 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.epl.CountDecimate;
-import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
+import ca.uqac.lif.cep.tmf.CountDecimate;
+import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.util.StringUtils;
 import ca.uqac.lif.util.PackageFileReader;
 

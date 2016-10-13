@@ -41,11 +41,11 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Palette;
-import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.SmartFork;
-import ca.uqac.lif.cep.epl.EplGrammar;
+import ca.uqac.lif.cep.tmf.EplGrammar;
+import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.cep.tmf.SmartFork;
 import ca.uqac.lif.cep.util.PackageFileReader;
 
 public class Interpreter implements ParseNodeVisitor

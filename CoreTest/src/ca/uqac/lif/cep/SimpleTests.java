@@ -24,7 +24,8 @@ import java.util.Queue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.QueueSink;
+import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.cep.tmf.QueueSink;
 
 /**
  * Unit tests for a few simple processors: {@link PullConstant}, 

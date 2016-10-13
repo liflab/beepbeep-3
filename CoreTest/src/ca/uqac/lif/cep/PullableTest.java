@@ -5,7 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.cep.tmf.QueueSource;
 
 public class PullableTest extends BeepBeepUnitTest
 {

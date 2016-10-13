@@ -22,7 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.epl.Sink;
+import ca.uqac.lif.cep.tmf.Sink;
 
 /**
  * Writes events to a file on disk

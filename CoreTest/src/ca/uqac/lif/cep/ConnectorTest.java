@@ -25,9 +25,10 @@ import java.util.Set;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.cep.tmf.QueueSink;
 
 /**
  * Unit tests for the {@link Connector} class

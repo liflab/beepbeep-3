@@ -25,7 +25,8 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.QueueSink;
+import ca.uqac.lif.cep.tmf.Demultiplexer;
+import ca.uqac.lif.cep.tmf.QueueSink;
 
 /**
  * Unit tests for the {@link Demultiplexer} class.

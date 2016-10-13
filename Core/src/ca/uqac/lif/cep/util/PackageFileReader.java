@@ -1,6 +1,6 @@
 /*
-    Cornipickle, validation of layout bugs in web applications
-    Copyright (C) 2015 Sylvain HallÃ©
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -20,6 +20,10 @@ package ca.uqac.lif.cep.util;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Utilities for reading files within a package (such as inside a JAR file).
+ * @author Sylvain Hallé
+ */
 public class PackageFileReader
 {
 	public static String readPackageFile(Object o, String path)

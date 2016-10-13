@@ -243,34 +243,5 @@ public abstract class Palette
 		{
 			return new ProcessorSettings();
 		}
-		
-		/**
-		 * Creates a new processor box from a set of settings
-		 * @param settings The settings
-		 * @return The processor box
-		 */
-		public ProcessorBox newEditorBox(ProcessorSettings settings)
-		{
-			Processor proc = null;
-			try 
-			{
-				proc = m_processorClass.newInstance();
-			} 
-			catch (InstantiationException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-			catch (IllegalAccessException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (proc == null)
-			{
-				return null;
-			}
-			return new ProcessorBox(proc);
-		}
 	}
 }

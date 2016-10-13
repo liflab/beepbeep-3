@@ -13,8 +13,8 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.epl.QueueSink;
-import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
  * Unit tests for the {@link TokenFeeder} class 

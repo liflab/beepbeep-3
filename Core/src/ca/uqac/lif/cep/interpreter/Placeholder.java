@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.interpreter;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Passthrough;
+import ca.uqac.lif.cep.tmf.Passthrough;
 
 /**
  * Placeholder used to symbolize the output of some processor. This is used

@@ -68,6 +68,30 @@ public class Connector
 	public static final transient boolean s_checkForBounds = false;
 	
 	/**
+	 * Constant used to replace the value 0 when referring to
+	 * a processor's unique input
+	 */
+	public static final int TOP = 0;
+	
+	/**
+	 * Constant used to replace the value 0 when referring to
+	 * a processor's unique output
+	 */
+	public static final int BOTTOM = 0;
+	
+	/**
+	 * Constant used to replace the value 0 when referring to
+	 * a processor's first input
+	 */
+	public static final int LEFT = 0;
+	
+	/**
+	 * Constant used to replace the value 1 when referring to
+	 * a processor's first input
+	 */
+	public static final int RIGHT = 1;
+	
+	/**
 	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
 	 * <i>j</i>-th input of <tt>p2</tt>
 	 * @param p1 The first processor
@@ -217,8 +241,8 @@ public class Connector
 	}
 		
 	/**
-	 * Exception thrown when two processors with incompatible input/output
-	 * types are attempted to be connected
+	 * Exception thrown when a problem occurs when connecting two
+	 * processors
 	 */
 	public static class ConnectorException extends Exception
 	{
@@ -245,6 +269,10 @@ public class Connector
 		}
 	}
 	
+	/**
+	 * Exception thrown when two processors with incompatible 
+	 * input/output types are attempted to be connected
+	 */
 	public static class IncompatibleTypesException extends ConnectorException
 	{
 		/**
@@ -266,6 +294,10 @@ public class Connector
 		}
 	}
 	
+	/**
+	 * Exception thrown when the connector is asked to pipe something
+	 * to a nonexistent input or output
+	 */
 	public static class IndexOutOfBoundsException extends ConnectorException
 	{
 		/**

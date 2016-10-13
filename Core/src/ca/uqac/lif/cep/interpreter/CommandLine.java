@@ -23,9 +23,9 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.epl.Sink;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
+import ca.uqac.lif.cep.tmf.Sink;
 import ca.uqac.lif.cep.util.AnsiPrinter;
 import ca.uqac.lif.cep.util.AnsiPrinter.Color;
 

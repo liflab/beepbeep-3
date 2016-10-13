@@ -29,7 +29,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.Source;
+import ca.uqac.lif.cep.tmf.Source;
 
 /**
  * Converts a query to a MySQL database into a trace of named tuples.

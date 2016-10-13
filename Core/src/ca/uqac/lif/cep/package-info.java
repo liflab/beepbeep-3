@@ -18,7 +18,18 @@
 
 /**
  * Elementary classes defining all the basic concepts of event stream
- * processing.
+ * processing. Here are some of the important objects defined in this
+ * package.
+ * <ul>
+ * <li>A {@link Processor} is an object that takes zero or
+ *   more event <em>traces</em>, and produces zero or more event
+ *   <em>traces</em> as its output.</li>
+ * <li>{@link Pullable} and {@link Pushable} are two interfaces for
+ *   receiving and giving events from/to a processor, respectively.</li>
+ * <li>{@link Connector} provides static methods for easily linking one
+ *   processor's output to another's input</li> 
+ * </ul>
+ * 
  * 
  * @author Sylvain Hallé
  */

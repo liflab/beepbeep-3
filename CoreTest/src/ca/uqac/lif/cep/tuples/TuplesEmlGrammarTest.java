@@ -31,10 +31,10 @@ import ca.uqac.lif.bullwinkle.ParseNode;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.EplGrammar;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
+import ca.uqac.lif.cep.tmf.EplGrammar;
 import ca.uqac.lif.util.PackageFileReader;
 
 public class TuplesEmlGrammarTest extends BeepBeepUnitTest

@@ -25,8 +25,8 @@ import ca.uqac.lif.bullwinkle.BnfRule.InvalidRuleException;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SmartFork;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.tmf.SmartFork;
 
 public class UserDefinition 
 {
