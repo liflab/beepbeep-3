@@ -13,8 +13,11 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
 		<link rel="stylesheet" href="../assets/css/custom.css">
 		<meta name="author" content="Laboratoire d'informatique formelle">
+		<link rel="stylesheet" href="../assets/js/styles/default.css">
+		<script src="../assets/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 	</head>
-	<body class="no-sidebar">
+	<body class="right-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -57,6 +60,8 @@
 <!-- Main -->
 <div id="main-wrapper">
 	<div class="container">
+		<div class="row 200%">
+			<div class="8u 12u$(medium)">
 				<div id="content">
 
 					<!-- Content -->
@@ -69,7 +74,9 @@
 
 <p>If you are interested in contributing to BeepBeep's development, you will need to download the sources and build them by yourself. We shall now see how to build BeepBeep and setup a development environment using Eclipse.</p>
 
-<h3>Prerequisites</h3>
+<h3>
+  <a name="prerequisites">Prerequisites</a>
+</h3>
 
 <ul>
 <li>The <strong>Java Development Kit</strong>, version 6 or later. Depending on your operating system, you can use Oracle's JDK, or the OpenJDK, at your convenience.</li>
@@ -80,7 +87,9 @@
 <li>Apache <a href="https://ant.apache.org/">Ant</a>; this is optional. You may need Ant if you wish to build the sources from the command line or automatically download the dependencies that some projects have.</li>
 </ul>
 
-<h3>Downloading the Source Code</h3>
+<h3>
+  <a name="source">Downloading the Source Code</a>
+</h3>
 
 <p>BeepBeep's code is split across two main code repositories. Both are hosted on <a href="https://github.com">GitHub</a>.</p>
 
@@ -113,7 +122,9 @@ $ git clone https://github.com/liflab/beepbeep-3-palettes.git
 
 <p>Whatever method you choose, these commands will create and fill two folders within <code>beepbeep</code>, respectively named <code>beepbeep-3</code> and <code>beepbeep-3-palettes</code>.</p>
 
-<h3>Creating the First Project</h3>
+<h3>
+  <a name="project">Creating the First Project</a>
+</h3>
 
 <p>You are now ready to open Eclipse and import this source code as projects in a new workspace. To this end, open Eclipse; when asked for a workspace to select, type the path to the <code>beepbeep</code> root folder you created:</p>
 
@@ -150,7 +161,9 @@ $ git clone https://github.com/liflab/beepbeep-3-palettes.git
   <img src="project-created.png" alt="Project created">
 </p>
 
-<h3>A Note on File Encoding</h3>
+<h3>
+  <a name="encoding">A Note on File Encoding</a>
+</h3>
 
 <p>This applies especially for Windows users. <strong>All source code should be edited as UTF-8.</strong> Otherwise, you may see some garbled characters. The developers would be especially mad at you if you push source files with another encoding, or if you mess up with the file encoding of existing files (which sometimes is converted without your knowledge if your project has the wrong settings). Therefore, once the project is created, right-click on it, select "Properties", and go to the "Resource" section at the left. In the panel, make sure that the "Text file encoding" setting is "UTF-8".</p>
 
@@ -160,7 +173,9 @@ $ git clone https://github.com/liflab/beepbeep-3-palettes.git
 
 <p>UTF-8 is the default setting in Linux, so you should not have problems. However, in Windows it will most likely be Cp1252, so you <strong>need</strong> to change it.</p>
 
-<h3>Adding a Reference to Another Project</h3>
+<h3>
+  <a name="ref-another">Adding a Reference to Another Project</a>
+</h3>
 
 <p>You can now repeat the same procedure for the <code>beepbeep-3/CoreTest</code> folder. However, simply importing it will create a ton of error messages, as its code refers to classes that are defined in <code>Core</code>. Hence, when creating the project, <strong>don't click on "Finish"</strong>; there is still one more step! Instead, click "Next"; in the next window, select the "Projects" tab (meaning you wish to add a reference to another project):</p>
 
@@ -174,7 +189,9 @@ $ git clone https://github.com/liflab/beepbeep-3-palettes.git
   <img src="add-core.png" alt="Add a project">
 </p>
 
-<h3>Adding a Reference to JUnit</h3>
+<h3>
+  <a name="ref-junit">Adding a Reference to JUnit</a>
+</h3>
 
 <p>There is yet one more thing to do before finalizing this project. CoreTest also requires a reference to the <a href="http://junit.org">JUnit</a> library, as it consists almost uniquely of test cases. Fortunately, Eclipse already ships with this library. Back in the Settings dialog, go to the "Libraries" tab, and then click on "Add Library":</p>
 
@@ -192,7 +209,9 @@ $ git clone https://github.com/liflab/beepbeep-3-palettes.git
 
 <p>Remember these steps, as <strong>all the other projects you will import</strong> require a reference to <code>Core</code> and to JUnit.</p>
 
-<h3>Adding References Later On</h3>
+<h3>
+  <a name="later">Adding References Later On</a>
+</h3>
 
 <p>In case you missed these instructions, references can be added to a project after it has been created. Simply right-click on the project in the Package Explorer, select "Properties". This will open a window for the project settings; what you are looking for is the "Java Build Path" entry at the left. Select it and you will get a panel with the same "Projects" and "Libraries" tabs we've seen before.</p>
 
@@ -200,7 +219,9 @@ $ git clone https://github.com/liflab/beepbeep-3-palettes.git
   <img src="project-properties.png" alt="Project properties">
 </p>
 
-<h3>Dependencies for the Remaining Projects</h3>
+<h3>
+  <a name="dependencies">Dependencies for the Remaining Projects</a>
+</h3>
 
 <p>Create one new project for all the folders you find in <code>beepbeep-3-palettes</code>. Don't forget to add the reference to <code>Core</code> and JUnit for each of them.</p>
 
@@ -212,7 +233,9 @@ $ git clone https://github.com/liflab/beepbeep-3-palettes.git
 
 <p>Once the JAR files are in the <code>dep</code> folder, you can add a reference to them in Eclipse. In the "Libraries" tab of the "Project Settings" dialog, click on "Add External JAR" and select the JAR file(s) you find in the <code>dep</code> folder of that project. This should fix the error messages immediately.</p>
 
-<h3>JUnit Test Cases</h3>
+<h3>
+  <a name="junit-tests">JUnit Test Cases</a>
+</h3>
 
 <p>It is <strong>extremely</strong> recommended to write JUnit test cases for any new functionality you develop, and to regularly run the existing test cases to spot any regression as soon as possible.</p>
 
@@ -241,6 +264,40 @@ $ git clone https://github.com/liflab/beepbeep-3-palettes.git
 
 				</div>
 			</div>
+			<div class="4u 12u$(medium)">
+				<div id="sidebar">
+
+					<!-- Sidebar -->
+						<!--
+<section>
+	<h3>Subheading</h3>
+	<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
+	Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
+	Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
+	consequat etiam.</p>
+	<footer>
+		<a href="#" class="button icon fa-info-circle">Find out more</a>
+	</footer>
+</section>
+
+<section>
+	<h3>Subheading</h3>
+	<ul class="style2">
+		<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
+		<li><a href="#">Ornare in hendrerit in lectus</a></li>
+		<li><a href="#">Semper mod quis eget mi dolore</a></li>
+		<li><a href="#">Quam turpis feugiat sit dolor</a></li>
+		<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
+		<li><a href="#">Semper mod quisturpis nisi</a></li>
+	</ul>
+</section>
+-->
+<!-- :indentSize=2:tabSize=2: -->
+
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 			<!-- Footer -->
 				<div id="footer-wrapper">
