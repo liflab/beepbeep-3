@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<!--
+	Verti by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+--><html>
+<head>
+		<title>Building BeepBeep in Eclipse - BeepBeep 3</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="../assets/css/main.css">
+		<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+		<link rel="stylesheet" href="../assets/css/custom.css">
+		<meta name="author" content="Laboratoire d'informatique formelle">
+	</head>
+	<body class="no-sidebar">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<header id="header" class="container">
+
+						<!-- Logo -->
+							<div id="logo">
+								<h1><a href="index.html">BeepBeep 3</a></h1>
+								<!--<span>by HTML5 UP</span>-->
+							</div>
+
+						<!-- Nav -->
+						<nav id="nav">
+	<ul>
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="../quickintro.html">In 5 minutes</a></li>
+		<li>
+<a href="../features.html">Features</a>
+			<ul>
+			  <li><a href="../use-cases.html">Examples of uses</a></li>
+				<li><a href="../palettes.html">Available extensions</a></li>
+			</ul>
+		</li>
+		<li><a href="../get.html">Get BeepBeep</a></li>
+		<li class="current">
+<a href="../documentation.html">Documentation</a>
+		  <ul>
+		    <li class="current"><a href="../guide/index.html">User Guide</a></li>
+		    <li class="current"><a href="../javadoc/index.html">API Reference</a></li>
+		  </ul>
+		</li>
+	</ul>
+</nav>
+<!-- :indentSize=2:tabSize=2: -->
+
+
+					</header>
+				</div>
+<!-- Main -->
+<div id="main-wrapper">
+	<div class="container">
+				<div id="content">
+
+					<!-- Content -->
+						<article>
+							<h2>Building BeepBeep in Eclipse</h2>
+
+<p>
+  <a href="index.html">Home</a>
+</p>
+
+<p>If you are interested in contributing to BeepBeep's development, you will need to download the sources and build them by yourself. We shall now see how to build BeepBeep and setup a development environment using Eclipse.</p>
+
+<h3>Prerequisites</h3>
+
+<ul>
+<li>The <strong>Java Development Kit</strong>, version 6 or later. Depending on your operating system, you can use Oracle's JDK, or the OpenJDK, at your convenience.</li>
+<li>
+<a href="http://www.eclipse.org">Eclipse</a>. BeepBeep is not particularly picky about what version you use; for sure, any 4.x version will do. You can, of course, use any other developemnt environment you wish; simply adapt the following instructions to the specifics of your favorite IDE.</li>
+<li>
+<a href="http://www.git-scm.com">Git</a> to pull/push the latest version of BeepBeep's source code.</li>
+<li>Apache <a href="https://ant.apache.org/">Ant</a>; this is optional. You may need Ant if you wish to build the sources from the command line or automatically download the dependencies that some projects have.</li>
+</ul>
+
+<h3>Downloading the Source Code</h3>
+
+<p>BeepBeep's code is split across two main code repositories. Both are hosted on <a href="https://github.com">GitHub</a>.</p>
+
+<ul>
+<li>The <a href="https://github.com/liflab/beepbeep-3">beepbeep-3</a> repository contains BeepBeep's "core": the minimum set of classes to perform anything useful.</li>
+<li>The <a href="https://github.com/liflab/beepbeep-3">beepbeep-3-palettes</a> repository contains small packets of code, called "palettes", that extend BeepBeep's functionalities in various ways. Although anybody can create palettes, this set is maintained directly by BeepBeep's development team and hence counts as a "semi-core" to the software.</li>
+</ul>
+
+<p>It is recommended that you setup a development environment that includes both.</p>
+
+<p>To download the source code, first create a <code>beepbeep</code> folder in the location of your choice. Within this folder, you will now need to <em>clone</em> both repositories. In order to do so, you need to fetch the clone URL that is shown on GitHub. This is represented by a green button on the repository's main page:</p>
+
+<p>
+  <img src="clone.png" alt="Clone URL in GitHub">
+</p>
+
+<p>You can clone the code of both repository, simply type at the command line (from the <code>beepbeep</code> folder you just created):</p>
+
+<pre>  <code>$ git clone git@github.com:liflab/beepbeep-3.git
+$ git clone git@github.com:liflab/beepbeep-3-palettes.git
+</code>
+</pre>
+
+<p>The SSH cloning method shown above will only work if you have a registered account on GitHub with the SSH keys correctly setup on your machine (this is out of the scope of these instructions; ask your friend Google). If you wish to only <em>pull</em> code from the repository, you can instead use the HTTP cloning method:</p>
+
+<pre>  <code>$ git clone https://github.com/liflab/beepbeep-3.git
+$ git clone https://github.com/liflab/beepbeep-3-palettes.git
+</code>
+</pre>
+
+<p>Whatever method you choose, these commands will create and fill two folders within <code>beepbeep</code>, respectively named <code>beepbeep-3</code> and <code>beepbeep-3-palettes</code>.</p>
+
+<h3>Creating the First Project</h3>
+
+<p>You are now ready to open Eclipse and import this source code as projects in a new workspace. To this end, open Eclipse; when asked for a workspace to select, type the path to the <code>beepbeep</code> root folder you created:</p>
+
+<p>
+  <img src="select-workspace.png" alt="Selecting a workspace">
+</p>
+
+<p>In the empty workspace, move your mouse to the left panel (labelled "Package Explorer"); right-click, and select New/Java Project.</p>
+
+<p>
+  <img src="java-project.png" alt="New menu">
+</p>
+
+<p>This will summon a dialog box where you need to type a number of things:</p>
+
+<p>
+  <img src="new-project.png" alt="New Java Project">
+</p>
+
+<p>Let us start by creating a project for BeepBeep's core. This corresponds to the <code>Core</code> folder in the <code>beepbeep-3</code> folder. In the dialog box, type:</p>
+
+<ul>
+<li>Project name: <code>Core</code>
+</li>
+<li>Uncheck "Use default location"</li>
+<li>In the "Location" box, browse to (or type) the <code>beepbeep-3/Core</code> folder</li>
+<li>Leave the remaining options to their default values</li>
+<li>Click "Finish"</li>
+</ul>
+
+<p>This will create a new project in the workspace, named "Core":</p>
+
+<p>
+  <img src="project-created.png" alt="Project created">
+</p>
+
+<h3>A Note on File Encoding</h3>
+
+<p>This applies especially for Windows users. <strong>All source code should be edited as UTF-8.</strong> Otherwise, you may see some garbled characters. The developers would be especially mad at you if you push source files with another encoding, or if you mess up with the file encoding of existing files (which sometimes is converted without your knowledge if your project has the wrong settings). Therefore, once the project is created, right-click on it, select "Properties", and go to the "Resource" section at the left. In the panel, make sure that the "Text file encoding" setting is "UTF-8".</p>
+
+<p>
+  <img src="file-encoding.png" alt="Setting the file encoding">
+</p>
+
+<p>UTF-8 is the default setting in Linux, so you should not have problems. However, in Windows it will most likely be Cp1252, so you <strong>need</strong> to change it.</p>
+
+<h3>Adding a Reference to Another Project</h3>
+
+<p>You can now repeat the same procedure for the <code>beepbeep-3/CoreTest</code> folder. However, simply importing it will create a ton of error messages, as its code refers to classes that are defined in <code>Core</code>. Hence, when creating the project, <strong>don't click on "Finish"</strong>; there is still one more step! Instead, click "Next"; in the next window, select the "Projects" tab (meaning you wish to add a reference to another project):</p>
+
+<p>
+  <img src="project-settings.png" alt="Project settings">
+</p>
+
+<p>In this tab, click "Add", and select the "Core" project:</p>
+
+<p>
+  <img src="add-core.png" alt="Add a project">
+</p>
+
+<h3>Adding a Reference to JUnit</h3>
+
+<p>There is yet one more thing to do before finalizing this project. CoreTest also requires a reference to the <a href="http://junit.org">JUnit</a> library, as it consists almost uniquely of test cases. Fortunately, Eclipse already ships with this library. Back in the Settings dialog, go to the "Libraries" tab, and then click on "Add Library":</p>
+
+<p>
+  <img src="add-library.png" alt="Add a library">
+</p>
+
+<p>Select "JUnit", then click "Next". In the next panel, make sure you select "JUnit 4", then click "Finish":</p>
+
+<p>
+  <img src="junit-4.png" alt="Select JUnit 4">
+</p>
+
+<p>You can now click "Finish" in the settings dialog. This will create the <code>CoreTest</code> project in the Package Explorer pane of the main window.</p>
+
+<p>Remember these steps, as <strong>all the other projects you will import</strong> require a reference to <code>Core</code> and to JUnit.</p>
+
+<h3>Adding References Later On</h3>
+
+<p>In case you missed these instructions, references can be added to a project after it has been created. Simply right-click on the project in the Package Explorer, select "Properties". This will open a window for the project settings; what you are looking for is the "Java Build Path" entry at the left. Select it and you will get a panel with the same "Projects" and "Libraries" tabs we've seen before.</p>
+
+<p>
+  <img src="project-properties.png" alt="Project properties">
+</p>
+
+<h3>Dependencies for the Remaining Projects</h3>
+
+<p>Create one new project for all the folders you find in <code>beepbeep-3-palettes</code>. Don't forget to add the reference to <code>Core</code> and JUnit for each of them.</p>
+
+<p>If you see error messages in the console panel, this means that some of these projects also have dependencies to other libraries (JAR files). They should normally ship with these JAR files inside a subfolder named <code>dep</code>. If not, they should come with an Ant script that can download them for you. Go to the project's subfolder, and from the command-line, type:</p>
+
+<pre>  <code>$ ant download-deps
+</code>
+</pre>
+
+<p>Once the JAR files are in the <code>dep</code> folder, you can add a reference to them in Eclipse. In the "Libraries" tab of the "Project Settings" dialog, click on "Add External JAR" and select the JAR file(s) you find in the <code>dep</code> folder of that project. This should fix the error messages immediately.</p>
+
+<h3>JUnit Test Cases</h3>
+
+<p>It is <strong>extremely</strong> recommended to write JUnit test cases for any new functionality you develop, and to regularly run the existing test cases to spot any regression as soon as possible.</p>
+
+<h4>Running Tests</h4>
+
+<p>Running the tests in Eclipse is easy. To run the tests associated to a specific project, right-click on it in the Package Explorer, select "Run As/JUnit Test":</p>
+
+<p>
+  <img src="run-as.png" alt="Run As">
+</p>
+
+<p>A summary of the execution of the tests is shown in the JUnit panel besides the Package Explorer:</p>
+
+<p>
+  <img src="junit-summary.png" alt="Test summary">
+</p>
+
+<h4>Writing Tests</h4>
+
+<p>Writing tests is also easy. Simply create a new class; by convention, make sure its name ends with "Test" (e.g. "MyNewTest"). This convention is used by the Ant build scripts, which do not include test classes in the JAR files they create. Hence, do not intersperse test cases with actual "code", and concentrate them all in files that end in <code>Test</code>.</p>
+
+<p>A new test case is simply a method that is prefixed by the <code>@Test</code> annotation. Have a look at existing test files to get a feel of what you can do.</p>
+
+<!-- :mode=markdown:wrap=soft: -->
+						</article>
+
+				</div>
+			</div>
+</div>
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="3u 6u(medium) 12u$(small)">
+
+								<!-- Links -->
+									<section class="widget links">
+										<h3>Made at LIF</h3>
+										<img src="http://liflab.github.io/beepbeep-3/images/logo-shadow.png" alt="LIF"><br>
+										BeepBeep was developed through the research done at <a href="http://liflab.ca">LIF</a>, the Formal Computer Science Laboratory in <a href="http://www.uqac.ca/">Universit&eacute; du Qu&eacute;bec &agrave; Chicoutimi</a>, Canada.
+									</section>
+
+							</div>
+							<div class="3u 6u$(medium) 12u$(small)">
+
+								<!-- Links -->
+									<section class="widget links">
+										<h3>Interested?</h3>
+										<p>BeepBeep is free software, released under the
+										<a href="https://www.gnu.org/copyleft/lesser.html">GNU LGPL</a>.
+										This means you can include it as a library in any project,
+										including closed-source commercial software.</p>
+									</section>
+
+							</div>
+
+							<div class="3u 6u$(medium) 12u$(small)">
+
+								<!-- Contact -->
+									<section class="widget contact last">
+										<h3>Contact Us</h3>
+										<ul>
+											<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>-->
+											<li><a href="https://www.facebook.com/liflab" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+											<!--<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+											<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+											<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>-->
+										</ul>
+										<p>Universit&eacute; du Qu&eacute;bec &agrave; Chicoutimi<br>
+										Chicoutimi, QC G7H 2B1<br>
+										Canada</p>
+									</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; 2015-2016 Laboratoire d'informatique formelle. All rights reserved</li>
+<li>Design: <a href="http://html5up.net">HTML5 UP</a>
+</li>
+<li>This site is generated by <a href="http://github.com/sylvainhalle/FantasticWindmill">Fantastic Windmill</a>
+</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+			</div>
+
+		<!-- Scripts -->
+
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="../assets/js/main.js"></script>
+			<!--
+You are viewing a page using the REMOTE version of the site.
+Insert here whatever HTML/PHP code you'd like to have in the pages on
+your server only.
+-->
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//leduotang.ca/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//leduotang.ca/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+
+	
+
+
+
+</body>
+</html><!-- :indentSize=2:tabSize=2: --><!-- :indentSize=2:tabSize=2: -->

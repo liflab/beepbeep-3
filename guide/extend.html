@@ -5,7 +5,7 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 --><html>
 <head>
-		<title>Extend ESQL - BeepBeep 3</title>
+		<title>Extending BeepBeep - BeepBeep 3</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -61,170 +61,20 @@
 
 					<!-- Content -->
 						<article>
-							<h2>Extend ESQL</h2>
+							<h2>Extending BeepBeep</h2>
 
-<p><a href="index.html">Home</a> &gt; Extending BeepBeep &gt; Extend ESQL</p>
+<p>
+  <a href="index.html">Home</a>
+</p>
 
-<p>You know that by creating your own processor, you can pipe it to any other existing processor, provided that its input and output events are of compatible types. It is also possible to extend the grammar of the ESQL language, so that you can also use your processor directly in ESQL queries. All this in less than 10 lines of code.</p>
-
-<p>As an example, let us consider the following processor, which repeats every input event n times, where n is a parameter decided when the processor is instantiated. Its implementation is as follows:</p>
-
-<pre><code>import ca.uqac.lif.cep.*;
-
-public class Repeater extends SingleProcessor {
-
-  private final int numReps;
-
-  public Repeater(int n) {
-    super(1, 1);
-    this.numReps = n;
-  }
-
-  public Queue&lt;Object[]&gt; compute(Object[] inputs) {
-    Queue&lt;Object[]&gt; queue = new LinkedList&lt;Object[]&gt;();
-    for (int i = 0; i &lt; this.numReps; i++) {
-      queue.add(inputs);
-    }
-    return queue;
-  }
-}
-</code>
-</pre>
-
-<h3>
-  <a name="rule">Step 1: Defining a new grammar rule</a>
-</h3>
-
-<p>We would like to be able to use this processor in ESQL queries. The first step is to decide what syntax one shall use to invoke the processor. In order to work, the processor requires two things: the output of another processor, and the number of times it should repeat each event. Therefore, an intuitive syntax for the processor could be:</p>
-
-<pre><code>REPEAT (some processor) n TIMES
-</code>
-</pre>
-
-<p>In this syntax, some processor refers to any other ESQL expression that builds a processor, and n is a number. The result of this expression is itself another object of type processor.</p>
-
-<p>If you are familiar with EBNF grammars, what follows should be easy. We must first tell the ESQL interpreter to add to its grammar a new case for the parsing of the &lt;processor&gt; rule. This rule should correspond to the parsing of our new, Repeater processor. This is done as follows:</p>
-
-<pre><code>Interpreter my_int = new Interpreter();
-my_int.addCaseToRule("&lt;processor&gt;", "&lt;repeater&gt;");
-</code>
-</pre>
-
-<p>At this point, the interpreter knows that &lt;processor&gt; can be parsed as a &lt;repeater&gt;, but it has no idea what this case corresponds to. We must tell the interpreter what is the parsing pattern for &lt;repeater&gt;, using method addRule():</p>
-
-<pre><code>my_int.addRule("&lt;repeater&gt;", "REPEAT ( &lt;processor&gt; ) <number> TIMES");
-</number></code>
-</pre>
-
-<p>The first argument is the name of the new rule we with to add (i.e. the left-hand side of the BNF rule), and the second argument is the right-hand side, or parsing pattern, corresponding to that rule. This parsing pattern is made of:</p>
+<p>BeepBeep was designed from the start to be easily extensible. As was discussed earlier, it consists of only a small core of built-in processors and functions. The rest of its functionalities are implemented through custom processors and grammar extensions, grouped in packages called <em>palettes</em>.</p>
 
 <ul>
-<li>The literal REPEAT</li>
-<li>An opening parenthesis</li>
-<li>The &lt;processor&gt; rule name. This means that what follows the parenthesis should follow the syntax of the &lt;processor&gt; rule.</li>
-<li>A closing parenthesis</li>
-<li>The <number> rule name. This means that what follows the parenthesis should follow the syntax of the <number> rule (which corresponds to any character string with the format of a number).</number></number>
-</li>
-<li>The literal TIMES</li>
+<li><a href="custom-processor.html">Creating a Custom Processor</a></li>
+<li>
+<a href="extend-esql.html">Extending ESQL</a>, BeepBeep's query language</li>
+<li>Wrapping it up: creating a palette (under construction)</li>
 </ul>
-
-<p>That's it. From now on, the interpreter will correctly parse an expression involving that syntax, and know that it represents an element of type &lt;processor&gt;. This means that such an expression can be written anywhere a &lt;processor&gt; is accepted; for example in the following:</p>
-
-<pre><code>SELECT a FROM (
-  REPEAT (THE TUPLES OF FILE "foo.csv") 3 TIMES
-)
-</code>
-</pre>
-
-<h3>
-  <a name="build">Step 2: build a processor form an expression</a>
-</h3>
-
-<p>The previous step allows the interpreter to know that REPEAT xxx n TIMES corresponds to a processor, but it doesn't know what processor it actually is, or how to instantiate it from the expression. We must therefore tell the processor what object class corresponds to the parsing of such an expression. This is done through the addAssociation() method.</p>
-
-<pre><code>my_int.addAssociation("&lt;repeater&gt;", "Repeater");
-</code>
-</pre>
-
-<p>The method tells the interpreter that encountering the &lt;repeater&gt; rule will result in the instantiation of a Java object of the class Repeater. This second argument should be the fully qualified name of the class. That is, if Repeater is located in package my.package, then one should write my.package.Repeater in the call to addAssociation().</p>
-
-<p>Upon parsing the &lt;repeater&gt; rule, the interpreter will look for a method called build() in the corresponding class. We must therefore provide such a method in Repeater. Its signature should be the following (it it's different, or absent, the interpreter will complain):</p>
-
-<pre><code>public static void build(Stack&lt;Object&gt; stack) {
-
-}
-</code>
-</pre>
-
-<p>The task of the <code>build()</code> method is to consume elements of the stack to build a new instance of the object to create, and to put that new object back on the stack so that other objects can consume it during their own construction. The contents of the stack correspond to the grammar rule we gave the interpreter in the very beginning. In our case, this means that the stack contains, from top to bottom:</p>
-
-<ul>
-<li>A String object containing the word "TIMES"</li>
-<li>A Number object corresponding to the actual value of n that was written in the expression</li>
-<li>A String object containing a closing paremthesis</li>
-<li>An object of class <code>ca.uqac.lif.cep.Processor</code>, which is the processor resulting from the parsing of the inner expression</li>
-<li>A String object containing an opening paremthesis</li>
-<li>A String object containing the word "REPEAT"</li>
-</ul>
-
-<p>Creating a new instance of Repeater is therefore straightforward. One simply has to <code>pop()</code> the stack to fetch the value of n and the Processor object to use as input, and discard all "useless" keywords (it is important to remove them from the stack, though, otherwise other objects accessing the stack afterwards will be confused by what they find there). One can then instantiate a new Repeater, pipe the input into it (using <code>Connector.connect()</code>), and put the resulting object on the stack.</p>
-
-<pre><code>public static void build(Stack&lt;Object&gt; stack) {
-  stack.pop(); // TIMES
-  Number n = (Number) stack.pop();
-  stack.pop(); // )
-  Processor p = (Processor) stack.pop();
-  stack.pop(); // (
-  stack.pop(); // REPEAT
-  Repeater r = new Repeater(n.intValue());
-  Connector.connect(p, r);
-  stack.push(r);
-}
-</code>
-</pre>
-
-<p>All done! As you can see, adding a new processor to the ESQL grammar took us 3 lines of code to extend the grammar, and another 9 lines for building it from the parse stack. (Try doing that with another software!)</p>
-
-<h3>
-  <a name="extension">Creating a grammar extension</a>
-</h3>
-
-<p>If you write a lot of extensions to the syntax (great! please tell us), it might be a good idea to "package" these extensions so that you don't have to manually put them into the interpreter every time. BeepBeep provides a class that allows you to do this easily, called <code>GrammarExtension</code>. The boilerplate code for an extension is this:</p>
-
-<pre><code>public class MyGrammar extends GrammarExtension {
-
-  public MyGrammar() {
-    super(MyGrammar.class);
-  }
-}
-</code>
-</pre>
-
-<p>As a matter of fact, you have nothing else to write. However, two text files should be present in the same folder as your extension class:</p>
-
-<ul>
-<li>The first, called <code>eml.bnf</code>, should contain all the new BNF rules that should be added to the interpreter</li>
-<li>The second, called <code>associations.txt</code>, should contain the list of all associations between grammar rules and objects (what you pass to the interpreter's <code>addAssociation()</code> method)</li>
-</ul>
-
-<p>For our grammar extension, here's what would be the contents of <code>eml.bnf</code>:</p>
-
-<pre><code>&lt;processor&gt; := &lt;repeater&gt; ;
-&lt;repeater&gt;  := REPEAT ( &lt;processor&gt; ) &lt;number&gt; TIMES ;
-</code>
-</pre>
-
-<p>and the contents of associations.txt:</p>
-
-<pre><code>&lt;repeater&gt;,my.package.Repeater
-</code>
-</pre>
-
-<p>From then on, you can add this extension to the interpreter by calling:</p>
-
-<pre><code>my_int.addExtension(MyExtension.class);
-</code>
-</pre>
 
 <!-- :wrap=soft: -->
 						</article>
