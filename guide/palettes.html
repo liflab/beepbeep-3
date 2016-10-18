@@ -5,7 +5,7 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 --><html>
 <head>
-		<title>Extending BeepBeep - BeepBeep 3</title>
+		<title>Introduction to Palettes - BeepBeep 3</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -13,8 +13,11 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
 		<link rel="stylesheet" href="../assets/css/custom.css">
 		<meta name="author" content="Laboratoire d'informatique formelle">
+		<link rel="stylesheet" href="../assets/js/styles/default.css">
+		<script src="../assets/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 	</head>
-	<body class="no-sidebar">
+	<body class="right-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -57,26 +60,45 @@
 <!-- Main -->
 <div id="main-wrapper">
 	<div class="container">
+		<div class="row 200%">
+			<div class="8u 12u$(medium)">
 				<div id="content">
 
 					<!-- Content -->
 						<article>
-							<h2>Extending BeepBeep</h2>
+							<h2>Introduction to Palettes</h2>
 
-<p>
-  <a href="index.html">Home</a>
-</p>
+<p><a href="index.html">Home</a> &gt; <a href="extend.html">Extending BeepBeep</a></p>
 
-<p>BeepBeep was designed from the start to be easily extensible. As was discussed earlier, it consists of only a small core of built-in processors and functions. The rest of its functionalities are implemented through custom processors and grammar extensions, grouped in packages called <em>palettes</em>.</p>
+<p>A palette is implemented as a JAR file that is loaded with BeepBeep's main program to extend its functionalities in a particular way. For example, one palette provides functions and processors to manipulate XML events, while another contains processors to create finite-state machines and temporal logic expressions.</p>
 
-<p>This modular organization has three advantages. First, palettes are a flexible and generic way to extend the engine to various application domains, in ways unforeseen by its original designers. Second, they make the engine's core (and each palette individually) relatively small and self-contained, easing the development and debugging process. Finally, it is hoped that BeepBeep's palette architecture, combined with its simple extension mechanisms, will help third-party users contribute to the BeepBeep ecosystem by developing and distributing extensions suited to their own needs.</p>
+<p>Many palettes are available alongside BeepBeep from the <a href="http://liflab.github.io/beepbeep-3-palettes">palettes web site</a>. In the following, we describe a few of the palettes that have already been developed for BeepBeep in the recent past.</p>
+
+<h3>
+  <a name="ltl-fo">LTL-FO+</a>
+</h3>
+
+<p>This palette provides processors for evaluating all operators of Linear Temporal Logic (LTL), in addition to the first-order quantification defined in LTL-FO$^+$ (and present in previous versions of BeepBeep).</p>
+
+<h3>
+  <a name="fsm">FSM</a>
+</h3>
+
+<p>This palette allows one to define a Moore machine, a special case of finite-state machine where each state is associated to an output symbol. This Moore machine allows its transitions to be guarded by arbitrary functions; hence it can operate on traces of events of any type.</p>
+
+<p>Moreover, transitions can be associated to a list of <code>ContextAssignment</code> objects, meaning that the machine can also query and modify its <code>Context</code> object. Depending on the context object being manipulated, the machine can work as a pushdown automaton, an extended finite-state machine \cite{DBLP:conf/dac/ChengK93}, and multiple variations thereof. Combined with the first-order quantifiers of the LTL-FO$^+$ package, a processing similar to Quantified Event Automata (QEA) \cite{DBLP:conf/fm/BarringerFHRR12} is also possible.</p>
+
+<h3>
+  <a name="others">Other Palettes</a>
+</h3>
+
+<p>Among other palettes, we mention:</p>
 
 <ul>
-<li><a href="custom-processor.html">Creating a Custom Processor</a></li>
-<li>
-<a href="extend-esql.html">Extending ESQL</a>, BeepBeep's query language</li>
-<li><a href="palettes.html">Introduction to Palettes</a></li>
-<li>Wrapping it up: creating a palette (under construction)</li>
+<li><p>Gnuplot: This palette allows the conversion of events into input files for the Gnuplot application. For example, an event that is a set of $(x,y)$ coordinates can be transformed into a text file producing a 2D scatterplot of these points. An additional processor can receive these strings of text, call Gnuplot in the background and retrieve its output. The events of the output trace, in this case, are binary strings containing image files.</p></li>
+<li><p>Sets: This palette provides an implementation of the <code>Multiset</code> data structure, and a handful of functions for comparing sets ($\subseteq$, $\in$, card) and manipulating them ($\cup$, $\cap$, $+$, $\setminus$).</p></li>
+<li><p>Tuples: This palette provides the implementation of the named tuple event type. A named tuple is a map between names (i.e.\ Strings) and arbitrary objects. When these objects are scalar values, a named tuple corresponds to the similarly named concept in relational databases. In addition, the palette includes a few utility functions for manipulating tuples. The <code>Select</code> processor allows a tuple to be created by naming and combining the contents of multiple input events. The <code>From</code> processor transforms input events from multiple traces into an array (which can be used by <code>Select</code>), and the <code>Where</code> processor internally duplicates an input trace and sends it into a <code>Filter</code> evaluating some function. Combined together, these processors provide the same kind of functionality as the SQL-like SELECT statement of other CEP engines.</p></li>
+<li><p>XML, JSON and CSV: The XML palette provides a processor that converts text events into parsed XML documents. It also contains a <code>Function</code> object that can evaluate an XPath expression on an XML document. Another palette provides the same functionalities for events in the JSON and the CSV format.</p></li>
 </ul>
 
 <!-- :wrap=soft: -->
@@ -84,6 +106,23 @@
 
 				</div>
 			</div>
+			<div class="4u 12u$(medium)">
+				<div id="sidebar">
+
+					<!-- Sidebar -->
+						<section>
+<h3>In this page</h3>
+<p>Discover a few of the available palettes for BeepBeep.</p>
+<ul class="style2">
+    <li><a href="#ltl-fo">LTL-FO+</a></li>
+    <li><a href="#fsm">Finite-state Machines</a></li>
+    <li><a href="#others">Other Palettes</a></li>
+</ul>
+</section>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 			<!-- Footer -->
 				<div id="footer-wrapper">
