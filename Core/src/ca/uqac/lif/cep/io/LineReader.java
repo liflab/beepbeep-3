@@ -1,7 +1,9 @@
 package ca.uqac.lif.cep.io;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -9,7 +11,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
- * Special case of stream reader reading lines from a text file.
+ * Special case of stream reader reading lines from an input stream.
  * @author Sylvain Hallé
  *
  */
@@ -21,9 +23,9 @@ public class LineReader extends SingleProcessor
 	protected Scanner m_scanner;
 
 	/**
-	 * The file to read from
+	 * The input stream to read from
 	 */
-	protected File m_file;
+	protected InputStream m_inStream;
 
 	/**
 	 * Whether to update a status line about the number of lines read
@@ -40,18 +42,16 @@ public class LineReader extends SingleProcessor
 	 */
 	protected boolean m_addCrlf = true;
 
-	public LineReader(File f)
+	public LineReader(File f) throws FileNotFoundException
+	{
+		this(new FileInputStream(f));
+	}
+	
+	public LineReader(InputStream is)
 	{
 		super(0, 1);
-		m_file = f;
-		try 
-		{
-			m_scanner = new Scanner(f);
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
+		m_inStream = is;
+		m_scanner = new Scanner(is);
 	}
 
 	/*@Override
@@ -86,6 +86,6 @@ public class LineReader extends SingleProcessor
 	@Override
 	public Processor clone() 
 	{
-		return new LineReader(m_file);
+		return new LineReader(m_inStream);
 	}
 }

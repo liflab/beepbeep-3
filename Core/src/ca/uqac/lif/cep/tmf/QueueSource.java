@@ -68,6 +68,17 @@ public class QueueSource extends Source
 	}
 	
 	/**
+	 * Adds an event to the queue
+	 * @param e The event to add
+	 * @return This queue source
+	 */
+	public QueueSource addEvent(Object e)
+	{
+		m_events.add(e);
+		return this;
+	}
+	
+	/**
 	 * Sets whether to loop over the events endlessly
 	 * @param b Set to <code>true</code> to loop over the events
 	 * endlessly (default), or <code>false</code> to play them
