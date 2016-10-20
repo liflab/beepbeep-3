@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.functions.And;
 import ca.uqac.lif.cep.functions.ConstantFunction;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.functions.TracePlaceholder;
+import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.numbers.IsEven;
 import ca.uqac.lif.cep.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.tmf.Filter;
@@ -42,7 +42,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * In this example, we wish to keep all events that are even <em>and</em>
  * greater than 4, and discard the others.
  * 
- * @author Sylvain Hallé
+ * @author Sylvain Hallï¿½
  */
 public class FilterConditionComposite
 {
@@ -62,7 +62,7 @@ public class FilterConditionComposite
 		FunctionTree tree = new FunctionTree(And.instance,
 				IsEven.instance,
 				new FunctionTree(IsGreaterThan.instance,
-						new TracePlaceholder(0),
+						new ArgumentPlaceholder(0),
 						new ConstantFunction(4)));
 		FunctionProcessor condition = new FunctionProcessor(tree);
 		// Connect its input to the second output of the fork

@@ -19,68 +19,65 @@ package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
 
+import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
 
 /**
- * Symbol standing for the <i>i</i>-th trace given as input
+ * Placeholder for the value of a context element
+ *  
  * @author Sylvain Hallé
  */
-public class TracePlaceholder extends Function
+public class ContextPlaceholder extends Function
 {
 	/**
-	 * The index of this placeholder
+	 * The name of this placeholder
 	 */
-	private final int m_index;
+	protected final String m_name;
 
 	/**
-	 * Creates a new trace placeholder
-	 * @param index The index of the trace this placeholder represents
+	 * Creates a new argument placeholder
+	 * @param name The name of this placeholder
 	 */
-	public TracePlaceholder(int index)
+	public ContextPlaceholder(String name)
 	{
 		super();
-		m_index = index;
-	}
-
-	/**
-	 * Creates a new trace placeholder, standing for the first
-	 * input trace (i.e. index 0)
-	 */
-	public TracePlaceholder()
-	{
-		this(0);
+		m_name = name;
 	}
 
 	/**
 	 * Gets the name of this placeholder
 	 * @return The name
 	 */
-	public int getIndex()
+	public String getName()
 	{
-		return m_index;
+		return m_name;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return m_index;
+		return m_name.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object o)
 	{
-		if (o == null || !(o instanceof TracePlaceholder))
+		if (o == null || !(o instanceof ContextPlaceholder))
 		{
 			return false;
 		}
-		return m_index == ((TracePlaceholder) o).m_index;
+		return m_name.compareTo(((ContextPlaceholder) o).m_name) == 0;
 	}
 	
 	@Override
 	public Object[] evaluate(Object[] inputs, Context context)
 	{
+		if (context == null || !context.containsKey(m_name))
+		{
+			return null;
+		}
 		Object[] out = new Object[1];
-		out[0] = inputs[m_index];;
+		out[0] = context.get(m_name);
 		return out;
 	}
 	
@@ -109,9 +106,9 @@ public class TracePlaceholder extends Function
 	}
 
 	@Override
-	public TracePlaceholder clone()
+	public ContextPlaceholder clone()
 	{
-		TracePlaceholder aph = new TracePlaceholder(m_index);
+		ContextPlaceholder aph = new ContextPlaceholder(m_name);
 		return aph;
 	}
 
@@ -124,12 +121,13 @@ public class TracePlaceholder extends Function
 	@Override
 	public Class<?> getOutputTypeFor(int index) 
 	{
-		return null;
+		return Variant.class;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "&" + m_index;
+		return "$" + m_name;
 	}
+
 }

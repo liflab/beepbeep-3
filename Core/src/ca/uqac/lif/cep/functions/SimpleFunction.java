@@ -34,10 +34,10 @@ public abstract class SimpleFunction extends Function
 		for (int i = 0; i < inputs.length; i++)
 		{
 			Object argument = inputs[i];
-			if (argument instanceof ArgumentPlaceholder)
+			if (argument instanceof ContextPlaceholder)
 			{
 				// If so, fetch concrete object in context
-				ArgumentPlaceholder ap = (ArgumentPlaceholder) argument;
+				ContextPlaceholder ap = (ContextPlaceholder) argument;
 				String ap_name = ap.getName();
 				if (context.containsKey(ap_name))
 				{

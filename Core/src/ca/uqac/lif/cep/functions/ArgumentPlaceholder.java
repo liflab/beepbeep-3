@@ -19,44 +19,51 @@ package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
 
-import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
 
 /**
- * Placeholder for the value of a context element
- *  
+ * Symbol standing for the <i>i</i>-th trace given as input
  * @author Sylvain Hallé
  */
 public class ArgumentPlaceholder extends Function
 {
 	/**
-	 * The name of this placeholder
+	 * The index of this placeholder
 	 */
-	protected final String m_name;
+	private final int m_index;
 
 	/**
-	 * Creates a new argument placeholder
-	 * @param name The name of this placeholder
+	 * Creates a new trace placeholder
+	 * @param index The index of the trace this placeholder represents
 	 */
-	public ArgumentPlaceholder(String name)
+	public ArgumentPlaceholder(int index)
 	{
 		super();
-		m_name = name;
+		m_index = index;
+	}
+
+	/**
+	 * Creates a new trace placeholder, standing for the first
+	 * input trace (i.e. index 0)
+	 */
+	public ArgumentPlaceholder()
+	{
+		this(0);
 	}
 
 	/**
 	 * Gets the name of this placeholder
 	 * @return The name
 	 */
-	public String getName()
+	public int getIndex()
 	{
-		return m_name;
+		return m_index;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return m_name.hashCode();
+		return m_index;
 	}
 
 	@Override
@@ -66,18 +73,14 @@ public class ArgumentPlaceholder extends Function
 		{
 			return false;
 		}
-		return m_name.compareTo(((ArgumentPlaceholder) o).m_name) == 0;
+		return m_index == ((ArgumentPlaceholder) o).m_index;
 	}
 	
 	@Override
 	public Object[] evaluate(Object[] inputs, Context context)
 	{
-		if (context == null || !context.containsKey(m_name))
-		{
-			return null;
-		}
 		Object[] out = new Object[1];
-		out[0] = context.get(m_name);
+		out[0] = inputs[m_index];;
 		return out;
 	}
 	
@@ -108,7 +111,7 @@ public class ArgumentPlaceholder extends Function
 	@Override
 	public ArgumentPlaceholder clone()
 	{
-		ArgumentPlaceholder aph = new ArgumentPlaceholder(m_name);
+		ArgumentPlaceholder aph = new ArgumentPlaceholder(m_index);
 		return aph;
 	}
 
@@ -121,13 +124,12 @@ public class ArgumentPlaceholder extends Function
 	@Override
 	public Class<?> getOutputTypeFor(int index) 
 	{
-		return Variant.class;
+		return null;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "$" + m_name;
+		return "&" + m_index;
 	}
-
 }

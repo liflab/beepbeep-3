@@ -19,7 +19,7 @@ package functions;
 
 import ca.uqac.lif.cep.functions.And;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.functions.TracePlaceholder;
+import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.numbers.IsLessThan;
 
@@ -42,11 +42,11 @@ public class Interval
 		 */
 		FunctionTree in_interval = new FunctionTree(And.instance,
 				new FunctionTree(IsGreaterThan.instance, 
-						new TracePlaceholder(0),
-						new TracePlaceholder(1)), // x > y
+						new ArgumentPlaceholder(0),
+						new ArgumentPlaceholder(1)), // x > y
 				new FunctionTree(IsLessThan.instance,
-						new TracePlaceholder(0),
-						new TracePlaceholder(2) // y < z
+						new ArgumentPlaceholder(0),
+						new ArgumentPlaceholder(2) // y < z
 						));
 		Object[] value;
 		value = in_interval.evaluate(new Integer[]{3, 2, 8});

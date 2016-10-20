@@ -105,9 +105,9 @@ public class FunctionTree extends Function
 		int max_arity = 0;
 		for (Function child : m_children)
 		{
-			if (child instanceof TracePlaceholder)
+			if (child instanceof ArgumentPlaceholder)
 			{
-				max_arity = Math.max(max_arity, ((TracePlaceholder) child).getIndex() + 1);
+				max_arity = Math.max(max_arity, ((ArgumentPlaceholder) child).getIndex() + 1);
 			}
 			else
 			{
