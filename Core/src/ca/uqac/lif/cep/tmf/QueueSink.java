@@ -36,6 +36,11 @@ public class QueueSink extends Sink
 		reset();
 	}
 	
+	public QueueSink()
+	{
+		this(1);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void reset()
@@ -74,6 +79,16 @@ public class QueueSink extends Sink
 	public Queue<Object> getQueue(int i)
 	{
 		return m_queues[i];
+	}
+	
+	/**
+	 * Gets the queue corresponding to the first output of the sink 
+	 * @return The queue
+	 */
+	/*@requires m_queues.length > 0 */
+	public Queue<Object> getQueue()
+	{
+		return getQueue(0);
 	}
 	
 	/**

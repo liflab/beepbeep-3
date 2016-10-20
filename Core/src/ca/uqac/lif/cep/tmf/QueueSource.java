@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.Collection;
 import java.util.Queue;
 import java.util.Vector;
 
@@ -62,9 +63,27 @@ public class QueueSource extends Source
 		m_index = 0;
 	}
 	
-	public void setEvents(Vector<Object> queue)
+	public QueueSource()
 	{
-		m_events = queue;
+		super(1);
+		m_events = new Vector<Object>();
+		m_index = 0;
+	}
+	
+	public void setEvents(Collection<Object> queue)
+	{
+		for (Object o : queue)
+		{
+			m_events.add(o);
+		}
+	}
+	
+	public void setEvents(Object[] queue)
+	{
+		for (Object o : queue)
+		{
+			m_events.add(o);
+		}
 	}
 	
 	/**

@@ -22,6 +22,11 @@ import java.util.Set;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
 
+/**
+ * Placeholder for the value of a context element
+ *  
+ * @author Sylvain Hallé
+ */
 public class ArgumentPlaceholder extends Function
 {
 	/**

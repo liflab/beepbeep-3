@@ -15,31 +15,35 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.functions;
+package ca.uqac.lif.cep.numbers;
+
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * Implementation of the logical negation
- * 
+ * Computes if a number is even
  * @author Sylvain Hallé
  */
-public class Negation extends UnaryFunction<Boolean,Boolean> 
+public class IsEven extends UnaryFunction<Number,Boolean> 
 {
-	public static final transient Negation instance = new Negation();
+	/**
+	 * A static instance of the function
+	 */
+	public static final transient IsEven instance = new IsEven();
 	
-	Negation()
+	private IsEven()
 	{
-		super(Boolean.class, Boolean.class);
+		super(Number.class, Boolean.class);
 	}
 
 	@Override
-	public Boolean getValue(Boolean x)
+	public Boolean getValue(Number x)
 	{
-		return !x.booleanValue();
+		return x.floatValue() % 2 == 0;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "!";
+		return "IS EVEN";
 	}
 }

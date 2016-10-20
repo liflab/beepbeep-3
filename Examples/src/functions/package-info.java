@@ -15,31 +15,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.functions;
 
 /**
- * Implementation of the logical negation
- * 
+ * Some examples of compound functions you can write in BeepBeep 3.
+ *  
  * @author Sylvain Hallé
+ *
  */
-public class Negation extends UnaryFunction<Boolean,Boolean> 
-{
-	public static final transient Negation instance = new Negation();
-	
-	Negation()
-	{
-		super(Boolean.class, Boolean.class);
-	}
-
-	@Override
-	public Boolean getValue(Boolean x)
-	{
-		return !x.booleanValue();
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "!";
-	}
-}
+package functions;

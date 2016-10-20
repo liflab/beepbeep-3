@@ -257,6 +257,17 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 *   <code>null</code> otherwise.
 	 */
 	public abstract Pushable getPushableInput(int index);
+	
+	/**
+	 * Returns the {@link Pushable} corresponding to the processor's
+	 * first input trace
+	 * @return The pushable if the processor has at least one input,
+	 *   <code>null</code> otherwise.
+	 */
+	public final Pushable getPushableInput()
+	{
+		return getPushableInput(0);
+	}
 
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's
@@ -267,6 +278,17 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 *   <code>null</code> otherwise.
 	 */
 	public abstract Pullable getPullableOutput(int index);
+	
+	/**
+	 * Returns the {@link Pullable} corresponding to the processor's
+	 * first output trace
+	 * @return The pullable if the processor has at least one output,
+	 *   <code>null</code> otherwise.
+	 */
+	public final Pullable getPullableOutput()
+	{
+		return getPullableOutput(0);
+	}
 
 	/**
 	 * Assigns a {@link Pullable} to the processor's <i>i</i>-th input.

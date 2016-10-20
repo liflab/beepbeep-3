@@ -18,28 +18,28 @@
 package ca.uqac.lif.cep.functions;
 
 /**
- * Implementation of the logical negation
+ * Implementation of the logical conjunction
  * 
  * @author Sylvain Hallé
  */
-public class Negation extends UnaryFunction<Boolean,Boolean> 
+public class And extends BinaryFunction<Boolean,Boolean,Boolean> 
 {
-	public static final transient Negation instance = new Negation();
+	public static final transient And instance = new And();
 	
-	Negation()
+	And()
 	{
-		super(Boolean.class, Boolean.class);
+		super(Boolean.class, Boolean.class, Boolean.class);
 	}
 
 	@Override
-	public Boolean getValue(Boolean x)
+	public Boolean getValue(Boolean x, Boolean y)
 	{
-		return !x.booleanValue();
+		return x.booleanValue() && y.booleanValue();
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "!";
+		return "&";
 	}
 }
