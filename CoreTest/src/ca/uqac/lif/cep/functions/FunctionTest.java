@@ -15,7 +15,7 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.ContextPlaceholder;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.Function;
@@ -59,7 +59,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		DummyAdditionFunction add = new DummyAdditionFunction();
 		Object[] arguments = new Object[2];
 		arguments[0] = 2;
-		arguments[1] = new ArgumentPlaceholder("x");
+		arguments[1] = new ContextPlaceholder("x");
 		Context context = new Context();
 		context.put("x", 3);
 		Object[] result = add.evaluate(arguments, context);
@@ -98,7 +98,7 @@ public class FunctionTest extends BeepBeepUnitTest
 		Pushable in = fp.getPushableInput(0);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fp,  sink);
-		ArgumentPlaceholder ap = new ArgumentPlaceholder("x");
+		ContextPlaceholder ap = new ContextPlaceholder("x");
 		for (int j = 0; j < 2; j++)
 		{
 			for (int i = 1; i <= 5; i++)
