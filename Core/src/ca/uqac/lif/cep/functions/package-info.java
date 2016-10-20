@@ -17,7 +17,9 @@
  */
 
 /**
- * Functions and function trees
+ * Definition of the {@link Function} object and basic concepts around
+ * functions. This package also defines a few commonly used functions,
+ * such as equality and Boolean connectives.
  * 
  * @author Sylvain Hallé
  */
