@@ -43,6 +43,15 @@ public class TracePlaceholder extends Function
 	}
 
 	/**
+	 * Creates a new trace placeholder, standing for the first
+	 * input trace (i.e. index 0)
+	 */
+	public TracePlaceholder()
+	{
+		this(0);
+	}
+
+	/**
 	 * Gets the name of this placeholder
 	 * @return The name
 	 */

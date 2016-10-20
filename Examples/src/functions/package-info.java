@@ -17,9 +17,9 @@
  */
 
 /**
- * Some examples of compound functions you can write in BeepBeep 3.
+ * Some examples of compound and custom functions you can write in
+ * BeepBeep 3.
  *  
  * @author Sylvain Hallé
- *
  */
 package functions;
