@@ -22,6 +22,11 @@ import java.io.InputStream;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.io.LineReader;
 
+/**
+ * Read an input stream from a text file line by line and show the output.
+ *  
+ * @author Sylvain Hallé
+ */
 public class FileReader
 {
 	public static void main(String[] args)
@@ -32,6 +37,7 @@ public class FileReader
 		InputStream stream = FileReader.class.getResourceAsStream("numbers.txt");
 		// Give this stream to a LineReader processor
 		LineReader reader = new LineReader(stream);
+		reader.addCrlf(false);
 		// Get a reference to the output pullable of the LineReader
 		Pullable p = reader.getPullableOutput();
 		// We exploit the fact that p can be used like an iterator to

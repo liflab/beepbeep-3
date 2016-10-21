@@ -33,25 +33,41 @@ public class LineReader extends SingleProcessor
 	public static boolean s_printStatus = false;
 
 	/**
-	 * The number of lines read from the input
-	 */
-	protected int m_lineCount = 0;
-
-	/**
 	 * Whether to add a carriage return at the end of each line
 	 */
 	protected boolean m_addCrlf = true;
 
+	/**
+	 * Creates a new LineReader from a File
+	 * @param f The file to read from
+	 * @throws FileNotFoundException If file is not found
+	 */
 	public LineReader(File f) throws FileNotFoundException
 	{
 		this(new FileInputStream(f));
 	}
 	
+	/**
+	 * Creates a new file reader from an input stream
+	 * @param is The input stream to read from
+	 */
 	public LineReader(InputStream is)
 	{
 		super(0, 1);
 		m_inStream = is;
 		m_scanner = new Scanner(is);
+	}
+	
+	/**
+	 * Tells the reader to add a carriage return at the end of each
+	 * output event
+	 * @param b true to add a CRLF, false otherwise
+	 * @return This reader
+	 */
+	public LineReader addCrlf(boolean b)
+	{
+		m_addCrlf = b;
+		return this;
 	}
 
 	/*@Override
@@ -65,14 +81,6 @@ public class LineReader extends SingleProcessor
 	{
 		if (m_scanner.hasNextLine())
 		{
-			if (s_printStatus)
-			{
-				m_lineCount++;
-				if (m_lineCount % 1000 == 0)
-				{
-					System.out.print("Lines read: " + m_lineCount + "    \r");
-				}
-			}
 			String line = m_scanner.nextLine();
 			if (m_addCrlf)
 			{
