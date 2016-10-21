@@ -172,12 +172,6 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	public boolean hasNext();
 	
 	/**
-	 * Gets the number of events pulled so far
-	 * @return The number of events
-	 */
-	public int getPullCount();
-	
-	/**
 	 * Gets the processor instance this Pullable is linked to 
 	 * @return The processor
 	 */

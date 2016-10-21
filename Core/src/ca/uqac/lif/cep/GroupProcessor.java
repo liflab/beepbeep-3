@@ -439,12 +439,6 @@ public class GroupProcessor extends Processor
 		}
 
 		@Override
-		public int getPullCount() 
-		{
-			return m_pullable.getPullCount();
-		}
-
-		@Override
 		public Processor getProcessor() 
 		{
 			return GroupProcessor.this;
@@ -489,12 +483,6 @@ public class GroupProcessor extends Processor
 		public Pushable push(Object o)
 		{
 			return m_pushable.push(o);
-		}
-
-		@Override
-		public int getPushCount() 
-		{
-			return m_pushable.getPushCount();
 		}
 
 		@Override

@@ -22,7 +22,6 @@ public class PullableTest extends BeepBeepUnitTest
 		assertEquals(Pullable.NextStatus.YES, tp.hasNextSoft());
 		String s = tp.pullSoft();
 		assertEquals("A", s);
-		assertEquals(1, tp.getPullCount());
 	}
 	
 	@Test
@@ -37,7 +36,6 @@ public class PullableTest extends BeepBeepUnitTest
 		assertTrue(tp.hasNext());
 		String s = tp.pull();
 		assertEquals("A", s);
-		assertEquals(1, tp.getPullCount());
 	}
 
 }

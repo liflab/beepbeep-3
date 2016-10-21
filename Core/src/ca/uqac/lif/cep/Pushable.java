@@ -44,12 +44,6 @@ public interface Pushable
 	public Pushable push(Object o);
 	
 	/**
-	 * Gets the number of events pushed so far
-	 * @return The number of events
-	 */
-	public int getPushCount();
-	
-	/**
 	 * Gets the processor instance this Pushable is linked to 
 	 * @return The processor
 	 */

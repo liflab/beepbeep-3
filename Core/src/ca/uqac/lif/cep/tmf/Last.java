@@ -144,12 +144,6 @@ public class Last extends Passthrough
 		}
 
 		@Override
-		public int getPullCount() 
-		{
-			return m_inputPullables[0].getPullCount();
-		}
-
-		@Override
 		public Processor getProcessor() 
 		{
 			return Last.this;

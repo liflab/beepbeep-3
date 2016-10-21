@@ -81,16 +81,10 @@ public class Multiplexer extends Processor
 	}
 	
 	protected final class MuxPullable implements Pullable
-	{
-		/**
-		 * Counts how many times <code>pull()</code> was called
-		 */
-		private int m_pullCount;
-		
+	{	
 		public MuxPullable()
 		{
 			super();
-			m_pullCount = 0;
 		}
 
 		@Override
@@ -217,12 +211,6 @@ public class Multiplexer extends Processor
 		}
 
 		@Override
-		public int getPullCount()
-		{
-			return m_pullCount;
-		}
-
-		@Override
 		public Processor getProcessor() 
 		{
 			return Multiplexer.this;
@@ -242,12 +230,7 @@ public class Multiplexer extends Processor
 	}
 	
 	protected final class MuxPushable implements Pushable
-	{
-		/**
-		 * Counts how many times <code>push()</code> was called
-		 */
-		private int m_pushCount;
-		
+	{	
 		/**
 		 * The index this pushable is linked to
 		 */
@@ -256,22 +239,14 @@ public class Multiplexer extends Processor
 		public MuxPushable(int index)
 		{
 			super();
-			m_pushCount = 0;
 			m_index = index;
 		}
 
 		@Override
 		public Pushable push(Object o)
 		{
-			m_pushCount++;
 			m_outputPushables[0].push(o);
 			return this;
-		}
-
-		@Override
-		public int getPushCount()
-		{
-			return m_pushCount;
 		}
 
 		@Override

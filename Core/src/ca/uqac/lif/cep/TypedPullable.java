@@ -84,12 +84,6 @@ public class TypedPullable<T> implements Pullable
 	}
 
 	@Override
-	public int getPullCount()
-	{
-		return m_pullable.getPullCount();
-	}
-
-	@Override
 	public Processor getProcessor() 
 	{
 		return m_pullable.getProcessor();

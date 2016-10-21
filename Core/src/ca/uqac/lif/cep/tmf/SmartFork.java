@@ -134,12 +134,9 @@ public final class SmartFork extends Processor
 	
 	protected class QueuePushable implements Pushable
 	{
-		private int m_pushCount;
-		
 		public QueuePushable()
 		{
 			super();
-			m_pushCount = 0;
 		}
 
 		@Override
@@ -150,15 +147,8 @@ public final class SmartFork extends Processor
 			{
 				m_outputPushables[i].push(o);
 			}
-			m_pushCount++;
 			incrementClean();
 			return this;
-		}
-
-		@Override
-		public int getPushCount()
-		{
-			return m_pushCount;
 		}
 
 		@Override
@@ -189,21 +179,12 @@ public final class SmartFork extends Processor
 	
 	protected class QueuePullable implements Pullable
 	{
-		private int m_queueIndex;
-		
-		private int m_pullCount;
+		private final int m_queueIndex;
 		
 		public QueuePullable(int index)
 		{
 			super();
 			m_queueIndex = index;
-			m_pullCount = 0;
-		}
-		
-		@Override
-		public int getPullCount()
-		{
-			return m_pullCount;
 		}
 
 		@Override
@@ -222,7 +203,6 @@ public final class SmartFork extends Processor
 			{
 				out = m_inputEvents.get(m_cursors[m_queueIndex]);
 				m_cursors[m_queueIndex]++;
-				m_pullCount++;
 			}
 			incrementClean();
 			return out;

@@ -89,12 +89,12 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * is instantiated. This is used to give a unique integer number to
 	 * every processor.
 	 */
-	protected static int s_uniqueIdCounter = 0;
+	private static int s_uniqueIdCounter = 0;
 
 	/**
 	 * The unique ID given to this processor instance 
 	 */
-	protected int m_uniqueId;
+	private final int m_uniqueId;
 
 	/**
 	 * The context in which the processor is instantiated
