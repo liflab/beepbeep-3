@@ -63,7 +63,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof Number);
 		Number n = (Number) answer;
 		assertEquals(0, n.intValue());
@@ -76,7 +76,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof Number);
 		Number n = (Number) answer;
 		assertEquals(0, n.intValue());
@@ -89,7 +89,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof Number);
 		Number n = (Number) answer;
 		assertEquals(0, n.intValue());
@@ -102,7 +102,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof Number);
 		Number n = (Number) answer;
 		assertEquals(2, n.intValue());
@@ -115,7 +115,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof Number);
 		Number n = (Number) answer;
 		assertEquals(3, n.intValue());
@@ -128,7 +128,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof NamedTuple);
 		NamedTuple tup = (NamedTuple) answer;
 		assertEquals(1, tup.keySet().size());
@@ -142,7 +142,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof NamedTuple);
 		NamedTuple tup = (NamedTuple) answer;
 		assertEquals(2, tup.keySet().size());
@@ -168,7 +168,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		Pullable p = s.getPullableOutput(0);
 		{
 			// Get first tuple
-			Object answer = p.pull();
+			Object answer = p.pullSoft();
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
@@ -177,7 +177,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		}
 		{
 			// Get next tuple
-			Object answer = p.pull();
+			Object answer = p.pullSoft();
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
@@ -214,7 +214,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		Pullable p = s.getPullableOutput(0);
 		{
 			// Get first tuple
-			Object answer = p.pull();
+			Object answer = p.pullSoft();
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
@@ -223,7 +223,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		}
 		{
 			// Get next tuple
-			Object answer = p.pull();
+			Object answer = p.pullSoft();
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
@@ -232,7 +232,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		}
 		{
 			// Get next tuple
-			Object answer = p.pull();
+			Object answer = p.pullSoft();
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
@@ -248,7 +248,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof Select);
 		Select s = (Select) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof Number);
 		Number n = (Number) answer;
 		assertEquals(Math.sin(1), n.floatValue(), 0.01);
@@ -262,13 +262,13 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof CumulativeProcessor);
 		CumulativeProcessor s = (CumulativeProcessor) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof Number);
 		Number num = (Number) answer;
 		assertEquals(1, num.intValue());
-		num = (Number) p.pull();
+		num = (Number) p.pullSoft();
 		assertEquals(2, num.intValue());
-		num = (Number) p.pull();
+		num = (Number) p.pullSoft();
 		assertEquals(3, num.intValue());
 	}
 	
@@ -279,13 +279,13 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		assertTrue(processor instanceof CumulativeProcessor);
 		CumulativeProcessor s = (CumulativeProcessor) processor;
 		Pullable p = s.getPullableOutput(0);
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertTrue(answer instanceof Number);
 		Number num = (Number) answer;
 		assertEquals(2, num.intValue());
-		num = (Number) p.pull();
+		num = (Number) p.pullSoft();
 		assertEquals(4, num.intValue());
-		num = (Number) p.pull();
+		num = (Number) p.pullSoft();
 		assertEquals(8, num.intValue());
 	}
 
@@ -299,7 +299,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		Pullable p = cd.getPullableOutput(0);
 		{
 			// Get first tuple
-			Object answer = p.pullHard();
+			Object answer = p.pull();
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
@@ -308,7 +308,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		}
 		{
 			// Get next tuple
-			Object answer = p.pullHard();
+			Object answer = p.pull();
 			assertTrue(answer instanceof NamedTuple);
 			NamedTuple tup = (NamedTuple) answer;
 			assertEquals(2, tup.keySet().size());
@@ -317,7 +317,7 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		}
 		{
 			// Get next tuple. There is no next tuple
-			Object answer = p.pull();
+			Object answer = p.pullSoft();
 			assertNull(answer);
 		}
 	}
@@ -396,13 +396,13 @@ public class TuplesEmlSelectTest extends BeepBeepUnitTest
 		Pullable pul = p.getPullableOutput(0);
 		NamedTuple recv;
 		// First tuple
-		recv = (NamedTuple) pul.pullHard();
+		recv = (NamedTuple) pul.pull();
 		assertNotNull(recv);
 		assertEquals(0, ((Number) recv.get("a")).intValue());
 		assertEquals(0, ((Number) recv.get("b")).intValue());
 		assertEquals(0, ((Number) recv.get("c")).intValue());
 		// Other tuple
-		recv = (NamedTuple) pul.pullHard();
+		recv = (NamedTuple) pul.pull();
 		assertNotNull(recv);
 		assertEquals(0, ((Number) recv.get("a")).intValue());
 		assertEquals(1, ((Number) recv.get("b")).intValue());

@@ -77,16 +77,16 @@ public class TokenFeederTest extends BeepBeepUnitTest
 	public void testTokenFeederPull1() throws ConnectorException
 	{
 		Object o;
-		QueueSource qsource = new QueueSource(null, 1);
+		QueueSource qsource = new QueueSource(1);
 		Vector<Object> events = new Vector<Object>();
 		events.add("|hello.|hi.");
 		qsource.setEvents(events);
 		MyFeeder mf = new MyFeeder("|", ".");
 		Connector.connect(qsource, mf);
 		Pullable p = mf.getPullableOutput(0);
-		o = p.pull();
+		o = p.pullSoft();
 		assertEquals("|hello.", (String) o);
-		o = p.pull();
+		o = p.pullSoft();
 		assertEquals("|hi.", (String) o);
 	}
 	

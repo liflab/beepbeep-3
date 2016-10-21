@@ -57,7 +57,7 @@ public class ConstantFunction extends Function
 	@Override
 	public int getOutputArity()
 	{
-		return 0;
+		return 1;
 	}
 
 	@Override

@@ -15,38 +15,18 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tmf;
-
-import java.util.LinkedList;
-import java.util.Queue;
+package queries;
 
 /**
- * Operates like {@link QueueSource}, except that it dumps all its
- * queue at once, instead of releasing the events one by one.
+ * Use the <code>TypedPullable<code> object to pull events already cast to
+ * a specific type.
+ * <p>
+ * This is the same example as {@link FileReader}, with the use of a
+ * <code>TypedPullable<code>.
+ *  
  * @author Sylvain Hallé
- *
  */
-public class QueueSourceBatch extends QueueSource 
+public class TypedFileReader 
 {
-	public QueueSourceBatch(int arity) 
-	{
-		super(arity);
-	}
-	
-	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
-	{
-		Queue<Object[]> queue = new LinkedList<Object[]>();
-		int output_arity = getOutputArity();
-		for (Object event : m_events)
-		{
-			Object[] out = new Object[output_arity];
-			for (int i = 0; i < output_arity; i++)
-			{
-				out[i] = event;
-			}
-			queue.add(out);
-		}
-		return queue;
-	}
+
 }

@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.tuples;
 
+import java.util.Iterator;
+
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 
@@ -75,14 +77,14 @@ public class EmlPuller
 		}
 
 		@Override
-		public Object pull()
+		public Object pullSoft()
 		{
-			return m_pullable.pull();
+			return m_pullable.pullSoft();
 		}
 		
 		public float pullFloat()
 		{
-			return EmlNumber.parseFloat(m_pullable.pull());
+			return EmlNumber.parseFloat(m_pullable.pullSoft());
 		}
 		
 		public int pullInt()
@@ -92,35 +94,41 @@ public class EmlPuller
 		
 		public String pullString()
 		{
-			return EmlString.parseString(m_pullable.pull());
+			return EmlString.parseString(m_pullable.pullSoft());
 		}
 		
 		public Tuple pullTuple()
 		{
-			return (Tuple) m_pullable.pull();
+			return (Tuple) m_pullable.pullSoft();
 		}
 		
 		public NamedTuple pullNamedTuple()
 		{
-			return (NamedTuple) m_pullable.pull();
+			return (NamedTuple) m_pullable.pullSoft();
 		}
 
 		@Override
-		public Object pullHard()
+		public Object pull()
 		{
-			return m_pullable.pullHard();
+			return m_pullable.pull();
+		}
+		
+		@Override
+		public final Object next()
+		{
+			return pull();
 		}
 
 		@Override
-		public NextStatus hasNext()
+		public NextStatus hasNextSoft()
+		{
+			return m_pullable.hasNextSoft();
+		}
+
+		@Override
+		public boolean hasNext()
 		{
 			return m_pullable.hasNext();
-		}
-
-		@Override
-		public NextStatus hasNextHard()
-		{
-			return m_pullable.hasNextHard();
 		}
 
 		@Override
@@ -139,6 +147,12 @@ public class EmlPuller
 		public int getPosition() 
 		{
 			return m_pullable.getPosition();
+		}
+
+		@Override
+		public Iterator<Object> iterator()
+		{
+			return this;
 		}
 	}
 }

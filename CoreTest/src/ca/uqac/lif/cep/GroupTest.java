@@ -270,10 +270,12 @@ public class GroupTest extends BeepBeepUnitTest
 		gp.associateInput(1, pt1, 1);
 		gp.associateOutput(0, pt2, 0);
 		gp.associateOutput(1, pt2, 1);
-		QueueSource qs = new QueueSource(0, 2);
+		QueueSource qs = new QueueSource(2);
+		qs.addEvent(0);
 		Connector.connect(qs, gp);
 		GroupProcessor gp_clone = gp.clone();
-		QueueSource qs2 = new QueueSource(100, 2);
+		QueueSource qs2 = new QueueSource(2);
+		qs2.addEvent(100);
 		Connector.connect(qs2, gp_clone);
 	}
 	
@@ -301,20 +303,22 @@ public class GroupTest extends BeepBeepUnitTest
 		g_out.associateOutput(0, g_within, 0);
 		// Check that this piping works
 		{
-			QueueSource qs = new QueueSource(0, 1);
+			QueueSource qs = new QueueSource(1);
+			qs.addEvent(0);
 			Connector.connect(qs, g_out);
 			Pullable pull1 = g_out.getPullableOutput(0);
-			o = pull1.pullHard();
+			o = pull1.pull();
 			assertNotNull(o);
 			assertEquals(0, ((Number) o).intValue());
 		}
 		// Now clone
 		GroupProcessor g_clone = g_out.clone();
 		{
-			QueueSource qs = new QueueSource(0, 1);
+			QueueSource qs = new QueueSource(1);
+			qs.addEvent(0);
 			Connector.connect(qs, g_clone);
 			Pullable pull1 = g_clone.getPullableOutput(0);
-			o = pull1.pullHard();
+			o = pull1.pull();
 			assertNotNull(o);
 			assertEquals(0, ((Number) o).intValue());
 		}
@@ -346,20 +350,22 @@ public class GroupTest extends BeepBeepUnitTest
 		g_out.associateOutput(0, pt, 0);
 		// Check that this piping works
 		{
-			QueueSource qs = new QueueSource(0, 1);
+			QueueSource qs = new QueueSource(1);
+			qs.addEvent(0);
 			Connector.connect(qs, g_out);
 			Pullable pull1 = g_out.getPullableOutput(0);
-			o = pull1.pullHard();
+			o = pull1.pull();
 			assertNotNull(o);
 			assertEquals(0, ((Number) o).intValue());
 		}
 		// Now clone
 		GroupProcessor g_clone = g_out.clone();
 		{
-			QueueSource qs = new QueueSource(0, 1);
+			QueueSource qs = new QueueSource(1);
+			qs.addEvent(0);
 			Connector.connect(qs, g_clone);
 			Pullable pull1 = g_clone.getPullableOutput(0);
-			o = pull1.pullHard();
+			o = pull1.pull();
 			assertNotNull(o);
 			assertEquals(0, ((Number) o).intValue());
 		}
@@ -382,14 +388,14 @@ public class GroupTest extends BeepBeepUnitTest
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(null, 1);
+		QueueSource input1 = new QueueSource(1);
 		input1.setEvents(l_input1);
 		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(1);
 		l_input2.add(2);
 		l_input2.add(3);
 		l_input2.add(4);
-		QueueSource input2 = new QueueSource(null, 1);
+		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
 		Connector.connectFork(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
@@ -446,14 +452,14 @@ public class GroupTest extends BeepBeepUnitTest
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(null, 1);
+		QueueSource input1 = new QueueSource(1);
 		input1.setEvents(l_input1);
 		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(1);
 		l_input2.add(2);
 		l_input2.add(3);
 		l_input2.add(4);
-		QueueSource input2 = new QueueSource(null, 1);
+		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
 		Connector.connectFork(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);

@@ -2,9 +2,9 @@
 # Class associations for the EPL
 # -----------------------------------------
 
-<p_decimate>,ca.uqac.lif.cep.epl.CountDecimate
-<p_freeze>,ca.uqac.lif.cep.epl.Freeze
-<p_prefix>,ca.uqac.lif.cep.epl.Prefix
-<p_slicer>,ca.uqac.lif.cep.epl.Slicer
-<p_trim>,ca.uqac.lif.cep.epl.Trim
-<p_window>,ca.uqac.lif.cep.epl.Window
+<p_decimate>,ca.uqac.lif.cep.tmf.CountDecimate
+<p_freeze>,ca.uqac.lif.cep.tmf.Freeze
+<p_prefix>,ca.uqac.lif.cep.tmf.Prefix
+<p_slicer>,ca.uqac.lif.cep.tmf.Slicer
+<p_trim>,ca.uqac.lif.cep.tmf.Trim
+<p_window>,ca.uqac.lif.cep.tmf.Window

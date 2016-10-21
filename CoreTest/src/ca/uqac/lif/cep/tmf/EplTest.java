@@ -253,13 +253,14 @@ public class EplTest extends BeepBeepUnitTest
 	public void testQueueSource1() throws ConnectorException
 	{
 		Object o = null;
-		QueueSource source = new QueueSource(0, 1);
+		QueueSource source = new QueueSource();
+		source.addEvent(0);
 		Pullable out = source.getPullableOutput(0);
-		o = out.pull();
+		o = out.pullSoft();
 		Utilities.assertEquals(0, o);
-		o = out.pull();
+		o = out.pullSoft();
 		Utilities.assertEquals(0, o);
-		o = out.pull();
+		o = out.pullSoft();
 		Utilities.assertEquals(0, o);
 	}
 
@@ -271,12 +272,12 @@ public class EplTest extends BeepBeepUnitTest
 		queue.add(0);
 		queue.add(1);
 		queue.add(2);
-		QueueSource source = new QueueSource(null, 1);
+		QueueSource source = new QueueSource(1);
 		source.setEvents(queue);
 		Pullable out = source.getPullableOutput(0);
 		for (int i = 0; i < 10; i++)
 		{
-			o = out.pull();
+			o = out.pullSoft();
 			assertTrue(o instanceof Integer);
 			Utilities.assertEquals(i % 3, o);
 		}
@@ -289,7 +290,7 @@ public class EplTest extends BeepBeepUnitTest
 		queue.add(0);
 		queue.add(1);
 		queue.add(2);
-		QueueSource source = new QueueSource(null, 1);
+		QueueSource source = new QueueSource(1);
 		source.setEvents(queue);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(source, sink);
@@ -308,7 +309,7 @@ public class EplTest extends BeepBeepUnitTest
 		queue.add(0);
 		queue.add(1);
 		queue.add(2);
-		QueueSource source = new QueueSource(null, 1);
+		QueueSource source = new QueueSource(1);
 		source.setEvents(queue);
 		SinkLast sink = new SinkLast(1);
 		Connector.connect(source, sink);
@@ -347,7 +348,7 @@ public class EplTest extends BeepBeepUnitTest
 		queue.add(0);
 		queue.add(1);
 		queue.add(2);
-		QueueSource source = new QueueSource(null, 1);
+		QueueSource source = new QueueSource(1);
 		source.setEvents(queue);
 		SinkLast sink = new SinkLast(1);
 		Connector.connect(source, sink);
@@ -368,7 +369,7 @@ public class EplTest extends BeepBeepUnitTest
 		queue.add(0);
 		queue.add(1);
 		queue.add(2);
-		QueueSource source = new QueueSource(null, 1);
+		QueueSource source = new QueueSource(1);
 		source.setEvents(queue);
 		SinkLast sink = new SinkLast();
 		Connector.connect(source, sink);

@@ -55,7 +55,8 @@ public class MathTest extends BeepBeepUnitTest
 	@Test
 	public void testSumPush() throws ConnectorException
 	{
-		QueueSource cp = new QueueSource(1, 1);
+		QueueSource cp = new QueueSource(1);
+		cp.addEvent(1);
 		Sum cs = new Sum();
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, cs);
@@ -85,7 +86,8 @@ public class MathTest extends BeepBeepUnitTest
 	@Test
 	public void testSumPull() throws ConnectorException
 	{
-		QueueSource cp = new QueueSource(1, 1);
+		QueueSource cp = new QueueSource(1);
+		cp.addEvent(1);
 		Sum cs = new Sum();
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, cs);
@@ -123,9 +125,9 @@ public class MathTest extends BeepBeepUnitTest
 		l_input2.add(4);
 		l_input2.add(2);
 		l_input2.add(0);
-		QueueSource input1 = new QueueSource(null, 1);
+		QueueSource input1 = new QueueSource(1);
 		input1.setEvents(l_input1);
-		QueueSource input2 = new QueueSource(null, 1);
+		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
 		FunctionProcessor pow = new FunctionProcessor(new Power());
 		Connector.connectFork(input1, input2, pow);
@@ -162,7 +164,7 @@ public class MathTest extends BeepBeepUnitTest
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(2);
-		QueueSource input1 = new QueueSource(null, 1);
+		QueueSource input1 = new QueueSource(1);
 		input1.setEvents(l_input1);
 		QueueSink sink = new QueueSink(1);
 		setupStatisticalMoment(input1, sink, 1);
@@ -194,7 +196,7 @@ public class MathTest extends BeepBeepUnitTest
 		l_input1.add(2);
 		l_input1.add(3);
 		l_input1.add(2);
-		QueueSource input1 = new QueueSource(null, 1);
+		QueueSource input1 = new QueueSource(1);
 		input1.setEvents(l_input1);
 		QueueSink sink = new QueueSink(1);
 		setupStatisticalMoment(input1, sink, 1);
@@ -273,7 +275,7 @@ public class MathTest extends BeepBeepUnitTest
 		l_input1.add(4);
 		l_input1.add(0);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(null, 1);
+		QueueSource input1 = new QueueSource(1);
 		input1.setEvents(l_input1);
 		QueueSink sink = new QueueSink(1);
 		setupSumIfGreater(input1, sink);
@@ -314,7 +316,7 @@ public class MathTest extends BeepBeepUnitTest
 		l_input1.add(4);
 		l_input1.add(0);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(null, 1);
+		QueueSource input1 = new QueueSource(1);
 		input1.setEvents(l_input1);
 		QueueSink sink = new QueueSink(1);
 		setupSumIfGreater(input1, sink);

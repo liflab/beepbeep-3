@@ -72,7 +72,7 @@ public class InterpreterExtensionTest extends BeepBeepUnitTest
 		assertNotNull(result);
 		assertTrue(result instanceof Freeze);
 		Pullable output = ((Freeze) result).getPullableOutput(0);
-		Object o = output.pull();
+		Object o = output.pullSoft();
 		assertTrue(o instanceof EmlNumber);
 	}
 	

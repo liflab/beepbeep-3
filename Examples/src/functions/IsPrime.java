@@ -76,7 +76,7 @@ public class IsPrime extends UnaryFunction<Number,Boolean>
 		// the array is of size 1
 		value = ip.evaluate(new Integer[]{3});
 		// Likewise, a function always returns an array of objects. Most
-		// function (like this one) returns a single object, so the output
+		// functions (like this one) return a single object, so the output
 		// array is also of size 1
 		System.out.printf("Return value of the function: %b\n", value[0]);
 		value = ip.evaluate(new Integer[]{8});

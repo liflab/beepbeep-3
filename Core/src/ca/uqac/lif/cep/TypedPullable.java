@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Iterator;
+
 /**
  * A Pullable object that casts all its output to a given type.
  * The TypedPullable is used by wrapping it around an existing
@@ -52,27 +54,33 @@ public class TypedPullable<T> implements Pullable
 	}
 
 	@Override
+	public T pullSoft()
+	{
+		return (T) m_pullable.pullSoft();
+	}
+
+	@Override
 	public T pull()
 	{
 		return (T) m_pullable.pull();
 	}
-
+	
 	@Override
-	public T pullHard()
+	public final T next()
 	{
-		return (T) m_pullable.pullHard();
+		return pull();
 	}
 
 	@Override
-	public NextStatus hasNext()
+	public NextStatus hasNextSoft()
+	{
+		return m_pullable.hasNextSoft();
+	}
+
+	@Override
+	public boolean hasNext()
 	{
 		return m_pullable.hasNext();
-	}
-
-	@Override
-	public NextStatus hasNextHard()
-	{
-		return m_pullable.hasNextHard();
 	}
 
 	@Override
@@ -91,5 +99,11 @@ public class TypedPullable<T> implements Pullable
 	public int getPosition() 
 	{
 		return m_pullable.getPosition();
+	}
+
+	@Override
+	public Iterator<Object> iterator()
+	{
+		return this;
 	}
 }

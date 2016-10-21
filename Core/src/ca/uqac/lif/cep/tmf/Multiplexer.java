@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.Iterator;
+
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -92,6 +94,28 @@ public class Multiplexer extends Processor
 		}
 
 		@Override
+		public Object pullSoft()
+		{
+			if (!m_outputQueues[0].isEmpty())
+			{
+				return m_outputQueues[0].remove();
+			}
+			for (Pullable p : m_inputPullables)
+			{
+				Object o = p.pullSoft();
+				if (o != null)
+				{
+					m_outputQueues[0].add(o);
+				}
+			}
+			if (!m_outputQueues[0].isEmpty())
+			{
+				return m_outputQueues[0].remove();
+			}
+			return null;
+		}
+
+		@Override
 		public Object pull()
 		{
 			if (!m_outputQueues[0].isEmpty())
@@ -112,31 +136,15 @@ public class Multiplexer extends Processor
 			}
 			return null;
 		}
-
+		
 		@Override
-		public Object pullHard()
+		public final Object next()
 		{
-			if (!m_outputQueues[0].isEmpty())
-			{
-				return m_outputQueues[0].remove();
-			}
-			for (Pullable p : m_inputPullables)
-			{
-				Object o = p.pullHard();
-				if (o != null)
-				{
-					m_outputQueues[0].add(o);
-				}
-			}
-			if (!m_outputQueues[0].isEmpty())
-			{
-				return m_outputQueues[0].remove();
-			}
-			return null;
+			return pull();
 		}
 
 		@Override
-		public NextStatus hasNext()
+		public NextStatus hasNextSoft()
 		{
 			if (!m_outputQueues[0].isEmpty())
 			{
@@ -146,7 +154,7 @@ public class Multiplexer extends Processor
 			NextStatus out = NextStatus.MAYBE;
 			for (Pullable p : m_inputPullables)
 			{
-				NextStatus ns = p.hasNext();
+				NextStatus ns = p.hasNextSoft();
 				if (ns != NextStatus.NO)
 				{
 					all_no = false;
@@ -168,11 +176,11 @@ public class Multiplexer extends Processor
 		}
 
 		@Override
-		public NextStatus hasNextHard()
+		public boolean hasNext()
 		{
 			if (!m_outputQueues[0].isEmpty())
 			{
-				return NextStatus.YES;
+				return true;
 			}
 			boolean all_no = true;
 			NextStatus out = NextStatus.MAYBE;
@@ -180,12 +188,12 @@ public class Multiplexer extends Processor
 			{
 				for (Pullable p : m_inputPullables)
 				{
-					NextStatus ns = p.hasNextHard();
-					if (ns != NextStatus.NO)
+					boolean ns = p.hasNext();
+					if (ns != false)
 					{
 						all_no = false;
 					}
-					if (ns == NextStatus.YES)
+					if (ns == true)
 					{
 						// We don't do a "break" here.
 						// We must go through ALL pullables, even if we encounter one
@@ -196,16 +204,16 @@ public class Multiplexer extends Processor
 				}
 				if (all_no)
 				{
-					return NextStatus.NO;
+					return false;
 				}
 				if (out == NextStatus.YES)
 				{
-					return NextStatus.YES;
+					return true;
 				}
 			}
 			// We went through the maximum number of retries without getting
 			// anything; declare defeat and return NO
-			return NextStatus.NO;
+			return false;
 		}
 
 		@Override
@@ -224,6 +232,12 @@ public class Multiplexer extends Processor
 		public int getPosition() 
 		{
 			return 0;
+		}
+
+		@Override
+		public Iterator<Object> iterator() 
+		{
+			return this;
 		}
 	}
 	

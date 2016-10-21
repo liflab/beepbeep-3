@@ -40,9 +40,9 @@ public class SimpleTests extends BeepBeepUnitTest
 		String out = null;
 		PullConstant c = new PullConstant("A");
 		TypedPullable<String> p = new TypedPullable<String>(c.getPullableOutput(0));
-		out = p.pull();
+		out = p.pullSoft();
 		assertEquals("A", out);
-		out = p.pull();
+		out = p.pullSoft();
 		assertEquals("A", out);
 	}
 	

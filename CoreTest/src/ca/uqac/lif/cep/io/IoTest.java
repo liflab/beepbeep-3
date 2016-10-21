@@ -74,12 +74,12 @@ public class IoTest extends BeepBeepUnitTest
 		Pullable p = sr.getPullableOutput(0);
 		@SuppressWarnings("unused")
 		String s = "";
-		while (p.hasNext() != NextStatus.NO)
+		while (p.hasNextSoft() != NextStatus.NO)
 		{
 			turns++;
-			String pulled = (String) p.pull();
+			String pulled = (String) p.pullSoft();
 			assertNotNull(pulled);
-			s += p.pull();
+			s += p.pullSoft();
 		}
 		assertTrue("Pulled the source for too long", turns < 4);
 	}
@@ -87,10 +87,10 @@ public class IoTest extends BeepBeepUnitTest
 	@Test
 	public void testUrlFeeder1() throws ConnectorException
 	{
-		HttpReader hr = new HttpReader("https://raw.githubusercontent.com/liflab/beepbeep-3/master/tuples1.csv");
+		HttpReader hr = new HttpReader("https://raw.githubusercontent.com/liflab/beepbeep-3/master/CoreTest/tuples1.csv");
 		Pullable p = hr.getPullableOutput(0);
 		assertNotNull(p);
-		Object o = p.pull();
+		Object o = p.pullSoft();
 		assertTrue(o instanceof String);
 	}
 	

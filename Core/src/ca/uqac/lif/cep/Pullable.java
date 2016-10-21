@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Iterator;
+
 /**
  * Queries events on one of a processor's outputs. For a processor with
  * an output arity <i>n</i>, there exists <i>n</i> distinct pullables,
@@ -32,18 +34,18 @@ package ca.uqac.lif.cep;
  *   output event. Since processors are connected in a chain, this generally
  *   means pulling events from the input in order to produce the output.
  *   However, if pulling the input produces no event, no output event can
- *   be produced. In such a case, {@link #hasNext()} will return a special
- *   value (<code>MAYBE</code>), and {@link #pull()} will return
+ *   be produced. In such a case, {@link #hasNextSoft()} will return a special
+ *   value (<code>MAYBE</code>), and {@link #pullSoft()} will return
  *   <code>null</code>. Soft methods can be seen a doing "one turn of the
  *   crank" on the whole chain of processors --whether or not this outputs
  *   something.</li>
  * <li><strong>Hard</strong> methods are actually calls to soft methods until
  *   an output event is produced: the "crank" is turned as long as necessary
  *   to produce something. This means that one call to, e.g.
- *   {@link #pullHard()} may consume more than one event from a processor's
- *   input. Therefore, calls to {@link #hasNextHard()} never return
+ *   {@link #pull()} may consume more than one event from a processor's
+ *   input. Therefore, calls to {@link #hasNext()} never return
  *   <code>MAYBE</code> (only <code>YES</code> or <code>NO</code>), and
- *   {@link #pullHard()} returns <code>null</code> only if no event will
+ *   {@link #pull()} returns <code>null</code> only if no event will
  *   ever be output in the future (this occurs, for example, when pulling
  *   events from a file, and the end of the file has been reached).</li>
  * </ul> 
@@ -54,11 +56,22 @@ package ca.uqac.lif.cep;
  *   can be done explicitly, e.g. by calling
  *   {@link Processor#getPullableOutput(int)}, or implicitly, for example
  *   through every call to {@link Connector#connect(Processor...)}.</li>
- * <li>At various moments, one calls {@link #hasNext()} (or
- *   {@link #hasNextHard()} to check if events are available</li>
- * <li>One calls {@link #pull()} (or {@link #pullHard()} to produce the next
+ * <li>At various moments, one calls {@link #hasNextSoft()} (or
+ *   {@link #hasNext()} to check if events are available</li>
+ * <li>One calls {@link #pullSoft()} (or {@link #pull()} to produce the next
  *   available output event.</li>
  * </ul>
+ * <p>The Pullable interface extends the <code>Iterator</code> and
+ * <code>Iterable</code> interfaces. This means that an instance of Pullable
+ * can also be iterated over like this:
+ * <pre>
+ * Pullable p = ...;
+ * for (Object o : p) {
+ *   // Do something
+ * }
+ * </pre>
+ * Note however that if <code>p</code> refers to a processor producing an
+ * infinite number of events, this loop will never terminate by itself.
  * <p>
  * For the same processor, mixing calls to soft and hard methods is discouraged.
  * As a matter of fact, the Pullable's behaviour in such a situation is
@@ -67,20 +80,20 @@ package ca.uqac.lif.cep;
  * @author Sylvain Hallé
  *
  */
-public interface Pullable
+public interface Pullable extends Iterator<Object>, Iterable<Object>
 {
 	/**
 	 * The "next" status of the pullable. Indicates whether a new output event
 	 * is available (i.e. can be "pulled").
 	 * <ul>
 	 * <li><code>YES</code> indicates that a new event can be pulled right now,
-	 *   using either {@link #pull()} or {@link #pullHard()}</li>
+	 *   using either {@link #pullSoft()} or {@link #pull()}</li>
 	 * <li><code>NO</code> indicates that no event is available, and will
 	 *   ever be. Receiving <code>NO</code> generally indicates that the
 	 *   end of the (output) trace has been reached</li>
 	 * <li><code>MAYBE</code> indicates that no event is available, but that
 	 *   keeping on pulling <em>may </em>produce an event in the future. This
-	 *   value is only returned by {@link #hasNext()}.</li>
+	 *   value is only returned by {@link #hasNextSoft()}.</li>
 	 * </ul>
 	 * 
 	 * @author Sylvain Hallé
@@ -89,7 +102,7 @@ public interface Pullable
 	public static enum NextStatus {YES, NO, MAYBE};
 	
 	/**
-	 * Number of times the {@link #hasNextHard()} method tries to produce an
+	 * Number of times the {@link #hasNext()} method tries to produce an
 	 * output from the input before giving up. While in theory, the method
 	 * tries "as long as necessary", in practice a bound was put on the
 	 * number of attempts as a safeguard to avoid infinite loops.
@@ -98,30 +111,36 @@ public interface Pullable
 	
 	/**
 	 * Attempts to pull an event from the source. An event is returned if
+	 * {@link #hasNextSoft()} returns <code>YES</code>, and <code>null</code>
+	 * is returned otherwise.
+	 * @return An event, or <code>null</code> if none could be retrieved
+	 */
+	public Object pullSoft();
+
+	/**
+	 * Attempts to pull an event from the source. An event is returned if
 	 * {@link #hasNext()} returns <code>YES</code>, and <code>null</code>
 	 * is returned otherwise.
 	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
 	public Object pull();
-
+	
 	/**
-	 * Attempts to pull an event from the source. An event is returned if
-	 * {@link #hasNextHard()} returns <code>YES</code>, and <code>null</code>
-	 * is returned otherwise.
+	 * Synonym of {@link #pull()}.
 	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
-	public Object pullHard();
+	public Object next();
 	
 	/**
 	 * Determines if an event can be pulled from the output. Depending on
 	 * what happens, the possible return values are:
 	 * <ul>
 	 * <li>If one of the inputs answers "no" when called for
-	 * {@link #hasNext()}, returns "no"</li>
+	 * {@link #hasNextSoft()}, returns "no"</li>
 	 * <li>If one of the inputs answers "maybe" when called for
-	 * {@link #hasNext()}, returns "maybe"</li>
+	 * {@link #hasNextSoft()}, returns "maybe"</li>
 	 * <li>If all inputs answer "yes" when called for
-	 * {@link #hasNext()}, but no event is produced with the given inputs,
+	 * {@link #hasNextSoft()}, but no event is produced with the given inputs,
 	 * returns "maybe"</li>
 	 * <li>Otherwise, returns "yes"</li>
 	 * </ul>
@@ -129,17 +148,17 @@ public interface Pullable
 	 * once, and attempts to produce an output event only once.
 	 * @return Whether a next event exists
 	 */
-	public NextStatus hasNext();
+	public NextStatus hasNextSoft();
 
 	/**
 	 * Determines if an event can be pulled from the output, by trying "harder"
-	 * than {@link #hasNext()}. Depending on
+	 * than {@link #hasNextSoft()}. Depending on
 	 * what happens, the possible return values are:
 	 * <ul>
 	 * <li>If one of the inputs answers "no" when called for
-	 * {@link #hasNext()}, returns "no"</li>
+	 * {@link #hasNextSoft()}, returns "no"</li>
 	 * <li>If all inputs answer "yes" when called for
-	 * {@link #hasNext()}, and an event is produced with the given inputs,
+	 * {@link #hasNextSoft()}, and an event is produced with the given inputs,
 	 * returns "yes"</li>
 	 * <li>Otherwise, the method will keep calling {@link #hasNextHard} on
 	 * the inputs as long as they don't answer "no", and will try to produce
@@ -150,7 +169,7 @@ public interface Pullable
 	 * </ul>
 	 * @return Whether a next event exists
 	 */
-	public NextStatus hasNextHard();
+	public boolean hasNext();
 	
 	/**
 	 * Gets the number of events pulled so far
@@ -170,5 +189,4 @@ public interface Pullable
 	 * @return The position
 	 */
 	public int getPosition();
-
 }

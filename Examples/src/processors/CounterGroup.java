@@ -47,7 +47,7 @@ public class CounterGroup extends GroupProcessor
 		// effectively creates a counter outputting 1, 2, ...
 		Vector<Object> one_list = new Vector<Object>();
 		one_list.add(1);
-		QueueSource ones = new QueueSource(1);
+		QueueSource ones = new QueueSource();
 		ones.setEvents(one_list);
 		CumulativeProcessor counter = new CumulativeProcessor(new CumulativeFunction<Number>(Addition.instance));
 		try 
@@ -62,6 +62,8 @@ public class CounterGroup extends GroupProcessor
 		addProcessors(ones, counter);
 		// Associate the output of the group to the output of counter
 		associateOutput(OUTPUT, counter, OUTPUT);
+		// This processor has no input; otherwise, we would also need to
+		// associate the input of the group to the input of some processor
 	}
 	
 	/*
@@ -70,10 +72,10 @@ public class CounterGroup extends GroupProcessor
 	public static void main(String[] args)
 	{
 		CounterGroup counter = new CounterGroup();
-		Pullable p = counter.getPullableOutput(OUTPUT);
+		Pullable p = counter.getPullableOutput();
 		for (int i = 0; i < 10; i++)
 		{
-			float n = (float) p.pullHard();
+			float n = (float) p.pull();
 			System.out.println(n);
 		}
 	}

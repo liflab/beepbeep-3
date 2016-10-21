@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -34,7 +34,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * Filter a trace by evaluating a simple condition on the events of
  * that trace.
  * 
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  */
 public class FilterConditionSimple
 {
@@ -61,7 +61,7 @@ public class FilterConditionSimple
 		// discard odd numbers
 		for (int i = 0; i < 4; i++)
 		{
-			int x = (int) p.pullHard();
+			int x = (int) p.pull();
 			System.out.printf("Output event #%d is %d\n", i, x);
 		}
 

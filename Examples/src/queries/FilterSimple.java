@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * Discard events from an input trace with the 
  * {@link ca.uqac.lif.cep.tmf.Filter} processor.
  *  
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  */
 public class FilterSimple 
 {
@@ -53,7 +53,7 @@ public class FilterSimple
 		// Pull 5 events from p
 		for (int i = 0; i < 5; i++)
 		{
-			int x = (int) p.pullHard();
+			int x = (int) p.pull();
 			System.out.printf("Output event #%d is %d\n", i, x);
 		}
 	}

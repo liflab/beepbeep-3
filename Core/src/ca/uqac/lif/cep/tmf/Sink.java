@@ -53,7 +53,7 @@ public abstract class Sink extends SingleProcessor
 		for (int i = 0; i < getInputArity(); i++)
 		{
 			Pullable p = m_inputPullables[i];
-			inputs[i] = p.pull();
+			inputs[i] = p.pullSoft();
 		}
 		compute(inputs);
 	}
@@ -67,7 +67,7 @@ public abstract class Sink extends SingleProcessor
 		for (int i = 0; i < getInputArity(); i++)
 		{
 			Pullable p = m_inputPullables[i];
-			inputs[i] = p.pullHard();
+			inputs[i] = p.pull();
 		}
 		compute(inputs);
 	}

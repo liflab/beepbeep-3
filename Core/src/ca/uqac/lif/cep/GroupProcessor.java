@@ -19,6 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -407,31 +408,51 @@ public class GroupProcessor extends Processor
 	{
 		protected Pullable m_pullable;
 		
-		public Object pull() {
+		@Override
+		public Object pullSoft() 
+		{
+			return m_pullable.pullSoft();
+		}
+
+		@Override
+		public Object pull() 
+		{
 			return m_pullable.pull();
 		}
-
-		public Object pullHard() {
-			return m_pullable.pullHard();
+		
+		@Override
+		public Object next() 
+		{
+			return m_pullable.next();
 		}
 
-		public NextStatus hasNext() {
+		@Override
+		public NextStatus hasNextSoft() 
+		{
+			return m_pullable.hasNextSoft();
+		}
+
+		@Override
+		public boolean hasNext() 
+		{
 			return m_pullable.hasNext();
 		}
 
-		public NextStatus hasNextHard() {
-			return m_pullable.hasNextHard();
-		}
-
-		public int getPullCount() {
+		@Override
+		public int getPullCount() 
+		{
 			return m_pullable.getPullCount();
 		}
 
-		public Processor getProcessor() {
+		@Override
+		public Processor getProcessor() 
+		{
 			return GroupProcessor.this;
 		}
 
-		public int getPosition() {
+		@Override
+		public int getPosition() 
+		{
 			return m_position;
 		}
 
@@ -442,6 +463,12 @@ public class GroupProcessor extends Processor
 			super();
 			m_pullable = p;
 			m_position = position;
+		}
+
+		@Override
+		public Iterator<Object> iterator() 
+		{
+			return this;
 		}
 	}
 	

@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 
+import ca.uqac.lif.cep.Connector.Variant;
+
 /**
  * Receives zero or more input events, and produces zero or more output
  * events. The processor is the fundamental class where all computation
@@ -431,13 +433,19 @@ public abstract class Processor implements Cloneable, Contextualizable
 
 	/**
 	 * Populates the set of classes accepted by the processor for its
-	 * <i>i</i>-th input
+	 * <i>i</i>-th input.
+	 * <p>
+	 * By default, a processor returns the {@link Connector.Variant} type
+	 * for all its inputs and all its outputs, meaning that the checking of
+	 * types in {@link Connector#connect(Processor...)} will be skipped.
+	 * A descendant of this class may choose to define specific types for
+	 * its input and output, thereby activating runtime type checking.
 	 * @param classes The set of to fill with classes
 	 * @param index The index of the input to query
 	 */
 	public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
 	{
-		classes.add(Object.class);
+		classes.add(Variant.class);
 	}
 
 	/**
@@ -459,12 +467,18 @@ public abstract class Processor implements Cloneable, Contextualizable
 
 	/**
 	 * Returns the type of the events produced by the processor for its
-	 * <i>i</i>-th output
+	 * <i>i</i>-th output.
+	 * <p>
+	 * By default, a processor returns the {@link Connector.Variant} type
+	 * for all its inputs and all its outputs, meaning that the checking of
+	 * types in {@link Connector#connect(Processor...)} will be skipped.
+	 * A descendant of this class may choose to define specific types for
+	 * its input and output, thereby activating runtime type checking.
 	 * @param index The index of the output to query
 	 * @return The type of the output
 	 */	
 	public Class<?> getOutputTypeFor(int index)
 	{
-		return Object.class;
+		return Variant.class;
 	}
 }

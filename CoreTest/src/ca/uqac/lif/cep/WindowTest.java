@@ -47,18 +47,19 @@ public class WindowTest extends BeepBeepUnitTest
 	public void testWindowPull1() throws ConnectorException
 	{
 		Number recv;
-		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
+		QueueSource cs = new QueueSource(1); // Sequence of 1s
+		cs.addEvent(1);
 		Window wp = new Window(new Sum(), 3);
 		Connector.connect(cs, wp);
 		Pullable p = wp.getPullableOutput(0);
 		// We must pull three times to get the first output
-		recv = (Number) p.pull();
+		recv = (Number) p.pullSoft();
 		assertNull(recv);
-		recv = (Number) p.pull();
+		recv = (Number) p.pullSoft();
 		assertNull(recv); // 1 + 1 = 2
-		recv = (Number) p.pull();
+		recv = (Number) p.pullSoft();
 		assertEquals(3, recv.intValue()); // 2 + 1 = 3
-		recv = (Number) p.pull();
+		recv = (Number) p.pullSoft();
 		assertEquals(3, recv.intValue());
 	}
 	
@@ -66,17 +67,18 @@ public class WindowTest extends BeepBeepUnitTest
 	public void testWindowPull2() throws ConnectorException
 	{
 		Number recv;
-		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
+		QueueSource cs = new QueueSource(1); // Sequence of 1s
+		cs.addEvent(1);
 		Window wp = new Window(new Sum(), 3);
 		Connector.connect(cs, wp);
 		Pullable p = wp.getPullableOutput(0);
 		// We pull hard: get output on first call
-		recv = (Number) p.pullHard();
+		recv = (Number) p.pull();
 		if (recv == null || recv.intValue() != 3)
 		{
 			fail("Expected 3 on first pull, got " + recv);
 		}
-		recv = (Number) p.pullHard();
+		recv = (Number) p.pull();
 		if (recv == null || recv.intValue() != 3)
 		{
 			fail("Expected 3 on second pull, got " + recv);
@@ -88,7 +90,8 @@ public class WindowTest extends BeepBeepUnitTest
 	public void testWindowPush1() throws ConnectorException
 	{
 		Number recv;
-		QueueSource cs = new QueueSource(1, 1); // Sequence of 1s
+		QueueSource cs = new QueueSource(1); // Sequence of 1s
+		cs.addEvent(1);
 		Window wp = new Window(new Sum(), 3);
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cs, wp);

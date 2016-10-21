@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -177,22 +177,22 @@ public class ForkTest extends BeepBeepUnitTest
 		events.add("B");
 		events.add("C");
 		events.add("D");
-		QueueSource cp = new QueueSource("", 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		Fork f = new Fork(2);
 		Connector.connect(cp,  f);
 		Pullable p1 = f.getPullableOutput(0);
 		Pullable p2 = f.getPullableOutput(1);
 		String recv;
-		recv = (String) p1.pull();
+		recv = (String) p1.pullSoft();
 		assertEquals("A", recv);
-		recv = (String) p1.pull();
+		recv = (String) p1.pullSoft();
 		assertEquals("B", recv);
-		recv = (String) p2.pull();
+		recv = (String) p2.pullSoft();
 		assertEquals("A", recv);
-		recv = (String) p1.pull();
+		recv = (String) p1.pullSoft();
 		assertEquals("C", recv);
-		recv = (String) p2.pull();
+		recv = (String) p2.pullSoft();
 		assertEquals("B", recv);		
 	}
 	
@@ -204,27 +204,27 @@ public class ForkTest extends BeepBeepUnitTest
 		events.add("B");
 		events.add("C");
 		events.add("D");
-		QueueSource cp = new QueueSource("", 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		SmartFork f = new SmartFork(2);
 		Connector.connect(cp,  f);
 		Pullable p1 = f.getPullableOutput(0);
 		Pullable p2 = f.getPullableOutput(1);
 		String recv;
-		assertEquals(Pullable.NextStatus.YES, p1.hasNext());
-		recv = (String) p1.pull();
+		assertEquals(Pullable.NextStatus.YES, p1.hasNextSoft());
+		recv = (String) p1.pullSoft();
 		assertEquals("A", recv);
-		assertEquals(Pullable.NextStatus.YES, p1.hasNext());
-		recv = (String) p1.pull();
+		assertEquals(Pullable.NextStatus.YES, p1.hasNextSoft());
+		recv = (String) p1.pullSoft();
 		assertEquals("B", recv);
-		assertEquals(Pullable.NextStatus.YES, p1.hasNext());
-		recv = (String) p2.pull();
+		assertEquals(Pullable.NextStatus.YES, p1.hasNextSoft());
+		recv = (String) p2.pullSoft();
 		assertEquals("A", recv);
-		assertEquals(Pullable.NextStatus.YES, p1.hasNext());
-		recv = (String) p1.pull();
+		assertEquals(Pullable.NextStatus.YES, p1.hasNextSoft());
+		recv = (String) p1.pullSoft();
 		assertEquals("C", recv);
-		assertEquals(Pullable.NextStatus.YES, p1.hasNext());
-		recv = (String) p2.pull();
+		assertEquals(Pullable.NextStatus.YES, p1.hasNextSoft());
+		recv = (String) p2.pullSoft();
 		assertEquals("B", recv);		
 	}
 	
@@ -236,7 +236,7 @@ public class ForkTest extends BeepBeepUnitTest
 		events.add("B");
 		events.add("C");
 		events.add("D");
-		QueueSource cp = new QueueSource("", 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		SmartFork f = new SmartFork(2);
 		Connector.connect(cp,  f);
@@ -245,15 +245,15 @@ public class ForkTest extends BeepBeepUnitTest
 		Pullable p2 = new_f.getPullableOutput(1);
 		Pullable p3 = new_f.getPullableOutput(2);
 		String recv;
-		recv = (String) p3.pull();
+		recv = (String) p3.pullSoft();
 		assertEquals("A", recv);
-		recv = (String) p1.pull();
+		recv = (String) p1.pullSoft();
 		assertEquals("A", recv);
-		recv = (String) p2.pull();
+		recv = (String) p2.pullSoft();
 		assertEquals("A", recv);
-		recv = (String) p1.pull();
+		recv = (String) p1.pullSoft();
 		assertEquals("B", recv);
-		recv = (String) p2.pull();
+		recv = (String) p2.pullSoft();
 		assertEquals("B", recv);		
 	}
 	
@@ -265,7 +265,7 @@ public class ForkTest extends BeepBeepUnitTest
 		events.add(1);
 		events.add(2);
 		events.add(3);
-		QueueSource cp = new QueueSource("", 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		SmartFork f = new SmartFork(2);
 		Connector.connect(cp,  f);
@@ -274,18 +274,18 @@ public class ForkTest extends BeepBeepUnitTest
 		int recv;
 		for (int i = 0; i < SmartFork.s_cleanInterval + 3; i++)
 		{
-			assertEquals(Pullable.NextStatus.YES, p1.hasNextHard());
-			recv = ((Number) p1.pullHard()).intValue();
-			p2.pullHard();
+			assertTrue(p1.hasNext());
+			recv = ((Number) p1.pull()).intValue();
+			p2.pull();
 			assertEquals(i % 4, recv);
 		}
 		f.reset();
 		cp.reset();
 		for (int i = 0; i < SmartFork.s_cleanInterval + 3; i++)
 		{
-			assertEquals(Pullable.NextStatus.YES, p1.hasNextHard());
-			recv = ((Number) p1.pullHard()).intValue();
-			p2.pullHard();
+			assertTrue(p1.hasNext());
+			recv = ((Number) p1.pull()).intValue();
+			p2.pull();
 			assertEquals(i % 4, recv);
 		}
 	}
@@ -301,7 +301,7 @@ public class ForkTest extends BeepBeepUnitTest
 		events.add(1);
 		events.add(2);
 		events.add(3);
-		QueueSource cp = new QueueSource("", 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		SmartFork f = new SmartFork(2);
 		Connector.connect(cp,  f);
@@ -309,8 +309,8 @@ public class ForkTest extends BeepBeepUnitTest
 		int recv;
 		for (int i = 0; i < SmartFork.s_cleanInterval + 3; i++)
 		{
-			assertEquals(Pullable.NextStatus.YES, p1.hasNextHard());
-			recv = ((Number) p1.pullHard()).intValue();
+			assertTrue(p1.hasNext());
+			recv = ((Number) p1.pull()).intValue();
 			// Here we don't do p2.pullHard()
 			assertEquals(i % 4, recv);
 		}
@@ -318,8 +318,8 @@ public class ForkTest extends BeepBeepUnitTest
 		cp.reset();
 		for (int i = 0; i < SmartFork.s_cleanInterval + 3; i++)
 		{
-			assertEquals(Pullable.NextStatus.YES, p1.hasNextHard());
-			recv = ((Number) p1.pullHard()).intValue();
+			assertTrue(p1.hasNext());
+			recv = ((Number) p1.pull()).intValue();
 			// Here we don't do p2.pullHard()
 			assertEquals(i % 4, recv);
 		}
@@ -331,7 +331,7 @@ public class ForkTest extends BeepBeepUnitTest
 		/*
 		 * In this test, we push events faster than we pull them
 		 */
-		QueueSourceBatch qsource = new QueueSourceBatch(null, 1);
+		QueueSourceBatch qsource = new QueueSourceBatch(1);
 		Vector<Object> events = new Vector<Object>();
 		events.add(0);
 		events.add(1);

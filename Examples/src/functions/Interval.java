@@ -53,7 +53,7 @@ public class Interval
 		Object[] value;
 		value = in_interval.evaluate(new Integer[]{3, 2, 8});
 		// Likewise, a function always returns an array of objects. Most
-		// function (like this one) returns a single object, so the output
+		// functions (like this one) return a single object, so the output
 		// array is also of size 1
 		System.out.printf("Return value of the function: %b\n", value[0]);
 		value = in_interval.evaluate(new Integer[]{6, 7, 9});

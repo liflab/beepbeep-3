@@ -54,7 +54,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 	@Test
 	public void testPush1() throws ConnectorException
 	{
-		QueueSource cp = new QueueSource("A", 1);
+		QueueSource cp = new QueueSource(1);
+		cp.addEvent("A");
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(cp, qs);
 		cp.push();
@@ -72,10 +73,11 @@ public class ProcessorTest extends BeepBeepUnitTest
 	@Test
 	public void testPull1() throws ConnectorException
 	{
-		QueueSource cp = new QueueSource("A", 1);
+		QueueSource cp = new QueueSource(1);
+		cp.addEvent("A");
 		String recv;
 		Pullable p = cp.getPullableOutput(0);
-		recv = (String) p.pull();
+		recv = (String) p.pullSoft();
 		if (recv == null)
 		{
 			fail("Expected a string, got null");
@@ -91,7 +93,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 	public void testDecimatePull1() throws ConnectorException
 	{
 		int op_num = 0;
-		QueueSource ones = new QueueSource(1, 1);
+		QueueSource ones = new QueueSource(1);
+		ones.addEvent(1);
 		Sum count = new Sum();
 		Connector.connect(ones, count);
 		CountDecimate decim = new CountDecimate(2);
@@ -140,7 +143,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 	public void testDecimatePush1() throws ConnectorException
 	{
 		int op_num = 0;
-		QueueSource ones = new QueueSource(1, 1);
+		QueueSource ones = new QueueSource(1);
+		ones.addEvent(1);
 		Sum count = new Sum();
 		Connector.connect(ones, count);
 		CountDecimate decim = new CountDecimate(2);
@@ -196,9 +200,9 @@ public class ProcessorTest extends BeepBeepUnitTest
 		l_input2.add(6);
 		l_input2.add(4);
 		l_input2.add(0);
-		QueueSource input1 = new QueueSource(null, 1);
+		QueueSource input1 = new QueueSource(1);
 		input1.setEvents(l_input1);
-		QueueSource input2 = new QueueSource(null, 1);
+		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		Connector.connectFork(input1, input2, add);
@@ -238,20 +242,10 @@ public class ProcessorTest extends BeepBeepUnitTest
 	@Test
 	public void testFilter1() throws ConnectorException
 	{
-		Vector<Object> l_input1 = new Vector<Object>();
-		l_input1.add(1);
-		l_input1.add(2);
-		l_input1.add(3);
-		l_input1.add(4);
-		Vector<Object> l_input2 = new Vector<Object>();
-		l_input2.add(true);
-		l_input2.add(false);
-		l_input2.add(true);
-		l_input2.add(false);
-		QueueSource input1 = new QueueSource(null, 1);
-		input1.setEvents(l_input1);
-		QueueSource input2 = new QueueSource(null, 1);
-		input2.setEvents(l_input2);
+		QueueSource input1 = new QueueSource();
+		input1.setEvents(new Integer[]{1, 2, 3, 4});
+		QueueSource input2 = new QueueSource();
+		input2.setEvents(new Boolean[]{true, false, true, false});
 		Filter f = new Filter();
 		Connector.connectFork(input1, input2, f);
 		QueueSink sink = new QueueSink(1);
@@ -291,13 +285,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 	@Test
 	public void testFilter2() throws ConnectorException
 	{
-		Vector<Object> l_input1 = new Vector<Object>();
-		l_input1.add(2);
-		l_input1.add(3);
-		l_input1.add(4);
-		l_input1.add(6);
-		QueueSource input1 = new QueueSource(null, 1);
-		input1.setEvents(l_input1);
+		QueueSource input1 = new QueueSource();
+		input1.setEvents(new Integer[]{2, 3, 4, 6});
 		Fork fork = new Fork(2);
 		Connector.connect(input1, fork);
 		Filter filter = new Filter();
@@ -348,14 +337,14 @@ public class ProcessorTest extends BeepBeepUnitTest
 		l_input1.add(3);
 		l_input1.add(4);
 		l_input1.add(6);
-		QueueSource input1 = new QueueSource(l_input1, 1);
+		QueueSource input1 = new QueueSource();
 		input1.setEvents(l_input1);
 		Vector<Object> l_input2 = new Vector<Object>();
 		l_input2.add(1);
 		l_input2.add(2);
 		l_input2.add(3);
 		l_input2.add(4);
-		QueueSource input2 = new QueueSource(null, 1);
+		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
 		Connector.connectFork(input1, input2, add_plus_10);
 		QueueSink sink = new QueueSink(1);
@@ -400,8 +389,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 	@Test
 	public void testBinaryPull() throws ConnectorException
 	{
-		QueueSource src_left = new QueueSource(null, 1);
-		QueueSource src_right = new QueueSource(null, 1);
+		QueueSource src_left = new QueueSource();
+		QueueSource src_right = new QueueSource();
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(new Integer(1));
@@ -420,9 +409,9 @@ public class ProcessorTest extends BeepBeepUnitTest
 		Connector.connect(src_right, add, 0, 1);
 		Pullable p = add.getPullableOutput(0);
 		Number n;
-		n = (Number) p.pull();
+		n = (Number) p.pullSoft();
 		assertNull(n);
-		n = (Number) p.pull();
+		n = (Number) p.pullSoft();
 		assertEquals(11, n.intValue());
 
 	}
@@ -430,7 +419,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	
 	/**
 	 * This test does not assert anything. It is used for step-by-step debugging
-	 * of the {@link SingleProcessor.OutputPullable#hasNext()} method.
+	 * of the {@link SingleProcessor.OutputPullable#hasNextSoft()} method.
 	 */
 	@Test
 	public void testHasNext() throws ConnectorException
@@ -440,16 +429,16 @@ public class ProcessorTest extends BeepBeepUnitTest
 		events.add("B");
 		events.add("C");
 		events.add("D");
-		QueueSource cp = new QueueSource("", 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		Passthrough pt = new Passthrough(1);
 		Connector.connect(cp, pt);
 		Pullable p = pt.getPullableOutput(0);
 		for (int i = 0; i < 10; i++)
 		{
-			if (p.hasNext() == Pullable.NextStatus.YES)
+			if (p.hasNextSoft() == Pullable.NextStatus.YES)
 			{
-				p.pull();
+				p.pullSoft();
 			}
 		}
 		assertTrue(true);

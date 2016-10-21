@@ -93,9 +93,21 @@ public class CounterSingle extends SingleProcessor
 	{
 		return new CounterSingle();
 	}
+	
+	/*
+	 * Implementing this method is optional. Doing so allows the
+	 * processor to be reset to its initial state. In the present
+	 * case, resetting means setting the counter back to 0.
+	 */
+	@Override
+	public void reset()
+	{
+		m_counterValue = 0;
+	}
 
 	/*
-	 * Simple main showing what the processor does. It should output the numbers 1 to 10.
+	 * Simple main showing what the processor does. It should output the 
+	 * numbers 1 to 10.
 	 */
 	public static void main(String[] args)
 	{
@@ -103,7 +115,7 @@ public class CounterSingle extends SingleProcessor
 		Pullable p = counter.getPullableOutput(OUTPUT);
 		for (int i = 0; i < 10; i++)
 		{
-			float n = (float) p.pullHard();
+			float n = (float) p.pull();
 			System.out.println(n);
 		}
 	}

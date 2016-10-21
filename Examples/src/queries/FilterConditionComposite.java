@@ -42,7 +42,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * In this example, we wish to keep all events that are even <em>and</em>
  * greater than 4, and discard the others.
  * 
- * @author Sylvain Hall�
+ * @author Sylvain Hallé
  */
 public class FilterConditionComposite
 {
@@ -74,7 +74,7 @@ public class FilterConditionComposite
 		// Pull 4 events from p
 		for (int i = 0; i < 4; i++)
 		{
-			int x = (int) p.pullHard();
+			int x = (int) p.pull();
 			System.out.printf("Output event #%d is %d\n", i, x);
 		}
 	}

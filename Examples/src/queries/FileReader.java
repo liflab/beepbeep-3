@@ -15,44 +15,30 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tmf;
+package queries;
 
-import static org.junit.Assert.*;
+import java.io.InputStream;
 
-import java.util.Vector;
-
-import org.junit.Test;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.tmf.Last;
-import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.io.LineReader;
 
-public class LastTest 
+public class FileReader
 {
-	@Test
-	public void test1() throws ConnectorException
+	public static void main(String[] args)
 	{
-		Object o;
-		QueueSource source1 = new QueueSource(1);
-		source1.loop(false);
+		// Get an input stream on some resource. Here we read a file
+		// that resides with the source code by using the getResourceAsStream()
+		// method
+		InputStream stream = FileReader.class.getResourceAsStream("numbers.txt");
+		// Give this stream to a LineReader processor
+		LineReader reader = new LineReader(stream);
+		// Get a reference to the output pullable of the LineReader
+		Pullable p = reader.getPullableOutput();
+		// We exploit the fact that p can be used like an iterator to
+		// write the loop as follows:
+		for (Object o : p)
 		{
-			Vector<Object> events = new Vector<Object>();
-			events.add(0);
-			events.add(1);
-			events.add(2);
-			source1.setEvents(events);
+			System.out.printf("The event is %s\n", o);
 		}
-		Last s = new Last();
-		Connector.connect(source1, s);
-		Pullable p = s.getPullableOutput(0);
-		o = p.pull();
-		assertNotNull(o);
-		assertEquals(2, ((Integer) o).intValue());
-		o = p.pull();
-		assertNull(o);
-		o = p.pull();
-		assertNull(o);
 	}
 }

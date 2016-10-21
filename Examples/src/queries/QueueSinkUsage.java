@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -23,10 +23,10 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.QueueSink;
 
 /**
- * How to push events into a {@link ca.uqac.lif.cep.tmf.QueueSink}
+ * Push events into a {@link ca.uqac.lif.cep.tmf.QueueSink}
  * processor.
  * 
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  */
 public class QueueSinkUsage 
 {

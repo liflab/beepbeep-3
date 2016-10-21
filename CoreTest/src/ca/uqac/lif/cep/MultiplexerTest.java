@@ -66,7 +66,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 	public void testMultiplexerPull() throws ConnectorException
 	{
 		int i = -1;
-		QueueSource qsource1 = new QueueSource(null, 1);
+		QueueSource qsource1 = new QueueSource(1);
 		{
 			Vector<Object> contents = new Vector<Object>();
 			contents.add(0);
@@ -74,7 +74,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 			contents.add(1);
 			qsource1.setEvents(contents);
 		}
-		QueueSource qsource2 = new QueueSource(null, 1);
+		QueueSource qsource2 = new QueueSource(1);
 		{
 			Vector<Object> contents = new Vector<Object>();
 			contents.add(null);
@@ -89,7 +89,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 		Connector.connect(mux, qsink);
 		Queue<Object> queue = qsink.getQueue(0);
 		Pullable pull1 = mux.getPullableOutput(0);
-		assertEquals(Pullable.NextStatus.YES, pull1.hasNext());
+		assertEquals(Pullable.NextStatus.YES, pull1.hasNextSoft());
 		qsink.pull();
 		assertEquals(1, queue.size());
 		i = ((Number) queue.remove()).intValue();
@@ -112,7 +112,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 	public void testMultiplexerPullHard() throws ConnectorException
 	{
 		int i = -1;
-		QueueSource qsource1 = new QueueSource(null, 1);
+		QueueSource qsource1 = new QueueSource(1);
 		{
 			Vector<Object> contents = new Vector<Object>();
 			contents.add(0);
@@ -120,7 +120,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 			contents.add(1);
 			qsource1.setEvents(contents);
 		}
-		QueueSource qsource2 = new QueueSource(null, 1);
+		QueueSource qsource2 = new QueueSource(1);
 		{
 			Vector<Object> contents = new Vector<Object>();
 			contents.add(null);
@@ -135,7 +135,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 		Connector.connect(mux, qsink);
 		Queue<Object> queue = qsink.getQueue(0);
 		Pullable pull1 = mux.getPullableOutput(0);
-		assertEquals(Pullable.NextStatus.YES, pull1.hasNextHard());
+		assertTrue(pull1.hasNext());
 		qsink.pullHard();
 		i = ((Number) queue.remove()).intValue();
 		assertEquals(0, i);

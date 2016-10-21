@@ -48,7 +48,7 @@ public class ThroughputTest extends BeepBeepUnitTest
 		events.add("B");
 		events.add("C");
 		events.add("D");
-		QueueSource cp = new QueueSource(null, 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		Passthrough pt = new Passthrough(1);
 		Connector.connect(cp, pt);
@@ -62,8 +62,8 @@ public class ThroughputTest extends BeepBeepUnitTest
 		float start_time = System.nanoTime();
 		for (long n = 0; n < num_events; n++)
 		{
-			p.hasNext();
-			p.pull();
+			p.hasNextSoft();
+			p.pullSoft();
 		}
 		float end_time = System.nanoTime();
 		long throughput = (long) (((float) num_events) / (end_time - start_time) * 1000000000f);
@@ -80,7 +80,7 @@ public class ThroughputTest extends BeepBeepUnitTest
 		events.add("B");
 		events.add("C");
 		events.add("D");
-		QueueSource cp = new QueueSource(null, 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		Passthrough pt = new Passthrough(1);
 		Connector.connect(cp, pt);
@@ -114,7 +114,7 @@ public class ThroughputTest extends BeepBeepUnitTest
 		events.add(2);
 		events.add(3);
 		events.add(4);
-		QueueSource cp = new QueueSource(null, 1);
+		QueueSource cp = new QueueSource(1);
 		cp.setEvents(events);
 		Window wp = new Window(new Sum(), 3);
 		QueueSink qs = new QueueSink(1);

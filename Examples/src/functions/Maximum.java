@@ -49,7 +49,7 @@ public class Maximum extends BinaryFunction<Number,Number,Number>
 	{
 		/*
 		 * Method getValue() is where the output of the function is
-		 * computed for the inputs. 
+		 * computed from the inputs. 
 		 */
 		if (x.floatValue() > y.floatValue())
 		{
@@ -70,7 +70,7 @@ public class Maximum extends BinaryFunction<Number,Number,Number>
 		// the array is of size 2
 		value = max.evaluate(new Float[]{3.5f, 10f});
 		// Likewise, a function always returns an array of objects. Most
-		// function (like this one) returns a single object, so the output
+		// functions (like this one) return a single object, so the output
 		// array is also of size 1
 		System.out.printf("Return value of the function: %f\n", value[0]);
 		value = max.evaluate(new Float[]{13.1f, 7.7f});

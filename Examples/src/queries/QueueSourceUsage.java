@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -21,10 +21,10 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * How to pull events from the
+ * Pull events from the
  * {@link ca.uqac.lif.cep.tmf.QueueSource} processor. 
  * 
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  */
 public class QueueSourceUsage
 {
@@ -44,7 +44,7 @@ public class QueueSourceUsage
 		{
 			// Method pull() returns an Object, hence we must manually cast 
 			// it as an integer (this is indeed what we get)
-			int x = (int) p.pull();
+			int x = (int) p.pullSoft();
 			System.out.println("The event is: " + x);
 		}
 	}

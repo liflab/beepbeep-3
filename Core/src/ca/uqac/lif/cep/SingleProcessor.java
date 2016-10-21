@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.Queue;
 
 /**
@@ -213,9 +214,9 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		public Object pull()
+		public Object pullSoft()
 		{
-			if (hasNext() != NextStatus.YES)
+			if (hasNextSoft() != NextStatus.YES)
 			{
 				return null;
 			}
@@ -232,9 +233,9 @@ public abstract class SingleProcessor extends Processor
 		}
 		
 		@Override
-		public Object pullHard()
+		public Object pull()
 		{
-			if (hasNextHard() != NextStatus.YES)
+			if (hasNext() != true)
 			{
 				return null;
 			}				
@@ -249,16 +250,22 @@ public abstract class SingleProcessor extends Processor
 			}
 			return null;
 		}
+		
+		@Override
+		public final Object next()
+		{
+			return pull();
+		}
 
 		@Override
-		public NextStatus hasNextHard()
+		public boolean hasNext()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
 			// return it and don't pull anything from the input
 			if (!out_queue.isEmpty())
 			{
-				return NextStatus.YES;
+				return true;
 			}
 			// Check if each pullable has an event ready
 			for (int tries = 0; tries < Pullable.s_maxRetries; tries++)
@@ -267,10 +274,10 @@ public abstract class SingleProcessor extends Processor
 				{
 					Pullable p = m_inputPullables[i];
 					assert p != null;
-					NextStatus status = p.hasNextHard();
-					if (status == NextStatus.NO)
+					boolean status = p.hasNext();
+					if (status == false)
 					{
-						return NextStatus.NO;
+						return false;
 					}
 				}
 				// We are here only if every input pullable has answered YES
@@ -279,7 +286,7 @@ public abstract class SingleProcessor extends Processor
 				for (int i = 0; i < m_inputArity; i++)
 				{
 					Pullable p = m_inputPullables[i];
-					Object o = p.pullHard();
+					Object o = p.pull();
 					inputs[i] = o;
 				}
 				// Compute output event(s)
@@ -288,7 +295,7 @@ public abstract class SingleProcessor extends Processor
 				if (computed == null)
 				{
 					// No output will ever be returned: stop there
-					return NextStatus.NO;
+					return false;
 				}
 				if (!computed.isEmpty())
 				{
@@ -308,21 +315,21 @@ public abstract class SingleProcessor extends Processor
 						else
 						{
 							// This source will NEVER output anything again
-							return NextStatus.NO;
+							return false;
 						}
 					}
 					if (status_to_return == NextStatus.YES)
 					{
-						return NextStatus.YES;
+						return true;
 					}
 				}
 				// Otherwise, try the whole thing again
 			}
-			return NextStatus.NO;
+			return false;
 		}
 
 		@Override
-		public NextStatus hasNext()
+		public NextStatus hasNextSoft()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -335,7 +342,7 @@ public abstract class SingleProcessor extends Processor
 			for (int i = 0; i < m_inputArity; i++)
 			{
 				Pullable p = m_inputPullables[i];
-				NextStatus status = p.hasNext();
+				NextStatus status = p.hasNextSoft();
 				if (status == NextStatus.NO)
 				{
 					return NextStatus.NO;
@@ -352,7 +359,7 @@ public abstract class SingleProcessor extends Processor
 				int i = 0;
 				for (Pullable p : m_inputPullables)
 				{
-					inputs[i] = p.pull();
+					inputs[i] = p.pullSoft();
 					i++;
 				}
 			}
@@ -394,6 +401,12 @@ public abstract class SingleProcessor extends Processor
 		public int getPosition() 
 		{
 			return m_index;
+		}
+
+		@Override
+		public Iterator<Object> iterator()
+		{
+			return this;
 		}
 	}
 	

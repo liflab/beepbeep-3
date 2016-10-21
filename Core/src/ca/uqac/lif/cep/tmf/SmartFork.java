@@ -207,12 +207,12 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		public Object pull()
+		public Object pullSoft()
 		{
 			Object out = null;
 			if (m_cursors[m_queueIndex] >= m_inputEvents.size())
 			{
-				Object o = m_inputPullables[0].pull();
+				Object o = m_inputPullables[0].pullSoft();
 				if (o != null)
 				{
 					m_inputEvents.add(o);
@@ -229,12 +229,12 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		public Object pullHard()
+		public Object pull()
 		{
 			Object out = null;
 			if (m_cursors[m_queueIndex] >= m_inputEvents.size())
 			{
-				Object o = m_inputPullables[0].pullHard();
+				Object o = m_inputPullables[0].pull();
 				m_inputEvents.add(o);
 			}
 			if (m_cursors[m_queueIndex] < m_inputEvents.size())
@@ -245,25 +245,31 @@ public final class SmartFork extends Processor
 			incrementClean();
 			return out;
 		}
-
+		
 		@Override
-		public NextStatus hasNext()
+		public final Object next()
 		{
-			if (m_cursors[m_queueIndex] < m_inputEvents.size())
-			{
-				return NextStatus.YES;
-			}
-			return m_inputPullables[0].hasNext();
+			return pull();
 		}
 
 		@Override
-		public NextStatus hasNextHard()
+		public NextStatus hasNextSoft()
 		{
 			if (m_cursors[m_queueIndex] < m_inputEvents.size())
 			{
 				return NextStatus.YES;
 			}
-			return m_inputPullables[0].hasNextHard();
+			return m_inputPullables[0].hasNextSoft();
+		}
+
+		@Override
+		public boolean hasNext()
+		{
+			if (m_cursors[m_queueIndex] < m_inputEvents.size())
+			{
+				return true;
+			}
+			return m_inputPullables[0].hasNext();
 		}	
 		
 		@Override
@@ -276,6 +282,12 @@ public final class SmartFork extends Processor
 		public int getPosition() 
 		{
 			return m_queueIndex;
+		}
+
+		@Override
+		public Iterator<Object> iterator()
+		{
+			return this;
 		}
 	}
 	

@@ -48,14 +48,11 @@ public class QueueSource extends Source
 	 */
 	protected int m_index;
 	
-	public QueueSource(Object o, int arity)
-	{
-		super(arity);
-		m_events = new Vector<Object>();
-		m_events.add(o);
-		m_index = 0;
-	}
-	
+	/**
+	 * Creates a new queue source of given output arity. The events
+	 * of the queue source will be duplicated on each of the outputs.
+	 * @param arity The output arity
+	 */
 	public QueueSource(int arity)
 	{
 		super(arity);
@@ -63,6 +60,9 @@ public class QueueSource extends Source
 		m_index = 0;
 	}
 	
+	/**
+	 * Creates a new queue source of output arity 1
+	 */
 	public QueueSource()
 	{
 		super(1);
@@ -70,6 +70,12 @@ public class QueueSource extends Source
 		m_index = 0;
 	}
 	
+	/**
+	 * Sets the events that the queue will output
+	 * @param queue A collection of events that the queue source
+	 * will output. If the collection is ordered, the events will
+	 * be output in the order they appear in the collection.
+	 */
 	public void setEvents(Collection<Object> queue)
 	{
 		for (Object o : queue)
@@ -77,7 +83,13 @@ public class QueueSource extends Source
 			m_events.add(o);
 		}
 	}
-	
+
+	/**
+	 * Sets the events that the queue will output
+	 * @param queue An array of events that the queue source
+	 * will output. The events will be output in the order they 
+	 * appear in the collection.
+	 */
 	public void setEvents(Object[] queue)
 	{
 		for (Object o : queue)
@@ -85,7 +97,7 @@ public class QueueSource extends Source
 			m_events.add(o);
 		}
 	}
-	
+		
 	/**
 	 * Adds an event to the queue
 	 * @param e The event to add
@@ -152,8 +164,22 @@ public class QueueSource extends Source
 	@Override
 	public QueueSource clone()
 	{
-		QueueSource out = new QueueSource(null, getOutputArity());
+		QueueSource out = new QueueSource(getOutputArity());
 		out.setEvents(m_events);
 		return out;
+	}
+	
+	@Override
+	public Class<?> getOutputTypeFor(int index)
+	{
+		// We return the type of the first non-null object in the queue
+		for (Object o : m_events)
+		{
+			if (o != null)
+			{
+				return o.getClass();
+			}
+		}
+		return null;
 	}
 }

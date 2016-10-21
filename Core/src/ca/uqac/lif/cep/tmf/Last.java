@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.Iterator;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Processor;
@@ -70,22 +71,20 @@ public class Last extends Passthrough
 	}
 	
 	protected class SentinelPullable implements Pullable
-	{
-		//protected Pullable m_pullable;
-		
+	{	
 		public SentinelPullable()
 		{
 			super();
 		}
 
 		@Override
-		public Object pull() 
+		public Object pullSoft() 
 		{
 			if (m_done)
 			{
 				return null;
 			}
-			Object o = m_inputPullables[0].pull();
+			Object o = m_inputPullables[0].pullSoft();
 			if (o != null)
 			{
 				m_lastReceived = o;
@@ -96,7 +95,7 @@ public class Last extends Passthrough
 		}
 
 		@Override
-		public Object pullHard() 
+		public Object pull() 
 		{
 			if (m_done)
 			{
@@ -104,7 +103,7 @@ public class Last extends Passthrough
 			}
 			for (int tries = 0; tries < Pullable.s_maxRetries; tries++)
 			{
-				Object o = m_inputPullables[0].pullHard();
+				Object o = m_inputPullables[0].pull();
 				if (o != null)
 				{
 					m_lastReceived = o;
@@ -117,25 +116,31 @@ public class Last extends Passthrough
 			}
 			return null;
 		}
+		
+		@Override
+		public final Object next()
+		{
+			return pull();
+		}
 
 		@Override
-		public NextStatus hasNext() 
+		public NextStatus hasNextSoft() 
 		{
 			if (m_done)
 			{
 				return NextStatus.NO;
 			}
-			return m_inputPullables[0].hasNext();
+			return m_inputPullables[0].hasNextSoft();
 		}
 		
 		@Override
-		public NextStatus hasNextHard() 
+		public boolean hasNext() 
 		{
 			if (m_done)
 			{
-				return NextStatus.NO;
+				return false;
 			}
-			return m_inputPullables[0].hasNextHard();
+			return m_inputPullables[0].hasNext();
 		}
 
 		@Override
@@ -154,6 +159,12 @@ public class Last extends Passthrough
 		public int getPosition() 
 		{
 			return m_inputPullables[0].getPosition();
+		}
+
+		@Override
+		public Iterator<Object> iterator() 
+		{
+			return this;
 		}
 	}
 	

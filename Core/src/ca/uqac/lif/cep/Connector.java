@@ -232,15 +232,15 @@ public class Connector
 	protected static void checkForException(Processor p1, Processor p2, int i, int j) throws ConnectorException
 	{
 		Class<?> out_class = p1.getOutputType(i);
-		if (out_class.equals(Variant.class))
-		{
-			// Skip type checking
-			return;
-		}
 		if (s_checkForBounds && out_class == null)
 		{
 			// p1 has no output, so how would you connect it to p2?
 			throw new IndexOutOfBoundsException(p1, p2, i, j);
+		}
+		if (out_class != null && out_class.equals(Variant.class))
+		{
+			// Skip type checking
+			return;
 		}
 		/*@NotNull*/ Set<Class<?>> in_classes = p2.getInputType(j);
 		if (in_classes.isEmpty())
@@ -259,7 +259,7 @@ public class Connector
 		}
 		for (Class<?> in_class : in_classes)
 		{
-			if (in_class.equals(Variant.class) || out_class.isAssignableFrom(in_class) || in_class.equals(Object.class))
+			if (in_class.equals(Variant.class) || in_class.isAssignableFrom(out_class) || in_class.equals(Object.class))
 			{
 				// Found a compatible in/out pair of types: return without exception
 				return;

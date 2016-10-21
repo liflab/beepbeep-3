@@ -33,7 +33,7 @@ public class SplicerTest
 	public void test1()
 	{
 		Object o;
-		QueueSource source1 = new QueueSource(null, 1);
+		QueueSource source1 = new QueueSource(1);
 		source1.loop(false);
 		{
 			Vector<Object> events = new Vector<Object>();
@@ -42,7 +42,7 @@ public class SplicerTest
 			events.add(2);
 			source1.setEvents(events);
 		}
-		QueueSource source2 = new QueueSource(null, 1);
+		QueueSource source2 = new QueueSource(1);
 		source2.loop(false);
 		{
 			Vector<Object> events = new Vector<Object>();
@@ -53,22 +53,22 @@ public class SplicerTest
 		}
 		Splicer s = new Splicer(source1, source2);
 		Pullable p = s.getPullableOutput(0);
-		o = p.pullHard();
+		o = p.pull();
 		assertNotNull(o);
 		assertEquals(0, ((Integer) o).intValue());
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(1, ((Integer) o).intValue());
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(2, ((Integer) o).intValue());
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(3, ((Integer) o).intValue());
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(4, ((Integer) o).intValue());
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(5, ((Integer) o).intValue());
-		o = p.pullHard();
+		o = p.pull();
 		assertNull(o);
-		o = p.pullHard();
+		o = p.pull();
 		assertNull(o);
 	}
 }

@@ -70,17 +70,18 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void testPlaceholder1() throws ParseException, ConnectorException
 	{
 		String expression = "@P";
-		QueueSource qs = new QueueSource(new Integer(1), 1);
+		QueueSource qs = new QueueSource(1);
+		qs.addEvent(1);
 		m_interpreter.addPlaceholder("@P", "processor", qs);
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof Processor);	
 		Processor s = (Processor) o;
 		Pullable p = s.getPullableOutput(0);
-		Number n = (Number) p.pullHard();
+		Number n = (Number) p.pull();
 		assertNotNull(n);
 		assertEquals(1, n.intValue());
-		n = (Number) p.pullHard();
+		n = (Number) p.pull();
 		assertNotNull(n);
 		assertEquals(1, n.intValue());
 	}
@@ -89,14 +90,15 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void testPlaceholder2() throws ParseException, ConnectorException
 	{
 		String expression = "SELECT x FROM (@P)";
-		QueueSource qs = new QueueSource(1, 1);
+		QueueSource qs = new QueueSource(1);
+		qs.addEvent(1);
 		m_interpreter.addPlaceholder("@P", "processor", qs);
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof Select);	
 		Select s = (Select) o;
 		Pullable p = s.getPullableOutput(0);
-		Number n = (Number) p.pullHard();
+		Number n = (Number) p.pull();
 		assertNotNull(n);
 		assertEquals(1, n.intValue());
 	}
@@ -105,7 +107,8 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void testPlaceholder3() throws ParseException, ConnectorException
 	{
 		String expression = "abc IS THE processor @P";
-		QueueSource qs = new QueueSource(1, 1);
+		QueueSource qs = new QueueSource(1);
+		qs.addEvent(1);
 		m_interpreter.executeQuery(expression);
 		m_interpreter.addPlaceholder("@P", "processor", qs);
 		Object o = m_interpreter.parseQuery("SELECT x FROM (abc)");
@@ -113,7 +116,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		assertTrue(o instanceof Select);	
 		Select s = (Select) o;
 		Pullable p = s.getPullableOutput(0);
-		Number n = (Number) p.pullHard();
+		Number n = (Number) p.pull();
 		assertNotNull(n);
 		assertEquals(1, n.intValue());
 	}
@@ -145,16 +148,16 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		assertTrue(user_stmt instanceof Processor);
 		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
 		// Pull a tuple from the resulting processor
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertNotNull(answer);
 		assertTrue(answer instanceof Number);
 		Number num = (Number) answer;
 		assertEquals(1, num.intValue());
 		// Pull another
-		num = (Number) p.pull();
+		num = (Number) p.pullSoft();
 		assertEquals(2, num.intValue());
 		// Pull another
-		num = (Number) p.pull();
+		num = (Number) p.pullSoft();
 		assertEquals(3, num.intValue());
 	}
 	
@@ -173,13 +176,13 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		assertTrue(user_stmt instanceof Processor);
 		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
 		// Pull a tuple from the resulting processor
-		Object answer = p.pull();
+		Object answer = p.pullSoft();
 		assertNotNull(answer);
 		assertTrue(answer instanceof Number);
 		Number num = (Number) answer;
 		assertEquals(3.1416, num.floatValue(), 0.01);
 		// Pull another
-		num = (Number) p.pull();
+		num = (Number) p.pullSoft();
 		assertEquals(3.1416, num.floatValue(), 0.01);
 	}
 	
@@ -192,7 +195,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		Processor proc = (Processor) m_interpreter.parseQuery("SELECT E FROM (1)");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
-		Number number = (Number) p.pull();
+		Number number = (Number) p.pullSoft();
 		assertEquals(2, number.intValue());
 	}
 	
@@ -210,11 +213,11 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		Processor proc = (Processor) m_interpreter.parseQuery("THE INVERSE OF (1)");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
-		Number number = (Number) p.pull();
+		Number number = (Number) p.pullSoft();
 		assertEquals(1, number.floatValue(), 0.01);
-		number = (Number) p.pull();
+		number = (Number) p.pullSoft();
 		assertEquals(0.5, number.floatValue(), 0.01);
-		number = (Number) p.pull();
+		number = (Number) p.pullSoft();
 		assertEquals(0.33, number.floatValue(), 0.01);
 	}
 	
@@ -232,13 +235,13 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		Processor proc = (Processor) m_interpreter.parseQuery("THE AVERAGE OF (SELECT a FROM (THE TUPLES OF FILE \"tuples3.csv\"))");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
-		Number number = (Number) p.pull();
+		Number number = (Number) p.pullSoft();
 		assertEquals(0, number.floatValue(), 0.01);
-		number = (Number) p.pull();
+		number = (Number) p.pullSoft();
 		//assertEquals(1, number.floatValue(), 0.01);
-		number = (Number) p.pull();
+		number = (Number) p.pullSoft();
 		//assertEquals(1, number.floatValue(), 0.01);
-		number = (Number) p.pull();
+		number = (Number) p.pullSoft();
 		//assertEquals(2, number.floatValue(), 0.01);
 	}
 	
@@ -253,10 +256,10 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		assertNotNull(p);
-		NamedTuple tuple = (NamedTuple) p.pull();
+		NamedTuple tuple = (NamedTuple) p.pullSoft();
 		assertEquals(0, tuple.get("x"));
 		assertEquals(0, tuple.get("y"));
-		tuple = (NamedTuple) p.pull();
+		tuple = (NamedTuple) p.pullSoft();
 		assertEquals(6, tuple.get("x"));
 		assertEquals(6, tuple.get("y"));
 	}
@@ -268,14 +271,15 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
-		QueueSource qs = new QueueSource(1, 1);
+		QueueSource qs = new QueueSource(1);
+		qs.addEvent(1);
 		m_interpreter.addPlaceholder("@T", "processor", qs);
 		Processor proc = (Processor) m_interpreter.parseQuery("APPLY (THE SUM OF (*)) ON (@T) ON A WINDOW OF 5");
 		assertNotNull(proc);
 		assertTrue(proc instanceof Window);
 		EmlPullable p = EmlPuller.getEmlPullable(proc, 0);
 		assertNotNull(p);
-		Object o = p.pullHard();
+		Object o = p.pull();
 		assertNotNull(o);
 		assertTrue(o instanceof Number);
 		float n = EmlNumber.parseFloat(o);
@@ -289,7 +293,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor, @N IS A number: FOO ( @P ) BAR @N IS THE processor TRIM @N OF (@P)");
 			e_def.addToInterpreter(m_interpreter);
 		}
-		QueueSource qs = new QueueSource(null, 1);
+		QueueSource qs = new QueueSource(1);
 		Vector<Object> events = new Vector<Object>();
 		events.add(0);
 		events.add(1);

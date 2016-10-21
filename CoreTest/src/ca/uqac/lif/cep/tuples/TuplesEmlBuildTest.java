@@ -179,16 +179,16 @@ public class TuplesEmlBuildTest extends BeepBeepUnitTest
 		Connector.connect(sr, tf);
 		Pullable p = tf.getPullableOutput(0);
 		NamedTuple t = null;
-		t = (NamedTuple) p.pullHard();
+		t = (NamedTuple) p.pull();
 		assertNotNull(t);
 		assertEquals("1", t.get("a").toString());
-		t = (NamedTuple) p.pullHard();
+		t = (NamedTuple) p.pull();
 		assertNotNull(t);
 		assertEquals("2", t.get("a").toString());
-		t = (NamedTuple) p.pullHard();
+		t = (NamedTuple) p.pull();
 		assertNotNull(t);
 		assertEquals("3", t.get("a").toString());
-		t = (NamedTuple) p.pullHard();
+		t = (NamedTuple) p.pull();
 		assertNotNull(t);
 		assertEquals("10", t.get("a").toString());
 	}
