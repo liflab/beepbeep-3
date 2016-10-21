@@ -17,8 +17,6 @@
  */
 package queries;
 
-import java.util.Vector;
-
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.BinaryFunction;
@@ -98,24 +96,24 @@ public class PointDistance
 	}
 	
 	/**
-	 * Creates a dummy vector of points
-	 * @return A queue of numbers
+	 * Creates a dummy array of points
+	 * @return An array of points
 	 */
-	public static Vector<Object> getListOfPoints()
+	public static Object[] getListOfPoints()
 	{
-		Vector<Object> points = new Vector<Object>();
-		points.add(new Point(2, 7));
-		points.add(new Point(1, 8));
-		points.add(new Point(2, 8));
-		points.add(new Point(1, 8));
-		points.add(new Point(2, 8));
-		points.add(new Point(4, 5));
-		points.add(new Point(9, 0));
-		points.add(new Point(4, 5));
-		points.add(new Point(2, 3));
-		points.add(new Point(5, 3));
-		points.add(new Point(6, 0));
-		points.add(new Point(2, 8));
-		return points;
+		return new Object[]{
+				new Point(2, 7),
+				new Point(1, 8),
+				new Point(2, 8),
+				new Point(1, 8),
+				new Point(2, 8),
+				new Point(4, 5),
+				new Point(9, 0),
+				new Point(4, 5),
+				new Point(2, 3),
+				new Point(5, 3),
+				new Point(6, 0),
+				new Point(2, 8)
+		};
 	}
 }

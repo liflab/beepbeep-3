@@ -34,7 +34,7 @@ import static ca.uqac.lif.cep.Connector.connect;
 
 
 /**
- * This example shows how to compute the cumulative average of a list of
+ * Compute the cumulative average of a list of
  * numbers. The cumulative average is the average of all the numbers
  * processed so far.
  * <p>
@@ -52,9 +52,9 @@ public class Average
 	public static void main(String[] args) throws ConnectorException 
 	{
 		// Create a source of numbers
-		Vector<Object> number_list = getListOfNumbers();
 		QueueSource numbers = new QueueSource(1);
-		numbers.setEvents(number_list);
+		numbers.setEvents(new Object[]{2, 7, 1, 8, 2, 8, 1, 8, 2, 8,
+				4, 5, 9, 0, 4, 5, 2, 3, 5, 3, 6, 0, 2, 8, 7});
 		// Pipe the output of this processor to a cumulative processor that
 		// computes the cumulative sum of numbers
 		CumulativeProcessor sum_proc = new CumulativeProcessor(new CumulativeFunction<Number>(Addition.instance));
@@ -76,7 +76,7 @@ public class Average
 		connect(counter, OUTPUT, division, RIGHT);
 		
 		// Extract the first 20 events from that pipe and print them
-		Pullable p = division.getPullableOutput(OUTPUT);
+		Pullable p = division.getPullableOutput();
 		System.out.println("The cumulative average is...");
 		for (int i = 0; i < 20; i++)
 		{
@@ -84,40 +84,5 @@ public class Average
 			System.out.print(value + ", ");
 		}
 		System.out.println("done!");
-	}
-	
-	/**
-	 * Creates a dummy vector of numbers
-	 * @return A queue of numbers
-	 */
-	public static Vector<Object> getListOfNumbers()
-	{
-		Vector<Object> numbers = new Vector<Object>();
-		numbers.add(2);
-		numbers.add(7);
-		numbers.add(1);
-		numbers.add(8);
-		numbers.add(2);
-		numbers.add(8);
-		numbers.add(1);
-		numbers.add(8);
-		numbers.add(2);
-		numbers.add(8);
-		numbers.add(4);
-		numbers.add(5);
-		numbers.add(9);
-		numbers.add(0);
-		numbers.add(4);
-		numbers.add(5);
-		numbers.add(2);
-		numbers.add(3);
-		numbers.add(5);
-		numbers.add(3);
-		numbers.add(6);
-		numbers.add(0);
-		numbers.add(2);
-		numbers.add(8);
-		numbers.add(7);
-		return numbers;
 	}
 }
