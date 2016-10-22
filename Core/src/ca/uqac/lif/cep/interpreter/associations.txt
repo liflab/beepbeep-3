@@ -4,4 +4,3 @@
 <p_constant>,ca.uqac.lif.cep.PullConstant
 <p_cumulative>,ca.uqac.lif.cep.functions.CumulativeProcessor
 <p_placeholder>,ca.uqac.lif.cep.interpreter.Placeholder
-<p_mutator>,ca.uqac.lif.cep.Mutator
