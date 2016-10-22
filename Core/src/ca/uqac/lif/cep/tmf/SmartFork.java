@@ -186,6 +186,13 @@ public final class SmartFork extends Processor
 			super();
 			m_queueIndex = index;
 		}
+		
+		@Override
+		public void remove()
+		{
+			// Cannot remove an event on a pullable
+			throw new UnsupportedOperationException();
+		}
 
 		@Override
 		public Object pullSoft()

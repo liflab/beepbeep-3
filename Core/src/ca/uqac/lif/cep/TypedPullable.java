@@ -52,6 +52,13 @@ public class TypedPullable<T> implements Pullable
 		super();
 		m_pullable = p;
 	}
+	
+	@Override
+	public void remove()
+	{
+		// Cannot remove an event on a pullable
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public T pullSoft()

@@ -409,6 +409,13 @@ public class GroupProcessor extends Processor
 		protected Pullable m_pullable;
 		
 		@Override
+		public void remove()
+		{
+			// Cannot remove an event on a pullable
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
 		public Object pullSoft() 
 		{
 			return m_pullable.pullSoft();

@@ -76,6 +76,13 @@ public class Last extends Passthrough
 		{
 			super();
 		}
+		
+		@Override
+		public void remove()
+		{
+			// Cannot remove an event on a pullable
+			throw new UnsupportedOperationException();
+		}
 
 		@Override
 		public Object pullSoft() 
