@@ -11,6 +11,10 @@
 
 /* Reset element styles within the article environment */
 
+article * {
+  line-height: 1.1;
+}
+
 article ul {
   margin-top: 6pt;
   list-style-type: disc;
@@ -18,8 +22,8 @@ article ul {
 }
 
 article p {
-  margin-top: 6pt;
-  margin-bottom: 6pt;
+  margin-top: 12pt;
+  margin-bottom: 12pt;
 }
 
 /* Put default text color back to black */

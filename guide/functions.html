@@ -5,16 +5,16 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 --><html>
 <head>
-		<title> - BeepBeep 3</title>
+		<title>Functions - BeepBeep 3</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="../assets/css/main.css">
 		<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
-		<link rel="stylesheet" href="assets/css/custom.css">
+		<link rel="stylesheet" href="../assets/css/custom.css">
 		<meta name="author" content="Laboratoire d'informatique formelle">
-		<link rel="stylesheet" href="assets/js/styles/default.css">
-		<script src="assets/js/highlight.pack.js"></script>
+		<link rel="stylesheet" href="../assets/js/styles/default.css">
+		<script src="../assets/js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 	</head>
 	<body class="no-sidebar">
@@ -33,21 +33,21 @@
 						<!-- Nav -->
 						<nav id="nav">
 	<ul>
-		<li><a href="index.html">Home</a></li>
-		<li><a href="quickintro.html">In 5 minutes</a></li>
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="../quickintro.html">In 5 minutes</a></li>
 		<li>
-<a href="features.html">Features</a>
+<a href="../features.html">Features</a>
 			<ul>
-			  <li><a href="use-cases.html">Examples of uses</a></li>
-				<li><a href="palettes.html">Available extensions</a></li>
+			  <li><a href="../use-cases.html">Examples of uses</a></li>
+				<li><a href="../palettes.html">Available extensions</a></li>
 			</ul>
 		</li>
-		<li><a href="get.html">Get BeepBeep</a></li>
-		<li>
-<a href="documentation.html">Documentation</a>
+		<li><a href="../get.html">Get BeepBeep</a></li>
+		<li class="current">
+<a href="../documentation.html">Documentation</a>
 		  <ul>
-		    <li><a href="guide/index.html">User Guide</a></li>
-		    <li><a href="javadoc/index.html">API Reference</a></li>
+		    <li class="current"><a href="../guide/index.html">User Guide</a></li>
+		    <li class="current"><a href="../javadoc/index.html">API Reference</a></li>
 		  </ul>
 		</li>
 	</ul>
@@ -64,14 +64,33 @@
 
 					<!-- Content -->
 						<article>
-							<section>
-<h4>In this page</h4>
-<ul class="style2">
-    <li><a href="#tutorial">Tutorial on BeepBeep</a></li>
-    <li><a href="#guide">User Guide</a></li>
-    <li><a href="#papers">Research Papers</a></li>
-</ul>
-</section>
+							<h2>Functions</h2>
+
+<p>
+  <a href="index.html">Home</a>
+</p>
+
+<p>A <em>function</em> is an object that takes one or more arguments as its input, and returns one or more values as its output.</p>
+
+<p>Functions can be used to manipulate objects of all types. For example, the Boolean "and" connective can be seen as a function that takes two Boolean values as its input, and returns another Boolean value as its output. Arithmetical operators, such as addition, can be viewed as a function that takes two numbers as its input and returns another number as its output.</p>
+
+<p>In BeepBeep, functions are "first-class" citizens: each function is actually a Java <code>Object</code> you can instnatiate and manipulate like any other. More precisely, all functions are descendents of the abstract class <a href="http://liflab.github.io/beepbeep-3/javadoc/ca/uqac/lif/cep/functions/Function.html"> Function</a>.</p>
+
+<p>The most important method of a <code>Function</code> object is called <a href="http://liflab.github.io/beepbeep-3/javadoc/ca/uqac/lif/cep/functions/Function.html#evaluate(java.lang.Object%5B%5D)"> evaluate()</a>. This method is responsible for evaluating the outputs of the function, given some inputs.</p>
+
+<p>Let us take as an example the function <a href="http://liflab.github.io/beepbeep-3/javadoc/ca/uqac/lif/cep/numbers/Addition.html"> Addition</a>. The following code shows an example usage of this function:</p>
+
+<p></p>
+<pre><code>Source code not found</code></pre>
+<p></p>
+
+<p>First, we get a refernce to an instance of the <code>Addition</code> object. The <code>Addition</code> class is a <em>singleton</em>: there is only a single instance of it, a reference to which is given by the static field <code>instance</code>, and all uses of the function should be done by using that instance.</p>
+
+<p></p>
+<pre><code>Source code not found</code></pre>
+<p></p>
+
+<!-- :wrap=soft: -->
 						</article>
 
 				</div>
@@ -143,12 +162,12 @@
 
 		<!-- Scripts -->
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+			<script src="../assets/js/main.js"></script>
 			<!--
 You are viewing a page using the REMOTE version of the site.
 Insert here whatever HTML/PHP code you'd like to have in the pages on
