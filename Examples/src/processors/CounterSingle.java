@@ -115,7 +115,7 @@ public class CounterSingle extends SingleProcessor
 		Pullable p = counter.getPullableOutput(OUTPUT);
 		for (int i = 0; i < 10; i++)
 		{
-			float n = (float) p.pull();
+			float n = (Float) p.pull();
 			System.out.println(n);
 		}
 	}

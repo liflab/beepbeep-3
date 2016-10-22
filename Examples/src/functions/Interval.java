@@ -42,6 +42,7 @@ public class Interval
 		 * y and z. The TracePlaceholder objects are used to
 		 * refer to the arguments, with the first argument starting at 0.
 		 */
+		// SNIP
 		FunctionTree in_interval = new FunctionTree(And.instance,
 				new FunctionTree(IsGreaterThan.instance, 
 						new ArgumentPlaceholder(0),
@@ -50,6 +51,7 @@ public class Interval
 						new ArgumentPlaceholder(0),
 						new ArgumentPlaceholder(2) // y < z
 						));
+		// SNIP
 		Object[] value;
 		value = in_interval.evaluate(new Integer[]{3, 2, 8});
 		// Likewise, a function always returns an array of objects. Most

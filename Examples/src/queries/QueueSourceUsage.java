@@ -44,7 +44,7 @@ public class QueueSourceUsage
 		{
 			// Method pull() returns an Object, hence we must manually cast 
 			// it as an integer (this is indeed what we get)
-			int x = (int) p.pullSoft();
+			int x = (Integer) p.pullSoft();
 			System.out.println("The event is: " + x);
 		}
 	}

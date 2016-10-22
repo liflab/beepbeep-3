@@ -80,7 +80,7 @@ public class Average
 		System.out.println("The cumulative average is...");
 		for (int i = 0; i < 20; i++)
 		{
-			float value = (float) p.pull();
+			float value = (Float) p.pull();
 			System.out.print(value + ", ");
 		}
 		System.out.println("done!");

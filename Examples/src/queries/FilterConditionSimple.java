@@ -61,7 +61,7 @@ public class FilterConditionSimple
 		// discard odd numbers
 		for (int i = 0; i < 4; i++)
 		{
-			int x = (int) p.pull();
+			int x = (Integer) p.pull();
 			System.out.printf("Output event #%d is %d\n", i, x);
 		}
 

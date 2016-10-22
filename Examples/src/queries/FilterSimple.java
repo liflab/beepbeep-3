@@ -53,7 +53,7 @@ public class FilterSimple
 		// Pull 5 events from p
 		for (int i = 0; i < 5; i++)
 		{
-			int x = (int) p.pull();
+			int x = (Integer) p.pull();
 			System.out.printf("Output event #%d is %d\n", i, x);
 		}
 	}

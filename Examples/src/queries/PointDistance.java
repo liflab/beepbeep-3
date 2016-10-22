@@ -90,7 +90,7 @@ public class PointDistance
 		Pullable p = distance_proc.getPullableOutput(OUTPUT);
 		for (int i = 0; i < 10; i++)
 		{
-			float d = (float) p.pull();
+			float d = (Float) p.pull();
 			System.out.println(d);
 		}
 	}
