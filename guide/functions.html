@@ -17,7 +17,7 @@
 		<script src="../assets/js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 	</head>
-	<body class="no-sidebar">
+	<body class="right-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -60,6 +60,8 @@
 <!-- Main -->
 <div id="main-wrapper">
 	<div class="container">
+		<div class="row 200%">
+			<div class="8u 12u$(medium)">
 				<div id="content">
 
 					<!-- Content -->
@@ -84,7 +86,11 @@
 <pre><code>Source code not found</code></pre>
 <p></p>
 
-<p>First, we get a refernce to an instance of the <code>Addition</code> object. The <code>Addition</code> class is a <em>singleton</em>: there is only a single instance of it, a reference to which is given by the static field <code>instance</code>, and all uses of the function should be done by using that instance.</p>
+<p>First, we get a reference to an instance of the <code>Addition</code> object. The <code>Addition</code> class is a <em>singleton</em>: there is only a single instance of it, a reference to which is given by the static field <code>instance</code>, and all uses of the function should be done by using that instance. We then create an array of two objects, the numbers 2 and 3, and pass this array to the addition function through the <code>evaluate()</code> method. The method returns yet another array, containing the result of evaluating the function. Most functions return a single value, and so the resulting array is of size 1. The next instruction fetches the first (and only) element of the result array and casts it as a <code>Float</code>.</p>
+
+<h3>
+  <a name="functiontree">Composing Functions</a>
+</h3>
 
 <p></p>
 <pre><code>Source code not found</code></pre>
@@ -95,6 +101,15 @@
 
 				</div>
 			</div>
+			<div class="4u 12u$(medium)">
+				<div id="sidebar">
+
+					<!-- Sidebar -->
+						
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 			<!-- Footer -->
 				<div id="footer-wrapper">
