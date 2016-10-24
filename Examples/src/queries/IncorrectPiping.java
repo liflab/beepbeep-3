@@ -17,37 +17,21 @@
  */
 package queries;
 
-import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.numbers.AbsoluteValue;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * Pull events from the
- * {@link ca.uqac.lif.cep.tmf.QueueSource} processor. 
+ * What happens when you pipe processors with non-matching event
+ * types.
  * 
  * @author Sylvain Hallé
  */
-public class QueueSourceUsage
+public class IncorrectPiping 
 {
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
-		// SNIP
-		// Create an empty queue source
 		QueueSource source = new QueueSource();
-		// Tell the source what events to output by giving it an array;
-		// in this case, we output the first powers of 2
-		source.setEvents(new Integer[]{1, 2, 4, 8, 16, 32});
-		// Get a pullable to the source
-		Pullable p = source.getPullableOutput();
-		// Pull 8 events from the source. The queue source loops through
-		// its array of events; hence after reaching the last (32), it
-		// will restart from the beginning of its list.
-		for (int i = 0; i < 8; i++)
-		{
-			// Method pull() returns an Object, hence we must manually cast 
-			// it as an integer (this is indeed what we get)
-			int x = (Integer) p.pull();
-			System.out.println("The event is: " + x);
-		}
-		// SNIP
+		source.setEvents(new Integer[]{3});
+		AbsoluteValue av = new AbsoluteValue();
 	}
 }

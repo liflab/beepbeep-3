@@ -17,37 +17,59 @@
  */
 package queries;
 
+import java.util.Queue;
+
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * Pull events from the
- * {@link ca.uqac.lif.cep.tmf.QueueSource} processor. 
+ * Pipe processors together using the {@link ca.uqac.lif.cep.Connector}
+ * class.
  * 
  * @author Sylvain Hallé
  */
-public class QueueSourceUsage
+public class PipingUnary 
 {
-	public static void main(String[] args) 
+	public static void main (String[] args) throws ConnectorException
 	{
 		// SNIP
-		// Create an empty queue source
 		QueueSource source = new QueueSource();
-		// Tell the source what events to output by giving it an array;
-		// in this case, we output the first powers of 2
-		source.setEvents(new Integer[]{1, 2, 4, 8, 16, 32});
-		// Get a pullable to the source
-		Pullable p = source.getPullableOutput();
-		// Pull 8 events from the source. The queue source loops through
-		// its array of events; hence after reaching the last (32), it
-		// will restart from the beginning of its list.
+		source.setEvents(new Integer[]{1, 2, 3, 4, 5, 6});
+		Doubler doubler = new Doubler();
+		Connector.connect(source, doubler);
+		Pullable p = doubler.getPullableOutput();
 		for (int i = 0; i < 8; i++)
 		{
-			// Method pull() returns an Object, hence we must manually cast 
-			// it as an integer (this is indeed what we get)
 			int x = (Integer) p.pull();
 			System.out.println("The event is: " + x);
 		}
 		// SNIP
+	}
+	
+	/**
+	 * A processor that doubles every number it is given
+	 */
+	public static class Doubler extends SingleProcessor
+	{
+		public Doubler()
+		{
+			super(1, 1);
+		}
+
+		@Override
+		protected Queue<Object[]> compute(Object[] inputs)
+		{
+			return wrapObject(2 * ((Number) inputs[0]).intValue());
+		}
+
+		@Override
+		public Processor clone() 
+		{
+			return this;
+		}
 	}
 }

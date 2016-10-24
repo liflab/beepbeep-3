@@ -44,16 +44,16 @@ public class IsPrime extends UnaryFunction<Number,Boolean>
 		super(Number.class, Boolean.class);
 	}
 
+	/*
+	 * Method getValue() is where the output of the function is
+	 * computed for the input. For the sake of our example, the
+	 * actual way to check if x is prime does not matter;
+	 * we'll simply enumerate all numbers up to sqrt(x) until we 
+	 * find one that divides x, and otherwise return true. 
+	 */
 	@Override
 	public Boolean getValue(Number x) 
 	{
-		/*
-		 * Method getValue() is where the output of the function is
-		 * computed for the input. For the sake of our example, the
-		 * actual way to check if x is prime does not matter;
-		 * we'll simply enumerate all numbers up to sqrt(x) until we 
-		 * find one that divides x, and otherwise return true. 
-		 */
 		int k = x.intValue(); // Convert x to an int
 		int max = (int) Math.sqrt(k);
 		for (int n = 2; n <= max; n++)

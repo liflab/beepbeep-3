@@ -52,8 +52,9 @@ public class Interval
 						new ArgumentPlaceholder(2) // y < z
 						));
 		// SNIP
-		Object[] value;
-		value = in_interval.evaluate(new Integer[]{3, 2, 8});
+		// SNAP
+		Object[] value = in_interval.evaluate(new Integer[]{3, 2, 8});
+		// SNAP
 		// Likewise, a function always returns an array of objects. Most
 		// functions (like this one) return a single object, so the output
 		// array is also of size 1
