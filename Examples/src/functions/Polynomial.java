@@ -18,7 +18,7 @@
 package functions;
 
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
-import ca.uqac.lif.cep.functions.ConstantFunction;
+import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.PassthroughFunction;
@@ -31,6 +31,7 @@ import ca.uqac.lif.cep.numbers.Multiplication;
  * 
  * @author Sylvain Hallé
  */
+//SNIP
 public class Polynomial extends PassthroughFunction 
 {
 	/*
@@ -45,18 +46,22 @@ public class Polynomial extends PassthroughFunction
 				new FunctionTree(Multiplication.instance,
 						new ArgumentPlaceholder(),
 						new ArgumentPlaceholder()),
-				new ConstantFunction(3));
+				new Constant(3));
 	}
+	// ...
+	// SNIP
 
 	/*
 	 * Small main() to illustrate the concept
 	 */
 	public static void main(String[] args) 
 	{
+		// SNAP
 		Polynomial poly = new Polynomial();
 		Object[] value;
 		value = poly.evaluate(new Integer[]{3});
 		System.out.printf("Return value of the function: %f\n", value[0]);
+		// SNAP
 		value = poly.evaluate(new Integer[]{8});
 		System.out.printf("Return value of the function: %f\n", value[0]);
 	}

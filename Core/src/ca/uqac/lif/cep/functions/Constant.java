@@ -25,12 +25,20 @@ import ca.uqac.lif.cep.Context;
  * Representation of a unary constant
  * @author Sylvain Hallé
  */
-public class ConstantFunction extends Function
+public class Constant extends Function
 {
-	protected Object m_value;
+	/**
+	 * The value to return by this constant
+	 */
+	private final Object m_value;
 	
-	public ConstantFunction(Object value)
+	/**
+	 * Creates a new constant
+	 * @param value The value associated to this constant
+	 */
+	public Constant(Object value)
 	{
+		super();
 		m_value = value;
 	}
 	
@@ -49,8 +57,8 @@ public class ConstantFunction extends Function
 	}
 
 	@Override
-	public int getInputArity() {
-		// TODO Auto-generated method stub
+	public int getInputArity()
+	{
 		return 0;
 	}
 
@@ -67,9 +75,9 @@ public class ConstantFunction extends Function
 	}
 
 	@Override
-	public ConstantFunction clone() 
+	public Constant clone() 
 	{
-		return new ConstantFunction(m_value);
+		return new Constant(m_value);
 	}
 
 	@Override

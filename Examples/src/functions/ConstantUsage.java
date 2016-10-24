@@ -17,24 +17,31 @@
  */
 package functions;
 
+import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.numbers.Addition;
 
 /**
- * Add two numbers with the {@link ca.uqac.lif.cep.numbers.Addition}
+ * Basic usage of the {@link ca.uqac.lif.cep.functions.Constant}
  * function.
  * @author Sylvain Hallé
  */
-public class AddNumbers
+public class ConstantUsage
 {
 	public static void main(String[] args)
 	{
 		// SNIP
-		Function add = Addition.instance;
-		Object[] inputs = new Object[]{2, 3};
-		Object values[] = add.evaluate(inputs);
-		float value = (Float) values[0]; // = 5
+		Function foo = new Constant("foo");
+		// A constant does not need any argument; we may pass
+		// an empty array, or simply null
+		Object values[] = foo.evaluate(null);
+		String s_value = (String) values[0]; // = "foo"
 		// SNIP
-		System.out.printf("The value is %f\n", value);
+		System.out.printf("The value of foo is %s\n", s_value);
+		// SNAP
+		Function one = new Constant(1);
+		values = one.evaluate(null);
+		int i_value = (Integer) values[0]; // = 1
+		// SNAP
+		System.out.printf("The value of one is %d\n", i_value);
 	}
 }

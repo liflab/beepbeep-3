@@ -25,7 +25,7 @@ import static ca.uqac.lif.cep.Connector.RIGHT;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.And;
-import ca.uqac.lif.cep.functions.ConstantFunction;
+import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
@@ -63,7 +63,7 @@ public class FilterConditionComposite
 				IsEven.instance,
 				new FunctionTree(IsGreaterThan.instance,
 						new ArgumentPlaceholder(0),
-						new ConstantFunction(4)));
+						new Constant(4)));
 		FunctionProcessor condition = new FunctionProcessor(tree);
 		// Connect its input to the second output of the fork
 		connect(fork, RIGHT, condition, INPUT);
