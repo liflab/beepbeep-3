@@ -18,31 +18,36 @@
 package queries;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.functions.Negation;
-import ca.uqac.lif.cep.numbers.AbsoluteValue;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.numbers.Addition;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * What happens when you pipe processors with non-matching event
- * types.
+ * Use a cumulative processor to compute the sum of all events
+ * received so far. 
  * 
  * @author Sylvain Hallé
  */
-public class IncorrectPiping 
+public class CumulativeSum 
 {
 	public static void main(String[] args) throws ConnectorException
 	{
 		// SNIP
 		QueueSource source = new QueueSource();
-		source.setEvents(new Integer[]{3});
-		Processor av = new FunctionProcessor(AbsoluteValue.instance);
-		Connector.connect(source, av);
-		Processor neg = new FunctionProcessor(Negation.instance);
-		Connector.connect(av, neg); // Will throw an exception
-		System.out.println("This line will not be reached");
+		source.setEvents(new Integer[]{1, 2, 3, 4, 5, 6});
+		CumulativeProcessor sum = new CumulativeProcessor(
+				new CumulativeFunction<Number>(Addition.instance));
+		Connector.connect(source, sum);
 		// SNIP
+		Pullable p = sum.getPullableOutput();
+		for (int i = 0; i < 5; i++)
+		{
+			float x = (Float) p.pull();
+			System.out.println("The event is: " + x);
+		}
 	}
+
 }

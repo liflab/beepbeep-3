@@ -19,30 +19,36 @@ package queries;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.Negation;
-import ca.uqac.lif.cep.numbers.AbsoluteValue;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * What happens when you pipe processors with non-matching event
- * types.
+ * Use the {@link ca.uqac.lif.cep.functions.FunctionProcessor} to apply
+ * a function to each input event.
  * 
  * @author Sylvain Hallé
  */
-public class IncorrectPiping 
+public class SimpleFunction 
 {
-	public static void main(String[] args) throws ConnectorException
+	/*
+	 * In this example, we apply the Negation function to a trace of
+	 * Boolean values.
+	 */
+	public static void main (String[] args) throws ConnectorException
 	{
 		// SNIP
 		QueueSource source = new QueueSource();
-		source.setEvents(new Integer[]{3});
-		Processor av = new FunctionProcessor(AbsoluteValue.instance);
-		Connector.connect(source, av);
-		Processor neg = new FunctionProcessor(Negation.instance);
-		Connector.connect(av, neg); // Will throw an exception
-		System.out.println("This line will not be reached");
+		source.setEvents(new Boolean[]{false, true, true, false, true});
+		FunctionProcessor not = new FunctionProcessor(Negation.instance);
+		Connector.connect(source, not);
+		Pullable p = not.getPullableOutput();
+		for (int i = 0; i < 5; i++)
+		{
+			float x = (Float) p.pull();
+			System.out.println("The event is: " + x);
+		}
 		// SNIP
 	}
 }
