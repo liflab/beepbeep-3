@@ -24,6 +24,6 @@ public class NumberGrammar extends Palette
 	public NumberGrammar()
 	{
 		super(NumberGrammar.class, "Numbers and arithmetic extension\n"
-				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi\n");
+				+ "(C) 2015-2016 Sylvain Hallé, Université du Québec à Chicoutimi\n");
 	}
 }

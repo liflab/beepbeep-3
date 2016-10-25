@@ -43,6 +43,7 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.EplGrammar;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.SmartFork;
@@ -132,6 +133,7 @@ public class Interpreter implements ParseNodeVisitor
 		extendGrammar(BootstrapGrammar.class);
 		m_parser.setStartRule("<S>");
 		extendGrammar(EplGrammar.class);
+		extendGrammar(NumberGrammar.class);
 	}
 
 	/**
@@ -442,6 +444,11 @@ public class Interpreter implements ParseNodeVisitor
 		String node_name = node.getToken();
 		Class<?> obj = m_associations.get(node_name);
 		Method m = getStaticMethod(obj, "build", Stack.class);
+		if (m == null)
+		{
+			throw new IllegalAccessException("Method build does not exist in class " + obj);
+		}
+		m.setAccessible(true);
 		try 
 		{
 			m.invoke(null, m_nodes);

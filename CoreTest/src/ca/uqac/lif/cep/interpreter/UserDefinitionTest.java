@@ -40,7 +40,7 @@ import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;
-import ca.uqac.lif.cep.tuples.EmlNumber;
+import ca.uqac.lif.cep.numbers.EmlNumber;
 import ca.uqac.lif.cep.tuples.EmlPuller;
 import ca.uqac.lif.cep.tuples.EmlPuller.EmlPullable;
 import ca.uqac.lif.cep.tuples.NamedTuple;

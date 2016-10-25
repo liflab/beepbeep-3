@@ -12,7 +12,7 @@
 
 # Definition of a processor
 
-<processor>          := <p_placeholder> | <userdef_proc> | <eml_expr> | <p_cumulative> ; 
+<processor>          := <p_placeholder> | <userdef_proc> | <p_cumulative> ; 
 <p_cumulative>       := COMBINE ( <processor> ) WITH <c_function> ;
 <p_placeholder>      := * ;
 

@@ -17,27 +17,26 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.GroupProcessor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.functions.Constant;
 
-public class EmlNumber extends SingleProcessor
+public class EmlNumber extends Constant
 {
-	protected final Number m_number;
-
-	public EmlNumber(Number n)
+	public EmlNumber(Object value)
 	{
-		super(0, 1);
-		m_number = n;
+		super(value);
 	}
-	
+
 	public int intValue()
 	{
-		return m_number.intValue();
+		return ((Number) evaluate(null)[0]).intValue();
+	}
+	
+	public float floatValue()
+	{
+		return ((Number) evaluate(null)[0]).floatValue();
 	}
 
 	public static void build(Stack<Object> stack) throws ConnectorException
@@ -47,25 +46,16 @@ public class EmlNumber extends SingleProcessor
 		{
 			stack.push(new EmlNumber((Number) o));
 		}
-		else if (o instanceof GroupProcessor)
+		else if (o instanceof String)
 		{
-			stack.push(o);
+			float f = Float.parseFloat((String) o);
+			stack.push(new EmlNumber(f));
 		}
-	}
-
-	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
-	{
-		Queue<Object[]> out = new ArrayDeque<Object[]>();
-		Object[] element = new EmlNumber[1];
-		element[0] = this;
-		out.add(element);
-		return out;
 	}
 	
 	@Override
 	public EmlNumber clone()
 	{
-		return new EmlNumber(m_number);
+		return new EmlNumber((Number) evaluate(null)[0]);
 	}
 }
