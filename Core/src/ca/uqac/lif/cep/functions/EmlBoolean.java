@@ -15,40 +15,57 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.functions;
 
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.util.CacheMap;
 
-public class NumberExpression extends ConstantExpression
+public abstract class EmlBoolean extends Constant
 {
-	protected final float m_number;
-	
-	public NumberExpression(float n)
+	public EmlBoolean(Object o)
 	{
-		super();
-		m_number = n;
+		super(parseBoolValue(o));
 	}
-
+	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		float n = EmlNumber.parseFloat(stack.pop());
-		stack.push(new NumberExpression(n));
-	}
-	
-	@Override
-	public String toString()
-	{
-		StringBuilder out = new StringBuilder();
-		out.append(m_number);
-		return out.toString();
+		Object o = stack.pop();
+		stack.push(EmlBoolean.toEmlBoolean(o));
 	}
 
-	@Override
-	public Object evaluate(CacheMap<Object> inputs) 
+	public static boolean toEmlBoolean(Object o)
 	{
-		return m_number;
+		return parseBoolValue(o);
+	}
+	
+	public static boolean parseBoolValue(Object o)
+	{
+		if (o instanceof Boolean)
+		{
+			return (Boolean) o;
+		}
+		else if (o instanceof String)
+		{
+			String s = (String) o;
+			if (s.compareToIgnoreCase("true") == 0 
+					|| s.compareToIgnoreCase("T") == 0
+					|| s.compareToIgnoreCase("1") == 0)
+			{
+				return true;
+			}
+			return false;
+		}
+		if (o instanceof Number)
+		{
+			Number n = (Number) o;
+			if (Math.abs(n.doubleValue()) < 0.00001)
+			{
+				return false;
+			}
+			return true;
+		}			
+		// When in doubt, return false
+		return false;
 	}
 }
