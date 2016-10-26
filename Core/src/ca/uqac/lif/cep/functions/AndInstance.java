@@ -15,56 +15,33 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.numbers;
+package ca.uqac.lif.cep.functions;
 
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.BinaryFunction;
-import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionTree;
 
-public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
+/**
+ * Instance of the AND function. This class exists only so that we can
+ * refer to it in an expression of the form:
+ * <pre>
+ * COMBINE (something) WITH CONJUNCTION
+ * </pre>
+ * 
+ * @author Sylvain Hallé
+ */
+class AndInstance extends And
 {
-	/**
-	 * A static instance of the function
-	 */
-	public static final transient IsLessThan instance = new IsLessThan();
+	public static final transient AndInstance instance = new AndInstance();
 	
-	private IsLessThan()
+	AndInstance()
 	{
-		super(Number.class, Number.class, Boolean.class);
+		super();
 	}
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // (
-		Function right = (Function) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // symbol
-		stack.pop(); // (
-		Function left = (Function) stack.pop();
-		stack.pop(); // )
-		FunctionTree ft = new FunctionTree(instance, left, right);
-		stack.push(ft);
+		stack.pop(); // the name
+		stack.push(instance);
 	}
-
-	@Override
-	public Boolean getValue(Number x, Number y) 
-	{
-		return x.floatValue() < y.floatValue();
-	}
-
-	@Override
-	public Boolean getStartValue() 
-	{
-		return false;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "<";
-	}
-
 }

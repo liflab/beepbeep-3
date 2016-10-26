@@ -8,3 +8,8 @@
 <fct_multiplication>,ca.uqac.lif.cep.numbers.Multiplication
 <fct_division>,ca.uqac.lif.cep.numbers.Division
 <fct_power>,ca.uqac.lif.cep.numbers.Power
+<fct_gt>,ca.uqac.lif.cep.numbers.IsGreaterThan
+<fct_gte>,ca.uqac.lif.cep.numbers.IsGreaterOrEqual
+<fct_lt>,ca.uqac.lif.cep.numbers.IsLessThan
+<fct_lte>,ca.uqac.lif.cep.numbers.IsLessOrEqual
+<fctn_addition>,ca.uqac.lif.cep.numbers.AdditionInstance

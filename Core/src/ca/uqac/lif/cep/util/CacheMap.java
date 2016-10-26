@@ -54,11 +54,16 @@ public final class CacheMap<T> implements Map<String,T>
 	
 	private Object[] m_values;
 	
-	public CacheMap(String[] names)
+	public CacheMap(String[] names, Object[] values)
 	{
 		super();
 		m_keys = names;
-		m_values = new Object[m_keys.length];
+		m_values = values;
+	}
+	
+	public CacheMap(String[] names)
+	{
+		this(names, new Object[names.length]);
 	}
 
 	@Override

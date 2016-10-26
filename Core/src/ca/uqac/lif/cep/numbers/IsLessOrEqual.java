@@ -24,14 +24,14 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
 
-public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
+public class IsLessOrEqual extends BinaryFunction<Number,Number,Boolean>
 {
 	/**
 	 * A static instance of the function
 	 */
-	public static final transient IsLessThan instance = new IsLessThan();
+	public static final transient IsLessOrEqual instance = new IsLessOrEqual();
 	
-	private IsLessThan()
+	private IsLessOrEqual()
 	{
 		super(Number.class, Number.class, Boolean.class);
 	}
@@ -52,7 +52,7 @@ public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
 	@Override
 	public Boolean getValue(Number x, Number y) 
 	{
-		return x.floatValue() < y.floatValue();
+		return x.floatValue() <= y.floatValue();
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
 	@Override
 	public String toString()
 	{
-		return "<";
+		return "≤";
 	}
 
 }

@@ -18,6 +18,9 @@
 package ca.uqac.lif.cep.functions;
 
 import java.util.Collection;
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector.ConnectorException;
 
 /**
  * Checks for the equality of various data types
@@ -52,5 +55,18 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 	public String toString()
 	{
 		return "=";
+	}
+	
+	public static void build(Stack<Object> stack) throws ConnectorException
+	{
+		stack.pop(); // (
+		Function right = (Function) stack.pop();
+		stack.pop(); // )
+		stack.pop(); // symbol
+		stack.pop(); // (
+		Function left = (Function) stack.pop();
+		stack.pop(); // )
+		FunctionTree ft = new FunctionTree(instance, left, right);
+		stack.push(ft);
 	}
 }

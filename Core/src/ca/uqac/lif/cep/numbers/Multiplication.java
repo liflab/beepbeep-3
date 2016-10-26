@@ -64,7 +64,7 @@ public class Multiplication extends BinaryFunction<Number,Number,Number>
 	@Override
 	public String toString()
 	{
-		return "*";
+		return "×";
 	}
 
 }

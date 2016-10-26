@@ -15,11 +15,22 @@
 # Processors
 
 <processor>          := <p_freeze> | <p_window> | <p_decimate> | <p_prefix> 
-                        | <p_cumulative> | <p_trim> | <p_slicer> | <var_name> ;
+                        | <p_cumulative> | <p_trim> | <p_slicer> | <p_collator> 
+                        | <var_name> ;
 <p_freeze>           := FREEZE ( <processor> ) ;
 <p_trim>             := TRIM <number> OF ( <processor> ) ;
 <p_window>           := APPLY ( <processor> ) ON ( <processor> ) ON A WINDOW OF <number> ;
 <p_decimate>         := EVERY <number> <number_suffix> OF ( <processor> ) ;
 <number_suffix>      := ST | ND | RD | TH ;
 <p_prefix>           := THE FIRST <number> OF ( <processor> ) ;
-<p_slicer>           := SLICE ( <processor> ) WITH ( <processor> ) ON <c_function> ;
+<p_slicer>           := SLICE ( <processor> ) WITH ( <processor> ) ON <fct_name> ;
+
+# Processor list
+
+<p_collator>         := WITH <proc_list> ;
+<proc_list>          := <proc_def> , <proc_list> | <proc_def> ;
+<proc_def>           := <proc_def_named> | <proc_def_anonymous> ;
+<proc_def_named>     := ( <processor> ) AS <var_name> ;
+<proc_def_anonymous> := ( <processor> ) ;
+<function>           := <map_placeholder> ;
+<map_placeholder>    := <var_name> ;

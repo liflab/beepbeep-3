@@ -76,7 +76,7 @@ public class SlicerTest extends BeepBeepUnitTest
 	{
 		Interpreter my_int = new Interpreter();
 		my_int.extendGrammar(NumberGrammar.class);
-		Object o = my_int.parseQuery("SLICE (1) WITH (1) ON ADDITION");
+		Object o = my_int.parseQuery("SLICE (CONSTANT (1)) WITH (*) ON ADDITION");
 		assertTrue(o instanceof Processor);
 	}
 	

@@ -17,46 +17,39 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Stack;
+import static org.junit.Assert.*;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
+import org.junit.Before;
+import org.junit.Test;
+
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
- * Implementation of the logical disjunction
+ * Unit tests for {@link Constant}
  * 
  * @author Sylvain Hallé
  */
-public class Or extends BinaryFunction<Boolean,Boolean,Boolean> 
+public class ConstantTest
 {
-	public static final transient Or instance = new Or();
+	protected Interpreter m_interpreter;
 	
-	Or()
+	@Before
+	public void setup()
 	{
-		super(Boolean.class, Boolean.class, Boolean.class);
-	}
-
-	@Override
-	public Boolean getValue(Boolean x, Boolean y)
-	{
-		return x.booleanValue() || y.booleanValue();
+		m_interpreter = new Interpreter();
 	}
 	
-	@Override
-	public String toString()
+	@Test
+	public void testConstantGrammar1() throws ParseException
 	{
-		return "∨";
-	}
-	
-	public static void build(Stack<Object> stack) throws ConnectorException
-	{
-		stack.pop(); // (
-		Function right = (Function) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // symbol
-		stack.pop(); // (
-		Function left = (Function) stack.pop();
-		stack.pop(); // )
-		FunctionTree ft = new FunctionTree(instance, left, right);
-		stack.push(ft);
+		Processor proc = (Processor) m_interpreter.parseQuery("CONSTANT (0)");
+		Pullable p = proc.getPullableOutput();
+		Object o = p.pull();
+		assertNotNull(o);
+		assertTrue(o instanceof Number);
+		assertEquals(0, ((Number) o).intValue());
 	}
 }

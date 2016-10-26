@@ -17,6 +17,10 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 /**
  * Implementation of the logical conjunction
  * 
@@ -40,6 +44,19 @@ public class And extends BinaryFunction<Boolean,Boolean,Boolean>
 	@Override
 	public String toString()
 	{
-		return "&";
+		return "∧";
+	}
+	
+	public static void build(Stack<Object> stack) throws ConnectorException
+	{
+		stack.pop(); // (
+		Function right = (Function) stack.pop();
+		stack.pop(); // )
+		stack.pop(); // symbol
+		stack.pop(); // (
+		Function left = (Function) stack.pop();
+		stack.pop(); // )
+		FunctionTree ft = new FunctionTree(instance, left, right);
+		stack.push(ft);
 	}
 }

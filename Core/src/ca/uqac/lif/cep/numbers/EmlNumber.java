@@ -22,21 +22,16 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.Constant;
 
+/**
+ * Used to create a constant out of a number
+ * @author Sylvain Hallé
+ *
+ */
 public class EmlNumber extends Constant
 {
-	public EmlNumber(Object value)
+	public EmlNumber()
 	{
-		super(value);
-	}
-
-	public int intValue()
-	{
-		return ((Number) evaluate(null)[0]).intValue();
-	}
-	
-	public float floatValue()
-	{
-		return ((Number) evaluate(null)[0]).floatValue();
+		super(null);
 	}
 
 	public static void build(Stack<Object> stack) throws ConnectorException
@@ -44,18 +39,17 @@ public class EmlNumber extends Constant
 		Object o = stack.pop();
 		if (o instanceof Number)
 		{
-			stack.push(new EmlNumber((Number) o));
+			stack.push(new Constant(o));
 		}
 		else if (o instanceof String)
 		{
 			float f = Float.parseFloat((String) o);
-			stack.push(new EmlNumber(f));
+			stack.push(new Constant(f));
 		}
-	}
-	
-	@Override
-	public EmlNumber clone()
-	{
-		return new EmlNumber((Number) evaluate(null)[0]);
+		else
+		{
+			// Put back on the stack
+			stack.push(o);
+		}
 	}
 }

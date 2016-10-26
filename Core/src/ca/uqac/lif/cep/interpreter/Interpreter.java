@@ -43,6 +43,7 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.functions.FunctionGrammar;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.EplGrammar;
 import ca.uqac.lif.cep.tmf.Passthrough;
@@ -133,6 +134,7 @@ public class Interpreter implements ParseNodeVisitor
 		extendGrammar(BootstrapGrammar.class);
 		m_parser.setStartRule("<S>");
 		extendGrammar(EplGrammar.class);
+		extendGrammar(FunctionGrammar.class);
 		extendGrammar(NumberGrammar.class);
 	}
 

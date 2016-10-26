@@ -8,3 +8,9 @@
 <p_slicer>,ca.uqac.lif.cep.tmf.Slicer
 <p_trim>,ca.uqac.lif.cep.tmf.Trim
 <p_window>,ca.uqac.lif.cep.tmf.Window
+<p_collator>,ca.uqac.lif.cep.tmf.Collator
+<proc_list>,ca.uqac.lif.cep.tmf.ProcessorExpressionList
+<proc_def>,ca.uqac.lif.cep.tmf.ProcessorExpression
+<proc_def_named>,ca.uqac.lif.cep.tmf.NamedProcessorExpression
+<proc_def_anonymous>,ca.uqac.lif.cep.tmf.AnonymousProcessorExpression
+<map_placeholder>,ca.uqac.lif.cep.tmf.MapPlaceholder

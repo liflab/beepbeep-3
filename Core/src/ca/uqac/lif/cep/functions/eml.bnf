@@ -1,0 +1,30 @@
+# -----------------------------------------
+# Grammar for BeepBeep 3; edit at your own risk!
+#
+# This is an EML (Event Manipulation Language) for data structures.
+#
+# This grammar works in tandem with the EPL (Event Processing
+# Language) grammar.
+# -----------------------------------------
+
+# Processors
+
+<processor>             := <fct_coll> | <fct_cp> | <cumulative> ;
+<fct_coll>              := APPLY ( <function> ) <p_collator> ;
+<fct_cp>                := CONSTANT ( <eml_number> ) | CONSTANT ( <string> ) ;
+<cumulative>            := COMBINE ( <processor> ) WITH <fct_name> ;
+
+# Functions
+
+<function>              := <fct_and> | <fct_or> | <fct_not> | <fct_eq> | <constant> ;
+<fct_and>               := ( <function> ) ∧ ( <function> ) ;
+<fct_or>                := ( <function> ) ∨ ( <function> ) ;
+<fct_not>               := ( <function> ) ¬ ( <function> ) ;
+<fct_eq>                := ( <function> ) = ( <function> ) ;
+<fct_name>              := <fctn_and> | <fctn_or> ;
+<constant>              := <eml_number> ;
+
+# Function names; only functions from T x T -> T need to have a name
+
+<fctn_and>              := CONJUNCTION ;
+<fctn_or>               := DISJUNCTION ;

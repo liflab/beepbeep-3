@@ -17,6 +17,10 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector.ConnectorException;
+
 /**
  * Implementation of the logical negation
  * 
@@ -40,6 +44,16 @@ public class Negation extends UnaryFunction<Boolean,Boolean>
 	@Override
 	public String toString()
 	{
-		return "!";
+		return "¬";
+	}
+	
+	public static void build(Stack<Object> stack) throws ConnectorException
+	{
+		stack.pop(); // (
+		Function right = (Function) stack.pop();
+		stack.pop(); // )
+		stack.pop(); // symbol
+		FunctionTree ft = new FunctionTree(instance, right);
+		stack.push(ft);
 	}
 }

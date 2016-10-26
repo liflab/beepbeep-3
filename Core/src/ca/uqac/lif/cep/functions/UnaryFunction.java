@@ -96,7 +96,7 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 	}
 	
 	@Override
-	public final Class<?> getOutputTypeFor(int index)
+	public Class<?> getOutputTypeFor(int index)
 	{
 		return m_outputType;
 	}

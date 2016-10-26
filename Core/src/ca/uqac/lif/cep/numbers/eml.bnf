@@ -9,15 +9,24 @@
 
 # Primitive types
 
-<eml_number>             := ^\d+;
+<eml_number>             := ^\d*\.?\d*;
 
 # Functions on numbers
 
 <function>               := <fct_addition> | <fct_subtraction> | <fct_division>
-                            | <fct_multiplication> | <fct_power>
-                            | <eml_number> ;
+                            | <fct_multiplication> | <fct_power> | <fct_gt>
+                            | <fct_gte> | <fct_lt> | <fct_lte> | <eml_number> ;
 <fct_addition>           := ( <function> ) + ( <function> ) ;
 <fct_subtraction>        := ( <function> ) - ( <function> ) ;
 <fct_division>           := ( <function> ) ÷ ( <function> ) ;
 <fct_multiplication>     := ( <function> ) × ( <function> ) ;
 <fct_power>              := ( <function> ) ^ ( <function> ) ;
+<fct_gte>                := ( <function> ) ≥ ( <function> ) ;
+<fct_lte>                := ( <function> ) ≤ ( <function> ) ;
+<fct_gt>                 := ( <function> ) \u003e ( <function> ) ;
+<fct_lt>                 := ( <function> ) \u003c ( <function> ) ;
+
+# Function names
+
+<fct_name>               := <fctn_addition> ;
+<fctn_addition>          := ADDITION ;

@@ -7,5 +7,5 @@
 # Language) grammar.
 # -----------------------------------------
 
-<c_combine>              := <eml_bag_union> ;
+<fct_name>               := <eml_bag_union> ;
 <eml_bag_union>          := BAG UNION ;

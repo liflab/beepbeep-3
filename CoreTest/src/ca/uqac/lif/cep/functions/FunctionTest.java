@@ -1,3 +1,20 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep.functions;
 
 import static org.junit.Assert.assertEquals;
@@ -12,7 +29,6 @@ import org.junit.Test;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.ContextPlaceholder;
@@ -22,6 +38,7 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.tmf.QueueSink;
 
 /**
@@ -219,10 +236,12 @@ public class FunctionTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGrammar() throws ConnectorException
+	public void testFunctionGrammar1() throws ParseException
 	{
-		Interpreter interp = new Interpreter();
-		interp.extendGrammar(DummyGrammarExtension.class);
+		Interpreter inter = new Interpreter();
+		inter.setDebugMode(true);
+		Object construct = inter.parseLanguage("1", "<function>");
+		assertTrue(construct instanceof Function);
 	}
 
 	public static class DummyUnaryFunction extends UnaryFunction<Integer,Integer>
@@ -271,13 +290,5 @@ public class FunctionTest extends BeepBeepUnitTest
 		{
 			return x.intValue() + y.intValue();
 		}
-	}
-	
-	public static class DummyGrammarExtension extends Palette
-	{
-		public DummyGrammarExtension()
-		{
-			super(DummyGrammarExtension.class, "");
-		}		
 	}
 }

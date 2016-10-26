@@ -64,8 +64,6 @@ public class Division extends BinaryFunction<Number,Number,Number>
 	@Override
 	public String toString()
 	{
-		return "/";
+		return "÷";
 	}
-
-
 }

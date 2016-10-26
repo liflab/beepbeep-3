@@ -26,12 +26,15 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.FunctionGrammar;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.HttpReader;
 import ca.uqac.lif.cep.io.StreamGrammar;
-import ca.uqac.lif.cep.numbers.EmlNumber;
+import ca.uqac.lif.cep.numbers.NumberCast;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.Freeze;
@@ -50,6 +53,7 @@ public class InterpreterExtensionTest extends BeepBeepUnitTest
 	public void setUp()
 	{
 		m_interpreter = new Interpreter();
+		m_interpreter.extendGrammar(FunctionGrammar.class);
 		m_interpreter.extendGrammar(NumberGrammar.class);
 		m_interpreter.extendGrammar(StreamGrammar.class);
 	}
@@ -57,23 +61,26 @@ public class InterpreterExtensionTest extends BeepBeepUnitTest
 	@Test
 	public void testExtensionNumber1() throws ParseException, ConnectorException
 	{
-		String expression = "0";
+		String expression = "CONSTANT (0)";
+		//m_interpreter.setDebugMode(true);
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
-		assertTrue(result instanceof EmlNumber);
-		assertEquals(0, ((EmlNumber) result).intValue());
+		assertTrue(result instanceof FunctionProcessor);
+		Pullable p = ((FunctionProcessor) result).getPullableOutput();
+		Object o = p.pull();
+		assertEquals(0, NumberCast.getNumber(o).intValue());
 	}
 	
 	@Test
 	public void testExtensionNumber2() throws ParseException, ConnectorException
 	{
-		String expression = "FREEZE (0)";
+		String expression = "FREEZE (CONSTANT (0))";
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof Freeze);
 		Pullable output = ((Freeze) result).getPullableOutput(0);
 		Object o = output.pullSoft();
-		assertTrue(o instanceof EmlNumber);
+		assertTrue(o instanceof Number);
 	}
 	
 	/*
@@ -85,7 +92,7 @@ public class InterpreterExtensionTest extends BeepBeepUnitTest
 	@Test
 	public void testExtensionNumber3() throws ParseException, ConnectorException
 	{
-		String expression = "APPLY (0) ON (0) ON A WINDOW OF 3";
+		String expression = "APPLY (CONSTANT (0)) ON (CONSTANT (0)) ON A WINDOW OF 3";
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof Window);
@@ -94,7 +101,7 @@ public class InterpreterExtensionTest extends BeepBeepUnitTest
 	@Test
 	public void testExtensionNumber4() throws ParseException, ConnectorException
 	{
-		String expression = "EVERY 2ND OF (0)";
+		String expression = "EVERY 2ND OF (CONSTANT (0))";
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof CountDecimate);
@@ -103,16 +110,26 @@ public class InterpreterExtensionTest extends BeepBeepUnitTest
 	@Test
 	public void testExtensionNumber5() throws ParseException, ConnectorException
 	{
-		String expression = "COMBINE (EVERY 2ND OF (0)) WITH ADDITION";
+		String expression = "COMBINE (EVERY 2ND OF (CONSTANT (1))) WITH ADDITION";
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof CumulativeProcessor);
+		Pullable p = ((Processor) result).getPullableOutput();
+		int i = 0;
+		i = ((Number) p.pull()).intValue();
+		assertEquals(1, i);
+		i = ((Number) p.pull()).intValue();
+		assertEquals(2, i);
+		i = ((Number) p.pull()).intValue();
+		assertEquals(3, i);
+		
 	}
 	
 	@Test
 	public void testExtensionIo1() throws ParseException, ConnectorException
 	{
 		String expression = "URL \"http://example.com\"";
+		//m_interpreter.setDebugMode(true);
 		Object result = m_interpreter.parseQuery(expression);
 		assertNotNull(result);
 		assertTrue(result instanceof HttpReader);

@@ -17,46 +17,17 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Stack;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Palette;
 
 /**
- * Implementation of the logical disjunction
- * 
+ * Palette object for the processor included in this package.
  * @author Sylvain Hallé
  */
-public class Or extends BinaryFunction<Boolean,Boolean,Boolean> 
+public class FunctionGrammar extends Palette
 {
-	public static final transient Or instance = new Or();
-	
-	Or()
+	public FunctionGrammar()
 	{
-		super(Boolean.class, Boolean.class, Boolean.class);
-	}
-
-	@Override
-	public Boolean getValue(Boolean x, Boolean y)
-	{
-		return x.booleanValue() || y.booleanValue();
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "∨";
-	}
-	
-	public static void build(Stack<Object> stack) throws ConnectorException
-	{
-		stack.pop(); // (
-		Function right = (Function) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // symbol
-		stack.pop(); // (
-		Function left = (Function) stack.pop();
-		stack.pop(); // )
-		FunctionTree ft = new FunctionTree(instance, left, right);
-		stack.push(ft);
+		super(FunctionGrammar.class, "Functions palette\n"
+				+ "(C) 2015-2016 Sylvain Hallé, Université du Québec à Chicoutimi\n");
 	}
 }

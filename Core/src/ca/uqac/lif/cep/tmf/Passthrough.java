@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  *
  */
 public class Passthrough extends SingleProcessor
-{
+{	
 	public Passthrough(int arity)
 	{
 		super(arity, arity);

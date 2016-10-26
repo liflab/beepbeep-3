@@ -17,17 +17,11 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 
-import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 
 /**
  * Applies a function to input events to produce output events. This 
@@ -72,46 +66,6 @@ public class FunctionProcessor extends SingleProcessor
 	{
 		FunctionProcessor out = new FunctionProcessor(m_function.clone(m_context));
 		return out;
-	}
-	
-	public static void build(Stack<Object> stack) throws ConnectorException, ConnectorException
-	{
-		// Principle: pop processors from the stack and count them,
-		// until we pop the Computable. The computable tells us how
-		// many processors we need to pop based on its input arity. This
-		// way, we can deal with prefix n-ary and infix binary functions
-		// at the same time.
-		List<Processor> inputs = new LinkedList<Processor>();
-		int num_popped = 0;
-		int arity = Function.s_maxInputArity;
-		Function c = null;
-		do
-		{
-			Object o = stack.pop();
-			if (o instanceof Processor)
-			{
-				num_popped++;
-				inputs.add((Processor) o);
-			}
-			else if (o instanceof Function)
-			{
-				c = (Function) o;
-				arity = c.getInputArity();
-			}
-			else
-			{
-				// This should not happen
-				assert false;
-			}
-		} while (num_popped < arity);
-		// Instantiate the processor and connect it to its input traces
-		FunctionProcessor out = new FunctionProcessor(c);
-		for (int i = 0; i < inputs.size(); i++)
-		{
-			Processor p = inputs.get(i);
-			Connector.connect(p, out, 0, i);
-		}
-		stack.push(out);
 	}
 	
 	@Override

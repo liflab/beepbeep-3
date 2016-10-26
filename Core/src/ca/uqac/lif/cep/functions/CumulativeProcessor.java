@@ -44,7 +44,7 @@ public class CumulativeProcessor extends FunctionProcessor
 		stack.pop(); // )
 		Processor p = Processor.liftProcessor(stack.pop());
 		stack.pop(); // (
-		stack.pop(); // CUMULATE
+		stack.pop(); // COMBINE
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		CumulativeFunction<?> func = new CumulativeFunction(com);
 		CumulativeProcessor out = new CumulativeProcessor(func);

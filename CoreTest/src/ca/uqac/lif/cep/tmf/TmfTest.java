@@ -48,13 +48,12 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.cep.tmf.Trim;
 import ca.uqac.lif.cep.tmf.Window;
-import ca.uqac.lif.cep.tuples.TupleGrammar;
 
 /**
- * Unit tests for classes of the epl package.
+ * Unit tests for classes of the TMF package.
  * @author Sylvain Hallé
  */
-public class EplTest extends BeepBeepUnitTest 
+public class TmfTest extends BeepBeepUnitTest 
 {
 	protected Interpreter m_interpreter;
 
@@ -64,7 +63,6 @@ public class EplTest extends BeepBeepUnitTest
 		m_interpreter = new Interpreter();
 		m_interpreter.extendGrammar(NumberGrammar.class);
 		m_interpreter.extendGrammar(StreamGrammar.class);
-		m_interpreter.extendGrammar(TupleGrammar.class);
 	}
 
 	@Test
@@ -94,7 +92,10 @@ public class EplTest extends BeepBeepUnitTest
 	@Test
 	public void testTrimGrammar() throws ParseException, ConnectorException
 	{
-		String s = "TRIM 3 OF (SELECT 1 FROM (1))";
+		QueueSource qs = new QueueSource();
+		qs.setEvents(new Integer[]{0, 1, 2, 3, 4, 5, 6});
+		m_interpreter.addPlaceholder("@foo", "processor", qs);
+		String s = "TRIM 3 OF (@foo)";
 		Object q = m_interpreter.parseQuery(s);
 		assertNotNull(q);
 		assertTrue(q instanceof Trim);
@@ -174,7 +175,10 @@ public class EplTest extends BeepBeepUnitTest
 	@Test
 	public void testCountDecimateGrammar() throws ParseException, ConnectorException
 	{
-		String s = "EVERY 3RD OF (SELECT 1 FROM (1))";
+		QueueSource qs = new QueueSource();
+		qs.addEvent(1);
+		m_interpreter.addPlaceholder("@foo", "processor", qs);
+		String s = "EVERY 3RD OF (@foo)";
 		Object q = m_interpreter.parseQuery(s);
 		assertNotNull(q);
 		assertTrue(q instanceof CountDecimate);
@@ -206,7 +210,7 @@ public class EplTest extends BeepBeepUnitTest
 	@Test
 	public void testFreezeGrammar() throws ParseException, ConnectorException
 	{
-		String s = "FREEZE (SELECT 1 FROM (1))";
+		String s = "FREEZE (CONSTANT (1))";
 		Object q = m_interpreter.parseQuery(s);
 		assertNotNull(q);
 		assertTrue(q instanceof Freeze); 
@@ -241,7 +245,7 @@ public class EplTest extends BeepBeepUnitTest
 	@Test
 	public void testPrefixGrammar() throws ParseException, ConnectorException
 	{
-		String s = "THE FIRST 3 OF (SELECT 1 FROM (1))";
+		String s = "THE FIRST 3 OF (CONSTANT (1))";
 		Object q = m_interpreter.parseQuery(s);
 		assertNotNull(q);
 		assertTrue(q instanceof Prefix);
@@ -407,7 +411,7 @@ public class EplTest extends BeepBeepUnitTest
 	@Test
 	public void testWindowGrammar() throws ParseException, ConnectorException
 	{
-		String s = "APPLY (SELECT 1 FROM (1)) ON (SELECT 1 FROM (1)) ON A WINDOW OF 3";
+		String s = "APPLY (CONSTANT (1)) ON (CONSTANT (1)) ON A WINDOW OF 3";
 		Object q = m_interpreter.parseQuery(s);
 		assertNotNull(q);
 		assertTrue(q instanceof Window);

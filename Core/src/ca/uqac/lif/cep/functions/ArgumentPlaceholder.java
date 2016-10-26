@@ -80,7 +80,7 @@ public class ArgumentPlaceholder extends Function
 	public Object[] evaluate(Object[] inputs, Context context)
 	{
 		Object[] out = new Object[1];
-		out[0] = inputs[m_index];;
+		out[0] = inputs[m_index];
 		return out;
 	}
 	

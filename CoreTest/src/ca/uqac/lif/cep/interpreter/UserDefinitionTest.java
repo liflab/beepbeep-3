@@ -35,18 +35,11 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
-import ca.uqac.lif.cep.io.StreamReader;
+import ca.uqac.lif.cep.numbers.NumberCast;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;
-import ca.uqac.lif.cep.numbers.EmlNumber;
-import ca.uqac.lif.cep.tuples.EmlPuller;
-import ca.uqac.lif.cep.tuples.EmlPuller.EmlPullable;
-import ca.uqac.lif.cep.tuples.NamedTuple;
-import ca.uqac.lif.cep.tuples.Select;
-import ca.uqac.lif.cep.tuples.TupleFeeder;
-import ca.uqac.lif.cep.tuples.TupleGrammar;
 
 /**
  * Unit tests for ESQL user definitions
@@ -63,7 +56,6 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		m_interpreter = new Interpreter();
 		m_interpreter.extendGrammar(NumberGrammar.class);
 		m_interpreter.extendGrammar(StreamGrammar.class);
-		m_interpreter.extendGrammar(TupleGrammar.class);
 	}
 	
 	@Test
@@ -87,23 +79,6 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPlaceholder2() throws ParseException, ConnectorException
-	{
-		String expression = "SELECT x FROM (@P)";
-		QueueSource qs = new QueueSource(1);
-		qs.addEvent(1);
-		m_interpreter.addPlaceholder("@P", "processor", qs);
-		Object o = m_interpreter.parseQuery(expression);
-		assertNotNull(o);
-		assertTrue(o instanceof Select);	
-		Select s = (Select) o;
-		Pullable p = s.getPullableOutput(0);
-		Number n = (Number) p.pull();
-		assertNotNull(n);
-		assertEquals(1, n.intValue());
-	}
-	
-	@Test
 	public void testPlaceholder3() throws ParseException, ConnectorException
 	{
 		String expression = "abc IS THE processor @P";
@@ -111,10 +86,10 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		qs.addEvent(1);
 		m_interpreter.executeQuery(expression);
 		m_interpreter.addPlaceholder("@P", "processor", qs);
-		Object o = m_interpreter.parseQuery("SELECT x FROM (abc)");
+		Object o = m_interpreter.parseQuery("abc");
 		assertNotNull(o);
-		assertTrue(o instanceof Select);	
-		Select s = (Select) o;
+		assertTrue(o instanceof Processor);	
+		Processor s = (Processor) o;
 		Pullable p = s.getPullableOutput(0);
 		Number n = (Number) p.pull();
 		assertNotNull(n);
@@ -122,26 +97,19 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPlaceholder4() throws ParseException, ConnectorException
-	{
-		StreamReader sr = new StreamReader();
-		m_interpreter.addPlaceholder("@T", "p_reader", sr);
-		Object o = m_interpreter.parseQuery("THE TUPLES OF @T");
-		assertNotNull(o);
-		assertTrue(o instanceof TupleFeeder);	
-	}
-	
-	@Test
 	public void testDefinition1() throws ParseException, ConnectorException
 	{
-		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION";
+		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor CONSTANT (1)";
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof UserDefinition);
 		UserDefinition user_def = (UserDefinition) o;
 		user_def.addToInterpreter(m_interpreter);
+		QueueSource qs = new QueueSource();
+		qs.addEvent(10);
+		m_interpreter.addPlaceholder("@foo", "processor", qs);
 		// Now, parse an expression that uses this definition
-		String user_expression = "THE COUNT OF (0)";
+		String user_expression = "THE COUNT OF (@foo)";
 		//m_interpreter.setDebugMode(true);
 		Object user_stmt = m_interpreter.parseQuery(user_expression);
 		assertNotNull(user_stmt);
@@ -155,10 +123,10 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		assertEquals(1, num.intValue());
 		// Pull another
 		num = (Number) p.pullSoft();
-		assertEquals(2, num.intValue());
+		assertEquals(1, num.intValue());
 		// Pull another
 		num = (Number) p.pullSoft();
-		assertEquals(3, num.intValue());
+		assertEquals(1, num.intValue());
 	}
 	
 	@Test
@@ -171,8 +139,8 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		UserDefinition user_def = (UserDefinition) o;
 		user_def.addToInterpreter(m_interpreter);
 		// Now, parse an expression that uses this definition
-		String user_expression = "PI";
-		Object user_stmt = m_interpreter.parseQueryLifted(user_expression);
+		String user_expression = "CONSTANT (PI)";
+		Object user_stmt = m_interpreter.parseQuery(user_expression);
 		assertTrue(user_stmt instanceof Processor);
 		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
 		// Pull a tuple from the resulting processor
@@ -187,81 +155,30 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testDefinition3() throws ParseException, ConnectorException
-	{
-		UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("E IS THE eml_number 2");
-		assertNotNull(e_def);
-		e_def.addToInterpreter(m_interpreter);
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT E FROM (1)");
-		assertNotNull(proc);
-		Pullable p = proc.getPullableOutput(0);
-		Number number = (Number) p.pullSoft();
-		assertEquals(2, number.intValue());
-	}
-	
-	@Test
-	public void testDefinition4() throws ParseException, ConnectorException
-	{
-		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION");
-			e_def.addToInterpreter(m_interpreter);
-		}
-		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE INVERSE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM ((SELECT x FROM (@P)) AS T, (THE COUNT OF (@P)) AS U)");
-			e_def.addToInterpreter(m_interpreter);
-		}
-		Processor proc = (Processor) m_interpreter.parseQuery("THE INVERSE OF (1)");
-		assertNotNull(proc);
-		Pullable p = proc.getPullableOutput(0);
-		Number number = (Number) p.pullSoft();
-		assertEquals(1, number.floatValue(), 0.01);
-		number = (Number) p.pullSoft();
-		assertEquals(0.5, number.floatValue(), 0.01);
-		number = (Number) p.pullSoft();
-		assertEquals(0.33, number.floatValue(), 0.01);
-	}
-	
-	@Test
 	public void testDefinition5() throws ParseException, ConnectorException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT 1 FROM (@P)) WITH ADDITION");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (CONSTANT (1)) WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor SELECT (T.x) ÷ (U.x) FROM ((COMBINE (SELECT x FROM (@P)) WITH ADDITION) AS T, (THE COUNT OF (@P)) AS U)");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor APPLY (($T) ÷ ($U)) WITH (COMBINE (@P) WITH ADDITION) AS $T, (THE COUNT OF (@P)) AS $U");
 			e_def.addToInterpreter(m_interpreter);
 		}
-		Processor proc = (Processor) m_interpreter.parseQuery("THE AVERAGE OF (SELECT a FROM (THE TUPLES OF FILE \"tuples3.csv\"))");
+		QueueSource qs = new QueueSource();
+		qs.setEvents(new Integer[]{0, 1, 2, 3, 4});
+		m_interpreter.addPlaceholder("@foo", "processor", qs);
+		Processor proc = (Processor) m_interpreter.parseQuery("THE AVERAGE OF (@foo)");
 		assertNotNull(proc);
 		Pullable p = proc.getPullableOutput(0);
 		Number number = (Number) p.pullSoft();
 		assertEquals(0, number.floatValue(), 0.01);
 		number = (Number) p.pullSoft();
-		//assertEquals(1, number.floatValue(), 0.01);
+		assertEquals(0.5, number.floatValue(), 0.01);
 		number = (Number) p.pullSoft();
-		//assertEquals(1, number.floatValue(), 0.01);
+		assertEquals(1, number.floatValue(), 0.01);
 		number = (Number) p.pullSoft();
 		//assertEquals(2, number.floatValue(), 0.01);
-	}
-	
-	@Test
-	public void testDefinition6() throws ParseException, ConnectorException
-	{
-		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: FOO ( @P ) IS THE processor SELECT T.a AS x, U.a AS y FROM (@P AS T, @P AS U)");
-			e_def.addToInterpreter(m_interpreter);
-		}
-		Processor proc = (Processor) m_interpreter.parseQuery("FOO (SELECT a FROM (THE TUPLES OF FILE \"tuples3.csv\"))");
-		assertNotNull(proc);
-		Pullable p = proc.getPullableOutput(0);
-		assertNotNull(p);
-		NamedTuple tuple = (NamedTuple) p.pullSoft();
-		assertEquals(0, tuple.get("x"));
-		assertEquals(0, tuple.get("y"));
-		tuple = (NamedTuple) p.pullSoft();
-		assertEquals(6, tuple.get("x"));
-		assertEquals(6, tuple.get("y"));
 	}
 	
 	@Test
@@ -277,12 +194,12 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		Processor proc = (Processor) m_interpreter.parseQuery("APPLY (THE SUM OF (*)) ON (@T) ON A WINDOW OF 5");
 		assertNotNull(proc);
 		assertTrue(proc instanceof Window);
-		EmlPullable p = EmlPuller.getEmlPullable(proc, 0);
+		Pullable p = proc.getPullableOutput();
 		assertNotNull(p);
 		Object o = p.pull();
 		assertNotNull(o);
 		assertTrue(o instanceof Number);
-		float n = EmlNumber.parseFloat(o);
+		float n = NumberCast.getNumber(o).floatValue();
 		assertEquals(5, n, 0.01);
 	}
 	
