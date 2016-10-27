@@ -19,11 +19,11 @@ package ca.uqac.lif.cep.io;
 
 import ca.uqac.lif.cep.Palette;
 
-public class StreamGrammar extends Palette
+public class PackageExtension extends Palette
 {
-	public StreamGrammar()
+	public PackageExtension()
 	{
-		super(StreamGrammar.class, "I/O streams extension\n"
+		super(PackageExtension.class, "I/O streams extension\n"
 				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi\n");
 	}
 }

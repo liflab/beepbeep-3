@@ -34,9 +34,7 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
-import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.numbers.NumberCast;
-import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;
@@ -54,8 +52,6 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void setUp()
 	{
 		m_interpreter = new Interpreter();
-		m_interpreter.extendGrammar(NumberGrammar.class);
-		m_interpreter.extendGrammar(StreamGrammar.class);
 	}
 	
 	@Test

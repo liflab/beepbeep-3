@@ -36,7 +36,7 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.numbers.NumberGrammar;
+import ca.uqac.lif.cep.numbers.PackageExtension;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.Slicer;
 
@@ -75,7 +75,7 @@ public class SlicerTest extends BeepBeepUnitTest
 	public void testSlicerParse() throws ParseException, ConnectorException
 	{
 		Interpreter my_int = new Interpreter();
-		my_int.extendGrammar(NumberGrammar.class);
+		my_int.extendGrammar(PackageExtension.class);
 		Object o = my_int.parseQuery("SLICE (CONSTANT (1)) WITH (*) ON ADDITION");
 		assertTrue(o instanceof Processor);
 	}

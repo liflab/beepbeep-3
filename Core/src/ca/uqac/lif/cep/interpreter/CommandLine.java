@@ -24,7 +24,7 @@ import java.util.Scanner;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
-import ca.uqac.lif.cep.io.StreamGrammar;
+import ca.uqac.lif.cep.io.PackageExtension;
 import ca.uqac.lif.cep.tmf.Sink;
 import ca.uqac.lif.cep.util.AnsiPrinter;
 import ca.uqac.lif.cep.util.AnsiPrinter.Color;
@@ -44,7 +44,7 @@ public class CommandLine
 		// Load extensions for the interpreter
 		{
 			//interpreter.extendGrammar(new TupleGrammar());
-			interpreter.extendGrammar(new StreamGrammar());
+			interpreter.extendGrammar(new PackageExtension());
 		}
 		boolean exit = false;
 		stdout.setForegroundColor(Color.LIGHT_GRAY);

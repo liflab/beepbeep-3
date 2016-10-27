@@ -481,4 +481,15 @@ public abstract class Processor implements Cloneable, Contextualizable
 	{
 		return Variant.class;
 	}
+	
+	/**
+	 * Gets an instance of an empty event queue. It is recommended that
+	 * processors call this method to get a queue instance, rather than
+	 * instantiate their own manually.
+	 * @return The queue
+	 */
+	public static Queue<Object[]> getEmptyQueue()
+	{
+		return new ArrayDeque<Object[]>();
+	}
 }

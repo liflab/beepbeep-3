@@ -43,9 +43,6 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.functions.FunctionGrammar;
-import ca.uqac.lif.cep.numbers.NumberGrammar;
-import ca.uqac.lif.cep.tmf.EplGrammar;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.SmartFork;
 import ca.uqac.lif.cep.util.PackageFileReader;
@@ -123,6 +120,7 @@ public class Interpreter implements ParseNodeVisitor
 	public Interpreter()
 	{
 		super();
+		// Initialize empty containers
 		m_parser = initializeParser();
 		m_nodes = new GroupStack<Object>();
 		m_associations = new HashMap<String, Class<?>>();
@@ -131,11 +129,15 @@ public class Interpreter implements ParseNodeVisitor
 		m_symbolDefinitions = new HashMap<String, Object>();
 		m_processorForks = new HashMap<String, SmartFork>();
 		m_lastExceptions = new HashSet<Exception>();
+		// Load boostrap grammar
 		extendGrammar(BootstrapGrammar.class);
 		m_parser.setStartRule("<S>");
-		extendGrammar(EplGrammar.class);
-		extendGrammar(FunctionGrammar.class);
-		extendGrammar(NumberGrammar.class);
+		// Load built-in extensions
+		extendGrammar(ca.uqac.lif.cep.tmf.PackageExtension.class);
+		extendGrammar(ca.uqac.lif.cep.functions.PackageExtension.class);
+		extendGrammar(ca.uqac.lif.cep.numbers.PackageExtension.class);
+		extendGrammar(ca.uqac.lif.cep.io.PackageExtension.class);
+		//extendGrammar(ca.uqac.lif.cep.sets.PackageExtension.class);
 	}
 
 	/**
@@ -271,7 +273,7 @@ public class Interpreter implements ParseNodeVisitor
 		try
 		{
 			BnfRule rule = BnfRule.parseRule("<" + non_terminal + "> := " + symbol_name);
-			m_parser.addRule(rule);
+			m_parser.addRule(0, rule);
 		}
 		catch (InvalidRuleException e)
 		{
@@ -297,17 +299,6 @@ public class Interpreter implements ParseNodeVisitor
 	protected BnfParser initializeParser()
 	{
 		BnfParser parser = new BnfParser();
-		/*String grammar = null;
-		try
-		{
-			grammar = getGrammarString();
-			parser.setGrammar(grammar);
-		} 
-		catch (InvalidGrammarException e)
-		{
-			e.printStackTrace();
-		}*/
-		//parser.setDebugMode(true);
 		return parser;
 	}
 

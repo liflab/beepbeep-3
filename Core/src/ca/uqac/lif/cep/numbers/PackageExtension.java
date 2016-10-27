@@ -15,20 +15,15 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tmf;
+package ca.uqac.lif.cep.numbers;
 
 import ca.uqac.lif.cep.Palette;
 
-/**
- * Palette object for the processors defined in this package 
- * @author Sylvain Hallé
- *
- */
-public class EplGrammar extends Palette
+public class PackageExtension extends Palette
 {
-	public EplGrammar()
+	public PackageExtension()
 	{
-		super(EplGrammar.class, "EPL extension\n"
-				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi");
-	}	
+		super(PackageExtension.class, "Numbers and arithmetic extension\n"
+				+ "(C) 2015-2016 Sylvain Hallé, Université du Québec à Chicoutimi\n");
+	}
 }

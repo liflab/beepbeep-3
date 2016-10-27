@@ -35,8 +35,6 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
-import ca.uqac.lif.cep.io.StreamGrammar;
-import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Freeze;
@@ -61,8 +59,6 @@ public class TmfTest extends BeepBeepUnitTest
 	public void setUp()
 	{
 		m_interpreter = new Interpreter();
-		m_interpreter.extendGrammar(NumberGrammar.class);
-		m_interpreter.extendGrammar(StreamGrammar.class);
 	}
 
 	@Test

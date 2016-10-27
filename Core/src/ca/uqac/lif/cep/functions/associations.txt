@@ -11,3 +11,4 @@
 <fct_eq>,ca.uqac.lif.cep.functions.Equals
 <fctn_and>,ca.uqac.lif.cep.functions.AndInstance
 <fctn_or>,ca.uqac.lif.cep.functions.OrInstance
+<eml_boolean>,ca.uqac.lif.cep.functions.EmlBoolean

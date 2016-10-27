@@ -23,11 +23,11 @@ import ca.uqac.lif.cep.Palette;
  * Palette object for the processor included in this package.
  * @author Sylvain Hallé
  */
-public class FunctionGrammar extends Palette
+public class PackageExtension extends Palette
 {
-	public FunctionGrammar()
+	public PackageExtension()
 	{
-		super(FunctionGrammar.class, "Functions palette\n"
+		super(PackageExtension.class, "Functions palette\n"
 				+ "(C) 2015-2016 Sylvain Hallé, Université du Québec à Chicoutimi\n");
 	}
 }

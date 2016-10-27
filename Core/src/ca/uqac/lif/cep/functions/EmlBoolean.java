@@ -21,7 +21,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 
-public abstract class EmlBoolean extends Constant
+public class EmlBoolean extends Constant
 {
 	public EmlBoolean(Object o)
 	{
@@ -31,7 +31,7 @@ public abstract class EmlBoolean extends Constant
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o = stack.pop();
-		stack.push(EmlBoolean.toEmlBoolean(o));
+		stack.push(new EmlBoolean(o));
 	}
 
 	public static boolean toEmlBoolean(Object o)

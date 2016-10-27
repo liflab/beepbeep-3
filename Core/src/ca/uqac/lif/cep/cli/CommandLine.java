@@ -26,8 +26,6 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.interpreter.UserDefinition;
-import ca.uqac.lif.cep.io.StreamGrammar;
-import ca.uqac.lif.cep.tmf.EplGrammar;
 import ca.uqac.lif.cep.tmf.Sink;
 import ca.uqac.lif.cep.util.AnsiPrinter;
 import ca.uqac.lif.cep.util.AnsiPrinter.Color;
@@ -44,13 +42,8 @@ public class CommandLine
 		Scanner scanner = new Scanner(System.in);
 		//	stdout.disableColors();
 		Interpreter interpreter = new Interpreter();
-		// Load extensions for the interpreter
-		{
-			interpreter.extendGrammar(EplGrammar.class);
-			interpreter.extendGrammar(CliGrammar.class);
-			//interpreter.extendGrammar(TupleGrammar.class);
-			interpreter.extendGrammar(StreamGrammar.class);
-		}
+		// Load the CLI extension for the interpreter
+		interpreter.extendGrammar(CliGrammar.class);
 		boolean exit = false;
 		stdout.setForegroundColor(Color.LIGHT_GRAY);
 		stdout.println("BeepBeep 3 - A versatile event stream processor");
