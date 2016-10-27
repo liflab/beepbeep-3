@@ -24,6 +24,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
 
+/**
+ * Computes the sum of its arguments
+ * @author Sylvain Hallé
+ */
 public class Addition extends BinaryFunction<Number,Number,Number>
 {
 	/**

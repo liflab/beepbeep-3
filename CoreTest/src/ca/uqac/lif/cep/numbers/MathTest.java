@@ -17,8 +17,7 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -34,6 +33,8 @@ import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -327,6 +328,14 @@ public class MathTest extends BeepBeepUnitTest
 		sink.pullHard();
 		recv = (Number) sink.remove()[0]; // 0+6=6
 		assertEquals(6, recv.intValue());
+	}
+	
+	@Test
+	public void testNumberCastGrammar() throws ParseException
+	{
+		Interpreter my_int = Interpreter.newInterpreter();
+		Object o = my_int.parseLanguage("(0) INTO A NUMBER", "<function>");
+		assertNotNull(o);
 	}
 	
 	public static class Sum extends CumulativeProcessor

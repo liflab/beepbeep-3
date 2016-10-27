@@ -17,32 +17,27 @@
  */
 package queries;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.functions.Negation;
-import ca.uqac.lif.cep.numbers.AbsoluteValue;
-import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.interpreter.Interpreter;
 
 /**
- * What happens when you pipe processors with non-matching event
- * types.
+ * Create a constant stream of events with the
+ * <code>CONSTANT</code> keyword.
  * 
  * @author Sylvain Hallé
  */
-public class IncorrectPiping 
+public class ConstantProcessor 
 {
-	public static void main(String[] args) throws ConnectorException
+	public static void main(String[] args)
 	{
 		// SNIP
-		QueueSource source = new QueueSource();
-		source.setEvents(new Integer[]{3});
-		Processor av = new FunctionProcessor(AbsoluteValue.instance);
-		Connector.connect(source, av);
-		Processor neg = new FunctionProcessor(Negation.instance);
-		Connector.connect(av, neg); // Will throw an exception
-		System.out.println("This line will not be reached");
+		Interpreter my_int = Interpreter.newInterpreter();
+		Pullable p = my_int.executeQuery("CONSTANT (1)");
+		for (int i = 0; i < 10; i++ )
+		{
+			Object o = p.pull();
+			System.out.printf("The event is: %s\n", o);
+		}
 		// SNIP
 	}
 }

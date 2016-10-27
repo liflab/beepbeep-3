@@ -17,7 +17,7 @@
  */
 
 /**
- * Some examples of ESQL queries.
+ * Some examples of queries processors you can write in BeepBeep 3.
  * @author Sylvain Hallé
  */
-package queries;
+package pipes;

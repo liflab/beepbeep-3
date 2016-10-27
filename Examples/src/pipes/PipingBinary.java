@@ -15,37 +15,37 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package queries;
+package pipes;
 
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.numbers.Addition;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * Pull events from the
- * {@link ca.uqac.lif.cep.tmf.QueueSource} processor. 
+ * Pipe processors together using the {@link ca.uqac.lif.cep.Connector}
+ * class.
  * 
  * @author Sylvain Hallé
  */
-public class QueueSourceUsage
+public class PipingBinary 
 {
-	public static void main(String[] args) 
+	public static void main (String[] args) throws ConnectorException
 	{
 		// SNIP
-		// Create an empty queue source
-		QueueSource source = new QueueSource();
-		// Tell the source what events to output by giving it an array;
-		// in this case, we output the first powers of 2
-		source.setEvents(new Integer[]{1, 2, 4, 8, 16, 32});
-		// Get a pullable to the source
-		Pullable p = source.getPullableOutput();
-		// Pull 8 events from the source. The queue source loops through
-		// its array of events; hence after reaching the last (32), it
-		// will restart from the beginning of its list.
-		for (int i = 0; i < 8; i++)
+		QueueSource source1 = new QueueSource();
+		source1.setEvents(new Integer[]{2, 7, 1, 8, 3});
+		QueueSource source2 = new QueueSource();
+		source2.setEvents(new Integer[]{3, 1, 4, 1, 6});
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		Connector.connect(source1, 0, add, 0);
+		Connector.connect(source2, 0, add, 1);
+		Pullable p = add.getPullableOutput();
+		for (int i = 0; i < 5; i++)
 		{
-			// Method pull() returns an Object, hence we must manually cast 
-			// it as an integer (this is indeed what we get)
-			int x = (Integer) p.pull();
+			float x = (Float) p.pull();
 			System.out.println("The event is: " + x);
 		}
 		// SNIP

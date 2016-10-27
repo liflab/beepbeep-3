@@ -17,34 +17,35 @@
  */
 package queries;
 
-import java.io.InputStream;
-
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.io.LineReader;
+import ca.uqac.lif.cep.interpreter.Interpreter;
 
 /**
- * Read an input stream from a text file line by line and show the output.
- *  
+ * Use the <code>COMBINE</code> keyword to apply a cumulative
+ * function to a stream of events.
+ * 
  * @author Sylvain Hallé
  */
-public class FileReader
+public class Combine 
 {
 	public static void main(String[] args)
 	{
-		// Get an input stream on some resource. Here we read a file
-		// that resides with the source code by using the getResourceAsStream()
-		// method
-		InputStream stream = FileReader.class.getResourceAsStream("numbers.txt");
-		// Give this stream to a LineReader processor
-		LineReader reader = new LineReader(stream);
-		reader.addCrlf(false);
-		// Get a reference to the output pullable of the LineReader
-		Pullable p = reader.getPullableOutput();
-		// We exploit the fact that p can be used like an iterator to
-		// write the loop as follows:
-		for (Object o : p)
+		// SNIP
+		Interpreter my_int = Interpreter.newInterpreter();
+		Pullable p = my_int.executeQuery("COMBINE (CONSTANT (2)) WITH ADDITION");
+		for (int i = 0; i < 5; i++ )
 		{
-			System.out.printf("The event is %s\n", o);
+			Object o = p.pull();
+			System.out.printf("The event is: %s\n", o);
+		}
+		// SNIP
+		System.out.println("-----");
+		// Just for fun, let's try the same thing with multiplication
+		p = my_int.executeQuery("COMBINE (CONSTANT (2)) WITH MULTIPLICATION");
+		for (int i = 0; i < 5; i++ )
+		{
+			Object o = p.pull();
+			System.out.printf("The event is: %s\n", o);
 		}
 	}
 }

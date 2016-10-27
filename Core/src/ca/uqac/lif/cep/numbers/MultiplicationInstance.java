@@ -20,54 +20,28 @@ package ca.uqac.lif.cep.numbers;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.BinaryFunction;
-import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionTree;
 
 /**
- * Computes the quotient of its arguments
+ * Instance of the multiplication function. This class exists only so that we can
+ * refer to it in an expression of the form:
+ * <pre>
+ * COMBINE (something) WITH MULTIPLICATION
+ * </pre>
+ * 
  * @author Sylvain Hallé
  */
-public class Division extends BinaryFunction<Number,Number,Number>
+class MultiplicationInstance extends Multiplication
 {
-	/**
-	 * Static reference to a single instance of the function
-	 */
-	public static final transient Division instance = new Division();
+	public static final transient MultiplicationInstance instance = new MultiplicationInstance();
 	
-	private Division()
+	MultiplicationInstance()
 	{
-		super(Number.class, Number.class, Number.class);
+		super();
 	}
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // (
-		Function right = (Function) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // symbol
-		stack.pop(); // (
-		Function left = (Function) stack.pop();
-		stack.pop(); // )
-		FunctionTree ft = new FunctionTree(instance, left, right);
-		stack.push(ft);
-	}
-
-	@Override
-	public Number getValue(Number x, Number y) 
-	{
-		return x.floatValue() / y.floatValue();
-	}
-
-	@Override
-	public Number getStartValue() 
-	{
-		return 1;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "÷";
+		stack.pop(); // the name
+		stack.push(instance);
 	}
 }

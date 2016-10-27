@@ -15,61 +15,39 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package queries;
+package pipes;
 
-import java.util.Queue;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * Pipe processors together using the {@link ca.uqac.lif.cep.Connector}
- * class.
+ * Pull events from the
+ * {@link ca.uqac.lif.cep.tmf.QueueSource} processor. 
  * 
  * @author Sylvain Hallé
  */
-public class PipingUnary 
+public class QueueSourceUsage
 {
-	public static void main (String[] args) throws ConnectorException
+	public static void main(String[] args) 
 	{
 		// SNIP
+		// Create an empty queue source
 		QueueSource source = new QueueSource();
-		source.setEvents(new Integer[]{1, 2, 3, 4, 5, 6});
-		Doubler doubler = new Doubler();
-		Connector.connect(source, doubler);
-		Pullable p = doubler.getPullableOutput();
+		// Tell the source what events to output by giving it an array;
+		// in this case, we output the first powers of 2
+		source.setEvents(new Integer[]{1, 2, 4, 8, 16, 32});
+		// Get a pullable to the source
+		Pullable p = source.getPullableOutput();
+		// Pull 8 events from the source. The queue source loops through
+		// its array of events; hence after reaching the last (32), it
+		// will restart from the beginning of its list.
 		for (int i = 0; i < 8; i++)
 		{
+			// Method pull() returns an Object, hence we must manually cast 
+			// it as an integer (this is indeed what we get)
 			int x = (Integer) p.pull();
 			System.out.println("The event is: " + x);
 		}
 		// SNIP
-	}
-	
-	/**
-	 * A processor that doubles every number it is given
-	 */
-	public static class Doubler extends SingleProcessor
-	{
-		public Doubler()
-		{
-			super(1, 1);
-		}
-
-		@Override
-		protected Queue<Object[]> compute(Object[] inputs)
-		{
-			return wrapObject(2 * ((Number) inputs[0]).intValue());
-		}
-
-		@Override
-		public Processor clone() 
-		{
-			return this;
-		}
 	}
 }

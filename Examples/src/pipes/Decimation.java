@@ -1,4 +1,4 @@
-package queries;
+package pipes;
 
 import static ca.uqac.lif.cep.Connector.connect;
 import static ca.uqac.lif.cep.Connector.LEFT;

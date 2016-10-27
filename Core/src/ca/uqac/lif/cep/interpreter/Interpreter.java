@@ -43,6 +43,8 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.io.LineReader;
+import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.SmartFork;
 import ca.uqac.lif.cep.util.PackageFileReader;
@@ -138,6 +140,65 @@ public class Interpreter implements ParseNodeVisitor
 		extendGrammar(ca.uqac.lif.cep.numbers.PackageExtension.class);
 		extendGrammar(ca.uqac.lif.cep.io.PackageExtension.class);
 		//extendGrammar(ca.uqac.lif.cep.sets.PackageExtension.class);
+	}
+	
+	/**
+	 * Creates an instance of an ESQL interpreter by loading a number of
+	 * extensions
+	 * @param extensions A list of extensions to load into the interpreter
+	 * @return An instance of the interpreter
+	 */
+	@SafeVarargs
+	public static Interpreter newInterpreter(Class<? extends Palette> ... extensions)
+	{
+		Interpreter interp = new Interpreter();
+		for (Class<? extends Palette> pal_class : extensions)
+		{
+			interp.extendGrammar(pal_class);
+		}
+		return interp;
+	}
+	
+	/**
+	 * Creates a {@link ca.uqac.lif.cep.io.StreamReader StreamReader} from
+	 * an input stream, and associates it to a placeholder in the
+	 * interpreter's grammar. This allows the interpreter to refer to
+	 * external input sources by a name in its queries.
+	 * <p>
+	 * An example usage would be:
+	 * <pre>
+	 * FileInputStream fis = new FileInputStream(new File("bar.txt"));
+	 * my_interpreter.nameInputStream("@foo", fis);
+	 * </pre>
+	 * From this point on, writing "@foo" in a query will refer to a
+	 * {@link ca.uqac.lif.cep.io.StreamReader StreamReader} reading from
+	 * external file "bar.txt".
+	 * 
+	 * @param name The name of the placeholder
+	 * @param is The <code>InputStream</code> to read from
+	 * @return This interpreter
+	 */
+	public Interpreter addStreamReader(String name, InputStream is)
+	{
+		StreamReader sr = new StreamReader(is);
+		addPlaceholder(name, "processor", sr);
+		return this;
+	}
+	
+	/**
+	 * Like {@link #addStreamReader(String, InputStream) addStreamReader()},
+	 * but creates a {@link ca.uqac.lif.cep.io.LineReader LineReader} instead.
+	 * 
+	 * @param name The name of the placeholder
+	 * @param is The <code>InputStream</code> to read from
+	 * @return This interpreter
+	 */
+	public Interpreter addLineReader(String name, InputStream is)
+	{
+		LineReader sr = new LineReader(is);
+		sr.addCrlf(false);
+		addPlaceholder(name, "processor", sr);
+		return this;
 	}
 
 	/**

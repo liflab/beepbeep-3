@@ -1,4 +1,4 @@
-package queries;
+package pipes;
 /*
     BeepBeep, an event stream processor
     Copyright (C) 2008-2016 Sylvain Hallé

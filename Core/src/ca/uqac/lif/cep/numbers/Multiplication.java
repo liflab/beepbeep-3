@@ -24,6 +24,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
 
+/**
+ * Computes the product of its arguments
+ * @author Sylvain Hallé
+ */
 public class Multiplication extends BinaryFunction<Number,Number,Number>
 {
 	/**
@@ -31,7 +35,7 @@ public class Multiplication extends BinaryFunction<Number,Number,Number>
 	 */
 	public static final transient Multiplication instance = new Multiplication();
 	
-	private Multiplication()
+	Multiplication()
 	{
 		super(Number.class, Number.class, Number.class);
 	}

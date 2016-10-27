@@ -24,6 +24,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
 
+/**
+ * Computes the difference of its arguments
+ * @author Sylvain Hallé
+ */
 public class Subtraction extends BinaryFunction<Number,Number,Number>
 {
 	/**

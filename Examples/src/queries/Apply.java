@@ -17,37 +17,28 @@
  */
 package queries;
 
-import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.CumulativeProcessor;
-import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.interpreter.Interpreter;
 
 /**
- * Use a cumulative processor to compute the sum of all events
- * received so far. 
+ * Use the <code>APPLY</code> keyword to apply a
+ * function to a stream of events.
  * 
  * @author Sylvain Hallé
  */
-public class CumulativeSum 
+public class Apply 
 {
-	public static void main(String[] args) throws ConnectorException
+	public static void main(String[] args)
 	{
 		// SNIP
-		QueueSource source = new QueueSource();
-		source.setEvents(new Integer[]{1, 2, 3, 4, 5, 6});
-		CumulativeProcessor sum = new CumulativeProcessor(
-				new CumulativeFunction<Number>(Addition.instance));
-		Connector.connect(source, sum);
-		// SNIP
-		Pullable p = sum.getPullableOutput();
-		for (int i = 0; i < 5; i++)
+		Interpreter my_int = Interpreter.newInterpreter();
+		my_int.addLineReader("@num1", Apply.class.getResourceAsStream("numbers1.txt"));
+		Pullable p = my_int.executeQuery("APPLY ((($0) INTO A NUMBER) + ($1)) WITH (@num1), (CONSTANT (2))");
+		for (int i = 0; i < 5; i++ )
 		{
-			float x = (Float) p.pull();
-			System.out.println("The event is: " + x);
+			Object o = p.pull();
+			System.out.printf("The event is: %s\n", o);
 		}
+		// SNIP
 	}
-
 }

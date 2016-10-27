@@ -15,7 +15,8 @@
 
 <function>               := <fct_addition> | <fct_subtraction> | <fct_division>
                             | <fct_multiplication> | <fct_power> | <fct_gt>
-                            | <fct_gte> | <fct_lt> | <fct_lte> | <eml_number> ;
+                            | <fct_gte> | <fct_lt> | <fct_lte> | <fct_ncast>
+                            | <eml_number> ;
 <fct_addition>           := ( <function> ) + ( <function> ) ;
 <fct_subtraction>        := ( <function> ) - ( <function> ) ;
 <fct_division>           := ( <function> ) ÷ ( <function> ) ;
@@ -25,8 +26,10 @@
 <fct_lte>                := ( <function> ) ≤ ( <function> ) ;
 <fct_gt>                 := ( <function> ) \u003e ( <function> ) ;
 <fct_lt>                 := ( <function> ) \u003c ( <function> ) ;
+<fct_ncast>              := ( <function> ) INTO A NUMBER ;
 
 # Function names
 
-<fct_name>               := <fctn_addition> ;
+<fct_name>               := <fctn_addition> | <fctn_multiplication> ;
 <fctn_addition>          := ADDITION ;
+<fctn_multiplication>    := MULTIPLICATION ;
