@@ -27,7 +27,7 @@ following companion library needs to be installed for BeepBeep to
 compile and run:
 
 - The [Bullwinkle parser](https://github.com/sylvainhalle/Bullwinkle),
-  an on-the-fly parser for BNF grammars *(tested with version 1.2.2)*
+  an on-the-fly parser for BNF grammars *(tested with version 1.2.4)*
 
 ### Extensions
 
@@ -41,9 +41,8 @@ Compiling and Installing BeepBeep 3                              {#install}
 
 First make sure you have the following installed:
 
-- The Java Development Kit (JDK) to compile. BeepBeep was developed and
-  tested on version 7 of the JDK, but it is probably safe to use either
-  version 6 or 8.
+- The Java Development Kit (JDK) to compile. BeepBeep is developed to comply
+  with Java version 6; it is probably safe to use any later version.
 - [Ant](http://ant.apache.org) to automate the compilation and build process
 
 Download the sources for BeepBeep from
@@ -105,7 +104,11 @@ in the folder `tests/coverage`.
 Developing BeepBeep using Eclipse                                {#eclipse}
 ---------------------------------
 
-If you wish to develop BeepBeep, here is a suggested setup using Eclipse.
+If you wish to develop BeepBeep in Eclipse, please follow the
+[detailed instructions](https://liflab.github.io/beepbeep-3/guide/building-eclipse.html)
+(with screenshots and all) found in the online user guide.
+
+In short:
 
 - Create a new empty workspace (preferably in a new, empty folder).
 - Create new projects for each of the folders `Core`,
