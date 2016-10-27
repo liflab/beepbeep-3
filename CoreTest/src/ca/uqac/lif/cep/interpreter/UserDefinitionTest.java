@@ -225,4 +225,20 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		assertNotNull(m_interpreter.toString());
 	}
 	
+	@Test
+	public void testDefinitionFunction1() throws ParseException, ConnectorException
+	{
+		m_interpreter.executeQuery("WHEN @X IS A function: FOO ( @X ) IS THE function ( ( @X ) + ( @X ) )");
+		Object o = m_interpreter.parseLanguage("FOO (2)", "<function>");
+		assertNotNull(o);
+	}
+	
+	@Test
+	public void testDefinitionFunction2() throws ParseException, ConnectorException
+	{
+		m_interpreter.executeQuery("WHEN @X IS A function, @Y IS A function: THE MODULUS OF ( @X , @Y ) IS THE function (((@X) ^ (2)) + ((@Y) ^ (2)))");
+		//m_interpreter.addPlaceholder("@foo", "<processor>", object)
+		//m_interpreter.executeQuery("FOO");
+	}
+	
 }

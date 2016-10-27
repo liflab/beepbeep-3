@@ -58,5 +58,11 @@ public class UserDefinitionInstance
 		Object o = m_definition.parseDefinition(variable_definitions);
 		stack.push(o);
 	}
+	
+	@Override
+	public String toString()
+	{
+		return m_definition.toString();
+	}
 
 }
