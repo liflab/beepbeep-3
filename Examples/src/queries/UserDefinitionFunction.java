@@ -35,7 +35,7 @@ public class UserDefinitionFunction
 		my_int.addLineReader("@num1", UserDefinitionFunction.class.getResourceAsStream("numbers1.txt"));
 		my_int.executeQuery("WHEN @X IS A function, @Y IS A function: "
 				+ "THE MODULUS OF ( @X , @Y ) IS THE function "
-				+ "(((@X)^(2)) + ((@Y)^(2)))");
+				+ "((@X)^(2)) + ((@Y)^(2))");
 		Pullable p = my_int.executeQuery("APPLY (THE MODULUS OF ($x,$y)) WITH "
 				+ "(THE NUMBERS FROM (@num1)) AS $x, "
 				+ "(THE NUMBERS FROM (@num2)) AS $y");

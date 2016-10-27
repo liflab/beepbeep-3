@@ -835,4 +835,9 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		
 	}
+
+	void addRule(int i, BnfRule rule)
+	{
+		m_parser.addRule(i, rule);
+	}
 }

@@ -121,7 +121,7 @@ public class UserDefinition
 				try 
 				{
 					BnfRule rule = BnfRule.parseRule("<" + symbol_nonterminal + "> := " + symbol);
-					inner_int.addRule(rule);
+					inner_int.addRule(0, rule);
 				} 
 				catch (InvalidRuleException e) 
 				{
