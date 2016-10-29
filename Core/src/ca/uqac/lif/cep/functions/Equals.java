@@ -59,14 +59,6 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // (
-		Function right = (Function) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // symbol
-		stack.pop(); // (
-		Function left = (Function) stack.pop();
-		stack.pop(); // )
-		FunctionTree ft = new FunctionTree(instance, left, right);
-		stack.push(ft);
+		BinaryFunction.buildInfix(stack, instance);
 	}
 }

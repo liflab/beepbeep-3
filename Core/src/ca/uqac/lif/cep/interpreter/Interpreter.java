@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -132,13 +133,13 @@ public class Interpreter implements ParseNodeVisitor
 		m_processorForks = new HashMap<String, SmartFork>();
 		m_lastExceptions = new HashSet<Exception>();
 		// Load boostrap grammar
-		extendGrammar(BootstrapGrammar.class);
+		load(BootstrapGrammar.class);
 		m_parser.setStartRule("<S>");
 		// Load built-in extensions
-		extendGrammar(ca.uqac.lif.cep.tmf.PackageExtension.class);
-		extendGrammar(ca.uqac.lif.cep.functions.PackageExtension.class);
-		extendGrammar(ca.uqac.lif.cep.numbers.PackageExtension.class);
-		extendGrammar(ca.uqac.lif.cep.io.PackageExtension.class);
+		load(ca.uqac.lif.cep.tmf.PackageExtension.class);
+		load(ca.uqac.lif.cep.functions.PackageExtension.class);
+		load(ca.uqac.lif.cep.numbers.PackageExtension.class);
+		load(ca.uqac.lif.cep.io.PackageExtension.class);
 		//extendGrammar(ca.uqac.lif.cep.sets.PackageExtension.class);
 	}
 	
@@ -154,7 +155,7 @@ public class Interpreter implements ParseNodeVisitor
 		Interpreter interp = new Interpreter();
 		for (Class<? extends Palette> pal_class : extensions)
 		{
-			interp.extendGrammar(pal_class);
+			interp.load(pal_class);
 		}
 		return interp;
 	}
@@ -224,7 +225,7 @@ public class Interpreter implements ParseNodeVisitor
 		{
 			if (ext.isAssignableFrom(Palette.class))
 			{
-				extendGrammar((Class<? extends Palette>) ext);	
+				load((Class<? extends Palette>) ext);	
 			}
 		}
 	}
@@ -257,12 +258,12 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param c A grammar extension class to add to the interpreter
 	 * @return This interpreter
 	 */
-	public Interpreter extendGrammar(Class<? extends Palette> c)
+	public Interpreter load(Class<? extends Palette> c)
 	{
 		try 
 		{
 			Palette ext = c.newInstance();
-			extendGrammar(ext);
+			load(ext);
 		} 
 		catch (InstantiationException e) 
 		{
@@ -280,7 +281,7 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param ext The grammar extension to add to the interpreter
 	 * @return This interpreter
 	 */
-	public Interpreter extendGrammar(Palette ext)
+	public Interpreter load(Palette ext)
 	{
 		// Adds the associations
 		Map<String,Class<?>> associations = ext.getAssociations();
@@ -800,7 +801,19 @@ public class Interpreter implements ParseNodeVisitor
 	 */
 	public void setDebugMode(boolean b)
 	{
-		m_parser.setDebugMode(b);
+		m_parser.setDebugMode(b, System.err);
+	}
+	
+	/**
+	 * Sets the interpreter into "debug mode". This should normally only
+	 * be useful for debugging and testing purposes.
+	 * @param b Set to true to get debug info
+	 * @param out The print stream to send debug info (defaults
+	 *   to <code>System.err</code>)
+	 */
+	public void setDebugMode(boolean b, PrintStream out)
+	{
+		m_parser.setDebugMode(b, out);
 	}
 	
 	/**

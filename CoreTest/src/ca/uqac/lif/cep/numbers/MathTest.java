@@ -334,7 +334,7 @@ public class MathTest extends BeepBeepUnitTest
 	public void testNumberCastGrammar() throws ParseException
 	{
 		Interpreter my_int = Interpreter.newInterpreter();
-		Object o = my_int.parseLanguage("(0) INTO A NUMBER", "<function>");
+		Object o = my_int.parseLanguage("TURN 0 INTO A NUMBER", "<function>");
 		assertNotNull(o);
 	}
 	

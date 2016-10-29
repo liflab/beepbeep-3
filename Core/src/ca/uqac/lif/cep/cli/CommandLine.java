@@ -43,7 +43,7 @@ public class CommandLine
 		//	stdout.disableColors();
 		Interpreter interpreter = new Interpreter();
 		// Load the CLI extension for the interpreter
-		interpreter.extendGrammar(CliGrammar.class);
+		interpreter.load(CliGrammar.class);
 		boolean exit = false;
 		stdout.setForegroundColor(Color.LIGHT_GRAY);
 		stdout.println("BeepBeep 3 - A versatile event stream processor");

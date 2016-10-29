@@ -1,9 +1,5 @@
 # -----------------------------------------
-# Grammar for BeepBeep 3; edit at your own risk!
-#
-# This is the bootstrap part of the language.
-# Working with BeepBeep 3 also requires the inclusion of at least
-# one grammar for the EML (Event Manipulation Language).
+# "Bootstrap" grammar
 # -----------------------------------------
 
 # Top production rule
@@ -12,8 +8,7 @@
 
 # Definition of a processor
 
-<processor>          := <p_placeholder> | <userdef_proc> | <p_cumulative> ; 
-<p_cumulative>       := COMBINE ( <processor> ) WITH <c_function> ;
+<processor>          := <p_placeholder> | <userdef_proc>  ; 
 <p_placeholder>      := * ;
 
 # Definition of a new grammatical object

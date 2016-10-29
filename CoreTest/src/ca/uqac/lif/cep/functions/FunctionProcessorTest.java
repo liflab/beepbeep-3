@@ -52,7 +52,7 @@ public class FunctionProcessorTest
 		QueueSource source2 = createSource2();
 		m_interpreter.addPlaceholder("@foo", "processor", source1);
 		m_interpreter.addPlaceholder("@bar", "processor", source2);
-		Processor proc = (Processor) m_interpreter.parseQuery("APPLY (($0) + ($1)) WITH (@foo) AS $A, (@bar) AS $B");
+		Processor proc = (Processor) m_interpreter.parseQuery("APPLY $0 + $1 WITH @foo AS $A, @bar AS $B");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertNotNull(o);
@@ -71,7 +71,7 @@ public class FunctionProcessorTest
 		QueueSource source2 = createSource2();
 		m_interpreter.addPlaceholder("@foo", "processor", source1);
 		m_interpreter.addPlaceholder("@bar", "processor", source2);
-		Processor proc = (Processor) m_interpreter.parseQuery("APPLY (($A) + ($B)) WITH (@foo) AS $A, (@bar) AS $B");
+		Processor proc = (Processor) m_interpreter.parseQuery("APPLY $A + $B WITH @foo AS $A, @bar AS $B");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertNotNull(o);

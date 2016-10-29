@@ -75,9 +75,9 @@ public class Trim extends SingleProcessor
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // )
+		//stack.pop(); // )
 		Processor p = (Processor) stack.pop();
-		stack.pop(); // (
+		//stack.pop(); // (
 		stack.pop(); // OF
 		Number delay = (Number) stack.pop();
 		stack.pop(); // TRIM

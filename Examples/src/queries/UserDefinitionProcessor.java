@@ -35,11 +35,11 @@ public class UserDefinitionProcessor
 		my_int.addLineReader("@num1", UserDefinitionProcessor.class.getResourceAsStream("numbers1.txt"));
 		my_int.addLineReader("@num2", UserDefinitionProcessor.class.getResourceAsStream("numbers2.txt"));
 		my_int.executeQuery("WHEN @P IS A processor: "
-				+ "THE NUMBERS FROM ( @P ) IS THE processor "
-				+ "APPLY (($0) INTO A NUMBER) WITH (@P)");
-		Pullable p = my_int.executeQuery("APPLY (($x) × ($y)) WITH "
-				+ "(THE NUMBERS FROM (@num1)) AS $x, "
-				+ "(THE NUMBERS FROM (@num2)) AS $y");
+				+ "THE NUMBERS FROM @P IS THE processor "
+				+ "APPLY TURN $0 INTO A NUMBER WITH @P");
+		Pullable p = my_int.executeQuery("APPLY $a × $b WITH "
+				+ "THE NUMBERS FROM @num1 AS $a, "
+				+ "THE NUMBERS FROM @num2 AS $b");
 		for (int i = 0; i < 5; i++ )
 		{
 			Object o = p.pull();

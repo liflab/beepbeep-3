@@ -61,9 +61,18 @@ public class Caller extends SingleProcessor
 
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
+		Object o;
+		Processor p;
+		o = stack.pop(); // ( ?
+		if (o instanceof String)
+		{
+			p = (Processor) stack.pop();
+			stack.pop(); // )
+		}
+		else
+		{
+			p = (Processor) o;
+		}
 		stack.pop(); // ON
 		String command = (String) stack.pop();
 		stack.pop(); // CALL

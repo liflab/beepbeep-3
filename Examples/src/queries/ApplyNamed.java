@@ -34,9 +34,9 @@ public class ApplyNamed
 		Interpreter my_int = Interpreter.newInterpreter();
 		my_int.addLineReader("@num1", ApplyNamed.class.getResourceAsStream("numbers1.txt"));
 		my_int.addLineReader("@num2", ApplyNamed.class.getResourceAsStream("numbers2.txt"));
-		Pullable p = my_int.executeQuery("APPLY (($x) × ($y)) WITH "
-				+ "(APPLY (($0) INTO A NUMBER) WITH (@num1)) AS $x, "
-				+ "(APPLY (($0) INTO A NUMBER) WITH (@num2)) AS $y");
+		Pullable p = my_int.executeQuery("APPLY $x × $y WITH "
+				+ "APPLY TURN $0 INTO A NUMBER WITH @num1 AS $x, "
+				+ "APPLY TURN $0 INTO A NUMBER WITH @num2 AS $y");
 		for (int i = 0; i < 5; i++ )
 		{
 			Object o = p.pull();

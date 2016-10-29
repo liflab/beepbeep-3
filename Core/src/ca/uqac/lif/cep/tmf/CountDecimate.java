@@ -83,9 +83,9 @@ public class CountDecimate extends SingleProcessor
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // (
+		//stack.pop(); // (
 		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
+		//stack.pop(); // )
 		stack.pop(); // OF
 		stack.pop(); // TH
 		Number interval = (Number) stack.pop();

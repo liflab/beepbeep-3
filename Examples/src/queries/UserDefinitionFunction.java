@@ -33,12 +33,14 @@ public class UserDefinitionFunction
 		// SNIP
 		Interpreter my_int = Interpreter.newInterpreter();
 		my_int.addLineReader("@num1", UserDefinitionFunction.class.getResourceAsStream("numbers1.txt"));
+		my_int.addLineReader("@num2", UserDefinitionFunction.class.getResourceAsStream("numbers2.txt"));
 		my_int.executeQuery("WHEN @X IS A function, @Y IS A function: "
-				+ "THE MODULUS OF ( @X , @Y ) IS THE function "
-				+ "((@X)^(2)) + ((@Y)^(2))");
-		Pullable p = my_int.executeQuery("APPLY (THE MODULUS OF ($x,$y)) WITH "
-				+ "(THE NUMBERS FROM (@num1)) AS $x, "
-				+ "(THE NUMBERS FROM (@num2)) AS $y");
+				+ "THE MODULUS OF @X AND @Y IS THE function "
+				+ "@X + @Y");
+		Pullable p = my_int.executeQuery("APPLY THE MODULUS OF $0 AND $1 WITH "
+				+ "@num1, @num2"
+				/*+ "APPLY TURN $0 INTO A NUMBER WITH @num1 AS $x, "
+				+ "APPLY TURN $0 INTO A NUMBER WITH @num2 AS $y"*/);
 		for (int i = 0; i < 5; i++ )
 		{
 			Object o = p.pull();

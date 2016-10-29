@@ -1,10 +1,5 @@
 # -----------------------------------------
-# Grammar for BeepBeep 3; edit at your own risk!
-#
-# This is an EML (Event Manipulation Language) where events are
-# simple numbers.
-# This grammar works in tandem with the EPL (Event Processing
-# Language) grammar.
+# Numbers and arithmetic
 # -----------------------------------------
 
 # Primitive types
@@ -16,17 +11,19 @@
 <function>               := <fct_addition> | <fct_subtraction> | <fct_division>
                             | <fct_multiplication> | <fct_power> | <fct_gt>
                             | <fct_gte> | <fct_lt> | <fct_lte> | <fct_ncast>
-                            | <eml_number> ;
-<fct_addition>           := ( <function> ) + ( <function> ) ;
-<fct_subtraction>        := ( <function> ) - ( <function> ) ;
-<fct_division>           := ( <function> ) ÷ ( <function> ) ;
-<fct_multiplication>     := ( <function> ) × ( <function> ) ;
-<fct_power>              := ( <function> ) ^ ( <function> ) ;
-<fct_gte>                := ( <function> ) ≥ ( <function> ) ;
-<fct_lte>                := ( <function> ) ≤ ( <function> ) ;
-<fct_gt>                 := ( <function> ) \u003e ( <function> ) ;
-<fct_lt>                 := ( <function> ) \u003c ( <function> ) ;
-<fct_ncast>              := ( <function> ) INTO A NUMBER ;
+                            | <fct_abs> | <fct_sqrt> | <eml_number> ;
+<fct_addition>           := <constant> + <constant> | <constant> + ( <function> ) | ( <function> ) + <constant> | ( <function> ) + ( <function> ) ;
+<fct_subtraction>        := <constant> - <constant> | <constant> - ( <function> ) | ( <function> ) - <constant> | ( <function> ) - ( <function> ) ;
+<fct_division>           := <constant> ÷ <constant> | <constant> ÷ ( <function> ) | ( <function> ) ÷ <constant> | ( <function> ) ÷ ( <function> ) ;
+<fct_multiplication>     := <constant> × <constant> | <constant> × ( <function> ) | ( <function> ) × <constant> | ( <function> ) × ( <function> ) ;
+<fct_power>              := <constant> ^ <constant> | <constant> ^ ( <function> ) | ( <function> ) ^ <constant> | ( <function> ) ^ ( <function> ) ;
+<fct_abs>                := \u007c <constant> \u007c | \u007c ( <function> ) \u007c ;
+<fct_sqrt>               := √ <constant> | √ ( <function> ) ;
+<fct_gte>                := <constant> ≥ <constant> | <constant> ≥ ( <function> ) | ( <function> ) ≥ <constant> | ( <function> ) ≥ ( <function> ) ;
+<fct_lte>                := <constant> ≤ <constant> | <constant> ≤ ( <function> ) | ( <function> ) ≤ <constant> | ( <function> ) ≤ ( <function> ) ;
+<fct_gt>                 := <constant> \u003e <constant> | <constant> \u003e ( <function> ) | ( <function> ) \u003e <constant> | ( <function> ) \u003e ( <function> ) ;
+<fct_lt>                 := <constant> \u003c <constant> | <constant> \u003c ( <function> ) | ( <function> ) \u003c <constant> | ( <function> ) \u003c ( <function> ) ;
+<fct_ncast>              := TURN <constant> INTO A NUMBER | TURN ( <function> ) INTO A NUMBER ;
 
 # Function names
 

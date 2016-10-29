@@ -32,7 +32,7 @@ public class Combine
 	{
 		// SNIP
 		Interpreter my_int = Interpreter.newInterpreter();
-		Pullable p = my_int.executeQuery("COMBINE (CONSTANT (2)) WITH ADDITION");
+		Pullable p = my_int.executeQuery("COMBINE CONSTANT 2 WITH ADDITION");
 		for (int i = 0; i < 5; i++ )
 		{
 			Object o = p.pull();
@@ -41,7 +41,7 @@ public class Combine
 		// SNIP
 		System.out.println("-----");
 		// Just for fun, let's try the same thing with multiplication
-		p = my_int.executeQuery("COMBINE (CONSTANT (2)) WITH MULTIPLICATION");
+		p = my_int.executeQuery("COMBINE CONSTANT 2 WITH MULTIPLICATION");
 		for (int i = 0; i < 5; i++ )
 		{
 			Object o = p.pull();

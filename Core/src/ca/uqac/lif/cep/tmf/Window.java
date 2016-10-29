@@ -184,14 +184,14 @@ public class Window extends SingleProcessor
 		stack.pop(); // WINDOW
 		stack.pop(); // A
 		stack.pop(); // ON
-		stack.pop(); // (
+		//stack.pop(); // (
 		Processor input_trace = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // ON
-		stack.pop(); // (
+		//stack.pop(); // )
+		stack.pop(); // FROM
+		//stack.pop(); // (
 		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // APPLY
+		//stack.pop(); // )
+		stack.pop(); // GET
 		Window out = new Window(p, width.intValue());
 		Connector.connect(input_trace, out);
 		stack.push(out);

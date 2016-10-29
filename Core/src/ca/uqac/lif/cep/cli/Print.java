@@ -64,9 +64,7 @@ public class Print extends Sink
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
-		stack.pop(); // (
 		stack.pop(); // PRINT
 		Print out = new Print(1, new AnsiPrinter(System.out));
 		Connector.connect(p, out);

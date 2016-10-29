@@ -19,46 +19,54 @@ package ca.uqac.lif.cep.numbers;
 
 import java.util.Stack;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionTree;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * Computes the product of its arguments
+ * Computes the square root of its argument
  * @author Sylvain Hallé
  */
-public class Multiplication extends BinaryFunction<Number,Number,Number>
+public class SquareRoot extends UnaryFunction<Number,Number> 
 {
 	/**
-	 * Static reference to a single instance of the function
+	 * A static instance of absolute value
 	 */
-	public static final transient Multiplication instance = new Multiplication();
+	public static final transient SquareRoot instance = new SquareRoot();
 	
-	Multiplication()
+	SquareRoot()
 	{
-		super(Number.class, Number.class, Number.class);
-	}
-	
-	public static void build(Stack<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
+		super(Number.class, Number.class);
 	}
 
 	@Override
-	public Number getValue(Number x, Number y) 
+	public Number getValue(Number x)
 	{
-		return x.floatValue() * y.floatValue();
+		return Math.sqrt(x.floatValue());
 	}
-
-	@Override
-	public Number getStartValue() 
-	{
-		return 1;
-	}
-
+	
 	@Override
 	public String toString()
 	{
-		return "×";
+		return "√";
 	}
-
+	
+	public static void build(Stack<Object> stack)
+	{
+		Object o;
+		Function arg;
+		o = stack.pop(); // ) ?
+		if (o instanceof String)
+		{
+			arg = (Function) stack.pop();
+			stack.pop(); // (
+		}
+		else
+		{
+			arg = (Function) o;
+		}
+		stack.pop(); // √
+		FunctionTree ft = new FunctionTree(instance, arg);
+		stack.push(ft);
+	}
 }

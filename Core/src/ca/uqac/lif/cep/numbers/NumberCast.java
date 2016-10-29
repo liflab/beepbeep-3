@@ -50,12 +50,22 @@ public class NumberCast extends UnaryFunction<Object,Number>
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
+		Object o;
+		Function left;
 		stack.pop(); // NUMBER
 		stack.pop(); // A
 		stack.pop(); // INTO
-		stack.pop(); // (
-		Function left = (Function) stack.pop();
-		stack.pop(); // )
+		o = stack.pop(); // ( ?
+		if (o instanceof String)
+		{
+			left = (Function) stack.pop();
+			stack.pop(); // )
+		}
+		else
+		{
+			left = (Function) o;
+		}
+		stack.pop(); // TURN
 		FunctionTree ft = new FunctionTree(instance, left);
 		stack.push(ft);
 	}

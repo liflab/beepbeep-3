@@ -91,8 +91,7 @@ public class TmfTest extends BeepBeepUnitTest
 		QueueSource qs = new QueueSource();
 		qs.setEvents(new Integer[]{0, 1, 2, 3, 4, 5, 6});
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		String s = "TRIM 3 OF (@foo)";
-		Object q = m_interpreter.parseQuery(s);
+		Object q = m_interpreter.parseQuery("TRIM 3 OF @foo");
 		assertNotNull(q);
 		assertTrue(q instanceof Trim);
 		Trim cd = (Trim) q;
@@ -174,8 +173,7 @@ public class TmfTest extends BeepBeepUnitTest
 		QueueSource qs = new QueueSource();
 		qs.addEvent(1);
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		String s = "EVERY 3RD OF (@foo)";
-		Object q = m_interpreter.parseQuery(s);
+		Object q = m_interpreter.parseQuery("EVERY 3RD OF @foo");
 		assertNotNull(q);
 		assertTrue(q instanceof CountDecimate);
 		CountDecimate cd = (CountDecimate) q;
@@ -206,8 +204,7 @@ public class TmfTest extends BeepBeepUnitTest
 	@Test
 	public void testFreezeGrammar() throws ParseException, ConnectorException
 	{
-		String s = "FREEZE (CONSTANT (1))";
-		Object q = m_interpreter.parseQuery(s);
+		Object q = m_interpreter.parseQuery("FREEZE CONSTANT 1");
 		assertNotNull(q);
 		assertTrue(q instanceof Freeze); 
 	}
@@ -241,8 +238,7 @@ public class TmfTest extends BeepBeepUnitTest
 	@Test
 	public void testPrefixGrammar() throws ParseException, ConnectorException
 	{
-		String s = "THE FIRST 3 OF (CONSTANT (1))";
-		Object q = m_interpreter.parseQuery(s);
+		Object q = m_interpreter.parseQuery("THE FIRST 3 OF CONSTANT 1");
 		assertNotNull(q);
 		assertTrue(q instanceof Prefix);
 		Prefix cd = (Prefix) q;
@@ -407,7 +403,7 @@ public class TmfTest extends BeepBeepUnitTest
 	@Test
 	public void testWindowGrammar() throws ParseException, ConnectorException
 	{
-		String s = "APPLY (CONSTANT (1)) ON (CONSTANT (1)) ON A WINDOW OF 3";
+		String s = "GET CONSTANT 1 FROM CONSTANT 1 ON A WINDOW OF 3";
 		Object q = m_interpreter.parseQuery(s);
 		assertNotNull(q);
 		assertTrue(q instanceof Window);

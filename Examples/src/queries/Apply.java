@@ -33,7 +33,7 @@ public class Apply
 		// SNIP
 		Interpreter my_int = Interpreter.newInterpreter();
 		my_int.addLineReader("@num1", Apply.class.getResourceAsStream("numbers1.txt"));
-		Pullable p = my_int.executeQuery("APPLY ((($0) INTO A NUMBER) + ($1)) WITH (@num1), (CONSTANT (2))");
+		Pullable p = my_int.executeQuery("APPLY (TURN $0 INTO A NUMBER) + $1 WITH @num1, CONSTANT 2");
 		for (int i = 0; i < 5; i++ )
 		{
 			Object o = p.pull();

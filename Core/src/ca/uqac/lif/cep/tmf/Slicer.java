@@ -152,13 +152,13 @@ public class Slicer extends SingleProcessor
 	{
 		Function f = (Function) stack.pop();
 		stack.pop(); // ON
-		stack.pop(); // (
+		//stack.pop(); // (
 		Processor p2 = (Processor) stack.pop();
-		stack.pop(); // )
+		//stack.pop(); // )
 		stack.pop(); // WITH
-		stack.pop(); // (
+		//stack.pop(); // (
 		Processor p1 = (Processor) stack.pop();
-		stack.pop(); // )
+		//stack.pop(); // )
 		stack.pop(); // SLICE
 		Slicer out = new Slicer(f, p2);
 		Connector.connect(p1, out);

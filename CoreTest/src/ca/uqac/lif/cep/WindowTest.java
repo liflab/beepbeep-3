@@ -127,8 +127,8 @@ public class WindowTest extends BeepBeepUnitTest
 	public void testGrammar1() throws ParseException, ConnectorException
 	{
 		Interpreter my_int = new Interpreter();
-		my_int.extendGrammar(PackageExtension.class);
-		Object o = my_int.parseQuery("APPLY (*) ON (CONSTANT (1)) ON A WINDOW OF 3");
+		my_int.load(PackageExtension.class);
+		Object o = my_int.parseQuery("GET * FROM CONSTANT 1 ON A WINDOW OF 3");
 		assertTrue(o instanceof Processor);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect((Processor) o, sink);

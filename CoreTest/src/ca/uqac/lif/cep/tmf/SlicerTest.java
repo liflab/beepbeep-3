@@ -75,8 +75,8 @@ public class SlicerTest extends BeepBeepUnitTest
 	public void testSlicerParse() throws ParseException, ConnectorException
 	{
 		Interpreter my_int = new Interpreter();
-		my_int.extendGrammar(PackageExtension.class);
-		Object o = my_int.parseQuery("SLICE (CONSTANT (1)) WITH (*) ON ADDITION");
+		my_int.load(PackageExtension.class);
+		Object o = my_int.parseQuery("SLICE CONSTANT 1 WITH * ON ADDITION");
 		assertTrue(o instanceof Processor);
 	}
 	

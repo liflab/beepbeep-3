@@ -239,7 +239,6 @@ public class FunctionTest extends BeepBeepUnitTest
 	public void testFunctionGrammar1() throws ParseException
 	{
 		Interpreter inter = new Interpreter();
-		inter.setDebugMode(true);
 		Object construct = inter.parseLanguage("1", "<function>");
 		assertTrue(construct instanceof Function);
 	}

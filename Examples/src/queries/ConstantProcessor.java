@@ -32,7 +32,7 @@ public class ConstantProcessor
 	{
 		// SNIP
 		Interpreter my_int = Interpreter.newInterpreter();
-		Pullable p = my_int.executeQuery("CONSTANT (1)");
+		Pullable p = my_int.executeQuery("CONSTANT 1");
 		for (int i = 0; i < 10; i++ )
 		{
 			Object o = p.pull();

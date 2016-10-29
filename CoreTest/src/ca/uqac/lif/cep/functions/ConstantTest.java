@@ -45,7 +45,7 @@ public class ConstantTest
 	@Test
 	public void testConstantGrammar1() throws ParseException
 	{
-		Processor proc = (Processor) m_interpreter.parseQuery("CONSTANT (0)");
+		Processor proc = (Processor) m_interpreter.parseQuery("CONSTANT 0");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertNotNull(o);

@@ -95,7 +95,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	@Test
 	public void testDefinition1() throws ParseException, ConnectorException
 	{
-		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor CONSTANT (1)";
+		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor CONSTANT 1";
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof UserDefinition);
@@ -106,7 +106,6 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
 		// Now, parse an expression that uses this definition
 		String user_expression = "THE COUNT OF (@foo)";
-		//m_interpreter.setDebugMode(true);
 		Object user_stmt = m_interpreter.parseQuery(user_expression);
 		assertNotNull(user_stmt);
 		assertTrue(user_stmt instanceof Processor);
@@ -135,7 +134,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		UserDefinition user_def = (UserDefinition) o;
 		user_def.addToInterpreter(m_interpreter);
 		// Now, parse an expression that uses this definition
-		String user_expression = "CONSTANT (PI)";
+		String user_expression = "CONSTANT PI";
 		Object user_stmt = m_interpreter.parseQuery(user_expression);
 		assertTrue(user_stmt instanceof Processor);
 		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
@@ -154,11 +153,11 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void testDefinition5() throws ParseException, ConnectorException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (CONSTANT (1)) WITH ADDITION");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE CONSTANT 1 WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor APPLY (($T) ÷ ($U)) WITH (COMBINE (@P) WITH ADDITION) AS $T, (THE COUNT OF (@P)) AS $U");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor APPLY $T ÷ $U WITH COMBINE @P WITH ADDITION AS $T, THE COUNT OF (@P) AS $U");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		QueueSource qs = new QueueSource();
@@ -181,13 +180,13 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void testDefinition7() throws ParseException, ConnectorException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE SUM OF ( @P ) IS THE processor COMBINE (@P) WITH ADDITION");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE SUM OF @P IS THE processor COMBINE @P WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		QueueSource qs = new QueueSource(1);
 		qs.addEvent(1);
 		m_interpreter.addPlaceholder("@T", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("APPLY (THE SUM OF (*)) ON (@T) ON A WINDOW OF 5");
+		Processor proc = (Processor) m_interpreter.parseQuery("GET THE SUM OF * FROM @T ON A WINDOW OF 5");
 		assertNotNull(proc);
 		assertTrue(proc instanceof Window);
 		Pullable p = proc.getPullableOutput();
@@ -203,7 +202,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void testDefinition8() throws ParseException, ConnectorException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor, @N IS A number: FOO ( @P ) BAR @N IS THE processor TRIM @N OF (@P)");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor, @N IS A number: FOO @P BAR @N IS THE processor TRIM @N OF @P");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		QueueSource qs = new QueueSource(1);
@@ -213,7 +212,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 		events.add(2);
 		qs.setEvents(events);
 		m_interpreter.addPlaceholder("@T", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("FOO (@T) BAR 2");
+		Processor proc = (Processor) m_interpreter.parseQuery("FOO @T BAR 2");
 		assertNotNull(proc);
 		QueueSink qsink = new QueueSink(1);
 		Connector.connect(proc, qsink);

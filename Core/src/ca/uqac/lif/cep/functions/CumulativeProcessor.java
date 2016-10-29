@@ -39,11 +39,20 @@ public class CumulativeProcessor extends FunctionProcessor
 
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
+		Object o;
+		Processor p;
 		BinaryFunction<?,?,?> com = (BinaryFunction<?,?,?>) stack.pop();
 		stack.pop(); // WITH
-		stack.pop(); // )
-		Processor p = Processor.liftProcessor(stack.pop());
-		stack.pop(); // (
+		o = stack.pop(); // ) ?
+		if (o instanceof String)
+		{
+			p = Processor.liftProcessor(stack.pop());
+			stack.pop(); // (
+		}
+		else
+		{
+			p = (Processor) o;
+		}
 		stack.pop(); // COMBINE
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		CumulativeFunction<?> func = new CumulativeFunction(com);

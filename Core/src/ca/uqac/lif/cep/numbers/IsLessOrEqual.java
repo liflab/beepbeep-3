@@ -21,8 +21,6 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
-import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionTree;
 
 public class IsLessOrEqual extends BinaryFunction<Number,Number,Boolean>
 {
@@ -38,15 +36,7 @@ public class IsLessOrEqual extends BinaryFunction<Number,Number,Boolean>
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // (
-		Function right = (Function) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // symbol
-		stack.pop(); // (
-		Function left = (Function) stack.pop();
-		stack.pop(); // )
-		FunctionTree ft = new FunctionTree(instance, left, right);
-		stack.push(ft);
+		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override

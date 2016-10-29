@@ -44,7 +44,7 @@ public class CommandLine
 		// Load extensions for the interpreter
 		{
 			//interpreter.extendGrammar(new TupleGrammar());
-			interpreter.extendGrammar(new PackageExtension());
+			interpreter.load(new PackageExtension());
 		}
 		boolean exit = false;
 		stdout.setForegroundColor(Color.LIGHT_GRAY);

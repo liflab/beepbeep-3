@@ -49,11 +49,20 @@ public class Negation extends UnaryFunction<Boolean,Boolean>
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // (
-		Function right = (Function) stack.pop();
-		stack.pop(); // )
+		Object o;
+		Function f;
+		o = stack.pop(); // ( ?
+		if (o instanceof String)
+		{
+			f = (Function) stack.pop();
+			stack.pop(); // )
+		}
+		else
+		{
+			f = (Function) o;
+		}
 		stack.pop(); // symbol
-		FunctionTree ft = new FunctionTree(instance, right);
+		FunctionTree ft = new FunctionTree(instance, f);
 		stack.push(ft);
 	}
 }
