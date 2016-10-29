@@ -18,8 +18,6 @@
 package ca.uqac.lif.cep.cli;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import ca.uqac.lif.cep.Processor;
@@ -30,10 +28,21 @@ import ca.uqac.lif.cep.tmf.Sink;
 import ca.uqac.lif.cep.util.AnsiPrinter;
 import ca.uqac.lif.cep.util.AnsiPrinter.Color;
 
+/**
+ * A crude command-line interactive interpreter for ESQL.
+ *  
+ * @author Sylvain Hallé
+ */
 public class CommandLine
 {
+	/**
+	 * The symbol for the command prompt
+	 */
 	protected static String s_prompt = "? ";
 	
+	/**
+	 * End greedings ;-)
+	 */
 	protected static String s_endGreeting = "Tata Edgar";
 
 	public static void main(String[] args) throws IOException
@@ -56,7 +65,7 @@ public class CommandLine
 		{
 			stdout.setForegroundColor(Color.PURPLE);
 			stdout.print("\n" + s_prompt);
-			stdout.setForegroundColor(Color.BLACK);
+			stdout.resetColors();
 			String command = scanner.nextLine();
 			// Parse instruction
 			command = command.trim();
@@ -118,49 +127,5 @@ public class CommandLine
 		stdout.println(s_endGreeting);
 		scanner.close();
 		stdout.close();
-	}
-
-	protected static class CharScanner
-	{
-		protected InputStream m_is;
-
-		protected volatile boolean m_exit;
-
-		public CharScanner(InputStream is)
-		{
-			super();
-			m_is = is;
-		}
-
-		public char nextChar()
-		{
-			InputStreamReader reader = new InputStreamReader(m_is);
-			m_exit = false;
-			while(!m_exit) 
-			{ 
-				try
-				{
-					if (reader.ready()) 
-					{ 
-						// read a character and process it
-						return (char) reader.read();
-					}
-				}
-				catch (IOException e)
-				{
-					// Do nothing
-				} 
-				// Lets not hog any cpu time 
-				try 
-				{ 
-					Thread.sleep(50); 
-				} 
-				catch (InterruptedException ex) 
-				{ 
-					// can't do much about it can we? Ignoring  
-				} 
-			}
-			return (char) 0;
-		}
 	}
 }

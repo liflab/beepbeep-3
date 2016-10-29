@@ -26,7 +26,7 @@
 <p_collator>         := WITH <proc_list> ;
 <proc_list>          := <proc_def> , <proc_list> | <proc_def> ;
 <proc_def>           := <proc_def_named> | <proc_def_anonymous> ;
-<proc_def_named>     := <processor> AS <var_name> ;
-<proc_def_anonymous> := <processor> ;
+<proc_def_named>     := <processor> AS <var_name> | ( <processor> ) AS <var_name> | ( <processor> AS <var_name> ) ;
+<proc_def_anonymous> := ( <processor> ) | <processor> ;
 <constant>           := <map_placeholder> ;
 <map_placeholder>    := <var_name> ;

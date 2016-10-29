@@ -76,7 +76,7 @@ public class Interpreter implements ParseNodeVisitor
 	/**
 	 * The system-dependent line separator
 	 */
-	protected static final String CRLF = System.getProperty("line.separator");
+	public static final String CRLF = System.getProperty("line.separator");
 
 	/**
 	 * The result of the last call to the interpreter. This either
@@ -852,5 +852,16 @@ public class Interpreter implements ParseNodeVisitor
 	void addRule(int i, BnfRule rule)
 	{
 		m_parser.addRule(i, rule);
+	}
+	
+	/**
+	 * Checks if an object is a specific string
+	 * @param o The object
+	 * @param symbol The string
+	 * @return True if the object is the string
+	 */
+	public static boolean isSymbol(Object o, String symbol)
+	{
+		return o instanceof String && ((String) o).toString().compareTo(symbol) == 0;
 	}
 }

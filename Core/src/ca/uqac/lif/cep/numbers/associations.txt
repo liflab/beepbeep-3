@@ -8,6 +8,7 @@
 <fct_multiplication>,ca.uqac.lif.cep.numbers.Multiplication
 <fct_division>,ca.uqac.lif.cep.numbers.Division
 <fct_power>,ca.uqac.lif.cep.numbers.Power
+<fct_sqrt>,ca.uqac.lif.cep.numbers.SquareRoot
 <fct_abs>,ca.uqac.lif.cep.numbers.AbsoluteValue
 <fct_gt>,ca.uqac.lif.cep.numbers.IsGreaterThan
 <fct_gte>,ca.uqac.lif.cep.numbers.IsGreaterOrEqual

@@ -26,6 +26,11 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.tmf.Sink;
 import ca.uqac.lif.cep.util.AnsiPrinter;
 
+/**
+ * Sends its input to an ANSI printer (such as the standard output)
+ * 
+ * @author Sylvain Hallé
+ */
 public class Print extends Sink
 {
 	/**
@@ -33,11 +38,19 @@ public class Print extends Sink
 	 */
 	protected AnsiPrinter m_out;
 	
+	/**
+	 * Creates a new printer
+	 */
 	public Print()
 	{
-		this(0, new AnsiPrinter(System.out));
+		this(1, new AnsiPrinter(System.out));
 	}
 	
+	/**
+	 * Creates a new ANSI printer of given input arity 
+	 * @param in_arity The input arity
+	 * @param out The ANSI printer to use
+	 */
 	public Print(int in_arity, AnsiPrinter out)
 	{
 		super(in_arity);
@@ -70,7 +83,11 @@ public class Print extends Sink
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-	
+
+	/**
+	 * Prints an object in an eye-pleasing way
+	 * @param n The object
+	 */
 	protected void prettyPrint(Object o)
 	{
 		if (o instanceof Number)
@@ -83,6 +100,11 @@ public class Print extends Sink
 		}
 	}
 	
+	/**
+	 * Prints a number in an eye-pleasing way. In this case, the
+	 * printer trims the decimals from a number if it is an integer
+	 * @param n The number
+	 */
 	protected void prettyPrint(Number n)
 	{
 		if (n.intValue() == n.floatValue())
