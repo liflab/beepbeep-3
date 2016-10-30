@@ -36,7 +36,8 @@ public class SymbolDefinition
 	public SymbolDefinition(String symbol_name, String variable_name)
 	{
 		super();
-		m_symbolName = symbol_name;
+		// Hack; we assume all non-terminals are lowercase
+		m_symbolName = symbol_name.toLowerCase();
 		m_variableName = variable_name;
 	}
 	

@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep;
+package ca.uqac.lif.cep.interpreter;
 
 import static org.junit.Assert.*;
 
@@ -24,6 +24,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.PackageFileReader;
@@ -57,6 +58,11 @@ public class GrammarTest
 				int a = 0;
 			}
 			String query = s_queries[i];
+			query = query.trim();
+			if (query.isEmpty())
+			{
+				continue;
+			}
 			m_interpreter.reset();
 			m_interpreter.addPlaceholder("@foo", "processor", new QueueSource());
 			m_interpreter.addPlaceholder("@bar", "processor", new QueueSource());

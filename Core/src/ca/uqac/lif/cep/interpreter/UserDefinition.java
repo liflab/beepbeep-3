@@ -68,7 +68,9 @@ public class UserDefinition
 		m_definition = definition;
 		m_pattern = pattern;
 		m_symbolDefs = sdl;
-		m_symbolName = symbol_name;
+		// Hack; we assume all non-terminals in the grammar are lowercase,
+		// and allow a query to refer to them in uppercase
+		m_symbolName = symbol_name.toLowerCase();
 	}
 	
 	void setInterpreter(Interpreter i)
