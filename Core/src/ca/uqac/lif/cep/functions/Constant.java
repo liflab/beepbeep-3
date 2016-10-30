@@ -102,4 +102,13 @@ public class Constant extends Function
 		}
 		return m_value.toString();
 	}
+	
+	/**
+	 * Gets the actual object that this constant processor returns
+	 * @return The value
+	 */
+	public Object getValue()
+	{
+		return m_value;
+	}
 }

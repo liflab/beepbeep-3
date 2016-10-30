@@ -33,23 +33,33 @@ public class EmlNumber extends Constant
 	{
 		super(null);
 	}
+	
+	public EmlNumber(Object o)
+	{
+		super(o);
+	}
 
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o = stack.pop();
 		if (o instanceof Number)
 		{
-			stack.push(new Constant(o));
+			stack.push(new EmlNumber(o));
 		}
 		else if (o instanceof String)
 		{
 			float f = Float.parseFloat((String) o);
-			stack.push(new Constant(f));
+			stack.push(new EmlNumber(f));
 		}
 		else
 		{
 			// Put back on the stack
 			stack.push(o);
 		}
+	}
+	
+	public int intValue()
+	{
+		return ((Number) getValue()).intValue();
 	}
 }

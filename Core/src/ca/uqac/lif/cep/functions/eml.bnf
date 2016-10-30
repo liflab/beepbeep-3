@@ -16,7 +16,7 @@
 <fct_or>                := <constant> ∨ <constant> | <constant> ∨ ( <function> ) | ( <function> ) ∨ <constant> | ( <function> ) ∨ ( <function> ) ;
 <fct_not>               := ¬ <constant> | ¬ ( <function> ) ;
 <fct_eq>                := <constant> = <constant> | <constant> = ( <function> ) | ( <function> ) = <constant> | ( <function> ) = ( <function> ) ;
-<constant>              := <eml_number> | <eml_boolean> ;
+<constant>              := <number> | <boolean> ;
 
 # Function names; only functions from T x T -> T need to have a name
 
@@ -26,4 +26,4 @@
 
 # Constants
 
-<eml_boolean>           := true | false ;
+<boolean>           := true | false ;

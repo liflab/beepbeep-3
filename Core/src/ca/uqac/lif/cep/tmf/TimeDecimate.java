@@ -24,6 +24,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * After returning an input event, discards all others for the next
@@ -82,13 +83,17 @@ public class TimeDecimate extends SingleProcessor
 				out = inputs;
 			}
 		}
-		return wrapVector(out);
+		if (out != null)
+		{
+			return wrapVector(out);
+		}
+		return getEmptyQueue();
 	}
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Processor p = (Processor) stack.pop();
-		Number interval = (Number) stack.pop();
+		EmlNumber interval = (EmlNumber) stack.pop();
 		TimeDecimate out = new TimeDecimate(interval.intValue());
 		Connector.connect(p, out);
 		stack.push(out);

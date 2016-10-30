@@ -77,7 +77,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	@Test
 	public void testPlaceholder3() throws ParseException, ConnectorException
 	{
-		String expression = "abc IS THE processor @P";
+		String expression = "abc IS THE PROCESSOR @P";
 		QueueSource qs = new QueueSource(1);
 		qs.addEvent(1);
 		m_interpreter.executeQuery(expression);
@@ -95,7 +95,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	@Test
 	public void testDefinition1() throws ParseException, ConnectorException
 	{
-		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor CONSTANT 1";
+		String expression = "WHEN @P IS A PROCESSOR: THE COUNT OF ( @P ) IS THE PROCESSOR CONSTANT 1";
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof UserDefinition);
@@ -127,7 +127,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	@Test
 	public void testDefinition2() throws ParseException, ConnectorException
 	{
-		String expression = "PI IS THE eml_number 3.1416";
+		String expression = "PI IS THE NUMBER 3.1416";
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof UserDefinition);
@@ -153,11 +153,11 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void testDefinition5() throws ParseException, ConnectorException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE CONSTANT 1 WITH ADDITION");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A PROCESSOR: THE COUNT OF ( @P ) IS THE PROCESSOR COMBINE CONSTANT 1 WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE AVERAGE OF ( @P ) IS THE processor APPLY $T ÷ $U WITH COMBINE @P WITH ADDITION AS $T, THE COUNT OF (@P) AS $U");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A PROCESSOR: THE AVERAGE OF ( @P ) IS THE PROCESSOR APPLY $T ÷ $U WITH COMBINE @P WITH ADDITION AS $T, THE COUNT OF (@P) AS $U");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		QueueSource qs = new QueueSource();
@@ -180,7 +180,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	public void testDefinition7() throws ParseException, ConnectorException
 	{
 		{
-			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A processor: THE SUM OF @P IS THE processor COMBINE @P WITH ADDITION");
+			UserDefinition e_def = (UserDefinition) m_interpreter.parseQuery("WHEN @P IS A PROCESSOR: THE SUM OF @P IS THE PROCESSOR COMBINE @P WITH ADDITION");
 			e_def.addToInterpreter(m_interpreter);
 		}
 		QueueSource qs = new QueueSource(1);
@@ -227,7 +227,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	@Test
 	public void testDefinitionFunction1() throws ParseException, ConnectorException
 	{
-		m_interpreter.executeQuery("WHEN @X IS A function: FOO ( @X ) IS THE function (@X) + (@X)");
+		m_interpreter.executeQuery("WHEN @X IS A FUNCTION: FOO ( @X ) IS THE FUNCTION (@X) + (@X)");
 		Object o = m_interpreter.parseLanguage("FOO (2)", "<function>");
 		assertNotNull(o);
 	}
@@ -235,7 +235,7 @@ public class UserDefinitionTest extends BeepBeepUnitTest
 	@Test
 	public void testDefinitionFunction2() throws ParseException, ConnectorException
 	{
-		m_interpreter.executeQuery("WHEN @X IS A function, @Y IS A function: THE MODULUS OF ( @X , @Y ) IS THE function (((@X) ^ (2)) + ((@Y) ^ (2)))");
+		m_interpreter.executeQuery("WHEN @X IS A FUNCTION, @Y IS A FUNCTION: THE MODULUS OF ( @X , @Y ) IS THE FUNCTION (((@X) ^ 2) + ((@Y) ^ 2))");
 		//m_interpreter.addPlaceholder("@foo", "<processor>", object)
 		//m_interpreter.executeQuery("FOO");
 	}

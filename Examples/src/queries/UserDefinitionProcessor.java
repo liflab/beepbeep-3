@@ -34,8 +34,8 @@ public class UserDefinitionProcessor
 		Interpreter my_int = Interpreter.newInterpreter();
 		my_int.addLineReader("@num1", UserDefinitionProcessor.class.getResourceAsStream("numbers1.txt"));
 		my_int.addLineReader("@num2", UserDefinitionProcessor.class.getResourceAsStream("numbers2.txt"));
-		my_int.executeQuery("WHEN @P IS A processor: "
-				+ "THE NUMBERS FROM @P IS THE processor "
+		my_int.executeQuery("WHEN @P IS A PROCESSOR: "
+				+ "THE NUMBERS FROM @P IS THE PROCESSOR "
 				+ "APPLY TURN $0 INTO A NUMBER WITH @P");
 		Pullable p = my_int.executeQuery("APPLY $a × $b WITH "
 				+ "THE NUMBERS FROM @num1 AS $a, "

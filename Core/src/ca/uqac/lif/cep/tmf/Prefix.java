@@ -23,6 +23,7 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * Returns the first <i>n</i> input events and discards the following ones.
@@ -69,7 +70,7 @@ public class Prefix extends Trim
 			p = (Processor) o;
 		}
 		stack.pop(); // OF
-		Number interval = (Number) stack.pop();
+		EmlNumber interval = (EmlNumber) stack.pop();
 		stack.pop(); // FIRST
 		stack.pop(); // THE
 		Prefix out = new Prefix(interval.intValue());

@@ -4,14 +4,14 @@
 
 # Primitive types
 
-<eml_number>             := ^\d*\.?\d*;
+<number>                 := ^\d*\.?\d*;
 
 # Functions on numbers
 
 <function>               := <fct_addition> | <fct_subtraction> | <fct_division>
                             | <fct_multiplication> | <fct_power> | <fct_gt>
                             | <fct_gte> | <fct_lt> | <fct_lte> | <fct_ncast>
-                            | <fct_abs> | <fct_sqrt> | <eml_number> ;
+                            | <fct_abs> | <fct_sqrt> | <number> ;
 <fct_addition>           := <constant> + <constant> | <constant> + ( <function> ) | ( <function> ) + <constant> | ( <function> ) + ( <function> ) ;
 <fct_subtraction>        := <constant> - <constant> | <constant> - ( <function> ) | ( <function> ) - <constant> | ( <function> ) - ( <function> ) ;
 <fct_division>           := <constant> ÷ <constant> | <constant> ÷ ( <function> ) | ( <function> ) ÷ <constant> | ( <function> ) ÷ ( <function> ) ;

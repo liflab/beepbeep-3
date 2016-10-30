@@ -25,6 +25,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * Discards the first <i>n</i> events of the input, and outputs
@@ -79,7 +80,7 @@ public class Trim extends SingleProcessor
 		Processor p = (Processor) stack.pop();
 		//stack.pop(); // (
 		stack.pop(); // OF
-		Number delay = (Number) stack.pop();
+		EmlNumber delay = (EmlNumber) stack.pop();
 		stack.pop(); // TRIM
 		Trim out = new Trim(delay.intValue());
 		Connector.connect(p, out);

@@ -28,6 +28,7 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.numbers.EmlNumber;
 import ca.uqac.lif.cep.objectfactory.IntegerSetting;
 import ca.uqac.lif.cep.objectfactory.Setting;
 import ca.uqac.lif.cep.objectfactory.SettingsSet;
@@ -179,7 +180,7 @@ public class Window extends SingleProcessor
 
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		Number width = (Number) stack.pop();
+		EmlNumber width = (EmlNumber) stack.pop();
 		stack.pop(); // OF
 		stack.pop(); // WINDOW
 		stack.pop(); // A

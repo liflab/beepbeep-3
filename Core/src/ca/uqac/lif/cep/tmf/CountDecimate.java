@@ -23,6 +23,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.numbers.EmlNumber;
 import ca.uqac.lif.cep.objectfactory.IntegerSetting;
 import ca.uqac.lif.cep.objectfactory.SettingsSet;
 import ca.uqac.lif.cep.Processor;
@@ -88,7 +89,7 @@ public class CountDecimate extends SingleProcessor
 		//stack.pop(); // )
 		stack.pop(); // OF
 		stack.pop(); // TH
-		Number interval = (Number) stack.pop();
+		EmlNumber interval = (EmlNumber) stack.pop();
 		stack.pop(); // EVERY
 		CountDecimate out = new CountDecimate(interval.intValue());
 		Connector.connect(p, out);

@@ -2,7 +2,7 @@
 # Class associations for the EML
 # -----------------------------------------
 
-<eml_number>,ca.uqac.lif.cep.numbers.EmlNumber
+<number>,ca.uqac.lif.cep.numbers.EmlNumber
 <fct_addition>,ca.uqac.lif.cep.numbers.Addition
 <fct_subtraction>,ca.uqac.lif.cep.numbers.Subtraction
 <fct_multiplication>,ca.uqac.lif.cep.numbers.Multiplication
