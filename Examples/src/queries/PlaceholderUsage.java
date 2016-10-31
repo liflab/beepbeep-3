@@ -21,6 +21,7 @@ import java.io.InputStream;
 
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
  * Use a placeholder to refer to an external source of events.
@@ -29,7 +30,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
  */
 public class PlaceholderUsage 
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws ParseException
 	{
 		// SNIP
 		Interpreter my_int = Interpreter.newInterpreter();

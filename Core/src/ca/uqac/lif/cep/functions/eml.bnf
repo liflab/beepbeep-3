@@ -5,7 +5,7 @@
 # Processors
 
 <processor>             := <fct_coll> | <fct_cp> | <cumulative> ;
-<fct_coll>              := APPLY <function> <p_collator> ;
+<fct_coll>              := APPLY <function> <p_collator> | APPLY ( <function> ) <p_collator> ;
 <fct_cp>                := CONSTANT <constant> ;
 <cumulative>            := COMBINE <processor> WITH <fct_name> ;
 

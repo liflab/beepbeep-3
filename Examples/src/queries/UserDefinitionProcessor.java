@@ -19,6 +19,7 @@ package queries;
 
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
  * Use the <code>APPLY</code> keyword to apply a
@@ -28,7 +29,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
  */
 public class UserDefinitionProcessor 
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws ParseException
 	{
 		// SNIP
 		Interpreter my_int = Interpreter.newInterpreter();

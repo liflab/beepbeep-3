@@ -130,6 +130,7 @@ public class ArgumentPlaceholder extends Function
 	@Override
 	public String toString()
 	{
-		return "&" + m_index;
+		return "$" + m_index;
 	}
+
 }

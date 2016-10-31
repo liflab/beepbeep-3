@@ -111,7 +111,7 @@ public class Interpreter implements ParseNodeVisitor
 	 * the buildable class whose syntax it defines
 	 */
 	protected Map<String, Class<?>> m_associations;
-	
+
 	/**
 	 * A set of exceptions encountered when parsing the expressions
 	 */
@@ -142,7 +142,7 @@ public class Interpreter implements ParseNodeVisitor
 		load(ca.uqac.lif.cep.io.PackageExtension.class);
 		//extendGrammar(ca.uqac.lif.cep.sets.PackageExtension.class);
 	}
-	
+
 	/**
 	 * Creates an instance of an ESQL interpreter by loading a number of
 	 * extensions.
@@ -171,7 +171,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return interp;
 	}
-	
+
 	/**
 	 * Creates a {@link ca.uqac.lif.cep.io.StreamReader StreamReader} from
 	 * an input stream, and associates it to a placeholder in the
@@ -197,7 +197,7 @@ public class Interpreter implements ParseNodeVisitor
 		addPlaceholder(name, "processor", sr);
 		return this;
 	}
-	
+
 	/**
 	 * Like {@link #addStreamReader(String, InputStream) addStreamReader()},
 	 * but creates a {@link ca.uqac.lif.cep.io.LineReader LineReader} instead.
@@ -578,39 +578,31 @@ public class Interpreter implements ParseNodeVisitor
 		// Nothing to do
 	}
 
-	public Pullable executeQuery(String query)
+	public Pullable executeQuery(String query) throws ParseException
 	{
 		return executeQuery(query, 0);
 	}
 
-	public Pullable executeQuery(String query, int index)
+	public Pullable executeQuery(String query, int index) throws ParseException
 	{
 		Object result;
-		try 
+		result = parseQuery(query);
+		m_lastQuery = result;
+		if (result instanceof Processor)
 		{
-			result = parseQuery(query);
-			m_lastQuery = result;
-			if (result instanceof Processor)
-			{
-				Pullable out = ((Processor) result).getPullableOutput(index);
-				return out;
-			}
-			else if (result instanceof UserDefinition)
-			{
-				UserDefinition ud = (UserDefinition) result;
-				ud.addToInterpreter(this);
-				return null;
-			}
-		} 
-		catch (ParseException e) 
+			Pullable out = ((Processor) result).getPullableOutput(index);
+			return out;
+		}
+		else if (result instanceof UserDefinition)
 		{
-			System.err.println("Error parsing expression " + query);
-			e.printStackTrace();
+			UserDefinition ud = (UserDefinition) result;
+			ud.addToInterpreter(this);
+			return null;
 		}
 		return null;
 	}
 
-	public Pullable executeQueries(InputStream is) throws IOException
+	public Pullable executeQueries(InputStream is) throws ParseException, IOException
 	{
 		BufferedReader in = new BufferedReader(new InputStreamReader(is));
 		String input_line;
@@ -623,7 +615,7 @@ public class Interpreter implements ParseNodeVisitor
 		return executeQueries(contents.toString());
 	}
 
-	public Pullable executeQueries(String queries)
+	public Pullable executeQueries(String queries) throws ParseException
 	{
 		queries += CRLF; // Apppend a CR so that the last query is also matched
 		queries = queries.replaceAll("--.*?" + CRLF, CRLF);
@@ -788,7 +780,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return null;
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -805,7 +797,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		return out.toString();
 	}
-	
+
 	/**
 	 * Sets the interpreter into "debug mode". This should normally only
 	 * be useful for debugging and testing purposes.
@@ -815,7 +807,7 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		m_parser.setDebugMode(b, System.err);
 	}
-	
+
 	/**
 	 * Sets the interpreter into "debug mode". This should normally only
 	 * be useful for debugging and testing purposes.
@@ -827,7 +819,7 @@ public class Interpreter implements ParseNodeVisitor
 	{
 		m_parser.setDebugMode(b, out);
 	}
-	
+
 	/**
 	 * Exception thrown when building the chain of processors from
 	 * the parse tree
@@ -835,37 +827,37 @@ public class Interpreter implements ParseNodeVisitor
 	public static class PipingParseException extends ParseException
 	{
 		protected final Exception m_exception;
-		
+
 		/**
 		 * Dummy UID
 		 */
 		private static final long serialVersionUID = 1L;
-		
+
 		PipingParseException(Exception e)
 		{
 			super(null);
 			m_exception = e;
 		}
-		
+
 		@Override
 		public String getMessage()
 		{
 			return m_exception.getMessage();
 		}
-		
+
 		@Override
 		public Throwable getCause()
 		{
 			return m_exception;
 		}
-		
+
 	}
 
 	void addRule(int i, BnfRule rule)
 	{
 		m_parser.addRule(i, rule);
 	}
-	
+
 	/**
 	 * Checks if an object is a specific string
 	 * @param o The object

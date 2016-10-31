@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.util.CacheMap;
  * map. The usefulness of this processor lies mostly in the ESQL language.
  * It makes it possible to write something like:
  * <pre>
- * APPLY $A) + $B WITH 
+ * APPLY $A + $B WITH 
  *   expression AS $A, 
  *   expression AS $B
  * </pre>

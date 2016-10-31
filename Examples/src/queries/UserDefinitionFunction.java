@@ -19,6 +19,7 @@ package queries;
 
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
  * Use the <code>APPLY</code> keyword to apply a
@@ -28,7 +29,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
  */
 public class UserDefinitionFunction 
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws ParseException
 	{
 		// SNIP
 		Interpreter my_int = Interpreter.newInterpreter();
@@ -38,8 +39,8 @@ public class UserDefinitionFunction
 				+ "THE MODULUS OF @X AND @Y IS THE FUNCTION "
 				+ "√(((@X)^2) + ((@Y)^2))");
 		Pullable p = my_int.executeQuery("APPLY THE MODULUS OF $0 AND $1 WITH "
-				+ "(APPLY TURN $0 INTO A NUMBER WITH @num1) AS $x, "
-				+ "(APPLY TURN $0 INTO A NUMBER WITH @num2) AS $y");
+				+ "(APPLY (TURN $0 INTO A NUMBER) WITH @num1) AS $x, "
+				+ "(APPLY (TURN $0 INTO A NUMBER) WITH @num2) AS $y");
 		for (int i = 0; i < 5; i++ )
 		{
 			Object o = p.pull();
