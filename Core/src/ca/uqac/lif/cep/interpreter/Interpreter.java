@@ -145,17 +145,29 @@ public class Interpreter implements ParseNodeVisitor
 	
 	/**
 	 * Creates an instance of an ESQL interpreter by loading a number of
-	 * extensions
+	 * extensions.
+	 * <p>
+	 * Note: we must resort to this signature, rather than the natural
+	 * <tt>Class&lt;? extends GrammarExtension&gt; ...</tt> that we would normally
+	 * write. The reason is backwards compatibility with Java 1.6.
+	 * Using Java &gt; 1.6 would require us to add the @SafeVarargs
+	 * annotation to prevent compile warnings, but this annotation
+	 * does not exist in Java 1.6 and produces a compile error. Thus this
+	 * is the only way to ensure warning- and error-free compilation in
+	 * both situations.
 	 * @param extensions A list of extensions to load into the interpreter
 	 * @return An instance of the interpreter
 	 */
-	@SafeVarargs
-	public static Interpreter newInterpreter(Class<? extends Palette> ... extensions)
+	@SuppressWarnings("unchecked")
+	public static Interpreter newInterpreter(Class<?> ... extensions)
 	{
 		Interpreter interp = new Interpreter();
-		for (Class<? extends Palette> pal_class : extensions)
+		for (Class<?> pal_class : extensions)
 		{
-			interp.load(pal_class);
+			if (pal_class.isAssignableFrom(Palette.class))
+			{
+				interp.load((Class<? extends Palette>) pal_class);
+			}
 		}
 		return interp;
 	}
