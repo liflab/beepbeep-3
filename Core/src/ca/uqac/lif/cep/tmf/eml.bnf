@@ -4,7 +4,6 @@
 
 # Types
 
-<number>             := ^\d+;
 <boolean>            := TRUE | FALSE ;
 <var_name>           := ^\$[\w\d]+;
 
