@@ -23,9 +23,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
@@ -34,51 +40,42 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.FileHelper;
 import ca.uqac.lif.cep.util.PackageFileReader;
 
+@RunWith(Parameterized.class)
 public class GrammarTest 
 {
+
+	static final String[] s_queries = readQueries();
+
+	protected Interpreter m_interpreter = new Interpreter();
 	
-	static String[] s_queries;
-
-	protected Interpreter m_interpreter;
-
-	@Before
-	public void setup() throws IOException
+	int m_queryNumber = 0;
+	
+	public GrammarTest(int query_number)
 	{
-		m_interpreter = new Interpreter();
-		String file_contents = PackageFileReader.readPackageFile(GrammarTest.class.getResourceAsStream("all-queries.esql"));
-		s_queries = file_contents.split("---");
+		super();
+		m_queryNumber = query_number;
 	}
-
-	/*
-	 * Simply run the parser on each string and make sure it does not fail 
-	 */
-	@Test
-	public void parsingTest() throws ParseException
+	
+	static String[] readQueries()
 	{
-		for (int i = 0; i < s_queries.length; i++)
+		String file_contents;
+		try 
 		{
-			String query = s_queries[i];
-			query = query.trim();
-			if (query.isEmpty())
-			{
-				continue;
-			}
-			m_interpreter.reset();
-			m_interpreter.addPlaceholder("@foo", "processor", new QueueSource());
-			m_interpreter.addPlaceholder("@bar", "processor", new QueueSource());
-			Pullable p = m_interpreter.executeQueries(query);
-			if (p == null)
-			{
-				fail("Parsing failed on expression " + query);
-			}
+			file_contents = PackageFileReader.readPackageFile(GrammarTest.class.getResourceAsStream("all-queries.esql"));
+			String[] queries = file_contents.split("---");
+			return queries;
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
 		}
+		return new String[0];
 	}
-	
+
 	@Test
 	public void debugQueryNumber() throws ParseException
 	{
-		int n = 6;
-		String query = s_queries[n];
+		String query = s_queries[m_queryNumber];
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(baos);
 		m_interpreter.setDebugMode(true, ps);
@@ -97,5 +94,18 @@ public class GrammarTest
 			FileHelper.writeFromBytes(new File("/home/sylvain/debug.txt"), baos.toByteArray());
 			throw e;
 		}
+	}
+
+	@Parameters(name = "{index}: query {0}")
+	public static Collection<Integer[]> getQueries()
+	{
+		List<Integer[]> ints = new ArrayList<Integer[]>(s_queries.length);
+		for (int i = 0; i < s_queries.length; i++)
+		{
+			Integer[] a_i = new Integer[1];
+			a_i[0] = i;
+			ints.add(a_i);
+		}
+		return ints;
 	}
 }
