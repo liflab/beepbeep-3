@@ -8,7 +8,7 @@ COMBINE CONSTANT 2 WITH ADDITION
 ---
 APPLY $0 + $1 WITH @foo, @bar
 ---
-APPLY √ $x WITH @foo AS $x
+APPLY √$x WITH @foo AS $x
 ---
 APPLY (TURN $0 INTO A NUMBER) + $1 WITH @foo, CONSTANT 2
 ---
