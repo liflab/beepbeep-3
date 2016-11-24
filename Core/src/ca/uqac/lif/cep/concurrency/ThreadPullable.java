@@ -103,4 +103,10 @@ public class ThreadPullable implements Pullable
 		return m_poller.getPullable().getPosition();
 	}
 
+	@Override
+	public void remove() 
+	{
+		// Do nothing
+	}
+
 }

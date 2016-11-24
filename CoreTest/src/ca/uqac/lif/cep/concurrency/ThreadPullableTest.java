@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.concurrency;
 
 import static org.junit.Assert.*;
 
-import java.math.BigInteger;
 import java.util.Queue;
 
 import org.junit.Test;
@@ -36,49 +35,23 @@ public class ThreadPullableTest
 	@Test
 	public void testOnDemand1()
 	{
-		FibonacciProcessor fp = new FibonacciProcessor(4);
+		DelayProcessor fp = new DelayProcessor(0, 200);
 		Pullable f_pull = fp.getPullableOutput();
 		ThreadPullable t_pull = new ThreadPullable(new OnDemandPoller(f_pull));
 		t_pull.start();
-		BigInteger bi = (BigInteger) t_pull.pull();
+		Integer bi = (Integer) t_pull.pull();
 		assertNotNull(bi);
-		assertEquals(3, bi.intValue());
-		t_pull.stop();
-	}
-	
-	@Test
-	public void testOnDemand2()
-	{
-		FibonacciProcessor fp = new FibonacciProcessor(100);
-		Pullable f_pull = fp.getPullableOutput();
-		ThreadPullable t_pull = new ThreadPullable(new OnDemandPoller(f_pull));
-		t_pull.start();
-		BigInteger bi = (BigInteger) t_pull.pull();
-		assertNotNull(bi);
-		t_pull.stop();
-	}
-	
-	@Test
-	public void testContinuousPull1()
-	{
-		FibonacciProcessor fp = new FibonacciProcessor(4);
-		Pullable f_pull = fp.getPullableOutput();
-		ThreadPullable t_pull = new ThreadPullable(new ContinuousPoller(f_pull));
-		t_pull.start();
-		BigInteger bi = (BigInteger) t_pull.pull();
-		assertNotNull(bi);
-		assertEquals(3, bi.intValue());
 		t_pull.stop();
 	}
 	
 	@Test
 	public void testContinuousPull2()
 	{
-		FibonacciProcessor fp = new FibonacciProcessor(100);
+		DelayProcessor fp = new DelayProcessor(0, 200);
 		Pullable f_pull = fp.getPullableOutput();
 		ThreadPullable t_pull = new ThreadPullable(new ContinuousPoller(f_pull));
 		t_pull.start();
-		BigInteger bi = (BigInteger) t_pull.pull();
+		Integer bi = (Integer) t_pull.pull();
 		assertNotNull(bi);
 		t_pull.stop();
 	}
