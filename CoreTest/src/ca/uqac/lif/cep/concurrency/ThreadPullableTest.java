@@ -25,7 +25,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -203,10 +202,9 @@ public class ThreadPullableTest
 		}
 
 		@Override
-		public Processor clone() 
+		public DelayProcessor clone() 
 		{
-			// Don't care
-			return null;
+			return new DelayProcessor(getInputArity(), m_waitInterval);
 		}
 		
 	}

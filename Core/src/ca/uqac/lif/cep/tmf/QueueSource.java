@@ -147,6 +147,11 @@ public class QueueSource extends Source
 			// If we don't loop, play the events only once
 			m_index++;
 		}
+		if (m_index > size && !m_loop)
+		{
+			// No more events from this queue
+			return null;
+		}
 		for (int i = 0; i < getOutputArity(); i++)
 		{
 			output[i] = event;
