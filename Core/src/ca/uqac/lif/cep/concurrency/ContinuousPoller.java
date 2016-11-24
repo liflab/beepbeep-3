@@ -30,7 +30,7 @@ public class ContinuousPoller implements Poller
 	 * Sleep interval (in milliseconds) between calls to the pullable's
 	 * pull method
 	 */
-	protected static final long s_sleepDuration = 100;
+	protected static final long s_sleepDuration = 10;
 
 	public ContinuousPoller(Pullable p)
 	{
@@ -51,7 +51,8 @@ public class ContinuousPoller implements Poller
 				Object o = m_pullable.pullSoft();
 				if (o != null)
 				{
-					synchronized (m_events)
+					//System.out.println("NOT NULL");
+					//synchronized (this)
 					{
 						m_events.add(o);
 					}				
@@ -72,7 +73,8 @@ public class ContinuousPoller implements Poller
 	@Override
 	public boolean isDone()
 	{
-		return m_done;
+		return true;
+		//return m_done;
 	}
 
 	@Override
@@ -84,83 +86,71 @@ public class ContinuousPoller implements Poller
 	@Override
 	public NextStatus getNextSoftStatus() 
 	{
-		synchronized (m_events)
+		if (m_events.isEmpty())
 		{
-			if (m_events.isEmpty())
-			{
-				return NextStatus.MAYBE;
-			}
-			return NextStatus.YES;
+			return NextStatus.MAYBE;
 		}
+		return NextStatus.YES;
 	}
 
 	@Override
 	public boolean getNextHardStatus() 
 	{
-		synchronized (m_events)
+		if (m_events.isEmpty())
 		{
-			if (m_events.isEmpty())
+			while (true)
 			{
-				while (true)
+				OnDemandPoller.sleep(s_sleepDuration);
+				if (!m_events.isEmpty())
 				{
-					OnDemandPoller.sleep(s_sleepDuration);
-					if (!m_events.isEmpty())
-					{
-						// As long as the thread is running, wait for
-						// an event to be added to the queue
-						return true;
-					}
-					if (!m_run)
-					{
-						// The thread stopped running, meaning no more events ever
-						return false;
-					}
+					// As long as the thread is running, wait for
+					// an event to be added to the queue
+					return true;
+				}
+				if (!m_run)
+				{
+					// The thread stopped running, meaning no more events ever
+					return false;
 				}
 			}
-			return true;
 		}
+		return true;
 	}
 
 	@Override
 	public Object getNextSoft() 
 	{
-		synchronized (m_events)
+		if (m_events.isEmpty())
 		{
-			if (m_events.isEmpty())
-			{
-				return false;
-			}
-			return m_events.remove();
+			return false;
 		}
+		return m_events.remove();
 	}
 
 	@Override
 	public Object getNextHard() 
 	{
-		synchronized (m_events)
+		if (m_events.isEmpty())
 		{
-			if (m_events.isEmpty())
+			while (true)
 			{
-				while (true)
+				OnDemandPoller.sleep(s_sleepDuration);
+				if (!m_events.isEmpty())
 				{
-					OnDemandPoller.sleep(s_sleepDuration);
-					if (!m_events.isEmpty())
-					{
-						// As long as the thread is running, wait for
-						// an event to be added to the queue
-						return m_events.remove();
-					}
-					if (!m_run)
-					{
-						// The thread stopped running, meaning no more events ever
-						return null;
-					}
+					// As long as the thread is running, wait for
+					// an event to be added to the queue
+					return m_events.remove();
+				}
+				if (!m_run)
+				{
+					// The thread stopped running, meaning no more events ever
+					return null;
 				}
 			}
-			else
-			{
-				return m_events.remove();
-			}
+		}
+		else
+		{
+			return m_events.remove();
 		}
 	}
 

@@ -219,14 +219,14 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public final Pushable getPushableInput(int index)
+	public Pushable getPushableInput(int index)
 	{
 		return new ProxyPushable(m_inputPushables.get(index), index);
 		//return m_inputPushables.get(index);
 	}
 
 	@Override
-	public final Pullable getPullableOutput(int index)
+	public Pullable getPullableOutput(int index)
 	{
 		return new ProxyPullable(m_outputPullables.get(index), index);
 		//return m_outputPullables.get(index);

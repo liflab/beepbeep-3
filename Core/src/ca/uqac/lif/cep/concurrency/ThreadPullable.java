@@ -57,7 +57,9 @@ public class ThreadPullable implements Pullable
 		{
 			OnDemandPoller.sleep(s_sleepDuration);
 		}
-		return m_poller.getNextHard();
+		Object out = m_poller.getNextHard();
+		//System.out.println("OUT: " + out);
+		return out;
 	}
 
 	@Override
@@ -85,7 +87,8 @@ public class ThreadPullable implements Pullable
 		{
 			OnDemandPoller.sleep(s_sleepDuration);
 		}
-		return m_poller.getNextHardStatus();
+		boolean status = m_poller.getNextHardStatus();
+		return status;
 	}
 
 	@Override

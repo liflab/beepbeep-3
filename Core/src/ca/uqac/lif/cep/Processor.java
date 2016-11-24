@@ -492,4 +492,24 @@ public abstract class Processor implements Cloneable, Contextualizable
 	{
 		return new ArrayDeque<Object[]>();
 	}
+	
+	/**
+	 * Starts the processor. This has no effect, except for processors
+	 * that use threads; in such a case, calling this method should
+	 * start the thread.
+	 */
+	public void start()
+	{
+		// Nothing
+	}
+	
+	/**
+	 * Stops the processor. This has no effect, except for processors
+	 * that use threads; in such a case, calling this method should
+	 * stop the thread.
+	 */
+	public void stop()
+	{
+		// Nothing
+	}
 }

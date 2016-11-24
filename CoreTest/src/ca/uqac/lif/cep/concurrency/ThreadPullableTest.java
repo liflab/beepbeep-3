@@ -24,6 +24,8 @@ import java.util.Queue;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -81,6 +83,13 @@ public class ThreadPullableTest
 		t_pull.stop();
 	}
 	
+	/**
+	 * Two processors are chained. Each takes 500 ms to produce each event.
+	 * Therefore, each event takes 500 + 500 ms before being output: processor
+	 * A first produces its output in 500 ms, which is then passed to
+	 * processor B that takes another 500 ms to create its output. Since
+	 * A and B are in the same thread, both cannot work at the same time.
+	 */
 	@Test
 	public void testSequentialChain1()
 	{
@@ -100,7 +109,17 @@ public class ThreadPullableTest
 			last_time = this_time;
 		}
 	}
-	
+
+	/**
+	 * Two processors are chained like in {@link #testSequentialChain1()},
+	 * but this time, a ThreadPullable is applied
+	 * to the output of the first. This has for effect that A now works in
+	 * a separate thread than B. In the first 500 ms, A produces its first
+	 * event and sends it to B; in the next 500 ms, B processes A's output,
+	 * and at the same time, A produces a second event. The end result is
+	 * that the first output event takes 1 s to be produced, but all the
+	 * others now only take 500 ms. The chain works twice as fast.  
+	 */
 	@Test
 	public void testContinuousChain1()
 	{
@@ -127,11 +146,56 @@ public class ThreadPullableTest
 			else
 			{
 				// We record less than 1 sec, meaning that the two
-				// processors have worked in parallel
+				// processors have worked in parallel. This should be
+				// around 500 ms, but it fluctuates due to the precision
+				// of the timer
 				assertTrue(duration < 800);
 			}
 			last_time = this_time;
 		}
+	}
+	
+	/**
+	 * Same as {@link #testContinuousChain1()}, but with the processor
+	 * encased in a GroupProcessor.
+	 * @throws ConnectorException 
+	 */
+	@Test
+	public void testContinuousGroup1() throws ConnectorException
+	{
+		DelayProcessor delay_1 = new DelayProcessor(0, 500);
+		PullThreadGroup group = new PullThreadGroup(0, 1);
+		group.addProcessor(delay_1);
+		group.associateOutput(0, delay_1, 0);
+		DelayProcessor delay_2 = new DelayProcessor(1, 500);
+		Connector.connect(group, delay_2);
+		Pullable d2_pull = delay_2.getPullableOutput();
+		group.start();
+		boolean first = true;
+		long last_time = System.currentTimeMillis();
+		for (int num_events = 0; num_events < 5; num_events++)
+		{
+			Object o = d2_pull.pull();
+			assertNotNull(o);
+			long this_time = System.currentTimeMillis();
+			float duration = (float) (this_time - last_time);
+			if (first)
+			{
+				first = false;
+				assertTrue(duration > 1000);
+			}
+			else
+			{
+				// We record less than 1 sec, meaning that the two
+				// processors have worked in parallel. This should be
+				// around 500 ms, but it fluctuates due to the precision
+				// of the timer
+				assertTrue(duration < 800);
+			}
+			System.out.println(duration);
+			last_time = this_time;
+		}
+		group.stop();
 	}
 	
 	/**
@@ -172,93 +236,5 @@ public class ThreadPullableTest
 			return null;
 		}
 		
-	}
-
-	public static class FibonacciProcessor extends SingleProcessor
-	{
-		protected int m_index = 1;
-		
-		public FibonacciProcessor(int index) 
-		{
-			super(0, 1);
-			m_index = index;
-		}
-
-		@Override
-		protected Queue<Object[]> compute(Object[] inputs)
-		{
-			// Perform some long computation
-			BigInteger i = fib(m_index);
-			return wrapObject(i);
-		}
-
-		@Override
-		public Processor clone() 
-		{
-			// Don't care
-			return this;
-		}
-
-		/**
-		 * Computes the n-th Fibonacci number.
-		 * The actual result of this computation does not really matter;
-		 * here we only use it as a CPU-intensive operation.
-		 * @param nth The index of the number
-		 * @return The Fibonacci number
-		 */
-		static BigInteger fib(long nth)
-		{
-			nth = nth - 1;
-			long count = 0;
-			BigInteger first = BigInteger.ZERO;
-			BigInteger second = BigInteger.ONE;
-
-			BigInteger third = null;
-			while(count < nth)
-			{
-				third = new BigInteger(first.add(second).toString());
-				first = new BigInteger(second.toString());
-				second = new BigInteger(third.toString());
-				count++;
-			}
-			return third;
-		}
-	}
-	
-	/**
-	 * Processor that checks the primality of a big integer.
-	 * Its goal is not to be efficient, but rather to be CPU-intensive.
-	 */
-	public static class IsPrime extends SingleProcessor
-	{
-		public IsPrime()
-		{
-			super(1, 1);
-		}
-
-		@Override
-		protected Queue<Object[]> compute(Object[] inputs)
-		{
-			BigInteger divisor = BigInteger.ONE.add(BigInteger.ONE);
-			BigInteger number = (BigInteger) inputs[0];
-			boolean prime = true;
-			while (divisor.compareTo(number) < 0)
-			{
-				BigInteger[] result = number.divideAndRemainder(divisor);
-				if (result[1].compareTo(BigInteger.ZERO) == 0)
-				{
-					prime = false;
-				}
-				divisor.add(BigInteger.ONE);
-			}
-			return wrapObject(prime);
-		}
-
-		@Override
-		public Processor clone() 
-		{
-			// Don't care
-			return this;
-		}
 	}
 }
