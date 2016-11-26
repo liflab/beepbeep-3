@@ -505,10 +505,9 @@ public class GroupProcessor extends Processor
 		}
 
 		@Override
-		public boolean isDone() 
+		public void waitFor() 
 		{
-			// Since this pushable is blocking
-			return true;
+			return;
 		}
 	}
 	

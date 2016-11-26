@@ -57,11 +57,14 @@ public interface Pushable
 	public int getPosition();
 	
 	/**
-	 * Determines if the pushable is done pushing. The answer
-	 * is not always "true" in the case of non-blocking pushables,
-	 * which return from their call to {@link #push(Object) push()}
-	 * wihtout the push action being actually completed.
-	 * @return true if the pushable is done pushing
+	 * Waits until the pushable is done pushing. In the case of a
+	 * blocking pushable, the call to {@link #push(Object) push()}
+	 * waits for the operation to be completed; so calling this method
+	 * afterwards should return immediately. For a non-blocking
+	 * pushable, this is the opposite: the call to 
+	 * {@link #push(Object) push()} should return more or less
+	 * immediately, but the call to this method will not return until
+	 * the push operation is finished.
 	 */
-	public boolean isDone();
+	public void waitFor();
 }

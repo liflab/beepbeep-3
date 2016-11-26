@@ -6,7 +6,7 @@ public interface Pusher extends Runnable
 {
 	public static enum Call {NONE, PUSH};
 	
-	public boolean isDone();
+	public void waitFor();
 	
 	public void call(Call c);
 		

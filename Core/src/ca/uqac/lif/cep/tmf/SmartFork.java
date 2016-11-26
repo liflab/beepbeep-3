@@ -164,9 +164,9 @@ public final class SmartFork extends Processor
 		}
 		
 		@Override
-		public boolean isDone() 
+		public void waitFor() 
 		{
-			return true;
+			return;
 		}
 	}
 	

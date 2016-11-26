@@ -39,7 +39,7 @@ public class OnDemandPusher implements Pusher
 			m_currentCall = Call.NONE;
 			m_done = true;
 		}
-		OnDemandPoller.sleep(s_sleepInterval);
+		ThreadManager.sleep(s_sleepInterval);
 	}
 	
 	public void setEventToPush(Object o)
@@ -48,9 +48,12 @@ public class OnDemandPusher implements Pusher
 	}
 
 	@Override
-	public boolean isDone() 
+	public void waitFor() 
 	{
-		return m_done;
+		while (!m_done)
+		{
+			ThreadManager.sleep(s_sleepInterval);
+		}
 	}
 
 	@Override

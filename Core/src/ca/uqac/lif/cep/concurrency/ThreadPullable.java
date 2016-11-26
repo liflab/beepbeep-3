@@ -44,7 +44,7 @@ public class ThreadPullable implements Pullable
 		m_poller.call(Call.PULL_SOFT);
 		while (!m_poller.isDone())
 		{
-			OnDemandPoller.sleep(s_sleepDuration);
+			ThreadManager.sleep(s_sleepDuration);
 		}
 		return m_poller.getNextSoft();
 	}
@@ -55,7 +55,7 @@ public class ThreadPullable implements Pullable
 		m_poller.call(Call.PULL);
 		while (!m_poller.isDone())
 		{
-			OnDemandPoller.sleep(s_sleepDuration);
+			ThreadManager.sleep(s_sleepDuration);
 		}
 		Object out = m_poller.getNextHard();
 		//System.out.println("OUT: " + out);
@@ -74,7 +74,7 @@ public class ThreadPullable implements Pullable
 		m_poller.call(Call.HAS_NEXT_SOFT);
 		while (!m_poller.isDone())
 		{
-			OnDemandPoller.sleep(s_sleepDuration);
+			ThreadManager.sleep(s_sleepDuration);
 		}
 		return m_poller.getNextSoftStatus();
 	}
@@ -85,7 +85,7 @@ public class ThreadPullable implements Pullable
 		m_poller.call(Call.HAS_NEXT);
 		while (!m_poller.isDone())
 		{
-			OnDemandPoller.sleep(s_sleepDuration);
+			ThreadManager.sleep(s_sleepDuration);
 		}
 		boolean status = m_poller.getNextHardStatus();
 		return status;

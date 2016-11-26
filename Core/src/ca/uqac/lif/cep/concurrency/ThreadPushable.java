@@ -51,13 +51,9 @@ public class ThreadPushable implements Pushable
 	}
 
 	@Override
-	public boolean isDone() 
+	public void waitFor() 
 	{
-		while (!m_pusher.isDone())
-		{
-			OnDemandPoller.sleep(s_sleepDuration);
-		}
-		return true;
+		m_pusher.waitFor();
 	}
 
 }

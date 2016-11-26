@@ -108,25 +108,13 @@ class OnDemandPoller implements Poller
 			m_currentCall = Call.NONE;
 			m_done = true;
 		}
-		sleep(s_sleepInterval);
+		ThreadManager.sleep(s_sleepInterval);
 	}
 	
 	@Override
 	synchronized public void stop()
 	{
 		m_run = false;
-	}
-	
-	public static void sleep(long duration)
-	{
-		try
-		{
-			Thread.sleep(duration);
-		}
-		catch (InterruptedException e)
-		{
-			// Do nothing
-		}		
 	}
 
 	@Override

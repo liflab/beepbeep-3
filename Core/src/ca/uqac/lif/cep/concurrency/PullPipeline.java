@@ -303,9 +303,9 @@ public class PullPipeline extends Processor implements Runnable
 		}
 		
 		@Override
-		public boolean isDone() 
+		public void waitFor() 
 		{
-			return true;
+			return;
 		}
 	}
 

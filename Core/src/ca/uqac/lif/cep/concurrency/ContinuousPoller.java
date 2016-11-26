@@ -100,7 +100,7 @@ public class ContinuousPoller implements Poller
 		{
 			while (true)
 			{
-				OnDemandPoller.sleep(s_sleepDuration);
+				ThreadManager.sleep(s_sleepDuration);
 				if (!m_events.isEmpty())
 				{
 					// As long as the thread is running, wait for
@@ -134,7 +134,7 @@ public class ContinuousPoller implements Poller
 		{
 			while (true)
 			{
-				OnDemandPoller.sleep(s_sleepDuration);
+				ThreadManager.sleep(s_sleepDuration);
 				if (!m_events.isEmpty())
 				{
 					// As long as the thread is running, wait for
