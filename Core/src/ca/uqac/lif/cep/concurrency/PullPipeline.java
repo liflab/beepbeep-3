@@ -160,6 +160,7 @@ public class PullPipeline extends Processor implements Runnable
 	{
 		PullPipeline p = new PullPipeline(m_processor.clone());
 		p.setContext(m_context);
+		p.m_threadManager = m_threadManager;
 		return p;
 	}
 

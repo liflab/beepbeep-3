@@ -104,7 +104,7 @@ public abstract class SingleProcessor extends Processor
 		}
 		
 		@Override
-		public Pushable pushFast(Object o)
+		synchronized public Pushable pushFast(Object o)
 		{
 			return push(o);
 		}
@@ -116,7 +116,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		public Pushable push(Object o)
+		synchronized public Pushable push(Object o)
 		{
 			if (m_index < m_inputQueues.length)
 			{

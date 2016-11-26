@@ -106,6 +106,7 @@ public class NonBlockingPusher extends Processor
 	{
 		NonBlockingPusher nbp = new NonBlockingPusher(m_processor.clone());
 		nbp.setContext(m_context);
+		nbp.m_threadManager = m_threadManager;
 		return nbp;
 	}
 	

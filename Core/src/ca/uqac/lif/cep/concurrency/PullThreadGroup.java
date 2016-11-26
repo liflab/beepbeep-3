@@ -78,5 +78,14 @@ public class PullThreadGroup extends GroupProcessor
 		super.stop();
 		m_pullable.stop();
 	}
+	
+	@Override
+	public PullThreadGroup clone()
+	{
+		PullThreadGroup ptg = new PullThreadGroup(getInputArity(), getOutputArity());
+		super.cloneInto(ptg);
+		ptg.m_threadManager = m_threadManager;
+		return ptg;
+	}
 
 }
