@@ -185,6 +185,15 @@ public class Last extends Passthrough
 				p.stop();
 			}
 		}
+		
+		@Override
+		public void dispose()
+		{
+			for (Pullable p : m_inputPullables)
+			{
+				p.dispose();
+			}
+		}
 	}
 	
 }

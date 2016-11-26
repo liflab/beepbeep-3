@@ -32,5 +32,7 @@ interface Pusher extends Runnable
 	public Pushable getPushable();
 	
 	public void setEventToPush(Object o);
+	
+	public void dispose();
 
 }

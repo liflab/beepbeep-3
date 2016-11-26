@@ -26,7 +26,9 @@ import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 
 public class ThreadPullable implements Pullable
 {
-	
+	/**
+	 * The poller that will repeatedly poll the input pullable 
+	 */
 	protected Poller m_poller;
 	
 	/**
@@ -170,6 +172,17 @@ public class ThreadPullable implements Pullable
 	public void remove() 
 	{
 		// Do nothing
+	}
+	
+	@Override
+	public void dispose()
+	{
+		stop();
+		m_poller.dispose();
+		if (m_thread != null)
+		{
+			m_thread.dispose();
+		}
 	}
 
 }

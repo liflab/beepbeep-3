@@ -175,6 +175,12 @@ public abstract class SingleProcessor extends Processor
 			// Since this pushable is blocking
 			return;
 		}
+
+		@Override
+		public void dispose()
+		{
+			// Do nothing
+		}
 	}
 
 	/**
@@ -411,6 +417,12 @@ public abstract class SingleProcessor extends Processor
 
 		@Override
 		public void stop()
+		{
+			// Do nothing
+		}
+
+		@Override
+		public void dispose()
 		{
 			// Do nothing
 		}

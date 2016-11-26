@@ -183,6 +183,12 @@ public final class SmartFork extends Processor
 				m_outputPushables[i].waitFor();
 			}
 		}
+
+		@Override
+		public void dispose()
+		{
+			// Do nothing
+		}
 	}
 	
 	/**
@@ -322,6 +328,12 @@ public final class SmartFork extends Processor
 			{
 				p.stop();
 			}			
+		}
+
+		@Override
+		public void dispose()
+		{
+			// Do nothing
 		}
 	}
 	

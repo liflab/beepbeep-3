@@ -182,4 +182,11 @@ class ContinuousPoller implements Poller
 		return m_pullable;
 	}
 
+	@Override
+	public void dispose() 
+	{
+		stop();
+		m_pullable.dispose();
+	}
+
 }

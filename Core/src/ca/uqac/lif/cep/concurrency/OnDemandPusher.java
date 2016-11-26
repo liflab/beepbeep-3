@@ -40,6 +40,12 @@ public class OnDemandPusher implements Pusher
 	}
 	
 	@Override
+	public void dispose()
+	{
+		m_pushable.dispose();
+	}
+	
+	@Override
 	public void run() 
 	{
 		m_run = true;

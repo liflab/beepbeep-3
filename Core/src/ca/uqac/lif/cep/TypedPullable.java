@@ -119,4 +119,10 @@ public class TypedPullable<T> implements Pullable
 	{
 		m_pullable.stop();
 	}
+	
+	@Override
+	public void dispose()
+	{
+		// Do nothing
+	}
 }

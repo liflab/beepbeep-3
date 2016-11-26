@@ -21,15 +21,62 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 
+/**
+ * Wrapper around a processor that makes its calls to
+ * {@link Pushable#push(Object) push()} non blocking.
+ * 
+ * @author Sylvain Hallé
+ */
 public class NonBlockingPusher extends Processor
 {
+	/**
+	 * The processor to which events will be pushed
+	 */
 	protected Processor m_processor;
 	
-	public NonBlockingPusher(Processor p)
+	/**
+	 * The thread manager to get instances of threads
+	 */
+	protected ThreadManager m_threadManager;
+
+	/**
+	 * The thread in which the pipeline thread is running
+	 */
+	protected ManagedThread m_managedThread;
+	
+	/**
+	 * The pushable to which events will be pushed
+	 */
+	protected Pushable m_pushable;
+	
+	public NonBlockingPusher(Processor p, ThreadManager manager)
 	{
 		super(1, 1);
 		m_processor = p;
+		if (manager != null)
+		{
+			m_threadManager = manager;
+		}
+		else
+		{
+			if (ThreadManager.defaultManager != null)
+			{
+				m_threadManager = ThreadManager.defaultManager;
+			}
+		}
+	}
+	
+	public NonBlockingPusher(Processor p)
+	{
+		this(p, ThreadManager.defaultManager);
+	}
+	
+	@Override
+	public void setPushableOutput(int index, Pushable p)
+	{
+		m_processor.setPushableOutput(index, p);
 	}
 
 	@Override
@@ -37,9 +84,13 @@ public class NonBlockingPusher extends Processor
 	{
 		if (index == 0)
 		{
-			Pusher p = new OnDemandPusher(m_processor.getPushableInput(0));
-			ThreadPushable tp = new ThreadPushable(p);
-			return tp;
+			if (m_pushable != null)
+			{
+				return m_pushable;
+			}
+			Pushable original_pushable = m_processor.getPushableInput(0);
+			m_pushable = ThreadPushable.tryPushable(original_pushable, m_threadManager);
+			return m_pushable;
 		}
 		return null;
 	}

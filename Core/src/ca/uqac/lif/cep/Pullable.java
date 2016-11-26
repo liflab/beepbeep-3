@@ -195,4 +195,16 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * pullables.
 	 */
 	public void stop();
+	
+	/**
+	 * Tells this pullable that methods {@link #pull()}, {@link #pullSoft()},
+	 * {@link #hasNext()} and {@link #hasNextSoft()}
+	 * will not be called anymore.
+	 * For some types of pullables, this can be used as a cue to free
+	 * some resources (such as threads). The behaviour of these four methods
+	 * after <code>dispose()</code> has been called is undefined.
+	 * In future versions, it is possible that an exception will
+	 * be thrown in such a case.
+	 */
+	public void dispose();
 }

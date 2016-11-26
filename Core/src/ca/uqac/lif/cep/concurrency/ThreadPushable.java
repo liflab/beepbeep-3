@@ -20,20 +20,66 @@ package ca.uqac.lif.cep.concurrency;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.concurrency.Pusher.Call;
+import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 
 public class ThreadPushable implements Pushable
 {	
+	/**
+	 * The pusher that will push events to the original pushable
+	 */
 	protected Pusher m_pusher;
 	
-	protected Thread m_thread;
+	/**
+	 * The managed thread in which this pullable is running, if any
+	 */
+	protected ManagedThread m_thread = null;
 	
+	/**
+	 * The interval (in milliseconds) between polls to the internal
+	 * pushable
+	 */
 	protected static final long s_sleepDuration = 100;
 	
-	public ThreadPushable(Pusher p)
+	/**
+	 * Attempts to get an instance of thread pushable. The method will
+	 * ask for a thread from the thread manager; if no thread can be
+	 * given, the method will return the original (blocking) pushable.
+	 * @param push The original pushable
+	 * @param manager The thread manager
+	 * @return A new thread pushable or the original pushable
+	 */
+	public static Pushable tryPushable(Pushable push, ThreadManager manager)
+	{
+		if (manager == null)
+		{
+			return push;
+		}
+		Pusher odp = new OnDemandPusher(push);
+		ManagedThread t = manager.tryNewThread(odp);
+		if (t == null)
+		{
+			return push;
+		}
+		return new ThreadPushable(odp, t);
+	}
+	
+	/**
+	 * Attempts to get an instance of thread pushable. The method will
+	 * ask for a thread from the default thread manager; if no thread can be
+	 * given, the method will return the original (blocking) pushable.
+	 * @param push The original pushable
+	 * @return A new thread pushable or the original pushable
+	 */
+	public static Pushable tryPushable(Pushable push)
+	{
+		return tryPushable(push, ThreadManager.defaultManager);
+	}
+	
+	private ThreadPushable(Pusher p, ManagedThread t)
 	{
 		super();
 		m_pusher = p;
-		m_thread = new Thread(m_pusher);
+		m_thread = t;
 		m_thread.start();
 	}
 	
@@ -81,6 +127,17 @@ public class ThreadPushable implements Pushable
 	public void waitFor() 
 	{
 		m_pusher.waitFor();
+	}
+	
+	@Override
+	public void dispose()
+	{
+		stop();
+		m_pusher.dispose();
+		if (m_thread != null)
+		{
+			m_thread.dispose();
+		}
 	}
 
 }

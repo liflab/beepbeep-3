@@ -93,4 +93,15 @@ public interface Pushable
 	 * the push operation is finished.
 	 */
 	public void waitFor();
+	
+	/**
+	 * Tells this pushable that methods {@link #push(Object) push()} or
+	 * {@link #pushFast(Object) pushFast()} will not be called anymore.
+	 * For some types of pushables, this can be used as a cue to free
+	 * some resources (such as threads). The behaviour of these two methods
+	 * after <code>dispose()</code> has been called is undefined.
+	 * In future versions, it is possible that an exception will
+	 * be thrown in such a case.
+	 */
+	public void dispose();
 }

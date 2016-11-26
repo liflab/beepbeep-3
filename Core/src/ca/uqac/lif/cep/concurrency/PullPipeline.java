@@ -348,6 +348,18 @@ public class PullPipeline extends Processor implements Runnable
 		{
 			// Nothing to do
 		}
+
+		@Override
+		public void dispose()
+		{
+			Iterator<PipelineRunnable> it = m_pipelines.iterator();
+			while (it.hasNext())
+			{
+				PipelineRunnable pr = it.next();
+				pr.dispose();
+				it.remove();
+			}
+		}
 	}
 
 	public class PipelinePushable implements Pushable
@@ -384,9 +396,19 @@ public class PullPipeline extends Processor implements Runnable
 		{
 			return;
 		}
+
+		@Override
+		public void dispose()
+		{
+			Iterator<PipelineRunnable> it = m_pipelines.iterator();
+			while (it.hasNext())
+			{
+				PipelineRunnable pr = it.next();
+				pr.dispose();
+				it.remove();
+			}
+		}
 	}
-
-
 
 	@Override
 	public void run()

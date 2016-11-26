@@ -483,6 +483,12 @@ public class GroupProcessor extends Processor
 		{
 			m_pullable.stop();
 		}
+
+		@Override
+		public void dispose()
+		{
+			m_pullable.dispose();
+		}
 	}
 	
 	public class ProxyPushable implements Pushable
@@ -528,6 +534,12 @@ public class GroupProcessor extends Processor
 		public void waitFor() 
 		{
 			return;
+		}
+
+		@Override
+		public void dispose() 
+		{
+			m_pushable.dispose();
 		}
 	}
 	

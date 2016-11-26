@@ -39,5 +39,7 @@ interface Poller extends Runnable
 	public void stop();
 	
 	public Pullable getPullable();
+
+	public void dispose();
 	
 }

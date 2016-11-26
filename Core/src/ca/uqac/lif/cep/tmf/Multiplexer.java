@@ -246,6 +246,12 @@ public class Multiplexer extends Processor
 		{
 			return this;
 		}
+
+		@Override
+		public void dispose()
+		{
+			// Do nothing
+		}
 	}
 	
 	protected final class MuxPushable implements Pushable
@@ -292,7 +298,12 @@ public class Multiplexer extends Processor
 		public void waitFor() 
 		{
 			m_outputPushables[0].waitFor();
-			return;
+		}
+		
+		@Override
+		public void dispose() 
+		{
+			m_outputPushables[0].dispose();
 		}
 	}
 	
