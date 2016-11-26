@@ -183,4 +183,16 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * @return The position
 	 */
 	public int getPosition();
+	
+	/**
+	 * Starts the pullable. This may be useful for multi-threaded
+	 * pullables.
+	 */
+	public void start();
+	
+	/**
+	 * Stops the pullable. This may be useful for multi-threaded
+	 * pullables.
+	 */
+	public void stop();
 }

@@ -167,6 +167,24 @@ public class Last extends Passthrough
 		{
 			return this;
 		}
+
+		@Override
+		public void start()
+		{
+			for (Pullable p : m_inputPullables)
+			{
+				p.start();
+			}
+		}
+
+		@Override
+		public void stop()
+		{
+			for (Pullable p : m_inputPullables)
+			{
+				p.stop();
+			}
+		}
 	}
 	
 }

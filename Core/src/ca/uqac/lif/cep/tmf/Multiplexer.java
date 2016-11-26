@@ -93,6 +93,18 @@ public class Multiplexer extends Processor
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
+		
+		@Override
+		public void start() 
+		{
+			// Do nothing
+		}
+
+		@Override
+		public void stop()
+		{
+			// Do nothing
+		}
 
 		@Override
 		public Object pullSoft()

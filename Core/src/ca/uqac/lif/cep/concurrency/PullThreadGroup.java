@@ -22,12 +22,30 @@ import ca.uqac.lif.cep.Pullable;
 
 public class PullThreadGroup extends GroupProcessor 
 {
-	protected ThreadPullable m_pullable;
+	/**
+	 * A (potentially non-blocking) pullable for the first
+	 * output of the group
+	 */
+	protected Pullable m_pullable;
 	
-	public PullThreadGroup(int in_arity, int out_arity) 
+	/**
+	 * The thread manager used to get thread instances
+	 */
+	protected ThreadManager m_threadManager;
+	
+	public PullThreadGroup(int in_arity, int out_arity, ThreadManager manager) 
 	{
 		super(in_arity, out_arity);
 		m_pullable = null;
+		if (manager == null)	
+		{
+			m_threadManager = ThreadManager.defaultManager;
+		}
+	}
+	
+	public PullThreadGroup(int in_arity, int out_arity) 
+	{
+		this(in_arity, out_arity, null);
 	}
 	
 	@Override
@@ -41,7 +59,8 @@ public class PullThreadGroup extends GroupProcessor
 		// For output 0, wrap pullable into a ThreadPullable
 		if (m_pullable == null)
 		{
-			m_pullable = new ThreadPullable(new ContinuousPoller(m_outputPullables.get(index)));
+			Pullable original_pullable = m_outputPullables.get(index);
+			m_pullable = ThreadPullable.tryPullable(original_pullable, m_threadManager);
 		}
 		return new ProxyPullable(m_pullable, index);
 	}

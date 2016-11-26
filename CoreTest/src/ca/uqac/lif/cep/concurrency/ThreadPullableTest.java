@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 
 import java.util.Queue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
@@ -31,12 +32,15 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class ThreadPullableTest 
 {
 	/* Test with a small number, just to make sure the computation is OK */
+	
 	@Test
-	public void testOnDemand1()
+	public void testContinuousPullWithThreads()
 	{
+		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		DelayProcessor fp = new DelayProcessor(0, 200);
 		Pullable f_pull = fp.getPullableOutput();
-		ThreadPullable t_pull = new ThreadPullable(new OnDemandPoller(f_pull));
+		Pullable t_pull = ThreadPullable.tryPullable(f_pull, tm);
+		assertTrue(t_pull instanceof ThreadPullable);
 		t_pull.start();
 		Integer bi = (Integer) t_pull.pull();
 		assertNotNull(bi);
@@ -44,11 +48,13 @@ public class ThreadPullableTest
 	}
 	
 	@Test
-	public void testContinuousPull2()
+	public void testContinuousPullWithoutThreads()
 	{
+		ThreadManager tm = new ThreadManager(0); // No thread
 		DelayProcessor fp = new DelayProcessor(0, 200);
 		Pullable f_pull = fp.getPullableOutput();
-		ThreadPullable t_pull = new ThreadPullable(new ContinuousPoller(f_pull));
+		Pullable t_pull = ThreadPullable.tryPullable(f_pull, tm);
+		assertFalse(t_pull instanceof ThreadPullable);
 		t_pull.start();
 		Integer bi = (Integer) t_pull.pull();
 		assertNotNull(bi);
@@ -97,7 +103,8 @@ public class ThreadPullableTest
 	{
 		DelayProcessor delay_1 = new DelayProcessor(0, 500);
 		Pullable d1_pull = delay_1.getPullableOutput();
-		ThreadPullable d1_tpull = new ThreadPullable(new ContinuousPoller(d1_pull));
+		Pullable d1_tpull = ThreadPullable.tryPullable(d1_pull);
+		assertTrue(d1_tpull instanceof ThreadPullable);
 		DelayProcessor delay_2 = new DelayProcessor(1, 500);
 		delay_2.setPullableInput(0, d1_tpull);
 		Pullable d2_pull = delay_2.getPullableOutput();

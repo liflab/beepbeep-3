@@ -471,6 +471,18 @@ public class GroupProcessor extends Processor
 		{
 			return this;
 		}
+
+		@Override
+		public void start() 
+		{
+			m_pullable.start();
+		}
+
+		@Override
+		public void stop() 
+		{
+			m_pullable.stop();
+		}
 	}
 	
 	public class ProxyPushable implements Pushable

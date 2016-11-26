@@ -107,4 +107,16 @@ public class TypedPullable<T> implements Pullable
 	{
 		return this;
 	}
+
+	@Override
+	public void start() 
+	{
+		m_pullable.start();		
+	}
+
+	@Override
+	public void stop()
+	{
+		m_pullable.stop();
+	}
 }
