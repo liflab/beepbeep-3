@@ -48,7 +48,7 @@ public class ThreadPushable implements Pushable
 	 * @param manager The thread manager
 	 * @return A new thread pushable or the original pushable
 	 */
-	public static Pushable tryPushable(Pushable push, ThreadManager manager)
+	synchronized public static Pushable tryPushable(Pushable push, ThreadManager manager)
 	{
 		if (manager == null)
 		{

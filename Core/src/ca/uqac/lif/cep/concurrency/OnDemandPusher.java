@@ -25,7 +25,7 @@ public class OnDemandPusher implements Pusher
 	
 	boolean m_run = false;
 
-	protected long s_sleepInterval = 100;
+	protected long s_sleepInterval = 15;
 
 	private Call m_currentCall = Call.NONE;
 
@@ -55,7 +55,7 @@ public class OnDemandPusher implements Pusher
 			{
 			case PUSH:
 				m_done = false;
-				m_pushable.push(m_eventToPush);
+				m_pushable.pushFast(m_eventToPush);
 				m_eventToPush = null;
 				break;
 			default:
@@ -63,8 +63,8 @@ public class OnDemandPusher implements Pusher
 			}
 			m_currentCall = Call.NONE;
 			m_done = true;
+			ThreadManager.sleep(s_sleepInterval);
 		}
-		ThreadManager.sleep(s_sleepInterval);
 	}
 	
 	public void setEventToPush(Object o)

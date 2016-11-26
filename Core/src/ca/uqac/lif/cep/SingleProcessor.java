@@ -116,49 +116,52 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Pushable push(Object o)
+		public Pushable push(Object o)
 		{
-			if (m_index < m_inputQueues.length)
+			synchronized (m_inputQueues)
 			{
-				Queue<Object> q = m_inputQueues[m_index];
-				q.add(o);
-			}
-			// Check if each input queue has an event ready
-			for (int i = 0; i < m_inputArity; i++)
-			{
-				Queue<Object> queue = m_inputQueues[i];
-				if (queue.isEmpty())
+				if (m_index < m_inputQueues.length)
 				{
-					// One of them doesn't: we can't produce an output yet
-					return this;
+					Queue<Object> q = m_inputQueues[m_index];
+					q.add(o);
 				}
-			}
-			// Pick an event from each input queue
-			Object[] inputs = new Object[m_inputArity];
-			for (int i = 0; i < m_inputArity; i++)
-			{
-				Queue<Object> queue = m_inputQueues[i];
-				Object ob = queue.remove();
-				inputs[i] = ob;
-			}
-			// Compute output event
-			Queue<Object[]> outs = compute(inputs);
-			if (outs != null && !outs.isEmpty())
-			{
-				for (Object[] evt : outs)
+				// Check if each input queue has an event ready
+				for (int i = 0; i < m_inputArity; i++)
 				{
-					if (evt != null)
+					Queue<Object> queue = m_inputQueues[i];
+					if (queue.isEmpty())
 					{
-						//assert evt.length >= m_outputPushables.size();
-						for (int i = 0; i < m_outputPushables.length; i++)
-						{
-							Pushable p = m_outputPushables[i];
-							assert p != null;
-							p.push(evt[i]);
-							p.waitFor();
-						}
+						// One of them doesn't: we can't produce an output yet
+						return this;
 					}
 				}
+				// Pick an event from each input queue
+				Object[] inputs = new Object[m_inputArity];
+				for (int i = 0; i < m_inputArity; i++)
+				{
+					Queue<Object> queue = m_inputQueues[i];
+					Object ob = queue.remove();
+					inputs[i] = ob;
+				}
+				// Compute output event
+				Queue<Object[]> outs = compute(inputs);
+				if (outs != null && !outs.isEmpty())
+				{
+					for (Object[] evt : outs)
+					{
+						if (evt != null)
+						{
+							//assert evt.length >= m_outputPushables.size();
+							for (int i = 0; i < m_outputPushables.length; i++)
+							{
+								Pushable p = m_outputPushables[i];
+								assert p != null;
+								p.push(evt[i]);
+								p.waitFor();
+							}
+						}
+					}
+				}				
 			}
 			return this;
 		}

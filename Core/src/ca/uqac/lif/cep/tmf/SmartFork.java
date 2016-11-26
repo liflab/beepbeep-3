@@ -42,25 +42,25 @@ public final class SmartFork extends Processor
 	 * The buffer of input events
 	 */
 	private List<Object> m_inputEvents;
-	
+
 	/**
 	 * A set of cursors, i.e. pointers to the input buffer. For a fork of
 	 * output arity <i>n</i>, there are <i>n</i> cursors.
 	 */
 	protected int[] m_cursors;
-	
+
 	/**
 	 * After how many calls to <code>pull()</code> or <code>push()</code>
 	 * do we call the cleanup of the input queue
 	 */
 	protected static final int s_cleanInterval = 10;
-	
+
 	/**
 	 * How many calls to <code>pull()</code> or <code>push()</code>
 	 * since last cleanup of the input queue
 	 */
 	protected int m_timeSinceLastClean;
-	
+
 	/**
 	 * Instantiates a fork.
 	 * @param out_arity The fork's output arity
@@ -72,7 +72,7 @@ public final class SmartFork extends Processor
 		m_cursors = new int[out_arity];
 		m_timeSinceLastClean = 0;
 	}
-	
+
 	/**
 	 * Creates a fork by extending the arity of another fork
 	 * @param out_arity The output arity of the fork
@@ -90,7 +90,7 @@ public final class SmartFork extends Processor
 			m_outputPushables[i] = reference.m_outputPushables[i];
 		}
 	}
-	
+
 	@Override
 	public SmartFork clone()
 	{
@@ -107,7 +107,7 @@ public final class SmartFork extends Processor
 		}
 		m_timeSinceLastClean = 0;
 	}
-	
+
 	/**
 	 * Directly puts an event in the fork's input queue. Note that
 	 * this bypasses the normal flow of events between processors, and
@@ -131,7 +131,7 @@ public final class SmartFork extends Processor
 	{
 		return new QueuePullable(index);
 	}
-	
+
 	protected class QueuePushable implements Pushable
 	{
 		public QueuePushable()
@@ -143,21 +143,27 @@ public final class SmartFork extends Processor
 		public Pushable push(Object o)
 		{
 			// Just push the event directly to the output pushables
-			for (int i = 0; i < m_outputPushables.length; i++)
+			synchronized (m_outputPushables)
 			{
-				m_outputPushables[i].push(o);
+				for (int i = 0; i < m_outputPushables.length; i++)
+				{
+					m_outputPushables[i].push(o);
+				}
 			}
 			incrementClean();
 			return this;
 		}
-		
+
 		@Override
 		public Pushable pushFast(Object o)
 		{
 			// Just push the event directly to the output pushables
-			for (int i = 0; i < m_outputPushables.length; i++)
+			synchronized (m_outputPushables)
 			{
-				m_outputPushables[i].pushFast(o);
+				for (int i = 0; i < m_outputPushables.length; i++)
+				{
+					m_outputPushables[i].pushFast(o);
+				}
 			}
 			incrementClean();
 			return this;
@@ -174,7 +180,7 @@ public final class SmartFork extends Processor
 		{
 			return 0;
 		}
-		
+
 		@Override
 		public void waitFor() 
 		{
@@ -190,7 +196,7 @@ public final class SmartFork extends Processor
 			// Do nothing
 		}
 	}
-	
+
 	/**
 	 * Increments the clean counter, which is used to decide when to
 	 * perform a clean-up of the input buffer 
@@ -203,17 +209,17 @@ public final class SmartFork extends Processor
 			cleanQueue();
 		}
 	}
-	
+
 	protected class QueuePullable implements Pullable
 	{
 		private final int m_queueIndex;
-		
+
 		public QueuePullable(int index)
 		{
 			super();
 			m_queueIndex = index;
 		}
-		
+
 		@Override
 		public void remove()
 		{
@@ -267,7 +273,7 @@ public final class SmartFork extends Processor
 			incrementClean();
 			return out;
 		}
-		
+
 		@Override
 		public final Object next()
 		{
@@ -293,7 +299,7 @@ public final class SmartFork extends Processor
 			}
 			return m_inputPullables[0].hasNext();
 		}	
-		
+
 		@Override
 		public Processor getProcessor() 
 		{
@@ -336,7 +342,7 @@ public final class SmartFork extends Processor
 			// Do nothing
 		}
 	}
-	
+
 	/**
 	 * Cleans the input list, and removes all events at the beginning that
 	 * have been consumed by all outputs
@@ -379,7 +385,7 @@ public final class SmartFork extends Processor
 			m_cursors[j] -= to_shift;
 		}
 	}
-	
+
 	/**
 	 * Creates a copy of the current fork with a greater arity
 	 * @param out_arity The desired arity for the output fork
