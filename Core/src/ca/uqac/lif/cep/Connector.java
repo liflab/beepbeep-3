@@ -265,6 +265,7 @@ public class Connector
 				return;
 			}
 		}
+		System.out.println("OUT CLASS: " + out_class);
 		throw new IncompatibleTypesException(p1, p2, i, j);
 	}
 		

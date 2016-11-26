@@ -149,7 +149,18 @@ public class FunctionTree extends Function
 	@Override
 	public void getInputTypesFor(Set<Class<?>> classes, int index) 
 	{
-		m_function.getInputTypesFor(classes, index);
+		for (Function f : m_children)
+		{
+			if (f instanceof ArgumentPlaceholder)
+			{
+				ArgumentPlaceholder ap = (ArgumentPlaceholder) f;
+				if (ap.getIndex() == index)
+				{
+					m_function.getInputTypesFor(classes, index);
+				}
+			}
+		}
+		//m_function.getInputTypesFor(classes, index);
 	}
 
 	@Override
