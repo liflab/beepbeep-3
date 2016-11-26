@@ -267,6 +267,12 @@ public class Multiplexer extends Processor
 		{
 			return m_index;
 		}
+
+		@Override
+		public boolean isDone() 
+		{
+			return true;
+		}
 	}
 	
 	/**

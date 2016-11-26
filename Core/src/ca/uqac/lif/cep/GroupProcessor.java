@@ -503,6 +503,32 @@ public class GroupProcessor extends Processor
 		{
 			return m_position;
 		}
+
+		@Override
+		public boolean isDone() 
+		{
+			// Since this pushable is blocking
+			return true;
+		}
 	}
 	
+	@Override
+	public void start()
+	{
+		super.start();
+		for (Processor p : m_processors)
+		{
+			p.start();
+		}
+	}
+
+	@Override
+	public void stop()
+	{
+		super.stop();
+		for (Processor p : m_processors)
+		{
+			p.stop();
+		}
+	}
 }

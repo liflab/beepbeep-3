@@ -161,6 +161,13 @@ public abstract class SingleProcessor extends Processor
 		{
 			return SingleProcessor.this;
 		}
+
+		@Override
+		public boolean isDone() 
+		{
+			// Since this pushable is blocking
+			return true;
+		}
 	}
 
 	/**

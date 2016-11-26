@@ -44,18 +44,19 @@ public class PullThreadGroup extends GroupProcessor
 			m_pullable = new ThreadPullable(new ContinuousPoller(m_outputPullables.get(index)));
 		}
 		return new ProxyPullable(m_pullable, index);
-		//return m_outputPullables.get(index);
 	}
 	
 	@Override
 	public void start()
 	{
+		super.start();
 		m_pullable.start();
 	}
 	
 	@Override
 	public void stop()
 	{
+		super.stop();
 		m_pullable.stop();
 	}
 

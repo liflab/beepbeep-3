@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.Queue;
 import java.util.Vector;
 
+import ca.uqac.lif.cep.Connector.Variant;
+
 /**
  * Source whose input is a queue of objects. One gives the
  * <code>QueueSource</code> a list of events, and that source sends
@@ -185,6 +187,6 @@ public class QueueSource extends Source
 				return o.getClass();
 			}
 		}
-		return null;
+		return Variant.class;
 	}
 }

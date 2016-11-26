@@ -55,4 +55,13 @@ public interface Pushable
 	 * @return The position
 	 */
 	public int getPosition();
+	
+	/**
+	 * Determines if the pushable is done pushing. The answer
+	 * is not always "true" in the case of non-blocking pushables,
+	 * which return from their call to {@link #push(Object) push()}
+	 * wihtout the push action being actually completed.
+	 * @return true if the pushable is done pushing
+	 */
+	public boolean isDone();
 }

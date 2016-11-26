@@ -162,6 +162,12 @@ public final class SmartFork extends Processor
 		{
 			return 0;
 		}
+		
+		@Override
+		public boolean isDone() 
+		{
+			return true;
+		}
 	}
 	
 	/**
@@ -198,6 +204,10 @@ public final class SmartFork extends Processor
 		public Object pullSoft()
 		{
 			Object out = null;
+			if (m_inputPullables[0] == null)
+			{
+				return out;
+			}
 			if (m_cursors[m_queueIndex] >= m_inputEvents.size())
 			{
 				Object o = m_inputPullables[0].pullSoft();
@@ -219,6 +229,10 @@ public final class SmartFork extends Processor
 		public Object pull()
 		{
 			Object out = null;
+			if (m_inputPullables[0] == null)
+			{
+				return out;
+			}
 			if (m_cursors[m_queueIndex] >= m_inputEvents.size())
 			{
 				Object o = m_inputPullables[0].pull();
