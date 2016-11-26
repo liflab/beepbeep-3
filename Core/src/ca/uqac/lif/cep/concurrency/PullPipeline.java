@@ -40,7 +40,7 @@ public class PullPipeline extends Processor implements Runnable
 	 * The pushable the pipeline will push to
 	 */
 	protected Pushable m_outputPushable;
-	
+
 	/**
 	 * The pushable one can push to this pipeline
 	 */
@@ -55,18 +55,22 @@ public class PullPipeline extends Processor implements Runnable
 	 * The maximum number of simultaneous threads that this pipeline
 	 * can use
 	 */
-	protected int m_maxThreads = 1;
+	protected int m_maxThreads = 2;
 
 	/**
 	 * Time (in milliseconds) to wait before polling again
 	 */
-	protected static final long s_sleepInterval = 1000;
+	protected static final long s_sleepInterval = 50;
 
 	/**
 	 * The processor that will be pipelined
 	 */
 	protected Processor m_processor;
 
+	/**
+	 * Creates a new pull pipeline around a processor
+	 * @param p The processor
+	 */
 	public PullPipeline(Processor p)
 	{
 		super(1, 1);
@@ -111,7 +115,13 @@ public class PullPipeline extends Processor implements Runnable
 	{
 		PullPipeline p = new PullPipeline(m_processor.clone());
 		p.setContext(m_context);
+		p.m_maxThreads = m_maxThreads;
 		return p;
+	}
+	
+	public void setMaxThreads(int num_threads)
+	{
+		m_maxThreads = num_threads;
 	}
 
 	@Override
@@ -183,41 +193,40 @@ public class PullPipeline extends Processor implements Runnable
 		}
 
 		@Override
-		synchronized public Object pull() 
+		public Object pull() 
 		{
-			if (!m_threads.isEmpty() && m_threads.getFirst().hasEvent())
+			synchronized (m_threads)
 			{
-				Object out = shiftEntries();
-				return out;
-			}
-			// Wait until index 0 appears
-			while (m_run)
-			{
-				try 
-				{
-					Thread.sleep(s_sleepInterval);
-				} 
-				catch (InterruptedException e) 
-				{
-					return null;
-				}
 				if (!m_threads.isEmpty() && m_threads.getFirst().hasEvent())
 				{
 					Object out = shiftEntries();
 					return out;
 				}
 			}
+			// Wait until index 0 appears
+			while (m_run)
+			{
+				ThreadManager.sleep(s_sleepInterval);
+				synchronized (m_threads)
+				{
+					if (!m_threads.isEmpty() && m_threads.getFirst().hasEvent())
+					{
+						Object out = shiftEntries();
+						return out;
+					}					
+				}
+			}
 			return null;
 		}
 
 		@Override
-		synchronized public Object next() 
+		public Object next() 
 		{
 			return pull();
 		}
 
 		@Override
-		synchronized public NextStatus hasNextSoft()
+		public NextStatus hasNextSoft()
 		{
 			if (!m_run)
 			{
@@ -259,7 +268,6 @@ public class PullPipeline extends Processor implements Runnable
 				{
 					if (!m_threads.isEmpty() && m_threads.getFirst().hasEvent())
 					{
-						System.out.println("Has event");
 						return true;
 					}					
 				}
@@ -301,13 +309,13 @@ public class PullPipeline extends Processor implements Runnable
 		{
 			return 0;
 		}
-		
+
 		@Override
 		public Pushable pushFast(Object o)
 		{
 			return push(o);
 		}
-		
+
 		@Override
 		public void waitFor() 
 		{
@@ -360,9 +368,8 @@ public class PullPipeline extends Processor implements Runnable
 				while (pullable.hasNext())
 				{
 					Object o = pullable.pull();
-					synchronized (this)
+					synchronized (m_outQueue)
 					{
-						System.out.println("PUTTING " + o);
 						m_outQueue.add(o);
 					}
 				}
@@ -372,14 +379,12 @@ public class PullPipeline extends Processor implements Runnable
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("DONE");
 		}
 	}
 
 	@Override
 	public void run()
 	{
-		m_run = true;
 		while (m_run)
 		{
 			if (m_threads.size() < m_maxThreads)
@@ -387,9 +392,11 @@ public class PullPipeline extends Processor implements Runnable
 				Object o = m_inputPullable.pullSoft();
 				if (o != null)
 				{
-					synchronized (this)
+					synchronized (m_inQueue)
 					{
+						//System.out.println("PUTTING " + o);
 						m_inQueue.add(o);	
+						m_isPulled.add(true);
 					}
 				}				
 			}
@@ -411,8 +418,9 @@ public class PullPipeline extends Processor implements Runnable
 	{
 		if (!m_run)
 		{
-			System.out.println("START");
+			//System.out.println("START");
 			Thread t = new Thread(this);
+			m_run = true;
 			t.start();
 		}
 	}
@@ -423,7 +431,7 @@ public class PullPipeline extends Processor implements Runnable
 		m_run = false;
 	}
 
-	synchronized protected void doThreadHousekeeping()
+	protected void doThreadHousekeeping()
 	{
 		int num_running = 0;
 		for (PipelineThread pt : m_threads)

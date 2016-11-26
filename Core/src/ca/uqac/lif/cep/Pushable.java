@@ -34,6 +34,9 @@ public interface Pushable
 {
 	/**
 	 * Pushes an event into one of the processor's input trace.
+	 * Contrarily to {@link #pushFast(Object)}, this method <em>must</em>
+	 * return only when the push operation is completely done. Calling
+	 * {@link #waitFor()} afterwards must <em>not</em> be necessary.
 	 * @param o The event. Although you can technically push <code>null</code>,
 	 *   the behaviour in this case is undefined. It <code>may</code> be
 	 *   interpreted as if you are passing no event.
@@ -82,9 +85,10 @@ public interface Pushable
 	 * Waits until the pushable is done pushing. In the case of a
 	 * blocking pushable, the call to {@link #push(Object) push()}
 	 * waits for the operation to be completed; so calling this method
-	 * afterwards should return immediately. For a non-blocking
-	 * pushable, this is the opposite: the call to 
-	 * {@link #push(Object) push()} should return more or less
+	 * afterwards should return immediately (as a matter of fact,
+	 * calling it is even optional). For a non-blocking
+	 * call (with {@link #pushFast(Object) pushFast()}, this is the opposite:
+	 * the call to {@link #push(Object) push()} should return more or less
 	 * immediately, but the call to this method will not return until
 	 * the push operation is finished.
 	 */
