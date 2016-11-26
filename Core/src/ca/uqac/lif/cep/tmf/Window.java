@@ -142,6 +142,10 @@ public class Window extends SingleProcessor
 					Pushable p = m_innerInputs[j];
 					p.push(o);
 				}
+				for (int j = 0; j < getInputArity(); j++)
+				{
+					m_innerInputs[j].waitFor();
+				}
 				out = m_sink.getLast();
 			}
 		}

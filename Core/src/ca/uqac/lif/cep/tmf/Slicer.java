@@ -121,12 +121,18 @@ public class Slicer extends SingleProcessor
 			Processor slice_p = m_slices.get(s_id);
 			QueueSink sink_p = m_sinks.get(s_id);
 			// Push the input into the processor
+			Pushable[] p_array = new Pushable[inputs.length];
 			for (int i = 0; i < inputs.length; i++)
 			{
 
 				Object o_i = inputs[i];
 				Pushable p = slice_p.getPushableInput(i);
 				p.push(o_i);
+				p_array[i] = p;
+			}
+			for (int i = 0; i < inputs.length; i++)
+			{
+				p_array[i].waitFor();
 			}
 			// Collect the output from that processor
 			Object[] out = sink_p.remove();

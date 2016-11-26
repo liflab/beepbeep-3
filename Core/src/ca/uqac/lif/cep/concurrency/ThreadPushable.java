@@ -31,12 +31,22 @@ public class ThreadPushable implements Pushable
 	}
 
 	@Override
-	public Pushable push(Object o) 
+	public Pushable pushFast(Object o) 
 	{
 		m_pusher.setEventToPush(o);
 		m_pusher.call(Call.PUSH);
 		return this;
 	}
+	
+	@Override
+	public Pushable push(Object o) 
+	{
+		m_pusher.setEventToPush(o);
+		m_pusher.call(Call.PUSH);
+		m_pusher.waitFor();
+		return this;
+	}
+
 
 	@Override
 	public Processor getProcessor() 

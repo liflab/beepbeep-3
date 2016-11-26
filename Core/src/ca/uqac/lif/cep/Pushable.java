@@ -44,6 +44,28 @@ public interface Pushable
 	public Pushable push(Object o);
 	
 	/**
+	 * Pushes an event into one of the processor's input trace, but
+	 * does not wait for the push operation to terminate. In other words,
+	 * this is a non-blocking call to <code>push()</code> that returns
+	 * control to the caller immediately.
+	 * In order to resynchronize the caller with the result of the push
+	 * operation, one must call {@link #waitFor()}.
+	 * <p>
+	 * Some implementations of this interface do not implement non-blocking
+	 * calls; in such a case, a call to {@link #pushFast() pushFast()} will
+	 * be identical to a call to {@link #push(Object) push()}, and
+	 * calling {@link #waitFor()} will return immediately.
+	 * @param o The event. Although you can technically push <code>null</code>,
+	 *   the behaviour in this case is undefined. It <code>may</code> be
+	 *   interpreted as if you are passing no event.
+	 * @return The same instance of pushable. This is done to allow chain
+	 *   calls to {@link Pushable} objects, e.g.
+	 *   <code>p.push(o1).push(o2)</code>.
+	 */
+	public Pushable pushFast(Object o);
+
+	
+	/**
 	 * Gets the processor instance this Pushable is linked to 
 	 * @return The processor
 	 */

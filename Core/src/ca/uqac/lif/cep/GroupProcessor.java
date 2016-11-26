@@ -489,7 +489,15 @@ public class GroupProcessor extends Processor
 		@Override
 		public Pushable push(Object o)
 		{
-			return m_pushable.push(o);
+			m_pushable.push(o);
+			m_pushable.waitFor();
+			return m_pushable;
+		}
+		
+		@Override
+		public Pushable pushFast(Object o)
+		{
+			return push(o);
 		}
 
 		@Override

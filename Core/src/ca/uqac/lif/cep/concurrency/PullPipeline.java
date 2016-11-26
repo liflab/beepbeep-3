@@ -303,6 +303,12 @@ public class PullPipeline extends Processor implements Runnable
 		}
 		
 		@Override
+		public Pushable pushFast(Object o)
+		{
+			return push(o);
+		}
+		
+		@Override
 		public void waitFor() 
 		{
 			return;
@@ -448,6 +454,7 @@ public class PullPipeline extends Processor implements Runnable
 				// must push whatever it produces
 				Object o = shiftEntries();
 				m_outputPushable.push(o);
+				m_outputPushable.waitFor();
 			}
 		}
 	}

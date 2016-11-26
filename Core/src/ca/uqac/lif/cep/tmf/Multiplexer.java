@@ -253,6 +253,14 @@ public class Multiplexer extends Processor
 		public Pushable push(Object o)
 		{
 			m_outputPushables[0].push(o);
+			m_outputPushables[0].waitFor();
+			return this;
+		}
+		
+		@Override
+		public Pushable pushFast(Object o)
+		{
+			m_outputPushables[0].pushFast(o);
 			return this;
 		}
 
@@ -271,6 +279,7 @@ public class Multiplexer extends Processor
 		@Override
 		public void waitFor() 
 		{
+			m_outputPushables[0].waitFor();
 			return;
 		}
 	}

@@ -150,6 +150,18 @@ public final class SmartFork extends Processor
 			incrementClean();
 			return this;
 		}
+		
+		@Override
+		public Pushable pushFast(Object o)
+		{
+			// Just push the event directly to the output pushables
+			for (int i = 0; i < m_outputPushables.length; i++)
+			{
+				m_outputPushables[i].pushFast(o);
+			}
+			incrementClean();
+			return this;
+		}
 
 		@Override
 		public Processor getProcessor() 
@@ -166,7 +178,10 @@ public final class SmartFork extends Processor
 		@Override
 		public void waitFor() 
 		{
-			return;
+			for (int i = 0; i < m_outputPushables.length; i++)
+			{
+				m_outputPushables[i].waitFor();
+			}
 		}
 	}
 	

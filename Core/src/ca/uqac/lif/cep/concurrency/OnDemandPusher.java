@@ -31,7 +31,9 @@ public class OnDemandPusher implements Pusher
 			switch (m_currentCall)
 			{
 			case PUSH:
+				m_done = false;
 				m_pushable.push(m_eventToPush);
+				m_eventToPush = null;
 				break;
 			default:
 				break;

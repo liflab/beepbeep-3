@@ -102,6 +102,12 @@ public abstract class SingleProcessor extends Processor
 			super();
 			m_index = index;
 		}
+		
+		@Override
+		public Pushable pushFast(Object o)
+		{
+			return push(o);
+		}
 				
 		@Override
 		public int getPosition()
@@ -149,6 +155,7 @@ public abstract class SingleProcessor extends Processor
 							Pushable p = m_outputPushables[i];
 							assert p != null;
 							p.push(evt[i]);
+							p.waitFor();
 						}
 					}
 				}
