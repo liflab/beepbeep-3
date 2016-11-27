@@ -85,7 +85,7 @@ public class PullPipeline extends Processor implements Runnable
 	/**
 	 * Time (in milliseconds) to wait before polling again
 	 */
-	protected static final long s_sleepInterval = 1;
+	protected static final long s_sleepInterval = 0;
 
 	/**
 	 * The processor that will be pipelined
@@ -99,19 +99,22 @@ public class PullPipeline extends Processor implements Runnable
 	public PullPipeline(Processor p, ThreadManager manager)
 	{
 		super(1, 1);
-		m_inQueue = new LinkedList<Object>();
-		m_isPulled = new LinkedList<Boolean>();
-		m_pipelines = new LinkedList<PipelineRunnable>();
-		m_processor = p;
-		if (manager != null)
+		synchronized (this)
 		{
-			m_threadManager = manager;
-		}
-		else
-		{
-			if (ThreadManager.defaultManager != null)
+			m_inQueue = new LinkedList<Object>();
+			m_isPulled = new LinkedList<Boolean>();
+			m_pipelines = new LinkedList<PipelineRunnable>();
+			m_processor = p;
+			if (manager != null)
 			{
-				m_threadManager = ThreadManager.defaultManager;
+				m_threadManager = manager;
+			}
+			else
+			{
+				if (ThreadManager.defaultManager != null)
+				{
+					m_threadManager = ThreadManager.defaultManager;
+				}
 			}
 		}
 	}
@@ -126,7 +129,7 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	public void setPullableInput(int index, Pullable p)
+	synchronized public void setPullableInput(int index, Pullable p)
 	{
 		if (index == 0)
 		{
@@ -135,7 +138,7 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	public void setPushableOutput(int index, Pushable p)
+	synchronized public void setPushableOutput(int index, Pushable p)
 	{
 		if (index == 0)
 		{
@@ -144,19 +147,19 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	public Pushable getPushableInput(int index) 
+	synchronized public Pushable getPushableInput(int index) 
 	{
 		return new PipelinePushable();
 	}
 
 	@Override
-	public Pullable getPullableOutput(int index) 
+	synchronized public Pullable getPullableOutput(int index) 
 	{
 		return new PipelinePullable();
 	}
 
 	@Override
-	public PullPipeline clone() 
+	synchronized public PullPipeline clone() 
 	{
 		PullPipeline p = new PullPipeline(m_processor.clone());
 		p.setContext(m_context);
@@ -165,7 +168,7 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	public void setContext(Context context)
+	synchronized public void setContext(Context context)
 	{
 		if (context == null)
 		{
@@ -196,15 +199,18 @@ public class PullPipeline extends Processor implements Runnable
 	synchronized protected Object shiftEntries()
 	{
 		// Entry 0 is guaranteed to be here if this method is called
-		PipelineRunnable thread = m_pipelines.get(0);
-		Object o = thread.popEvent();
-		if (thread.canDelete())
+		synchronized (m_pipelines)
 		{
-			// This thread is done; we remove it
-			thread.dispose();
-			m_pipelines.remove(0);
+			PipelineRunnable thread = m_pipelines.get(0);
+			Object o = thread.popEvent();
+			if (thread.canDelete())
+			{
+				// This thread is done; we remove it
+				thread.dispose();
+				m_pipelines.remove(0);
+			}
+			return o;
 		}
-		return o;
 	}
 
 	/**
@@ -233,9 +239,12 @@ public class PullPipeline extends Processor implements Runnable
 				pollPullableSoft();
 				doThreadHousekeeping();
 			}
-			if (m_pipelines.isEmpty())
+			synchronized (m_pipelines)
 			{
-				return null;
+				if (m_pipelines.isEmpty())
+				{
+					return null;
+				}
 			}
 			Object out = shiftEntries();
 			return out;
@@ -247,7 +256,7 @@ public class PullPipeline extends Processor implements Runnable
 			if (!m_run)
 			{
 				// Take this opportunity to perform a cleanup on the pipelines
-				pollPullableSoft();
+				pollPullableHard();
 				doThreadHousekeeping();
 			}
 			synchronized (m_pipelines)
@@ -289,9 +298,12 @@ public class PullPipeline extends Processor implements Runnable
 				pollPullableSoft();
 				doThreadHousekeeping();
 			}
-			if (m_pipelines.isEmpty())
+			synchronized (m_pipelines)
 			{
-				return NextStatus.MAYBE;
+				if (m_pipelines.isEmpty())
+				{
+					return NextStatus.MAYBE;
+				}
 			}
 			return NextStatus.YES;
 		}
@@ -313,13 +325,14 @@ public class PullPipeline extends Processor implements Runnable
 				boolean b = pollPullableHard();
 				if (!b)
 				{
+					m_run = false;
 					return false;
 				}
 				doThreadHousekeeping();
 				return true;
 			}
 			// If we're running in a thread, wait until index 0 appears
-			while (true)
+			while (m_run)
 			{
 				ThreadManager.sleep(s_sleepInterval);
 				synchronized (m_pipelines)
@@ -330,6 +343,7 @@ public class PullPipeline extends Processor implements Runnable
 					}					
 				}
 			}
+			return false;
 		}
 
 		@Override
@@ -359,12 +373,15 @@ public class PullPipeline extends Processor implements Runnable
 		@Override
 		public void dispose()
 		{
-			Iterator<PipelineRunnable> it = m_pipelines.iterator();
-			while (it.hasNext())
+			synchronized (m_pipelines)
 			{
-				PipelineRunnable pr = it.next();
-				pr.dispose();
-				it.remove();
+				Iterator<PipelineRunnable> it = m_pipelines.iterator();
+				while (it.hasNext())
+				{
+					PipelineRunnable pr = it.next();
+					pr.dispose();
+					it.remove();
+				}
 			}
 		}
 	}
@@ -407,12 +424,15 @@ public class PullPipeline extends Processor implements Runnable
 		@Override
 		public void dispose()
 		{
-			Iterator<PipelineRunnable> it = m_pipelines.iterator();
-			while (it.hasNext())
+			synchronized (m_pipelines)
 			{
-				PipelineRunnable pr = it.next();
-				pr.dispose();
-				it.remove();
+				Iterator<PipelineRunnable> it = m_pipelines.iterator();
+				while (it.hasNext())
+				{
+					PipelineRunnable pr = it.next();
+					pr.dispose();
+					it.remove();
+				}
 			}
 		}
 	}
@@ -428,7 +448,7 @@ public class PullPipeline extends Processor implements Runnable
 		}
 	}
 
-	private void pollPullableSoft()
+	synchronized private void pollPullableSoft()
 	{
 		if (m_inQueue.size() < m_maxQueueSize)
 		{
@@ -444,8 +464,8 @@ public class PullPipeline extends Processor implements Runnable
 			}				
 		}
 	}
-	
-	private boolean pollPullableHard()
+
+	synchronized private boolean pollPullableHard()
 	{
 		if (m_inQueue.size() < m_maxQueueSize)
 		{
@@ -462,6 +482,7 @@ public class PullPipeline extends Processor implements Runnable
 			}
 			else
 			{
+				m_run = false;
 				return false;
 			}
 		}
@@ -469,7 +490,7 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	public void start()
+	synchronized public void start()
 	{
 		if (!m_run)
 		{
@@ -485,7 +506,7 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	public void stop()
+	synchronized public void stop()
 	{
 		m_run = false;
 		if (m_managedThread != null)
@@ -497,43 +518,49 @@ public class PullPipeline extends Processor implements Runnable
 	private void doThreadHousekeeping()
 	{
 		//System.out.println("Housekeeping");
-		if (!m_inQueue.isEmpty())
+		synchronized (m_inQueue)
 		{
-			// An input event waiting: start a new pipeline with this event
-			Object event = m_inQueue.poll();
-			boolean is_pulled = m_isPulled.poll();
-			Object[] inputs = new Object[1];
-			inputs[0] = event;
-			PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.clone(), inputs, is_pulled);
-			m_pipelines.add(new_pipeline);
-			ManagedThread new_thread = null;
-			if (m_threadManager != null)
+			if (!m_inQueue.isEmpty())
 			{
-				new_thread = m_threadManager.tryNewThread(new_pipeline);
-			}
-			if (new_thread != null)
-			{
-				// We got a thread: run pipeline in that thread
-				//System.out.println("Got new thread");
-				new_pipeline.setThread(new_thread);
-				new_thread.start();
-			}
-			else
-			{
-				// No thread: run pipeline in the current thread
-				new_pipeline.run();
+				// An input event waiting: start a new pipeline with this event
+				Object event = m_inQueue.poll();
+				boolean is_pulled = m_isPulled.poll();
+				Object[] inputs = new Object[1];
+				inputs[0] = event;
+				PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.clone(), inputs, is_pulled);
+				m_pipelines.add(new_pipeline);
+				ManagedThread new_thread = null;
+				if (m_threadManager != null)
+				{
+					new_thread = m_threadManager.tryNewThread(new_pipeline);
+				}
+				if (new_thread != null)
+				{
+					// We got a thread: run pipeline in that thread
+					//System.out.println("Got new thread");
+					new_pipeline.setThread(new_thread);
+					new_thread.start();
+				}
+				else
+				{
+					// No thread: run pipeline in the current thread
+					new_pipeline.run();
+				}
 			}
 		}
-		if (!m_pipelines.isEmpty())
+		synchronized (m_pipelines)
 		{
-			PipelineRunnable pt = m_pipelines.getFirst();
-			while (!pt.m_isPulled && pt.hasEvent())
+			if (!m_pipelines.isEmpty())
 			{
-				// If this thread has been started from pushed events,
-				// must push whatever it produces
-				Object o = shiftEntries();
-				m_outputPushable.push(o);
-				m_outputPushable.waitFor();
+				PipelineRunnable pt = m_pipelines.getFirst();
+				while (!pt.m_isPulled && pt.hasEvent())
+				{
+					// If this thread has been started from pushed events,
+					// must push whatever it produces
+					Object o = shiftEntries();
+					m_outputPushable.push(o);
+					m_outputPushable.waitFor();
+				}
 			}
 		}
 	}
