@@ -101,9 +101,10 @@ public class ThreadPullableTest
 	@Test
 	public void testContinuousChain1()
 	{
+		ThreadManager tm = new ThreadManager(-1);
 		DelayProcessor delay_1 = new DelayProcessor(0, 500);
 		Pullable d1_pull = delay_1.getPullableOutput();
-		Pullable d1_tpull = ThreadPullable.tryPullable(d1_pull);
+		Pullable d1_tpull = ThreadPullable.tryPullable(d1_pull, tm);
 		assertTrue(d1_tpull instanceof ThreadPullable);
 		DelayProcessor delay_2 = new DelayProcessor(1, 500);
 		delay_2.setPullableInput(0, d1_tpull);

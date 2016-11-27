@@ -141,6 +141,7 @@ class PipelineRunnable implements Runnable
 	@Override
 	public void run()
 	{
+		//System.out.println(this + " started");
 		QueueSource qs = new QueueSource();
 		qs.loop(false);
 		qs.addEvent(m_inputs[0]);
@@ -153,6 +154,7 @@ class PipelineRunnable implements Runnable
 				Object o = pullable.pull();
 				synchronized (m_outQueue)
 				{
+					//System.out.println(this + " Adding " + o);
 					m_outQueue.add(o);
 				}
 			}

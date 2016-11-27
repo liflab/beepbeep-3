@@ -32,65 +32,65 @@ public class PullPipeline extends Processor implements Runnable
 	/**
 	 * A queue of incoming messages
 	 */
-	protected Queue<Object> m_inQueue;
+	private volatile Queue<Object> m_inQueue;
 
 	/**
 	 * A matching queue of Booleans; an entry contains the value
 	 * true if the event of <code>m_inQueue</code> was pulled from
 	 * the input, and false if it was pushed from it
 	 */
-	protected Queue<Boolean> m_isPulled;
+	private volatile Queue<Boolean> m_isPulled;
 
 	/**
 	 * A list of {@link PipelineRunnable}
 	 */
-	protected LinkedList<PipelineRunnable> m_pipelines;
+	private volatile LinkedList<PipelineRunnable> m_pipelines;
 
 	/**
 	 * The pullable the pipeline will read from
 	 */
-	protected Pullable m_inputPullable;
+	private Pullable m_inputPullable;
 
 	/**
 	 * The pushable the pipeline will push to
 	 */
-	protected Pushable m_outputPushable;
+	private Pushable m_outputPushable;
 
 	/**
 	 * The pushable one can push to this pipeline
 	 */
-	protected Pushable m_inputPushable;
+	private Pushable m_inputPushable;
 
 	/**
 	 * Semaphore to stop the pipeline
 	 */
-	protected boolean m_run = false;
-	
+	private volatile boolean m_run = false;
+
 	/**
 	 * The size after which the pipeline temporarily stops polling
 	 * for new events
 	 */
-	protected int m_maxQueueSize = 100;
+	private int m_maxQueueSize = 100;
 
 	/**
 	 * The thread manager to get instances of threads
 	 */
-	protected ThreadManager m_threadManager;
+	private ThreadManager m_threadManager;
 
 	/**
 	 * The thread in which the pipeline thread is running
 	 */
-	protected ManagedThread m_managedThread;
+	private ManagedThread m_managedThread;
 
 	/**
 	 * Time (in milliseconds) to wait before polling again
 	 */
-	protected static final long s_sleepInterval = 50;
+	protected static final long s_sleepInterval = 1;
 
 	/**
 	 * The processor that will be pipelined
 	 */
-	protected Processor m_processor;
+	private Processor m_processor;
 
 	/**
 	 * Creates a new pull pipeline around a processor
@@ -230,7 +230,7 @@ public class PullPipeline extends Processor implements Runnable
 			if (!m_run)
 			{
 				// Take this opportunity to perform a cleanup on the pipelines
-				pollPullable();
+				pollPullableSoft();
 				doThreadHousekeeping();
 			}
 			if (m_pipelines.isEmpty())
@@ -247,7 +247,7 @@ public class PullPipeline extends Processor implements Runnable
 			if (!m_run)
 			{
 				// Take this opportunity to perform a cleanup on the pipelines
-				pollPullable();
+				pollPullableSoft();
 				doThreadHousekeeping();
 			}
 			synchronized (m_pipelines)
@@ -286,7 +286,7 @@ public class PullPipeline extends Processor implements Runnable
 			if (!m_run)
 			{
 				// Take this opportunity to perform a cleanup on the pipelines
-				pollPullable();
+				pollPullableSoft();
 				doThreadHousekeeping();
 			}
 			if (m_pipelines.isEmpty())
@@ -299,12 +299,6 @@ public class PullPipeline extends Processor implements Runnable
 		@Override
 		public boolean hasNext() 
 		{
-			if (!m_run)
-			{
-				// Take this opportunity to perform a cleanup on the pipelines
-				pollPullable();
-				doThreadHousekeeping();
-			}
 			synchronized (m_pipelines)
 			{
 				if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
@@ -312,7 +306,19 @@ public class PullPipeline extends Processor implements Runnable
 					return true;
 				}
 			}
-			// Wait until index 0 appears
+			// If we're not running in a thread, poll the pullable
+			if (!m_run)
+			{
+				// Take this opportunity to perform a cleanup on the pipelines
+				boolean b = pollPullableHard();
+				if (!b)
+				{
+					return false;
+				}
+				doThreadHousekeeping();
+				return true;
+			}
+			// If we're running in a thread, wait until index 0 appears
 			while (true)
 			{
 				ThreadManager.sleep(s_sleepInterval);
@@ -416,13 +422,13 @@ public class PullPipeline extends Processor implements Runnable
 	{
 		while (m_run)
 		{
-			pollPullable();
+			pollPullableHard();
 			doThreadHousekeeping();
 			ThreadManager.sleep(s_sleepInterval);
 		}
 	}
-	
-	private void pollPullable()
+
+	private void pollPullableSoft()
 	{
 		if (m_inQueue.size() < m_maxQueueSize)
 		{
@@ -438,16 +444,40 @@ public class PullPipeline extends Processor implements Runnable
 			}				
 		}
 	}
+	
+	private boolean pollPullableHard()
+	{
+		if (m_inQueue.size() < m_maxQueueSize)
+		{
+			Object o = m_inputPullable.pull();
+			if (o != null)
+			{
+				synchronized (m_inQueue)
+				{
+					//System.out.println("PUTTING " + o);
+					m_inQueue.add(o);	
+					m_isPulled.add(true);
+					return true;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public void start()
 	{
 		if (!m_run)
 		{
-			//System.out.println("START");
+			System.out.println("START");
 			m_managedThread = m_threadManager.tryNewThread(this);
 			if (m_managedThread != null)
 			{
+				System.out.println("GOT A THREAD");
 				m_run = true;
 				m_managedThread.start();
 			}
@@ -464,8 +494,9 @@ public class PullPipeline extends Processor implements Runnable
 		}
 	}
 
-	protected void doThreadHousekeeping()
+	private void doThreadHousekeeping()
 	{
+		//System.out.println("Housekeeping");
 		if (!m_inQueue.isEmpty())
 		{
 			// An input event waiting: start a new pipeline with this event
@@ -483,6 +514,7 @@ public class PullPipeline extends Processor implements Runnable
 			if (new_thread != null)
 			{
 				// We got a thread: run pipeline in that thread
+				//System.out.println("Got new thread");
 				new_pipeline.setThread(new_thread);
 				new_thread.start();
 			}
