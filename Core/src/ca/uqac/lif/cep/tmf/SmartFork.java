@@ -68,9 +68,12 @@ public final class SmartFork extends Processor
 	public SmartFork(int out_arity)
 	{
 		super(1, out_arity);
-		m_inputEvents = new ArrayList<Object>();
-		m_cursors = new int[out_arity];
-		m_timeSinceLastClean = 0;
+		synchronized (this)
+		{
+			m_inputEvents = new ArrayList<Object>();
+			m_cursors = new int[out_arity];
+			m_timeSinceLastClean = 0;			
+		}
 	}
 
 	/**
@@ -81,24 +84,27 @@ public final class SmartFork extends Processor
 	public SmartFork(int out_arity, SmartFork reference)
 	{
 		this(out_arity);
-		for (int i = 0; i < reference.m_inputPullables.length; i++)
+		synchronized (this)
 		{
-			m_inputPullables[i] = reference.m_inputPullables[i];
-		}
-		for (int i = 0; i < reference.m_outputPushables.length; i++)
-		{
-			m_outputPushables[i] = reference.m_outputPushables[i];
+			for (int i = 0; i < reference.m_inputPullables.length; i++)
+			{
+				m_inputPullables[i] = reference.m_inputPullables[i];
+			}
+			for (int i = 0; i < reference.m_outputPushables.length; i++)
+			{
+				m_outputPushables[i] = reference.m_outputPushables[i];
+			}			
 		}
 	}
 
 	@Override
-	public SmartFork clone()
+	synchronized public SmartFork clone()
 	{
 		return new SmartFork(getOutputArity());
 	}
 
 	@Override
-	public void reset()
+	synchronized public void reset()
 	{
 		m_inputEvents.clear();
 		for (int i = 0; i < m_cursors.length; i++)
@@ -114,7 +120,7 @@ public final class SmartFork extends Processor
 	 * should be used with much caution.
 	 * @param o The event to insert 
 	 */
-	public void putInQueue(Object o)
+	synchronized public void putInQueue(Object o)
 	{
 		m_inputEvents.add(o);
 	}
@@ -127,7 +133,7 @@ public final class SmartFork extends Processor
 	}
 
 	@Override
-	public Pullable getPullableOutput(int index)
+	synchronized public Pullable getPullableOutput(int index)
 	{
 		return new QueuePullable(index);
 	}
@@ -140,49 +146,43 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		public Pushable push(Object o)
+		synchronized public Pushable push(Object o)
 		{
 			// Just push the event directly to the output pushables
-			synchronized (m_outputPushables)
+			for (int i = 0; i < m_outputPushables.length; i++)
 			{
-				for (int i = 0; i < m_outputPushables.length; i++)
-				{
-					m_outputPushables[i].push(o);
-				}
+				m_outputPushables[i].push(o);
 			}
 			incrementClean();
 			return this;
 		}
 
 		@Override
-		public Pushable pushFast(Object o)
+		synchronized public Pushable pushFast(Object o)
 		{
 			// Just push the event directly to the output pushables
-			synchronized (m_outputPushables)
+			for (int i = 0; i < m_outputPushables.length; i++)
 			{
-				for (int i = 0; i < m_outputPushables.length; i++)
-				{
-					m_outputPushables[i].pushFast(o);
-				}
+				m_outputPushables[i].pushFast(o);
 			}
 			incrementClean();
 			return this;
 		}
 
 		@Override
-		public Processor getProcessor() 
+		synchronized public Processor getProcessor() 
 		{
 			return SmartFork.this;
 		}
 
 		@Override
-		public int getPosition() 
+		synchronized public int getPosition() 
 		{
 			return 0;
 		}
 
 		@Override
-		public void waitFor() 
+		synchronized public void waitFor() 
 		{
 			for (int i = 0; i < m_outputPushables.length; i++)
 			{
@@ -201,7 +201,7 @@ public final class SmartFork extends Processor
 	 * Increments the clean counter, which is used to decide when to
 	 * perform a clean-up of the input buffer 
 	 */
-	protected void incrementClean()
+	synchronized protected void incrementClean()
 	{
 		m_timeSinceLastClean = (m_timeSinceLastClean + 1) % s_cleanInterval;
 		if (m_timeSinceLastClean == 0)
@@ -347,7 +347,7 @@ public final class SmartFork extends Processor
 	 * Cleans the input list, and removes all events at the beginning that
 	 * have been consumed by all outputs
 	 */
-	protected void cleanQueue()
+	synchronized protected void cleanQueue()
 	{
 		int i = 0;
 		int to_shift = 0;
@@ -390,7 +390,7 @@ public final class SmartFork extends Processor
 	 * Creates a copy of the current fork with a greater arity
 	 * @param out_arity The desired arity for the output fork
 	 */
-	public void extendOutputArity(int out_arity)
+	synchronized public void extendOutputArity(int out_arity)
 	{
 		m_outputArity = out_arity;
 		m_cursors = new int[out_arity];

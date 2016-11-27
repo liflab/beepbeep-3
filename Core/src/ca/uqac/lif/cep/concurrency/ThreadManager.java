@@ -28,38 +28,41 @@ public class ThreadManager implements Runnable
 	 * thread manager forbids the use of threads.
 	 */
 	public static ThreadManager defaultManager = new ThreadManager(0);
-	
+
 	/**
 	 * The set of threads managed by this manager
 	 */
 	protected volatile Set<ManagedThread> m_threads;
-	
+
 	/**
 	 * The maximum number of threads this manager is allowed to keep
 	 * at any moment
 	 */
 	protected int m_maxThreads = 2;
-	
+
 	/**
 	 * The time (in milliseconds) between refreshes of the internal
 	 * state of the manager
 	 */
 	protected static final long s_sleepInterval = 30;
-	
+
 	/**
 	 * Whether the manager is running
 	 */
 	protected volatile boolean m_run = false;
-	
+
 	/**
 	 * Creates a new thread manager
 	 */
 	public ThreadManager()
 	{
 		super();
-		m_threads = new HashSet<ManagedThread>();
+		synchronized (this)
+		{
+			m_threads = new HashSet<ManagedThread>();
+		}
 	}
-	
+
 	/**
 	 * Creates a new thread manager
 	 * @param max_threads The maximum number of threads this manager
@@ -69,10 +72,13 @@ public class ThreadManager implements Runnable
 	public ThreadManager(int max_threads)
 	{
 		super();
-		m_threads = new HashSet<ManagedThread>();
-		m_maxThreads = max_threads;
+		synchronized (this)
+		{
+			m_threads = new HashSet<ManagedThread>();
+			m_maxThreads = max_threads;
+		}
 	}
-	
+
 	/**
 	 * Gets a new instance of managed thread. This method is blocking,
 	 * i.e. if the manager already has the maximum number of threads
@@ -103,7 +109,7 @@ public class ThreadManager implements Runnable
 			sleep(s_sleepInterval);
 		}
 	}
-	
+
 	/**
 	 * Attempts to get a new instance of managed thread. This method
 	 * is non-blocking: if the manager already has the maximum number of
@@ -111,7 +117,7 @@ public class ThreadManager implements Runnable
 	 * @param r The runnable to put into the new thread
 	 * @return A new thread, or null
 	 */
-	public ManagedThread tryNewThread(Runnable r)
+	synchronized public ManagedThread tryNewThread(Runnable r)
 	{
 		if (!m_run)
 		{
@@ -131,13 +137,16 @@ public class ThreadManager implements Runnable
 		}
 		return null;
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		return m_threads.toString();
+		synchronized (m_threads)
+		{
+			return m_threads.toString();
+		}
 	}
-	
+
 	/**
 	 * Sets the default thread manager
 	 * @param manager The manager
@@ -146,7 +155,7 @@ public class ThreadManager implements Runnable
 	{
 		defaultManager = manager;
 	}
-	
+
 	/**
 	 * Tells the default manager to allow threads
 	 */
@@ -154,7 +163,7 @@ public class ThreadManager implements Runnable
 	{
 		defaultManager.m_maxThreads = -1;
 	}
-	
+
 	/**
 	 * Causes the current thread to sleeps for some time
 	 * @param duration The duration in milliseconds
@@ -170,7 +179,7 @@ public class ThreadManager implements Runnable
 			// Do nothing
 		}		
 	}
-	
+
 	/**
 	 * A thread managed by a thread manager. This differs from a plain
 	 * Java thread by the possibility to mark it as "disposable", meaning
@@ -182,7 +191,7 @@ public class ThreadManager implements Runnable
 		 * Whether this thread is disposable
 		 */
 		private boolean m_disposable = false;
-		
+
 		/**
 		 * Creates a new managed thread. Note that this constructor has
 		 * a reduced visibility, as one is expected to pass through the
@@ -192,7 +201,7 @@ public class ThreadManager implements Runnable
 		{
 			super();
 		}
-		
+
 		/**
 		 * Creates a managed thread from a runnable
 		 * @param r The runnable
@@ -201,7 +210,7 @@ public class ThreadManager implements Runnable
 		{
 			super(r);
 		}
-		
+
 		/**
 		 * Creates a managed thread from another thread
 		 * @param t The thread
@@ -210,7 +219,7 @@ public class ThreadManager implements Runnable
 		{
 			super(t);
 		}
-		
+
 		/**
 		 * Checks if this thread is disposable
 		 * @return true if disposable, false otherwise
@@ -219,7 +228,7 @@ public class ThreadManager implements Runnable
 		{
 			return m_disposable;
 		}
-		
+
 		/**
 		 * Marks this thread as disposable
 		 */
@@ -227,7 +236,7 @@ public class ThreadManager implements Runnable
 		{
 			m_disposable = true;
 		}
-		
+
 		@Override
 		public String toString()
 		{
@@ -244,9 +253,9 @@ public class ThreadManager implements Runnable
 			cleanThreads();
 			sleep(s_sleepInterval);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Stops the thread manager
 	 */
@@ -254,7 +263,7 @@ public class ThreadManager implements Runnable
 	{
 		m_run = false;
 	}
-	
+
 	/**
 	 * Deletes any thread that is marked as disposable
 	 */
