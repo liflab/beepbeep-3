@@ -54,13 +54,13 @@ public abstract class SingleProcessor extends Processor
 	}
 
 	@Override
-	public final Pushable getPushableInput(int index)
+	synchronized public final Pushable getPushableInput(int index)
 	{
 		return new InputPushable(index);
 	}
 
 	@Override
-	public Pullable getPullableOutput(int index)
+	synchronized public Pullable getPullableOutput(int index)
 	{
 		if (index >= 0 && index < m_outputArity)
 		{
@@ -100,23 +100,26 @@ public abstract class SingleProcessor extends Processor
 		InputPushable(int index)
 		{
 			super();
-			m_index = index;
+			synchronized (this)
+			{
+				m_index = index;
+			}
 		}
-		
+
 		@Override
 		synchronized public Pushable pushFast(Object o)
 		{
 			return push(o);
 		}
-				
+
 		@Override
-		public int getPosition()
+		synchronized public int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		public Pushable push(Object o)
+		synchronized public Pushable push(Object o)
 		{
 			synchronized (m_inputQueues)
 			{
@@ -167,20 +170,20 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		public Processor getProcessor() 
+		synchronized public Processor getProcessor() 
 		{
 			return SingleProcessor.this;
 		}
 
 		@Override
-		public void waitFor() 
+		synchronized public void waitFor() 
 		{
 			// Since this pushable is blocking
 			return;
 		}
 
 		@Override
-		public void dispose()
+		synchronized public void dispose()
 		{
 			// Do nothing
 		}
@@ -210,58 +213,64 @@ public abstract class SingleProcessor extends Processor
 			super();
 			m_index = index;
 		}
-		
+
 		@Override
-		public void remove()
+		synchronized public void remove()
 		{
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
-		public Object pullSoft()
+		synchronized public Object pullSoft()
 		{
 			if (hasNextSoft() != NextStatus.YES)
 			{
 				return null;
 			}
-			Queue<Object> out_queue = m_outputQueues[m_index];
-			// If an event is already waiting in the output queue,
-			// return it and don't pull anything from the input
-			if (!out_queue.isEmpty())
+			synchronized (m_outputQueues)
 			{
-				Object o = out_queue.remove();
-				return o;
+				Queue<Object> out_queue = m_outputQueues[m_index];
+				// If an event is already waiting in the output queue,
+				// return it and don't pull anything from the input
+				if (!out_queue.isEmpty())
+				{
+					Object o = out_queue.remove();
+					return o;
+				}
 			}
 			return null;
 		}
-		
+
 		@Override
-		public Object pull()
+		synchronized public Object pull()
 		{
 			if (hasNext() != true)
 			{
 				return null;
-			}				
-			Queue<Object> out_queue = m_outputQueues[m_index];
-			// If an event is already waiting in the output queue,
-			// return it and don't pull anything from the input
-			if (!out_queue.isEmpty())
+			}
+			synchronized (m_outputQueues)
 			{
-				Object o = out_queue.remove();
-				return o;
+				Queue<Object> out_queue = m_outputQueues[m_index];
+				// If an event is already waiting in the output queue,
+				// return it and don't pull anything from the input
+				if (!out_queue.isEmpty())
+				{
+					Object o = out_queue.remove();
+					return o;
+				}
 			}
 			return null;
 		}
-		
+
 		@Override
-		public final Object next()
+		synchronized public final Object next()
 		{
 			return pull();
 		}
 
 		@Override
-		public boolean hasNext()
+		synchronized public boolean hasNext()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -332,7 +341,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		public NextStatus hasNextSoft()
+		synchronized public NextStatus hasNextSoft()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -393,44 +402,44 @@ public abstract class SingleProcessor extends Processor
 			}
 			return status_to_return;
 		}
-		
+
 		@Override
-		public Processor getProcessor() 
+		synchronized public Processor getProcessor() 
 		{
 			return SingleProcessor.this;
 		}
 
 		@Override
-		public int getPosition() 
+		synchronized public int getPosition() 
 		{
 			return m_index;
 		}
 
 		@Override
-		public Iterator<Object> iterator()
+		synchronized public Iterator<Object> iterator()
 		{
 			return this;
 		}
 
 		@Override
-		public void start() 
+		synchronized public void start() 
 		{
 			// Do nothing
 		}
 
 		@Override
-		public void stop()
+		synchronized public void stop()
 		{
 			// Do nothing
 		}
 
 		@Override
-		public void dispose()
+		synchronized public void dispose()
 		{
 			// Do nothing
 		}
 	}
-	
+
 	/**
 	 * Puts an array of objects (given as an argument) into an
 	 * empty queue of arrays of objects. This is a convenience method
@@ -451,7 +460,7 @@ public abstract class SingleProcessor extends Processor
 		out.add(v);
 		return out;
 	}
-	
+
 	/**
 	 * Puts a object (given as an argument) into an
 	 * empty queue of arrays of objects. This is a convenience method
@@ -469,7 +478,7 @@ public abstract class SingleProcessor extends Processor
 		out.add(v);
 		return out;
 	}
-	
+
 	/**
 	 * Gets a new instance of an empty object queue
 	 * @return The queue
@@ -478,5 +487,5 @@ public abstract class SingleProcessor extends Processor
 	{
 		return new ArrayDeque<Object[]>();
 	}
-	
+
 }
