@@ -25,9 +25,12 @@ public class PushableWrapper implements Pushable
 {
 	protected Pushable m_pushable;
 	
-	public PushableWrapper(Pushable p)
+	protected Processor m_processorReference;
+	
+	public PushableWrapper(Pushable p, Processor reference)
 	{
 		super();
+		m_processorReference = reference;
 		m_pushable = p;
 	}
 
@@ -46,7 +49,7 @@ public class PushableWrapper implements Pushable
 	@Override
 	public Processor getProcessor()
 	{
-		return m_pushable.getProcessor();
+		return m_processorReference;
 	}
 
 	@Override

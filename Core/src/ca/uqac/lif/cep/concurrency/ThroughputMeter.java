@@ -31,17 +31,17 @@ import ca.uqac.lif.cep.PushableWrapper;
 
 public class ThroughputMeter 
 {
-	Map<Integer,Set<PushMeter>> m_pushMeters;
+	Map<Integer,Set<PushableMeter>> m_pushMeters;
 	
-	Map<Integer,Set<PullMeter>> m_pullMeters;
+	Map<Integer,Set<PullableMeter>> m_pullMeters;
 	
 	Map<Integer,String> m_descriptions;
 	
 	public ThroughputMeter()
 	{
 		super();
-		m_pushMeters = new HashMap<Integer,Set<PushMeter>>();
-		m_pullMeters = new HashMap<Integer,Set<PullMeter>>();
+		m_pushMeters = new HashMap<Integer,Set<PushableMeter>>();
+		m_pullMeters = new HashMap<Integer,Set<PullableMeter>>();
 		m_descriptions = new HashMap<Integer,String>();
 	}
 	
@@ -50,14 +50,14 @@ public class ThroughputMeter
 	{
 		StringBuilder out = new StringBuilder();
 		out.append("Mode ID    Description       #      Avg time (ms)\n");
-		for (Entry<Integer,Set<PushMeter>> e : m_pushMeters.entrySet())
+		for (Entry<Integer,Set<PushableMeter>> e : m_pushMeters.entrySet())
 		{
 			out.append("Push ");
 			out.append(pad(e.getKey().toString(), 6));
 			out.append(pad(m_descriptions.get(e.getKey()), 18));
 			long tot_time = 0;
 			long cnt = 0;
-			for (PushMeter meter : e.getValue())
+			for (PushableMeter meter : e.getValue())
 			{
 				tot_time += meter.m_totalTime;
 				cnt += meter.m_pushCount;
@@ -70,14 +70,14 @@ public class ThroughputMeter
 			out.append(pad(Long.toString(cnt), 7));
 			out.append(avg).append("\n");
 		}
-		for (Entry<Integer,Set<PullMeter>> e : m_pullMeters.entrySet())
+		for (Entry<Integer,Set<PullableMeter>> e : m_pullMeters.entrySet())
 		{
 			out.append("Pull ");
 			out.append(pad(e.getKey().toString(), 6));
 			out.append(pad(m_descriptions.get(e.getKey()), 18));
 			long tot_time = 0;
 			long cnt = 0;
-			for (PullMeter meter : e.getValue())
+			for (PullableMeter meter : e.getValue())
 			{
 				tot_time += meter.m_totalTime;
 				cnt += meter.m_pulledCount;
@@ -106,14 +106,14 @@ public class ThroughputMeter
 	}
 	
 	
-	public PushMeter newInputPushMeter(Processor p, int index, int original_id, String description)
+	public PushableMeter newInputPushMeter(Processor p, int index, ProcessorMeter pm, int original_id, String description)
 	{
 		m_descriptions.put(original_id, description);
-		PushMeter p_meter = new PushMeter(p.getPushableInput(index));
-		Set<PushMeter> meters = null;
+		PushableMeter p_meter = new PushableMeter(p.getPushableInput(index), pm);
+		Set<PushableMeter> meters = null;
 		if (!m_pushMeters.containsKey(original_id))
 		{
-			meters = new HashSet<PushMeter>();
+			meters = new HashSet<PushableMeter>();
 		}
 		else
 		{
@@ -124,14 +124,14 @@ public class ThroughputMeter
 		return p_meter;
 	}
 	
-	public PullMeter newOutputPullMeter(Processor p, int index, int original_id, String description)
+	public PullableMeter newOutputPullMeter(Processor p, int index, Processor reference, int original_id, String description)
 	{
 		m_descriptions.put(original_id, description);
-		PullMeter p_meter = new PullMeter(p.getPullableOutput(index));
-		Set<PullMeter> meters = null;
+		PullableMeter p_meter = new PullableMeter(p.getPullableOutput(index), reference);
+		Set<PullableMeter> meters = null;
 		if (!m_pullMeters.containsKey(original_id))
 		{
-			meters = new HashSet<PullMeter>();
+			meters = new HashSet<PullableMeter>();
 		}
 		else
 		{
@@ -142,7 +142,7 @@ public class ThroughputMeter
 		return p_meter;
 	}
 	
-	public static class PushMeter extends PushableWrapper
+	public static class PushableMeter extends PushableWrapper
 	{
 		int m_pushCount = 0;
 		
@@ -152,9 +152,9 @@ public class ThroughputMeter
 		
 		long m_maxTime = 0;
 		
-		PushMeter(Pushable p)
+		PushableMeter(Pushable p, Processor reference)
 		{
-			super(p);
+			super(p, reference);
 		}
 		
 		@Override
@@ -172,7 +172,7 @@ public class ThroughputMeter
 		}
 	}
 	
-	public static class PullMeter extends PullableWrapper
+	public static class PullableMeter extends PullableWrapper
 	{
 		int m_pulledCount = 0;
 		
@@ -182,9 +182,9 @@ public class ThroughputMeter
 		
 		long m_maxTime = 0;
 		
-		PullMeter(Pullable p)
+		PullableMeter(Pullable p, Processor reference)
 		{
-			super(p);
+			super(p, reference);
 		}
 		
 		@Override

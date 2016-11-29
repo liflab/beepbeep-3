@@ -122,23 +122,26 @@ public abstract class Processor implements Cloneable, Contextualizable
 	public Processor(int in_arity, int out_arity)
 	{
 		super();
-		m_inputArity = in_arity;
-		m_outputArity = out_arity;
-		m_uniqueId = s_uniqueIdCounter++;
-		m_inputQueues = new Queue[m_inputArity];
-		for (int i = 0; i < m_inputArity; i++)
+		synchronized (this)
 		{
-			m_inputQueues[i] = new ArrayDeque<Object>();
+			m_inputArity = in_arity;
+			m_outputArity = out_arity;
+			m_uniqueId = s_uniqueIdCounter++;
+			m_inputQueues = new Queue[m_inputArity];
+			for (int i = 0; i < m_inputArity; i++)
+			{
+				m_inputQueues[i] = new ArrayDeque<Object>();
+			}
+			m_outputQueues = new Queue[m_outputArity];
+			for (int i = 0; i < m_outputArity; i++)
+			{
+				m_outputQueues[i] = new ArrayDeque<Object>();
+			}
+			m_inputPullables = new Pullable[m_inputArity];
+			m_outputPushables = new Pushable[m_outputArity];
+			// The context object
+			m_context = null;
 		}
-		m_outputQueues = new Queue[m_outputArity];
-		for (int i = 0; i < m_outputArity; i++)
-		{
-			m_outputQueues[i] = new ArrayDeque<Object>();
-		}
-		m_inputPullables = new Pullable[m_inputArity];
-		m_outputPushables = new Pushable[m_outputArity];
-		// The context object
-		m_context = null;
 	}
 
 	/**
@@ -156,7 +159,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * @return The object, or <code>null</code> if no object exists
 	 *   with such key
 	 */
-	public final Object getContext(String key)
+	synchronized public final Object getContext(String key)
 	{
 		if (m_context == null || !m_context.containsKey(key))
 		{
@@ -164,9 +167,9 @@ public abstract class Processor implements Cloneable, Contextualizable
 		}
 		return m_context.get(key);
 	}
-	
+
 	@Override
-	public Context getContext()
+	synchronized public Context getContext()
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -178,7 +181,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	}
 
 	@Override
-	public void setContext(String key, Object value)
+	synchronized public void setContext(String key, Object value)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -259,7 +262,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 *   <code>null</code> otherwise.
 	 */
 	public abstract Pushable getPushableInput(int index);
-	
+
 	/**
 	 * Returns the {@link Pushable} corresponding to the processor's
 	 * first input trace
@@ -280,7 +283,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 *   <code>null</code> otherwise.
 	 */
 	public abstract Pullable getPullableOutput(int index);
-	
+
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's
 	 * first output trace
@@ -481,7 +484,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	{
 		return Variant.class;
 	}
-	
+
 	/**
 	 * Gets an instance of an empty event queue. It is recommended that
 	 * processors call this method to get a queue instance, rather than
@@ -492,7 +495,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	{
 		return new ArrayDeque<Object[]>();
 	}
-	
+
 	/**
 	 * Starts the processor. This has no effect, except for processors
 	 * that use threads; in such a case, calling this method should
@@ -502,7 +505,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	{
 		// Nothing
 	}
-	
+
 	/**
 	 * Stops the processor. This has no effect, except for processors
 	 * that use threads; in such a case, calling this method should

@@ -27,9 +27,12 @@ public class PullableWrapper implements Pullable
 {
 	protected Pullable m_pullable;
 	
-	public PullableWrapper(Pullable p)
+	protected Processor m_processorReference;
+	
+	public PullableWrapper(Pullable p, Processor reference)
 	{
 		super();
+		m_processorReference = reference;
 		m_pullable = p;
 	}
 
