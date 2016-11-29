@@ -246,8 +246,16 @@ public class PullPipeline extends Processor implements Runnable
 					return null;
 				}
 			}
-			Object out = shiftEntries();
-			return out;
+			synchronized (m_pipelines)
+			{
+				if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
+				{
+					Object out = shiftEntries();
+					System.out.print("Giving ");
+					return out;
+				}
+			}
+			return null;
 		}
 
 		@Override
@@ -276,6 +284,7 @@ public class PullPipeline extends Processor implements Runnable
 					if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
 					{
 						Object out = shiftEntries();
+						System.out.print("Giving ");
 						return out;
 					}					
 				}
@@ -553,13 +562,16 @@ public class PullPipeline extends Processor implements Runnable
 			if (!m_pipelines.isEmpty())
 			{
 				PipelineRunnable pt = m_pipelines.getFirst();
-				while (!pt.m_isPulled && pt.hasEvent())
+				if (!pt.getIsPulled())
 				{
-					// If this thread has been started from pushed events,
-					// must push whatever it produces
-					Object o = shiftEntries();
-					m_outputPushable.push(o);
-					m_outputPushable.waitFor();
+					while (pt.hasEvent())
+					{
+						// If this thread has been started from pushed events,
+						// must push whatever it produces
+						Object o = shiftEntries();
+						m_outputPushable.push(o);
+						m_outputPushable.waitFor();
+					}					
 				}
 			}
 		}

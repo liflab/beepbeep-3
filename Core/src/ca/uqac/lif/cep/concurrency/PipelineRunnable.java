@@ -48,29 +48,29 @@ class PipelineRunnable implements Runnable
 	 * Whether the events given to this pipeline have been retrieved
 	 * by a pull (true) or a push (false)
 	 */
-	boolean m_isPulled;
+	private boolean m_isPulled;
 	
 	/**
 	 * The processor this pipeline will call
 	 */
-	protected Processor m_processor;
+	private Processor m_processor;
 	
 	/**
 	 * The inputs given to this processor. This consists of a single
 	 * front; moreover, currently the pipeline only supports unary
 	 * processors, so this array should always be of size 1.
 	 */
-	Object[] m_inputs;
+	private Object[] m_inputs;
 	
 	/**
 	 * The output events produced by the processor
 	 */
-	Queue<Object> m_outQueue;
+	private volatile Queue<Object> m_outQueue;
 
 	/**
 	 * The thread in which the pipeline thread is running, if any
 	 */
-	protected ManagedThread m_managedThread;
+	private ManagedThread m_managedThread;
 
 	/**
 	 * Creates a new pipeline runnable
@@ -88,12 +88,12 @@ class PipelineRunnable implements Runnable
 		m_isPulled = is_pulled;
 	}
 	
-	public void setThread(ManagedThread thread)
+	synchronized public void setThread(ManagedThread thread)
 	{
 		m_managedThread = thread;
 	}
 
-	public void dispose()
+	synchronized public void dispose()
 	{
 		// Tell the thread manager that the thread in which
 		// we were running is no longer used (if any)
@@ -141,7 +141,6 @@ class PipelineRunnable implements Runnable
 	@Override
 	public void run()
 	{
-		//System.out.println(this + " started");
 		QueueSource qs = new QueueSource();
 		qs.loop(false);
 		qs.addEvent(m_inputs[0]);
@@ -154,7 +153,6 @@ class PipelineRunnable implements Runnable
 				Object o = pullable.pull();
 				synchronized (m_outQueue)
 				{
-					//System.out.println(this + " Adding " + o);
 					m_outQueue.add(o);
 				}
 			}
@@ -163,5 +161,28 @@ class PipelineRunnable implements Runnable
 		{
 			// Do nothing
 		}
+	}
+
+	/**
+	 * Sets if the events given to this pipeline have been retrieved
+	 * by a {@link ca.uqac.lif.cep.Pullable#pull() pull()} or a
+	 * {@link ca.uqac.lif.cep.Pushable#push() push()} 
+	 * @param b Set to <code>true</code> to indicate pull
+	 */
+	public void setIsPulled(boolean b)
+	{
+		m_isPulled = b;
+	}
+	
+	/**
+	 * Checks if the events given to this pipeline have been retrieved
+	 * by a {@link ca.uqac.lif.cep.Pullable#pull() pull()} or a
+	 * {@link ca.uqac.lif.cep.Pushable#push() push()} 
+	 * @return <code>true</code> to indicate pull, <code>false</code>
+	 *   otherwise
+	 */
+	public boolean getIsPulled()
+	{
+		return m_isPulled;
 	}
 }
