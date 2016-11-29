@@ -38,6 +38,7 @@ public class ProcessorMeter extends ProcessorWrapper
 		m_originalId = m_processor.getId();
 		m_description = description;
 		m_meter = meter;
+		m_meter.registerProcessor(p, description);
 	}
 	
 	protected ProcessorMeter(Processor p, ThroughputMeter meter, int original_id)
@@ -66,6 +67,7 @@ public class ProcessorMeter extends ProcessorWrapper
 	{
 		ProcessorMeter pm = new ProcessorMeter(m_processor.clone(), m_meter, m_originalId);
 		super.cloneInto(pm);
+		pm.m_description = m_description;
 		return pm;
 	}
 }

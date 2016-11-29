@@ -18,9 +18,7 @@
 package ca.uqac.lif.cep.concurrency;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Processor;
@@ -31,68 +29,87 @@ import ca.uqac.lif.cep.PushableWrapper;
 
 public class ThroughputMeter 
 {
-	Map<Integer,Set<PushableMeter>> m_pushMeters;
-	
-	Map<Integer,Set<PullableMeter>> m_pullMeters;
-	
+	Map<Integer,Map<Integer,Long>> m_outputPullCount;
+
+	Map<Integer,Map<Integer,Long>> m_outputTotalTime;
+
+	Map<Integer,Map<Integer,Long>> m_inputPushCount;
+
+	Map<Integer,Map<Integer,Long>> m_inputTotalTime;
+
 	Map<Integer,String> m_descriptions;
-	
+
 	public ThroughputMeter()
 	{
 		super();
-		m_pushMeters = new HashMap<Integer,Set<PushableMeter>>();
-		m_pullMeters = new HashMap<Integer,Set<PullableMeter>>();
+		m_outputPullCount = new HashMap<Integer,Map<Integer,Long>>();
+		m_inputPushCount = new HashMap<Integer,Map<Integer,Long>>();
+		m_outputTotalTime = new HashMap<Integer,Map<Integer,Long>>();
+		m_inputTotalTime = new HashMap<Integer,Map<Integer,Long>>();
 		m_descriptions = new HashMap<Integer,String>();
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		StringBuilder out = new StringBuilder();
-		out.append("Mode ID    Description       #      Avg time (ms)\n");
-		for (Entry<Integer,Set<PushableMeter>> e : m_pushMeters.entrySet())
+		out.append("Mode ID    Description       #        Avg time (ms)\n");
+		Set<Integer> processor_ids = m_descriptions.keySet();
+		for (int id : processor_ids)
 		{
-			out.append("Push ");
-			out.append(pad(e.getKey().toString(), 6));
-			out.append(pad(m_descriptions.get(e.getKey()), 18));
-			long tot_time = 0;
 			long cnt = 0;
-			for (PushableMeter meter : e.getValue())
-			{
-				tot_time += meter.m_totalTime;
-				cnt += meter.m_pushCount;
-			}
-			float avg = 0;
-			if (cnt > 0)
-			{
-				avg = ((float) tot_time / (float) cnt) / 1000000f;
-			}
-			out.append(pad(Long.toString(cnt), 7));
-			out.append(avg).append("\n");
-		}
-		for (Entry<Integer,Set<PullableMeter>> e : m_pullMeters.entrySet())
-		{
-			out.append("Pull ");
-			out.append(pad(e.getKey().toString(), 6));
-			out.append(pad(m_descriptions.get(e.getKey()), 18));
 			long tot_time = 0;
-			long cnt = 0;
-			for (PullableMeter meter : e.getValue())
-			{
-				tot_time += meter.m_totalTime;
-				cnt += meter.m_pulledCount;
-			}
 			float avg = 0;
-			if (cnt > 0)
 			{
-				avg = ((float) tot_time / (float) cnt) / 1000000f;
+				// Push
+				Map<Integer,Long> counts = m_inputPushCount.get(id);
+				Map<Integer,Long> times = m_inputTotalTime.get(id);
+				for (long c : counts.values())
+				{
+					cnt += c;
+				}
+				for (long t : times.values())
+				{
+					tot_time += t;
+				}
+
+				if (cnt > 0)
+				{
+					avg = ((float) tot_time / (float) cnt) / 1000000f;
+				}
+				out.append("Push ");
+				out.append(pad(Integer.toString(id), 6));
+				out.append(pad(m_descriptions.get(id), 18));
+				out.append(pad(Long.toString(cnt), 9));
+				out.append(avg).append("\n");
 			}
-			out.append(pad(Long.toString(cnt), 7));
-			out.append(avg).append("\n");
+			{
+				// Pull
+				Map<Integer,Long> counts = m_outputPullCount.get(id);
+				Map<Integer,Long> times = m_outputTotalTime.get(id);
+				for (long c : counts.values())
+				{
+					cnt += c;
+				}
+				for (long t : times.values())
+				{
+					tot_time += t;
+				}
+
+				if (cnt > 0)
+				{
+					avg = ((float) tot_time / (float) cnt) / 1000000f;
+				}
+				out.append("Pull ");
+				out.append(pad(Integer.toString(id), 6));
+				out.append(pad(m_descriptions.get(id), 18));
+				out.append(pad(Long.toString(cnt), 9));
+				out.append(avg).append("\n");
+			}
 		}
 		return out.toString();
 	}
-	
+
 	protected static String pad(String s, int width)
 	{
 		if (s.length() < width)
@@ -104,129 +121,142 @@ public class ThroughputMeter
 		}
 		return s;
 	}
-	
-	
+
+	public void registerProcessor(Processor p, String description)
+	{
+		int id = p.getId();
+		m_descriptions.put(id, description);
+		{
+			Map<Integer,Long> val1 = new HashMap<Integer,Long>();
+			Map<Integer,Long> val2 = new HashMap<Integer,Long>();
+			for (int i = 0; i < p.getInputArity(); i++)
+			{
+				val1.put(i, 0l);
+				val2.put(i, 0l);
+			}
+			m_inputPushCount.put(id, val1);
+			m_inputTotalTime.put(id, val2);
+		}
+		{
+			Map<Integer,Long> val1 = new HashMap<Integer,Long>();
+			Map<Integer,Long> val2 = new HashMap<Integer,Long>();
+			for (int i = 0; i < p.getOutputArity(); i++)
+			{
+				val1.put(i, 0l);
+				val2.put(i, 0l);
+			}
+			m_outputPullCount.put(id, val1);
+			m_outputTotalTime.put(id, val2);
+		}
+	}
+
+
 	public PushableMeter newInputPushMeter(Processor p, int index, ProcessorMeter pm, int original_id, String description)
 	{
-		m_descriptions.put(original_id, description);
-		PushableMeter p_meter = new PushableMeter(p.getPushableInput(index), pm);
-		Set<PushableMeter> meters = null;
-		if (!m_pushMeters.containsKey(original_id))
-		{
-			meters = new HashSet<PushableMeter>();
-		}
-		else
-		{
-			meters = m_pushMeters.get(original_id);
-		}
-		meters.add(p_meter);
-		m_pushMeters.put(original_id, meters);
+		PushableMeter p_meter = new PushableMeter(p.getPushableInput(index), pm, original_id, index);
 		return p_meter;
 	}
-	
+
 	public PullableMeter newOutputPullMeter(Processor p, int index, Processor reference, int original_id, String description)
 	{
-		m_descriptions.put(original_id, description);
-		PullableMeter p_meter = new PullableMeter(p.getPullableOutput(index), reference);
-		Set<PullableMeter> meters = null;
-		if (!m_pullMeters.containsKey(original_id))
-		{
-			meters = new HashSet<PullableMeter>();
-		}
-		else
-		{
-			meters = m_pullMeters.get(original_id);
-		}
-		meters.add(p_meter);
-		m_pullMeters.put(original_id, meters);
+		PullableMeter p_meter = new PullableMeter(p.getPullableOutput(index), reference, original_id, index);
 		return p_meter;
 	}
-	
-	public static class PushableMeter extends PushableWrapper
+
+	public class PushableMeter extends PushableWrapper
 	{
-		int m_pushCount = 0;
+		int m_index = 0;
+
+		int m_originalId = 0;
 		
-		long m_totalTime = 0;
-		
-		long m_minTime = 0;
-		
-		long m_maxTime = 0;
-		
-		PushableMeter(Pushable p, Processor reference)
+		PushableMeter(Pushable p, Processor reference, int original_id, int index)
 		{
 			super(p, reference);
+			m_index = index;
+			m_originalId = original_id;
 		}
-		
+
 		@Override
-		public Pushable push(Object o)
+		synchronized public Pushable push(Object o)
 		{
 			long time_start = System.nanoTime();
 			m_pushable.push(o);
 			long time_end = System.nanoTime();
 			long duration = time_end - time_start;
-			m_totalTime += duration;
-			m_pushCount++;
-			m_minTime = Math.min(m_minTime, duration);
-			m_maxTime = Math.max(m_maxTime, duration);
+			Map<Integer,Long> counts = m_inputPushCount.get(m_originalId);
+			counts.put(m_index, counts.get(m_index) + 1);
+			m_inputPushCount.put(m_originalId, counts);
+			Map<Integer,Long> durations = m_inputTotalTime.get(m_originalId);
+			durations.put(m_index, durations.get(m_index) + duration);
+			m_inputTotalTime.put(m_originalId, durations);
 			return this;
 		}
 	}
-	
-	public static class PullableMeter extends PullableWrapper
+
+	public  class PullableMeter extends PullableWrapper
 	{
-		int m_pulledCount = 0;
+		int m_index = 0;
 		
-		long m_totalTime = 0;
-		
-		long m_minTime = 0;
-		
-		long m_maxTime = 0;
-		
-		PullableMeter(Pullable p, Processor reference)
+		int m_originalId = 0;
+
+		PullableMeter(Pullable p, Processor reference, int original_id, int index)
 		{
 			super(p, reference);
+			m_index = index;
+			m_originalId = original_id;
 		}
-		
+
 		@Override
-		public NextStatus hasNextSoft()
+		synchronized public NextStatus hasNextSoft()
 		{
 			long time_start = System.nanoTime();
 			NextStatus s = m_pullable.hasNextSoft();
 			long time_end = System.nanoTime();
 			long duration = time_end - time_start;
-			m_totalTime += duration;
+			Map<Integer,Long> counts = m_outputPullCount.get(m_originalId);
+			counts.put(m_index, counts.get(m_index) + 1);
+			m_outputPullCount.put(m_originalId, counts);
+			Map<Integer,Long> durations = m_outputTotalTime.get(m_originalId);
+			durations.put(m_index, durations.get(m_index) + duration);
+			m_outputTotalTime.put(m_originalId, durations);
 			return s;
 		}
-		
+
 		@Override
-		public boolean hasNext()
+		synchronized public boolean hasNext()
 		{
 			long time_start = System.nanoTime();
 			boolean s = m_pullable.hasNext();
 			long time_end = System.nanoTime();
 			long duration = time_end - time_start;
-			m_totalTime += duration;
+			Map<Integer,Long> durations = m_outputTotalTime.get(m_originalId);
+			durations.put(m_index, durations.get(m_index) + duration);
+			m_outputTotalTime.put(m_originalId, durations);
 			return s;
 		}
-		
+
 		@Override
-		public Object pull()
+		synchronized public Object pull()
 		{
 			Object o = m_pullable.pull();
 			if (o != null)
 			{
-				m_pulledCount++;
+				Map<Integer,Long> counts = m_outputPullCount.get(m_originalId);
+				counts.put(m_index, counts.get(m_index) + 1);
+				m_outputPullCount.put(m_originalId, counts);
 			}
 			return o;
 		}
-		
+
 		@Override
-		public Object pullSoft()
+		synchronized public Object pullSoft()
 		{
 			Object o = m_pullable.pullSoft();
 			if (o != null)
 			{
-				m_pulledCount++;
+				Map<Integer,Long> counts = m_outputPullCount.get(m_originalId);
+				counts.put(m_index, counts.get(m_index) + 1);
+				m_outputPullCount.put(m_originalId, counts);
 			}
 			return o;
 		}
