@@ -24,6 +24,14 @@ public class ProcessorWrapper extends Processor
 	 */
 	protected Processor m_processor;
 	
+	protected Pushable[] m_pushableInputs;
+	
+	protected Pullable[] m_pullableInputs;
+	
+	protected Pushable[] m_pushableOutputs;
+	
+	protected Pullable[] m_pullableOutputs;
+	
 	/**
 	 * Creates a new processor wrapper
 	 * @param p The processor being wrapped around
@@ -31,21 +39,35 @@ public class ProcessorWrapper extends Processor
 	public ProcessorWrapper(Processor p)
 	{
 		super(p.getInputArity(), p.getOutputArity());
+		m_pushableInputs = new Pushable[p.getInputArity()];
+		m_pullableInputs = new Pullable[p.getInputArity()];
+		m_pushableOutputs = new Pushable[p.getOutputArity()];
+		m_pullableOutputs = new Pullable[p.getOutputArity()];
 		m_processor = p;
 	}
 
 	@Override
 	public Pushable getPushableInput(int index)
 	{
-		Pushable p = m_processor.getPushableInput(index);
-		return new PushableWrapper(p, this);
+		if (m_pushableInputs[index] == null)
+		{
+			Pushable p = m_processor.getPushableInput(index);
+			PushableWrapper pw = new PushableWrapper(p, this);
+			m_pushableInputs[index] = pw;
+		}
+		return m_pushableInputs[index];
 	}
 
 	@Override
 	public Pullable getPullableOutput(int index) 
 	{
-		Pullable p = m_processor.getPullableOutput(index);
-		return new PullableWrapper(p, this);
+		if (m_pullableOutputs[index] == null)
+		{
+			Pullable p = m_processor.getPullableOutput(index);
+			PullableWrapper pw = new PullableWrapper(p, this);
+			m_pullableOutputs[index] = pw;
+		}
+		return m_pullableOutputs[index];
 	}
 	
 	@Override
@@ -53,6 +75,7 @@ public class ProcessorWrapper extends Processor
 	{
 		Pullable new_p = new PullableWrapper(p, this);
 		m_processor.setPullableInput(index, new_p);
+		m_pullableInputs[index] = p;
 	}
 	
 	@Override
@@ -60,6 +83,19 @@ public class ProcessorWrapper extends Processor
 	{
 		Pushable new_p = new PushableWrapper(p, this);
 		m_processor.setPushableOutput(index, new_p);
+		m_pushableOutputs[index] = p;
+	}
+	
+	@Override
+	public Pushable getPushableOutput(int index)
+	{
+		return m_pushableOutputs[index];
+	}
+	
+	@Override
+	public Pullable getPullableInput(int index)
+	{
+		return m_pullableInputs[index];
 	}
 	
 	@Override

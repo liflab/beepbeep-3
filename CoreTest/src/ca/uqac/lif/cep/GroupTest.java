@@ -485,6 +485,56 @@ public class GroupTest extends BeepBeepUnitTest
 		assertEquals(20, recv.intValue());
 	}
 	
+	@Test
+	public void testWrapperInGroup1() throws ConnectorException
+	{
+		GroupProcessor gp = new GroupProcessor(1, 1);
+		Passthrough pt = new Passthrough(1);
+		ProcessorWrapper pw = new ProcessorWrapper(pt);
+		gp.addProcessor(pw);
+		gp.associateInput(0, pw, 0);
+		gp.associateOutput(0, pw, 0);
+		QueueSink qs = new QueueSink(1);
+		Connector.connect(gp, qs);
+		Pushable p = gp.getPushableInput();
+		p.push(0);
+	}
+	
+	@Test
+	public void testWrapperInGroup2() throws ConnectorException
+	{
+		GroupProcessor gp = new GroupProcessor(1, 1);
+		Passthrough pt = new Passthrough(1);
+		ProcessorWrapper pw = new ProcessorWrapper(pt);
+		gp.addProcessor(pw);
+		gp.associateInput(0, pw, 0);
+		gp.associateOutput(0, pw, 0);
+		GroupProcessor gp_new = gp.clone();
+		QueueSink qs = new QueueSink(1);
+		Connector.connect(gp_new, qs);
+		Pushable p = gp_new.getPushableInput();
+		p.push(0);
+	}
+	
+	@Test
+	public void testWrapperInGroup3() throws ConnectorException
+	{
+		GroupProcessor gp = new GroupProcessor(1, 1);
+		Passthrough pt = new Passthrough(1);
+		ProcessorWrapper pw = new ProcessorWrapper(pt);
+		gp.addProcessor(pw);
+		Passthrough pt2 = new Passthrough(1);
+		gp.addProcessor(pt2);
+		Connector.connect(pw, pt2);
+		gp.associateInput(0, pw, 0);
+		gp.associateOutput(0, pt2, 0);
+		GroupProcessor gp_new = gp.clone();
+		QueueSink qs = new QueueSink(1);
+		Connector.connect(gp_new, qs);
+		Pushable p = gp_new.getPushableInput();
+		p.push(0);
+	}
+	
 	public static class Incrementer extends FunctionProcessor
 	{
 		public Incrementer(int increment)

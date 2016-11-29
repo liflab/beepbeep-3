@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.concurrency;
 
-import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorWrapper;
 import ca.uqac.lif.cep.Pullable;
@@ -62,7 +61,6 @@ public class ProcessorMeter extends ProcessorWrapper
 		return pm;
 	}
 	
-
 	@Override
 	public ProcessorMeter clone()
 	{
