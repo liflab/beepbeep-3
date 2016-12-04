@@ -70,7 +70,7 @@ public class PullPipeline extends Processor implements Runnable
 	 * The size after which the pipeline temporarily stops polling
 	 * for new events
 	 */
-	private int m_maxQueueSize = 100;
+	private int m_maxQueueSize = 10;
 
 	/**
 	 * The thread manager to get instances of threads
@@ -231,7 +231,7 @@ public class PullPipeline extends Processor implements Runnable
 		}
 
 		@Override
-		synchronized public Object pullSoft() 
+		public Object pullSoft() 
 		{
 			if (!m_run)
 			{
@@ -376,7 +376,7 @@ public class PullPipeline extends Processor implements Runnable
 		@Override
 		public void stop() 
 		{
-			// Nothing to do
+			PullPipeline.this.stop();
 		}
 
 		@Override
@@ -515,7 +515,7 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	synchronized public void stop()
+	public void stop()
 	{
 		m_run = false;
 		if (m_managedThread != null)
