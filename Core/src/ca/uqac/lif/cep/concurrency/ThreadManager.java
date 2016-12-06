@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.concurrency;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ThreadManager implements Runnable
 {
@@ -33,6 +35,11 @@ public class ThreadManager implements Runnable
 	 * The set of threads managed by this manager
 	 */
 	protected volatile Set<ManagedThread> m_threads;
+
+	/**
+	 * A lock to access the thread set
+	 */
+	protected Lock m_threadsLock;
 
 	/**
 	 * The maximum number of threads this manager is allowed to keep
@@ -50,6 +57,18 @@ public class ThreadManager implements Runnable
 	 * Whether the manager is running
 	 */
 	protected volatile boolean m_run = false;
+	
+	/**
+	 * Total number of threads requested. Used mostly for debugging
+	 * purposes.
+	 */
+	protected int m_threadsRequested = 0;
+	
+	/**
+	 * Total number of threads granted. Used mostly for debugging
+	 * purposes.
+	 */
+	protected int m_threadsGranted = 0;
 
 	/**
 	 * Creates a new thread manager
@@ -57,10 +76,8 @@ public class ThreadManager implements Runnable
 	public ThreadManager()
 	{
 		super();
-		synchronized (this)
-		{
-			m_threads = new HashSet<ManagedThread>();
-		}
+		m_threads = new HashSet<ManagedThread>();
+		m_threadsLock = new ReentrantLock();
 	}
 
 	/**
@@ -71,12 +88,8 @@ public class ThreadManager implements Runnable
 	 */
 	public ThreadManager(int max_threads)
 	{
-		super();
-		synchronized (this)
-		{
-			m_threads = new HashSet<ManagedThread>();
-			m_maxThreads = max_threads;
-		}
+		this();
+		m_maxThreads = max_threads;		
 	}
 
 	/**
@@ -97,14 +110,13 @@ public class ThreadManager implements Runnable
 				// (since they are not cleaned periodically by the run() method)
 				cleanThreads();
 			}
-			synchronized (m_threads)
+			m_threadsLock.lock();
+			if (m_maxThreads < 0 || m_threads.size() < m_maxThreads)
 			{
-				if (m_maxThreads < 0 || m_threads.size() < m_maxThreads)
-				{
-					ManagedThread new_thread = new ManagedThread(runnable);
-					m_threads.add(new_thread);
-					return new_thread;
-				}
+				ManagedThread new_thread = new ManagedThread(runnable);
+				m_threads.add(new_thread);
+				m_threadsLock.unlock();
+				return new_thread;
 			}
 			sleep(s_sleepInterval);
 		}
@@ -117,8 +129,9 @@ public class ThreadManager implements Runnable
 	 * @param r The runnable to put into the new thread
 	 * @return A new thread, or null
 	 */
-	synchronized public ManagedThread tryNewThread(Runnable r)
+	public ManagedThread tryNewThread(Runnable r)
 	{
+		m_threadsRequested++;
 		if (!m_run)
 		{
 			// If the manager is not started, take the opportunity of
@@ -126,25 +139,22 @@ public class ThreadManager implements Runnable
 			// (since they are not cleaned periodically by the run() method)
 			cleanThreads();
 		}
-		synchronized (m_threads)
+		ManagedThread new_thread = null;
+		m_threadsLock.lock();
+		if (m_maxThreads < 0 || m_threads.size() < m_maxThreads)
 		{
-			if (m_maxThreads < 0 || m_threads.size() < m_maxThreads)
-			{
-				ManagedThread new_thread = new ManagedThread(r);
-				m_threads.add(new_thread);
-				return new_thread;
-			}
+			m_threadsGranted++;
+			new_thread = new ManagedThread(r);
+			m_threads.add(new_thread);
 		}
-		return null;
+		m_threadsLock.unlock();
+		return new_thread;
 	}
 
 	@Override
 	public String toString()
 	{
-		synchronized (m_threads)
-		{
-			return m_threads.toString();
-		}
+		return m_threads.toString();
 	}
 
 	/**
@@ -269,17 +279,37 @@ public class ThreadManager implements Runnable
 	 */
 	protected void cleanThreads()
 	{
-		synchronized (m_threads)
+		m_threadsLock.lock();
+		Iterator<ManagedThread> thread_it = m_threads.iterator();
+		while (thread_it.hasNext())
 		{
-			Iterator<ManagedThread> thread_it = m_threads.iterator();
-			while (thread_it.hasNext())
+			ManagedThread mt = thread_it.next();
+			if (mt.m_disposable)
 			{
-				ManagedThread mt = thread_it.next();
-				if (mt.m_disposable)
-				{
-					thread_it.remove();
-				}
+				thread_it.remove();
 			}
 		}
+		m_threadsLock.unlock();
 	}
+	
+	/**
+	 * Gets the number of threads that have been requested from this
+	 * manager, so far.
+	 * @return The number of threads
+	 */
+	public int getNumThreadsRequested()
+	{
+		return m_threadsRequested;
+	}
+	
+	/**
+	 * Gets the number of threads that have been granted from this
+	 * manager, so far.
+	 * @return The number of threads
+	 */
+	public int getNumThreadsGranted()
+	{
+		return m_threadsGranted;
+	}
+
 }

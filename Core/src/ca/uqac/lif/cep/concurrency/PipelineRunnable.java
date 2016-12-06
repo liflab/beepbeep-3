@@ -183,6 +183,7 @@ class PipelineRunnable implements Runnable
 			// Do nothing
 		}
 		m_done = true;
+		dispose();
 	}
 
 	/**

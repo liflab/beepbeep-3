@@ -354,7 +354,6 @@ public class PullPipeline extends Processor implements Runnable
 			//System.out.println("unlock");
 			if (condition)
 			{
-				//System.out.println("TRUE");
 				return true;
 			}
 			// If we're running in a thread, wait until index 0 appears
@@ -487,10 +486,12 @@ public class PullPipeline extends Processor implements Runnable
 	{
 		while (m_run)
 		{
+			m_pipelinesLock.lock();
 			if (m_pipelines.size() < m_maxPipelines)
 			{
 				pollPullableHard();
 			}
+			m_pipelinesLock.unlock();
 			doThreadHousekeeping();
 			ThreadManager.sleep(s_sleepInterval);
 		}
@@ -513,6 +514,7 @@ public class PullPipeline extends Processor implements Runnable
 
 	private boolean pollPullableHard()
 	{
+		//System.out.println("POLLING");
 		m_inQueueLock.lock();
 		if (m_inQueue.size() < m_maxQueueSize)
 		{
@@ -544,6 +546,7 @@ public class PullPipeline extends Processor implements Runnable
 			m_managedThread = m_threadManager.tryNewThread(this);
 			if (m_managedThread != null)
 			{
+				System.out.println("GOT A THREAD");
 				m_run = true;
 				m_managedThread.start();
 			}
