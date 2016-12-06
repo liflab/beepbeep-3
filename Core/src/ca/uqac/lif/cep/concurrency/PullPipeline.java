@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.concurrency;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
@@ -42,9 +44,26 @@ public class PullPipeline extends Processor implements Runnable
 	private volatile Queue<Boolean> m_isPulled;
 
 	/**
+	 * A lock to access the input queue
+	 */
+	private Lock m_inQueueLock;
+
+	/**
 	 * A list of {@link PipelineRunnable}
 	 */
 	private volatile LinkedList<PipelineRunnable> m_pipelines;
+
+	/**
+	 * A lock to access the pipelines
+	 */
+	private Lock m_pipelinesLock;
+
+	/**
+	 * The maximum number of pipelines that can be in the queue. This is to
+	 * prevent generating too many output events that are not consumed 
+	 * downstream. 
+	 */
+	private int m_maxPipelines = 100;
 
 	/**
 	 * The pullable the pipeline will read from
@@ -70,7 +89,7 @@ public class PullPipeline extends Processor implements Runnable
 	 * The size after which the pipeline temporarily stops polling
 	 * for new events
 	 */
-	private int m_maxQueueSize = 10;
+	private int m_maxQueueSize = 100;
 
 	/**
 	 * The thread manager to get instances of threads
@@ -102,8 +121,10 @@ public class PullPipeline extends Processor implements Runnable
 		synchronized (this)
 		{
 			m_inQueue = new LinkedList<Object>();
+			m_inQueueLock = new ReentrantLock();
 			m_isPulled = new LinkedList<Boolean>();
 			m_pipelines = new LinkedList<PipelineRunnable>();
+			m_pipelinesLock = new ReentrantLock();
 			m_processor = p;
 			if (manager != null)
 			{
@@ -168,7 +189,7 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	synchronized public void setContext(Context context)
+	public void setContext(Context context)
 	{
 		if (context == null)
 		{
@@ -194,23 +215,22 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	/**
-	 * Shifts the index of each entry of the out map by -1 
+	 * Shifts the index of each entry of the out map by -1. This method
+	 * <em>must</em> be called by another method that has the lock on
+	 * <code>m_pipelines</code>. 
 	 */
-	synchronized protected Object shiftEntries()
+	protected Object shiftEntries()
 	{
 		// Entry 0 is guaranteed to be here if this method is called
-		synchronized (m_pipelines)
+		PipelineRunnable thread = m_pipelines.get(0);
+		Object o = thread.popEvent();
+		if (thread.canDelete())
 		{
-			PipelineRunnable thread = m_pipelines.get(0);
-			Object o = thread.popEvent();
-			if (thread.canDelete())
-			{
-				// This thread is done; we remove it
-				thread.dispose();
-				m_pipelines.remove(0);
-			}
-			return o;
+			// This thread is done; we remove it
+			thread.dispose();
+			m_pipelines.remove(0);
 		}
+		return o;
 	}
 
 	/**
@@ -233,67 +253,71 @@ public class PullPipeline extends Processor implements Runnable
 		@Override
 		public Object pullSoft() 
 		{
+			Object out = null;
 			if (!m_run)
 			{
 				// Take this opportunity to perform a cleanup on the pipelines
 				pollPullableSoft();
 				doThreadHousekeeping();
 			}
-			synchronized (m_pipelines)
+			m_pipelinesLock.lock();
+			if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
 			{
-				if (m_pipelines.isEmpty())
-				{
-					return null;
-				}
+				out = shiftEntries();
 			}
-			synchronized (m_pipelines)
-			{
-				if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
-				{
-					Object out = shiftEntries();
-					System.out.print("Giving ");
-					return out;
-				}
-			}
-			return null;
+			m_pipelinesLock.unlock();
+			return out;
 		}
 
 		@Override
 		public Object pull() 
 		{
+			Object out = null;
 			if (!m_run)
 			{
 				// Take this opportunity to perform a cleanup on the pipelines
-				pollPullableHard();
+				if (m_pipelines.size() < m_maxPipelines)
+				{
+					pollPullableHard();
+				}
 				doThreadHousekeeping();
 			}
-			synchronized (m_pipelines)
+			m_pipelinesLock.lock();
+			//System.out.println("pull lock");
+			if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
 			{
-				if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
-				{
-					Object out = shiftEntries();
-					return out;
-				}
+				out = shiftEntries();
+			}
+			m_pipelinesLock.unlock();
+			//System.out.println("unlock");
+			if (out != null)
+			{
+				return out;
 			}
 			// Wait until index 0 appears
 			while (m_run)
 			{
 				ThreadManager.sleep(s_sleepInterval);
-				synchronized (m_pipelines)
+				m_pipelinesLock.lock();
+				//System.out.println("pull 2 lock");
+				boolean returned = false;
+				if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
 				{
-					if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
-					{
-						Object out = shiftEntries();
-						System.out.print("Giving ");
-						return out;
-					}					
+					out = shiftEntries();
+					returned = true;
+				}
+				m_pipelinesLock.unlock();
+				//System.out.println("unlock");
+				if (returned)
+				{
+					return out;
 				}
 			}
 			return null;
 		}
 
 		@Override
-		public Object next() 
+		public Object next()
 		{
 			return pull();
 		}
@@ -307,49 +331,63 @@ public class PullPipeline extends Processor implements Runnable
 				pollPullableSoft();
 				doThreadHousekeeping();
 			}
-			synchronized (m_pipelines)
+			m_pipelinesLock.lock();
+			//System.out.println("hns lock");
+			NextStatus to_return = NextStatus.MAYBE;
+			if (!m_pipelines.isEmpty())
 			{
-				if (m_pipelines.isEmpty())
-				{
-					return NextStatus.MAYBE;
-				}
+				to_return = NextStatus.YES;
 			}
-			return NextStatus.YES;
+			m_pipelinesLock.unlock();
+			//System.out.println("unlock");
+			return to_return;
 		}
 
 		@Override
 		public boolean hasNext() 
 		{
-			synchronized (m_pipelines)
+			boolean condition;
+			m_pipelinesLock.lock();
+			//System.out.println("hn lock");
+			condition = !m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent();
+			m_pipelinesLock.unlock();
+			//System.out.println("unlock");
+			if (condition)
 			{
-				if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
-				{
-					return true;
-				}
-			}
-			// If we're not running in a thread, poll the pullable
-			if (!m_run)
-			{
-				// Take this opportunity to perform a cleanup on the pipelines
-				boolean b = pollPullableHard();
-				if (!b)
-				{
-					m_run = false;
-					return false;
-				}
-				doThreadHousekeeping();
+				//System.out.println("TRUE");
 				return true;
 			}
 			// If we're running in a thread, wait until index 0 appears
 			while (m_run)
 			{
 				ThreadManager.sleep(s_sleepInterval);
-				synchronized (m_pipelines)
+				//System.out.println("HERE");
+				m_pipelinesLock.lock();
+				//System.out.println("hn2 lock");
+				condition = !m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent();
+				//System.out.println("CONDITION " + condition);
+				m_pipelinesLock.unlock();
+				//System.out.println("unlock");
+				if (condition)
 				{
-					if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
-					{
-						return true;
-					}					
+					return true;
+				}
+			}
+			// If we're not running in a thread, poll the pullable
+			System.out.println("Somebody stopped me");
+			if (!m_run)
+			{
+				if (m_pipelines.size() < m_maxPipelines)
+				{
+					pollPullableHard();
+				}
+				doThreadHousekeeping();
+				m_pipelinesLock.lock();
+				condition = !m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent();
+				m_pipelinesLock.unlock();
+				if (condition)
+				{
+					return true;
 				}
 			}
 			return false;
@@ -382,16 +420,15 @@ public class PullPipeline extends Processor implements Runnable
 		@Override
 		public void dispose()
 		{
-			synchronized (m_pipelines)
+			m_pipelinesLock.lock();
+			Iterator<PipelineRunnable> it = m_pipelines.iterator();
+			while (it.hasNext())
 			{
-				Iterator<PipelineRunnable> it = m_pipelines.iterator();
-				while (it.hasNext())
-				{
-					PipelineRunnable pr = it.next();
-					pr.dispose();
-					it.remove();
-				}
+				PipelineRunnable pr = it.next();
+				pr.dispose();
 			}
+			m_pipelines.clear();
+			m_pipelinesLock.unlock();
 		}
 	}
 
@@ -433,16 +470,15 @@ public class PullPipeline extends Processor implements Runnable
 		@Override
 		public void dispose()
 		{
-			synchronized (m_pipelines)
+			m_pipelinesLock.lock();
+			Iterator<PipelineRunnable> it = m_pipelines.iterator();
+			while (it.hasNext())
 			{
-				Iterator<PipelineRunnable> it = m_pipelines.iterator();
-				while (it.hasNext())
-				{
-					PipelineRunnable pr = it.next();
-					pr.dispose();
-					it.remove();
-				}
+				PipelineRunnable pr = it.next();
+				pr.dispose();
 			}
+			m_pipelines.clear();
+			m_pipelinesLock.unlock();
 		}
 	}
 
@@ -451,63 +487,63 @@ public class PullPipeline extends Processor implements Runnable
 	{
 		while (m_run)
 		{
-			pollPullableHard();
+			if (m_pipelines.size() < m_maxPipelines)
+			{
+				pollPullableHard();
+			}
 			doThreadHousekeeping();
 			ThreadManager.sleep(s_sleepInterval);
 		}
 	}
 
-	synchronized private void pollPullableSoft()
+	private void pollPullableSoft()
 	{
+		m_inQueueLock.lock();
 		if (m_inQueue.size() < m_maxQueueSize)
 		{
 			Object o = m_inputPullable.pullSoft();
 			if (o != null)
 			{
-				synchronized (m_inQueue)
-				{
-					//System.out.println("PUTTING " + o);
-					m_inQueue.add(o);	
-					m_isPulled.add(true);
-				}
-			}				
+				m_inQueue.add(o);	
+				m_isPulled.add(true);
+			}
 		}
+		m_inQueueLock.unlock();
 	}
 
-	synchronized private boolean pollPullableHard()
+	private boolean pollPullableHard()
 	{
+		m_inQueueLock.lock();
 		if (m_inQueue.size() < m_maxQueueSize)
 		{
 			Object o = m_inputPullable.pull();
 			if (o != null)
 			{
-				synchronized (m_inQueue)
-				{
-					//System.out.println("PUTTING " + o);
-					m_inQueue.add(o);	
-					m_isPulled.add(true);
-					return true;
-				}
+				//System.out.println("PUTTING " + o);
+				m_inQueue.add(o);	
+				m_isPulled.add(true);
+				m_inQueueLock.unlock();
+				return true;
 			}
 			else
 			{
 				m_run = false;
+				m_inQueueLock.unlock();
 				return false;
 			}
 		}
+		m_inQueueLock.unlock();
 		return true;
 	}
 
 	@Override
-	synchronized public void start()
+	public void start()
 	{
 		if (!m_run)
 		{
-			System.out.println("START");
 			m_managedThread = m_threadManager.tryNewThread(this);
 			if (m_managedThread != null)
 			{
-				System.out.println("GOT A THREAD");
 				m_run = true;
 				m_managedThread.start();
 			}
@@ -526,54 +562,62 @@ public class PullPipeline extends Processor implements Runnable
 
 	private void doThreadHousekeeping()
 	{
-		//System.out.println("Housekeeping");
-		synchronized (m_inQueue)
+		Object event = null;
+		boolean is_pulled = false;
+		m_inQueueLock.lock();
+		if (!m_inQueue.isEmpty())
 		{
-			if (!m_inQueue.isEmpty())
+			// An input event waiting: start a new pipeline with this event
+			event = m_inQueue.poll();
+			is_pulled = m_isPulled.poll();
+		}
+		m_inQueueLock.unlock();
+		if (event != null && m_pipelines.size() < m_maxPipelines)
+		{
+			Object[] inputs = new Object[1];
+			inputs[0] = event;
+			PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.clone(), inputs, is_pulled);
+			m_pipelinesLock.lock();
+			//System.out.println("lock");
+			m_pipelines.add(new_pipeline);
+			m_pipelinesLock.unlock();
+			//System.out.println("unlock");
+			ManagedThread new_thread = null;
+			if (m_threadManager != null)
 			{
-				// An input event waiting: start a new pipeline with this event
-				Object event = m_inQueue.poll();
-				boolean is_pulled = m_isPulled.poll();
-				Object[] inputs = new Object[1];
-				inputs[0] = event;
-				PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.clone(), inputs, is_pulled);
-				m_pipelines.add(new_pipeline);
-				ManagedThread new_thread = null;
-				if (m_threadManager != null)
-				{
-					new_thread = m_threadManager.tryNewThread(new_pipeline);
-				}
-				if (new_thread != null)
-				{
-					// We got a thread: run pipeline in that thread
-					//System.out.println("Got new thread");
-					new_pipeline.setThread(new_thread);
-					new_thread.start();
-				}
-				else
-				{
-					// No thread: run pipeline in the current thread
-					new_pipeline.run();
-				}
+				new_thread = m_threadManager.tryNewThread(new_pipeline);
+			}
+			if (new_thread != null)
+			{
+				// We got a thread: run pipeline in that thread
+				//System.out.println("Got new thread");
+				new_pipeline.setThread(new_thread);
+				new_thread.start();
+			}
+			else
+			{
+				// No thread: run pipeline in the current thread
+				new_pipeline.run();
 			}
 		}
-		synchronized (m_pipelines)
+		m_pipelinesLock.lock();
+		//System.out.println("lock");
+		if (!m_pipelines.isEmpty())
 		{
-			if (!m_pipelines.isEmpty())
+			PipelineRunnable pt = m_pipelines.getFirst();
+			if (!pt.getIsPulled())
 			{
-				PipelineRunnable pt = m_pipelines.getFirst();
-				if (!pt.getIsPulled())
+				while (pt.hasEvent())
 				{
-					while (pt.hasEvent())
-					{
-						// If this thread has been started from pushed events,
-						// must push whatever it produces
-						Object o = shiftEntries();
-						m_outputPushable.push(o);
-						m_outputPushable.waitFor();
-					}					
-				}
+					// If this thread has been started from pushed events,
+					// must push whatever it produces
+					Object o = shiftEntries();
+					m_outputPushable.push(o);
+					m_outputPushable.waitFor();
+				}					
 			}
 		}
+		m_pipelinesLock.unlock();
+		//System.out.println("unlock");
 	}
 }

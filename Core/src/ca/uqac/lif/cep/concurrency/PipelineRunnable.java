@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.concurrency;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -56,6 +58,11 @@ class PipelineRunnable implements Runnable
 	private Processor m_processor;
 	
 	/**
+	 * Whether this runnable is done
+	 */
+	private volatile boolean m_done = false;
+	
+	/**
 	 * The inputs given to this processor. This consists of a single
 	 * front; moreover, currently the pipeline only supports unary
 	 * processors, so this array should always be of size 1.
@@ -66,6 +73,11 @@ class PipelineRunnable implements Runnable
 	 * The output events produced by the processor
 	 */
 	private volatile Queue<Object> m_outQueue;
+	
+	/**
+	 * A lock to access the queue
+	 */
+	private Lock m_outQueueLock;
 
 	/**
 	 * The thread in which the pipeline thread is running, if any
@@ -85,15 +97,16 @@ class PipelineRunnable implements Runnable
 		m_processor = p;
 		m_inputs = inputs;
 		m_outQueue = new LinkedList<Object>();
+		m_outQueueLock = new ReentrantLock();
 		m_isPulled = is_pulled;
 	}
 	
-	synchronized public void setThread(ManagedThread thread)
+	public void setThread(ManagedThread thread)
 	{
 		m_managedThread = thread;
 	}
 
-	synchronized public void dispose()
+	public void dispose()
 	{
 		// Tell the thread manager that the thread in which
 		// we were running is no longer used (if any)
@@ -109,18 +122,24 @@ class PipelineRunnable implements Runnable
 	 * @see #hasEvent()
 	 * @return The event
 	 */
-	synchronized public Object popEvent()
+	public Object popEvent()
 	{
-		return m_outQueue.remove();
+		m_outQueueLock.lock();
+		Object o = m_outQueue.remove();
+		m_outQueueLock.unlock();
+		return o;
 	}
 
 	/**
 	 * Checks that the pipeline's output queue contains at least one event
 	 * @return true if the queue is not empty
 	 */
-	synchronized public boolean hasEvent()
+	public boolean hasEvent()
 	{
-		return !m_outQueue.isEmpty();
+		m_outQueueLock.lock();
+		boolean b = !m_outQueue.isEmpty();
+		m_outQueueLock.unlock();
+		return b;
 	}
 
 	/**
@@ -133,9 +152,12 @@ class PipelineRunnable implements Runnable
 	 * </ul>
 	 * @return
 	 */
-	synchronized public boolean canDelete()
+	public boolean canDelete()
 	{
-		return m_outQueue.isEmpty() && (m_managedThread == null || !m_managedThread.isAlive());
+		m_outQueueLock.lock();
+		boolean condition = m_outQueue.isEmpty() && m_done;
+		m_outQueueLock.unlock();
+		return condition;
 	}
 
 	@Override
@@ -151,16 +173,16 @@ class PipelineRunnable implements Runnable
 			while (pullable.hasNext())
 			{
 				Object o = pullable.pull();
-				synchronized (m_outQueue)
-				{
-					m_outQueue.add(o);
-				}
+				m_outQueueLock.lock();
+				m_outQueue.add(o);
+				m_outQueueLock.unlock();
 			}
 		} 
 		catch (ConnectorException e)
 		{
 			// Do nothing
 		}
+		m_done = true;
 	}
 
 	/**
@@ -184,5 +206,10 @@ class PipelineRunnable implements Runnable
 	public boolean getIsPulled()
 	{
 		return m_isPulled;
+	}
+	
+	public boolean isDone()
+	{
+		return m_done;
 	}
 }
