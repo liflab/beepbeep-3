@@ -104,7 +104,13 @@ public class PullPipeline extends Processor implements Runnable
 	/**
 	 * Time (in milliseconds) to wait before polling again
 	 */
-	protected static final long s_sleepInterval = 0;
+	protected static final long s_sleepIntervalWhenPolling = 0;
+	
+	/**
+	 * Time (in milliseconds) to wait when the pipeline sees that its
+	 * output queue is at maximum capacity
+	 */
+	protected static final long s_sleepIntervalWhenFullQueue = 5;
 
 	/**
 	 * The processor that will be pipelined
@@ -297,7 +303,7 @@ public class PullPipeline extends Processor implements Runnable
 			// Wait until index 0 appears
 			while (m_run)
 			{
-				ThreadManager.sleep(s_sleepInterval);
+				ThreadManager.sleep(s_sleepIntervalWhenPolling);
 				m_pipelinesLock.lock();
 				//System.out.println("pull 2 lock");
 				boolean returned = false;
@@ -359,7 +365,7 @@ public class PullPipeline extends Processor implements Runnable
 			// If we're running in a thread, wait until index 0 appears
 			while (m_run)
 			{
-				ThreadManager.sleep(s_sleepInterval);
+				ThreadManager.sleep(s_sleepIntervalWhenPolling);
 				//System.out.println("HERE");
 				m_pipelinesLock.lock();
 				//System.out.println("hn2 lock");
@@ -492,8 +498,16 @@ public class PullPipeline extends Processor implements Runnable
 				pollPullableHard();
 			}
 			m_pipelinesLock.unlock();
-			doThreadHousekeeping();
-			ThreadManager.sleep(s_sleepInterval);
+			boolean b = doThreadHousekeeping();
+			if (b)
+			{
+				ThreadManager.sleep(s_sleepIntervalWhenPolling);
+			}
+			else
+			{
+				// Wait a bit longer if queue is full
+				ThreadManager.sleep(s_sleepIntervalWhenFullQueue);
+			}
 		}
 	}
 
@@ -563,10 +577,11 @@ public class PullPipeline extends Processor implements Runnable
 		}
 	}
 
-	private void doThreadHousekeeping()
+	private boolean doThreadHousekeeping()
 	{
 		Object event = null;
 		boolean is_pulled = false;
+		boolean to_return = true;
 		m_inQueueLock.lock();
 		if (!m_inQueue.isEmpty())
 		{
@@ -575,6 +590,11 @@ public class PullPipeline extends Processor implements Runnable
 			is_pulled = m_isPulled.poll();
 		}
 		m_inQueueLock.unlock();
+		if (m_pipelines.size() >= m_maxPipelines)
+		{
+			// Indicates the maximum number of pipelines is reached
+			to_return = false;
+		}
 		if (event != null && m_pipelines.size() < m_maxPipelines)
 		{
 			Object[] inputs = new Object[1];
@@ -603,6 +623,10 @@ public class PullPipeline extends Processor implements Runnable
 				new_pipeline.run();
 			}
 		}
+		else
+		{
+			
+		}
 		m_pipelinesLock.lock();
 		//System.out.println("lock");
 		if (!m_pipelines.isEmpty())
@@ -622,5 +646,6 @@ public class PullPipeline extends Processor implements Runnable
 		}
 		m_pipelinesLock.unlock();
 		//System.out.println("unlock");
+		return to_return;
 	}
 }
