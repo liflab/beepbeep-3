@@ -116,6 +116,7 @@ public class ThreadGroups
 			BigInteger divisor = BigInteger.ONE.add(BigInteger.ONE);
 			BigInteger number = (BigInteger) inputs[0];
 			BigInteger sqrt_number = sqrt(number);
+			@SuppressWarnings("unused")
 			boolean prime = true;
 			//System.out.println("PRIME : " + number);
 			while (divisor.compareTo(sqrt_number) <= 0)

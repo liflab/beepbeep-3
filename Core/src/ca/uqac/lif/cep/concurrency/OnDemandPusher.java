@@ -25,7 +25,7 @@ public class OnDemandPusher implements Pusher
 	
 	boolean m_run = false;
 
-	protected long s_sleepInterval = 15;
+	protected long s_sleepInterval = 0;
 
 	private Call m_currentCall = Call.NONE;
 
@@ -82,7 +82,7 @@ public class OnDemandPusher implements Pusher
 	}
 
 	@Override
-	synchronized public void call(Call c)
+	public void call(Call c)
 	{
 		m_done = false;
 		m_currentCall = c;

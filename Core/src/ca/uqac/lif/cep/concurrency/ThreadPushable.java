@@ -38,7 +38,7 @@ public class ThreadPushable implements Pushable
 	 * The interval (in milliseconds) between polls to the internal
 	 * pushable
 	 */
-	protected static final long s_sleepDuration = 100;
+	protected static final long s_sleepDuration = 0;
 	
 	/**
 	 * Attempts to get an instance of thread pushable. The method will

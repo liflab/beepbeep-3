@@ -107,9 +107,13 @@ public class NonBlockingPusher extends Processor
 	@Override
 	synchronized public NonBlockingPusher clone() 
 	{
-		NonBlockingPusher nbp = new NonBlockingPusher(m_processor.clone());
-		nbp.setContext(m_context);
-		nbp.m_threadManager = m_threadManager;
+		Processor new_processor = m_processor.clone();
+		//new_processor.setContext(m_context);
+		NonBlockingPusher nbp = new NonBlockingPusher(new_processor, m_threadManager);
+		if (m_context != null)
+		{
+			nbp.getContext().putAll(m_context);
+		}
 		return nbp;
 	}
 

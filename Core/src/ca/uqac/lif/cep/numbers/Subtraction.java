@@ -32,7 +32,7 @@ public class Subtraction extends BinaryFunction<Number,Number,Number>
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Subtraction instance = new Subtraction();
-	
+
 	private Subtraction()
 	{
 		super(Number.class, Number.class, Number.class);
@@ -46,6 +46,11 @@ public class Subtraction extends BinaryFunction<Number,Number,Number>
 	@Override
 	public Number getValue(Number x, Number y)
 	{
+		if (x== null)
+		{
+			System.out.println("HA");
+		}
+
 		return x.floatValue() - y.floatValue();
 	}
 
@@ -54,7 +59,7 @@ public class Subtraction extends BinaryFunction<Number,Number,Number>
 	{
 		return 0;
 	}
-	
+
 	@Override
 	public String toString()
 	{
