@@ -51,22 +51,35 @@ public class NonBlockingPusher extends Processor
 	 */
 	protected Pushable m_pushable;
 
+	/**
+	 * A reference to the pushable this processor should send its output to 
+	 */
+	protected Pushable m_pushableOutput;
+
+	/**
+	 * A reference to the pullable this processor should pull its input from 
+	 */
+	protected Pullable m_pullableInput;
+
+	/**
+	 * Creates a new non-blocking pusher
+	 * @param p The processor to wrap
+	 * @param manager The thread manager that will coordinate the granting of
+	 *   threads for this processor
+	 */
 	public NonBlockingPusher(Processor p, ThreadManager manager)
 	{
 		super(1, 1);
-		synchronized (this)
+		m_processor = p;
+		if (manager != null)
 		{
-			m_processor = p;
-			if (manager != null)
+			m_threadManager = manager;
+		}
+		else
+		{
+			if (ThreadManager.defaultManager != null)
 			{
-				m_threadManager = manager;
-			}
-			else
-			{
-				if (ThreadManager.defaultManager != null)
-				{
-					m_threadManager = ThreadManager.defaultManager;
-				}
+				m_threadManager = ThreadManager.defaultManager;
 			}
 		}
 	}
@@ -79,7 +92,27 @@ public class NonBlockingPusher extends Processor
 	@Override
 	synchronized public void setPushableOutput(int index, Pushable p)
 	{
+		m_pushableOutput = p;
 		m_processor.setPushableOutput(index, p);
+	}
+
+	@Override
+	public Pullable getPullableInput(int index)
+	{
+		return m_pullableInput;
+	}
+
+	@Override
+	public void setPullableInput(int index, Pullable p)
+	{
+		m_processor.setPullableInput(index, p);
+		m_pullableInput = p;
+	}
+
+	@Override
+	public Pushable getPushableOutput(int index)
+	{
+		return m_pushableOutput;
 	}
 
 	@Override
@@ -92,7 +125,8 @@ public class NonBlockingPusher extends Processor
 				return m_pushable;
 			}
 			Pushable original_pushable = m_processor.getPushableInput(0);
-			m_pushable = ThreadPushable.tryPushable(original_pushable, m_threadManager);
+			m_pushable = new NewThreadPushable(this, original_pushable, m_threadManager);
+			//ThreadPushable.tryPushable(original_pushable, m_threadManager);
 			return m_pushable;
 		}
 		return null;
@@ -105,10 +139,10 @@ public class NonBlockingPusher extends Processor
 	}
 
 	@Override
-	synchronized public NonBlockingPusher clone() 
+	public synchronized NonBlockingPusher clone() 
 	{
 		Processor new_processor = m_processor.clone();
-		//new_processor.setContext(m_context);
+		new_processor.setContext(m_processor.getContext());
 		NonBlockingPusher nbp = new NonBlockingPusher(new_processor, m_threadManager);
 		if (m_context != null)
 		{

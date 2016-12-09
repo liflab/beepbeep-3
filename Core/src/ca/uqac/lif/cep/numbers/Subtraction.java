@@ -46,11 +46,6 @@ public class Subtraction extends BinaryFunction<Number,Number,Number>
 	@Override
 	public Number getValue(Number x, Number y)
 	{
-		if (x== null)
-		{
-			System.out.println("HA");
-		}
-
 		return x.floatValue() - y.floatValue();
 	}
 

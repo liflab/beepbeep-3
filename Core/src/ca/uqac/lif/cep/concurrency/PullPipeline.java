@@ -76,11 +76,6 @@ public class PullPipeline extends Processor implements Runnable
 	private Pushable m_outputPushable;
 
 	/**
-	 * The pushable one can push to this pipeline
-	 */
-	private Pushable m_inputPushable;
-
-	/**
 	 * Semaphore to stop the pipeline
 	 */
 	private volatile boolean m_run = false;
