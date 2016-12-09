@@ -122,26 +122,23 @@ public abstract class Processor implements Cloneable, Contextualizable
 	public Processor(int in_arity, int out_arity)
 	{
 		super();
-		synchronized (this)
+		m_inputArity = in_arity;
+		m_outputArity = out_arity;
+		m_uniqueId = s_uniqueIdCounter++;
+		m_inputQueues = new Queue[m_inputArity];
+		for (int i = 0; i < m_inputArity; i++)
 		{
-			m_inputArity = in_arity;
-			m_outputArity = out_arity;
-			m_uniqueId = s_uniqueIdCounter++;
-			m_inputQueues = new Queue[m_inputArity];
-			for (int i = 0; i < m_inputArity; i++)
-			{
-				m_inputQueues[i] = new ArrayDeque<Object>();
-			}
-			m_outputQueues = new Queue[m_outputArity];
-			for (int i = 0; i < m_outputArity; i++)
-			{
-				m_outputQueues[i] = new ArrayDeque<Object>();
-			}
-			m_inputPullables = new Pullable[m_inputArity];
-			m_outputPushables = new Pushable[m_outputArity];
-			// The context object
-			m_context = null;
+			m_inputQueues[i] = new ArrayDeque<Object>();
 		}
+		m_outputQueues = new Queue[m_outputArity];
+		for (int i = 0; i < m_outputArity; i++)
+		{
+			m_outputQueues[i] = new ArrayDeque<Object>();
+		}
+		m_inputPullables = new Pullable[m_inputArity];
+		m_outputPushables = new Pushable[m_outputArity];
+		// The context object
+		m_context = null;
 	}
 
 	/**
@@ -193,7 +190,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	}
 
 	@Override
-	public void setContext(Context context)
+	public synchronized void setContext(Context context)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not

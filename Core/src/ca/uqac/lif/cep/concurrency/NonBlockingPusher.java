@@ -144,15 +144,12 @@ public class NonBlockingPusher extends Processor
 		Processor new_processor = m_processor.clone();
 		new_processor.setContext(m_processor.getContext());
 		NonBlockingPusher nbp = new NonBlockingPusher(new_processor, m_threadManager);
-		if (m_context != null)
-		{
-			nbp.getContext().putAll(m_context);
-		}
+		nbp.setContext(m_context);
 		return nbp;
 	}
 
 	@Override
-	synchronized public void setContext(Context c)
+	public synchronized void setContext(Context c)
 	{
 		if (c == null)
 		{
@@ -167,7 +164,7 @@ public class NonBlockingPusher extends Processor
 	}
 
 	@Override
-	synchronized public void setContext(String key, Object value)
+	public synchronized void setContext(String key, Object value)
 	{
 		if (m_context == null)
 		{

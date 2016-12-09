@@ -56,7 +56,10 @@ public class NewThreadPushable implements Pushable
 		{
 			// No thread: just push normally
 			m_currentThread = null;
-			m_pushable.push(o);
+			synchronized (m_pushable)
+			{
+				m_pushable.push(o);
+			}
 		}
 		else
 		{
