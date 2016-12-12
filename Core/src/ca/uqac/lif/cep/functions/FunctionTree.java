@@ -136,13 +136,14 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public FunctionTree clone() 
+	public synchronized FunctionTree clone() 
 	{
 		FunctionTree out = new FunctionTree(m_function.clone());
 		for (int i = 0; i < m_children.length; i++)
 		{
 			out.m_children[i] = m_children[i].clone();
 		}
+		out.setContext(getContext());
 		return out;
 	}
 
@@ -194,7 +195,7 @@ public class FunctionTree extends Function
 	}
 	
 	@Override
-	public void setContext(Context context)
+	public synchronized void setContext(Context context)
 	{
 		super.setContext(context);
 		m_function.setContext(context);
@@ -205,7 +206,7 @@ public class FunctionTree extends Function
 	}
 	
 	@Override
-	public void setContext(String key, Object value)
+	public synchronized void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
 		m_function.setContext(key, value);

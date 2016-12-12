@@ -266,7 +266,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * @return The pushable if the processor has at least one input,
 	 *   <code>null</code> otherwise.
 	 */
-	public final Pushable getPushableInput()
+	public final synchronized Pushable getPushableInput()
 	{
 		return getPushableInput(0);
 	}
@@ -287,7 +287,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * @return The pullable if the processor has at least one output,
 	 *   <code>null</code> otherwise.
 	 */
-	public final Pullable getPullableOutput()
+	public final synchronized Pullable getPullableOutput()
 	{
 		return getPullableOutput(0);
 	}
@@ -297,7 +297,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * @param i The index of the input
 	 * @param p The pullable to assign it to
 	 */
-	public void setPullableInput(int i, Pullable p)
+	public synchronized void setPullableInput(int i, Pullable p)
 	{
 		if (i < m_inputPullables.length)
 		{
@@ -311,7 +311,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * @param i The index of the input
 	 * @return The pullable
 	 */
-	public Pullable getPullableInput(int i)
+	public synchronized Pullable getPullableInput(int i)
 	{
 		if (i < m_inputPullables.length)
 		{
@@ -327,7 +327,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 *   Outside these bounds, nothing will occur.
 	 * @param p The pushable to assign it to
 	 */
-	public void setPushableOutput(int i, Pushable p)
+	public synchronized void setPushableOutput(int i, Pushable p)
 	{
 		if (i < m_outputPushables.length)
 		{
@@ -344,7 +344,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * @return The pushable, <code>null</code> if <code>i</code> is
 	 *   out of range
 	 */	
-	public Pushable getPushableOutput(int i)
+	public synchronized Pushable getPushableOutput(int i)
 	{
 		if (i < m_outputPushables.length)
 		{

@@ -47,19 +47,19 @@ public final class SmartFork extends Processor
 	 * A set of cursors, i.e. pointers to the input buffer. For a fork of
 	 * output arity <i>n</i>, there are <i>n</i> cursors.
 	 */
-	protected int[] m_cursors;
+	private int[] m_cursors;
 
 	/**
 	 * After how many calls to <code>pull()</code> or <code>push()</code>
 	 * do we call the cleanup of the input queue
 	 */
-	protected static final int s_cleanInterval = 10;
+	static final int s_cleanInterval = 10;
 
 	/**
 	 * How many calls to <code>pull()</code> or <code>push()</code>
 	 * since last cleanup of the input queue
 	 */
-	protected int m_timeSinceLastClean;
+	private int m_timeSinceLastClean;
 
 	/**
 	 * Instantiates a fork.
@@ -84,27 +84,26 @@ public final class SmartFork extends Processor
 	public SmartFork(int out_arity, SmartFork reference)
 	{
 		this(out_arity);
-		synchronized (this)
+		for (int i = 0; i < reference.m_inputPullables.length; i++)
 		{
-			for (int i = 0; i < reference.m_inputPullables.length; i++)
-			{
-				m_inputPullables[i] = reference.m_inputPullables[i];
-			}
-			for (int i = 0; i < reference.m_outputPushables.length; i++)
-			{
-				m_outputPushables[i] = reference.m_outputPushables[i];
-			}			
+			m_inputPullables[i] = reference.m_inputPullables[i];
+		}
+		for (int i = 0; i < reference.m_outputPushables.length; i++)
+		{
+			m_outputPushables[i] = reference.m_outputPushables[i];
 		}
 	}
 
 	@Override
-	synchronized public SmartFork clone()
+	public synchronized SmartFork clone()
 	{
-		return new SmartFork(getOutputArity());
+		SmartFork sm = new SmartFork(getOutputArity());
+		sm.setContext(getContext());
+		return sm;
 	}
 
 	@Override
-	synchronized public void reset()
+	public synchronized void reset()
 	{
 		m_inputEvents.clear();
 		for (int i = 0; i < m_cursors.length; i++)
@@ -151,7 +150,14 @@ public final class SmartFork extends Processor
 			// Just push the event directly to the output pushables
 			for (int i = 0; i < m_outputPushables.length; i++)
 			{
+				if (m_outputPushables[i] == null)
+				{
+					System.out.println("NULL!");
+				}
+				else
+				{
 				m_outputPushables[i].push(o);
+				}
 			}
 			incrementClean();
 			return this;
@@ -191,7 +197,7 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}
@@ -201,7 +207,7 @@ public final class SmartFork extends Processor
 	 * Increments the clean counter, which is used to decide when to
 	 * perform a clean-up of the input buffer 
 	 */
-	synchronized protected void incrementClean()
+	private synchronized void incrementClean()
 	{
 		m_timeSinceLastClean = (m_timeSinceLastClean + 1) % s_cleanInterval;
 		if (m_timeSinceLastClean == 0)

@@ -39,7 +39,7 @@ public abstract class PipeCrawler
 	 * Crawls a graph from some starting point
 	 * @param start
 	 */
-	public void crawl(Processor start)
+	public synchronized void crawl(Processor start)
 	{
 		Queue<Processor> to_visit = new LinkedList<Processor>();
 		Set<Processor> visited = new HashSet<Processor>();

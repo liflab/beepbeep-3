@@ -37,19 +37,19 @@ public class GroupProcessor extends Processor
 	/**
 	 * The set of processors included in the group
 	 */
-	protected Set<Processor> m_processors = null;
+	private Set<Processor> m_processors = null;
 
 	/**
 	 * The {@link Pushable}s associated to each of the processor's
 	 * input traces
 	 */
-	protected Vector<Pushable> m_inputPushables = null;
+	private Vector<Pushable> m_inputPushables = null;
 
 	/**
 	 * The {@link Pullable}s associated to each of the processor's
 	 * output traces
 	 */
-	protected Vector<Pullable> m_outputPullables = null;
+	private Vector<Pullable> m_outputPullables = null;
 
 	/**
 	 * A map between numbers and processor associations. An element
@@ -57,7 +57,7 @@ public class GroupProcessor extends Processor
 	 * group processor is in fact the <i>n</i>-th input of processor
 	 * <code>p</code>
 	 */
-	protected Map<Integer,ProcessorAssociation> m_inputPullableAssociations;
+	private Map<Integer,ProcessorAssociation> m_inputPullableAssociations;
 
 	/**
 	 * A map between numbers and processor associations. An element
@@ -65,19 +65,19 @@ public class GroupProcessor extends Processor
 	 * group processor is in fact the <i>n</i>-th output of processor
 	 * <code>p</code>
 	 */
-	protected Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
+	private Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
 
 	/**
 	 * If this group processor is associated to a BNF rule, this contains
 	 * the name of the non-terminal part (left-hand side) of the rule
 	 */
-	protected String m_ruleName;
+	private String m_ruleName;
 
 	/**
 	 * If this group processor is associated to a BNF rule, this contains
 	 * the name right-hand side of the rule
 	 */
-	protected BnfRule m_rule;
+	private BnfRule m_rule;
 
 	/**
 	 * Crate a group processor
@@ -87,14 +87,11 @@ public class GroupProcessor extends Processor
 	public GroupProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
-		synchronized (this)
-		{
-			m_processors = new HashSet<Processor>();
-			m_inputPushables = new Vector<Pushable>();
-			m_outputPullables = new Vector<Pullable>();
-			m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
-			m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();			
-		}
+		m_processors = new HashSet<Processor>();
+		m_inputPushables = new Vector<Pushable>();
+		m_outputPullables = new Vector<Pullable>();
+		m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
+		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
 	}
 
 	/**
@@ -149,11 +146,8 @@ public class GroupProcessor extends Processor
 		ProcessorAssociation(int number, Processor p)
 		{
 			super();
-			synchronized (this)
-			{
-				m_ioNumber = number;
-				m_processor = p;
-			}
+			m_ioNumber = number;
+			m_processor = p;
 		}
 	}
 
@@ -175,7 +169,7 @@ public class GroupProcessor extends Processor
 	 * @param p The processor to add
 	 * @return A reference to the current group processor
 	 */
-	synchronized public GroupProcessor addProcessor(Processor p)
+	public synchronized GroupProcessor addProcessor(Processor p)
 	{
 		m_processors.add(p);
 		return this;
@@ -186,7 +180,7 @@ public class GroupProcessor extends Processor
 	 * @param procs The processors to add
 	 * @return A reference to the current group processor
 	 */
-	synchronized public GroupProcessor addProcessors(Processor... procs)
+	public synchronized GroupProcessor addProcessors(Processor... procs)
 	{
 		for (Processor p : procs)
 		{
@@ -203,7 +197,7 @@ public class GroupProcessor extends Processor
 	 * @param j The number of the input of processor <code>p</code>
 	 * @return A reference to the current group processor
 	 */
-	synchronized public GroupProcessor associateInput(int i, Processor p, int j)
+	public synchronized GroupProcessor associateInput(int i, Processor p, int j)
 	{
 		setPushableInput(i, p.getPushableInput(j));
 		setPullableInputAssociation(i, p, j);
@@ -218,7 +212,7 @@ public class GroupProcessor extends Processor
 	 * @param j The number of the output of processor <code>p</code>
 	 * @return A reference to the current group processor
 	 */
-	synchronized public GroupProcessor associateOutput(int i, Processor p, int j)
+	public synchronized GroupProcessor associateOutput(int i, Processor p, int j)
 	{
 		setPullableOutput(i, p.getPullableOutput(j));
 		setPushableOutputAssociation(i, p, j);
@@ -226,7 +220,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public Pushable getPushableInput(int index)
+	public synchronized Pushable getPushableInput(int index)
 	{
 		return new ProxyPushable(m_inputPushables.get(index), index);
 		//return m_inputPushables.get(index);
@@ -301,7 +295,7 @@ public class GroupProcessor extends Processor
 		return a.m_processor.getPullableInput(a.m_ioNumber);
 	}
 
-	synchronized public Map<Integer,Processor> cloneInto(GroupProcessor group)
+	public synchronized Map<Integer,Processor> cloneInto(GroupProcessor group)
 	{
 		Map<Integer,Processor> new_procs = new HashMap<Integer,Processor>();
 		Processor start = null;
@@ -338,7 +332,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public GroupProcessor clone()
+	public synchronized GroupProcessor clone()
 	{
 		GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
 		cloneInto(group);
@@ -352,19 +346,17 @@ public class GroupProcessor extends Processor
 	 */
 	protected static class CopyCrawler extends PipeCrawler
 	{
-		Map<Integer,Processor> m_correspondences;
+		private final Map<Integer,Processor> m_correspondences;
 
 		public CopyCrawler(Map<Integer,Processor> correspondences)
 		{
 			super();
-			synchronized (this)
-			{
-				m_correspondences = correspondences;
-			}
+			m_correspondences = new HashMap<Integer,Processor>();
+			m_correspondences.putAll(correspondences);
 		}
 
 		@Override
-		synchronized public void visit(Processor p)
+		public synchronized void visit(Processor p)
 		{
 			int out_arity = p.getOutputArity();
 			for (int i = 0; i < out_arity; i++)
@@ -374,8 +366,16 @@ public class GroupProcessor extends Processor
 				{
 					Processor target = push.getProcessor();
 					int j = push.getPosition();
-					Processor new_p = m_correspondences.get(p.getId());
-					Processor new_target = m_correspondences.get(target.getId());
+					Processor new_p = null, new_target = null;
+					if (p.getId() == target.getId())
+					{
+						System.out.println("Source and target are the same!");
+					}
+					synchronized (m_correspondences)
+					{
+						new_p = m_correspondences.get(p.getId());
+						new_target = m_correspondences.get(target.getId());
+					}
 					if (new_p != null && new_target != null)
 					{
 						// new_p and new_target may be null if they refer to a processor
@@ -395,7 +395,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public void setContext(Context context)
+	public synchronized void setContext(Context context)
 	{
 		super.setContext(context);
 		for (Processor p : m_processors)
@@ -405,7 +405,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public void setContext(String key, Object value)
+	public synchronized void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
 		for (Processor p : m_processors)

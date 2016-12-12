@@ -114,13 +114,18 @@ public class Connector
 	 * @throws ConnectorException If the input/output types of the processors
 	 *   to connect are incompatible
 	 */
-	public static Processor connect(Processor p1, Processor p2, int i, int j) throws ConnectorException
+	public static synchronized Processor connect(Processor p1, Processor p2, int i, int j) throws ConnectorException
 	{
 		// First check for type compatibility
 		if (s_checkForTypes)
 		{
 			// This will throw an exception if the connection is impossible
 			checkForException(p1, p2, i, j);
+		}
+		if (p1 == p2)
+		{
+			// This is weird: you try to connect a processor to itself
+			throw new SelfLoopException(p1, p2, i, j);
 		}
 		// Pull
 		Pullable p1_out = p1.getPullableOutput(i);
@@ -142,7 +147,7 @@ public class Connector
 	 * @throws ConnectorException If the input/output types of the processors
 	 *   to connect are incompatible
 	 */
-	public static Processor connect(Processor p1, int i, Processor p2, int j) throws ConnectorException
+	public static synchronized Processor connect(Processor p1, int i, Processor p2, int j) throws ConnectorException
 	{
 		return connect(p1, p2, i, j);
 	}
@@ -157,7 +162,7 @@ public class Connector
 	 * @throws ConnectorException If the input/output types of the processors
 	 *   to connect are incompatible
 	 */
-	public static Processor connectFork(Processor p1, Processor p2, Processor p3) throws ConnectorException
+	public static synchronized Processor connectFork(Processor p1, Processor p2, Processor p3) throws ConnectorException
 	{
 		connect(p1, p3, 0, 0);
 		connect(p2, p3, 0, 1);
@@ -174,7 +179,7 @@ public class Connector
 	 * @throws ConnectorException If the input/output types of the processors
 	 *   to connect are incompatible
 	 */
-	public static Processor connect(Processor ... procs) throws ConnectorException
+	public static synchronized Processor connect(Processor ... procs) throws ConnectorException
 	{
 		if (procs.length == 1)
 		{
@@ -265,8 +270,8 @@ public class Connector
 				return;
 			}
 		}
-		System.out.println("IN CLASSES: " + in_classes);
-		System.out.println("OUT CLASS: " + out_class);
+		System.out.println("IN CLASSES: " + in_classes + p1);
+		System.out.println("OUT CLASS: " + out_class + p2);
 		throw new IncompatibleTypesException(p1, p2, i, j);
 	}
 		
@@ -347,6 +352,31 @@ public class Connector
 			out.append("Cannot connect output ").append(m_sourceIndex).append(" of ").append(m_source).append(" to input ").append(m_destinationIndex).append(" of ").append(m_destination).append(": index out of bounds");
 			return out.toString();
 		}				
+	}
+	
+	/**
+	 * Exception thrown when trying to connect the output of a processor to
+	 * its own input 
+	 */
+	public static class SelfLoopException extends ConnectorException
+	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 1L;
+
+		SelfLoopException(Processor source, Processor destination, int i, int j) 
+		{
+			super(source, destination, i, j);
+		}
+		
+		@Override
+		public String getMessage()
+		{
+			StringBuilder out = new StringBuilder();
+			out.append("Trying to connect processor #").append(m_source.getId()).append(" to itself");
+			return out.toString();
+		}
 	}
 
 	/**

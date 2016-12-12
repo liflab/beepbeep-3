@@ -34,12 +34,12 @@ public class NonBlockingPusher extends Processor
 	/**
 	 * The processor to which events will be pushed
 	 */
-	protected Processor m_processor;
+	protected final Processor m_processor;
 
 	/**
 	 * The thread manager to get instances of threads
 	 */
-	protected ThreadManager m_threadManager;
+	protected final ThreadManager m_threadManager;
 
 	/**
 	 * The thread in which the pipeline thread is running
@@ -81,6 +81,10 @@ public class NonBlockingPusher extends Processor
 			{
 				m_threadManager = ThreadManager.defaultManager;
 			}
+			else
+			{
+				m_threadManager = null;
+			}
 		}
 	}
 
@@ -97,26 +101,26 @@ public class NonBlockingPusher extends Processor
 	}
 
 	@Override
-	public Pullable getPullableInput(int index)
+	public synchronized Pullable getPullableInput(int index)
 	{
 		return m_pullableInput;
 	}
 
 	@Override
-	public void setPullableInput(int index, Pullable p)
+	public synchronized void setPullableInput(int index, Pullable p)
 	{
 		m_processor.setPullableInput(index, p);
 		m_pullableInput = p;
 	}
 
 	@Override
-	public Pushable getPushableOutput(int index)
+	public synchronized Pushable getPushableOutput(int index)
 	{
 		return m_pushableOutput;
 	}
 
 	@Override
-	synchronized public Pushable getPushableInput(int index) 
+	public synchronized Pushable getPushableInput(int index) 
 	{
 		if (index == 0)
 		{
@@ -133,7 +137,7 @@ public class NonBlockingPusher extends Processor
 	}
 
 	@Override
-	synchronized public Pullable getPullableOutput(int index) 
+	public synchronized Pullable getPullableOutput(int index) 
 	{
 		return m_processor.getPullableOutput(index);
 	}
@@ -142,7 +146,6 @@ public class NonBlockingPusher extends Processor
 	public synchronized NonBlockingPusher clone() 
 	{
 		Processor new_processor = m_processor.clone();
-		new_processor.setContext(m_processor.getContext());
 		NonBlockingPusher nbp = new NonBlockingPusher(new_processor, m_threadManager);
 		nbp.setContext(m_context);
 		return nbp;
@@ -151,26 +154,14 @@ public class NonBlockingPusher extends Processor
 	@Override
 	public synchronized void setContext(Context c)
 	{
-		if (c == null)
-		{
-			return;
-		}
-		if (m_context == null)
-		{
-			m_context = new Context();
-		}
-		m_context.putAll(c);
+		super.setContext(c);
 		m_processor.setContext(c);
 	}
 
 	@Override
 	public synchronized void setContext(String key, Object value)
 	{
-		if (m_context == null)
-		{
-			m_context = new Context();
-		}
-		m_context.put(key, value);
+		super.setContext(key, value);
 		m_processor.setContext(key, value);
 	}
 }

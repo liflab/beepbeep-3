@@ -59,7 +59,7 @@ public class PullThreadGroup extends GroupProcessor
 		// For output 0, wrap pullable into a ThreadPullable
 		if (m_pullable == null)
 		{
-			Pullable original_pullable = m_outputPullables.get(index);
+			Pullable original_pullable = super.getPullableOutput(index);
 			m_pullable = ThreadPullable.tryPullable(original_pullable, m_threadManager);
 		}
 		return new ProxyPullable(m_pullable, index);

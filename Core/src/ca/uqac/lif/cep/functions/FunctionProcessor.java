@@ -62,9 +62,10 @@ public class FunctionProcessor extends SingleProcessor
 	}
 	
 	@Override
-	public FunctionProcessor clone()
+	public synchronized FunctionProcessor clone()
 	{
 		FunctionProcessor out = new FunctionProcessor(m_function.clone(m_context));
+		out.setContext(m_context);
 		return out;
 	}
 	
@@ -76,21 +77,21 @@ public class FunctionProcessor extends SingleProcessor
 	}
 	
 	@Override
-	public final Class<?> getOutputTypeFor(int index)
+	public final synchronized Class<?> getOutputTypeFor(int index)
 	{
 		// The type is determined by that of the underlying function
 		return m_function.getOutputTypeFor(index);
 	}
 	
 	@Override
-	public void setContext(Context context)
+	public synchronized void setContext(Context context)
 	{
 		super.setContext(context);
 		m_function.setContext(context);
 	}
 	
 	@Override
-	public void setContext(String key, Object value)
+	public synchronized void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
 		m_function.setContext(key, value);
