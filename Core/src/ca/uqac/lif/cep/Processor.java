@@ -21,6 +21,8 @@ import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import ca.uqac.lif.cep.Connector.Variant;
 
@@ -90,6 +92,11 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * every processor.
 	 */
 	private static int s_uniqueIdCounter = 0;
+	
+	/**
+	 * A lock to access the ID counter
+	 */
+	private static Lock m_counterLock = new ReentrantLock();
 
 	/**
 	 * The unique ID given to this processor instance 
@@ -124,7 +131,9 @@ public abstract class Processor implements Cloneable, Contextualizable
 		super();
 		m_inputArity = in_arity;
 		m_outputArity = out_arity;
+		m_counterLock.lock();
 		m_uniqueId = s_uniqueIdCounter++;
+		m_counterLock.unlock();
 		m_inputQueues = new Queue[m_inputArity];
 		for (int i = 0; i < m_inputArity; i++)
 		{
