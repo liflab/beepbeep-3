@@ -38,14 +38,14 @@ public class FileHelper
 	/**
 	 * The system-dependent carriage return symbol
 	 */
-	public static final transient String CRLF = System.getProperty("line.separator");
-	
+	public static final String CRLF = System.getProperty("line.separator");
+
 	/**
 	 * Utility classes should not have public constructors
 	 */
 	private FileHelper()
 	{
-	    throw new IllegalAccessError("Utility class");
+		throw new IllegalAccessError("Utility class");
 	}
 
 	/**
@@ -58,10 +58,12 @@ public class FileHelper
 	{
 		BufferedReader br = null;
 		StringBuilder sb = new StringBuilder();
+		FileReader fr = null;
 		try
 		{
 			String sCurrentLine;
-			br = new BufferedReader(new FileReader(f));
+			fr = new FileReader(f);
+			br = new BufferedReader(fr);
 			while ((sCurrentLine = br.readLine()) != null)
 			{
 				sb.append(sCurrentLine).append("\n");
@@ -77,7 +79,13 @@ public class FileHelper
 			try
 			{
 				if (br != null)
+				{
 					br.close();
+				}
+				if (fr != null)
+				{
+					fr.close();
+				}
 			}
 			catch (IOException ex)
 			{
@@ -119,11 +127,24 @@ public class FileHelper
 			//convert file into array of bytes
 			fileInputStream = new FileInputStream(f);
 			fileInputStream.read(bFile);
-			fileInputStream.close();
 		}
 		catch (Exception e)
 		{
 			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+		}
+		finally
+		{
+			if (fileInputStream != null)
+			{
+				try 
+				{
+					fileInputStream.close();
+				} 
+				catch (IOException e) 
+				{
+					BeepBeepLogger.logger.log(Level.WARNING, "", e);
+				}
+			}
 		}
 		return bFile;
 	}
@@ -136,6 +157,8 @@ public class FileHelper
 	 */
 	public static void writeFromString(File f, String content)
 	{
+		FileWriter fw = null;
+		BufferedWriter bw = null;
 		try
 		{
 			// if file doesnt exists, then create it
@@ -143,14 +166,32 @@ public class FileHelper
 			{
 				createIfNotExists(f);
 			}
-			FileWriter fw = new FileWriter(f.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
+			fw = new FileWriter(f.getAbsoluteFile());
+			bw = new BufferedWriter(fw);
 			bw.write(content);
 			bw.close();
 		}
 		catch (IOException e)
 		{
 			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+		}
+		finally
+		{
+			try 
+			{
+				if (bw != null)
+				{
+					bw.close();
+				}
+				if (fw != null)
+				{
+					fw.close();
+				}
+			} 
+			catch (IOException e) 
+			{
+				BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			}
 		}
 	}
 
@@ -177,6 +218,7 @@ public class FileHelper
 	 */
 	public static void writeFromBytes(File f, byte[] bFile)
 	{
+		FileOutputStream fileOutputStream = null;
 		try
 		{
 			// if file doesnt exists, then create it
@@ -185,13 +227,27 @@ public class FileHelper
 				createIfNotExists(f);
 			}
 			//convert array of bytes into file
-			FileOutputStream fileOuputStream = new FileOutputStream(f);
-			fileOuputStream.write(bFile);
-			fileOuputStream.close();
+			fileOutputStream = new FileOutputStream(f);
+			fileOutputStream.write(bFile);
+			
 		}
 		catch(Exception e)
 		{
 			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+		}
+		finally
+		{
+			if (fileOutputStream != null)
+			{
+				try 
+				{
+					fileOutputStream.close();
+				} 
+				catch (IOException e) 
+				{
+					BeepBeepLogger.logger.log(Level.WARNING, "", e);
+				}
+			}
 		}
 	}
 
@@ -238,7 +294,7 @@ public class FileHelper
 	 */
 	public static String trimExtension(String filename)
 	{
-		int position = filename.lastIndexOf(".");
+		int position = filename.lastIndexOf('.');
 		if (position < 0)
 			return filename;
 		return filename.substring(0, position);
@@ -254,6 +310,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 			return null;
 		}
 		return out;
@@ -272,8 +329,7 @@ public class FileHelper
 
 	public static InputStream internalFileToStream(Class<?> c, String path)
 	{
-		InputStream in = c.getResourceAsStream(path);
-		return in;
+		return c.getResourceAsStream(path);
 	}
 
 	/**
@@ -309,7 +365,6 @@ public class FileHelper
 			{
 				String line = scanner.nextLine();
 				out.append(line).append(CRLF);
-				//out.append(line).append("\n");
 			}
 		}
 		finally

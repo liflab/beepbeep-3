@@ -17,18 +17,21 @@
  */
 package ca.uqac.lif.cep.interpreter;
 
+import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Stack;
 
-class GroupStack<T> extends Stack<T>
+class GroupStack<T> extends ArrayDeque<T>
 {
 	/**
 	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected Set<T> m_parsedObjects;
+	/**
+	 * The set of parsed objects
+	 */
+	protected transient Set<T> m_parsedObjects;
 
 	public GroupStack()
 	{
@@ -37,10 +40,10 @@ class GroupStack<T> extends Stack<T>
 	}
 
 	@Override
-	public T push(T o)
+	public void push(T o)
 	{
 		m_parsedObjects.add(o);
-		return super.push(o);
+		super.push(o);
 	}
 
 	public Set<T> getHistory()

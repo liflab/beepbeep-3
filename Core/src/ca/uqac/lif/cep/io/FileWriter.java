@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Queue;
+import java.util.logging.Level;
 
 import ca.uqac.lif.cep.tmf.Sink;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
@@ -89,7 +90,7 @@ public class FileWriter extends Sink
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.throwing("FileWriter", "overwrite", e);
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		return null;
 	}
@@ -110,7 +111,7 @@ public class FileWriter extends Sink
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.throwing("FileWriter", "append", e);
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		return null;
 	}
@@ -127,7 +128,7 @@ public class FileWriter extends Sink
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.throwing("FileWriter", "close", e);
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		return this;
 	}
