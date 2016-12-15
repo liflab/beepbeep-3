@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.interpreter;
 
 import java.util.Map;
 import java.util.Stack;
+import java.util.logging.Level;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.bullwinkle.BnfRule.InvalidRuleException;
@@ -27,6 +28,7 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.tmf.SmartFork;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 public class UserDefinition
 {
@@ -127,7 +129,7 @@ public class UserDefinition
 				}
 				catch (InvalidRuleException e)
 				{
-					e.printStackTrace();
+					BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 				}
 			}
 		}
@@ -191,8 +193,7 @@ public class UserDefinition
 		}
 		catch (InvalidRuleException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 		}
 		m_interpreter.addCaseToRule("<" + m_symbolName + ">", non_terminal);
 		m_interpreter.addUserDefinedAssociation(non_terminal, new UserDefinitionInstance(this));

@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -28,6 +29,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Computes all the outputs of a
@@ -180,7 +182,7 @@ class PipelineRunnable implements Runnable
 		}
 		catch (ConnectorException e)
 		{
-			// Do nothing
+			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 		}
 		m_done = true;
 		dispose();

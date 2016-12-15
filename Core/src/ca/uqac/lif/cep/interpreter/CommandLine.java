@@ -21,12 +21,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.PackageExtension;
 import ca.uqac.lif.cep.tmf.Sink;
 import ca.uqac.lif.cep.util.AnsiPrinter;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 import ca.uqac.lif.cep.util.AnsiPrinter.Color;
 
 public class CommandLine
@@ -158,7 +160,7 @@ public class CommandLine
 				}
 				catch (IOException e)
 				{
-					// Do nothing
+					BeepBeepLogger.logger.log(Level.WARNING, "", e);
 				}
 				// Lets not hog any cpu time
 				try

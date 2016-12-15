@@ -29,5 +29,15 @@ public class InstantiationException extends Exception
 	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public InstantiationException(Throwable t)
+	{
+		super(t);
+	}
+	
+	public InstantiationException()
+	{
+		super("");
+	}
 
 }

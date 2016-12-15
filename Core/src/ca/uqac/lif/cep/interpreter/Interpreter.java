@@ -308,7 +308,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		catch (InvalidGrammarException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 		}
 		return this;
 	}
@@ -488,7 +488,7 @@ public class Interpreter implements ParseNodeVisitor
 				m_nodes.push(n);
 				is_number = true;
 			}
-			catch (Exception e)
+			catch (NumberFormatException e)
 			{
 				// Do nothing; this only means we can't parse the string
 				// as a number
@@ -528,6 +528,7 @@ public class Interpreter implements ParseNodeVisitor
 			{
 				m_lastExceptions.add((Exception) th);
 			}
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 	}
 
@@ -556,6 +557,7 @@ public class Interpreter implements ParseNodeVisitor
 			{
 				m_lastExceptions.add((Exception) th);
 			}
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 	}
 
@@ -651,7 +653,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		catch (BnfParser.ParseException e)
 		{
-			throw new ParseException(e.toString());
+			throw new ParseException(e);
 		}
 		if (node != null)
 		{
@@ -710,6 +712,11 @@ public class Interpreter implements ParseNodeVisitor
 		public ParseException(String message)
 		{
 			super(message);
+		}
+		
+		public ParseException(Throwable t)
+		{
+			super(t);
 		}
 	}
 
@@ -834,7 +841,7 @@ public class Interpreter implements ParseNodeVisitor
 
 		PipingParseException(Exception e)
 		{
-			super(null);
+			super(e);
 			m_exception = e;
 		}
 

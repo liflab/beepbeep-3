@@ -20,6 +20,9 @@ package ca.uqac.lif.cep.cli;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Scans characters from an input stream. This class is only used
@@ -55,7 +58,7 @@ class CharScanner
 			}
 			catch (IOException e)
 			{
-				// Do nothing
+				BeepBeepLogger.logger.log(Level.WARNING, "", e);
 			}
 			// Let's not hog any cpu time
 			try

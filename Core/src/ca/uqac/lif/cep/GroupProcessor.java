@@ -23,9 +23,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+import java.util.logging.Level;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Encapsulates a chain of processors as if it were a single one.
@@ -380,7 +382,7 @@ public class GroupProcessor extends Processor
 						}
 						catch (ConnectorException e)
 						{
-							e.printStackTrace();
+							BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 						}
 					}
 				}

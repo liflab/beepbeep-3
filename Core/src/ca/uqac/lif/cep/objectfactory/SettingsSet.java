@@ -125,15 +125,15 @@ public class SettingsSet
 		}
 		catch (IllegalArgumentException e)
 		{
-			// Do nothing
+			throw new InstantiationException(e);
 		}
 		catch (SecurityException e)
 		{
-			// Do nothing
+			throw new InstantiationException(e);
 		}
 		catch (NoSuchMethodException e)
 		{
-			// Do nothing
+			throw new InstantiationException(e);
 		}
 		if (m == null)
 		{
@@ -145,14 +145,12 @@ public class SettingsSet
 			}
 			catch (java.lang.InstantiationException e)
 			{
-				// Do nothing
+				throw new InstantiationException(e);
 			}
 			catch (IllegalAccessException e)
 			{
-				// Do nothing
+				throw new InstantiationException(e);
 			}
-			// If we get here, something bad happened
-			throw new InstantiationException();
 		}
 		else
 		{
@@ -170,18 +168,16 @@ public class SettingsSet
 			}
 			catch (IllegalAccessException e)
 			{
-				// Do nothing
+				throw new InstantiationException(e);
 			}
 			catch (IllegalArgumentException e)
 			{
-				// Do nothing
+				throw new InstantiationException(e);
 			}
 			catch (InvocationTargetException e)
 			{
-				// Do nothing
+				throw new InstantiationException(e);
 			}
-			// If we get here, something bad happened
-			throw new InstantiationException();
 		}
 	}
 

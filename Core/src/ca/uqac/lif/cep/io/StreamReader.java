@@ -147,7 +147,7 @@ public class StreamReader extends Source
 	}
 
 	@Override
-	@SuppressWarnings("squid:S1168")
+	@SuppressWarnings({"squid:S1168", "squid:S1166"})
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		Object[] out = new String[1];
