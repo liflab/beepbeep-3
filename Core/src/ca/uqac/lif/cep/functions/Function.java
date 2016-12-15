@@ -32,7 +32,7 @@ public abstract class Function implements Cloneable, Contextualizable
 	/**
 	 * The maximum input arity that a function can have
 	 */
-	public static int s_maxInputArity = 10;
+	public static final int s_maxInputArity = 10;
 
 	/**
 	 * Evaluates the outputs of the function, given some inputs

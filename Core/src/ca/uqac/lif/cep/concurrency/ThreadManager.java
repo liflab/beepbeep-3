@@ -29,7 +29,7 @@ public class ThreadManager implements Runnable
 	 * An instance of thread manager used as a default. The default
 	 * thread manager forbids the use of threads.
 	 */
-	public static ThreadManager defaultManager = new ThreadManager(0);
+	public static final ThreadManager defaultManager = new ThreadManager(0);
 
 	/**
 	 * The set of threads managed by this manager
@@ -155,15 +155,6 @@ public class ThreadManager implements Runnable
 	public String toString()
 	{
 		return m_threads.toString();
-	}
-
-	/**
-	 * Sets the default thread manager
-	 * @param manager The manager
-	 */
-	public static void setDefaultManager(ThreadManager manager)
-	{
-		defaultManager = manager;
 	}
 
 	/**

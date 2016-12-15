@@ -20,8 +20,10 @@ package ca.uqac.lif.cep;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import ca.uqac.lif.cep.objectfactory.SettingsSet;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 import ca.uqac.lif.cep.util.PackageFileReader;
 
 /**
@@ -125,7 +127,7 @@ public abstract class Palette
 			}
 			catch (ClassNotFoundException e)
 			{
-				e.printStackTrace();
+				BeepBeepLogger.logger.log(Level.SEVERE, "Class defined in palette cannot be loaded", e);
 			}
 		}
 		return out;
@@ -208,17 +210,17 @@ public abstract class Palette
 		/**
 		 * The name of the processor
 		 */
-		public String processorName;
+		protected String processorName;
 
 		/**
 		 * The class of the processor represented by this entry
 		 */
-		public Class<? extends Processor> m_processorClass;
+		protected Class<? extends Processor> m_processorClass;
 
 		/**
 		 * The image associated to the processor in the palette
 		 */
-		public byte[] m_image;
+		protected byte[] m_image;
 
 		/**
 		 * Craetes a new palette entry
@@ -245,6 +247,36 @@ public abstract class Palette
 		public SettingsSet getSettings()
 		{
 			return new SettingsSet(Object.class);
+		}
+		
+		public String getProcessorName()
+		{
+			return processorName;
+		}
+		
+		public void setProcessorName(String name)
+		{
+			processorName = name;
+		}
+
+		public Class<? extends Processor> getProcessorClass() 
+		{
+			return m_processorClass;
+		}
+
+		public void setProcessorClass(Class<? extends Processor> processorClass)
+		{
+			this.m_processorClass = processorClass;
+		}
+
+		public byte[] getImage()
+		{
+			return m_image;
+		}
+
+		public void setImage(byte[] m_image) 
+		{
+			this.m_image = m_image;
 		}
 	}
 }

@@ -32,7 +32,7 @@ public abstract class TokenFeeder extends SingleProcessor
 	/**
 	 * Whether to update a status line about the number of lines read
 	 */
-	public static boolean s_printStatus = false;
+	protected boolean m_printStatus = false;
 
 	/**
 	 * The number of tokens output so far
@@ -43,6 +43,15 @@ public abstract class TokenFeeder extends SingleProcessor
 	{
 		super(1, 1);
 		m_bufferedContents = new StringBuilder();
+	}
+	
+	/**
+	 * Sets whether the feeder prints a status line
+	 * @param b Set to <code>true</code> to print a status line
+	 */
+	public void printStatus(boolean b)
+	{
+		m_printStatus = b;
 	}
 
 	protected abstract Object createTokenFromInput(String token);
@@ -84,7 +93,7 @@ public abstract class TokenFeeder extends SingleProcessor
 			{
 				if (!(token instanceof NoToken))
 				{
-					if (s_printStatus)
+					if (m_printStatus)
 					{
 						m_tokenCount++;
 						if (m_tokenCount % 1000 == 0)

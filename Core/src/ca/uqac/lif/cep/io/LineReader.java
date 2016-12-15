@@ -30,7 +30,7 @@ public class LineReader extends SingleProcessor
 	/**
 	 * Whether to update a status line about the number of lines read
 	 */
-	public static boolean s_printStatus = false;
+	protected boolean m_printStatus = false;
 
 	/**
 	 * Whether to add a carriage return at the end of each line
@@ -56,6 +56,15 @@ public class LineReader extends SingleProcessor
 		super(0, 1);
 		m_inStream = is;
 		m_scanner = new Scanner(is);
+	}
+	
+	/**
+	 * Sets whether the feeder prints a status line
+	 * @param b Set to <code>true</code> to print a status line
+	 */
+	public void printStatus(boolean b)
+	{
+		m_printStatus = b;
 	}
 
 	/**

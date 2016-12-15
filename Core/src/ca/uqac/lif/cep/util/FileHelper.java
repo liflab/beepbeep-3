@@ -70,7 +70,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		finally
 		{
@@ -81,7 +81,7 @@ public class FileHelper
 			}
 			catch (IOException ex)
 			{
-				ex.printStackTrace();
+				BeepBeepLogger.logger.log(Level.WARNING, "", ex);
 			}
 		}
 		return sb.toString();

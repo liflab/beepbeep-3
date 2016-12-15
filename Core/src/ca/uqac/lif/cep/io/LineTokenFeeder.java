@@ -15,7 +15,7 @@ public class LineTokenFeeder extends SingleProcessor
 
 	protected int m_tokensFed = 0;
 
-	public static boolean s_printStatus = false;
+	protected boolean m_printStatus = false;
 
 	public LineTokenFeeder(String start_token, String end_token)
 	{
@@ -23,6 +23,15 @@ public class LineTokenFeeder extends SingleProcessor
 		m_currentEvent = new StringBuilder();
 		m_startToken = start_token;
 		m_endToken = end_token;
+	}
+	
+	/**
+	 * Sets whether the feeder prints a status line
+	 * @param b Set to <code>true</code> to print a status line
+	 */
+	public void printStatus(boolean b)
+	{
+		m_printStatus = b;
 	}
 
 	@Override
@@ -38,7 +47,7 @@ public class LineTokenFeeder extends SingleProcessor
 		if (line.compareTo(m_endToken) == 0)
 		{
 			m_currentEvent.append(line);
-			if (s_printStatus)
+			if (m_printStatus)
 			{
 				m_tokensFed++;
 				if (m_tokensFed % 1000 == 0)
