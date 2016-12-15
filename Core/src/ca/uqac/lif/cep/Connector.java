@@ -217,6 +217,7 @@ public class Connector
 	 * @param j The index of the input on the second processor
 	 * @return true if the types are compatible, false otherwise
 	 */
+	@SuppressWarnings("squid:S1166")
 	public static boolean isCompatible(Processor p1, Processor p2, int i, int j)
 	{
 		try
