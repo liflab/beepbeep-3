@@ -8,6 +8,7 @@
 *.swp
 *.bak
 *.old
+*.log
 
 # Auto-generated folders
 **/doc/
@@ -56,3 +57,6 @@ jacoco.exec
 
 # PDT-specific
 **/.buildpath
+
+# SonarQube
+.sonar/
