@@ -17,12 +17,13 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
 import java.util.logging.Level;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
@@ -45,13 +46,13 @@ public class GroupProcessor extends Processor
 	 * The {@link Pushable}s associated to each of the processor's
 	 * input traces
 	 */
-	private Vector<Pushable> m_inputPushables = null;
+	private List<Pushable> m_inputPushables = null;
 
 	/**
 	 * The {@link Pullable}s associated to each of the processor's
 	 * output traces
 	 */
-	private Vector<Pullable> m_outputPullables = null;
+	private List<Pullable> m_outputPullables = null;
 
 	/**
 	 * A map between numbers and processor associations. An element
@@ -90,8 +91,8 @@ public class GroupProcessor extends Processor
 	{
 		super(in_arity, out_arity);
 		m_processors = new HashSet<Processor>();
-		m_inputPushables = new Vector<Pushable>();
-		m_outputPullables = new Vector<Pullable>();
+		m_inputPushables = new ArrayList<Pushable>();
+		m_outputPullables = new ArrayList<Pullable>();
 		m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
 		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
 	}

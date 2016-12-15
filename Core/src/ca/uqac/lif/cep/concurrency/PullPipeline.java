@@ -284,13 +284,11 @@ public class PullPipeline extends Processor implements Runnable
 				doThreadHousekeeping();
 			}
 			m_pipelinesLock.lock();
-			//System.out.println("pull lock");
 			if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
 			{
 				out = shiftEntries();
 			}
 			m_pipelinesLock.unlock();
-			//System.out.println("unlock");
 			if (out != null)
 			{
 				return out;
@@ -300,7 +298,6 @@ public class PullPipeline extends Processor implements Runnable
 			{
 				ThreadManager.sleep(s_sleepIntervalWhenPolling);
 				m_pipelinesLock.lock();
-				//System.out.println("pull 2 lock");
 				boolean returned = false;
 				if (!m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent())
 				{
@@ -308,7 +305,6 @@ public class PullPipeline extends Processor implements Runnable
 					returned = true;
 				}
 				m_pipelinesLock.unlock();
-				//System.out.println("unlock");
 				if (returned)
 				{
 					return out;
@@ -333,14 +329,12 @@ public class PullPipeline extends Processor implements Runnable
 				doThreadHousekeeping();
 			}
 			m_pipelinesLock.lock();
-			//System.out.println("hns lock");
 			NextStatus to_return = NextStatus.MAYBE;
 			if (!m_pipelines.isEmpty())
 			{
 				to_return = NextStatus.YES;
 			}
 			m_pipelinesLock.unlock();
-			//System.out.println("unlock");
 			return to_return;
 		}
 
@@ -349,10 +343,8 @@ public class PullPipeline extends Processor implements Runnable
 		{
 			boolean condition;
 			m_pipelinesLock.lock();
-			//System.out.println("hn lock");
 			condition = !m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent();
 			m_pipelinesLock.unlock();
-			//System.out.println("unlock");
 			if (condition)
 			{
 				return true;
@@ -361,20 +353,15 @@ public class PullPipeline extends Processor implements Runnable
 			while (m_run)
 			{
 				ThreadManager.sleep(s_sleepIntervalWhenPolling);
-				//System.out.println("HERE");
 				m_pipelinesLock.lock();
-				//System.out.println("hn2 lock");
 				condition = !m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent();
-				//System.out.println("CONDITION " + condition);
 				m_pipelinesLock.unlock();
-				//System.out.println("unlock");
 				if (condition)
 				{
 					return true;
 				}
 			}
 			// If we're not running in a thread, poll the pullable
-			System.out.println("Somebody stopped me");
 			if (!m_run)
 			{
 				if (m_pipelines.size() < m_maxPipelines)
@@ -523,14 +510,12 @@ public class PullPipeline extends Processor implements Runnable
 
 	private boolean pollPullableHard()
 	{
-		//System.out.println("POLLING");
 		m_inQueueLock.lock();
 		if (m_inQueue.size() < m_maxQueueSize)
 		{
 			Object o = m_inputPullable.pull();
 			if (o != null)
 			{
-				//System.out.println("PUTTING " + o);
 				m_inQueue.add(o);
 				m_isPulled.add(true);
 				m_inQueueLock.unlock();
@@ -555,7 +540,6 @@ public class PullPipeline extends Processor implements Runnable
 			m_managedThread = m_threadManager.tryNewThread(this);
 			if (m_managedThread != null)
 			{
-				System.out.println("GOT A THREAD");
 				m_run = true;
 				m_managedThread.start();
 			}
@@ -596,10 +580,8 @@ public class PullPipeline extends Processor implements Runnable
 			inputs[0] = event;
 			PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.clone(), inputs, is_pulled);
 			m_pipelinesLock.lock();
-			//System.out.println("lock");
 			m_pipelines.add(new_pipeline);
 			m_pipelinesLock.unlock();
-			//System.out.println("unlock");
 			ManagedThread new_thread = null;
 			if (m_threadManager != null)
 			{
@@ -608,7 +590,6 @@ public class PullPipeline extends Processor implements Runnable
 			if (new_thread != null)
 			{
 				// We got a thread: run pipeline in that thread
-				//System.out.println("Got new thread");
 				new_pipeline.setThread(new_thread);
 				new_thread.start();
 			}
@@ -623,7 +604,6 @@ public class PullPipeline extends Processor implements Runnable
 
 		}
 		m_pipelinesLock.lock();
-		//System.out.println("lock");
 		if (!m_pipelines.isEmpty())
 		{
 			PipelineRunnable pt = m_pipelines.getFirst();
@@ -640,7 +620,6 @@ public class PullPipeline extends Processor implements Runnable
 			}
 		}
 		m_pipelinesLock.unlock();
-		//System.out.println("unlock");
 		return to_return;
 	}
 }

@@ -35,6 +35,7 @@ public class LineTokenFeeder extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S106") 
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		String line = ((String) inputs[0]).trim();

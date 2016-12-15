@@ -17,9 +17,10 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Queue;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector.Variant;
 
@@ -38,7 +39,7 @@ public class QueueSource extends Source
 	/**
 	 * The events to repeat endlessly
 	 */
-	protected Vector<Object> m_events;
+	protected List<Object> m_events;
 
 	/**
 	 * Whether to loop over the events endlessly
@@ -58,7 +59,7 @@ public class QueueSource extends Source
 	public QueueSource(int arity)
 	{
 		super(arity);
-		m_events = new Vector<Object>();
+		m_events = new ArrayList<Object>();
 		m_index = 0;
 	}
 
@@ -68,7 +69,7 @@ public class QueueSource extends Source
 	public QueueSource()
 	{
 		super(1);
-		m_events = new Vector<Object>();
+		m_events = new ArrayList<Object>();
 		m_index = 0;
 	}
 

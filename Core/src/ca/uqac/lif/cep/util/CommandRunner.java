@@ -21,8 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 
 /**
@@ -103,13 +103,13 @@ public class CommandRunner extends Thread
 	protected class StreamGobbler extends Thread
 	{
 		InputStream m_is;
-		Vector<Byte> m_contents;
+		ArrayList<Byte> m_contents;
 		String m_name;
 
 		private StreamGobbler(InputStream is, String name)
 		{
 			super();
-			m_contents = new Vector<Byte>();
+			m_contents = new ArrayList<Byte>();
 			this.m_is = is;
 			m_name = name;
 		}
@@ -191,7 +191,6 @@ public class CommandRunner extends Thread
 				// This happens if the user cancels the command manually
 				runner.stopCommand();
 				runner.interrupt();
-				System.err.println("Interrupted");
 				return null;
 			}
 		}

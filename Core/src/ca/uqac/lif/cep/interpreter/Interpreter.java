@@ -809,6 +809,7 @@ public class Interpreter implements ParseNodeVisitor
 	 * be useful for debugging and testing purposes.
 	 * @param b Set to true to get debug info
 	 */
+	@SuppressWarnings("squid:S106")
 	public void setDebugMode(boolean b)
 	{
 		m_parser.setDebugMode(b, System.err);

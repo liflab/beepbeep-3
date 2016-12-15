@@ -53,6 +53,7 @@ public class CommandLine
 	    throw new IllegalAccessError("Utility class");
 	}
 
+	@SuppressWarnings("squid:S106")
 	public static void main(String[] args) throws IOException
 	{
 		AnsiPrinter stdout = new AnsiPrinter(System.out);

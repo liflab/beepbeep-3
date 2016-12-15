@@ -41,6 +41,7 @@ public class Print extends Sink
 	/**
 	 * Creates a new printer
 	 */
+	@SuppressWarnings("squid:S106")
 	public Print()
 	{
 		this(1, new AnsiPrinter(System.out));
@@ -76,11 +77,12 @@ public class Print extends Sink
 		return wrapVector(new Object[getOutputArity()]);
 	}
 
+	@SuppressWarnings("squid:S106")
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // PRINT
-		Print out = new Print(1, new AnsiPrinter(System.out)); // NOSONAR
+		Print out = new Print(1, new AnsiPrinter(System.out));
 		Connector.connect(p, out);
 		stack.push(out);
 	}

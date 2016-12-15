@@ -150,14 +150,7 @@ public final class SmartFork extends Processor
 			// Just push the event directly to the output pushables
 			for (int i = 0; i < m_outputPushables.length; i++)
 			{
-				if (m_outputPushables[i] == null)
-				{
-					System.out.println("NULL!");
-				}
-				else
-				{
-					m_outputPushables[i].push(o);
-				}
+				m_outputPushables[i].push(o);
 			}
 			incrementClean();
 			return this;
