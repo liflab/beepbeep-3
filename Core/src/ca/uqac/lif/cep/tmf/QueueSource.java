@@ -39,17 +39,17 @@ public class QueueSource extends Source
 	 * The events to repeat endlessly
 	 */
 	protected Vector<Object> m_events;
-	
+
 	/**
 	 * Whether to loop over the events endlessly
 	 */
 	protected boolean m_loop = true;
-	
+
 	/**
 	 * The index of the next event to produce
 	 */
 	protected int m_index;
-	
+
 	/**
 	 * Creates a new queue source of given output arity. The events
 	 * of the queue source will be duplicated on each of the outputs.
@@ -61,7 +61,7 @@ public class QueueSource extends Source
 		m_events = new Vector<Object>();
 		m_index = 0;
 	}
-	
+
 	/**
 	 * Creates a new queue source of output arity 1
 	 */
@@ -71,7 +71,7 @@ public class QueueSource extends Source
 		m_events = new Vector<Object>();
 		m_index = 0;
 	}
-	
+
 	/**
 	 * Sets the events that the queue will output
 	 * @param queue A collection of events that the queue source
@@ -89,7 +89,7 @@ public class QueueSource extends Source
 	/**
 	 * Sets the events that the queue will output
 	 * @param queue An array of events that the queue source
-	 * will output. The events will be output in the order they 
+	 * will output. The events will be output in the order they
 	 * appear in the collection.
 	 */
 	public void setEvents(Object[] queue)
@@ -99,7 +99,7 @@ public class QueueSource extends Source
 			m_events.add(o);
 		}
 	}
-		
+
 	/**
 	 * Adds an event to the queue
 	 * @param e The event to add
@@ -110,7 +110,7 @@ public class QueueSource extends Source
 		m_events.add(e);
 		return this;
 	}
-	
+
 	/**
 	 * Sets whether to loop over the events endlessly
 	 * @param b Set to <code>true</code> to loop over the events
@@ -123,7 +123,7 @@ public class QueueSource extends Source
 		m_loop = b;
 		return this;
 	}
-	
+
 	/*@Override
 	public Pullable getPullableOutput(int index)
 	{
@@ -131,6 +131,7 @@ public class QueueSource extends Source
 	}*/
 
 	@Override
+	@SuppressWarnings("squid:S1168")
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		int size = m_events.size();
@@ -160,14 +161,14 @@ public class QueueSource extends Source
 		}
 		return wrapVector(output);
 	}
-	
+
 	@Override
 	public void reset()
 	{
 		super.reset();
 		m_index = 0;
 	}
-	
+
 	@Override
 	public QueueSource clone()
 	{
@@ -175,7 +176,7 @@ public class QueueSource extends Source
 		out.setEvents(m_events);
 		return out;
 	}
-	
+
 	@Override
 	public Class<?> getOutputTypeFor(int index)
 	{

@@ -1,10 +1,11 @@
 package concurrency;
 
+import static ca.uqac.lif.cep.Connector.connect;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Queue;
 
-import static ca.uqac.lif.cep.Connector.connect;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
@@ -49,7 +50,7 @@ public class ThreadGroups
 			super(0, 1);
 		}
 
-		public FibonacciProcessor(int index) 
+		public FibonacciProcessor(int index)
 		{
 			this();
 			m_index = index;
@@ -66,7 +67,7 @@ public class ThreadGroups
 		}
 
 		@Override
-		public Processor clone() 
+		public Processor clone()
 		{
 			// Don't care
 			return this;
@@ -133,7 +134,7 @@ public class ThreadGroups
 		}
 
 		@Override
-		public Processor clone() 
+		public Processor clone()
 		{
 			// Don't care
 			return this;
@@ -186,18 +187,18 @@ public class ThreadGroups
 		} while (firsttime > 1);
 		return saveg.toBigInteger();
 	}
-	
+
 	public static class Counter extends SingleProcessor
 	{
 		BigInteger count = new BigInteger("100000000000");
-		
+
 		public Counter()
 		{
 			super(0, 1);
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs) 
+		protected Queue<Object[]> compute(Object[] inputs)
 		{
 			BigInteger out = count;
 			count = count.add(BigInteger.TEN);

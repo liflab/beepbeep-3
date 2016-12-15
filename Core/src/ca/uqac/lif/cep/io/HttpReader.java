@@ -39,12 +39,12 @@ public class HttpReader extends StreamReader
 	 * requests
 	 */
 	public static final String s_userAgent = "BeepBeep3";
-	
+
 	/**
 	 * The URL to read from
 	 */
 	protected final String m_url;
-	
+
 	/**
 	 * Instantiates an HTTP reader with an URL. Note that no request is
 	 * sent over the network until the first call to {@link #compute(Object[])}.
@@ -75,7 +75,7 @@ public class HttpReader extends StreamReader
 		HttpReader hr = new HttpReader(url);
 		stack.push(hr);
 	}
-	
+
 	/**
 	 * Sends a GET request to the specified URL, and obtains
 	 * an input stream with the contents of the response
@@ -94,7 +94,7 @@ public class HttpReader extends StreamReader
 			con.setRequestProperty("User-Agent", s_userAgent);
 			con.getResponseCode();
 			is = con.getInputStream();
-		} 
+		}
 		catch (IOException e)
 		{
 			e.printStackTrace();

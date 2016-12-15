@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * 
  * @author Sylvain Hallé
  */
-public class SimpleFunction 
+public class SimpleFunction
 {
 	/*
 	 * In this example, we apply the Negation function to a trace of

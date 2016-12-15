@@ -27,7 +27,7 @@
  * <li>{@link Pullable} and {@link Pushable} are two interfaces for
  *   receiving and giving events from/to a processor, respectively.</li>
  * <li>{@link Connector} provides static methods for easily linking one
- *   processor's output to another's input</li> 
+ *   processor's output to another's input</li>
  * </ul>
  * 
  * 

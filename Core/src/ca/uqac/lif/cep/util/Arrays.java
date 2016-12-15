@@ -23,8 +23,16 @@ import java.util.Collection;
  * Utilities for manipulating arrays and collections
  * @author Sylvain Hallé
  */
-public class Arrays 
+public class Arrays
 {
+	/**
+	 * Utility classes should not have public constructors
+	 */
+	private Arrays()
+	{
+	    throw new IllegalAccessError("Utility class");
+	}
+	
 	/**
 	 * Converts an input object into an array. This method uses the following
 	 * rules:

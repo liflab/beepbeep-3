@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
- * Applies a function to input events to produce output events. This 
+ * Applies a function to input events to produce output events. This
  * class provides a way to "lift" any <i>m</i>-to-<i>n</i> function
  * into an <i>m</i>-to-<i>n</i> processor, by simply calling the
  * function on the inputs to produce the outputs.
@@ -38,7 +38,7 @@ public class FunctionProcessor extends SingleProcessor
 	 * The object responsible for the computation
 	 */
 	protected final Function m_function;
-	
+
 	/**
 	 * Instantiates a new function processor
 	 * @param comp The computable object responsible for the computation
@@ -48,7 +48,7 @@ public class FunctionProcessor extends SingleProcessor
 		super(comp.getInputArity(), comp.getOutputArity());
 		m_function = comp;
 	}
-	
+
 	@Override
 	public void reset()
 	{
@@ -60,7 +60,7 @@ public class FunctionProcessor extends SingleProcessor
 	{
 		return wrapVector(m_function.evaluate(inputs, m_context));
 	}
-	
+
 	@Override
 	public synchronized FunctionProcessor clone()
 	{
@@ -68,41 +68,41 @@ public class FunctionProcessor extends SingleProcessor
 		out.setContext(m_context);
 		return out;
 	}
-	
+
 	@Override
 	public final void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
 	{
 		// The type is determined by that of the underlying function
 		m_function.getInputTypesFor(classes, index);
 	}
-	
+
 	@Override
 	public final synchronized Class<?> getOutputTypeFor(int index)
 	{
 		// The type is determined by that of the underlying function
 		return m_function.getOutputTypeFor(index);
 	}
-	
+
 	@Override
 	public synchronized void setContext(Context context)
 	{
 		super.setContext(context);
 		m_function.setContext(context);
 	}
-	
+
 	@Override
 	public synchronized void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
 		m_function.setContext(key, value);
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return m_function.toString();
 	}
-	
+
 	/**
 	 * Gets the function associated to that processor
 	 * @return The function

@@ -33,7 +33,7 @@ public class Multiset implements Set<Object>
 	 * cardinality
 	 */
 	private final Map<Object,Integer> m_map;
-	
+
 	/**
 	 * Creates an empty multiset
 	 */
@@ -42,7 +42,7 @@ public class Multiset implements Set<Object>
 		super();
 		m_map = new HashMap<Object, Integer>();
 	}
-	
+
 	/**
 	 * Performs the union of two multisets
 	 * @param b The multiset to add
@@ -64,7 +64,7 @@ public class Multiset implements Set<Object>
 		}
 		return this;
 	}
-	
+
 	/**
 	 * Picks one element of the multiset. This assumes you don't care
 	 * about what element of the multiset you get, as long as you get one.
@@ -80,12 +80,13 @@ public class Multiset implements Set<Object>
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Checks if an element is contained (at least once) into this multiset
 	 * @param o The element
 	 * @return true if the element is contained at least once, false otherwise
 	 */
+	@Override
 	public boolean contains(Object o)
 	{
 		if (!m_map.containsKey(o))
@@ -95,7 +96,7 @@ public class Multiset implements Set<Object>
 		int cardinality = m_map.get(o);
 		return cardinality > 0;
 	}
-	
+
 	/**
 	 * Adds an element to this multiset
 	 * @param o The element
@@ -114,14 +115,14 @@ public class Multiset implements Set<Object>
 		}
 		return this;
 	}
-	
+
 	@Override
 	public boolean add(Object o)
 	{
 		addElement(o);
 		return true;
 	}
-	
+
 	/**
 	 * Gets the cardinality of an element
 	 * @param o The element
@@ -135,17 +136,17 @@ public class Multiset implements Set<Object>
 		}
 		return m_map.get(o);
 	}
-	
+
 	/**
 	 * Gets the (normal) set of all elements in this multiset.
-	 * In other words, turns this multiset into a regular set. 
+	 * In other words, turns this multiset into a regular set.
 	 * @return The set of elements
 	 */
 	public Set<Object> keySet()
 	{
 		return m_map.keySet();
 	}
-	
+
 	/**
 	 * Removes an element from this multiset
 	 * @param o The element
@@ -168,7 +169,7 @@ public class Multiset implements Set<Object>
 		}
 		return this;
 	}
-	
+
 	/**
 	 * Gets the size of the multiset
 	 * @return The size
@@ -183,13 +184,13 @@ public class Multiset implements Set<Object>
 		}
 		return size;
 	}
-	
+
 	@Override
 	public void clear()
 	{
 		m_map.clear();
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -197,7 +198,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends Object> arg0) 
+	public boolean addAll(Collection<? extends Object> arg0)
 	{
 		if (arg0 instanceof Multiset)
 		{
@@ -212,7 +213,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> arg0) 
+	public boolean containsAll(Collection<?> arg0)
 	{
 		if (arg0 instanceof Multiset)
 		{
@@ -241,23 +242,23 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean isEmpty() 
+	public boolean isEmpty()
 	{
 		return m_map.keySet().isEmpty();
 	}
 
 	@Override
-	public Iterator<Object> iterator() 
+	public Iterator<Object> iterator()
 	{
 		return keySet().iterator();
 	}
 
 	@Override
-	public boolean remove(Object arg0) 
+	public boolean remove(Object arg0)
 	{
 		return remove(arg0, 1);
 	}
-	
+
 	/**
 	 * Removes an element a number of times
 	 * @param arg0 The element
@@ -265,7 +266,7 @@ public class Multiset implements Set<Object>
 	 * @return true if the element was removed at least once,
 	 *   false otherwise
 	 */
-	public boolean remove(Object arg0, int times) 
+	public boolean remove(Object arg0, int times)
 	{
 		if (!contains(arg0))
 		{
@@ -276,7 +277,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> arg0) 
+	public boolean removeAll(Collection<?> arg0)
 	{
 		boolean removed = false;
 		if (arg0 instanceof Multiset)
@@ -301,7 +302,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> arg0) 
+	public boolean retainAll(Collection<?> arg0)
 	{
 		boolean changed = false;
 		if (arg0 instanceof Multiset)
@@ -349,15 +350,14 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public Object[] toArray() 
+	public Object[] toArray()
 	{
 		return m_map.values().toArray();
 	}
 
 	@Override
-	public <T> T[] toArray(T[] arg0) 
+	public <T> T[] toArray(T[] arg0)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return arg0;
 	}
 }

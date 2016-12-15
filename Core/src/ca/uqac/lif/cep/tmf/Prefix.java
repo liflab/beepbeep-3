@@ -31,13 +31,14 @@ import ca.uqac.lif.cep.numbers.EmlNumber;
  * @author Sylvain Hallé
  */
 public class Prefix extends Trim
-{	
+{
 	public Prefix(int k)
 	{
 		super(k);
 	}
-	
+
 	@Override
+	@SuppressWarnings("squid:S1168")
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		m_eventsReceived++;
@@ -47,14 +48,14 @@ public class Prefix extends Trim
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void reset()
 	{
 		super.reset();
 		m_eventsReceived = 0;
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o;

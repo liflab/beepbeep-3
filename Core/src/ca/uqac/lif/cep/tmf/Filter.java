@@ -62,7 +62,7 @@ public class Filter extends SingleProcessor
 	}
 
 	@Override
-	public Filter clone() 
+	public Filter clone()
 	{
 		return new Filter();
 	}

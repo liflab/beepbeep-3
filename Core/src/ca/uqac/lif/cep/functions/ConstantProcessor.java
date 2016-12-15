@@ -28,17 +28,17 @@ import java.util.Stack;
  * <pre>
  * x = new FunctionProcessor(new Constant(foo));
  * x = new ConstantProcessor(foo);
- * </pre> 
+ * </pre>
  * 
  * @author Sylvain Hallé
  */
-public class ConstantProcessor extends FunctionProcessor 
+public class ConstantProcessor extends FunctionProcessor
 {
 	public ConstantProcessor(Constant comp)
 	{
 		super(comp);
 	}
-	
+
 	public static void build(Stack<Object> stack)
 	{
 		Object o;
@@ -52,7 +52,7 @@ public class ConstantProcessor extends FunctionProcessor
 		else
 		{
 			c = (Constant) o;
-		} 
+		}
 		stack.pop(); // CONSTANT
 		FunctionProcessor fp = new FunctionProcessor(c);
 		stack.push(fp);

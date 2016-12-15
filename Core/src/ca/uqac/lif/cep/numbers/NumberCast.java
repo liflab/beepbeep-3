@@ -10,24 +10,24 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class NumberCast extends UnaryFunction<Object,Number>
 {
 	public static final transient NumberCast instance = new NumberCast();
-	
+
 	NumberCast()
 	{
 		super(Object.class, Number.class);
 	}
 
 	@Override
-	public Number getValue(Object x) 
+	public Number getValue(Object x)
 	{
 		return getNumber(x);
 	}
-	
+
 	@Override
 	public NumberCast clone()
 	{
 		return this;
 	}
-	
+
 	public static Number getNumber(Object x)
 	{
 		if (x instanceof Number)
@@ -47,7 +47,7 @@ public class NumberCast extends UnaryFunction<Object,Number>
 		}
 		return 0;
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o;

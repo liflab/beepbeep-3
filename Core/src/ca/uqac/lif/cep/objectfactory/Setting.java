@@ -14,24 +14,24 @@ public class Setting
 	 * The type (i.e. class) of the parameter
 	 */
 	protected final Class<?> m_type;
-	
+
 	/**
 	 * Determines if the parameter is mandatory. If so,
 	 * the processor cannot be instantiated without providing
 	 * a value for this parameter.
 	 */
 	protected final boolean m_mandatory;
-	
+
 	/**
 	 * The current value of this setting
 	 */
 	protected Object m_value;
-	
+
 	/**
 	 * The description for this setting
 	 */
 	protected String m_description = null;
-	
+
 	/**
 	 * Instantiates a new setting
 	 * @param name The name of the setting
@@ -58,7 +58,7 @@ public class Setting
 		m_mandatory = mandatory;
 		m_value = null;
 	}
-	
+
 	/**
 	 * Instantiates a new, non mandatory setting
 	 * @param name The name of the setting
@@ -68,12 +68,12 @@ public class Setting
 	{
 		this(name, type, false);
 	}
-	
+
 	/**
 	 * Gets the name of the setting
 	 * @return The name
 	 */
-	public String getName() 
+	public String getName()
 	{
 		return m_name;
 	}
@@ -82,7 +82,7 @@ public class Setting
 	 * Gets the type of the setting
 	 * @return The type
 	 */
-	public Class<?> getType() 
+	public Class<?> getType()
 	{
 		return m_type;
 	}
@@ -91,11 +91,11 @@ public class Setting
 	 * Determines if this setting is mandatory
 	 * @return true if mandatory, false otherwise
 	 */
-	public boolean isMandatory() 
+	public boolean isMandatory()
 	{
 		return m_mandatory;
 	}
-	
+
 	/**
 	 * Gets the description of this setting
 	 * @return The description (may be null)
@@ -104,7 +104,7 @@ public class Setting
 	{
 		return m_description;
 	}
-	
+
 	/**
 	 * Sets the description of this setting
 	 * @param o The description
@@ -113,7 +113,7 @@ public class Setting
 	{
 		m_description = d;
 	}
-	
+
 	/**
 	 * Gets the current value of this setting
 	 * @return The value (may be null)
@@ -122,7 +122,7 @@ public class Setting
 	{
 		return m_value;
 	}
-	
+
 	/**
 	 * Sets the value of this setting
 	 * @param o The value
@@ -131,7 +131,7 @@ public class Setting
 	{
 		m_value = o;
 	}
-	
+
 	@Override
 	public Setting clone()
 	{

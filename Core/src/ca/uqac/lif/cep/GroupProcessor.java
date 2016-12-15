@@ -223,14 +223,12 @@ public class GroupProcessor extends Processor
 	public synchronized Pushable getPushableInput(int index)
 	{
 		return new ProxyPushable(m_inputPushables.get(index), index);
-		//return m_inputPushables.get(index);
 	}
 
 	@Override
 	synchronized public Pullable getPullableOutput(int index)
 	{
 		return new ProxyPullable(m_outputPullables.get(index), index);
-		//return m_outputPullables.get(index);
 	}
 
 	@Override
@@ -277,8 +275,8 @@ public class GroupProcessor extends Processor
 		}
 		else
 		{
-			m_outputPullables.set(i, p);	
-		}		
+			m_outputPullables.set(i, p);
+		}
 	}
 
 	@Override
@@ -366,11 +364,7 @@ public class GroupProcessor extends Processor
 				{
 					Processor target = push.getProcessor();
 					int j = push.getPosition();
-					Processor new_p = null, new_target = null;
-					if (p.getId() == target.getId())
-					{
-						System.out.println("Source and target are the same!");
-					}
+					Processor new_p, new_target;
 					synchronized (m_correspondences)
 					{
 						new_p = m_correspondences.get(p.getId());
@@ -380,11 +374,11 @@ public class GroupProcessor extends Processor
 					{
 						// new_p and new_target may be null if they refer to a processor
 						// outside of the group
-						try 
+						try
 						{
 							Connector.connect(new_p, new_target, i, j);
-						} 
-						catch (ConnectorException e) 
+						}
+						catch (ConnectorException e)
 						{
 							e.printStackTrace();
 						}
@@ -426,48 +420,48 @@ public class GroupProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Object pullSoft() 
+		synchronized public Object pullSoft()
 		{
 			return m_pullable.pullSoft();
 		}
 
 		@Override
-		synchronized public Object pull() 
+		synchronized public Object pull()
 		{
 			return m_pullable.pull();
 		}
 
 		@Override
-		synchronized public Object next() 
+		synchronized public Object next()
 		{
 			return m_pullable.next();
 		}
 
 		@Override
-		synchronized public NextStatus hasNextSoft() 
+		synchronized public NextStatus hasNextSoft()
 		{
 			return m_pullable.hasNextSoft();
 		}
 
 		@Override
-		synchronized public boolean hasNext() 
+		synchronized public boolean hasNext()
 		{
 			return m_pullable.hasNext();
 		}
 
 		@Override
-		synchronized public Processor getProcessor() 
+		synchronized public Processor getProcessor()
 		{
 			return GroupProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition() 
+		synchronized public int getPosition()
 		{
 			return m_position;
 		}
 
-		protected int m_position = 0;	
+		protected int m_position = 0;
 
 		public ProxyPullable(Pullable p, int position)
 		{
@@ -475,24 +469,24 @@ public class GroupProcessor extends Processor
 			synchronized (this)
 			{
 				m_pullable = p;
-				m_position = position;				
+				m_position = position;
 			}
 		}
 
 		@Override
-		synchronized public Iterator<Object> iterator() 
+		synchronized public Iterator<Object> iterator()
 		{
 			return this;
 		}
 
 		@Override
-		synchronized public void start() 
+		synchronized public void start()
 		{
 			m_pullable.start();
 		}
 
 		@Override
-		synchronized public void stop() 
+		synchronized public void stop()
 		{
 			m_pullable.stop();
 		}
@@ -516,7 +510,7 @@ public class GroupProcessor extends Processor
 			synchronized (this)
 			{
 				m_pushable = p;
-				m_position = position;				
+				m_position = position;
 			}
 		}
 
@@ -531,33 +525,29 @@ public class GroupProcessor extends Processor
 		@Override
 		synchronized public Pushable pushFast(Object o)
 		{
-			if (o == null)
-			{
-				System.out.println("Pushing a null");
-			}
 			return push(o);
 		}
 
 		@Override
-		synchronized public Processor getProcessor() 
+		synchronized public Processor getProcessor()
 		{
 			return GroupProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition() 
+		synchronized public int getPosition()
 		{
 			return m_position;
 		}
 
 		@Override
-		synchronized public void waitFor() 
+		synchronized public void waitFor()
 		{
 			return;
 		}
 
 		@Override
-		synchronized public void dispose() 
+		synchronized public void dispose()
 		{
 			m_pushable.dispose();
 		}

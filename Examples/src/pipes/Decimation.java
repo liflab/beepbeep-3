@@ -1,10 +1,10 @@
 package pipes;
 
-import static ca.uqac.lif.cep.Connector.connect;
-import static ca.uqac.lif.cep.Connector.LEFT;
 import static ca.uqac.lif.cep.Connector.INPUT;
+import static ca.uqac.lif.cep.Connector.LEFT;
 import static ca.uqac.lif.cep.Connector.OUTPUT;
 import static ca.uqac.lif.cep.Connector.RIGHT;
+import static ca.uqac.lif.cep.Connector.connect;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
@@ -23,7 +23,7 @@ import ca.uqac.lif.cep.tmf.Trim;
  * 
  * @author Sylvain Hallé
  */
-public class Decimation 
+public class Decimation
 {
 	public static void main(String[] args) throws ConnectorException
 	{
@@ -46,6 +46,6 @@ public class Decimation
 			int v = ((Number) p.pull()).intValue();
 			System.out.printf("Event #%d is: %d\n", i, v);
 		}
-		
+
 	}
 }

@@ -43,12 +43,12 @@ class CharScanner
 	{
 		InputStreamReader reader = new InputStreamReader(m_is);
 		m_exit = false;
-		while(!m_exit) 
-		{ 
+		while(!m_exit)
+		{
 			try
 			{
-				if (reader.ready()) 
-				{ 
+				if (reader.ready())
+				{
 					// read a character and process it
 					return (char) reader.read();
 				}
@@ -56,16 +56,17 @@ class CharScanner
 			catch (IOException e)
 			{
 				// Do nothing
-			} 
-			// Let's not hog any cpu time 
-			try 
-			{ 
-				Thread.sleep(50); 
-			} 
-			catch (InterruptedException ex) 
-			{ 
-				// can't do much about it can we? Ignoring  
-			} 
+			}
+			// Let's not hog any cpu time
+			try
+			{
+				Thread.sleep(50);
+			}
+			catch (InterruptedException ex)
+			{
+				// can't do much about it can we? Ignoring
+				Thread.currentThread().interrupt();
+			}
 		}
 		return (char) 0;
 	}

@@ -30,12 +30,12 @@ public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
 	 * A static instance of the function
 	 */
 	public static final transient IsLessThan instance = new IsLessThan();
-	
+
 	private IsLessThan()
 	{
 		super(Number.class, Number.class, Boolean.class);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // (
@@ -50,17 +50,17 @@ public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
 	}
 
 	@Override
-	public Boolean getValue(Number x, Number y) 
+	public Boolean getValue(Number x, Number y)
 	{
 		return x.floatValue() < y.floatValue();
 	}
 
 	@Override
-	public Boolean getStartValue() 
+	public Boolean getStartValue()
 	{
 		return false;
 	}
-	
+
 	@Override
 	public String toString()
 	{

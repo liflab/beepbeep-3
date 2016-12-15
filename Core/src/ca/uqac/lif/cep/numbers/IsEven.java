@@ -23,13 +23,13 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * Computes if a number is even
  * @author Sylvain Hallé
  */
-public class IsEven extends UnaryFunction<Number,Boolean> 
+public class IsEven extends UnaryFunction<Number,Boolean>
 {
 	/**
 	 * A static instance of the function
 	 */
 	public static final transient IsEven instance = new IsEven();
-	
+
 	private IsEven()
 	{
 		super(Number.class, Boolean.class);
@@ -40,7 +40,7 @@ public class IsEven extends UnaryFunction<Number,Boolean>
 	{
 		return x.floatValue() % 2 == 0;
 	}
-	
+
 	@Override
 	public String toString()
 	{

@@ -17,6 +17,11 @@
  */
 package pipes;
 
+import static ca.uqac.lif.cep.Connector.INPUT;
+import static ca.uqac.lif.cep.Connector.LEFT;
+import static ca.uqac.lif.cep.Connector.OUTPUT;
+import static ca.uqac.lif.cep.Connector.RIGHT;
+import static ca.uqac.lif.cep.Connector.connect;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.BinaryFunction;
@@ -24,20 +29,15 @@ import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Trim;
-import static ca.uqac.lif.cep.Connector.connect;
-import static ca.uqac.lif.cep.Connector.INPUT;
-import static ca.uqac.lif.cep.Connector.LEFT;
-import static ca.uqac.lif.cep.Connector.OUTPUT;
-import static ca.uqac.lif.cep.Connector.RIGHT;
 
 /**
  * Calculates the Euclidean distance of each two successive points in an
  * input trace of (x,y) coordinates.
- *  
+ * 
  * @author Sylvain Hallé
  *
  */
-public class PointDistance 
+public class PointDistance
 {
 	/*
 	 * We create a new type of event: Point. A point is just
@@ -47,14 +47,14 @@ public class PointDistance
 	{
 		public float x;
 		public float y;
-		
+
 		public Point(float x, float y)
 		{
 			this.x = x;
 			this.y = y;
 		}
 	}
-	
+
 	/*
 	 * We create a new function: Distance. This function takes two points
 	 * as its input, and returns their Euclidean distance as its output.
@@ -73,7 +73,7 @@ public class PointDistance
 			return (float) Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 		}
 	}
-	
+
 	public static void main(String[] args) throws ConnectorException
 	{
 		QueueSource point_source = new QueueSource(1);
@@ -85,7 +85,7 @@ public class PointDistance
 		Trim trim = new Trim(1);
 		connect(fork, RIGHT, trim, INPUT);
 		connect(trim, OUTPUT, distance_proc, RIGHT);
-		
+
 		// Pull and print the first 10 events from the output
 		Pullable p = distance_proc.getPullableOutput(OUTPUT);
 		for (int i = 0; i < 10; i++)
@@ -94,7 +94,7 @@ public class PointDistance
 			System.out.println(d);
 		}
 	}
-	
+
 	/**
 	 * Creates a dummy array of points
 	 * @return An array of points

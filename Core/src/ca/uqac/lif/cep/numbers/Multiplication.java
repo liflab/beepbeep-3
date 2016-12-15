@@ -32,25 +32,25 @@ public class Multiplication extends BinaryFunction<Number,Number,Number>
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Multiplication instance = new Multiplication();
-	
+
 	Multiplication()
 	{
 		super(Number.class, Number.class, Number.class);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override
-	public Number getValue(Number x, Number y) 
+	public Number getValue(Number x, Number y)
 	{
 		return x.floatValue() * y.floatValue();
 	}
 
 	@Override
-	public Number getStartValue() 
+	public Number getStartValue()
 	{
 		return 1;
 	}

@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * 
  * @author Sylvain Hallé
  */
-public class PipingBinary 
+public class PipingBinary
 {
 	public static void main (String[] args) throws ConnectorException
 	{

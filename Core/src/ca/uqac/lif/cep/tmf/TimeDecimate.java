@@ -41,16 +41,16 @@ public class TimeDecimate extends SingleProcessor
 	 * Interval of time
 	 */
 	protected final long m_interval;
-	
+
 	/**
 	 * The system time when the last event was output
 	 */
 	protected long m_timeLastSent;
-	
+
 	/**
 	 * Instantiates a time decimator
 	 * @param interval The interval (in nanoseconds) during which
-	 *   events should be discarded after an output event is produced 
+	 *   events should be discarded after an output event is produced
 	 */
 	public TimeDecimate(long interval)
 	{
@@ -58,7 +58,7 @@ public class TimeDecimate extends SingleProcessor
 		m_interval = interval;
 		m_timeLastSent = -1;
 	}
-	
+
 	@Override
 	public void reset()
 	{
@@ -89,7 +89,7 @@ public class TimeDecimate extends SingleProcessor
 		}
 		return getEmptyQueue();
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Processor p = (Processor) stack.pop();
@@ -98,7 +98,7 @@ public class TimeDecimate extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-	
+
 	@Override
 	public TimeDecimate clone()
 	{

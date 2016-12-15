@@ -12,7 +12,7 @@ import java.util.List;
  * <p>
  * {@link http://tutorials.jenkov.com/java-concurrency/starvation-and-fairness.html}
  */
-public class FairLock 
+public class FairLock
 {
 	private boolean isLocked = false;
 	private Thread lockingThread  = null;
@@ -31,7 +31,7 @@ public class FairLock
 		}
 		catch (InterruptedException e)
 		{
-			// Do nothing
+			Thread.currentThread().interrupt();
 		}
 	}
 
@@ -68,7 +68,7 @@ public class FairLock
 			{
 				synchronized (this)
 				{
-					waitingThreads.remove(queueObject); 
+					waitingThreads.remove(queueObject);
 				}
 				throw e;
 			}
@@ -92,11 +92,11 @@ public class FairLock
 		}
 	}
 
-	private static class QueueObject 
+	private static class QueueObject
 	{
 		private boolean isNotified = false;
 
-		public synchronized void doWait() throws InterruptedException 
+		public synchronized void doWait() throws InterruptedException
 		{
 			while (!isNotified)
 			{
@@ -105,14 +105,14 @@ public class FairLock
 			this.isNotified = false;
 		}
 
-		public synchronized void doNotify() 
+		public synchronized void doNotify()
 		{
 			this.isNotified = true;
 			this.notify();
 		}
 
 		@Override
-		public boolean equals(Object o) 
+		public boolean equals(Object o)
 		{
 			return this == o;
 		}

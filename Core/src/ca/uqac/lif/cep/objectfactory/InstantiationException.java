@@ -23,7 +23,7 @@ package ca.uqac.lif.cep.objectfactory;
  * 
  * @author Sylvain Hallé
  */
-public class InstantiationException extends Exception 
+public class InstantiationException extends Exception
 {
 	/**
 	 * Dummy UID

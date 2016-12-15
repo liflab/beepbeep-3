@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.util.AnsiPrinter.Color;
 
 /**
  * A crude command-line interactive interpreter for ESQL.
- *  
+ * 
  * @author Sylvain Hallé
  */
 public class CommandLine
@@ -39,11 +39,19 @@ public class CommandLine
 	 * The symbol for the command prompt
 	 */
 	protected static String s_prompt = "? ";
-	
+
 	/**
 	 * End greedings ;-)
 	 */
 	protected static String s_endGreeting = "Tata Edgar";
+	
+	/**
+	 * Utility classes should not have public constructors
+	 */
+	private CommandLine()
+	{
+	    throw new IllegalAccessError("Utility class");
+	}
 
 	public static void main(String[] args) throws IOException
 	{

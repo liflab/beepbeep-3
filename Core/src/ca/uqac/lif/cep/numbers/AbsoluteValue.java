@@ -27,13 +27,13 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * Computes the absolute value of its argument
  * @author Sylvain Hallé
  */
-public class AbsoluteValue extends UnaryFunction<Number,Number> 
+public class AbsoluteValue extends UnaryFunction<Number,Number>
 {
 	/**
 	 * A static instance of absolute value
 	 */
 	public static final transient AbsoluteValue instance = new AbsoluteValue();
-	
+
 	AbsoluteValue()
 	{
 		super(Number.class, Number.class);
@@ -44,13 +44,13 @@ public class AbsoluteValue extends UnaryFunction<Number,Number>
 	{
 		return Math.abs(x.floatValue());
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return "ABS";
 	}
-	
+
 	public static void build(Stack<Object> stack)
 	{
 		Object o;

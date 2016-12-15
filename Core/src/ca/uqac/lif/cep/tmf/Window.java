@@ -42,7 +42,7 @@ import ca.uqac.lif.cep.objectfactory.SettingsSet;
  *   <i>n</i>-1...</li>
  * <li>Then the result of (a new instance of &phi;) that processes
  *   events 1 to <i>n</i>-1...</li>
- * <li>...and so on</li> 
+ * <li>...and so on</li>
  * </ul>
  * @author sylvain
  *
@@ -96,13 +96,13 @@ public class Window extends SingleProcessor
 		{
 			m_window[i] = new LinkedList<Object>();
 			m_innerInputs[i] = m_processor.getPushableInput(i);
-		}		
+		}
 		m_sink.reset();
-		try 
+		try
 		{
 			Connector.connect(m_processor, m_sink);
-		} 
-		catch (ConnectorException e) 
+		}
+		catch (ConnectorException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -136,7 +136,7 @@ public class Window extends SingleProcessor
 			{
 				for (int j = 0; j < getInputArity(); j++)
 				{
-					// Feed 
+					// Feed
 					List<Object> q = m_window[j];
 					Object o = q.get(i);
 					Pushable p = m_innerInputs[j];
@@ -201,13 +201,13 @@ public class Window extends SingleProcessor
 		Connector.connect(input_trace, out);
 		stack.push(out);
 	}
-	
+
 	@Override
 	public Window clone()
 	{
 		return new Window(m_processor.clone(), m_width);
 	}
-	
+
 	/**
 	 * Gets the set of initial settings for this processor
 	 * @return The set of settings

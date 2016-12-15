@@ -22,34 +22,34 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 /**
  * Adds an element to a multiset. This function <em>modifies</em>
  * the multiset and returns it.
- *  
+ * 
  * @author Sylvain Hallé
  */
-public class MultisetAddElement extends BinaryFunction<Multiset,Object,Multiset> 
+public class MultisetAddElement extends BinaryFunction<Multiset,Object,Multiset>
 {
 	/**
 	 * A static instance of the function
 	 */
 	public static final transient MultisetAddElement instance = new MultisetAddElement();
-	
+
 	private MultisetAddElement()
 	{
 		super(Multiset.class, Object.class, Multiset.class);
 	}
-	
+
 	@Override
-	public Multiset getValue(Multiset x, Object y) 
+	public Multiset getValue(Multiset x, Object y)
 	{
 		x.add(y);
 		return x;
 	}
 
 	@Override
-	public Multiset getStartValue() 
+	public Multiset getStartValue()
 	{
 		return new Multiset();
 	}
-	
+
 	@Override
 	public String toString()
 	{

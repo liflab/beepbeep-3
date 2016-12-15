@@ -75,7 +75,7 @@ public class ArgumentPlaceholder extends Function
 		}
 		return m_index == ((ArgumentPlaceholder) o).m_index;
 	}
-	
+
 	@Override
 	public Object[] evaluate(Object[] inputs, Context context)
 	{
@@ -83,7 +83,7 @@ public class ArgumentPlaceholder extends Function
 		out[0] = inputs[m_index];
 		return out;
 	}
-	
+
 	@Override
 	public Object[] evaluate(Object[] inputs)
 	{
@@ -97,13 +97,13 @@ public class ArgumentPlaceholder extends Function
 	}
 
 	@Override
-	public int getOutputArity() 
+	public int getOutputArity()
 	{
 		return 0;
 	}
 
 	@Override
-	public void reset() 
+	public void reset()
 	{
 		// Nothing to do
 	}
@@ -116,17 +116,17 @@ public class ArgumentPlaceholder extends Function
 	}
 
 	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index) 
+	public void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
 		// Nothing to do
 	}
 
 	@Override
-	public Class<?> getOutputTypeFor(int index) 
+	public Class<?> getOutputTypeFor(int index)
 	{
 		return null;
 	}
-	
+
 	@Override
 	public String toString()
 	{

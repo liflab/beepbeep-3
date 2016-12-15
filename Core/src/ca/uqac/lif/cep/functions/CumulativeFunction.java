@@ -26,12 +26,12 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 	 * The last value returned by the function
 	 */
 	private T m_lastValue;
-	
+
 	/**
 	 * The stateless binary function to apply on each call
 	 */
 	private BinaryFunction<T,T,T> m_function;
-	
+
 	/**
 	 * Instantiates a new cumulative function
 	 */
@@ -43,7 +43,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 	}
 
 	@Override
-	public T getValue(T x) 
+	public T getValue(T x)
 	{
 		if (m_lastValue == null)
 		{
@@ -56,13 +56,13 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 		m_lastValue = value;
 		return value;
 	}
-	
+
 	@Override
 	public void reset()
 	{
 		m_lastValue = m_function.getStartValue();
 	}
-	
+
 	@Override
 	public CumulativeFunction<T> clone()
 	{

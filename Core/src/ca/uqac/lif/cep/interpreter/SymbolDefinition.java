@@ -27,12 +27,12 @@ public class SymbolDefinition
 	 * The non terminal symbol this definition stands for
 	 */
 	protected final String m_symbolName;
-	
+
 	/**
 	 * The variable name of this definition
 	 */
 	protected final String m_variableName;
-	
+
 	public SymbolDefinition(String symbol_name, String variable_name)
 	{
 		super();
@@ -40,18 +40,18 @@ public class SymbolDefinition
 		m_symbolName = symbol_name.toLowerCase();
 		m_variableName = variable_name;
 	}
-	
+
 	public String getName()
 	{
 		return m_variableName;
 	}
-	
+
 	public String getSymbol()
 	{
 		return m_symbolName;
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException 
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String symbol_name = (String) stack.pop();
 		stack.pop(); // A

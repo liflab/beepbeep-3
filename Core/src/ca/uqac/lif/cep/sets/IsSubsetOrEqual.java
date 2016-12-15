@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class IsSubsetOrEqual extends BinaryFunction<Set,Set,Boolean>
 {
 	public static final transient IsSubsetOrEqual instance = new IsSubsetOrEqual();
-	
+
 	IsSubsetOrEqual()
 	{
 		super(Set.class, Set.class, Boolean.class);

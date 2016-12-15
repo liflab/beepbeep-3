@@ -48,7 +48,7 @@ public class PullConstant extends SingleProcessor
 	}
 
 	@Override
-	public PullConstant clone() 
+	public PullConstant clone()
 	{
 		return new PullConstant(m_toReturn);
 	}

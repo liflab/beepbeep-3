@@ -45,35 +45,35 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * thread to signal it can be cleaned up.
  */
 class PipelineRunnable implements Runnable
-{	
+{
 	/**
 	 * Whether the events given to this pipeline have been retrieved
 	 * by a pull (true) or a push (false)
 	 */
 	private boolean m_isPulled;
-	
+
 	/**
 	 * The processor this pipeline will call
 	 */
 	private Processor m_processor;
-	
+
 	/**
 	 * Whether this runnable is done
 	 */
 	private volatile boolean m_done = false;
-	
+
 	/**
 	 * The inputs given to this processor. This consists of a single
 	 * front; moreover, currently the pipeline only supports unary
 	 * processors, so this array should always be of size 1.
 	 */
 	private Object[] m_inputs;
-	
+
 	/**
 	 * The output events produced by the processor
 	 */
 	private volatile Queue<Object> m_outQueue;
-	
+
 	/**
 	 * A lock to access the queue
 	 */
@@ -100,7 +100,7 @@ class PipelineRunnable implements Runnable
 		m_outQueueLock = new ReentrantLock();
 		m_isPulled = is_pulled;
 	}
-	
+
 	public void setThread(ManagedThread thread)
 	{
 		m_managedThread = thread;
@@ -166,7 +166,7 @@ class PipelineRunnable implements Runnable
 		QueueSource qs = new QueueSource();
 		qs.loop(false);
 		qs.addEvent(m_inputs[0]);
-		try 
+		try
 		{
 			Connector.connect(qs, m_processor);
 			Pullable pullable = m_processor.getPullableOutput();
@@ -177,7 +177,7 @@ class PipelineRunnable implements Runnable
 				m_outQueue.add(o);
 				m_outQueueLock.unlock();
 			}
-		} 
+		}
 		catch (ConnectorException e)
 		{
 			// Do nothing
@@ -189,18 +189,18 @@ class PipelineRunnable implements Runnable
 	/**
 	 * Sets if the events given to this pipeline have been retrieved
 	 * by a {@link ca.uqac.lif.cep.Pullable#pull() pull()} or a
-	 * {@link ca.uqac.lif.cep.Pushable#push() push()} 
+	 * {@link ca.uqac.lif.cep.Pushable#push() push()}
 	 * @param b Set to <code>true</code> to indicate pull
 	 */
 	public void setIsPulled(boolean b)
 	{
 		m_isPulled = b;
 	}
-	
+
 	/**
 	 * Checks if the events given to this pipeline have been retrieved
 	 * by a {@link ca.uqac.lif.cep.Pullable#pull() pull()} or a
-	 * {@link ca.uqac.lif.cep.Pushable#push() push()} 
+	 * {@link ca.uqac.lif.cep.Pushable#push() push()}
 	 * @return <code>true</code> to indicate pull, <code>false</code>
 	 *   otherwise
 	 */
@@ -208,7 +208,7 @@ class PipelineRunnable implements Runnable
 	{
 		return m_isPulled;
 	}
-	
+
 	public boolean isDone()
 	{
 		return m_done;

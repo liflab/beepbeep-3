@@ -37,7 +37,7 @@ public class Fork extends SingleProcessor
 	{
 		super(1, out_arity);
 	}
-	
+
 	@Override
 	public Fork clone()
 	{
@@ -80,7 +80,7 @@ public class Fork extends SingleProcessor
 		}
 		m_outputPushables = out_pushables;
 	}
-	
+
 	/**
 	 * Gets the set of initial settings for this processor
 	 * @return The set of settings

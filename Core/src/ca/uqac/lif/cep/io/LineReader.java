@@ -15,7 +15,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  *
  */
-public class LineReader extends SingleProcessor 
+public class LineReader extends SingleProcessor
 {
 	/**
 	 * The scanner to read from
@@ -46,7 +46,7 @@ public class LineReader extends SingleProcessor
 	{
 		this(new FileInputStream(f));
 	}
-	
+
 	/**
 	 * Creates a new file reader from an input stream
 	 * @param is The input stream to read from
@@ -57,7 +57,7 @@ public class LineReader extends SingleProcessor
 		m_inStream = is;
 		m_scanner = new Scanner(is);
 	}
-	
+
 	/**
 	 * Tells the reader to add a carriage return at the end of each
 	 * output event
@@ -70,14 +70,9 @@ public class LineReader extends SingleProcessor
 		return this;
 	}
 
-	/*@Override
-	public Pullable getPullableOutput(int index)
-	{
-		return new SentinelPullable();
-	}*/
-
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	@SuppressWarnings("squid:S1168")
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		if (m_scanner.hasNextLine())
 		{
@@ -92,7 +87,7 @@ public class LineReader extends SingleProcessor
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor clone()
 	{
 		return new LineReader(m_inStream);
 	}

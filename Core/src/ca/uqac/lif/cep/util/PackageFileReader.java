@@ -26,6 +26,14 @@ import java.io.InputStream;
  */
 public class PackageFileReader
 {
+	/**
+	 * Utility classes should not have public constructors
+	 */
+	private PackageFileReader()
+	{
+	    throw new IllegalAccessError("Utility class");
+	}
+	
 	public static String readPackageFile(Object o, String path)
 	{
 		return readPackageFile(o.getClass(), path);

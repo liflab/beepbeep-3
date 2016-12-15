@@ -6,7 +6,7 @@ import java.util.List;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 @SuppressWarnings("rawtypes")
-public class CsvToList extends UnaryFunction<String, List> 
+public class CsvToList extends UnaryFunction<String, List>
 {
 	/**
 	 * Instance of the function
@@ -19,7 +19,7 @@ public class CsvToList extends UnaryFunction<String, List>
 	}
 
 	@Override
-	public List getValue(String x) 
+	public List getValue(String x)
 	{
 		String[] array = x.split(",");
 		List<String> out = new ArrayList<String>(array.length);

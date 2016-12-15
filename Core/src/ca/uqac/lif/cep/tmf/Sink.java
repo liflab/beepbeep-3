@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * <p>
  * When operating in "pull" mode, it is nevertheless possible to ask the
  * sink to pull on its inputs; this is why, like a {@link Pullable}, it
- * implements methods {@link #pull()} and {@link #pullHard()}. 
+ * implements methods {@link #pull()} and {@link #pullHard()}.
  * @author Sylvain Hallé
  *
  */
@@ -38,7 +38,7 @@ public abstract class Sink extends SingleProcessor
 	{
 		this(1);
 	}
-	
+
 	public Sink(int in_arity)
 	{
 		super(in_arity, 0);
@@ -57,7 +57,7 @@ public abstract class Sink extends SingleProcessor
 		}
 		compute(inputs);
 	}
-	
+
 	/**
 	 * Tells the sink to pull events from the pipeline
 	 */

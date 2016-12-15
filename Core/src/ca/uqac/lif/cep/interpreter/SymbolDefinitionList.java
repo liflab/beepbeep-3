@@ -56,7 +56,7 @@ public class SymbolDefinitionList extends HashMap<String, String>
 		}
 		stack.push(new_sdl);
 	}
-	
+
 	@Override
 	public String toString()
 	{

@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
 
 class NamedProcessorExpression extends ProcessorExpression
 {
-	public NamedProcessorExpression(Processor p, String n) 
+	public NamedProcessorExpression(Processor p, String n)
 	{
 		super(p, n);
 	}

@@ -60,49 +60,57 @@ public class Connector
 	 * processor it connects are compatible.
 	 */
 	public static final transient boolean s_checkForTypes = true;
-	
+
 	/**
 	 * Whether the connector checks that the processors are connected
 	 * using in/out indexes within the bounds of their arity
 	 */
 	public static final transient boolean s_checkForBounds = false;
-	
+
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's unique input
 	 */
 	public static final int INPUT = 0;
-	
+
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's unique output
 	 */
 	public static final int OUTPUT = 0;
-	
+
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's first input or output
 	 */
 	public static final int LEFT = 0;
-	
+
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's first input or output
 	 */
 	public static final int TOP = 0;
-	
+
 	/**
 	 * Constant used to replace the value 1 when referring to
 	 * a processor's first input or output
 	 */
 	public static final int RIGHT = 1;
-	
+
 	/**
 	 * Constant used to replace the value 1 when referring to
 	 * a processor's first input or output
 	 */
 	public static final int BOTTOM = 1;
 	
+	/**
+	 * Utility classes should not have public constructors
+	 */
+	private Connector()
+	{
+	    throw new IllegalAccessError("Utility class");
+	}
+
 	/**
 	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
 	 * <i>j</i>-th input of <tt>p2</tt>
@@ -135,7 +143,7 @@ public class Connector
 		p1.setPushableOutput(i, p2_in);
 		return p2;
 	}
-	
+
 	/**
 	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
 	 * <i>j</i>-th input of <tt>p2</tt>
@@ -151,7 +159,7 @@ public class Connector
 	{
 		return connect(p1, p2, i, j);
 	}
-	
+
 	/**
 	 * Connects three processors, by associating the (first) output of <tt>p1</tt>
 	 * and <tt>p2</tt> respectively to the first and second input of <tt>p3</tt>
@@ -168,7 +176,7 @@ public class Connector
 		connect(p2, p3, 0, 1);
 		return p3;
 	}
-	
+
 	/**
 	 * Connects a chain of processors, by associating the outputs of one
 	 * to the inputs of the next. The output arity of the first must match
@@ -194,14 +202,14 @@ public class Connector
 			for (int i = 0; i < arity; i++)
 			{
 				connect(p1, p2, i, i);
-			}			
+			}
 		}
 		return procs[procs.length - 1];
 	}
-	
+
 	/**
 	 * Checks if the <i>i</i>-th output of processor <code>p1</code> has a
-	 * declared type compatible with the <i>j</i>-th input of processor 
+	 * declared type compatible with the <i>j</i>-th input of processor
 	 * <code>p2</code>
 	 * @param p1 The first processor
 	 * @param p2 The second processor
@@ -221,10 +229,10 @@ public class Connector
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Checks if the <i>i</i>-th output of processor <code>p1</code> has a
-	 * declared type compatible with the <i>j</i>-th input of processor 
+	 * declared type compatible with the <i>j</i>-th input of processor
 	 * <code>p2</code>, and throws an appropriate exception if not
 	 * @param p1 The first processor
 	 * @param p2 The second processor
@@ -270,11 +278,9 @@ public class Connector
 				return;
 			}
 		}
-		System.out.println("IN CLASSES: " + in_classes + p1);
-		System.out.println("OUT CLASS: " + out_class + p2);
 		throw new IncompatibleTypesException(p1, p2, i, j);
 	}
-		
+
 	/**
 	 * Exception thrown when a problem occurs when connecting two
 	 * processors
@@ -285,15 +291,15 @@ public class Connector
 		 * Dummy UID
 		 */
 		private static final long serialVersionUID = 1L;
-		
+
 		protected Processor m_source;
-		
+
 		protected Processor m_destination;
-		
+
 		protected int m_sourceIndex;
-		
+
 		protected int m_destinationIndex;
-		
+
 		ConnectorException(Processor source, Processor destination, int i, int j)
 		{
 			super();
@@ -303,9 +309,9 @@ public class Connector
 			m_destinationIndex = j;
 		}
 	}
-	
+
 	/**
-	 * Exception thrown when two processors with incompatible 
+	 * Exception thrown when two processors with incompatible
 	 * input/output types are attempted to be connected
 	 */
 	public static class IncompatibleTypesException extends ConnectorException
@@ -315,11 +321,11 @@ public class Connector
 		 */
 		private static final long serialVersionUID = 1L;
 
-		IncompatibleTypesException(Processor source, Processor destination, int i, int j) 
+		IncompatibleTypesException(Processor source, Processor destination, int i, int j)
 		{
 			super(source, destination, i, j);
 		}
-		
+
 		@Override
 		public String getMessage()
 		{
@@ -328,7 +334,7 @@ public class Connector
 			return out.toString();
 		}
 	}
-	
+
 	/**
 	 * Exception thrown when the connector is asked to pipe something
 	 * to a nonexistent input or output
@@ -340,23 +346,23 @@ public class Connector
 		 */
 		private static final long serialVersionUID = 1L;
 
-		IndexOutOfBoundsException(Processor source, Processor destination, int i, int j) 
+		IndexOutOfBoundsException(Processor source, Processor destination, int i, int j)
 		{
 			super(source, destination, i, j);
 		}
-		
+
 		@Override
 		public String getMessage()
 		{
 			StringBuilder out = new StringBuilder();
 			out.append("Cannot connect output ").append(m_sourceIndex).append(" of ").append(m_source).append(" to input ").append(m_destinationIndex).append(" of ").append(m_destination).append(": index out of bounds");
 			return out.toString();
-		}				
+		}
 	}
-	
+
 	/**
 	 * Exception thrown when trying to connect the output of a processor to
-	 * its own input 
+	 * its own input
 	 */
 	public static class SelfLoopException extends ConnectorException
 	{
@@ -365,11 +371,11 @@ public class Connector
 		 */
 		private static final long serialVersionUID = 1L;
 
-		SelfLoopException(Processor source, Processor destination, int i, int j) 
+		SelfLoopException(Processor source, Processor destination, int i, int j)
 		{
 			super(source, destination, i, j);
 		}
-		
+
 		@Override
 		public String getMessage()
 		{
@@ -385,6 +391,12 @@ public class Connector
 	 */
 	public static final class Variant
 	{
-		
+		public static final Variant instance = new Variant();
+
+		private Variant()
+		{
+			super();
+		}
+
 	}
 }

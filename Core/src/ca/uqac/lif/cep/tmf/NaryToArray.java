@@ -34,13 +34,13 @@ public class NaryToArray extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		return wrapObject(inputs);
 	}
 
 	@Override
-	public NaryToArray clone() 
+	public NaryToArray clone()
 	{
 		return new NaryToArray(getInputArity());
 	}

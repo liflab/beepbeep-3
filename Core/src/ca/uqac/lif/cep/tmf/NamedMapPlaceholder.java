@@ -3,12 +3,12 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.CacheMap;
 
-public class NamedMapPlaceholder extends UnaryFunction<Object,Object> 
+public class NamedMapPlaceholder extends UnaryFunction<Object,Object>
 {
 	protected int m_lastIndex = -1;
-	
+
 	protected String m_name;
-	
+
 	public NamedMapPlaceholder(String name)
 	{
 		super(Object.class, Object.class);
@@ -16,7 +16,7 @@ public class NamedMapPlaceholder extends UnaryFunction<Object,Object>
 	}
 
 	@Override
-	public Object getValue(Object in) 
+	public Object getValue(Object in)
 	{
 		@SuppressWarnings("unchecked")
 		CacheMap<Object> map = (CacheMap<Object>) in;

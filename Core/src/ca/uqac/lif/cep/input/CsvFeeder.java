@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.input;
 /**
  * Creates a feed of events from comma-separated string chunks.
  * Note that the input feed must have a trailing comma for all elements,
- * including the last. 
+ * including the last.
  * @author sylvain
  *
  */
@@ -32,14 +32,14 @@ public class CsvFeeder extends TokenFeeder
 		m_separatorBegin = "";
 		m_separatorEnd = ",";
 	}
-	
+
 	@Override
 	protected Object createTokenFromInput(String token)
 	{
 		// Remove trailing comma
 		return token.substring(0, token.length() - 1);
 	}
-	
+
 	@Override
 	public CsvFeeder clone()
 	{

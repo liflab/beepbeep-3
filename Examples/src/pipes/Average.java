@@ -16,6 +16,12 @@ package pipes;
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+import static ca.uqac.lif.cep.Connector.INPUT;
+import static ca.uqac.lif.cep.Connector.LEFT;
+import static ca.uqac.lif.cep.Connector.OUTPUT;
+import static ca.uqac.lif.cep.Connector.RIGHT;
+import static ca.uqac.lif.cep.Connector.connect;
+
 import java.util.Vector;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -26,11 +32,6 @@ import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.numbers.Addition;
 import ca.uqac.lif.cep.numbers.Division;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import static ca.uqac.lif.cep.Connector.LEFT;
-import static ca.uqac.lif.cep.Connector.RIGHT;
-import static ca.uqac.lif.cep.Connector.INPUT;
-import static ca.uqac.lif.cep.Connector.OUTPUT;
-import static ca.uqac.lif.cep.Connector.connect;
 
 
 /**
@@ -46,10 +47,10 @@ import static ca.uqac.lif.cep.Connector.connect;
  * @author Sylvain Hallé
  *
  */
-public class Average 
+public class Average
 {
 
-	public static void main(String[] args) throws ConnectorException 
+	public static void main(String[] args) throws ConnectorException
 	{
 		// Create a source of numbers
 		QueueSource numbers = new QueueSource(1);
@@ -68,13 +69,13 @@ public class Average
 		ones.setEvents(one_list);
 		CumulativeProcessor counter = new CumulativeProcessor(new CumulativeFunction<Number>(Addition.instance));
 		connect(ones, OUTPUT, counter, INPUT);
-		
+
 		// Divide one trace by the other; the output is the cumulative average
 		// of all numbers seen so far
 		FunctionProcessor division = new FunctionProcessor(Division.instance);
 		connect(sum_proc, OUTPUT, division, LEFT);
 		connect(counter, OUTPUT, division, RIGHT);
-		
+
 		// Extract the first 20 events from that pipe and print them
 		Pullable p = division.getPullableOutput();
 		System.out.println("The cumulative average is...");

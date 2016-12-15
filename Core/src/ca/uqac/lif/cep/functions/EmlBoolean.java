@@ -27,7 +27,7 @@ public class EmlBoolean extends Constant
 	{
 		super(parseBoolValue(o));
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o = stack.pop();
@@ -38,7 +38,7 @@ public class EmlBoolean extends Constant
 	{
 		return parseBoolValue(o);
 	}
-	
+
 	public static boolean parseBoolValue(Object o)
 	{
 		if (o instanceof Boolean)
@@ -48,7 +48,7 @@ public class EmlBoolean extends Constant
 		else if (o instanceof String)
 		{
 			String s = (String) o;
-			if (s.compareToIgnoreCase("true") == 0 
+			if (s.compareToIgnoreCase("true") == 0
 					|| s.compareToIgnoreCase("T") == 0
 					|| s.compareToIgnoreCase("1") == 0)
 			{
@@ -64,7 +64,7 @@ public class EmlBoolean extends Constant
 				return false;
 			}
 			return true;
-		}			
+		}
 		// When in doubt, return false
 		return false;
 	}

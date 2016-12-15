@@ -27,20 +27,20 @@ import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 public class ThreadPullable implements Pullable
 {
 	/**
-	 * The poller that will repeatedly poll the input pullable 
+	 * The poller that will repeatedly poll the input pullable
 	 */
 	protected Poller m_poller;
-	
+
 	/**
 	 * The managed thread in which this pullable is running, if any
 	 */
 	protected ManagedThread m_thread = null;
-	
+
 	/**
 	 * The interval (in milliseconds) between polls to the input pullable
 	 */
 	protected static final long s_sleepDuration = 100;
-	
+
 	/**
 	 * Attempts to get an instance of thread pullable. The method will
 	 * ask for a thread from the thread manager; if no thread can be
@@ -63,7 +63,7 @@ public class ThreadPullable implements Pullable
 		}
 		return new ThreadPullable(poll, t);
 	}
-	
+
 	/**
 	 * Attempts to get an instance of thread pullable. The method will
 	 * ask for a thread from the default thread manager; if no thread can be
@@ -75,20 +75,20 @@ public class ThreadPullable implements Pullable
 	{
 		return tryPullable(pull, ThreadManager.defaultManager);
 	}
-	
+
 	private ThreadPullable(Poller p, ManagedThread t)
 	{
 		super();
 		m_poller = p;
 		m_thread = t;
 	}
-	
+
 	@Override
 	public void start()
 	{
 		m_thread.start();
 	}
-	
+
 	@Override
 	public void stop()
 	{
@@ -97,14 +97,14 @@ public class ThreadPullable implements Pullable
 	}
 
 	@Override
-	public Iterator<Object> iterator() 
+	public Iterator<Object> iterator()
 	{
 		// Don't use a threadpullable as an iterator
 		return null;
 	}
 
 	@Override
-	public Object pullSoft() 
+	public Object pullSoft()
 	{
 		m_poller.call(Call.PULL_SOFT);
 		while (!m_poller.isDone())
@@ -115,7 +115,7 @@ public class ThreadPullable implements Pullable
 	}
 
 	@Override
-	public Object pull() 
+	public Object pull()
 	{
 		m_poller.call(Call.PULL);
 		while (!m_poller.isDone())
@@ -128,13 +128,13 @@ public class ThreadPullable implements Pullable
 	}
 
 	@Override
-	public Object next() 
+	public Object next()
 	{
 		return pull();
 	}
 
 	@Override
-	public NextStatus hasNextSoft() 
+	public NextStatus hasNextSoft()
 	{
 		m_poller.call(Call.HAS_NEXT_SOFT);
 		while (!m_poller.isDone())
@@ -145,7 +145,7 @@ public class ThreadPullable implements Pullable
 	}
 
 	@Override
-	public boolean hasNext() 
+	public boolean hasNext()
 	{
 		m_poller.call(Call.HAS_NEXT);
 		while (!m_poller.isDone())
@@ -157,23 +157,23 @@ public class ThreadPullable implements Pullable
 	}
 
 	@Override
-	public Processor getProcessor() 
+	public Processor getProcessor()
 	{
 		return m_poller.getPullable().getProcessor();
 	}
 
 	@Override
-	public int getPosition() 
+	public int getPosition()
 	{
 		return m_poller.getPullable().getPosition();
 	}
 
 	@Override
-	public void remove() 
+	public void remove()
 	{
 		// Do nothing
 	}
-	
+
 	@Override
 	public void dispose()
 	{

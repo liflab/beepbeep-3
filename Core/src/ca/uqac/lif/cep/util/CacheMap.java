@@ -37,7 +37,7 @@ import java.util.Set;
  *   <code>HashMap</code>) for storing keys and values. For tuples with,
  *   a small number of keys, this should actually provide <em>faster</em>
  *   access than a HashMap. In all cases, arrays use up less memory
- *   than a HashMap.</li> 
+ *   than a HashMap.</li>
  * <li>Because of this, one can also ask for the <em>index</em> of a key/value
  *   pair, and obtain a value based on its index (rather than its key).
  *   Assuming that all tuples in a stream have their key/value pairs
@@ -51,16 +51,16 @@ import java.util.Set;
 public final class CacheMap<T> implements Map<String,T>
 {
 	private String[] m_keys;
-	
+
 	private Object[] m_values;
-	
+
 	public CacheMap(String[] names, Object[] values)
 	{
 		super();
 		m_keys = names;
 		m_values = values;
 	}
-	
+
 	public CacheMap(String[] names)
 	{
 		this(names, new Object[names.length]);
@@ -121,13 +121,13 @@ public final class CacheMap<T> implements Map<String,T>
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public final Object getValue(int index)
 	{
 		return (T) m_values[index];
 	}
-	
+
 	/**
 	 * Get the index of a key in the current map
 	 * @param s The key
@@ -145,7 +145,7 @@ public final class CacheMap<T> implements Map<String,T>
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * Retrieves a value, possibly using an index. This allows one
 	 * to both get the direct index of a value in the map, if not
@@ -153,7 +153,7 @@ public final class CacheMap<T> implements Map<String,T>
 	 * <pre>
 	 * Object o;
 	 * cached_index = map.getIndexOf("mykey", cached_index, o);
-	 * </pre> 
+	 * </pre>
 	 * This will put the value corresponding to <code>mykey</code> in
 	 * <code>o</code>, and update <code>cached_index</code> to the
 	 * position in the array where this key was found. Later calls
@@ -216,12 +216,12 @@ public final class CacheMap<T> implements Map<String,T>
 		}
 		return null;
 	}
-	
+
 	public final void putAt(int index, T value)
 	{
 		m_values[index] = value;
 	}
-	
+
 	public final void putAll(T[] values)
 	{
 		assert values.length == m_keys.length;
@@ -258,7 +258,7 @@ public final class CacheMap<T> implements Map<String,T>
 		}
 		return l;
 	}
-	
+
 	@Override
 	public String toString()
 	{

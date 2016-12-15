@@ -38,7 +38,7 @@ public class CounterSingle extends SingleProcessor
 	 * The variable that will keep the current value of the counter
 	 */
 	protected int m_counterValue;
-	
+
 	/*
 	 * The constructor sets the input and output arity of this processor.
 	 * The input arity is 0, as we do not need an input trace to
@@ -49,7 +49,7 @@ public class CounterSingle extends SingleProcessor
 	 * setting the initial state; in our case, this means setting our
 	 * counter variable to 1.
 	 */
-	public CounterSingle() 
+	public CounterSingle()
 	{
 		super(0, 1);
 		m_counterValue = 1;
@@ -60,7 +60,7 @@ public class CounterSingle extends SingleProcessor
 	 * called every time a new output event must be generated.
 	 */
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		// Create a queue of Object[]. We must put our
 		// results in this queue and return it at the end
@@ -68,12 +68,12 @@ public class CounterSingle extends SingleProcessor
 
 		// Create an array of objects of size 1
 		Object[] front = new Object[1];
-		
+
 		// Put into this array the current value of our counter,
 		// and then increment this counter
 		front[0] = m_counterValue;
 		m_counterValue++;
-		
+
 		// Put the array in the queue
 		out_queue.add(front);
 
@@ -89,11 +89,11 @@ public class CounterSingle extends SingleProcessor
 	 * returning a new instance of MyCounter.
 	 */
 	@Override
-	public Processor clone() 
+	public Processor clone()
 	{
 		return new CounterSingle();
 	}
-	
+
 	/*
 	 * Implementing this method is optional. Doing so allows the
 	 * processor to be reset to its initial state. In the present
@@ -106,7 +106,7 @@ public class CounterSingle extends SingleProcessor
 	}
 
 	/*
-	 * Simple main showing what the processor does. It should output the 
+	 * Simple main showing what the processor does. It should output the
 	 * numbers 1 to 10.
 	 */
 	public static void main(String[] args)

@@ -57,7 +57,7 @@ class ContinuousPoller implements Poller
 	}
 
 	@Override
-	public void run() 
+	public void run()
 	{
 		m_run = true;
 		while (m_run)
@@ -72,17 +72,18 @@ class ContinuousPoller implements Poller
 					//synchronized (this)
 					{
 						m_events.add(o);
-					}				
+					}
 				}
-				m_done = true;				
+				m_done = true;
 			}
-			try 
+			try
 			{
 				Thread.sleep(s_sleepDuration);
-			} 
-			catch (InterruptedException e) 
+			}
+			catch (InterruptedException e)
 			{
 				m_run = false;
+				Thread.currentThread().interrupt();
 			}
 		}
 	}
@@ -94,13 +95,13 @@ class ContinuousPoller implements Poller
 	}
 
 	@Override
-	public void call(Call c) 
+	public void call(Call c)
 	{
 		// Do nothing
 	}
 
 	@Override
-	public NextStatus getNextSoftStatus() 
+	public NextStatus getNextSoftStatus()
 	{
 		if (m_events.isEmpty())
 		{
@@ -110,7 +111,7 @@ class ContinuousPoller implements Poller
 	}
 
 	@Override
-	public boolean getNextHardStatus() 
+	public boolean getNextHardStatus()
 	{
 		if (m_events.isEmpty())
 		{
@@ -134,7 +135,7 @@ class ContinuousPoller implements Poller
 	}
 
 	@Override
-	public Object getNextSoft() 
+	public Object getNextSoft()
 	{
 		if (m_events.isEmpty())
 		{
@@ -144,7 +145,7 @@ class ContinuousPoller implements Poller
 	}
 
 	@Override
-	public Object getNextHard() 
+	public Object getNextHard()
 	{
 		if (m_events.isEmpty())
 		{
@@ -171,19 +172,19 @@ class ContinuousPoller implements Poller
 	}
 
 	@Override
-	public void stop() 
+	public void stop()
 	{
 		m_run = false;
 	}
 
 	@Override
-	public Pullable getPullable() 
+	public Pullable getPullable()
 	{
 		return m_pullable;
 	}
 
 	@Override
-	public void dispose() 
+	public void dispose()
 	{
 		stop();
 		m_pullable.dispose();

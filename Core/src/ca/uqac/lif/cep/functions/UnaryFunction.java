@@ -24,7 +24,7 @@ import java.util.Set;
  * @param <T> The type of the input
  * @param <U> The type of the output
  */
-public abstract class UnaryFunction<T,U> extends SimpleFunction 
+public abstract class UnaryFunction<T,U> extends SimpleFunction
 {
 	/**
 	 * The class of the input
@@ -35,7 +35,7 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 	 * The class of the output
 	 */
 	private Class<U> m_outputType;
-	
+
 	/**
 	 * Creates a new instance of an unary function
 	 * @param t The class of the input
@@ -47,54 +47,54 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 		m_inputType = t;
 		m_outputType = u;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 1 */
-	public Object[] compute(/*@NonNull*/ Object[] inputs) 
+	public Object[] compute(/*@NonNull*/ Object[] inputs)
 	{
 		Object[] out = new Object[1];
 		out[0] = getValue((T) inputs[0]);
 		return out;
 	}
-	
+
 	/**
 	 * Evaluates the function
 	 * @param x The argument
 	 * @return The return value of the function
 	 */
-	public abstract U getValue(T x); 
+	public abstract U getValue(T x);
 
 	@Override
-	public final int getInputArity() 
+	public final int getInputArity()
 	{
 		return 1;
 	}
 
 	@Override
-	public final int getOutputArity() 
+	public final int getOutputArity()
 	{
 		return 1;
 	}
-	
+
 	@Override
 	public void reset()
 	{
 		// Do nothing
 	}
-	
+
 	@Override
 	public UnaryFunction<T,U> clone()
 	{
 		return this;
 	}
-	
+
 	@Override
 	public final void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
 	{
 		classes.add(m_inputType);
 	}
-	
+
 	@Override
 	public Class<?> getOutputTypeFor(int index)
 	{

@@ -64,7 +64,7 @@ public class Interpreter implements ParseNodeVisitor
 	protected BnfParser m_parser;
 
 	/**
-	 * The stack used to build the object resulting from the parsing  
+	 * The stack used to build the object resulting from the parsing
 	 */
 	protected GroupStack<Object> m_nodes;
 
@@ -237,7 +237,7 @@ public class Interpreter implements ParseNodeVisitor
 		{
 			if (ext.isAssignableFrom(Palette.class))
 			{
-				load((Class<? extends Palette>) ext);	
+				load((Class<? extends Palette>) ext);
 			}
 		}
 	}
@@ -272,16 +272,16 @@ public class Interpreter implements ParseNodeVisitor
 	 */
 	public Interpreter load(Class<? extends Palette> c)
 	{
-		try 
+		try
 		{
 			Palette ext = c.newInstance();
 			load(ext);
-		} 
-		catch (InstantiationException e) 
+		}
+		catch (InstantiationException e)
 		{
 			e.printStackTrace();
-		} 
-		catch (IllegalAccessException e) 
+		}
+		catch (IllegalAccessException e)
 		{
 			e.printStackTrace();
 		}
@@ -414,8 +414,8 @@ public class Interpreter implements ParseNodeVisitor
 					try
 					{
 						Connector.connect(o_p, f, 0, 0);
-					} 
-					catch (ConnectorException e) 
+					}
+					catch (ConnectorException e)
 					{
 						m_lastExceptions.add(e);
 					}
@@ -431,11 +431,11 @@ public class Interpreter implements ParseNodeVisitor
 				m_processorForks.put(node_name, new_f);
 				 */
 				f.extendOutputArity(new_arity);
-				try 
+				try
 				{
 					Connector.connect(f, pt, new_arity - 1, 0);
-				} 
-				catch (ConnectorException e) 
+				}
+				catch (ConnectorException e)
 				{
 					m_lastExceptions.add(e);
 				}
@@ -454,18 +454,18 @@ public class Interpreter implements ParseNodeVisitor
 			if (m_associations.containsKey(node_name))
 			{
 				// Production rule for something buildable from stack contents
-				try 
+				try
 				{
 					visitAssociation(node);
-				} 
-				catch (IllegalAccessException e) 
+				}
+				catch (IllegalAccessException e)
 				{
 					m_lastExceptions.add(e);
-				} 
+				}
 				catch (IllegalArgumentException e)
 				{
 					m_lastExceptions.add(e);
-				} 
+				}
 				catch (PipingParseException e)
 				{
 					m_lastExceptions.add(e);
@@ -516,11 +516,11 @@ public class Interpreter implements ParseNodeVisitor
 			throw new IllegalAccessException("Method build does not exist in class " + obj);
 		}
 		m.setAccessible(true);
-		try 
+		try
 		{
 			m.invoke(null, m_nodes);
-		} 
-		catch (InvocationTargetException e) 
+		}
+		catch (InvocationTargetException e)
 		{
 			Throwable th = e.getTargetException();
 			if (th instanceof Exception)
@@ -539,18 +539,18 @@ public class Interpreter implements ParseNodeVisitor
 		try
 		{
 			m.invoke(obj, m_nodes);
-		} 
+		}
 		catch (IllegalAccessException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		catch (IllegalArgumentException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 		
-		catch (InvocationTargetException e) 
+		}
+		catch (InvocationTargetException e)
 		{
 			Throwable th = e.getTargetException();
 			if (th instanceof Exception)
@@ -663,7 +663,7 @@ public class Interpreter implements ParseNodeVisitor
 		{
 			throw new ParseException("Error: the BNF parser returned null on input " + query);
 		}
-		//return null;    
+		//return null;
 	}
 
 	public Object parseLanguage(String property, String start_symbol) throws ParseException
@@ -745,17 +745,17 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param params Any parameters this method may have
 	 * @return The method, or null if no method was found
 	 */
-	static public Method getStaticMethod(Class<?> type, String methodName, Class<?>... params) 
+	static public Method getStaticMethod(Class<?> type, String methodName, Class<?>... params)
 	{
-		try 
+		try
 		{
 			Method method = type.getDeclaredMethod(methodName, params);
-			if ((method.getModifiers() & Modifier.STATIC) != 0) 
+			if ((method.getModifiers() & Modifier.STATIC) != 0)
 			{
 				return method;
 			}
-		} 
-		catch (NoSuchMethodException e) 
+		}
+		catch (NoSuchMethodException e)
 		{
 		}
 		return null;
@@ -768,14 +768,14 @@ public class Interpreter implements ParseNodeVisitor
 	 * @param params Any parameters this method may have
 	 * @return The method, or <code>null</code> if no method was found
 	 */
-	static public Method getMethod(Object o, String methodName, Class<?>... params) 
+	static public Method getMethod(Object o, String methodName, Class<?>... params)
 	{
-		try 
+		try
 		{
 			Method method = o.getClass().getDeclaredMethod(methodName, params);
 			return method;
-		} 
-		catch (NoSuchMethodException e) 
+		}
+		catch (NoSuchMethodException e)
 		{
 		}
 		return null;

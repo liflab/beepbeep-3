@@ -31,15 +31,15 @@ import ca.uqac.lif.cep.util.CacheMap;
  * map. The usefulness of this processor lies mostly in the ESQL language.
  * It makes it possible to write something like:
  * <pre>
- * APPLY $A + $B WITH 
- *   expression AS $A, 
+ * APPLY $A + $B WITH
+ *   expression AS $A,
  *   expression AS $B
  * </pre>
  * <p>
  * <strong>Caveat emptor:</strong> The input processors of this processor must
  * be <em>distinct</em>. If the same processor instance occurs multiple
  * times, it will be pulled more than once. (Note though that this applies
- * to any n-ary processor.) 
+ * to any n-ary processor.)
  * @author Sylvain Hallé
  */
 public class Collator extends SingleProcessor
@@ -68,7 +68,7 @@ public class Collator extends SingleProcessor
 		CacheMap<Object> map = new CacheMap<Object>(names, values);
 		return wrapObject(map);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		ProcessorExpressionList pel = (ProcessorExpressionList) stack.pop();
@@ -84,11 +84,11 @@ public class Collator extends SingleProcessor
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor clone()
 	{
 		return new Collator(m_processorList);
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -97,7 +97,7 @@ public class Collator extends SingleProcessor
 		return out.toString();
 	}
 
-	public ProcessorExpressionList getProcessorList() 
+	public ProcessorExpressionList getProcessorList()
 	{
 		return m_processorList;
 	}

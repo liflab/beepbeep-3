@@ -23,11 +23,11 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.numbers.EmlNumber;
 import ca.uqac.lif.cep.objectfactory.IntegerSetting;
 import ca.uqac.lif.cep.objectfactory.SettingsSet;
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
@@ -41,24 +41,24 @@ public class CountDecimate extends SingleProcessor
 	 * The decimation interval
 	 */
 	protected final int m_interval;
-	
+
 	/**
 	 * Index of last event received
 	 */
 	protected int m_current;
-	
+
 	public CountDecimate()
 	{
 		this(1);
 	}
-	
+
 	public CountDecimate(int interval)
 	{
 		super(1, 1);
 		m_interval = interval;
 		m_current = 0;
 	}
-	
+
 	@Override
 	public void reset()
 	{
@@ -81,7 +81,7 @@ public class CountDecimate extends SingleProcessor
 		}
 		return wrapVector(out);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		//stack.pop(); // (
@@ -97,11 +97,11 @@ public class CountDecimate extends SingleProcessor
 	}
 
 	@Override
-	public CountDecimate clone() 
+	public CountDecimate clone()
 	{
 		return new CountDecimate(m_interval);
 	}
-	
+
 	/**
 	 * Gets the set of initial settings for this processor
 	 * @return The set of settings

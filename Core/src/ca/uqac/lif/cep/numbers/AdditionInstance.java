@@ -33,12 +33,12 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 class AdditionInstance extends Addition
 {
 	public static final transient AdditionInstance instance = new AdditionInstance();
-	
+
 	AdditionInstance()
 	{
 		super();
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // the name

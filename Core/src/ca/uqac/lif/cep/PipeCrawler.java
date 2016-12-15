@@ -26,7 +26,7 @@ import java.util.Set;
  * Visits every processor
  * @author Sylvain Hallé
  */
-public abstract class PipeCrawler 
+public abstract class PipeCrawler
 {
 	/**
 	 * The maximum number of loops that the crawler can do during a traversal.
@@ -34,7 +34,7 @@ public abstract class PipeCrawler
 	 * {@link #crawl(Processor)} always terminates.
 	 */
 	protected static final transient int s_maxCrawls = 10000;
-	
+
 	/**
 	 * Crawls a graph from some starting point
 	 * @param start
@@ -57,7 +57,6 @@ public abstract class PipeCrawler
 			int out_arity = proc.getOutputArity();
 			for (int i = 0; i < out_arity; i++)
 			{
-				//Pushable p = proc.getPushableInput(i);
 				Pushable p = proc.getPushableOutput(i);
 				if (p != null)
 				{
@@ -71,7 +70,6 @@ public abstract class PipeCrawler
 			for (int i = 0; i < in_arity; i++)
 			{
 				Pullable p = proc.getPullableInput(i);
-				//Pullable p = proc.getPullableOutput(i);
 				if (p != null)
 				{
 					Processor target = p.getProcessor();
@@ -83,7 +81,7 @@ public abstract class PipeCrawler
 			}
 		}
 	}
-	
+
 	/**
 	 * Do something on a processor. Upon a call to {@link #crawl(Processor)},
 	 * this method is called exactly once for every reachable processor in the

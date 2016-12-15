@@ -27,20 +27,20 @@ import ca.uqac.lif.cep.Context;
  * <p>
  * The main purpose of this class is to allow one to create a class
  * out of a {@link FunctionTree} instance created programmatically. The code
- * creating the <code>FunctionTree</code> is written in the 
+ * creating the <code>FunctionTree</code> is written in the
  * {@link getFunction()} method (which, as a matter of fact, can
  * return any other <code>Function</code> object).
  * 
  * @author Sylvain Hallé
  *
  */
-public abstract class PassthroughFunction extends Function 
+public abstract class PassthroughFunction extends Function
 {
 	/**
 	 * The function to which all calls will be delegated
 	 */
 	private Function m_function;
-	
+
 	/**
 	 * Createa a new instance of PassthroughFunction
 	 */
@@ -49,7 +49,7 @@ public abstract class PassthroughFunction extends Function
 		super();
 		m_function = getFunction();
 	}
-	
+
 	/**
 	 * Instantiates the function that this object will call
 	 * @return The function
@@ -57,31 +57,31 @@ public abstract class PassthroughFunction extends Function
 	public abstract Function getFunction();
 
 	@Override
-	public final Object[] evaluate(Object[] inputs, Context context) 
+	public final Object[] evaluate(Object[] inputs, Context context)
 	{
 		return m_function.evaluate(inputs, context);
 	}
 
 	@Override
-	public final Object[] evaluate(Object[] inputs) 
+	public final Object[] evaluate(Object[] inputs)
 	{
 		return m_function.evaluate(inputs);
 	}
 
 	@Override
-	public final int getInputArity() 
+	public final int getInputArity()
 	{
 		return m_function.getInputArity();
 	}
 
 	@Override
-	public final int getOutputArity() 
+	public final int getOutputArity()
 	{
 		return m_function.getOutputArity();
 	}
 
 	@Override
-	public final void reset() 
+	public final void reset()
 	{
 		m_function.reset();
 	}
@@ -93,13 +93,13 @@ public abstract class PassthroughFunction extends Function
 	}
 
 	@Override
-	public final void getInputTypesFor(Set<Class<?>> classes, int index) 
+	public final void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
 		m_function.getInputTypesFor(classes, index);
 	}
 
 	@Override
-	public final Class<?> getOutputTypeFor(int index) 
+	public final Class<?> getOutputTypeFor(int index)
 	{
 		return m_function.getOutputTypeFor(index);
 	}

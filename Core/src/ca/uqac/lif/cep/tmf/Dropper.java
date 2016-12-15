@@ -29,7 +29,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * 
  * @author Sylvain Hallé
  */
-public class Dropper extends SingleProcessor 
+public class Dropper extends SingleProcessor
 {
 	public Dropper()
 	{
@@ -59,10 +59,10 @@ public class Dropper extends SingleProcessor
 	}
 
 	@Override
-	public Dropper clone() 
+	public Dropper clone()
 	{
 		return new Dropper();
 	}
-	
-	
+
+
 }

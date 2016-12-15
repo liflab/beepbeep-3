@@ -28,8 +28,8 @@ import ca.uqac.lif.cep.objectfactory.SettingsSet;
 /**
  * Merges the contents of multiple traces into a single trace.
  * The multiplexer ("muxer") is an <i>n</i>:1 processor. However, contrarily
- * to other <i>n</i>:1 processors, the multiplexer does not wait until all 
- * its <i>n</i> inputs produced an event before doing something. It directly 
+ * to other <i>n</i>:1 processors, the multiplexer does not wait until all
+ * its <i>n</i> inputs produced an event before doing something. It directly
  * sends to its (single) output whatever events come from any of its inputs.
  * <p>
  * The muxer provides the following guarantees:
@@ -39,7 +39,7 @@ import ca.uqac.lif.cep.objectfactory.SettingsSet;
  * before any event received at step <i>k</i>+1</li>
  * <li>There is no guarantee as to the output ordering of events received
  * at the same step</li>
- * </ul> 
+ * </ul>
  * <p>
  * In other words, the muxer provides a way to merge <i>n</i> input traces
  * into a single one, preserving the relative ordering of events coming
@@ -52,7 +52,7 @@ public class Multiplexer extends Processor
 	/**
 	 * Instantiates a multiplexer
 	 * @param in_arity The input arity of the multiplexer. This is the
-	 *   number of input traces that should be merged together in the output 
+	 *   number of input traces that should be merged together in the output
 	 */
 	public Multiplexer(int in_arity)
 	{
@@ -73,29 +73,29 @@ public class Multiplexer extends Processor
 		// We ignore index, as it is supposed to be 0 (the muxer is of arity 1)
 		return new MuxPullable();
 	}
-	
+
 	@Override
 	public Multiplexer clone()
 	{
 		return new Multiplexer(getInputArity());
 	}
-	
+
 	protected final class MuxPullable implements Pullable
-	{	
+	{
 		public MuxPullable()
 		{
 			super();
 		}
-		
+
 		@Override
 		public void remove()
 		{
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
-		public void start() 
+		public void start()
 		{
 			// Do nothing
 		}
@@ -149,7 +149,7 @@ public class Multiplexer extends Processor
 			}
 			return null;
 		}
-		
+
 		@Override
 		public final Object next()
 		{
@@ -230,19 +230,19 @@ public class Multiplexer extends Processor
 		}
 
 		@Override
-		public Processor getProcessor() 
+		public Processor getProcessor()
 		{
 			return Multiplexer.this;
 		}
 
 		@Override
-		public int getPosition() 
+		public int getPosition()
 		{
 			return 0;
 		}
 
 		@Override
-		public Iterator<Object> iterator() 
+		public Iterator<Object> iterator()
 		{
 			return this;
 		}
@@ -253,14 +253,14 @@ public class Multiplexer extends Processor
 			// Do nothing
 		}
 	}
-	
+
 	protected final class MuxPushable implements Pushable
-	{	
+	{
 		/**
 		 * The index this pushable is linked to
 		 */
 		private int m_index;
-		
+
 		public MuxPushable(int index)
 		{
 			super();
@@ -274,7 +274,7 @@ public class Multiplexer extends Processor
 			m_outputPushables[0].waitFor();
 			return this;
 		}
-		
+
 		@Override
 		public Pushable pushFast(Object o)
 		{
@@ -283,30 +283,30 @@ public class Multiplexer extends Processor
 		}
 
 		@Override
-		public Processor getProcessor() 
+		public Processor getProcessor()
 		{
 			return Multiplexer.this;
 		}
 
 		@Override
-		public int getPosition() 
+		public int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		public void waitFor() 
+		public void waitFor()
 		{
 			m_outputPushables[0].waitFor();
 		}
-		
+
 		@Override
-		public void dispose() 
+		public void dispose()
 		{
 			m_outputPushables[0].dispose();
 		}
 	}
-	
+
 	/**
 	 * Gets the set of initial settings for this processor
 	 * @return The set of settings

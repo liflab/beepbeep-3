@@ -72,7 +72,7 @@ public final class SmartFork extends Processor
 		{
 			m_inputEvents = new ArrayList<Object>();
 			m_cursors = new int[out_arity];
-			m_timeSinceLastClean = 0;			
+			m_timeSinceLastClean = 0;
 		}
 	}
 
@@ -117,7 +117,7 @@ public final class SmartFork extends Processor
 	 * Directly puts an event in the fork's input queue. Note that
 	 * this bypasses the normal flow of events between processors, and
 	 * should be used with much caution.
-	 * @param o The event to insert 
+	 * @param o The event to insert
 	 */
 	synchronized public void putInQueue(Object o)
 	{
@@ -156,7 +156,7 @@ public final class SmartFork extends Processor
 				}
 				else
 				{
-				m_outputPushables[i].push(o);
+					m_outputPushables[i].push(o);
 				}
 			}
 			incrementClean();
@@ -176,19 +176,19 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor() 
+		synchronized public Processor getProcessor()
 		{
 			return SmartFork.this;
 		}
 
 		@Override
-		synchronized public int getPosition() 
+		synchronized public int getPosition()
 		{
 			return 0;
 		}
 
 		@Override
-		synchronized public void waitFor() 
+		synchronized public void waitFor()
 		{
 			for (int i = 0; i < m_outputPushables.length; i++)
 			{
@@ -205,7 +205,7 @@ public final class SmartFork extends Processor
 
 	/**
 	 * Increments the clean counter, which is used to decide when to
-	 * perform a clean-up of the input buffer 
+	 * perform a clean-up of the input buffer
 	 */
 	private synchronized void incrementClean()
 	{
@@ -304,16 +304,16 @@ public final class SmartFork extends Processor
 				return true;
 			}
 			return m_inputPullables[0].hasNext();
-		}	
+		}
 
 		@Override
-		public Processor getProcessor() 
+		public Processor getProcessor()
 		{
 			return SmartFork.this;
 		}
 
 		@Override
-		public int getPosition() 
+		public int getPosition()
 		{
 			return m_queueIndex;
 		}
@@ -325,21 +325,21 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		public void start() 
+		public void start()
 		{
 			for (Pullable p : m_inputPullables)
 			{
 				p.start();
-			}			
+			}
 		}
 
 		@Override
-		public void stop() 
+		public void stop()
 		{
 			for (Pullable p : m_inputPullables)
 			{
 				p.stop();
-			}			
+			}
 		}
 
 		@Override
@@ -376,7 +376,7 @@ public final class SmartFork extends Processor
 				// All queues consumed this event: remove it...
 				it.remove();
 				// ...and remember to shift the queue indices by one more position
-				to_shift++;				
+				to_shift++;
 			}
 			else
 			{

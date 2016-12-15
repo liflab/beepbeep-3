@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
  * 
  * @author Sylvain Hallé
  */
-public class Apply 
+public class Apply
 {
 	public static void main(String[] args) throws ParseException
 	{

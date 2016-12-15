@@ -23,26 +23,26 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * Wraps the input into a multiset.
  * @author Sylvain Hallé
  */
-public class Wrap extends UnaryFunction<Object,Multiset> 
+public class Wrap extends UnaryFunction<Object,Multiset>
 {
 	/**
 	 * An instance of the peel function
 	 */
 	public static final transient Wrap instance = new Wrap();
-	
+
 	private Wrap()
 	{
 		super(Object.class, Multiset.class);
 	}
 
 	@Override
-	public Multiset getValue(Object x) 
+	public Multiset getValue(Object x)
 	{
 		Multiset set = new Multiset();
 		set.add(x);
 		return set;
 	}
-	
+
 	@Override
 	public String toString()
 	{

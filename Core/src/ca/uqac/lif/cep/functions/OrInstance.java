@@ -33,12 +33,12 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 class OrInstance extends Or
 {
 	public static final transient OrInstance instance = new OrInstance();
-	
+
 	OrInstance()
 	{
 		super();
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // the name

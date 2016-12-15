@@ -26,20 +26,20 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  * 
  * @author Sylvain Hallé
  */
-public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset> 
+public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset>
 {
 	/**
 	 * A static instance of the function
 	 */
 	public static final transient MultisetUnion instance = new MultisetUnion();
-	
+
 	private MultisetUnion()
 	{
 		super(Multiset.class, Multiset.class, Multiset.class);
 	}
-	
+
 	@Override
-	public Multiset getValue(Multiset x, Multiset y) 
+	public Multiset getValue(Multiset x, Multiset y)
 	{
 		Multiset out = new Multiset();
 		out.addAll(x);
@@ -48,11 +48,11 @@ public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset>
 	}
 
 	@Override
-	public Multiset getStartValue() 
+	public Multiset getStartValue()
 	{
 		return new Multiset();
 	}
-	
+
 	@Override
 	public String toString()
 	{

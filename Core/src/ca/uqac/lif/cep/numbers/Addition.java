@@ -32,7 +32,7 @@ public class Addition extends BinaryFunction<Number,Number,Number>
 	 * A static instance of addition
 	 */
 	public static final transient Addition instance = new Addition();
-	
+
 	/**
 	 * Make constructor private, to force users to refer to the static
 	 * instance of addition
@@ -41,24 +41,24 @@ public class Addition extends BinaryFunction<Number,Number,Number>
 	{
 		super(Number.class, Number.class, Number.class);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override
-	public Number getValue(Number x, Number y) 
+	public Number getValue(Number x, Number y)
 	{
 		return x.floatValue() + y.floatValue();
 	}
 
 	@Override
-	public Number getStartValue() 
+	public Number getStartValue()
 	{
 		return 0;
 	}
-	
+
 	@Override
 	public String toString()
 	{

@@ -20,22 +20,22 @@ package ca.uqac.lif.cep;
 import java.util.HashMap;
 
 /**
- * Associative map used by processors to store persistent data 
+ * Associative map used by processors to store persistent data
  * @author Sylvain Hallé
  *
  */
-public class Context extends HashMap<String,Object> 
+public class Context extends HashMap<String,Object>
 {
 	/**
 	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public Context()
 	{
 		super();
 	}
-	
+
 	public Context(Context c)
 	{
 		super();
@@ -44,5 +44,5 @@ public class Context extends HashMap<String,Object>
 			putAll(c);
 		}
 	}
-	
+
 }

@@ -70,7 +70,7 @@ public class StreamReader extends Source
 	 * By default, we use ASCII 4, which is traditionally interpreted
 	 * as the <a href="http://en.wikipedia.org/wiki/End-of-transmission_character">end
 	 * of transmission character (EOT)</a>. This has no effect when the
-	 * underlying input is not a pipe. 
+	 * underlying input is not a pipe.
 	 */
 	public static final String END_CHARACTER = String.valueOf((char) 4);
 
@@ -95,7 +95,7 @@ public class StreamReader extends Source
 	protected BufferedReader m_br;
 
 	protected InputStreamReader m_isr;
-	
+
 	public StreamReader()
 	{
 		super(1);
@@ -147,6 +147,7 @@ public class StreamReader extends Source
 	}
 
 	@Override
+	@SuppressWarnings("squid:S1168")
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		Object[] out = new String[1];
@@ -195,7 +196,7 @@ public class StreamReader extends Source
 		}
 		return wrapVector(out);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		String filename = (String) stack.pop();
@@ -213,14 +214,14 @@ public class StreamReader extends Source
 			StreamReader sr = new StreamReader(new FileInputStream(new File(filename)));
 			stack.push(sr);
 		}
-		catch (FileNotFoundException e) 
+		catch (FileNotFoundException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			stack.push(new StreamReader(null));
 		}
 	}
-	
+
 	@Override
 	public StreamReader clone()
 	{

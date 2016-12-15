@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.Palette;
 
 /**
- * Palette object for the processors defined in this package 
+ * Palette object for the processors defined in this package
  * @author Sylvain Hallé
  *
  */
@@ -30,5 +30,5 @@ public class PackageExtension extends Palette
 	{
 		super(PackageExtension.class, "EPL extension\n"
 				+ "(C) 2015 Sylvain Hallé, Université du Québec à Chicoutimi");
-	}	
+	}
 }

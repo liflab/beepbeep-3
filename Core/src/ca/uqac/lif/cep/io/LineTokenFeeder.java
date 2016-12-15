@@ -5,19 +5,19 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
-public class LineTokenFeeder extends SingleProcessor 
+public class LineTokenFeeder extends SingleProcessor
 {
 	StringBuilder m_currentEvent;
-	
+
 	protected String m_startToken;
-	
+
 	protected String m_endToken;
-	
+
 	protected int m_tokensFed = 0;
-	
+
 	public static boolean s_printStatus = false;
-	
-	public LineTokenFeeder(String start_token, String end_token) 
+
+	public LineTokenFeeder(String start_token, String end_token)
 	{
 		super(1, 1);
 		m_currentEvent = new StringBuilder();
@@ -53,7 +53,7 @@ public class LineTokenFeeder extends SingleProcessor
 	}
 
 	@Override
-	public LineTokenFeeder clone() 
+	public LineTokenFeeder clone()
 	{
 		LineTokenFeeder ltf = new LineTokenFeeder(m_startToken, m_endToken);
 		ltf.setContext(m_context);

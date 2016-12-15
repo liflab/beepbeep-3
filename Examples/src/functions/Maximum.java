@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  * 
  * @author Sylvain Hallé
  */
-public class Maximum extends BinaryFunction<Number,Number,Number> 
+public class Maximum extends BinaryFunction<Number,Number,Number>
 {
 	/*
 	 * This is optional. Since a Function object is stateless, the
@@ -45,11 +45,11 @@ public class Maximum extends BinaryFunction<Number,Number,Number>
 	}
 
 	@Override
-	public Number getValue(Number x, Number y) 
+	public Number getValue(Number x, Number y)
 	{
 		/*
 		 * Method getValue() is where the output of the function is
-		 * computed from the inputs. 
+		 * computed from the inputs.
 		 */
 		if (x.floatValue() > y.floatValue())
 		{
@@ -57,7 +57,7 @@ public class Maximum extends BinaryFunction<Number,Number,Number>
 		}
 		return y;
 	}
-	
+
 	/*
 	 * A small main method to illustrate the function
 	 */

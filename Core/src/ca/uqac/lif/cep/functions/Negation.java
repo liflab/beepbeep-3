@@ -26,10 +26,10 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
  * 
  * @author Sylvain Hallé
  */
-public class Negation extends UnaryFunction<Boolean,Boolean> 
+public class Negation extends UnaryFunction<Boolean,Boolean>
 {
 	public static final transient Negation instance = new Negation();
-	
+
 	Negation()
 	{
 		super(Boolean.class, Boolean.class);
@@ -40,13 +40,13 @@ public class Negation extends UnaryFunction<Boolean,Boolean>
 	{
 		return !x.booleanValue();
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return "¬";
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Object o;

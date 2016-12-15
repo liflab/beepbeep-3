@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * 
  * @author Sylvain Hallé
  */
-public class IncorrectPiping 
+public class IncorrectPiping
 {
 	public static void main(String[] args) throws ConnectorException
 	{

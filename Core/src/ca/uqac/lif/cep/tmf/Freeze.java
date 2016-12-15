@@ -22,8 +22,8 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.PullConstant;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.PullConstant;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
@@ -38,12 +38,12 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class Freeze extends SingleProcessor
 {
 	protected Object[] m_output;
-	
+
 	public Freeze()
 	{
 		super(1, 1);
 	}
-	
+
 	@Override
 	public void reset()
 	{
@@ -60,7 +60,7 @@ public class Freeze extends SingleProcessor
 		}
 		return wrapVector(m_output);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		//stack.pop(); // (
@@ -71,7 +71,7 @@ public class Freeze extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-	
+
 	@Override
 	public Freeze clone()
 	{

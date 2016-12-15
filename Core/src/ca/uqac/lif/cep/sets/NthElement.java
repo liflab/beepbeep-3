@@ -10,15 +10,15 @@ public class NthElement extends UnaryFunction<Object,Object>
 	 * The position of the element to get
 	 */
 	protected int m_n;
-	
-	public NthElement(int n) 
+
+	public NthElement(int n)
 	{
 		super(Object.class, Object.class);
 		m_n = n;
 	}
 
 	@Override
-	public Object getValue(Object x) 
+	public Object getValue(Object x)
 	{
 		if (x instanceof Object[])
 		{
@@ -35,7 +35,7 @@ public class NthElement extends UnaryFunction<Object,Object>
 		}
 		return null;
 	}
-	
+
 	@Override
 	public NthElement clone()
 	{

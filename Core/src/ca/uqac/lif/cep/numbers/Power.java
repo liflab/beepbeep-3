@@ -32,7 +32,7 @@ public class Power extends BinaryFunction<Number,Number,Number>
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Power instance = new Power();
-	
+
 	public Power()
 	{
 		super(Number.class, Number.class, Number.class);
@@ -44,13 +44,13 @@ public class Power extends BinaryFunction<Number,Number,Number>
 	}
 
 	@Override
-	public Number getValue(Number x, Number y) 
+	public Number getValue(Number x, Number y)
 	{
 		return Math.pow(x.floatValue(), y.floatValue());
 	}
 
 	@Override
-	public Number getStartValue() 
+	public Number getStartValue()
 	{
 		return 1;
 	}

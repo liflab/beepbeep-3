@@ -18,8 +18,8 @@
 package pipes;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.numbers.Addition;
@@ -27,11 +27,11 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
  * Use a cumulative processor to compute the sum of all events
- * received so far. 
+ * received so far.
  * 
  * @author Sylvain Hallé
  */
-public class CumulativeSum 
+public class CumulativeSum
 {
 	public static void main(String[] args) throws ConnectorException
 	{

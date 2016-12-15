@@ -26,13 +26,13 @@ import java.util.Queue;
  * @author Sylvain Hallé
  *
  */
-public class QueueSourceBatch extends QueueSource 
+public class QueueSourceBatch extends QueueSource
 {
-	public QueueSourceBatch(int arity) 
+	public QueueSourceBatch(int arity)
 	{
 		super(arity);
 	}
-	
+
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{

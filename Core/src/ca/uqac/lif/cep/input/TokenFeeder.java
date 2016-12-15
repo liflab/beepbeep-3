@@ -28,7 +28,7 @@ public abstract class TokenFeeder extends SingleProcessor
 
 	protected String m_separatorBegin;
 	protected String m_separatorEnd;
-	
+
 	/**
 	 * Whether to update a status line about the number of lines read
 	 */
@@ -101,7 +101,7 @@ public abstract class TokenFeeder extends SingleProcessor
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Sets the starting separator to split tokens
 	 * @param sep The starting separator
@@ -110,7 +110,7 @@ public abstract class TokenFeeder extends SingleProcessor
 	{
 		m_separatorBegin = sep;
 	}
-	
+
 	/**
 	 * Sets the ending separator to split tokens
 	 * @param sep The ending separator
@@ -119,7 +119,7 @@ public abstract class TokenFeeder extends SingleProcessor
 	{
 		m_separatorEnd = sep;
 	}
-	
+
 	/**
 	 * Gets the starting separator to split tokens
 	 * @return The starting separator
@@ -128,7 +128,7 @@ public abstract class TokenFeeder extends SingleProcessor
 	{
 		return m_separatorBegin;
 	}
-	
+
 	/**
 	 * Gets the ending separator to split tokens
 	 * @return The ending separator
@@ -137,7 +137,7 @@ public abstract class TokenFeeder extends SingleProcessor
 	{
 		return m_separatorEnd;
 	}
-	
+
 	/**
 	 * Dummy object indicating that no token can be produced out of the
 	 * input string. This is different from <code>null</code>, which signals

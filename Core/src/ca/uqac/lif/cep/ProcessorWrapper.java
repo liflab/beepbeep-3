@@ -23,15 +23,15 @@ public class ProcessorWrapper extends Processor
 	 * The processor being wrapped around
 	 */
 	protected Processor m_processor;
-	
+
 	protected Pushable[] m_pushableInputs;
-	
+
 	protected Pullable[] m_pullableInputs;
-	
+
 	protected Pushable[] m_pushableOutputs;
-	
+
 	protected Pullable[] m_pullableOutputs;
-	
+
 	/**
 	 * Creates a new processor wrapper
 	 * @param p The processor being wrapped around
@@ -59,7 +59,7 @@ public class ProcessorWrapper extends Processor
 	}
 
 	@Override
-	public Pullable getPullableOutput(int index) 
+	public Pullable getPullableOutput(int index)
 	{
 		if (m_pullableOutputs[index] == null)
 		{
@@ -69,7 +69,7 @@ public class ProcessorWrapper extends Processor
 		}
 		return m_pullableOutputs[index];
 	}
-	
+
 	@Override
 	public void setPullableInput(int index, Pullable p)
 	{
@@ -77,7 +77,7 @@ public class ProcessorWrapper extends Processor
 		m_processor.setPullableInput(index, new_p);
 		m_pullableInputs[index] = p;
 	}
-	
+
 	@Override
 	public void setPushableOutput(int index, Pushable p)
 	{
@@ -85,19 +85,19 @@ public class ProcessorWrapper extends Processor
 		m_processor.setPushableOutput(index, new_p);
 		m_pushableOutputs[index] = p;
 	}
-	
+
 	@Override
 	public Pushable getPushableOutput(int index)
 	{
 		return m_pushableOutputs[index];
 	}
-	
+
 	@Override
 	public Pullable getPullableInput(int index)
 	{
 		return m_pullableInputs[index];
 	}
-	
+
 	@Override
 	public void setContext(Context c)
 	{
@@ -112,7 +112,7 @@ public class ProcessorWrapper extends Processor
 		}
 		m_context.putAll(c);
 	}
-	
+
 	@Override
 	public void setContext(String key, Object value)
 	{
@@ -126,13 +126,13 @@ public class ProcessorWrapper extends Processor
 
 
 	@Override
-	public Processor clone() 
+	public Processor clone()
 	{
 		ProcessorWrapper pw = new ProcessorWrapper(m_processor.clone());
 		cloneInto(pw);
 		return pw;
 	}
-	
+
 	protected void cloneInto(ProcessorWrapper pw)
 	{
 		pw.setContext(m_context);

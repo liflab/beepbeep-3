@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.Context;
 
 /**
  * Placeholder for the value of a context element
- *  
+ * 
  * @author Sylvain Hallé
  */
 public class ContextPlaceholder extends Function
@@ -68,8 +68,9 @@ public class ContextPlaceholder extends Function
 		}
 		return m_name.compareTo(((ContextPlaceholder) o).m_name) == 0;
 	}
-	
+
 	@Override
+	@SuppressWarnings("squid:S1168")
 	public Object[] evaluate(Object[] inputs, Context context)
 	{
 		if (context == null || !context.containsKey(m_name))
@@ -80,7 +81,7 @@ public class ContextPlaceholder extends Function
 		out[0] = context.get(m_name);
 		return out;
 	}
-	
+
 	@Override
 	public Object[] evaluate(Object[] inputs)
 	{
@@ -94,13 +95,13 @@ public class ContextPlaceholder extends Function
 	}
 
 	@Override
-	public int getOutputArity() 
+	public int getOutputArity()
 	{
 		return 0;
 	}
 
 	@Override
-	public void reset() 
+	public void reset()
 	{
 		// Nothing to do
 	}
@@ -113,17 +114,17 @@ public class ContextPlaceholder extends Function
 	}
 
 	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index) 
+	public void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
 		// Nothing to do
 	}
 
 	@Override
-	public Class<?> getOutputTypeFor(int index) 
+	public Class<?> getOutputTypeFor(int index)
 	{
 		return Variant.class;
 	}
-	
+
 	@Override
 	public String toString()
 	{

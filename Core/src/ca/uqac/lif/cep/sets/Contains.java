@@ -30,14 +30,14 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Contains extends BinaryFunction<Set, Object, Boolean>
 {
 	public static final transient Contains instance = new Contains();
-	
+
 	private Contains()
 	{
 		super(Set.class, Object.class, Boolean.class);
 	}
 
 	@Override
-	public Boolean getValue(Set x, Object y) 
+	public Boolean getValue(Set x, Object y)
 	{
 		if (x == null || y == null)
 		{
@@ -45,7 +45,7 @@ public class Contains extends BinaryFunction<Set, Object, Boolean>
 		}
 		return x.contains(y);
 	}
-	
+
 	@Override
 	public String toString()
 	{

@@ -25,12 +25,12 @@ import ca.uqac.lif.cep.SingleProcessor;
  * Returns its input as its output. Although it seems useless,
  * <code>Passthrough</code> is used internally by the ESQL interpreter as
  * a placeholder when building processor chains from an expression.
- *  
+ * 
  * @author Sylvain Hallé
  *
  */
 public class Passthrough extends SingleProcessor
-{	
+{
 	public Passthrough(int arity)
 	{
 		super(arity, arity);
@@ -41,7 +41,7 @@ public class Passthrough extends SingleProcessor
 	{
 		return wrapVector(inputs);
 	}
-	
+
 	@Override
 	public Passthrough clone()
 	{

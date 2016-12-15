@@ -41,7 +41,7 @@ public abstract class Source extends SingleProcessor
 	{
 		super(0, out_arity);
 	}
-	
+
 	/**
 	 * Tells the source to push events into the pipeline
 	 */

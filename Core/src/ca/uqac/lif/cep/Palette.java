@@ -35,50 +35,50 @@ public abstract class Palette
 	 * extension of the grammar
 	 */
 	protected static final String s_associationsFilename = "associations.txt";
-	
+
 	/**
 	 * The (local) filename containing the BNF grammar to extend the
 	 * interpreter's basic grammar
 	 */
 	protected static final String s_grammarFilename = "eml.bnf";
-	
+
 	/**
 	 * The character used for comments in the associations file
 	 */
 	protected static final transient String s_commentChar = "#";
-	
+
 	/**
 	 * The message used to describe this palette
 	 */
 	protected String m_message = "";
-	
+
 	/**
 	 * A reference to the current class of grammar extension. This is
 	 * necessary because the methods {@link #getAssociations()} and
 	 * {@link #getGrammar()} must read a file whose path is relative to
-	 * <em>that</em> class, and not the {@link Palette} class. 
+	 * <em>that</em> class, and not the {@link Palette} class.
 	 */
 	protected final Class<? extends Palette> m_classReference;
-	
+
 	/**
 	 * The list of entries in this palette
 	 */
 	protected List<PaletteEntry> m_entries;
-	
+
 	/**
 	 * The ID for this palette
 	 */
 	protected int m_id;
-	
+
 	/**
 	 * A counter for palette IDs
 	 */
 	protected static transient int s_idCounter = 0;
-	
+
 	/**
 	 * Instantiates a palette
 	 * @param reference The current grammar extension
-	 * @param message The short description for this grammar extension 
+	 * @param message The short description for this grammar extension
 	 */
 	protected Palette(Class<? extends Palette> reference, String message)
 	{
@@ -87,7 +87,7 @@ public abstract class Palette
 		m_classReference = reference;
 		m_message = message;
 	}
-	
+
 	/**
 	 * Returns a map of associations between non-terminal symbols of the
 	 * grammar and fully-qualified class names.
@@ -118,11 +118,11 @@ public abstract class Palette
 			}
 			String non_terminal = parts[0].trim();
 			String class_name = parts[1].trim();
-			try 
+			try
 			{
 				Class<?> c = loader.loadClass(class_name);
 				out.put(non_terminal, c);
-			} 
+			}
 			catch (ClassNotFoundException e)
 			{
 				e.printStackTrace();
@@ -130,7 +130,7 @@ public abstract class Palette
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Gets the BNF grammar associated to this extension
 	 * @return A string containing the BNF grammar
@@ -140,9 +140,9 @@ public abstract class Palette
 		String file_contents = PackageFileReader.readPackageFile(m_classReference, s_grammarFilename);
 		return file_contents;
 	}
-	
+
 	/**
-	 * Produces a message (e.g. copyright info, authors, etc.) associated to 
+	 * Produces a message (e.g. copyright info, authors, etc.) associated to
 	 * the grammar extension
 	 * @return The message
 	 */
@@ -150,12 +150,12 @@ public abstract class Palette
 	{
 		return m_message;
 	}
-	
+
 	public final List<PaletteEntry> getPalette()
 	{
 		return m_entries;
 	}
-	
+
 	/**
 	 * Adds an entry to this palette
 	 * @param e The entry
@@ -166,7 +166,7 @@ public abstract class Palette
 		m_entries.add(e);
 		return this;
 	}
-	
+
 	/**
 	 * Returns a palette entry for a processor of a given name
 	 * @param name The processor's class name
@@ -183,7 +183,7 @@ public abstract class Palette
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns a palette entry for a processor at a given position
 	 * in the palette
@@ -198,7 +198,7 @@ public abstract class Palette
 		}
 		return m_entries.get(index);
 	}
-	
+
 	/**
 	 * Represents one of the processors provided by
 	 * this palette.
@@ -209,17 +209,17 @@ public abstract class Palette
 		 * The name of the processor
 		 */
 		public String processorName;
-		
+
 		/**
 		 * The class of the processor represented by this entry
 		 */
 		public Class<? extends Processor> m_processorClass;
-		
+
 		/**
 		 * The image associated to the processor in the palette
 		 */
 		public byte[] m_image;
-		
+
 		/**
 		 * Craetes a new palette entry
 		 * @param name The processor's name
@@ -235,7 +235,7 @@ public abstract class Palette
 			m_processorClass = processor;
 			m_image = image;
 		}
-		
+
 		/**
 		 * Gets the settings associated to this palette entry.
 		 * This generic method should be overridden by any processor

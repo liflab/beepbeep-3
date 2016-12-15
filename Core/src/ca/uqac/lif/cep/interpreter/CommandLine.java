@@ -32,8 +32,16 @@ import ca.uqac.lif.cep.util.AnsiPrinter.Color;
 public class CommandLine
 {
 	protected static String s_prompt = "? ";
-	
+
 	protected static String s_endGreeting = "Tata Edgar";
+	
+	/**
+	 * Utility classes should not have public constructors
+	 */
+	private CommandLine()
+	{
+	    throw new IllegalAccessError("Utility class");
+	}
 
 	public static void main(String[] args) throws IOException
 	{
@@ -138,12 +146,12 @@ public class CommandLine
 		{
 			InputStreamReader reader = new InputStreamReader(m_is);
 			m_exit = false;
-			while(!m_exit) 
-			{ 
+			while(!m_exit)
+			{
 				try
 				{
-					if (reader.ready()) 
-					{ 
+					if (reader.ready())
+					{
 						// read a character and process it
 						return (char) reader.read();
 					}
@@ -151,16 +159,17 @@ public class CommandLine
 				catch (IOException e)
 				{
 					// Do nothing
-				} 
-				// Lets not hog any cpu time 
-				try 
-				{ 
-					Thread.sleep(50); 
-				} 
-				catch (InterruptedException ex) 
-				{ 
-					// can't do much about it can we? Ignoring  
-				} 
+				}
+				// Lets not hog any cpu time
+				try
+				{
+					Thread.sleep(50);
+				}
+				catch (InterruptedException ex)
+				{
+					// can't do much about it can we? Ignoring
+					Thread.currentThread().interrupt();
+				}
 			}
 			return (char) 0;
 		}

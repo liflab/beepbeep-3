@@ -45,7 +45,7 @@ public interface Pushable
 	 *   <code>p.push(o1).push(o2)</code>.
 	 */
 	public Pushable push(Object o);
-	
+
 	/**
 	 * Pushes an event into one of the processor's input trace, but
 	 * does not wait for the push operation to terminate. In other words,
@@ -67,20 +67,20 @@ public interface Pushable
 	 */
 	public Pushable pushFast(Object o);
 
-	
+
 	/**
-	 * Gets the processor instance this Pushable is linked to 
+	 * Gets the processor instance this Pushable is linked to
 	 * @return The processor
 	 */
 	public Processor getProcessor();
-	
+
 	/**
 	 * Gets the position this Pushable is associated to: 0 is the first input
 	 * (or output), 1 the second, etc.
 	 * @return The position
 	 */
 	public int getPosition();
-	
+
 	/**
 	 * Waits until the pushable is done pushing. In the case of a
 	 * blocking pushable, the call to {@link #push(Object) push()}
@@ -93,7 +93,7 @@ public interface Pushable
 	 * the push operation is finished.
 	 */
 	public void waitFor();
-	
+
 	/**
 	 * Tells this pushable that methods {@link #push(Object) push()} or
 	 * {@link #pushFast(Object) pushFast()} will not be called anymore.

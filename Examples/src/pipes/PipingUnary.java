@@ -32,7 +32,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * 
  * @author Sylvain Hallé
  */
-public class PipingUnary 
+public class PipingUnary
 {
 	public static void main (String[] args) throws ConnectorException
 	{
@@ -49,7 +49,7 @@ public class PipingUnary
 		}
 		// SNIP
 	}
-	
+
 	/**
 	 * A processor that doubles every number it is given
 	 */
@@ -67,7 +67,7 @@ public class PipingUnary
 		}
 
 		@Override
-		public Processor clone() 
+		public Processor clone()
 		{
 			return this;
 		}

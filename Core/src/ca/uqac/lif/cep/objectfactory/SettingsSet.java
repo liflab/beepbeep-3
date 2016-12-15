@@ -36,19 +36,19 @@ public class SettingsSet
 	 * a <code>SettingsSet</code> object
 	 */
 	public static final String s_instanceMethodName = "getNewInstance";
-	
+
 	/**
 	 * The settings associated to a processor type. Note that this is not a
 	 * set, since we might want the settings to be displayed always in the
 	 * same order (for example in some GUI).
 	 */
 	protected final List<Setting> m_settings;
-	
+
 	/**
 	 * The class this set of settings creates instances of
 	 */
 	protected final Class<?> m_class;
-	
+
 	/**
 	 * Creates a new empty set of processor settings
 	 */
@@ -58,7 +58,7 @@ public class SettingsSet
 		m_settings = new ArrayList<Setting>();
 		m_class = clazz;
 	}
-	
+
 	/**
 	 * Gets a setting with given name
 	 * @param name The name
@@ -75,7 +75,7 @@ public class SettingsSet
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Adds a new setting
 	 * @param s The setting
@@ -86,7 +86,7 @@ public class SettingsSet
 		m_settings.add(s);
 		return this;
 	}
-	
+
 	@Override
 	public SettingsSet clone()
 	{
@@ -98,7 +98,7 @@ public class SettingsSet
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Gets a new instance of an object based on the current
 	 * settings. This method does the following:
@@ -119,35 +119,35 @@ public class SettingsSet
 		Method m = null;
 		Object o = null;
 		// First, check if method "getNewInstance" exists
-		try 
+		try
 		{
-	        m = m_class.getMethod(s_instanceMethodName, SettingsSet.class);
-	    } 
-		catch (IllegalArgumentException e) 
+			m = m_class.getMethod(s_instanceMethodName, SettingsSet.class);
+		}
+		catch (IllegalArgumentException e)
 		{
 			// Do nothing
-	    } 
-		catch (SecurityException e) 
+		}
+		catch (SecurityException e)
 		{
-	        // Do nothing
-	    } 
-		catch (NoSuchMethodException e) 
+			// Do nothing
+		}
+		catch (NoSuchMethodException e)
 		{
-	        // Do nothing
-	    }
+			// Do nothing
+		}
 		if (m == null)
 		{
 			// Method does not exist; try to instantiate a vanilla object
-			try 
+			try
 			{
 				o = m_class.newInstance();
 				return o;
-			} 
-			catch (java.lang.InstantiationException e) 
+			}
+			catch (java.lang.InstantiationException e)
 			{
 				// Do nothing
-			} 
-			catch (IllegalAccessException e) 
+			}
+			catch (IllegalAccessException e)
 			{
 				// Do nothing
 			}
@@ -163,20 +163,20 @@ public class SettingsSet
 				throw new InstantiationException();
 			}
 			// Invoke method
-			try 
+			try
 			{
 				o = m.invoke(null, s_instanceMethodName, this);
 				return o;
-			} 
-			catch (IllegalAccessException e) 
+			}
+			catch (IllegalAccessException e)
 			{
 				// Do nothing
-			} 
-			catch (IllegalArgumentException e) 
+			}
+			catch (IllegalArgumentException e)
 			{
 				// Do nothing
-			} 
-			catch (InvocationTargetException e) 
+			}
+			catch (InvocationTargetException e)
 			{
 				// Do nothing
 			}
@@ -184,7 +184,7 @@ public class SettingsSet
 			throw new InstantiationException();
 		}
 	}
-	
+
 	/**
 	 * Checks if all mandatory settings of the set are non-null
 	 * @return true if all mandatory settings of the set are defined,

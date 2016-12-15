@@ -24,14 +24,14 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.concurrency.ThroughputMeter.PullableMeter;
 import ca.uqac.lif.cep.concurrency.ThroughputMeter.PushableMeter;
 
-public class ProcessorMeter extends ProcessorWrapper 
+public class ProcessorMeter extends ProcessorWrapper
 {
 	protected int m_originalId;
-	
+
 	protected ThroughputMeter m_meter;
-	
+
 	protected String m_description = "";
-	
+
 	public ProcessorMeter(Processor p, String description, ThroughputMeter meter)
 	{
 		super(p);
@@ -40,7 +40,7 @@ public class ProcessorMeter extends ProcessorWrapper
 		m_meter = meter;
 		m_meter.registerProcessor(p, description);
 	}
-	
+
 	protected ProcessorMeter(Processor p, ThroughputMeter meter, int original_id)
 	{
 		super(p);
@@ -56,12 +56,12 @@ public class ProcessorMeter extends ProcessorWrapper
 	}
 
 	@Override
-	public Pullable getPullableOutput(int index) 
+	public Pullable getPullableOutput(int index)
 	{
 		PullableMeter pm = m_meter.newOutputPullMeter(m_processor, index, this, m_originalId, m_description);
 		return pm;
 	}
-	
+
 	@Override
 	public ProcessorMeter clone()
 	{

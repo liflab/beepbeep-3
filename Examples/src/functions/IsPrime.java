@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * 
  * @author Sylvain Hallé
  */
-public class IsPrime extends UnaryFunction<Number,Boolean> 
+public class IsPrime extends UnaryFunction<Number,Boolean>
 {
 	/*
 	 * This is optional. Since a Function object is stateless, the
@@ -48,11 +48,11 @@ public class IsPrime extends UnaryFunction<Number,Boolean>
 	 * Method getValue() is where the output of the function is
 	 * computed for the input. For the sake of our example, the
 	 * actual way to check if x is prime does not matter;
-	 * we'll simply enumerate all numbers up to sqrt(x) until we 
-	 * find one that divides x, and otherwise return true. 
+	 * we'll simply enumerate all numbers up to sqrt(x) until we
+	 * find one that divides x, and otherwise return true.
 	 */
 	@Override
-	public Boolean getValue(Number x) 
+	public Boolean getValue(Number x)
 	{
 		int k = x.intValue(); // Convert x to an int
 		int max = (int) Math.sqrt(k);
@@ -63,7 +63,7 @@ public class IsPrime extends UnaryFunction<Number,Boolean>
 		}
 		return true;
 	}
-	
+
 	/*
 	 * A small main method to illustrate the function
 	 */

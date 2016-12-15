@@ -48,7 +48,7 @@ import java.util.Iterator;
  *   {@link #pull()} returns <code>null</code> only if no event will
  *   ever be output in the future (this occurs, for example, when pulling
  *   events from a file, and the end of the file has been reached).</li>
- * </ul> 
+ * </ul>
  * <p>
  * The lifecycle of a <code>Pullable</code> object is as follows:
  * <ul>
@@ -100,7 +100,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 *
 	 */
 	public static enum NextStatus {YES, NO, MAYBE};
-	
+
 	/**
 	 * Number of times the {@link #hasNext()} method tries to produce an
 	 * output from the input before giving up. While in theory, the method
@@ -108,7 +108,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * number of attempts as a safeguard to avoid infinite loops.
 	 */
 	public static final int s_maxRetries = 10000000;
-	
+
 	/**
 	 * Attempts to pull an event from the source. An event is returned if
 	 * {@link #hasNextSoft()} returns <code>YES</code>, and <code>null</code>
@@ -124,13 +124,14 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
 	public Object pull();
-	
+
 	/**
 	 * Synonym of {@link #pull()}.
 	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
+	@Override
 	public Object next();
-	
+
 	/**
 	 * Determines if an event can be pulled from the output. Depending on
 	 * what happens, the possible return values are:
@@ -169,33 +170,34 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * </ul>
 	 * @return Whether a next event exists
 	 */
+	@Override
 	public boolean hasNext();
-	
+
 	/**
-	 * Gets the processor instance this Pullable is linked to 
+	 * Gets the processor instance this Pullable is linked to
 	 * @return The processor
 	 */
 	public Processor getProcessor();
-	
+
 	/**
 	 * Gets the position this Pullable is associated to: 0 is the first input
 	 * (or output), 1 the second, etc.
 	 * @return The position
 	 */
 	public int getPosition();
-	
+
 	/**
 	 * Starts the pullable. This may be useful for multi-threaded
 	 * pullables.
 	 */
 	public void start();
-	
+
 	/**
 	 * Stops the pullable. This may be useful for multi-threaded
 	 * pullables.
 	 */
 	public void stop();
-	
+
 	/**
 	 * Tells this pullable that methods {@link #pull()}, {@link #pullSoft()},
 	 * {@link #hasNext()} and {@link #hasNextSoft()}

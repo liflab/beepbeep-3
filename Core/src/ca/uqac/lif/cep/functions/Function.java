@@ -55,14 +55,14 @@ public abstract class Function implements Cloneable, Contextualizable
 	 *   should be equal to the function's declared output arity.
 	 */
 	public abstract Object[] evaluate(Object[] inputs);
-	
+
 	/**
 	 * Gets the function's input arity, i.e. the number of arguments
 	 * it takes.
 	 * @return The input arity
 	 */
 	public abstract int getInputArity();
-	
+
 	/**
 	 * Gets the function's output arity, i.e. the number of elements
 	 * it outputs. (We expect that most functions will have an output
@@ -70,13 +70,13 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * @return The output arity
 	 */
 	public abstract int getOutputArity();
-	
+
 	/**
 	 * Resets the function to its initial state. In the case of a
 	 * stateless function, nothing requires to be done.
 	 */
 	public abstract void reset();
-	
+
 	/**
 	 * Creates a copy of the function
 	 * @param context The context in which to clone this function
@@ -86,14 +86,14 @@ public abstract class Function implements Cloneable, Contextualizable
 	{
 		return clone();
 	}
-	
+
 	/**
 	 * Creates a copy of the function
 	 * @return The copy
 	 */
 	@Override
 	public abstract Function clone();
-	
+
 	/**
 	 * Populates the set of classes accepted by the function for its
 	 * <i>i</i>-th input
@@ -101,27 +101,27 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * @param index The index of the input to query
 	 */
 	public abstract void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index);
-	
+
 	/**
 	 * Returns the type of the events produced by the function for its
 	 * <i>i</i>-th output
 	 * @param index The index of the output to query
 	 * @return The type of the output
-	 */	
-	public abstract Class<?> getOutputTypeFor(int index);	
-	
+	 */
+	public abstract Class<?> getOutputTypeFor(int index);
+
 	@Override
 	public void setContext(Context context)
 	{
 		// Do nothing
 	}
-	
+
 	@Override
 	public void setContext(String key, Object value)
 	{
 		// Do nothing
 	}
-	
+
 	@Override
 	public Context getContext()
 	{

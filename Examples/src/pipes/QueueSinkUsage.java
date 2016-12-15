@@ -28,9 +28,9 @@ import ca.uqac.lif.cep.tmf.QueueSink;
  * 
  * @author Sylvain Hallé
  */
-public class QueueSinkUsage 
+public class QueueSinkUsage
 {
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		// Create a sink
 		QueueSink sink = new QueueSink();

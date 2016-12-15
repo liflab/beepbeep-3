@@ -32,7 +32,7 @@ import ca.uqac.lif.cep.numbers.Multiplication;
  * @author Sylvain Hallé
  */
 //SNIP
-public class Polynomial extends PassthroughFunction 
+public class Polynomial extends PassthroughFunction
 {
 	/*
 	 * We need to implement the getFunction() method, which must
@@ -40,13 +40,13 @@ public class Polynomial extends PassthroughFunction
 	 * that computes x^2+3.
 	 */
 	@Override
-	public Function getFunction() 
+	public Function getFunction()
 	{
 		return new FunctionTree(Addition.instance,
 				new FunctionTree(Multiplication.instance,
 						new ArgumentPlaceholder(),
 						new ArgumentPlaceholder()),
-				new Constant(3));
+						new Constant(3));
 	}
 	// ...
 	// SNIP
@@ -54,7 +54,7 @@ public class Polynomial extends PassthroughFunction
 	/*
 	 * Small main() to illustrate the concept
 	 */
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		// SNAP
 		Polynomial poly = new Polynomial();

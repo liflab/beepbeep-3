@@ -21,14 +21,14 @@ import java.util.Queue;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Collator;
 
 /**
  * Applies a function to a input events from one or more traces.
- * This processor must work in tandem with the 
+ * This processor must work in tandem with the
  * {@link ca.uqac.lif.tmf.Collator Collator}: its input is a
  * {@link ca.uqac.lif.util.CacheMap CacheMap} of input events
  * associated with names.
@@ -36,8 +36,8 @@ import ca.uqac.lif.cep.tmf.Collator;
  * The usefulness of this processor lies mostly in the ESQL language.
  * It makes it possible to write something like:
  * <pre>
- * APPLY $A + $B WITH 
- *   expression AS $A, 
+ * APPLY $A + $B WITH
+ *   expression AS $A,
  *   expression AS $B
  * </pre>
  * <p>
@@ -46,16 +46,16 @@ import ca.uqac.lif.cep.tmf.Collator;
  * 
  * @author Sylvain Hallé
  */
-public class FunctionCollator extends SingleProcessor 
+public class FunctionCollator extends SingleProcessor
 {
 	protected Function m_function;
-	
+
 	public FunctionCollator(Function f)
 	{
 		super(1, f.getOutputArity());
 		m_function = f;
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException, ConnectorException
 	{
 		Object o;

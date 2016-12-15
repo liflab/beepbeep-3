@@ -29,7 +29,7 @@ public class MapPlaceholder extends ArgumentPlaceholder
 	{
 		super(index);
 	}
-	
+
 	public static void build(Stack<Object> stack)
 	{
 		Object o = stack.pop();
@@ -63,7 +63,7 @@ public class MapPlaceholder extends ArgumentPlaceholder
 			assert false;
 		}
 	}
-	
+
 	@Override
 	public Object[] evaluate(Object[] inputs, Context context)
 	{

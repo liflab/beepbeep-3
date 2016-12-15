@@ -9,12 +9,12 @@ public class IntegerSetting extends Setting
 	{
 		super(name, Integer.class, mandatory, description);
 	}
-	
+
 	public IntegerSetting(String name, boolean mandatory)
 	{
 		super(name, Integer.class, mandatory);
 	}
-	
+
 	/**
 	 * Gets the setting's value, cast as an integer
 	 * @return The value

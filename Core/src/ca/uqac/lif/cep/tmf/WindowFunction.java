@@ -42,7 +42,7 @@ public class WindowFunction extends SingleProcessor
 	 * The internal function
 	 */
 	protected Function m_function;
-	
+
 	/**
 	 * The event window
 	 */
@@ -52,14 +52,14 @@ public class WindowFunction extends SingleProcessor
 	{
 		this(1);
 	}
-	
+
 	WindowFunction(int width)
 	{
 		super(1, 1);
 		m_window = new LinkedList<Object>();
 		m_width = width;
 	}
-	
+
 	/**
 	 * Creates a new Window from a given function
 	 * @param f The function. Its output arity must be exactly 1.
@@ -71,7 +71,7 @@ public class WindowFunction extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		m_window.add(inputs[0]);
 		int size = m_window.size();

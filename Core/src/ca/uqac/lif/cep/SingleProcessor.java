@@ -37,7 +37,7 @@ import java.util.Queue;
  * when new input events have been received from all input traces. This
  * is the task of abstract method {@link #compute(Object[])}, which descendants
  * of this class must implement.
- *   
+ * 
  * @author Sylvain Hallé
  *
  */
@@ -92,7 +92,7 @@ public abstract class SingleProcessor extends Processor
 
 		/**
 		 * Creates a pushable associated to some of a processor's input
-		 * traces. 
+		 * traces.
 		 * @param index The index of the trace. Should be between 0 and
 		 *   the processor's input arity - 1. This is not checked by the
 		 *   constructor, so beware.
@@ -162,18 +162,18 @@ public abstract class SingleProcessor extends Processor
 						}
 					}
 				}
-			}				
+			}
 			return this;
 		}
 
 		@Override
-		synchronized public Processor getProcessor() 
+		synchronized public Processor getProcessor()
 		{
 			return SingleProcessor.this;
 		}
 
 		@Override
-		synchronized public void waitFor() 
+		synchronized public void waitFor()
 		{
 			// Since this pushable is blocking
 			return;
@@ -200,7 +200,7 @@ public abstract class SingleProcessor extends Processor
 
 		/**
 		 * Creates a pullable associated to some of a processor's output
-		 * traces. 
+		 * traces.
 		 * @param index The index of the trace. Should be between 0 and
 		 *   the processor's output arity - 1. This is not checked by the
 		 *   constructor, so beware.
@@ -401,13 +401,13 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor() 
+		synchronized public Processor getProcessor()
 		{
 			return SingleProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition() 
+		synchronized public int getPosition()
 		{
 			return m_index;
 		}
@@ -419,7 +419,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public void start() 
+		synchronized public void start()
 		{
 			// Do nothing
 		}
@@ -442,11 +442,12 @@ public abstract class SingleProcessor extends Processor
 	 * empty queue of arrays of objects. This is a convenience method
 	 * that descendants of {@link SingleProcessor} (which implement
 	 * {@link #compute(Object[])}) can use to avoid
-	 * a few lines of code when they output a single array of events. 
+	 * a few lines of code when they output a single array of events.
 	 * @param v The array of objects
 	 * @return The queue, or <code>null</code> if all elements of
 	 *   <code>v</code> are null
 	 */
+	@SuppressWarnings("squid:S1168")
 	protected static final Queue<Object[]> wrapVector(Object[] v)
 	{
 		if (v == null || allNull(v))
@@ -463,7 +464,7 @@ public abstract class SingleProcessor extends Processor
 	 * empty queue of arrays of objects. This is a convenience method
 	 * that descendants of {@link SingleProcessor} (which implement
 	 * {@link #compute(Object[])}) can use to avoid
-	 * a few lines of code when they output a single event. 
+	 * a few lines of code when they output a single event.
 	 * @param o The object
 	 * @return The queue
 	 */

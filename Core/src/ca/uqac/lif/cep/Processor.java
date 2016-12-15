@@ -92,14 +92,14 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * every processor.
 	 */
 	private static int s_uniqueIdCounter = 0;
-	
+
 	/**
 	 * A lock to access the ID counter
 	 */
 	private static Lock m_counterLock = new ReentrantLock();
 
 	/**
-	 * The unique ID given to this processor instance 
+	 * The unique ID given to this processor instance
 	 */
 	private final int m_uniqueId;
 
@@ -261,7 +261,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 
 	/**
 	 * Returns the {@link Pushable} corresponding to the processor's
-	 * <i>i</i>-th input trace. 
+	 * <i>i</i>-th input trace.
 	 * @param index The index. Should be between 0 and the processor's
 	 *   input arity - 1 (since indices start at 0).
 	 * @return The pushable if the index is within the appropriate range,
@@ -282,7 +282,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's
-	 * <i>i</i>-th output trace. 
+	 * <i>i</i>-th output trace.
 	 * @param index The index. Should be between 0 and the processor's
 	 *   output arity - 1 (since indices start at 0).
 	 * @return The pullable if the index is within the appropriate range,
@@ -345,14 +345,14 @@ public abstract class Processor implements Cloneable, Contextualizable
 	}
 
 	/**
-	 * Retrieves the {@link Pushable} associated to the processor's 
+	 * Retrieves the {@link Pushable} associated to the processor's
 	 * <i>i</i>-th output.
 	 * @param i The index of the output. Should be greater than 0
 	 *   (not checked) and less than the processor's output arity.
 	 *   Outside these bounds, nothing will occur.
 	 * @return The pushable, <code>null</code> if <code>i</code> is
 	 *   out of range
-	 */	
+	 */
 	public synchronized Pushable getPushableOutput(int i)
 	{
 		if (i < m_outputPushables.length)
@@ -386,7 +386,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * to make sure that some output was generated from a given input
 	 * @param v The array
 	 * @return <code>true</code> if all elements in the
-	 *   array are null, <code>false</code> otherwise 
+	 *   array are null, <code>false</code> otherwise
 	 */
 	public static boolean allNull(Object[] v)
 	{
@@ -459,7 +459,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 
 	/**
 	 * Gets the type of events the processor produces for its <i>i</i>-th
-	 * output trace. 
+	 * output trace.
 	 * @param index The index of the output to query
 	 * @return A set of classes. If <code>index</code> it less than 0 or
 	 *   greater than the processor's declared output arity, the response
@@ -485,7 +485,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * its input and output, thereby activating runtime type checking.
 	 * @param index The index of the output to query
 	 * @return The type of the output
-	 */	
+	 */
 	public Class<?> getOutputTypeFor(int index)
 	{
 		return Variant.class;

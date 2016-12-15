@@ -27,10 +27,10 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.functions.Function;
 
 /**
  * Separates an input trace into different "slices". The slicer
@@ -48,7 +48,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * be created, but that the incoming event must be dispatched to
  * <em>all</em> slices one by one. In such a case, the output of
  * every slice on that event is sent out, in no particular order.
- *  
+ * 
  * @author Sylvain Hallé
  */
 public class Slicer extends SingleProcessor
@@ -65,7 +65,7 @@ public class Slicer extends SingleProcessor
 
 	protected Map<Object,Processor> m_slices;
 
-	protected Map<Object,QueueSink> m_sinks; 
+	protected Map<Object,QueueSink> m_sinks;
 
 	Slicer()
 	{
@@ -82,7 +82,7 @@ public class Slicer extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		int output_arity = getOutputArity();
 		Object[] f_value = m_slicingFunction.evaluate(inputs);
@@ -101,11 +101,11 @@ public class Slicer extends SingleProcessor
 				m_slices.put(slice_id, p);
 				addContextFromSlice(p, slice_id);
 				QueueSink sink = new QueueSink(output_arity);
-				try 
+				try
 				{
 					Connector.connect(p, sink);
-				} 
-				catch (ConnectorException e) 
+				}
+				catch (ConnectorException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -140,7 +140,7 @@ public class Slicer extends SingleProcessor
 		}
 		return out_queue;
 	}
-	
+
 	public void addContextFromSlice(Processor p, Object slice)
 	{
 		// Do nothing
@@ -184,7 +184,7 @@ public class Slicer extends SingleProcessor
 	public static class AllSlices
 	{
 		public static final transient AllSlices instance = new AllSlices();
-		
+
 		AllSlices()
 		{
 			super();

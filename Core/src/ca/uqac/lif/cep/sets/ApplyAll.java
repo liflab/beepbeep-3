@@ -26,24 +26,24 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * 
  * @author Sylvain Hallé
  */
-public class ApplyAll extends UnaryFunction<Multiset,Multiset> 
+public class ApplyAll extends UnaryFunction<Multiset,Multiset>
 {
 	/**
 	 * The function to apply on each element
 	 */
 	protected Function m_function;
-	
-	public ApplyAll() 
+
+	public ApplyAll()
 	{
 		super(Multiset.class, Multiset.class);
 	}
-	
+
 	public ApplyAll(Function function)
 	{
 		this();
 		m_function = function;
 	}
-	
+
 	/**
 	 * Sets the function to apply on each element
 	 * @param function The condition
@@ -54,7 +54,7 @@ public class ApplyAll extends UnaryFunction<Multiset,Multiset>
 	}
 
 	@Override
-	public Multiset getValue(Multiset x) 
+	public Multiset getValue(Multiset x)
 	{
 		Multiset out = new Multiset();
 		for (Object o : x)
@@ -66,7 +66,7 @@ public class ApplyAll extends UnaryFunction<Multiset,Multiset>
 		}
 		return out;
 	}
-	
-	
+
+
 
 }

@@ -15,12 +15,12 @@ public class ProcessorExpression
 	 * The input processor producing the tuples
 	 */
 	protected Processor m_processor;
-	
+
 	/**
 	 * The name to be associated with
 	 */
 	protected String m_name;
-	
+
 	/**
 	 * Creates a new TupleExpression
 	 * @param p The input processor producing the tuples
@@ -32,12 +32,12 @@ public class ProcessorExpression
 		m_processor = p;
 		m_name = n;
 	}
-	
+
 	public static void build(Stack<Object> stack)
 	{
 		// Do nothing
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -50,7 +50,7 @@ public class ProcessorExpression
 		return out.toString();
 	}
 
-	public Processor getProcessor() 
+	public Processor getProcessor()
 	{
 		return m_processor;
 	}

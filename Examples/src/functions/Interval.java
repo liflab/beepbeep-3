@@ -18,8 +18,8 @@
 package functions;
 
 import ca.uqac.lif.cep.functions.And;
-import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.numbers.IsLessThan;
 
@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.numbers.IsLessThan;
  * @author Sylvain Hallé
  *
  */
-public class Interval 
+public class Interval
 {
 	public static void main(String[] args)
 	{
@@ -44,13 +44,13 @@ public class Interval
 		 */
 		// SNIP
 		FunctionTree in_interval = new FunctionTree(And.instance,
-				new FunctionTree(IsGreaterThan.instance, 
+				new FunctionTree(IsGreaterThan.instance,
 						new ArgumentPlaceholder(0),
 						new ArgumentPlaceholder(1)), // x > y
-				new FunctionTree(IsLessThan.instance,
-						new ArgumentPlaceholder(0),
-						new ArgumentPlaceholder(2) // y < z
-						));
+						new FunctionTree(IsLessThan.instance,
+								new ArgumentPlaceholder(0),
+								new ArgumentPlaceholder(2) // y < z
+								));
 		// SNIP
 		// SNAP
 		Object[] value = in_interval.evaluate(new Integer[]{3, 2, 8});

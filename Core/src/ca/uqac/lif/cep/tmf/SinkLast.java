@@ -29,29 +29,29 @@ import java.util.Queue;
 public class SinkLast extends Sink
 {
 	/**
-	 * The last event (or array of events) received 
+	 * The last event (or array of events) received
 	 */
 	protected Object[] m_last;
-	
+
 	/**
 	 * The number of events received so far
 	 */
 	protected int m_eventCounter;
-	
+
 	public SinkLast()
 	{
 		super();
 		m_last = null;
 		m_eventCounter = 0;
 	}
-	
+
 	public SinkLast(int in_arity)
 	{
 		super(in_arity);
 		m_last = null;
 		m_eventCounter = 0;
 	}
-	
+
 	@Override
 	public void reset()
 	{
@@ -64,14 +64,14 @@ public class SinkLast extends Sink
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		m_last = inputs;
-		return null;
+		return getEmptyQueue();
 	}
-	
+
 	public Object[] getLast()
 	{
 		return m_last;
 	}
-	
+
 	@Override
 	public SinkLast clone()
 	{

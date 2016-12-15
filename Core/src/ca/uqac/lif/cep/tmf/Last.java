@@ -37,25 +37,25 @@ public class Last extends Passthrough
 	 * The last event received
 	 */
 	protected Object m_lastReceived;
-	
+
 	/**
 	 * Whether the processor has output something
 	 */
 	protected boolean m_done;
-	
+
 	public Last()
 	{
 		super(1);
 		m_done = false;
 	}
-	
+
 	@Override
 	public void reset()
 	{
 		m_lastReceived = null;
 		m_done = false;
 	}
-	
+
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
@@ -69,14 +69,14 @@ public class Last extends Passthrough
 	{
 		return new SentinelPullable();
 	}
-	
+
 	protected class SentinelPullable implements Pullable
-	{	
+	{
 		public SentinelPullable()
 		{
 			super();
 		}
-		
+
 		@Override
 		public void remove()
 		{
@@ -85,7 +85,7 @@ public class Last extends Passthrough
 		}
 
 		@Override
-		public Object pullSoft() 
+		public Object pullSoft()
 		{
 			if (m_done)
 			{
@@ -102,7 +102,8 @@ public class Last extends Passthrough
 		}
 
 		@Override
-		public Object pull() 
+		@SuppressWarnings("squid:S1168")
+		public Object pull()
 		{
 			if (m_done)
 			{
@@ -123,7 +124,7 @@ public class Last extends Passthrough
 			}
 			return null;
 		}
-		
+
 		@Override
 		public final Object next()
 		{
@@ -131,7 +132,7 @@ public class Last extends Passthrough
 		}
 
 		@Override
-		public NextStatus hasNextSoft() 
+		public NextStatus hasNextSoft()
 		{
 			if (m_done)
 			{
@@ -139,9 +140,9 @@ public class Last extends Passthrough
 			}
 			return m_inputPullables[0].hasNextSoft();
 		}
-		
+
 		@Override
-		public boolean hasNext() 
+		public boolean hasNext()
 		{
 			if (m_done)
 			{
@@ -151,19 +152,19 @@ public class Last extends Passthrough
 		}
 
 		@Override
-		public Processor getProcessor() 
+		public Processor getProcessor()
 		{
 			return Last.this;
 		}
 
 		@Override
-		public int getPosition() 
+		public int getPosition()
 		{
 			return m_inputPullables[0].getPosition();
 		}
 
 		@Override
-		public Iterator<Object> iterator() 
+		public Iterator<Object> iterator()
 		{
 			return this;
 		}
@@ -185,7 +186,7 @@ public class Last extends Passthrough
 				p.stop();
 			}
 		}
-		
+
 		@Override
 		public void dispose()
 		{
@@ -195,5 +196,5 @@ public class Last extends Passthrough
 			}
 		}
 	}
-	
+
 }

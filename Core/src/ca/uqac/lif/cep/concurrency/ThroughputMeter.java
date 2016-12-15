@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.PullableWrapper;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.PushableWrapper;
 
-public class ThroughputMeter 
+public class ThroughputMeter
 {
 	Map<Integer,Map<Integer,Long>> m_outputPullCount;
 
@@ -168,7 +168,7 @@ public class ThroughputMeter
 		int m_index = 0;
 
 		int m_originalId = 0;
-		
+
 		PushableMeter(Pushable p, Processor reference, int original_id, int index)
 		{
 			super(p, reference);
@@ -196,7 +196,7 @@ public class ThroughputMeter
 	public  class PullableMeter extends PullableWrapper
 	{
 		int m_index = 0;
-		
+
 		int m_originalId = 0;
 
 		PullableMeter(Pullable p, Processor reference, int original_id, int index)

@@ -33,15 +33,15 @@ import java.util.Vector;
 public class CommandRunner extends Thread
 {
 	protected String[] m_command;
-	
+
 	protected byte[] m_stdin;
-	
-	protected volatile boolean m_stop = false; 
-	
+
+	protected volatile boolean m_stop = false;
+
 	protected StreamGobbler m_stdoutGobbler;
-	
+
 	protected StreamGobbler m_stderrGobbler;
-	
+
 	protected int m_errorCode = 0;
 
 	/**
@@ -61,7 +61,7 @@ public class CommandRunner extends Thread
 		}
 		m_stdin = stdin;
 	}
-	
+
 	/**
 	 * Creates a CommandRunner to run a command.
 	 * @param command The command to run
@@ -74,7 +74,7 @@ public class CommandRunner extends Thread
 		m_command = command;
 		m_stdin = stdin;
 	}
-	
+
 	/**
 	 * Creates a CommandRunner to run a command.
 	 * @param command The command to run
@@ -85,7 +85,7 @@ public class CommandRunner extends Thread
 	{
 		this(command, stdin.getBytes());
 	}
-	
+
 	/**
 	 * Creates a CommandRunner to run a command.
 	 * @param command The command to run
@@ -132,10 +132,10 @@ public class CommandRunner extends Thread
 				}
 				m_is.close();
 			}
-			catch (IOException ioe) 
+			catch (IOException ioe)
 			{
 				ioe.printStackTrace();
-			} 
+			}
 		}
 
 		/**
@@ -192,7 +192,7 @@ public class CommandRunner extends Thread
 			return filename;
 		return filename.substring(0, position);
 	}
-	
+
 	/**
 	 * Deletes a file
 	 * @param filename The filename
@@ -203,12 +203,12 @@ public class CommandRunner extends Thread
 		File f = new File(filename);
 		return f.delete();
 	}
-	
+
 	public static byte[] runAndGet(String command, String inputs)
 	{
 		return runAndGet(command, inputs.getBytes());
 	}
-	
+
 	public static byte[] runAndGet(String command, byte[] inputs)
 	{
 		String[] s_command = new String[1];
@@ -223,7 +223,7 @@ public class CommandRunner extends Thread
 			{
 				Thread.sleep(100);
 			}
-			catch (InterruptedException e) 
+			catch (InterruptedException e)
 			{
 				// This happens if the user cancels the command manually
 				runner.stopCommand();
@@ -241,7 +241,7 @@ public class CommandRunner extends Thread
 	{
 		ProcessBuilder builder = new ProcessBuilder(m_command);
 		Process process = null;
-		try 
+		try
 		{
 			process = builder.start();
 			m_stderrGobbler = new StreamGobbler(process.getErrorStream(), "ERR");
@@ -263,22 +263,23 @@ public class CommandRunner extends Thread
 			{
 				// Wait for both gobblers to finish
 			} while (!m_stop && (m_stderrGobbler.isAlive() || m_stdoutGobbler.isAlive()));
-		} 
+		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		catch (InterruptedException e) 
+		catch (InterruptedException e)
 		{
 			// Destroy the running command
 			if (process != null)
 			{
 				process.destroy();
 			}
+			Thread.currentThread().interrupt();
 		}
 		//System.err.println(new String(error_gobbler.getBytes()));
 	}
-	
+
 	/**
 	 * Gets the contents of stdout sent by the command as an array of bytes
 	 * @return The contents of stdout
@@ -287,7 +288,7 @@ public class CommandRunner extends Thread
 	{
 		return m_stdoutGobbler.getBytes();
 	}
-	
+
 	/**
 	 * Gets the contents of stdout sent by the command as a string
 	 * @return The contents of stdout
@@ -297,7 +298,7 @@ public class CommandRunner extends Thread
 		byte[] out = m_stdoutGobbler.getBytes();
 		return new String(out);
 	}
-	
+
 	synchronized public void stopCommand()
 	{
 		m_stop = true;

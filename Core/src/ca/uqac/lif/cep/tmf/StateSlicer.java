@@ -30,10 +30,10 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.functions.Function;
 
 /**
  * Separates an input trace into different "slices". The slicer
@@ -54,7 +54,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * object {@link ToAllSlices}. This indicates that no new slice must
  * be created, but that the incoming event must be dispatched to
  * <em>all</em> slices one by one.
- *  
+ * 
  * @author Sylvain Hallé
  */
 public class StateSlicer extends SingleProcessor
@@ -76,7 +76,7 @@ public class StateSlicer extends SingleProcessor
 
 	protected Map<Object,Processor> m_slices;
 
-	protected Map<Object,QueueSink> m_sinks; 
+	protected Map<Object,QueueSink> m_sinks;
 
 	/**
 	 * The last value output by the processor for each slice
@@ -84,7 +84,7 @@ public class StateSlicer extends SingleProcessor
 	protected List<Object> m_lastValues;
 
 	/**
-	 * A map between slices and their index in the various arrays 
+	 * A map between slices and their index in the various arrays
 	 */
 	protected Map<Object,Integer> m_sliceIndices;
 
@@ -117,7 +117,7 @@ public class StateSlicer extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		int output_arity = getOutputArity();
 		Object[] f_value = m_slicingFunction.evaluate(inputs);
@@ -136,11 +136,11 @@ public class StateSlicer extends SingleProcessor
 				m_slices.put(slice_id, p);
 				addContextFromSlice(p, slice_id);
 				QueueSink sink = new QueueSink(output_arity);
-				try 
+				try
 				{
 					Connector.connect(p, sink);
-				} 
-				catch (ConnectorException e) 
+				}
+				catch (ConnectorException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();

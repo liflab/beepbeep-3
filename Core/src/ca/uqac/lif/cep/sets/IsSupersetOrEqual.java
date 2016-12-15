@@ -27,7 +27,7 @@ import java.util.Set;
 public class IsSupersetOrEqual extends IsSubsetOrEqual
 {
 	public static final transient IsSupersetOrEqual instance = new IsSupersetOrEqual();
-	
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Boolean getValue(Set x, Set y)

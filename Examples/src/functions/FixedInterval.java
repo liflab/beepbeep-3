@@ -18,9 +18,9 @@
 package functions;
 
 import ca.uqac.lif.cep.functions.And;
+import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.numbers.IsLessThan;
 
@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.numbers.IsLessThan;
  * @author Sylvain Hallé
  *
  */
-public class FixedInterval 
+public class FixedInterval
 {
 	public static void main(String[] args)
 	{
@@ -44,13 +44,13 @@ public class FixedInterval
 		 */
 		// SNIP
 		FunctionTree in_interval = new FunctionTree(And.instance,
-				new FunctionTree(IsGreaterThan.instance, 
+				new FunctionTree(IsGreaterThan.instance,
 						new ArgumentPlaceholder(0),
 						new Constant(0)), // x > 0
-				new FunctionTree(IsLessThan.instance,
-						new ArgumentPlaceholder(0),
-						new Constant(2) // x < 2
-						));
+						new FunctionTree(IsLessThan.instance,
+								new ArgumentPlaceholder(0),
+								new Constant(2) // x < 2
+								));
 		// SNIP
 		// SNAP
 		Object[] value = in_interval.evaluate(new Integer[]{3}); // = {false}

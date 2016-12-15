@@ -24,9 +24,9 @@ package ca.uqac.lif.cep;
 public class PushableWrapper implements Pushable
 {
 	protected Pushable m_pushable;
-	
+
 	protected Processor m_processorReference;
-	
+
 	public PushableWrapper(Pushable p, Processor reference)
 	{
 		super();

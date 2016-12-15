@@ -26,10 +26,10 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
  * 
  * @author Sylvain Hallé
  */
-public class Or extends BinaryFunction<Boolean,Boolean,Boolean> 
+public class Or extends BinaryFunction<Boolean,Boolean,Boolean>
 {
 	public static final transient Or instance = new Or();
-	
+
 	Or()
 	{
 		super(Boolean.class, Boolean.class, Boolean.class);
@@ -40,13 +40,13 @@ public class Or extends BinaryFunction<Boolean,Boolean,Boolean>
 	{
 		return x.booleanValue() || y.booleanValue();
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return "∨";
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		BinaryFunction.buildInfix(stack, instance);

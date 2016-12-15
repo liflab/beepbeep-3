@@ -52,12 +52,12 @@ public class NonBlockingPusher extends Processor
 	protected Pushable m_pushable;
 
 	/**
-	 * A reference to the pushable this processor should send its output to 
+	 * A reference to the pushable this processor should send its output to
 	 */
 	protected Pushable m_pushableOutput;
 
 	/**
-	 * A reference to the pullable this processor should pull its input from 
+	 * A reference to the pullable this processor should pull its input from
 	 */
 	protected Pullable m_pullableInput;
 
@@ -120,7 +120,7 @@ public class NonBlockingPusher extends Processor
 	}
 
 	@Override
-	public synchronized Pushable getPushableInput(int index) 
+	public synchronized Pushable getPushableInput(int index)
 	{
 		if (index == 0)
 		{
@@ -137,13 +137,13 @@ public class NonBlockingPusher extends Processor
 	}
 
 	@Override
-	public synchronized Pullable getPullableOutput(int index) 
+	public synchronized Pullable getPullableOutput(int index)
 	{
 		return m_processor.getPullableOutput(index);
 	}
 
 	@Override
-	public synchronized NonBlockingPusher clone() 
+	public synchronized NonBlockingPusher clone()
 	{
 		Processor new_processor = m_processor.clone();
 		NonBlockingPusher nbp = new NonBlockingPusher(new_processor, m_threadManager);

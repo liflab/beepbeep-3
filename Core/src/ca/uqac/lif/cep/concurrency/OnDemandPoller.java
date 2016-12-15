@@ -20,22 +20,22 @@ package ca.uqac.lif.cep.concurrency;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pullable.NextStatus;
 
-class OnDemandPoller implements Poller 
+class OnDemandPoller implements Poller
 {
 	protected Pullable m_pullable;
-	
+
 	boolean m_run = false;
 
 	protected long s_sleepInterval = 100;
 
 	private Call m_currentCall = Call.NONE;
-	
+
 	private NextStatus m_lastSoftStatus;
-	
+
 	private boolean m_lastHardStatus;
-	
+
 	private boolean m_done;
-	
+
 	private Object m_lastEvent;
 
 	public OnDemandPoller(Pullable p)
@@ -44,38 +44,38 @@ class OnDemandPoller implements Poller
 		m_pullable = p;
 		m_done = true;
 	}
-	
+
 	@Override
 	synchronized public boolean isDone()
 	{
 		return m_done;
 	}
-	
+
 	@Override
 	synchronized public void call(Call c)
 	{
 		m_done = false;
 		m_currentCall = c;
 	}
-	
+
 	@Override
 	synchronized public NextStatus getNextSoftStatus()
 	{
 		return m_lastSoftStatus;
 	}
-	
+
 	@Override
 	synchronized public boolean getNextHardStatus()
 	{
 		return m_lastHardStatus;
 	}
-	
+
 	@Override
 	synchronized public Object getNextSoft()
 	{
 		return m_lastEvent;
 	}
-	
+
 	@Override
 	synchronized public Object getNextHard()
 	{
@@ -83,7 +83,7 @@ class OnDemandPoller implements Poller
 	}
 
 	@Override
-	public void run() 
+	public void run()
 	{
 		m_run = true;
 		while (m_run)
@@ -110,7 +110,7 @@ class OnDemandPoller implements Poller
 		}
 		ThreadManager.sleep(s_sleepInterval);
 	}
-	
+
 	@Override
 	synchronized public void stop()
 	{
@@ -118,13 +118,13 @@ class OnDemandPoller implements Poller
 	}
 
 	@Override
-	public Pullable getPullable() 
+	public Pullable getPullable()
 	{
 		return m_pullable;
 	}
 
 	@Override
-	public void dispose() 
+	public void dispose()
 	{
 		stop();
 		m_pullable.dispose();

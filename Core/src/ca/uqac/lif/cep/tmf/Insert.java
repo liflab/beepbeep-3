@@ -37,18 +37,18 @@ public class Insert extends SingleProcessor
 	 * The event to be added at the beginning of the input trace
 	 */
 	private final Object[] m_pad;
-	
+
 	/**
 	 * The number of times the pad should be inserted before the beginning
 	 * of the input trace
 	 */
 	private final int m_times;
-	
+
 	/**
 	 * Whether or not the padding has already been sent
 	 */
 	private boolean m_sentPad;
-	
+
 	/**
 	 * Instantiates a new Insert processor
 	 * @param o The event(s) to use as padding
@@ -79,14 +79,14 @@ public class Insert extends SingleProcessor
 		out_queue.add(inputs);
 		return out_queue;
 	}
-	
+
 	@Override
 	public void reset()
 	{
 		super.reset();
 		m_sentPad = false;
 	}
-	
+
 	@Override
 	public Insert clone()
 	{

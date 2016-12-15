@@ -22,13 +22,13 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
  * Pull events from the
- * {@link ca.uqac.lif.cep.tmf.QueueSource} processor. 
+ * {@link ca.uqac.lif.cep.tmf.QueueSource} processor.
  * 
  * @author Sylvain Hallé
  */
 public class QueueSourceUsage
 {
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		// SNIP
 		// Create an empty queue source
@@ -43,7 +43,7 @@ public class QueueSourceUsage
 		// will restart from the beginning of its list.
 		for (int i = 0; i < 8; i++)
 		{
-			// Method pull() returns an Object, hence we must manually cast 
+			// Method pull() returns an Object, hence we must manually cast
 			// it as an integer (this is indeed what we get)
 			int x = (Integer) p.pull();
 			System.out.println("The event is: " + x);

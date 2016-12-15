@@ -29,18 +29,18 @@ import java.util.Queue;
 public class QueueSink extends Sink
 {
 	protected Queue<Object>[] m_queues;
-	
+
 	public QueueSink(int in_arity)
 	{
 		super(in_arity);
 		reset();
 	}
-	
+
 	public QueueSink()
 	{
 		this(1);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void reset()
@@ -68,9 +68,9 @@ public class QueueSink extends Sink
 		}
 		return wrapVector(new Object[m_queues.length]);
 	}
-	
+
 	/**
-	 * Gets the queue corresponding to the <i>i</i>-th output of the sink 
+	 * Gets the queue corresponding to the <i>i</i>-th output of the sink
 	 * @param i The position of the output. Must be non-negative and less than
 	 *   the queue's arity.
 	 * @return The queue
@@ -80,9 +80,9 @@ public class QueueSink extends Sink
 	{
 		return m_queues[i];
 	}
-	
+
 	/**
-	 * Gets the queue corresponding to the first output of the sink 
+	 * Gets the queue corresponding to the first output of the sink
 	 * @return The queue
 	 */
 	/*@requires m_queues.length > 0 */
@@ -90,7 +90,7 @@ public class QueueSink extends Sink
 	{
 		return getQueue(0);
 	}
-	
+
 	/**
 	 * Removes the first event of all queues
 	 * @return A vector containing the first event of all queues, or null
@@ -108,12 +108,12 @@ public class QueueSink extends Sink
 			else
 			{
 				Object o = q.remove();
-				out[i] = o;				
+				out[i] = o;
 			}
 		}
 		return out;
 	}
-	
+
 	@Override
 	public QueueSink clone()
 	{

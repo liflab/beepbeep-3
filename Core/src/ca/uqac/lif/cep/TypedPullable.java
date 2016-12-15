@@ -46,13 +46,13 @@ public class TypedPullable<T> implements Pullable
 	 * The actual pullable this class is wrapping
 	 */
 	protected final Pullable m_pullable;
-	
+
 	public TypedPullable(Pullable p)
 	{
 		super();
 		m_pullable = p;
 	}
-	
+
 	@Override
 	public void remove()
 	{
@@ -71,7 +71,7 @@ public class TypedPullable<T> implements Pullable
 	{
 		return (T) m_pullable.pull();
 	}
-	
+
 	@Override
 	public final T next()
 	{
@@ -91,13 +91,13 @@ public class TypedPullable<T> implements Pullable
 	}
 
 	@Override
-	public Processor getProcessor() 
+	public Processor getProcessor()
 	{
 		return m_pullable.getProcessor();
 	}
 
 	@Override
-	public int getPosition() 
+	public int getPosition()
 	{
 		return m_pullable.getPosition();
 	}
@@ -109,9 +109,9 @@ public class TypedPullable<T> implements Pullable
 	}
 
 	@Override
-	public void start() 
+	public void start()
 	{
-		m_pullable.start();		
+		m_pullable.start();
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class TypedPullable<T> implements Pullable
 	{
 		m_pullable.stop();
 	}
-	
+
 	@Override
 	public void dispose()
 	{

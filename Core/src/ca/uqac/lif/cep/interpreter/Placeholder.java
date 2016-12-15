@@ -34,7 +34,7 @@ public final class Placeholder extends Passthrough
 	{
 		super(1);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // *

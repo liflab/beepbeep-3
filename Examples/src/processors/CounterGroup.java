@@ -19,10 +19,10 @@ package processors;
 
 import static ca.uqac.lif.cep.Connector.INPUT;
 import static ca.uqac.lif.cep.Connector.OUTPUT;
+import static ca.uqac.lif.cep.Connector.connect;
 
 import java.util.Vector;
 
-import static ca.uqac.lif.cep.Connector.connect;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Pullable;
@@ -50,11 +50,11 @@ public class CounterGroup extends GroupProcessor
 		QueueSource ones = new QueueSource();
 		ones.setEvents(one_list);
 		CumulativeProcessor counter = new CumulativeProcessor(new CumulativeFunction<Number>(Addition.instance));
-		try 
+		try
 		{
 			connect(ones, OUTPUT, counter, INPUT);
-		} 
-		catch (ConnectorException e) 
+		}
+		catch (ConnectorException e)
 		{
 			// This is not supposed to happen; we know what we're doing!
 		}
@@ -65,7 +65,7 @@ public class CounterGroup extends GroupProcessor
 		// This processor has no input; otherwise, we would also need to
 		// associate the input of the group to the input of some processor
 	}
-	
+
 	/*
 	 * Simple main showing what the processor does. It should output the numbers 1 to 10.
 	 */

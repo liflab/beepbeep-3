@@ -28,13 +28,13 @@ import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
  * 
  * @author Sylvain Hallé
  */
-public class PlaceholderUsage 
+public class PlaceholderUsage
 {
 	public static void main(String[] args) throws ParseException
 	{
 		// SNIP
 		Interpreter my_int = Interpreter.newInterpreter();
-		// Get a hold of an input stream to a text file 
+		// Get a hold of an input stream to a text file
 		InputStream is = PlaceholderUsage.class.getResourceAsStream("numbers1.txt");
 		// Tell the interpreter to create a LineReader out of this input
 		// stream, which we will refer to in queries as the placeholder

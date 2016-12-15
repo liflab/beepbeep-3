@@ -26,9 +26,9 @@ import java.util.Iterator;
 public class PullableWrapper implements Pullable
 {
 	protected Pullable m_pullable;
-	
+
 	protected Processor m_processorReference;
-	
+
 	public PullableWrapper(Pullable p, Processor reference)
 	{
 		super();
@@ -37,73 +37,73 @@ public class PullableWrapper implements Pullable
 	}
 
 	@Override
-	public Object pullSoft() 
+	public Object pullSoft()
 	{
 		return m_pullable.pullSoft();
 	}
 
 	@Override
-	public Object pull() 
+	public Object pull()
 	{
 		return m_pullable.pull();
 	}
 
 	@Override
-	public Object next() 
+	public Object next()
 	{
 		return m_pullable.next();
 	}
 
 	@Override
-	public NextStatus hasNextSoft() 
+	public NextStatus hasNextSoft()
 	{
 		return m_pullable.hasNextSoft();
 	}
 
 	@Override
-	public boolean hasNext() 
+	public boolean hasNext()
 	{
 		return m_pullable.hasNext();
 	}
 
 	@Override
-	public Processor getProcessor() 
+	public Processor getProcessor()
 	{
 		return m_pullable.getProcessor();
 	}
 
 	@Override
-	public int getPosition() 
+	public int getPosition()
 	{
 		return m_pullable.getPosition();
 	}
 
 	@Override
-	public void dispose() 
+	public void dispose()
 	{
 		m_pullable.dispose();
 	}
 
 	@Override
-	public Iterator<Object> iterator() 
+	public Iterator<Object> iterator()
 	{
 		return m_pullable.iterator();
 	}
 
 	@Override
-	public void remove() 
+	public void remove()
 	{
 		m_pullable.remove();
 	}
 
 	@Override
-	public void start() 
+	public void start()
 	{
 		m_pullable.start();
 	}
 
 	@Override
-	public void stop() 
+	public void stop()
 	{
 		m_pullable.stop();
 	}

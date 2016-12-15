@@ -28,40 +28,40 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.tmf.SmartFork;
 
-public class UserDefinition 
+public class UserDefinition
 {
 	/**
-	 * The definition of each variable occurring in the expression 
+	 * The definition of each variable occurring in the expression
 	 */
 	protected final SymbolDefinitionList m_symbolDefs;
-	
+
 	/**
-	 * The non-terminal symbol of the grammar this definition adds 
+	 * The non-terminal symbol of the grammar this definition adds
 	 * a new case to
 	 */
 	protected final String m_symbolName;
-	
+
 	/**
 	 * The definition
 	 */
 	protected final String m_definition;
-	
+
 	/**
 	 * The parsing pattern
 	 */
 	protected final String m_pattern;
-	
+
 	/**
 	 * An interpreter to parse the definition
 	 */
 	protected Interpreter m_interpreter;
-	
+
 	/**
 	 * The object (processor, constant, etc.) this definition ultimately
 	 * stands for
 	 */
 	protected Object m_standsFor;
-	
+
 	public UserDefinition(SymbolDefinitionList sdl, String symbol_name, String definition, String pattern)
 	{
 		super();
@@ -72,13 +72,13 @@ public class UserDefinition
 		// and allow a query to refer to them in uppercase
 		m_symbolName = symbol_name.toLowerCase();
 	}
-	
+
 	void setInterpreter(Interpreter i)
 	{
 		m_interpreter = i;
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException 
+	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		// We use toString: if the definition is a single number, a number is
 		// on the stack rather than a string
@@ -101,7 +101,7 @@ public class UserDefinition
 		UserDefinition ud = new UserDefinition(symbol_defs, symbolName, definition, pattern);
 		stack.push(ud);
 	}
-	
+
 	Object parseDefinition(Map<String,Object> symbol_defs)
 	{
 		Interpreter inner_int = new Interpreter(m_interpreter);
@@ -120,32 +120,32 @@ public class UserDefinition
 			for (String symbol : m_symbolDefs.keySet())
 			{
 				String symbol_nonterminal = m_symbolDefs.get(symbol);
-				try 
+				try
 				{
 					BnfRule rule = BnfRule.parseRule("<" + symbol_nonterminal + "> := " + symbol);
 					inner_int.addRule(0, rule);
-				} 
-				catch (InvalidRuleException e) 
+				}
+				catch (InvalidRuleException e)
 				{
 					e.printStackTrace();
 				}
 			}
 		}
 		Object parsed = null;
-		try 
+		try
 		{
 			//inner_int.setDebugMode(true);
 			// We give a hint to the interpreter by telling it what
 			// non-terminal symbol to start parsing from
 			parsed = inner_int.parseLanguage(m_definition, "<" + m_symbolName + ">");
-		} 
-		catch (ParseException e) 
+		}
+		catch (ParseException e)
 		{
 			e.printStackTrace();
 		}
 		if (parsed != null && parsed instanceof Processor && m_symbolName.compareTo("processor") == 0)
 		{
-			// The parsing succeeded: create a group processor out of 
+			// The parsing succeeded: create a group processor out of
 			// the parsed expression
 			Processor p_parsed = (Processor) parsed;
 			GroupProcessor gp = new GroupProcessor(in_arity, p_parsed.getOutputArity());
@@ -172,7 +172,7 @@ public class UserDefinition
 		}
 		return parsed;
 	}
-	
+
 	/**
 	 * Adds this user definition to the grammar of an existing interpreter
 	 * @param i The interpreter to add the definition to
@@ -185,11 +185,11 @@ public class UserDefinition
 		}
 		String pattern = createPattern();
 		String non_terminal = "<USERDEF" + Interpreter.s_defNb++ + ">";
-		try 
+		try
 		{
 			m_interpreter.addRule(BnfRule.parseRule(non_terminal + " := " + pattern));
-		} 
-		catch (InvalidRuleException e) 
+		}
+		catch (InvalidRuleException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -197,7 +197,7 @@ public class UserDefinition
 		m_interpreter.addCaseToRule("<" + m_symbolName + ">", non_terminal);
 		m_interpreter.addUserDefinedAssociation(non_terminal, new UserDefinitionInstance(this));
 	}
-	
+
 	/**
 	 * Creates a new grammar case that matches the pattern declared for this
 	 * definition. For example, given the expression:
@@ -223,7 +223,7 @@ public class UserDefinition
 		}
 		return out;
 	}
-	
+
 	@Override
 	public String toString()
 	{

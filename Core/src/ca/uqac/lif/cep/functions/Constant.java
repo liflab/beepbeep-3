@@ -31,7 +31,7 @@ public class Constant extends Function
 	 * The value to return by this constant
 	 */
 	private final Object m_value;
-	
+
 	/**
 	 * Creates a new constant
 	 * @param value The value associated to this constant
@@ -41,7 +41,7 @@ public class Constant extends Function
 		super();
 		m_value = value;
 	}
-	
+
 	@Override
 	public Object[] evaluate(Object[] inputs, Context context)
 	{
@@ -51,7 +51,7 @@ public class Constant extends Function
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs) 
+	public Object[] evaluate(Object[] inputs)
 	{
 		return evaluate(inputs, null);
 	}
@@ -69,13 +69,13 @@ public class Constant extends Function
 	}
 
 	@Override
-	public void reset() 
+	public void reset()
 	{
 		// Nothing to do
 	}
 
 	@Override
-	public Constant clone() 
+	public Constant clone()
 	{
 		return new Constant(m_value);
 	}
@@ -92,7 +92,7 @@ public class Constant extends Function
 	{
 		return m_value.getClass();
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -102,7 +102,7 @@ public class Constant extends Function
 		}
 		return m_value.toString();
 	}
-	
+
 	/**
 	 * Gets the actual object that this constant processor returns
 	 * @return The value

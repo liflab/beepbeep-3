@@ -6,7 +6,7 @@ import ca.uqac.lif.cep.Processor;
 
 class AnonymousProcessorExpression extends ProcessorExpression
 {
-	public AnonymousProcessorExpression(Processor p) 
+	public AnonymousProcessorExpression(Processor p)
 	{
 		super(p, null);
 	}

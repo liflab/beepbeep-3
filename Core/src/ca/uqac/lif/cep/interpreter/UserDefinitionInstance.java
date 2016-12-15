@@ -24,14 +24,14 @@ import java.util.Stack;
 public class UserDefinitionInstance
 {
 	protected UserDefinition m_definition;
-	
+
 	public UserDefinitionInstance(UserDefinition definition)
 	{
 		super();
 		m_definition = definition;
 	}
-	
-	public void build(Stack<Object> stack) 
+
+	public void build(Stack<Object> stack)
 	{
 		// Pull stuff from the stack based on the parsing pattern
 		Map<String,Object> variable_definitions = new HashMap<String,Object>();
@@ -58,7 +58,7 @@ public class UserDefinitionInstance
 		Object o = m_definition.parseDefinition(variable_definitions);
 		stack.push(o);
 	}
-	
+
 	@Override
 	public String toString()
 	{

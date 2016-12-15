@@ -27,13 +27,13 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * Computes the square root of its argument
  * @author Sylvain Hallé
  */
-public class SquareRoot extends UnaryFunction<Number,Number> 
+public class SquareRoot extends UnaryFunction<Number,Number>
 {
 	/**
 	 * A static instance of absolute value
 	 */
 	public static final transient SquareRoot instance = new SquareRoot();
-	
+
 	SquareRoot()
 	{
 		super(Number.class, Number.class);
@@ -44,13 +44,13 @@ public class SquareRoot extends UnaryFunction<Number,Number>
 	{
 		return Math.sqrt(x.floatValue());
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return "√";
 	}
-	
+
 	public static void build(Stack<Object> stack)
 	{
 		Object o;

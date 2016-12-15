@@ -37,7 +37,7 @@ public class Print extends Sink
 	 * The stream to print to
 	 */
 	protected AnsiPrinter m_out;
-	
+
 	/**
 	 * Creates a new printer
 	 */
@@ -45,9 +45,9 @@ public class Print extends Sink
 	{
 		this(1, new AnsiPrinter(System.out));
 	}
-	
+
 	/**
-	 * Creates a new ANSI printer of given input arity 
+	 * Creates a new ANSI printer of given input arity
 	 * @param in_arity The input arity
 	 * @param out The ANSI printer to use
 	 */
@@ -58,6 +58,7 @@ public class Print extends Sink
 	}
 
 	@Override
+	@SuppressWarnings("squid:S1168")
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		if (inputs == null || allNull(inputs))
@@ -74,12 +75,12 @@ public class Print extends Sink
 		}
 		return wrapVector(new Object[getOutputArity()]);
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // PRINT
-		Print out = new Print(1, new AnsiPrinter(System.out));
+		Print out = new Print(1, new AnsiPrinter(System.out)); // NOSONAR
 		Connector.connect(p, out);
 		stack.push(out);
 	}
@@ -99,7 +100,7 @@ public class Print extends Sink
 			m_out.print(o);
 		}
 	}
-	
+
 	/**
 	 * Prints a number in an eye-pleasing way. In this case, the
 	 * printer trims the decimals from a number if it is an integer
@@ -112,7 +113,7 @@ public class Print extends Sink
 			m_out.print(n.intValue());
 		}
 	}
-	
+
 	@Override
 	public Print clone()
 	{

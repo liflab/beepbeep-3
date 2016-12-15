@@ -31,11 +31,11 @@ import ca.uqac.lif.cep.Pullable;
  * <p>
  * Currently, the splicer is implemented as a 0:n processor, and
  * the processors it is given must have an input arity of 0.
- *  
+ * 
  * @author Sylvain Hallé
  *
  */
-public class Splicer extends Source 
+public class Splicer extends Source
 {
 	/**
 	 * The list of processors to splice together
@@ -106,6 +106,7 @@ public class Splicer extends Source
 	}
 
 	@Override
+	@SuppressWarnings("squid:S1168")
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		if (m_processorIndex >= m_processors.length)
@@ -147,7 +148,7 @@ public class Splicer extends Source
 	}
 
 	@Override
-	public Splicer clone() 
+	public Splicer clone()
 	{
 		return new Splicer(m_processors);
 	}

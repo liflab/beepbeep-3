@@ -27,27 +27,27 @@ class GroupStack<T> extends Stack<T>
 	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	protected Set<T> m_parsedObjects;
-	
+
 	public GroupStack()
 	{
 		super();
 		m_parsedObjects = new HashSet<T>();
 	}
-	
+
 	@Override
 	public T push(T o)
 	{
 		m_parsedObjects.add(o);
 		return super.push(o);
 	}
-	
+
 	public Set<T> getHistory()
 	{
 		return m_parsedObjects;
 	}
-	
+
 	@Override
 	public void clear()
 	{

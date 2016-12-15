@@ -24,34 +24,34 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  * returns this first multiset as its output. This function <em>modifies</em>
  * the first multiset and returns it. This should be contrasted with
  * {@link MultisetUnion}.
- *  
+ * 
  * @author Sylvain Hallé
  */
-public class MultisetAddAll extends BinaryFunction<Multiset,Multiset,Multiset> 
+public class MultisetAddAll extends BinaryFunction<Multiset,Multiset,Multiset>
 {
 	/**
 	 * A static instance of the function
 	 */
 	public static final transient MultisetAddAll instance = new MultisetAddAll();
-	
+
 	private MultisetAddAll()
 	{
 		super(Multiset.class, Multiset.class, Multiset.class);
 	}
-	
+
 	@Override
-	public Multiset getValue(Multiset x, Multiset y) 
+	public Multiset getValue(Multiset x, Multiset y)
 	{
 		x.addAll(y);
 		return x;
 	}
 
 	@Override
-	public Multiset getStartValue() 
+	public Multiset getStartValue()
 	{
 		return new Multiset();
 	}
-	
+
 	@Override
 	public String toString()
 	{

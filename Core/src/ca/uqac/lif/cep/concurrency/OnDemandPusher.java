@@ -22,7 +22,7 @@ import ca.uqac.lif.cep.Pushable;
 public class OnDemandPusher implements Pusher
 {
 	protected Pushable m_pushable;
-	
+
 	boolean m_run = false;
 
 	protected long s_sleepInterval = 0;
@@ -30,23 +30,23 @@ public class OnDemandPusher implements Pusher
 	private Call m_currentCall = Call.NONE;
 
 	private Object m_eventToPush = null;
-	
+
 	private boolean m_done = false;
-	
+
 	public OnDemandPusher(Pushable p)
 	{
 		super();
 		m_pushable = p;
 	}
-	
+
 	@Override
 	public void dispose()
 	{
 		m_pushable.dispose();
 	}
-	
+
 	@Override
-	public void run() 
+	public void run()
 	{
 		m_run = true;
 		while (m_run)
@@ -66,14 +66,15 @@ public class OnDemandPusher implements Pusher
 			ThreadManager.sleep(s_sleepInterval);
 		}
 	}
-	
+
+	@Override
 	public void setEventToPush(Object o)
 	{
 		m_eventToPush = o;
 	}
 
 	@Override
-	public void waitFor() 
+	public void waitFor()
 	{
 		while (!m_done)
 		{
@@ -89,13 +90,13 @@ public class OnDemandPusher implements Pusher
 	}
 
 	@Override
-	public void stop() 
+	public void stop()
 	{
 		m_run = false;
 	}
 
 	@Override
-	public Pushable getPushable() 
+	public Pushable getPushable()
 	{
 		return m_pushable;
 	}

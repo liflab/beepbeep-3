@@ -57,13 +57,13 @@ public class ThreadManager implements Runnable
 	 * Whether the manager is running
 	 */
 	protected volatile boolean m_run = false;
-	
+
 	/**
 	 * Total number of threads requested. Used mostly for debugging
 	 * purposes.
 	 */
 	protected int m_threadsRequested = 0;
-	
+
 	/**
 	 * Total number of threads granted. Used mostly for debugging
 	 * purposes.
@@ -89,7 +89,7 @@ public class ThreadManager implements Runnable
 	public ThreadManager(int max_threads)
 	{
 		this();
-		m_maxThreads = max_threads;		
+		m_maxThreads = max_threads;
 	}
 
 	/**
@@ -186,8 +186,8 @@ public class ThreadManager implements Runnable
 		}
 		catch (InterruptedException e)
 		{
-			// Do nothing
-		}		
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	/**
@@ -250,7 +250,7 @@ public class ThreadManager implements Runnable
 		@Override
 		public String toString()
 		{
-			return super.toString() + ":" + m_disposable; 
+			return super.toString() + ":" + m_disposable;
 		}
 	}
 
@@ -291,7 +291,7 @@ public class ThreadManager implements Runnable
 		}
 		m_threadsLock.unlock();
 	}
-	
+
 	/**
 	 * Gets the number of threads that have been requested from this
 	 * manager, so far.
@@ -301,7 +301,7 @@ public class ThreadManager implements Runnable
 	{
 		return m_threadsRequested;
 	}
-	
+
 	/**
 	 * Gets the number of threads that have been granted from this
 	 * manager, so far.

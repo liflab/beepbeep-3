@@ -29,14 +29,14 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 public class Equals extends BinaryFunction<Object,Object,Boolean>
 {
 	public static final transient Equals instance = new Equals();
-	
+
 	private Equals()
 	{
 		super(Object.class, Object.class, Boolean.class);
 	}
 
 	@Override
-	public Boolean getValue(Object x, Object y) 
+	public Boolean getValue(Object x, Object y)
 	{
 		if (x == null || y == null)
 		{
@@ -50,13 +50,13 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 		}
 		return x.equals(y);
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return "=";
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		BinaryFunction.buildInfix(stack, instance);

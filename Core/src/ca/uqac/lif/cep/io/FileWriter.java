@@ -62,6 +62,7 @@ public class FileWriter extends Sink
 	}
 
 	@Override
+	@SuppressWarnings("squid:S1168")
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		if (inputs == null || inputs[0] == null)
@@ -76,6 +77,7 @@ public class FileWriter extends Sink
 		return overwrite(inputs[0]);
 	}
 
+	@SuppressWarnings("squid:S1168")
 	private Queue<Object[]> overwrite(Object o)
 	{
 		try
@@ -92,6 +94,7 @@ public class FileWriter extends Sink
 		return null;
 	}
 
+	@SuppressWarnings("squid:S1168")
 	private Queue<Object[]> append(Object o)
 	{
 		try
@@ -112,7 +115,7 @@ public class FileWriter extends Sink
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Closes the file linked to this file writer
 	 * @return A reference to the current file writer
@@ -130,7 +133,7 @@ public class FileWriter extends Sink
 		}
 		return this;
 	}
-	
+
 	@Override
 	public FileWriter clone()
 	{

@@ -37,18 +37,18 @@ public class Demultiplexer extends SingleProcessor
 	 * The window of objects to be stored
 	 */
 	protected List<Object> m_window;
-	
+
 	/**
 	 * The width of the demuxing, i.e. the value of <i>n</i> in the
 	 * definition above
 	 */
 	private int m_width;
-	
+
 	Demultiplexer()
 	{
 		super(1, 1);
 	}
-	
+
 	/**
 	 * Creates a new demuxer
 	 * @param width The width of the window
@@ -76,9 +76,9 @@ public class Demultiplexer extends SingleProcessor
 			out[0] = objects;
 			return wrapVector(out);
 		}
-		return null;
+		return getEmptyQueue();
 	}
-	
+
 	@Override
 	public void reset()
 	{
@@ -87,7 +87,7 @@ public class Demultiplexer extends SingleProcessor
 	}
 
 	@Override
-	public Demultiplexer clone() 
+	public Demultiplexer clone()
 	{
 		return new Demultiplexer(m_width);
 	}

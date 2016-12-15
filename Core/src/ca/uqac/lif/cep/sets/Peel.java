@@ -26,13 +26,13 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * In all other cases, returns the input as is.
  * @author Sylvain Hallé
  */
-public class Peel extends UnaryFunction<Object,Object> 
+public class Peel extends UnaryFunction<Object,Object>
 {
 	/**
 	 * An instance of the peel function
 	 */
 	public static final transient Peel instance = new Peel();
-	
+
 	private Peel()
 	{
 		super(Object.class, Object.class);
@@ -40,7 +40,7 @@ public class Peel extends UnaryFunction<Object,Object>
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Object getValue(Object x) 
+	public Object getValue(Object x)
 	{
 		if (x instanceof Collection)
 		{

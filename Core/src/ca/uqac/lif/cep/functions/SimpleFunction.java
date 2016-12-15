@@ -58,7 +58,7 @@ public abstract class SimpleFunction extends Function
 		// Call compute() with concrete inputs
 		return compute(concrete_inputs);
 	}
-	
+
 	@Override
 	public Object[] evaluate(Object[] inputs)
 	{

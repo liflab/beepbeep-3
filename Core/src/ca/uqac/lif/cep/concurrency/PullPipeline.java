@@ -60,8 +60,8 @@ public class PullPipeline extends Processor implements Runnable
 
 	/**
 	 * The maximum number of pipelines that can be in the queue. This is to
-	 * prevent generating too many output events that are not consumed 
-	 * downstream. 
+	 * prevent generating too many output events that are not consumed
+	 * downstream.
 	 */
 	private int m_maxPipelines = 100;
 
@@ -100,7 +100,7 @@ public class PullPipeline extends Processor implements Runnable
 	 * Time (in milliseconds) to wait before polling again
 	 */
 	protected static final long s_sleepIntervalWhenPolling = 0;
-	
+
 	/**
 	 * Time (in milliseconds) to wait when the pipeline sees that its
 	 * output queue is at maximum capacity
@@ -169,19 +169,19 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	synchronized public Pushable getPushableInput(int index) 
+	synchronized public Pushable getPushableInput(int index)
 	{
 		return new PipelinePushable();
 	}
 
 	@Override
-	synchronized public Pullable getPullableOutput(int index) 
+	synchronized public Pullable getPullableOutput(int index)
 	{
 		return new PipelinePullable();
 	}
 
 	@Override
-	synchronized public PullPipeline clone() 
+	synchronized public PullPipeline clone()
 	{
 		PullPipeline p = new PullPipeline(m_processor.clone());
 		p.setContext(m_context);
@@ -218,7 +218,7 @@ public class PullPipeline extends Processor implements Runnable
 	/**
 	 * Shifts the index of each entry of the out map by -1. This method
 	 * <em>must</em> be called by another method that has the lock on
-	 * <code>m_pipelines</code>. 
+	 * <code>m_pipelines</code>.
 	 */
 	protected Object shiftEntries()
 	{
@@ -246,13 +246,13 @@ public class PullPipeline extends Processor implements Runnable
 		}
 
 		@Override
-		public Iterator<Object> iterator() 
+		public Iterator<Object> iterator()
 		{
 			return this;
 		}
 
 		@Override
-		public Object pullSoft() 
+		public Object pullSoft()
 		{
 			Object out = null;
 			if (!m_run)
@@ -271,7 +271,7 @@ public class PullPipeline extends Processor implements Runnable
 		}
 
 		@Override
-		public Object pull() 
+		public Object pull()
 		{
 			Object out = null;
 			if (!m_run)
@@ -345,7 +345,7 @@ public class PullPipeline extends Processor implements Runnable
 		}
 
 		@Override
-		public boolean hasNext() 
+		public boolean hasNext()
 		{
 			boolean condition;
 			m_pipelinesLock.lock();
@@ -394,25 +394,25 @@ public class PullPipeline extends Processor implements Runnable
 		}
 
 		@Override
-		public Processor getProcessor() 
+		public Processor getProcessor()
 		{
 			return PullPipeline.this;
 		}
 
 		@Override
-		public int getPosition() 
+		public int getPosition()
 		{
 			return 0;
 		}
 
 		@Override
-		public void start() 
+		public void start()
 		{
 			// Nothing to do
 		}
 
 		@Override
-		public void stop() 
+		public void stop()
 		{
 			PullPipeline.this.stop();
 		}
@@ -444,13 +444,13 @@ public class PullPipeline extends Processor implements Runnable
 		}
 
 		@Override
-		public Processor getProcessor() 
+		public Processor getProcessor()
 		{
 			return PullPipeline.this;
 		}
 
 		@Override
-		public int getPosition() 
+		public int getPosition()
 		{
 			return 0;
 		}
@@ -462,7 +462,7 @@ public class PullPipeline extends Processor implements Runnable
 		}
 
 		@Override
-		public void waitFor() 
+		public void waitFor()
 		{
 			return;
 		}
@@ -514,7 +514,7 @@ public class PullPipeline extends Processor implements Runnable
 			Object o = m_inputPullable.pullSoft();
 			if (o != null)
 			{
-				m_inQueue.add(o);	
+				m_inQueue.add(o);
 				m_isPulled.add(true);
 			}
 		}
@@ -531,7 +531,7 @@ public class PullPipeline extends Processor implements Runnable
 			if (o != null)
 			{
 				//System.out.println("PUTTING " + o);
-				m_inQueue.add(o);	
+				m_inQueue.add(o);
 				m_isPulled.add(true);
 				m_inQueueLock.unlock();
 				return true;
@@ -620,7 +620,7 @@ public class PullPipeline extends Processor implements Runnable
 		}
 		else
 		{
-			
+
 		}
 		m_pipelinesLock.lock();
 		//System.out.println("lock");
@@ -636,7 +636,7 @@ public class PullPipeline extends Processor implements Runnable
 					Object o = shiftEntries();
 					m_outputPushable.push(o);
 					m_outputPushable.waitFor();
-				}					
+				}
 			}
 		}
 		m_pipelinesLock.unlock();

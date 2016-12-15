@@ -26,11 +26,11 @@ public class NewThreadPushable implements Pushable
 	 * The thread that is currently running the push
 	 */
 	private ManagedThread m_currentThread;
-	
+
 	/**
 	 * The reference to the processor
 	 */
-	private Processor m_processorReference; 
+	private Processor m_processorReference;
 
 	NewThreadPushable(Processor reference, Pushable pushable, ThreadManager manager)
 	{
@@ -41,14 +41,14 @@ public class NewThreadPushable implements Pushable
 	}
 
 	@Override
-	public Pushable push(Object o) 
+	public Pushable push(Object o)
 	{
 		m_pushable.push(o);
 		return this;
 	}
 
 	@Override
-	public synchronized Pushable pushFast(Object o) 
+	public synchronized Pushable pushFast(Object o)
 	{
 		PushRunnable pr = new PushRunnable(o);
 		ManagedThread thread = m_manager.tryNewThread(pr);
@@ -71,39 +71,40 @@ public class NewThreadPushable implements Pushable
 	}
 
 	@Override
-	public Processor getProcessor() 
+	public Processor getProcessor()
 	{
 		return m_processorReference;
 	}
 
 	@Override
-	public int getPosition() 
+	public int getPosition()
 	{
 		return 0;
 	}
 
 	@Override
-	public synchronized void waitFor() 
+	public synchronized void waitFor()
 	{
 		if (m_currentThread == null)
 		{
 			// We don't have a thread, so just return
 			return;
 		}
-		try 
+		try
 		{
 			m_currentThread.join();
-		} 
-		catch (InterruptedException e) 
+		}
+		catch (InterruptedException e)
 		{
 			// Should be OK
+			Thread.currentThread().interrupt();
 		}
 		m_currentThread.dispose();
 		m_currentThread = null;
 	}
 
 	@Override
-	public void dispose() 
+	public void dispose()
 	{
 		if (m_currentThread != null)
 		{

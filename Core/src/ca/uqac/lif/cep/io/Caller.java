@@ -39,18 +39,18 @@ public class Caller extends SingleProcessor
 	 * The command to call
 	 */
 	protected final String m_command;
-	
+
 	public Caller(String command)
 	{
 		super(1, 1);
 		m_command = command;
 	}
-	
+
 	/**
-	 * The time to wait (in milliseconds) before polling the command's result 
+	 * The time to wait (in milliseconds) before polling the command's result
 	 */
 	protected static long s_waitInterval = 100;
-	
+
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
@@ -80,7 +80,7 @@ public class Caller extends SingleProcessor
 		Connector.connect(p, c);
 		stack.push(c);
 	}
-	
+
 	@Override
 	public Caller clone()
 	{

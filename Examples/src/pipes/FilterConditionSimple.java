@@ -17,13 +17,13 @@
  */
 package pipes;
 
-import static ca.uqac.lif.cep.Connector.connect;
 import static ca.uqac.lif.cep.Connector.INPUT;
 import static ca.uqac.lif.cep.Connector.LEFT;
 import static ca.uqac.lif.cep.Connector.OUTPUT;
 import static ca.uqac.lif.cep.Connector.RIGHT;
-import ca.uqac.lif.cep.Pullable;
+import static ca.uqac.lif.cep.Connector.connect;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.numbers.IsEven;
 import ca.uqac.lif.cep.tmf.Filter;

@@ -30,14 +30,14 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class Cardinality extends UnaryFunction<Set, Integer>
 {
 	public static final transient Cardinality instance = new Cardinality();
-	
+
 	private Cardinality()
 	{
 		super(Set.class, Integer.class);
 	}
 
 	@Override
-	public Integer getValue(Set x) 
+	public Integer getValue(Set x)
 	{
 		return x.size();
 	}

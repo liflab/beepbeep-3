@@ -25,18 +25,18 @@ import ca.uqac.lif.cep.Context;
  * A tree of n-ary functions composed together
  * @author Sylvain Hallé
  */
-public class FunctionTree extends Function 
+public class FunctionTree extends Function
 {
 	/**
 	 * The function to evaluate
 	 */
 	protected Function m_function;
-	
+
 	/**
 	 * The children function to evaluate first
 	 */
 	protected Function[] m_children;
-	
+
 	/**
 	 * Creates a new function tree
 	 * @param f The function to act as the root of the tree
@@ -47,7 +47,7 @@ public class FunctionTree extends Function
 		m_function = f;
 		m_children = new Function[f.getInputArity()];
 	}
-	
+
 	/**
 	 * Creates a new function tree, by specifying the root and
 	 * its immediate children
@@ -66,7 +66,7 @@ public class FunctionTree extends Function
 			setChild(i - 1, functions[i]);
 		}
 	}
-	
+
 	/**
 	 * Sets the <i>i</i>-th child of the tree
 	 * @param index The index
@@ -81,7 +81,7 @@ public class FunctionTree extends Function
 		}
 		return this;
 	}
-	
+
 	@Override
 	public Object[] evaluate(Object[] inputs, Context context)
 	{
@@ -92,7 +92,7 @@ public class FunctionTree extends Function
 		}
 		return m_function.evaluate(values, context);
 	}
-	
+
 	@Override
 	public Object[] evaluate(Object[] inputs)
 	{
@@ -119,13 +119,13 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public int getOutputArity() 
+	public int getOutputArity()
 	{
 		return m_function.getOutputArity();
 	}
 
 	@Override
-	public void reset() 
+	public void reset()
 	{
 		m_function.reset();
 		for (Function f : m_children)
@@ -136,7 +136,7 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public synchronized FunctionTree clone() 
+	public synchronized FunctionTree clone()
 	{
 		FunctionTree out = new FunctionTree(m_function.clone());
 		for (int i = 0; i < m_children.length; i++)
@@ -148,7 +148,7 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index) 
+	public void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
 		for (Function f : m_children)
 		{
@@ -165,11 +165,11 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public Class<?> getOutputTypeFor(int index) 
+	public Class<?> getOutputTypeFor(int index)
 	{
 		return m_function.getOutputTypeFor(index);
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -193,7 +193,7 @@ public class FunctionTree extends Function
 		}
 		return out.toString();
 	}
-	
+
 	@Override
 	public synchronized void setContext(Context context)
 	{
@@ -204,7 +204,7 @@ public class FunctionTree extends Function
 			f.setContext(context);
 		}
 	}
-	
+
 	@Override
 	public synchronized void setContext(String key, Object value)
 	{

@@ -33,12 +33,12 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 class AndInstance extends And
 {
 	public static final transient AndInstance instance = new AndInstance();
-	
+
 	AndInstance()
 	{
 		super();
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // the name

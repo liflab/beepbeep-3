@@ -33,7 +33,7 @@ public class EmlNumber extends Constant
 	{
 		super(null);
 	}
-	
+
 	public EmlNumber(Object o)
 	{
 		super(o);
@@ -57,7 +57,7 @@ public class EmlNumber extends Constant
 			stack.push(o);
 		}
 	}
-	
+
 	public int intValue()
 	{
 		return ((Number) getValue()).intValue();

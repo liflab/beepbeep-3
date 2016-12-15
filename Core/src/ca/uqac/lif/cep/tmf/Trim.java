@@ -40,12 +40,12 @@ public class Trim extends SingleProcessor
 	 * How many events to ignore at the beginning of the trace
 	 */
 	protected final int m_delay;
-	
+
 	/**
 	 * The number of events received so far
 	 */
 	protected int m_eventsReceived;
-	
+
 	/**
 	 * Creates a new delay processor.
 	 * @param delay The number of events from the input trace to discard
@@ -55,7 +55,7 @@ public class Trim extends SingleProcessor
 		super(1, 1);
 		m_delay = delay;
 	}
-	
+
 	@Override
 	public void reset()
 	{
@@ -73,7 +73,7 @@ public class Trim extends SingleProcessor
 		}
 		return new ArrayDeque<Object[]>();
 	}
-	
+
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
 		//stack.pop(); // )
@@ -86,7 +86,7 @@ public class Trim extends SingleProcessor
 		Connector.connect(p, out);
 		stack.push(out);
 	}
-	
+
 	@Override
 	public Trim clone()
 	{

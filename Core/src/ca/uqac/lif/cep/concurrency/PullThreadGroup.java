@@ -20,34 +20,34 @@ package ca.uqac.lif.cep.concurrency;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Pullable;
 
-public class PullThreadGroup extends GroupProcessor 
+public class PullThreadGroup extends GroupProcessor
 {
 	/**
 	 * A (potentially non-blocking) pullable for the first
 	 * output of the group
 	 */
 	protected Pullable m_pullable;
-	
+
 	/**
 	 * The thread manager used to get thread instances
 	 */
 	protected ThreadManager m_threadManager;
-	
-	public PullThreadGroup(int in_arity, int out_arity, ThreadManager manager) 
+
+	public PullThreadGroup(int in_arity, int out_arity, ThreadManager manager)
 	{
 		super(in_arity, out_arity);
 		m_pullable = null;
-		if (manager == null)	
+		if (manager == null)
 		{
 			m_threadManager = ThreadManager.defaultManager;
 		}
 	}
-	
-	public PullThreadGroup(int in_arity, int out_arity) 
+
+	public PullThreadGroup(int in_arity, int out_arity)
 	{
 		this(in_arity, out_arity, null);
 	}
-	
+
 	@Override
 	public final Pullable getPullableOutput(int index)
 	{
@@ -64,21 +64,21 @@ public class PullThreadGroup extends GroupProcessor
 		}
 		return new ProxyPullable(m_pullable, index);
 	}
-	
+
 	@Override
 	public void start()
 	{
 		super.start();
 		m_pullable.start();
 	}
-	
+
 	@Override
 	public void stop()
 	{
 		super.stop();
 		m_pullable.stop();
 	}
-	
+
 	@Override
 	public PullThreadGroup clone()
 	{

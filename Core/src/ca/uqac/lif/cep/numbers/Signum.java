@@ -23,13 +23,13 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * Computes the signum of its argument
  * @author Sylvain Hallé
  */
-public class Signum extends UnaryFunction<Number,Number> 
+public class Signum extends UnaryFunction<Number,Number>
 {
 	/**
 	 * A static instance of absolute value
 	 */
 	public static final transient Signum instance = new Signum();
-	
+
 	private Signum()
 	{
 		super(Number.class, Number.class);
@@ -48,7 +48,7 @@ public class Signum extends UnaryFunction<Number,Number>
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public String toString()
 	{

@@ -23,23 +23,23 @@ import ca.uqac.lif.cep.concurrency.Pusher.Call;
 import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 
 public class ThreadPushable implements Pushable
-{	
+{
 	/**
 	 * The pusher that will push events to the original pushable
 	 */
 	protected Pusher m_pusher;
-	
+
 	/**
 	 * The managed thread in which this pullable is running, if any
 	 */
 	protected ManagedThread m_thread = null;
-	
+
 	/**
 	 * The interval (in milliseconds) between polls to the internal
 	 * pushable
 	 */
 	protected static final long s_sleepDuration = 0;
-	
+
 	/**
 	 * Attempts to get an instance of thread pushable. The method will
 	 * ask for a thread from the thread manager; if no thread can be
@@ -62,7 +62,7 @@ public class ThreadPushable implements Pushable
 		}
 		return new ThreadPushable(odp, t);
 	}
-	
+
 	/**
 	 * Attempts to get an instance of thread pushable. The method will
 	 * ask for a thread from the default thread manager; if no thread can be
@@ -74,7 +74,7 @@ public class ThreadPushable implements Pushable
 	{
 		return tryPushable(push, ThreadManager.defaultManager);
 	}
-	
+
 	private ThreadPushable(Pusher p, ManagedThread t)
 	{
 		super();
@@ -82,27 +82,27 @@ public class ThreadPushable implements Pushable
 		m_thread = t;
 		m_thread.start();
 	}
-	
+
 	public void start()
 	{
 		m_thread.start();
 	}
-	
+
 	public void stop()
 	{
 		m_pusher.stop();
 	}
 
 	@Override
-	public Pushable pushFast(Object o) 
+	public Pushable pushFast(Object o)
 	{
 		m_pusher.setEventToPush(o);
 		m_pusher.call(Call.PUSH);
 		return this;
 	}
-	
+
 	@Override
-	public Pushable push(Object o) 
+	public Pushable push(Object o)
 	{
 		m_pusher.setEventToPush(o);
 		m_pusher.call(Call.PUSH);
@@ -112,23 +112,23 @@ public class ThreadPushable implements Pushable
 
 
 	@Override
-	public Processor getProcessor() 
+	public Processor getProcessor()
 	{
 		return m_pusher.getPushable().getProcessor();
 	}
 
 	@Override
-	public int getPosition() 
+	public int getPosition()
 	{
 		return m_pusher.getPushable().getPosition();
 	}
 
 	@Override
-	public void waitFor() 
+	public void waitFor()
 	{
 		m_pusher.waitFor();
 	}
-	
+
 	@Override
 	public void dispose()
 	{

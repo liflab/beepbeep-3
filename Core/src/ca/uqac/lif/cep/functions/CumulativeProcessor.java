@@ -20,8 +20,8 @@ package ca.uqac.lif.cep.functions;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Processor;
 
 /**
  * Creates a cumulative processor out of a cumulative function.
@@ -33,7 +33,7 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 public class CumulativeProcessor extends FunctionProcessor
 {
 	public CumulativeProcessor(CumulativeFunction<?> f)
-	{	
+	{
 		super(f);
 	}
 
