@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+import java.util.logging.Level;
 
 import ca.uqac.lif.bullwinkle.BnfParser;
 import ca.uqac.lif.bullwinkle.BnfParser.InvalidGrammarException;
@@ -48,6 +49,7 @@ import ca.uqac.lif.cep.io.LineReader;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.SmartFork;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 import ca.uqac.lif.cep.util.PackageFileReader;
 
 public class Interpreter implements ParseNodeVisitor
@@ -279,11 +281,11 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		catch (InstantiationException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 		}
 		catch (IllegalAccessException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 		}
 		return this;
 	}
@@ -351,8 +353,7 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		catch (InvalidRuleException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 		}
 	}
 
@@ -542,13 +543,11 @@ public class Interpreter implements ParseNodeVisitor
 		}
 		catch (IllegalAccessException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.throwing("Interpreter", "visitUserDefinedAssociation", e);
 		}
 		catch (IllegalArgumentException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.throwing("Interpreter", "visitUserDefinedAssociation", e);
 		}
 		catch (InvocationTargetException e)
 		{

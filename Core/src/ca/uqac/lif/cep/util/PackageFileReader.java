@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
 
 /**
  * Utilities for reading files within a package (such as inside a JAR file).
@@ -49,7 +50,7 @@ public class PackageFileReader
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 			return null;
 		}
 		return out;

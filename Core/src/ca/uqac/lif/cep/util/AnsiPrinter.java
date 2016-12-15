@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.util;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.logging.Level;
 
 /**
  * Print stream with facilities for producing colored text using
@@ -139,7 +140,7 @@ public class AnsiPrinter extends PrintStream
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				BeepBeepLogger.logger.log(Level.WARNING, "", e);
 			}
 		}
 

@@ -23,8 +23,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Reads chunks of data from an URL, using an HTTP request.
@@ -97,7 +99,7 @@ public class HttpReader extends StreamReader
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		return is;
 	}

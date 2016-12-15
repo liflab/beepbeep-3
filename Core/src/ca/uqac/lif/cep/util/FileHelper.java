@@ -27,6 +27,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
 
 /**
  * A number of helpful utilities to read, write and manage files
@@ -122,7 +123,7 @@ public class FileHelper
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		return bFile;
 	}
@@ -149,7 +150,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 	}
 
@@ -190,7 +191,7 @@ public class FileHelper
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 	}
 
@@ -334,7 +335,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		return buffer.toByteArray();
 	}

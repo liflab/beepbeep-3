@@ -30,6 +30,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Source;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Reads chunks of data from an input source.
@@ -125,7 +126,6 @@ public class StreamReader extends Source
 			}
 			catch (UnsupportedEncodingException e)
 			{
-				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
 		}
@@ -216,8 +216,7 @@ public class StreamReader extends Source
 		}
 		catch (FileNotFoundException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.throwing("StreamReader", "build", e);
 			stack.push(new StreamReader(null));
 		}
 	}

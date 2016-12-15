@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
 
 /**
  * Utility class to run commands on the command line and fetch their
@@ -134,7 +135,7 @@ public class CommandRunner extends Thread
 			}
 			catch (IOException ioe)
 			{
-				ioe.printStackTrace();
+				BeepBeepLogger.logger.log(Level.WARNING, "", ioe);
 			}
 		}
 
@@ -266,7 +267,7 @@ public class CommandRunner extends Thread
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		catch (InterruptedException e)
 		{

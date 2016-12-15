@@ -4,10 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import ca.uqac.lif.cep.SingleProcessor;
-
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 public class TokenScanner extends SingleProcessor
 {
@@ -41,7 +42,7 @@ public class TokenScanner extends SingleProcessor
 		}
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
 		m_pattern = Pattern.compile(pattern);
 	}

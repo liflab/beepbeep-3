@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.tmf.Sink;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Writes events to a file on disk
@@ -88,8 +89,7 @@ public class FileWriter extends Sink
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.throwing("FileWriter", "overwrite", e);
 		}
 		return null;
 	}
@@ -110,8 +110,7 @@ public class FileWriter extends Sink
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.throwing("FileWriter", "append", e);
 		}
 		return null;
 	}
@@ -128,8 +127,7 @@ public class FileWriter extends Sink
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.throwing("FileWriter", "close", e);
 		}
 		return this;
 	}
