@@ -538,26 +538,33 @@ public class Interpreter implements ParseNodeVisitor
 		String node_name = node.getToken();
 		Object obj = m_userDefinedAssociations.get(node_name);
 		Method m = getMethod(obj, "build", ArrayDeque.class);
-		try
+		if (m != null)
 		{
-			m.invoke(obj, m_nodes);
-		}
-		catch (IllegalAccessException e)
-		{
-			BeepBeepLogger.logger.throwing("Interpreter", "visitUserDefinedAssociation", e);
-		}
-		catch (IllegalArgumentException e)
-		{
-			BeepBeepLogger.logger.throwing("Interpreter", "visitUserDefinedAssociation", e);
-		}
-		catch (InvocationTargetException e)
-		{
-			Throwable th = e.getTargetException();
-			if (th instanceof Exception)
+			try
 			{
-				m_lastExceptions.add((Exception) th);
+				m.invoke(obj, m_nodes);
 			}
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			catch (IllegalAccessException e)
+			{
+				BeepBeepLogger.logger.throwing("Interpreter", "visitUserDefinedAssociation", e);
+			}
+			catch (IllegalArgumentException e)
+			{
+				BeepBeepLogger.logger.throwing("Interpreter", "visitUserDefinedAssociation", e);
+			}
+			catch (InvocationTargetException e)
+			{
+				Throwable th = e.getTargetException();
+				if (th instanceof Exception)
+				{
+					m_lastExceptions.add((Exception) th);
+				}
+				BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			}			
+		}
+		else
+		{
+			BeepBeepLogger.logger.log(Level.SEVERE, "No build method for this parse node: " + node.getValue());
 		}
 	}
 
@@ -791,14 +798,14 @@ public class Interpreter implements ParseNodeVisitor
 	public String toString()
 	{
 		StringBuilder out = new StringBuilder();
-		for (String key : m_processorDefinitions.keySet())
+		for (Map.Entry<String,GroupProcessor> entry : m_processorDefinitions.entrySet())
 		{
-			GroupProcessor pd = m_processorDefinitions.get(key);
+			GroupProcessor pd = entry.getValue();
 			out.append(pd).append("\n");
 		}
-		for (String key : m_symbolDefinitions.keySet())
+		for (Map.Entry<String,Object> entry : m_symbolDefinitions.entrySet())
 		{
-			Object pd = m_symbolDefinitions.get(key);
+			Object pd = entry.getValue();
 			out.append(pd).append("\n");
 		}
 		return out.toString();

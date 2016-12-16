@@ -109,9 +109,9 @@ public class UserDefinition
 		Interpreter inner_int = new Interpreter(m_interpreter);
 		inner_int.addSymbolDefinitions(symbol_defs);
 		int in_arity = 0;
-		for (String symbol : symbol_defs.keySet())
+		for (Map.Entry<String,Object> entry : symbol_defs.entrySet())
 		{
-			Object def = symbol_defs.get(symbol);
+			Object def = entry.getValue();
 			if (def instanceof Processor)
 			{
 				in_arity++;

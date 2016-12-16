@@ -117,7 +117,7 @@ public class SettingsSet
 	public Object getObject() throws InstantiationException
 	{
 		Method m = null;
-		Object o = null;
+		Object o;
 		// First, check if method "getNewInstance" exists
 		try
 		{

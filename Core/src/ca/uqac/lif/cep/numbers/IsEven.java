@@ -38,7 +38,12 @@ public class IsEven extends UnaryFunction<Number,Boolean>
 	@Override
 	public Boolean getValue(Number x)
 	{
-		return x.floatValue() % 2 == 0;
+		if (x.floatValue() != Math.round(x.floatValue()))
+		{
+			// Not an integer
+			return false;
+		}
+		return x.intValue() % 2 == 0;
 	}
 
 	@Override

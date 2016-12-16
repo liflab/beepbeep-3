@@ -20,7 +20,7 @@ public class NamedMapPlaceholder extends UnaryFunction<Object,Object>
 	{
 		@SuppressWarnings("unchecked")
 		CacheMap<Object> map = (CacheMap<Object>) in;
-		Object o = null;
+		Object o;
 		if (m_lastIndex == -1)
 		{
 			m_lastIndex = map.getIndexOf(m_name);

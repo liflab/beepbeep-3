@@ -110,9 +110,13 @@ public class Print extends Sink
 	 */
 	protected void prettyPrint(Number n)
 	{
-		if (n.intValue() == n.floatValue())
+		if (n.floatValue() == Math.round(n.floatValue()))
 		{
 			m_out.print(n.intValue());
+		}
+		else
+		{
+			m_out.print(n);
 		}
 	}
 
