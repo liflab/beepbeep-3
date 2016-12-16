@@ -243,6 +243,12 @@ public class ThreadManager implements Runnable
 		{
 			return super.toString() + ":" + m_disposable;
 		}
+		
+		@Override
+		public void run()
+		{
+			super.run();
+		}
 	}
 
 	@Override
