@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Queue;
 import java.util.ArrayDeque;
+import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Source;
@@ -126,7 +127,7 @@ public class StreamReader extends Source
 			}
 			catch (UnsupportedEncodingException e)
 			{
-				throw new RuntimeException(e);
+				BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 			}
 		}
 	}

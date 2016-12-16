@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.ArrayDeque;
+import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -34,6 +35,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Separates an input trace into different "slices". The slicer
@@ -142,8 +144,7 @@ public class StateSlicer extends SingleProcessor
 				}
 				catch (ConnectorException e)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 				}
 				m_sinks.put(slice_id, sink);
 				// Put dummy value temporarily

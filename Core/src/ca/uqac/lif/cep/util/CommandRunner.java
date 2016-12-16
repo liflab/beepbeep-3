@@ -120,7 +120,7 @@ public class CommandRunner extends Thread
 			try
 			{
 				byte[] buffer = new byte[8192];
-				int len = -1;
+				int len;
 				while (!m_stop && (len = m_is.read(buffer)) > 0)
 				{
 					synchronized (this)
@@ -233,13 +233,9 @@ public class CommandRunner extends Thread
 		catch (InterruptedException e)
 		{
 			// Destroy the running command
-			if (process != null)
-			{
-				process.destroy();
-			}
+			process.destroy();
 			Thread.currentThread().interrupt();
 		}
-		//System.err.println(new String(error_gobbler.getBytes()));
 	}
 
 	/**

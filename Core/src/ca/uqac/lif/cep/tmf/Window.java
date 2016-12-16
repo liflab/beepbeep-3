@@ -21,7 +21,7 @@ import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.ArrayDeque;
+import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -32,6 +32,7 @@ import ca.uqac.lif.cep.numbers.EmlNumber;
 import ca.uqac.lif.cep.objectfactory.IntegerSetting;
 import ca.uqac.lif.cep.objectfactory.Setting;
 import ca.uqac.lif.cep.objectfactory.SettingsSet;
+import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Simulates the application of a "sliding window" to a trace.
@@ -104,8 +105,7 @@ public class Window extends SingleProcessor
 		}
 		catch (ConnectorException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
 		}
 	}
 

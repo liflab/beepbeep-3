@@ -169,7 +169,7 @@ public final class CacheMap<T> implements Map<String,T>
 	 *   one is looking for
 	 * @return The index value
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "squid:S1854"})
 	public final int getIndexOf(String key, int index, T out)
 	{
 		if (index >= 0)

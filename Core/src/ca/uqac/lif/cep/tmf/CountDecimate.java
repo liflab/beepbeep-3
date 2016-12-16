@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.tmf;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
