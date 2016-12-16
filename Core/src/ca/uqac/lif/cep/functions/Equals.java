@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.functions;
 
 import java.util.Collection;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 
@@ -57,7 +57,7 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 		return "=";
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		BinaryFunction.buildInfix(stack, instance);
 	}

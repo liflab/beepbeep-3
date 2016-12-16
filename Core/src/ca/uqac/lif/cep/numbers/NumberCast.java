@@ -1,6 +1,6 @@
 package ca.uqac.lif.cep.numbers;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.Function;
@@ -48,7 +48,7 @@ public class NumberCast extends UnaryFunction<Object,Number>
 		return 0;
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Object o;
 		Function left;

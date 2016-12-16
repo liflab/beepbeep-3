@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 /**
  * Function processor returning a constant value.
@@ -39,7 +39,7 @@ public class ConstantProcessor extends FunctionProcessor
 		super(comp);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		Object o;
 		Constant c;

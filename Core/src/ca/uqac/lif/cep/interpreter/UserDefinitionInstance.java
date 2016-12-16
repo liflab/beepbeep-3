@@ -19,7 +19,7 @@ package ca.uqac.lif.cep.interpreter;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 public class UserDefinitionInstance
 {
@@ -31,7 +31,7 @@ public class UserDefinitionInstance
 		m_definition = definition;
 	}
 
-	public void build(Stack<Object> stack)
+	public void build(ArrayDeque<Object> stack)
 	{
 		// Pull stuff from the stack based on the parsing pattern
 		Map<String,Object> variable_definitions = new HashMap<String,Object>();

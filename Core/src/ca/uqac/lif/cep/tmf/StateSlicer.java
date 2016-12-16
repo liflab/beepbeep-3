@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -246,7 +246,7 @@ public class StateSlicer extends SingleProcessor
 		return m_fixedValues.size();
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Function f = (Function) stack.pop();
 		stack.pop(); // ON

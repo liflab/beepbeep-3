@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.sets;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
@@ -47,7 +47,7 @@ public class BagUnion extends CumulativeFunction<Multiset>
 		super(MultisetUnion.instance);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // UNION
 		stack.pop(); // BAG

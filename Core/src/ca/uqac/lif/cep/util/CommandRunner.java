@@ -98,7 +98,7 @@ public class CommandRunner extends Thread
 
 	/**
 	 * Constantly reads an input stream and captures its content.
-	 * Inspired from <a href="http://stackoverflow.com/questions/14165517/processbuilder-forwarding-stdout-and-stderr-of-started-processes-without-blocki">Stack Overflow</a>
+	 * Inspired from <a href="http://stackoverflow.com/questions/14165517/processbuilder-forwarding-stdout-and-stderr-of-started-processes-without-blocki">ArrayDeque Overflow</a>
 	 */
 	protected class StreamGobbler extends Thread
 	{

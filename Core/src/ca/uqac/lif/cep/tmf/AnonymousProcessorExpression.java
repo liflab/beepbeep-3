@@ -1,6 +1,6 @@
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Processor;
 
@@ -11,7 +11,7 @@ class AnonymousProcessorExpression extends ProcessorExpression
 		super(p, null);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		Object o;
 		Processor p;

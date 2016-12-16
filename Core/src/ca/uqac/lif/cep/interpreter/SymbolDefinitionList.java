@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.interpreter;
 
 import java.util.HashMap;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 
@@ -34,7 +34,7 @@ public class SymbolDefinitionList extends HashMap<String, String>
 		super();
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Object top = stack.peek();
 		SymbolDefinitionList new_sdl = new SymbolDefinitionList();

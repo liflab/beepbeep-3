@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
@@ -30,7 +30,7 @@ public class MapPlaceholder extends ArgumentPlaceholder
 		super(index);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		Object o = stack.pop();
 		if (o instanceof String)

@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.Constant;
@@ -39,7 +39,7 @@ public class EmlNumber extends Constant
 		super(o);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Object o = stack.pop();
 		if (o instanceof Number)

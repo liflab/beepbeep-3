@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Queue;
-import java.util.Stack;
+import java.util.ArrayDeque;
 import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -70,7 +70,7 @@ public class HttpReader extends StreamReader
 		return super.compute(inputs);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		String url = (String) stack.pop();
 		stack.pop(); // URL

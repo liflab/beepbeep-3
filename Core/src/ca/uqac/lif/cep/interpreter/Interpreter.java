@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
+import java.util.ArrayDeque;
 import java.util.logging.Level;
 
 import ca.uqac.lif.bullwinkle.BnfParser;
@@ -511,7 +511,7 @@ public class Interpreter implements ParseNodeVisitor
 		// The node's name appears to refer to a Buildable object
 		String node_name = node.getToken();
 		Class<?> obj = m_associations.get(node_name);
-		Method m = getStaticMethod(obj, "build", Stack.class);
+		Method m = getStaticMethod(obj, "build", ArrayDeque.class);
 		if (m == null)
 		{
 			throw new IllegalAccessException("Method build does not exist in class " + obj);
@@ -537,7 +537,7 @@ public class Interpreter implements ParseNodeVisitor
 		// The node's name appears to refer to a Buildable object
 		String node_name = node.getToken();
 		Object obj = m_userDefinedAssociations.get(node_name);
-		Method m = getMethod(obj, "build", Stack.class);
+		Method m = getMethod(obj, "build", ArrayDeque.class);
 		try
 		{
 			m.invoke(obj, m_nodes);

@@ -1,7 +1,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.ArrayList;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 /**
  * A list of input traces. This class exists only to provide
@@ -16,7 +16,7 @@ public class ProcessorExpressionList extends ArrayList<ProcessorExpression>
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		Object top = stack.peek();
 		ProcessorExpressionList new_al = new ProcessorExpressionList();

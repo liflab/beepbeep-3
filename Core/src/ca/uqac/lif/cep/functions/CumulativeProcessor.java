@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -37,7 +37,7 @@ public class CumulativeProcessor extends FunctionProcessor
 		super(f);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Object o;
 		Processor p;

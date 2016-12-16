@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.interpreter;
 
 import java.util.Map;
-import java.util.Stack;
+import java.util.ArrayDeque;
 import java.util.logging.Level;
 
 import ca.uqac.lif.bullwinkle.BnfRule;
@@ -80,7 +80,7 @@ public class UserDefinition
 		m_interpreter = i;
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		// We use toString: if the definition is a single number, a number is
 		// on the stack rather than a string

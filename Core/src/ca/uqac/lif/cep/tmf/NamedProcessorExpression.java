@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.interpreter.Interpreter;
@@ -29,7 +29,7 @@ class NamedProcessorExpression extends ProcessorExpression
 		super(p, n);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		Object o;
 		Processor p;

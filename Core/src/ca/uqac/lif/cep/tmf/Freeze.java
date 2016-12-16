@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Queue;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -61,7 +61,7 @@ public class Freeze extends SingleProcessor
 		return wrapVector(m_output);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		//stack.pop(); // (
 		Processor p = (Processor) stack.pop();

@@ -1,7 +1,7 @@
 package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 
@@ -136,7 +136,7 @@ public abstract class BinaryFunction<T,V,U> extends SimpleFunction
 	 * @param instance The instance of binary function to build
 	 * @throws ConnectorException
 	 */
-	public static void buildInfix(Stack<Object> stack, BinaryFunction<?,?,?> instance) throws ConnectorException
+	public static void buildInfix(ArrayDeque<Object> stack, BinaryFunction<?,?,?> instance) throws ConnectorException
 	{
 		// We take care of the fact that either of the arguments
 		// can be surrounded by parentheses or not
