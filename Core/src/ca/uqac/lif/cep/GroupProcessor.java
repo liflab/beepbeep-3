@@ -313,18 +313,20 @@ public class GroupProcessor extends Processor
 			group.addProcessor(clone_p);
 		}
 		// Re-pipe the inputs like in the original group
-		for (Integer input_number : m_inputPullableAssociations.keySet())
+		for (Map.Entry<Integer,ProcessorAssociation> entry : m_inputPullableAssociations.entrySet())
 		{
-			ProcessorAssociation pa = m_inputPullableAssociations.get(input_number);
+			int input_number = entry.getKey();
+			ProcessorAssociation pa = entry.getValue();
 			Processor clone_p = new_procs.get(pa.m_processor.getId());
-			group.associateInput(input_number, clone_p, pa.m_ioNumber);
+			group.associateInput(input_number, clone_p, pa.m_ioNumber);			
 		}
 		// Re-pipe the outputs like in the original group
-		for (Integer output_number : m_outputPushableAssociations.keySet())
+		for (Map.Entry<Integer,ProcessorAssociation> entry : m_outputPushableAssociations.entrySet())
 		{
-			ProcessorAssociation pa = m_outputPushableAssociations.get(output_number);
+			int output_number = entry.getKey();
+			ProcessorAssociation pa = entry.getValue();
 			Processor clone_p = new_procs.get(pa.m_processor.getId());
-			group.associateOutput(output_number, clone_p, pa.m_ioNumber);
+			group.associateOutput(output_number, clone_p, pa.m_ioNumber);			
 		}
 		// Re-pipe the internal processors like in the original group
 		CopyCrawler cc = new CopyCrawler(new_procs);

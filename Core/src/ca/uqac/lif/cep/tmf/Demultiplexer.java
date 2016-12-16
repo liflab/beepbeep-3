@@ -17,10 +17,10 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Vector;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -70,7 +70,7 @@ public class Demultiplexer extends SingleProcessor
 		m_window.add(inputs[0]);
 		if (m_window.size() == m_width)
 		{
-			Vector<Object> objects = new Vector<Object>();
+			List<Object> objects = new ArrayList<Object>(m_window.size());
 			objects.addAll(m_window);
 			Object[] out = new Object[1];
 			out[0] = objects;
