@@ -1,7 +1,8 @@
 BeepBeep 3: an expressive query processor for event streams
 ===========================================================
 
-[![Build Status](https://semaphoreci.com/api/v1/sylvainhalle/beepbeep-3/branches/master/badge.svg)](https://semaphoreci.com/sylvainhalle/beepbeep-3)
+[![Travis](https://img.shields.io/travis/liflab/beepbeep-3.svg?style=flat-square)]()
+[![SonarQube Coverage](https://img.shields.io/sonar/http/sonarqube.com/liflab:beepbeep-3/coverage.svg?style=flat-square)]()
 
 BeepBeep is an event stream query engine. It can take as input various
 sources of *events*, pipe them through various *processors*, and produce
@@ -27,7 +28,7 @@ following companion library needs to be installed for BeepBeep to
 compile and run:
 
 - The [Bullwinkle parser](https://github.com/sylvainhalle/Bullwinkle),
-  an on-the-fly parser for BNF grammars *(tested with version 1.2.4)*
+  an on-the-fly parser for BNF grammars *(tested with version 1.3.1)*
 
 ### Extensions
 
