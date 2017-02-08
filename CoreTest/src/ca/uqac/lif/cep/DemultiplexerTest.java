@@ -19,8 +19,8 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
 import java.util.Queue;
-import java.util.Vector;
 
 import org.junit.Test;
 
@@ -52,13 +52,13 @@ public class DemultiplexerTest extends BeepBeepUnitTest
 			assertEquals(0, queue.size());
 			push1.push(2);
 			assertEquals(1, queue.size());
-			Vector<Object> out = (Vector<Object>) queue.remove();
+			List<Object> out = (List<Object>) queue.remove();
 			assertEquals(3, out.size());
 			push1.push(3);
-			out = (Vector<Object>) queue.remove();
+			out = (List<Object>) queue.remove();
 			assertEquals(3, out.size());
 			push1.push(4);
-			out = (Vector<Object>) queue.remove();
+			out = (List<Object>) queue.remove();
 			assertEquals(3, out.size());
 			demux.reset();
 			qsink.reset();
