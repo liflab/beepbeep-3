@@ -114,23 +114,27 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * {@link #hasNextSoft()} returns <code>YES</code>, and <code>null</code>
 	 * is returned otherwise.
 	 * @return An event, or <code>null</code> if none could be retrieved
+	 * @throws PullableException A runtime exception indicating that something
+	 * went wrong when attempting to check if a next event exists.
 	 */
-	public Object pullSoft();
+	public Object pullSoft() throws PullableException;
 
 	/**
 	 * Attempts to pull an event from the source. An event is returned if
 	 * {@link #hasNext()} returns <code>YES</code>, and <code>null</code>
 	 * is returned otherwise.
 	 * @return An event, or <code>null</code> if none could be retrieved
+	 * @throws PullableException A runtime exception indicating that something
+	 * went wrong when attempting to check if a next event exists.
 	 */
-	public Object pull();
+	public Object pull() throws PullableException;
 
 	/**
 	 * Synonym of {@link #pull()}.
 	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
 	@Override
-	public Object next();
+	public Object next() throws PullableException;
 
 	/**
 	 * Determines if an event can be pulled from the output. Depending on
@@ -148,8 +152,10 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * Therefore, the method is lazy in that it asks events from its input only
 	 * once, and attempts to produce an output event only once.
 	 * @return Whether a next event exists
+	 * @throws PullableException A runtime exception indicating that something
+	 * went wrong when attempting to check if a next event exists.
 	 */
-	public NextStatus hasNextSoft();
+	public NextStatus hasNextSoft() throws PullableException;
 
 	/**
 	 * Determines if an event can be pulled from the output, by trying "harder"
@@ -169,9 +175,11 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * is configured by the static field {@link #s_maxRetries}.
 	 * </ul>
 	 * @return Whether a next event exists
+	 * @throws PullableException A runtime exception indicating that something
+	 * went wrong when attempting to check if a next event exists.
 	 */
 	@Override
-	public boolean hasNext();
+	public boolean hasNext() throws PullableException;
 
 	/**
 	 * Gets the processor instance this Pullable is linked to
@@ -209,4 +217,47 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * be thrown in such a case.
 	 */
 	public void dispose();
+
+	/**
+	 * A runtime exception indicating that something
+	 * went wrong when attempting to check if a next event exists. This
+	 * happens, for example, if one of a processor's inputs it not connected
+	 * to anything. Rather than throwing a {@code NullPointerException}, the
+	 * issue will be wrapped within a PullableException with a better
+	 * error message.
+	 */
+	public static class PullableException extends RuntimeException
+	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		/**
+		 * The processor to which the exception is associated (if any)
+		 */
+		protected final Processor m_processor;
+
+		public PullableException(Throwable t)
+		{
+			this(t, null);
+		}
+
+		public PullableException(String message)
+		{
+			this(message, null);
+		}
+		
+		public PullableException(String message, Processor p)
+		{
+			super(message);
+			m_processor = p;
+		}
+		
+		public PullableException(Throwable t, Processor p)
+		{
+			super(t);
+			m_processor = p;
+		}
+	}
 }

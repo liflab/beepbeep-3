@@ -156,7 +156,10 @@ public abstract class SingleProcessor extends Processor
 						for (int i = 0; i < m_outputPushables.length; i++)
 						{
 							Pushable p = m_outputPushables[i];
-							assert p != null;
+							if (p == null)
+							{
+								throw new PushableException("Output " + i + " of this processor is connected to nothing", getProcessor());
+							}
 							p.push(evt[i]);
 							p.waitFor();
 						}
@@ -282,7 +285,10 @@ public abstract class SingleProcessor extends Processor
 				for (int i = 0; i < m_inputArity; i++)
 				{
 					Pullable p = m_inputPullables[i];
-					assert p != null;
+					if (p == null)
+					{
+						throw new PullableException("Input " + i + " of this processor is connected to nothing", getProcessor());
+					}
 					boolean status = p.hasNext();
 					if (status == false)
 					{
@@ -295,6 +301,7 @@ public abstract class SingleProcessor extends Processor
 				for (int i = 0; i < m_inputArity; i++)
 				{
 					Pullable p = m_inputPullables[i];
+					// Don't check for p == null, we did it above
 					Object o = p.pull();
 					inputs[i] = o;
 				}

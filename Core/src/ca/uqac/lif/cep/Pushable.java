@@ -43,8 +43,10 @@ public interface Pushable
 	 * @return The same instance of pushable. This is done to allow chain
 	 *   calls to {@link Pushable} objects, e.g.
 	 *   <code>p.push(o1).push(o2)</code>.
+	 * @throws PushableException A runtime exception indicating that something
+	 * went wrong when attempting to push the event
 	 */
-	public Pushable push(Object o);
+	public Pushable push(Object o) throws PushableException;
 
 	/**
 	 * Pushes an event into one of the processor's input trace, but
@@ -64,9 +66,10 @@ public interface Pushable
 	 * @return The same instance of pushable. This is done to allow chain
 	 *   calls to {@link Pushable} objects, e.g.
 	 *   <code>p.push(o1).push(o2)</code>.
+	 * @throws PushableException A runtime exception indicating that something
+	 * went wrong when attempting to push the event
 	 */
-	public Pushable pushFast(Object o);
-
+	public Pushable pushFast(Object o) throws PushableException;
 
 	/**
 	 * Gets the processor instance this Pushable is linked to
@@ -87,7 +90,7 @@ public interface Pushable
 	 * waits for the operation to be completed; so calling this method
 	 * afterwards should return immediately (as a matter of fact,
 	 * calling it is even optional). For a non-blocking
-	 * call (with {@link #pushFast(Object) pushFast()}, this is the opposite:
+	 * call (with {@link #pushFast(Object) pushFast()}), this is the opposite:
 	 * the call to {@link #push(Object) push()} should return more or less
 	 * immediately, but the call to this method will not return until
 	 * the push operation is finished.
@@ -104,4 +107,47 @@ public interface Pushable
 	 * be thrown in such a case.
 	 */
 	public void dispose();
+	
+	/**
+	 * A runtime exception indicating that something
+	 * went wrong when attempting to check if a next event exists. This
+	 * happens, for example, if one of a processor's inputs it not connected
+	 * to anything. Rather than throwing a {@code NullPointerException}, the
+	 * issue will be wrapped within a PullableException with a better
+	 * error message.
+	 */
+	public static class PushableException extends RuntimeException
+	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		/**
+		 * The processor to which the exception is associated (if any)
+		 */
+		protected final Processor m_processor;
+
+		public PushableException(Throwable t)
+		{
+			this(t, null);
+		}
+
+		public PushableException(String message)
+		{
+			this(message, null);
+		}
+		
+		public PushableException(String message, Processor p)
+		{
+			super(message);
+			m_processor = p;
+		}
+		
+		public PushableException(Throwable t, Processor p)
+		{
+			super(t);
+			m_processor = p;
+		}
+	}
 }
