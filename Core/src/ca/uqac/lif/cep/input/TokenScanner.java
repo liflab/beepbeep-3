@@ -2,15 +2,14 @@ package ca.uqac.lif.cep.input;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Queue;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
-public class TokenScanner extends SingleProcessor
+public class TokenScanner extends UniformProcessor
 {
 	/**
 	 * The scanner to read from
@@ -49,7 +48,7 @@ public class TokenScanner extends SingleProcessor
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		if (m_scanner.hasNext(m_pattern))
 		{
@@ -58,7 +57,7 @@ public class TokenScanner extends SingleProcessor
 			{
 				line += "\n";
 			}
-			outputs.add(new Object[]{line});
+			outputs[0] = line;
 			return true;
 		}
 		return false;

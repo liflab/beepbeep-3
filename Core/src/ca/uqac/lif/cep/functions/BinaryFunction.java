@@ -45,11 +45,9 @@ public abstract class BinaryFunction<T,V,U> extends SimpleFunction
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 2 */
-	public /*@NonNull*/ Object[] compute(/*@NonNull*/ Object[] inputs)
+	public void compute(/*@NonNull*/ Object[] inputs, Object[] outputs)
 	{
-		Object[] out = new Object[1];
-		out[0] = getValue((T) inputs[0], (V) inputs[1]);
-		return out;
+		outputs[0] = getValue((T) inputs[0], (V) inputs[1]);
 	}
 
 	/**

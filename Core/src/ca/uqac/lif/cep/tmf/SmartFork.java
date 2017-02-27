@@ -53,7 +53,7 @@ public final class SmartFork extends Processor
 	 * After how many calls to <code>pull()</code> or <code>push()</code>
 	 * do we call the cleanup of the input queue
 	 */
-	static final int s_cleanInterval = 10;
+	protected int m_cleanInterval = 1000;
 
 	/**
 	 * How many calls to <code>pull()</code> or <code>push()</code>
@@ -92,6 +92,16 @@ public final class SmartFork extends Processor
 		{
 			m_outputPushables[i] = reference.m_outputPushables[i];
 		}
+	}
+	
+	/**
+	 * Sets after how many calls to <code>pull()</code> or <code>push()</code>
+	 * do we call the cleanup of the input queue
+	 * @param num_events The number of calls
+	 */
+	public void setCleanInterval(int num_events)
+	{
+		m_cleanInterval = num_events;
 	}
 
 	@Override
@@ -202,7 +212,7 @@ public final class SmartFork extends Processor
 	 */
 	private synchronized void incrementClean()
 	{
-		m_timeSinceLastClean = (m_timeSinceLastClean + 1) % s_cleanInterval;
+		m_timeSinceLastClean = (m_timeSinceLastClean + 1) % m_cleanInterval;
 		if (m_timeSinceLastClean == 0)
 		{
 			cleanQueue();

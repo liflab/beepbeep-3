@@ -58,11 +58,11 @@ public class Polynomial extends PassthroughFunction
 	{
 		// SNAP
 		Polynomial poly = new Polynomial();
-		Object[] value;
-		value = poly.evaluate(new Integer[]{3});
+		Object[] value = new Object[1];
+		poly.evaluate(new Integer[]{3}, value);
 		System.out.printf("Return value of the function: %f\n", value[0]);
 		// SNAP
-		value = poly.evaluate(new Integer[]{8});
+		poly.evaluate(new Integer[]{8}, value);
 		System.out.printf("Return value of the function: %f\n", value[0]);
 	}
 }

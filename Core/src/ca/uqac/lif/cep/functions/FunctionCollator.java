@@ -17,13 +17,12 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.tmf.Collator;
 
 /**
@@ -46,7 +45,7 @@ import ca.uqac.lif.cep.tmf.Collator;
  * 
  * @author Sylvain Hallé
  */
-public class FunctionCollator extends SingleProcessor
+public class FunctionCollator extends UniformProcessor
 {
 	protected Function m_function;
 
@@ -78,10 +77,9 @@ public class FunctionCollator extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-		Object[] out_vals = m_function.evaluate(inputs);
-		outputs.add(out_vals);
+		m_function.evaluate(inputs, outputs);
 		return true;
 	}
 

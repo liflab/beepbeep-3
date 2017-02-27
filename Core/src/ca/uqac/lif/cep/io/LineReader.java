@@ -4,18 +4,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Queue;
 import java.util.Scanner;
 
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Special case of stream reader reading lines from an input stream.
  * @author Sylvain Hallé
  *
  */
-public class LineReader extends SingleProcessor
+public class LineReader extends UniformProcessor
 {
 	/**
 	 * The scanner to read from
@@ -81,7 +80,7 @@ public class LineReader extends SingleProcessor
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		if (m_scanner.hasNextLine())
 		{
@@ -90,7 +89,7 @@ public class LineReader extends SingleProcessor
 			{
 				line += "\n";
 			}
-			outputs.add(wrapObject(line));
+			outputs[0] = line;
 			return true;
 		}
 		return false;

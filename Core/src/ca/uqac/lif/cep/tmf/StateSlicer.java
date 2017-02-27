@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.ArrayDeque;
 import java.util.logging.Level;
@@ -33,7 +32,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
@@ -59,7 +58,7 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
  * 
  * @author Sylvain Hallé
  */
-public class StateSlicer extends SingleProcessor
+public class StateSlicer extends UniformProcessor
 {
 	/**
 	 * The slicing function
@@ -119,10 +118,11 @@ public class StateSlicer extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		int output_arity = getOutputArity();
-		Object[] f_value = m_slicingFunction.evaluate(inputs);
+		Object[] f_value = new Object[1];
+		m_slicingFunction.evaluate(inputs, f_value);
 		Object slice_id = f_value[0];
 		Set<Object> slices_to_process = new HashSet<Object>();
 		if (slice_id instanceof ToAllSlices || slice_id == null)
@@ -177,10 +177,10 @@ public class StateSlicer extends SingleProcessor
 				// Collect the output from that processor
 				Object[] out = sink_p.remove();
 				// Can we clean that slice?
-				Object[] can_clean = null;
+				Object[] can_clean = new Object[1];
 				if (m_cleaningFunction != null)
 				{
-					can_clean = m_cleaningFunction.evaluate(out);
+					m_cleaningFunction.evaluate(out, can_clean);
 				}
 				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]) == true)
 				{
@@ -192,7 +192,7 @@ public class StateSlicer extends SingleProcessor
 				m_lastValues.set(m_sliceIndices.get(s_id), out[0]);
 			}
 		}
-		outputs.add(wrapObject(m_lastValues));
+		outputs[0] = m_lastValues;
 		return true;
 	}
 

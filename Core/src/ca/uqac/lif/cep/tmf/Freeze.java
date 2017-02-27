@@ -17,14 +17,13 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.PullConstant;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Repeatedly outputs the first event it has received. <code>Freeze</code>
@@ -35,7 +34,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  *
  */
-public class Freeze extends SingleProcessor
+public class Freeze extends UniformProcessor
 {
 	protected Object[] m_output;
 
@@ -52,13 +51,13 @@ public class Freeze extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		if (m_output == null)
 		{
 			m_output = inputs;
 		}
-		outputs.add(m_output);
+		outputs[0] = m_output[0];
 		return true;
 	}
 

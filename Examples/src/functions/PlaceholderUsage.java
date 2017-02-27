@@ -31,10 +31,11 @@ public class PlaceholderUsage
 	{
 		// SNIP
 		Function foo = new ArgumentPlaceholder(1);
+		Object values[] = new Object[1];
 		// A constant does not need any argument; we may pass
 		// an empty array, or simply null
 		Object inputs[] = new Object[]{42, "foo"};
-		Object values[] = foo.evaluate(inputs);
+		foo.evaluate(inputs, values);
 		String s_value = (String) values[0]; // = "foo"
 		// SNIP
 		System.out.printf("The value of foo is %s\n", s_value);

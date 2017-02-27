@@ -63,7 +63,8 @@ public class GetElements extends UnaryFunction<Multiset,Multiset>
 		{
 			Object[] in = new Object[1];
 			in[0] = o;
-			Object[] values = m_condition.evaluate(in);
+			Object[] values = new Object[1];
+			 m_condition.evaluate(in, values);
 			if (values[0] instanceof Boolean && ((Boolean) values[0]))
 			{
 				out.add(o);

@@ -53,13 +53,14 @@ public class Interval
 								));
 		// SNIP
 		// SNAP
-		Object[] value = in_interval.evaluate(new Integer[]{3, 2, 8});
+		Object[] value = new Object[1];
+		in_interval.evaluate(new Integer[]{3, 2, 8}, value);
 		// SNAP
 		// Likewise, a function always returns an array of objects. Most
 		// functions (like this one) return a single object, so the output
 		// array is also of size 1
 		System.out.printf("Return value of the function: %b\n", value[0]);
-		value = in_interval.evaluate(new Integer[]{6, 7, 9});
+		in_interval.evaluate(new Integer[]{6, 7, 9}, value);
 		System.out.printf("Return value of the function: %b\n", value[0]);
 	}
 }

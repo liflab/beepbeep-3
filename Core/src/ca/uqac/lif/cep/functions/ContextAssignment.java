@@ -28,10 +28,10 @@ public class ContextAssignment
 	 * @param inputs The inputs to evaluate the assignment function
 	 * @param context The context to update
 	 */
-	public void assign(Object[] inputs, Context context)
+	public void assign(Object[] inputs, Object[] outputs, Context context)
 	{
-		Object[] v = m_value.evaluate(inputs, context);
-		context.put(m_lvalue, v[0]);
+		m_value.evaluate(inputs, outputs, context);
+		context.put(m_lvalue, outputs[0]);
 	}
 
 	/**
@@ -39,10 +39,10 @@ public class ContextAssignment
 	 * @param inputs The inputs to evaluate the assignment function
 	 * @param c The object
 	 */
-	public void assign(Object[] inputs, Contextualizable c)
+	public void assign(Object[] inputs, Object[] outputs, Contextualizable c)
 	{
 		Context context = c.getContext();
-		assign(inputs, context);
+		assign(inputs, outputs, context);
 		c.setContext(context);
 	}
 

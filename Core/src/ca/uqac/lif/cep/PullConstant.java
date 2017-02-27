@@ -17,14 +17,12 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.Queue;
-
 /**
  * Returns the same event over and over when pulled
  * 
  * @author Sylvain Hallé
  */
-public class PullConstant extends SingleProcessor
+public class PullConstant extends UniformProcessor
 {
 	/**
 	 * The event to return
@@ -42,9 +40,9 @@ public class PullConstant extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-		outputs.add(new Object[]{m_toReturn});
+		outputs[0] = m_toReturn;
 		return true;
 	}
 

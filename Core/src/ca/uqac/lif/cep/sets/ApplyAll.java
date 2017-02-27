@@ -61,12 +61,10 @@ public class ApplyAll extends UnaryFunction<Multiset,Multiset>
 		{
 			Object[] in = new Object[1];
 			in[0] = o;
-			Object[] values = m_function.evaluate(in);
+			Object[] values = new Object[1];
+			m_function.evaluate(in, values);
 			out.add(values[0]);
 		}
 		return out;
 	}
-
-
-
 }

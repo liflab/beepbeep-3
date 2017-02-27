@@ -51,11 +51,9 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 1 */
-	public Object[] compute(/*@NonNull*/ Object[] inputs)
+	public void compute(/*@NonNull*/ Object[] inputs, Object[] outputs)
 	{
-		Object[] out = new Object[1];
-		out[0] = getValue((T) inputs[0]);
-		return out;
+		outputs[0] = getValue((T) inputs[0]);
 	}
 
 	/**

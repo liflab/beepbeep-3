@@ -57,15 +57,15 @@ public abstract class PassthroughFunction extends Function
 	public abstract Function getFunction();
 
 	@Override
-	public final Object[] evaluate(Object[] inputs, Context context)
+	public final void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
-		return m_function.evaluate(inputs, context);
+		m_function.evaluate(inputs, outputs, context);
 	}
 
 	@Override
-	public final Object[] evaluate(Object[] inputs)
+	public final void evaluate(Object[] inputs, Object[] outputs)
 	{
-		return m_function.evaluate(inputs);
+		m_function.evaluate(inputs, outputs);
 	}
 
 	@Override

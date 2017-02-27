@@ -64,16 +64,16 @@ public class Maximum extends BinaryFunction<Number,Number,Number>
 	public static void main(String[] args)
 	{
 		Maximum max = Maximum.instance;
-		Object[] value;
+		Object[] value = new Object[1];
 		// A function is always called on an array of objects; this array
 		// corresponds to the arguments. Here the function is unary, hence
 		// the array is of size 2
-		value = max.evaluate(new Float[]{3.5f, 10f});
+		max.evaluate(new Float[]{3.5f, 10f}, value);
 		// Likewise, a function always returns an array of objects. Most
 		// functions (like this one) return a single object, so the output
 		// array is also of size 1
 		System.out.printf("Return value of the function: %f\n", value[0]);
-		value = max.evaluate(new Float[]{13.1f, 7.7f});
+		max.evaluate(new Float[]{13.1f, 7.7f}, value);
 		System.out.printf("Return value of the function: %f\n", value[0]);
 	}
 }

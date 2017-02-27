@@ -77,17 +77,15 @@ public class ArgumentPlaceholder extends Function
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
-		Object[] out = new Object[1];
-		out[0] = inputs[m_index];
-		return out;
+		outputs[0] = inputs[m_index];
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs)
+	public void evaluate(Object[] inputs, Object[] outputs)
 	{
-		return evaluate(inputs, null);
+		evaluate(inputs, outputs, null);
 	}
 
 	@Override

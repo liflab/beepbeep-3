@@ -17,13 +17,12 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.util.CacheMap;
 
 /**
@@ -42,7 +41,7 @@ import ca.uqac.lif.cep.util.CacheMap;
  * to any n-ary processor.)
  * @author Sylvain Hallé
  */
-public class Collator extends SingleProcessor
+public class Collator extends UniformProcessor
 {
 	protected ProcessorExpressionList m_processorList;
 
@@ -53,7 +52,7 @@ public class Collator extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		int size = m_processorList.size();
 		String[] names = new String[size];
@@ -66,7 +65,7 @@ public class Collator extends SingleProcessor
 			i++;
 		}
 		CacheMap<Object> map = new CacheMap<Object>(names, values);
-		outputs.add(wrapObject(map));
+		outputs[0] = map;
 		return true;
 	}
 

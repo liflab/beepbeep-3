@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,13 +17,12 @@
  */
 package ca.uqac.lif.cep.io;
 
-import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.util.CommandRunner;
 
 /**
@@ -33,7 +32,7 @@ import ca.uqac.lif.cep.util.CommandRunner;
  * @author Sylvain Hallé
  *
  */
-public class Caller extends SingleProcessor
+public class Caller extends UniformProcessor
 {
 	/**
 	 * The command to call
@@ -52,11 +51,11 @@ public class Caller extends SingleProcessor
 	protected static long s_waitInterval = 100;
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		// Pass the event (as is) to the standard input of the command
 		byte[] contents = CommandRunner.runAndGet(m_command, (byte[]) inputs[0]);
-		outputs.add(wrapObject(contents));
+		outputs[0] = contents;
 		return true;
 	}
 

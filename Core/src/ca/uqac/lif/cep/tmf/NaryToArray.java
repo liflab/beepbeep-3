@@ -17,16 +17,15 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Converts <i>n</i> input traces into a single output trace, whose events are
  * arrays of <i>n</i> elements
  * @author Sylvain Hallé
  */
-public class NaryToArray extends SingleProcessor
+public class NaryToArray extends UniformProcessor
 {
 	public NaryToArray(int in_arity)
 	{
@@ -34,9 +33,9 @@ public class NaryToArray extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-		outputs.add(wrapObject(inputs));
+		outputs[0] = wrapObject(inputs);
 		return true;
 	}
 

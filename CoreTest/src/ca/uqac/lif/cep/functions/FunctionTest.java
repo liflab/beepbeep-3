@@ -79,7 +79,8 @@ public class FunctionTest extends BeepBeepUnitTest
 		arguments[1] = new ContextPlaceholder("x");
 		Context context = new Context();
 		context.put("x", 3);
-		Object[] result = add.evaluate(arguments, context);
+		Object[] result = new Object[1];
+		add.evaluate(arguments, result, context);
 		assertEquals(1, result.length);
 		assertNotNull(result[0]);
 		assertEquals(5, result[0]);

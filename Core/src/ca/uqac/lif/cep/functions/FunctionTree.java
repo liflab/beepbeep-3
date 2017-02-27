@@ -83,20 +83,22 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
 		Object[] values = new Object[m_children.length];
 		for (int i = 0; i < values.length; i++)
 		{
-			values[i] = m_children[i].evaluate(inputs, context)[0];
+			Object[] val = new Object[1];
+			m_children[i].evaluate(inputs, val, context);
+			values[i] = val[0];
 		}
-		return m_function.evaluate(values, context);
+		m_function.evaluate(values, outputs, context);
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs)
+	public void evaluate(Object[] inputs, Object[] outputs)
 	{
-		return evaluate(inputs, null);
+		evaluate(inputs, outputs, null);
 	}
 
 	@Override

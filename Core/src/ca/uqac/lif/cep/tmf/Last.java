@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Iterator;
-import java.util.Queue;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
@@ -57,7 +56,7 @@ public class Last extends Passthrough
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		// Don't do anything, as the computation is taken care of by
 		// the SentinelPullable

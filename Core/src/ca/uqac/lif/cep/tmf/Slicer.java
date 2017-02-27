@@ -21,7 +21,6 @@ import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -29,7 +28,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
@@ -52,7 +51,7 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
  * 
  * @author Sylvain Hallé
  */
-public class Slicer extends SingleProcessor
+public class Slicer extends UniformProcessor
 {
 	/**
 	 * The slicing function
@@ -83,10 +82,11 @@ public class Slicer extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		int output_arity = getOutputArity();
-		Object[] f_value = m_slicingFunction.evaluate(inputs);
+		Object[] f_value = new Object[1];
+		m_slicingFunction.evaluate(inputs, f_value);
 		Object slice_id = f_value[0];
 		Set<Object> slices_to_process = new HashSet<Object>();
 		if (slice_id instanceof AllSlices || slice_id == null)
@@ -134,8 +134,7 @@ public class Slicer extends SingleProcessor
 				p_array[i].waitFor();
 			}
 			// Collect the output from that processor
-			Object[] out = sink_p.remove();
-			outputs.add(out);
+			outputs[0] = sink_p.remove()[0];
 		}
 		return true;
 	}

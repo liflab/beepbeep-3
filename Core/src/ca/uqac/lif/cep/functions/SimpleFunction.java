@@ -22,12 +22,13 @@ import ca.uqac.lif.cep.Context;
 public abstract class SimpleFunction extends Function
 {
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
 		// If no context is given, call compute() straight away
 		if (context == null)
 		{
-			return compute(inputs);
+			compute(inputs, outputs);
+			return;
 		}
 		Object[] concrete_inputs = new Object[inputs.length];
 		// Check each of the concrete inputs if it is a placeholder
@@ -56,21 +57,21 @@ public abstract class SimpleFunction extends Function
 			}
 		}
 		// Call compute() with concrete inputs
-		return compute(concrete_inputs);
+		compute(concrete_inputs, outputs);
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs)
+	public void evaluate(Object[] inputs, Object[] outputs)
 	{
-		return compute(inputs);
+		compute(inputs, outputs);
 	}
 
 	/**
 	 * Computes the outputs of the function, given some inputs
 	 * @param inputs The arguments of the function. The size of the array
 	 *   should be equal to the function's declared input arity.
-	 * @return The outputs of the function. The size of the array returned
+	 * @param outputs The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
 	 */
-	public abstract Object[] compute(Object[] inputs);
+	public abstract void compute(Object[] inputs, Object[] outputs);
 }

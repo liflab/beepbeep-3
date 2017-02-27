@@ -45,7 +45,7 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * @return The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
 	 */
-	public abstract Object[] evaluate(Object[] inputs, Context context);
+	public abstract void evaluate(Object[] inputs, Object[] outputs, Context context);
 
 	/**
 	 * Evaluates the outputs of the function, given some inputs
@@ -54,7 +54,7 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * @return The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
 	 */
-	public abstract Object[] evaluate(Object[] inputs);
+	public abstract void evaluate(Object[] inputs, Object[] outputs);
 
 	/**
 	 * Gets the function's input arity, i.e. the number of arguments

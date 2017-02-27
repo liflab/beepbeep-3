@@ -32,7 +32,8 @@ public class AddNumbers
 		// SNIP
 		Function add = Addition.instance;
 		Object[] inputs = new Object[]{2, 3};
-		Object values[] = add.evaluate(inputs);
+		Object[] values = new Object[1];
+		add.evaluate(inputs, values);
 		float value = (Float) values[0]; // = 5
 		// SNIP
 		System.out.printf("The value is %f\n", value);

@@ -71,21 +71,20 @@ public class ContextPlaceholder extends Function
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
 		if (context == null || !context.containsKey(m_name))
 		{
-			return null;
+			outputs[0] = null;
+			return;
 		}
-		Object[] out = new Object[1];
-		out[0] = context.get(m_name);
-		return out;
+		outputs[0] = context.get(m_name);
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs)
+	public void evaluate(Object[] inputs, Object[] outputs)
 	{
-		return evaluate(inputs, null);
+		evaluate(inputs, outputs, null);
 	}
 
 	@Override

@@ -70,16 +70,16 @@ public class IsPrime extends UnaryFunction<Number,Boolean>
 	public static void main(String[] args)
 	{
 		IsPrime ip = IsPrime.instance;
-		Object[] value;
+		Object[] value = new Object[1];
 		// A function is always called on an array of objects; this array
 		// corresponds to the arguments. Here the function is unary, hence
 		// the array is of size 1
-		value = ip.evaluate(new Integer[]{3});
+		ip.evaluate(new Integer[]{3}, value);
 		// Likewise, a function always returns an array of objects. Most
 		// functions (like this one) return a single object, so the output
 		// array is also of size 1
 		System.out.printf("Return value of the function: %b\n", value[0]);
-		value = ip.evaluate(new Integer[]{8});
+		ip.evaluate(new Integer[]{8}, value);
 		System.out.printf("Return value of the function: %b\n", value[0]);
 	}
 }

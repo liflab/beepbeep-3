@@ -65,12 +65,10 @@ public class MapPlaceholder extends ArgumentPlaceholder
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] out, Context context)
 	{
-		Object[] out = new Object[1];
 		@SuppressWarnings("unchecked")
 		CacheMap<Object> map = (CacheMap<Object>) inputs[0];
 		out[0] = map.getValue(getIndex());
-		return out;
 	}
 }

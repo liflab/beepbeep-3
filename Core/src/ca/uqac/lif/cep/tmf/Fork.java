@@ -21,7 +21,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.objectfactory.IntegerSetting;
 import ca.uqac.lif.cep.objectfactory.SettingsSet;
 
@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.objectfactory.SettingsSet;
  * @author Sylvain Hallé
  *
  */
-public class Fork extends SingleProcessor
+public class Fork extends UniformProcessor
 {
 	public Fork(int out_arity)
 	{
@@ -45,19 +45,13 @@ public class Fork extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		int arity = getOutputArity();
-		Object[] out = new Object[arity];
-		if (inputs.length > 0)
+		for (int i = 0; i < arity; i++)
 		{
-			Object o = inputs[0];
-			for (int i = 0; i < arity; i++)
-			{
-				out[i] = o;
-			}
+			outputs[i] = inputs[0];
 		}
-		outputs.add(out);
 		return true;
 	}
 
@@ -68,6 +62,7 @@ public class Fork extends SingleProcessor
 	@SuppressWarnings("unchecked")
 	public void extendOutputArity(int out_arity)
 	{
+		m_outputArray = new Object[out_arity];
 		m_outputQueues = new Queue[out_arity];
 		m_outputArity = out_arity;
 		for (int i = 0; i < m_outputArity; i++)

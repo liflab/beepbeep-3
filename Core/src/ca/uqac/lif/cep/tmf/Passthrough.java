@@ -17,9 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
-
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Returns its input as its output. Although it seems useless,
@@ -29,7 +27,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  *
  */
-public class Passthrough extends SingleProcessor
+public class Passthrough extends UniformProcessor
 {
 	public Passthrough(int arity)
 	{
@@ -37,9 +35,12 @@ public class Passthrough extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-		outputs.add(inputs);
+		for (int i = 0; i < inputs.length; i++)
+		{
+			outputs[i] = inputs[i];
+		}
 		return true;
 	}
 

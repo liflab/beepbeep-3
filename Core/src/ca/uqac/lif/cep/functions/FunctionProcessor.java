@@ -17,11 +17,10 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Queue;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Applies a function to input events to produce output events. This
@@ -32,7 +31,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  *
  */
-public class FunctionProcessor extends SingleProcessor
+public class FunctionProcessor extends UniformProcessor
 {
 	/**
 	 * The object responsible for the computation
@@ -56,9 +55,9 @@ public class FunctionProcessor extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-		outputs.add(m_function.evaluate(inputs, m_context));
+		m_function.evaluate(inputs, outputs, m_context);
 		return true;
 	}
 

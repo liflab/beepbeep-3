@@ -33,13 +33,14 @@ public class ConstantUsage
 		Function foo = new Constant("foo");
 		// A constant does not need any argument; we may pass
 		// an empty array, or simply null
-		Object values[] = foo.evaluate(null);
+		Object[] values = new Object[1];
+		foo.evaluate(null, values);
 		String s_value = (String) values[0]; // = "foo"
 		// SNIP
 		System.out.printf("The value of foo is %s\n", s_value);
 		// SNAP
 		Function one = new Constant(1);
-		values = one.evaluate(null);
+		one.evaluate(null, values);
 		int i_value = (Integer) values[0]; // = 1
 		// SNAP
 		System.out.printf("The value of one is %d\n", i_value);
