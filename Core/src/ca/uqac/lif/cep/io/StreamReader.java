@@ -149,7 +149,7 @@ public class StreamReader extends Source
 
 	@Override
 	@SuppressWarnings({"squid:S1168", "squid:S1166"})
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out = new String[1];
 		try
@@ -193,9 +193,10 @@ public class StreamReader extends Source
 		if (m_returnCode == ERR_EOF || m_returnCode == ERR_EOT)
 		{
 			// End of stream
-			return null;
+			return false;
 		}
-		return wrapVector(out);
+		outputs.add(out);
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

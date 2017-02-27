@@ -110,7 +110,7 @@ public class Window extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		// Add the inputs to each window
 		boolean windows_ok = true;
@@ -151,11 +151,12 @@ public class Window extends SingleProcessor
 		}
 		if (out == null)
 		{
-			// Don't return null, otherwise it would signal that no
+			// Don't return false, otherwise it would signal that no
 			// event will every be produced in the future
-			return new ArrayDeque<Object[]>();
+			return true;
 		}
-		return wrapVector(out);
+		outputs.add(out);
+		return true;
 	}
 
 	/**

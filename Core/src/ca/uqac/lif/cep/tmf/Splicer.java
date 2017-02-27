@@ -107,11 +107,11 @@ public class Splicer extends Source
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_processorIndex >= m_processors.length)
 		{
-			return null;
+			return false;
 		}
 		Object[] out = new Object[m_pullables.length];
 		for (int index = m_processorIndex; index < m_processors.length; index++)
@@ -136,7 +136,8 @@ public class Splicer extends Source
 			}
 			if (!has_null)
 			{
-				return wrapVector(out);
+				outputs.add(out);
+				return true;
 			}
 			m_processorIndex++;
 			if (m_processorIndex < m_processors.length)
@@ -144,7 +145,7 @@ public class Splicer extends Source
 				setPullablesTo(m_processorIndex);
 			}
 		}
-		return null;
+		return false;
 	}
 
 	@Override

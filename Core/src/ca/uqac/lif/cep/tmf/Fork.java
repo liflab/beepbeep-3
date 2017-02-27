@@ -45,7 +45,7 @@ public class Fork extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		int arity = getOutputArity();
 		Object[] out = new Object[arity];
@@ -57,7 +57,8 @@ public class Fork extends SingleProcessor
 				out[i] = o;
 			}
 		}
-		return wrapVector(out);
+		outputs.add(out);
+		return true;
 	}
 
 	/**

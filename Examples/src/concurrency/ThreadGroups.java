@@ -57,13 +57,14 @@ public class ThreadGroups
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs)
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 		{
 			// Perform some long computation
 			BigInteger i = fib(m_index);
 			m_index++;
 			System.out.println("FIB : " + (m_index - 1) + " DONE");
-			return wrapObject(i);
+			outputs.add(wrapObject(i));
+			return true;
 		}
 
 		@Override
@@ -112,7 +113,7 @@ public class ThreadGroups
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs)
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 		{
 			BigInteger divisor = BigInteger.ONE.add(BigInteger.ONE);
 			BigInteger number = (BigInteger) inputs[0];
@@ -130,7 +131,8 @@ public class ThreadGroups
 				divisor = divisor.add(BigInteger.ONE);
 			}
 			System.out.println("PRIME : " + number + " DONE");
-			return wrapVector(inputs);
+			outputs.add(inputs);
+			return true;
 		}
 
 		@Override
@@ -198,11 +200,12 @@ public class ThreadGroups
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs)
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 		{
 			BigInteger out = count;
 			count = count.add(BigInteger.TEN);
-			return wrapObject(out);
+			outputs.add(wrapObject(out));
+			return true;
 		}
 
 		@Override

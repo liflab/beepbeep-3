@@ -66,7 +66,7 @@ public class CountDecimate extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out = null;
 		if (m_current == 0)
@@ -76,9 +76,10 @@ public class CountDecimate extends SingleProcessor
 		m_current = (m_current + 1) % m_interval;
 		if (out == null)
 		{
-			return new ArrayDeque<Object[]>();
+			return true;
 		}
-		return wrapVector(out);
+		outputs.add(out);
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

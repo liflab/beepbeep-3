@@ -133,12 +133,12 @@ public class QueueSource extends Source
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		int size = m_events.size();
 		if (m_index >= size)
 		{
-			return null;
+			return false;
 		}
 		Object[] output = new Object[getOutputArity()];
 		Object event = m_events.get(m_index);
@@ -154,13 +154,19 @@ public class QueueSource extends Source
 		if (m_index > size && !m_loop)
 		{
 			// No more events from this queue
-			return null;
+			return false;
 		}
 		for (int i = 0; i < getOutputArity(); i++)
 		{
+			if (event == null)
+			{
+				// If one of the elements is null, don't output anything
+				return true;
+			}
 			output[i] = event;
 		}
-		return wrapVector(output);
+		outputs.add(output);
+		return true;
 	}
 
 	@Override

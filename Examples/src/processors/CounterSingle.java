@@ -18,7 +18,6 @@
 package processors;
 import static ca.uqac.lif.cep.Connector.OUTPUT;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Processor;
@@ -60,12 +59,8 @@ public class CounterSingle extends SingleProcessor
 	 * called every time a new output event must be generated.
 	 */
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		// Create a queue of Object[]. We must put our
-		// results in this queue and return it at the end
-		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
-
 		// Create an array of objects of size 1
 		Object[] front = new Object[1];
 
@@ -75,10 +70,10 @@ public class CounterSingle extends SingleProcessor
 		m_counterValue++;
 
 		// Put the array in the queue
-		out_queue.add(front);
+		outputs.add(front);
 
-		// Return the queue
-		return out_queue;
+		// That's it
+		return true;
 	}
 
 	/*

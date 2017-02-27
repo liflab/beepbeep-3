@@ -53,7 +53,7 @@ public class Collator extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		int size = m_processorList.size();
 		String[] names = new String[size];
@@ -66,7 +66,8 @@ public class Collator extends SingleProcessor
 			i++;
 		}
 		CacheMap<Object> map = new CacheMap<Object>(names, values);
-		return wrapObject(map);
+		outputs.add(wrapObject(map));
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

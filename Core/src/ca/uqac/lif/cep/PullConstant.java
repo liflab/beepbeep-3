@@ -42,9 +42,10 @@ public class PullConstant extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		return wrapObject(m_toReturn);
+		outputs.add(new Object[]{m_toReturn});
+		return true;
 	}
 
 	@Override

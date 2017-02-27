@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
@@ -64,20 +63,19 @@ public class Insert extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		if (!m_sentPad)
 		{
 			// Send the padding before the first input event
 			for (int i = 0; i < m_times; i++)
 			{
-				out_queue.add(m_pad);
+				outputs.add(m_pad);
 			}
 			m_sentPad = true;
 		}
-		out_queue.add(inputs);
-		return out_queue;
+		outputs.add(inputs);
+		return true;
 	}
 
 	@Override

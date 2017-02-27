@@ -119,7 +119,7 @@ public class StateSlicer extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		int output_arity = getOutputArity();
 		Object[] f_value = m_slicingFunction.evaluate(inputs);
@@ -192,7 +192,8 @@ public class StateSlicer extends SingleProcessor
 				m_lastValues.set(m_sliceIndices.get(s_id), out[0]);
 			}
 		}
-		return wrapObject(m_lastValues);
+		outputs.add(wrapObject(m_lastValues));
+		return true;
 	}
 
 	/**

@@ -2,7 +2,6 @@ package ca.uqac.lif.cep.io;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
 public class LineTokenFeeder extends SingleProcessor
@@ -36,14 +35,14 @@ public class LineTokenFeeder extends SingleProcessor
 
 	@Override
 	@SuppressWarnings("squid:S106") 
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		String line = ((String) inputs[0]).trim();
 		if (line.compareTo(m_startToken) == 0)
 		{
 			m_currentEvent = new StringBuilder();
 			m_currentEvent.append(line).append("\n");
-			return Processor.getEmptyQueue();
+			return true;
 		}
 		if (line.compareTo(m_endToken) == 0)
 		{
@@ -56,10 +55,11 @@ public class LineTokenFeeder extends SingleProcessor
 					System.out.println("Tokens fed: " + m_tokensFed);
 				}
 			}
-			return wrapObject(m_currentEvent.toString());
+			outputs.add(wrapObject(m_currentEvent.toString()));
+			return true;
 		}
 		m_currentEvent.append(line);
-		return Processor.getEmptyQueue();
+		return true;
 	}
 
 	@Override

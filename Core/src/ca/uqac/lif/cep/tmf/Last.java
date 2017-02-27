@@ -57,11 +57,11 @@ public class Last extends Passthrough
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		// Don't do anything, as the computation is taken care of by
 		// the SentinelPullable
-		return null;
+		return false;
 	}
 
 	@Override

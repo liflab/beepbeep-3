@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
@@ -37,24 +36,24 @@ public class Dropper extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object o = inputs[0];
 		if (o instanceof Set)
 		{
 			Set<?> s_o = (Set<?>) o;
-			Queue<Object[]> out_queue = new LinkedList<Object[]>();
 			for (Object obj : s_o)
 			{
 				Object[] obj_array = new Object[1];
 				obj_array[0] = obj;
-				out_queue.add(obj_array);
+				outputs.add(obj_array);
 			}
-			return out_queue;
+			return true;
 		}
 		else
 		{
-			return wrapObject(o);
+			outputs.add(wrapObject(o));
+			return true;
 		}
 	}
 

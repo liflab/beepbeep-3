@@ -63,14 +63,14 @@ public class Trim extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_eventsReceived++;
 		if (m_eventsReceived > m_delay)
 		{
-			return wrapVector(inputs);
+			outputs.add(inputs);
 		}
-		return new ArrayDeque<Object[]>();
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

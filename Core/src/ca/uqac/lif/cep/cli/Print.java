@@ -60,11 +60,11 @@ public class Print extends Sink
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (inputs == null || allNull(inputs))
 		{
-			return null;
+			return false;
 		}
 		Object o = inputs[0];
 		if (o != null)
@@ -74,7 +74,7 @@ public class Print extends Sink
 			m_out.setForegroundColor(AnsiPrinter.Color.RED);
 			m_out.print(",");
 		}
-		return wrapVector(new Object[getOutputArity()]);
+		return true;
 	}
 
 	@SuppressWarnings("squid:S106")

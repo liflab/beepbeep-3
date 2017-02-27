@@ -52,13 +52,14 @@ public class Freeze extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_output == null)
 		{
 			m_output = inputs;
 		}
-		return wrapVector(m_output);
+		outputs.add(m_output);
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

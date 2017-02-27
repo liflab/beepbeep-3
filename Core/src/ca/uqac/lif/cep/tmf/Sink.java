@@ -55,7 +55,7 @@ public abstract class Sink extends SingleProcessor
 			Pullable p = m_inputPullables[i];
 			inputs[i] = p.pullSoft();
 		}
-		compute(inputs);
+		compute(inputs, null);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public abstract class Sink extends SingleProcessor
 			Pullable p = m_inputPullables[i];
 			inputs[i] = p.pull();
 		}
-		compute(inputs);
+		compute(inputs, null);
 	}
 
 }

@@ -65,12 +65,14 @@ public class FileWriter extends Sink
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
+		// We return false everywhere, since anyway the FileWrite is
+		// a sink, so we'll never call pull on it
 		if (inputs == null || inputs[0] == null)
 		{
 			// Don't write anything if the input is null
-			return null;
+			return false;
 		}
 		if (m_append == true)
 		{
@@ -80,7 +82,7 @@ public class FileWriter extends Sink
 	}
 
 	@SuppressWarnings("squid:S1168")
-	private Queue<Object[]> overwrite(Object o)
+	private boolean overwrite(Object o)
 	{
 		try
 		{
@@ -92,11 +94,11 @@ public class FileWriter extends Sink
 		{
 			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
-		return null;
+		return false;
 	}
 
 	@SuppressWarnings("squid:S1168")
-	private Queue<Object[]> append(Object o)
+	private boolean append(Object o)
 	{
 		try
 		{
@@ -113,7 +115,7 @@ public class FileWriter extends Sink
 		{
 			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
-		return null;
+		return false;
 	}
 
 	/**

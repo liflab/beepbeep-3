@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -71,7 +70,7 @@ public class WindowFunction extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_window.add(inputs[0]);
 		int size = m_window.size();
@@ -79,14 +78,16 @@ public class WindowFunction extends SingleProcessor
 		{
 			m_window.remove(0);
 			Object value = m_function.evaluate(m_window.toArray())[0];
-			return wrapObject(value);
+			outputs.add(wrapObject(value));
+			return true;
 		}
 		if (size == m_width)
 		{
 			Object value = m_function.evaluate(m_window.toArray())[0];
-			return wrapObject(value);
+			outputs.add(wrapObject(value));
+			return true;
 		}
-		return new ArrayDeque<Object[]>();
+		return true;
 	}
 
 	@Override

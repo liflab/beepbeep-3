@@ -61,7 +61,7 @@ public class Demultiplexer extends SingleProcessor
 	}
 
 	@Override
-	protected final Queue<Object[]> compute(Object[] inputs)
+	protected final boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_window.size() == m_width)
 		{
@@ -74,9 +74,10 @@ public class Demultiplexer extends SingleProcessor
 			objects.addAll(m_window);
 			Object[] out = new Object[1];
 			out[0] = objects;
-			return wrapVector(out);
+			outputs.add(out);
+			return true;
 		}
-		return getEmptyQueue();
+		return true;
 	}
 
 	@Override

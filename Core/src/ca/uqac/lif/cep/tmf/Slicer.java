@@ -83,7 +83,7 @@ public class Slicer extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		int output_arity = getOutputArity();
 		Object[] f_value = m_slicingFunction.evaluate(inputs);
@@ -114,7 +114,6 @@ public class Slicer extends SingleProcessor
 			}
 			slices_to_process.add(slice_id);
 		}
-		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		for (Object s_id : slices_to_process)
 		{
 			// Find processor corresponding to that slice
@@ -136,9 +135,9 @@ public class Slicer extends SingleProcessor
 			}
 			// Collect the output from that processor
 			Object[] out = sink_p.remove();
-			out_queue.add(out);
+			outputs.add(out);
 		}
-		return out_queue;
+		return true;
 	}
 
 	public void addContextFromSlice(Processor p, Object slice)

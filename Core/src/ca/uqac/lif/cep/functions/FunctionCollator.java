@@ -78,10 +78,11 @@ public class FunctionCollator extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		Object[] outputs = m_function.evaluate(inputs);
-		return wrapVector(outputs);
+		Object[] out_vals = m_function.evaluate(inputs);
+		outputs.add(out_vals);
+		return true;
 	}
 
 	@Override

@@ -81,7 +81,7 @@ public class LineReader extends SingleProcessor
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_scanner.hasNextLine())
 		{
@@ -90,9 +90,10 @@ public class LineReader extends SingleProcessor
 			{
 				line += "\n";
 			}
-			return wrapObject(line);
+			outputs.add(wrapObject(line));
+			return true;
 		}
-		return null;
+		return false;
 	}
 
 	@Override

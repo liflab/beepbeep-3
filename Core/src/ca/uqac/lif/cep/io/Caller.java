@@ -52,11 +52,12 @@ public class Caller extends SingleProcessor
 	protected static long s_waitInterval = 100;
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		// Pass the event (as is) to the standard input of the command
 		byte[] contents = CommandRunner.runAndGet(m_command, (byte[]) inputs[0]);
-		return wrapObject(contents);
+		outputs.add(wrapObject(contents));
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

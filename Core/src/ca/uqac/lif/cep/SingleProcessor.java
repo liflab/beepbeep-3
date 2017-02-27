@@ -35,7 +35,7 @@ import java.util.Queue;
  * <p>
  * The only thing that is left undefined is what to do
  * when new input events have been received from all input traces. This
- * is the task of abstract method {@link #compute(Object[])}, which descendants
+ * is the task of abstract method {@link #compute(Object[], Queue)}, which descendants
  * of this class must implement.
  * 
  * @author Sylvain Hallé
@@ -44,6 +44,12 @@ import java.util.Queue;
 public abstract class SingleProcessor extends Processor
 {
 	/**
+	 * A queue object that will be passed to the {@link #compute(Object[], Queue)}
+	 * method
+	 */
+	protected final Queue<Object[]> m_tempQueue;
+	
+	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
@@ -51,6 +57,7 @@ public abstract class SingleProcessor extends Processor
 	public SingleProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
+		m_tempQueue = new ArrayDeque<Object[]>(1);
 	}
 
 	@Override
@@ -73,10 +80,11 @@ public abstract class SingleProcessor extends Processor
 	 * Computes one or more output events from its input events
 	 * @param inputs An array of input events; its length corresponds to the
 	 *   processor's input arity
+	 * @param outputs TODO
 	 * @return A queue of vectors of output events, or null
 	 *   if no event could be produced
 	 */
-	protected abstract Queue<Object[]> compute(Object[] inputs);
+	protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs);
 
 	/**
 	 * Implementation of a {@link Pushable} for a single processor.
@@ -145,10 +153,11 @@ public abstract class SingleProcessor extends Processor
 				inputs[i] = ob;
 			}
 			// Compute output event
-			Queue<Object[]> outs = compute(inputs);
-			if (outs != null && !outs.isEmpty())
+			m_tempQueue.clear();
+			boolean outs = compute(inputs, m_tempQueue);
+			if (outs != false && !m_tempQueue.isEmpty())
 			{
-				for (Object[] evt : outs)
+				for (Object[] evt : m_tempQueue)
 				{
 					if (evt != null)
 					{
@@ -306,18 +315,19 @@ public abstract class SingleProcessor extends Processor
 					inputs[i] = o;
 				}
 				// Compute output event(s)
-				Queue<Object[]> computed = compute(inputs);
+				m_tempQueue.clear();
+				boolean computed = compute(inputs, m_tempQueue);
 				NextStatus status_to_return = NextStatus.NO;
-				if (computed == null)
+				if (computed == false)
 				{
 					// No output will ever be returned: stop there
 					return false;
 				}
-				if (!computed.isEmpty())
+				if (!m_tempQueue.isEmpty())
 				{
 					// We computed an output event; add it to the output queue
 					// and answer YES
-					for (Object[] evt : computed)
+					for (Object[] evt : m_tempQueue)
 					{
 						if (evt != null)
 						{
@@ -381,14 +391,15 @@ public abstract class SingleProcessor extends Processor
 			}
 			// Compute output event(s)
 			NextStatus status_to_return = NextStatus.MAYBE;
-			Queue<Object[]> computed = compute(inputs);
-			if (computed == null)
+			m_tempQueue.clear();
+			boolean computed = compute(inputs, m_tempQueue);
+			if (computed == false)
 			{
 				status_to_return = NextStatus.NO;
 			}
-			else if (!computed.isEmpty())
+			else if (!m_tempQueue.isEmpty())
 			{
-				for (Object[] evt : computed)
+				for (Object[] evt : m_tempQueue)
 				{
 					if (evt != null)
 					{
@@ -448,7 +459,7 @@ public abstract class SingleProcessor extends Processor
 	 * Puts an array of objects (given as an argument) into an
 	 * empty queue of arrays of objects. This is a convenience method
 	 * that descendants of {@link SingleProcessor} (which implement
-	 * {@link #compute(Object[])}) can use to avoid
+	 * {@link #compute(Object[], Queue)}) can use to avoid
 	 * a few lines of code when they output a single array of events.
 	 * @param v The array of objects
 	 * @return The queue, or <code>null</code> if all elements of
@@ -468,20 +479,18 @@ public abstract class SingleProcessor extends Processor
 
 	/**
 	 * Puts a object (given as an argument) into an
-	 * empty queue of arrays of objects. This is a convenience method
+	 *  array of objects. This is a convenience method
 	 * that descendants of {@link SingleProcessor} (which implement
-	 * {@link #compute(Object[])}) can use to avoid
+	 * {@link #compute(Object[], Queue)}) can use to avoid
 	 * a few lines of code when they output a single event.
 	 * @param o The object
 	 * @return The queue
 	 */
-	protected static final Queue<Object[]> wrapObject(Object o)
+	protected static final Object[] wrapObject(Object o)
 	{
-		Queue<Object[]> out = newQueue();
 		Object[] v = new Object[1];
 		v[0] = o;
-		out.add(v);
-		return out;
+		return v;
 	}
 
 	/**

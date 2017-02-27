@@ -37,9 +37,10 @@ public class Passthrough extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		return wrapVector(inputs);
+		outputs.add(inputs);
+		return true;
 	}
 
 	@Override

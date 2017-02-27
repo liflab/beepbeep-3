@@ -34,9 +34,10 @@ public class NaryToArray extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		return wrapObject(inputs);
+		outputs.add(wrapObject(inputs));
+		return true;
 	}
 
 	@Override

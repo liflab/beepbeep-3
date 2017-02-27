@@ -39,14 +39,15 @@ public class Prefix extends Trim
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_eventsReceived++;
 		if (m_eventsReceived <= m_delay)
 		{
-			return wrapVector(inputs);
+			outputs.add(inputs);
+			return true;
 		}
-		return null;
+		return false;
 	}
 
 	@Override

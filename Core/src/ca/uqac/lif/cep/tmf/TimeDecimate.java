@@ -67,7 +67,7 @@ public class TimeDecimate extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out = null;
 		if (m_timeLastSent < 0)
@@ -85,9 +85,10 @@ public class TimeDecimate extends SingleProcessor
 		}
 		if (out != null)
 		{
-			return wrapVector(out);
+			outputs.add(out);
+			return true;
 		}
-		return getEmptyQueue();
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

@@ -49,7 +49,7 @@ public class HttpReader extends StreamReader
 
 	/**
 	 * Instantiates an HTTP reader with an URL. Note that no request is
-	 * sent over the network until the first call to {@link #compute(Object[])}.
+	 * sent over the network until the first call to {@link #compute(Object[], Queue)}.
 	 * @param url The URL to read from
 	 */
 	public HttpReader(String url)
@@ -59,7 +59,7 @@ public class HttpReader extends StreamReader
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_fis == null)
 		{
@@ -67,7 +67,7 @@ public class HttpReader extends StreamReader
 			InputStream is = sendGet(m_url);
 			setInputStream(is);
 		}
-		return super.compute(inputs);
+		return super.compute(inputs, outputs);
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

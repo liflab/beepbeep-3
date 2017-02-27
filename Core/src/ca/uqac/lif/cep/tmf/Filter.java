@@ -38,7 +38,7 @@ public class Filter extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object o = inputs[0];
 		Object[] out = new Object[1];
@@ -49,10 +49,10 @@ public class Filter extends SingleProcessor
 		}
 		else
 		{
-			// Don't output null, but rather an empty queue
-			return new ArrayDeque<Object[]>();
+			return true;
 		}
-		return wrapVector(out);
+		outputs.add(out);
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

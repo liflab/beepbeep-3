@@ -61,10 +61,10 @@ public class SinkLast extends Sink
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_last = inputs;
-		return getEmptyQueue();
+		return true;
 	}
 
 	public Object[] getLast()

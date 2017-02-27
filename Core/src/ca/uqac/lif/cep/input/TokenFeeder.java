@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.input;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
@@ -62,7 +61,7 @@ public abstract class TokenFeeder extends SingleProcessor
 	 * @param inputs The inputs
 	 */
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		for (Object o : inputs)
 		{
@@ -72,14 +71,13 @@ public abstract class TokenFeeder extends SingleProcessor
 				m_bufferedContents.append(s);
 			}
 		}
-		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		String s = m_bufferedContents.toString();
 		while (!s.isEmpty())
 		{
 			int index = s.indexOf(m_separatorEnd);
 			if (index < 0)
 			{
-				return out;
+				return true;
 			}
 			int index2 = s.indexOf(m_separatorBegin);
 			if (index2 > index)
@@ -103,12 +101,12 @@ public abstract class TokenFeeder extends SingleProcessor
 					}
 					Object[] to_fill = new Object[1];
 					to_fill[0] = token;
-					out.add(to_fill);
+					outputs.add(to_fill);
 				}
 			}
 			s = m_bufferedContents.toString();
 		}
-		return out;
+		return true;
 	}
 
 	/**

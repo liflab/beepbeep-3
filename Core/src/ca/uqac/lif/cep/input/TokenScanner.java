@@ -49,7 +49,7 @@ public class TokenScanner extends SingleProcessor
 
 	@Override
 	@SuppressWarnings("squid:S1168")
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_scanner.hasNext(m_pattern))
 		{
@@ -58,9 +58,10 @@ public class TokenScanner extends SingleProcessor
 			{
 				line += "\n";
 			}
-			return wrapObject(line);
+			outputs.add(new Object[]{line});
+			return true;
 		}
-		return null;
+		return false;
 	}
 
 	@Override

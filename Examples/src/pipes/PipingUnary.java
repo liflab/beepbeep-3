@@ -61,9 +61,10 @@ public class PipingUnary
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs)
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 		{
-			return wrapObject(2 * ((Number) inputs[0]).intValue());
+			outputs.add(wrapObject(2 * ((Number) inputs[0]).intValue()));
+			return true;
 		}
 
 		@Override

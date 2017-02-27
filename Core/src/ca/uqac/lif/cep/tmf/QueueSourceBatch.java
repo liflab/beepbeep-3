@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -34,9 +33,8 @@ public class QueueSourceBatch extends QueueSource
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		Queue<Object[]> queue = new LinkedList<Object[]>();
 		int output_arity = getOutputArity();
 		for (Object event : m_events)
 		{
@@ -45,8 +43,8 @@ public class QueueSourceBatch extends QueueSource
 			{
 				out[i] = event;
 			}
-			queue.add(out);
+			outputs.add(out);
 		}
-		return queue;
+		return true;
 	}
 }

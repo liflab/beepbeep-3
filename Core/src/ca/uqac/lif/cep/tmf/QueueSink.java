@@ -56,7 +56,7 @@ public class QueueSink extends Sink
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		for (int i = 0; i < m_queues.length; i++)
 		{
@@ -66,7 +66,7 @@ public class QueueSink extends Sink
 				q.add(inputs[i]);
 			}
 		}
-		return wrapVector(new Object[m_queues.length]);
+		return true;
 	}
 
 	/**

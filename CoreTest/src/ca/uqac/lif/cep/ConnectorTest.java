@@ -164,10 +164,10 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs) 
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 		{
 			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 
 		@Override
@@ -198,10 +198,10 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs) 
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 		{
 			// TODO Auto-generated method stub
-			return null;
+			return false;
 		}
 
 		@Override
