@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -64,8 +64,8 @@ public class CommandLine
 		interpreter.load(CliGrammar.class);
 		boolean exit = false;
 		stdout.setForegroundColor(Color.LIGHT_GRAY);
-		stdout.println("BeepBeep 3 - A versatile event stream processor");
-		stdout.println("(C) 2008-2016 Sylvain Hallé et al., Université du Québec à Chicoutimi");
+		stdout.println("BeepBeep 3 v" + Processor.s_versionString + " - A versatile event stream processor");
+		stdout.println("(C) 2008-2017 Sylvain Hallé et al., Université du Québec à Chicoutimi");
 		stdout.println("This program comes with ABSOLUTELY NO WARRANTY.");
 		stdout.println("This is a free software, and you are welcome to redistribute it");
 		stdout.println("under certain conditions. See the file LICENSE for details.\n");
