@@ -127,4 +127,14 @@ public abstract class Function implements Cloneable, Contextualizable
 	{
 		return null;
 	}
+	
+	public void evaluateFast(Object[] inputs, Object[] outputs, Context context)
+	{
+		evaluate(inputs, outputs, context);
+	}
+	
+	public void waitFor()
+	{
+		return;
+	}
 }
