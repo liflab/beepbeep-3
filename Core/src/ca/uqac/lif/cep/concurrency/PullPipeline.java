@@ -360,6 +360,13 @@ public class PullPipeline extends Processor implements Runnable
 				{
 					return true;
 				}
+				m_pipelinesLock.lock();
+				if (!m_pipelines.isEmpty() && m_pipelines.getFirst().canDelete())
+				{
+					// This pipeline is done; remove it
+					m_pipelines.removeFirst();
+				}
+				m_pipelinesLock.unlock();
 			}
 			// If we're not running in a thread, poll the pullable
 			if (!m_run)
