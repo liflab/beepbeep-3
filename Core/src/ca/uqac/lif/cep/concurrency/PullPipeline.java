@@ -229,7 +229,7 @@ public class PullPipeline extends Processor implements Runnable
 		{
 			// This thread is done; we remove it
 			thread.dispose();
-			m_pipelines.remove(0);
+			m_pipelines.removeFirst();
 		}
 		return o;
 	}
@@ -371,18 +371,34 @@ public class PullPipeline extends Processor implements Runnable
 			// If we're not running in a thread, poll the pullable
 			if (!m_run)
 			{
-				if (m_pipelines.size() < m_maxPipelines)
+				while (true)
 				{
+					if (m_pipelines.size() < m_maxPipelines)
+					{
+						pollPullableHard();
+					}
+					doThreadHousekeeping();
+					m_pipelinesLock.lock();
+					boolean pipes_empty = m_pipelines.isEmpty();
+					condition = !pipes_empty && m_pipelines.getFirst().hasEvent();
+					m_pipelinesLock.unlock();
+					if (condition)
+					{
+						return true;
+					}
+					m_pipelinesLock.lock();
+					m_pipelines.removeFirst();
+					m_pipelinesLock.unlock();
 					pollPullableHard();
-				}
-				doThreadHousekeeping();
-				m_pipelinesLock.lock();
-				condition = !m_pipelines.isEmpty() && m_pipelines.getFirst().hasEvent();
-				m_pipelinesLock.unlock();
-				if (condition)
-				{
-					return true;
-				}
+					doThreadHousekeeping();
+					m_pipelinesLock.lock();
+					pipes_empty = m_pipelines.isEmpty();
+					m_pipelinesLock.unlock();
+					if (pipes_empty)
+					{
+						return false;
+					}
+				}			
 			}
 			return false;
 		}
