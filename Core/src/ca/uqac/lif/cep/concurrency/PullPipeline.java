@@ -387,7 +387,10 @@ public class PullPipeline extends Processor implements Runnable
 						return true;
 					}
 					m_pipelinesLock.lock();
-					m_pipelines.removeFirst();
+					if (!m_pipelines.isEmpty())
+					{
+						m_pipelines.removeFirst();
+					}
 					m_pipelinesLock.unlock();
 					pollPullableHard();
 					doThreadHousekeeping();
@@ -398,6 +401,7 @@ public class PullPipeline extends Processor implements Runnable
 					{
 						return false;
 					}
+					System.out.println("Polling");
 				}			
 			}
 			return false;
@@ -601,7 +605,7 @@ public class PullPipeline extends Processor implements Runnable
 		{
 			Object[] inputs = new Object[1];
 			inputs[0] = event;
-			PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.clone(), inputs, is_pulled);
+			PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.clone(), inputs, is_pulled);			
 			m_pipelinesLock.lock();
 			m_pipelines.add(new_pipeline);
 			m_pipelinesLock.unlock();

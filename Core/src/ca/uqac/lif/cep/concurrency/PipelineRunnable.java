@@ -117,6 +117,15 @@ class PipelineRunnable implements Runnable
 			m_managedThread.dispose();
 		}
 	}
+	
+	/**
+	 * Gets the processor instance associated to this pipeline runnable
+	 * @return The processor
+	 */
+	Processor getProcessor()
+	{
+		return m_processor;
+	}
 
 	/**
 	 * Pops an event from the pipeline's output queue. This method

@@ -111,6 +111,8 @@ public class WindowFunction extends SingleProcessor
 	@Override
 	public WindowFunction clone()
 	{
-		return new WindowFunction(m_function);
+		WindowFunction wf = new WindowFunction(m_function.clone());
+		wf.m_window.addAll(m_window);
+		return wf;
 	}
 }
