@@ -272,7 +272,7 @@ public class ForkTest extends BeepBeepUnitTest
 		Pullable p1 = f.getPullableOutput(0);
 		Pullable p2 = f.getPullableOutput(1);
 		int recv;
-		for (int i = 0; i < SmartFork.m_cleanInterval + 3; i++)
+		for (int i = 0; i < f.m_cleanInterval + 3; i++)
 		{
 			assertTrue(p1.hasNext());
 			recv = ((Number) p1.pull()).intValue();
@@ -281,7 +281,7 @@ public class ForkTest extends BeepBeepUnitTest
 		}
 		f.reset();
 		cp.reset();
-		for (int i = 0; i < SmartFork.m_cleanInterval + 3; i++)
+		for (int i = 0; i < f.m_cleanInterval + 3; i++)
 		{
 			assertTrue(p1.hasNext());
 			recv = ((Number) p1.pull()).intValue();
@@ -307,7 +307,7 @@ public class ForkTest extends BeepBeepUnitTest
 		Connector.connect(cp,  f);
 		Pullable p1 = f.getPullableOutput(0);
 		int recv;
-		for (int i = 0; i < SmartFork.m_cleanInterval + 3; i++)
+		for (int i = 0; i < f.m_cleanInterval + 3; i++)
 		{
 			assertTrue(p1.hasNext());
 			recv = ((Number) p1.pull()).intValue();
@@ -316,7 +316,7 @@ public class ForkTest extends BeepBeepUnitTest
 		}
 		f.reset();
 		cp.reset();
-		for (int i = 0; i < SmartFork.m_cleanInterval + 3; i++)
+		for (int i = 0; i < f.m_cleanInterval + 3; i++)
 		{
 			assertTrue(p1.hasNext());
 			recv = ((Number) p1.pull()).intValue();

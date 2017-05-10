@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 
 import java.util.Queue;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
@@ -192,7 +191,7 @@ public class ThreadPullableTest
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs) 
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 		{
 			try 
 			{
@@ -204,9 +203,10 @@ public class ThreadPullableTest
 			}
 			if (getInputArity() == 0)
 			{
-				return wrapObject(0);
+				return true;
 			}
-			return wrapVector(inputs);
+			outputs.add(inputs);
+			return true;
 		}
 
 		@Override
