@@ -22,7 +22,7 @@ import ca.uqac.lif.cep.Context;
 public abstract class SimpleFunction extends Function
 {
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException
 	{
 		// If no context is given, call compute() straight away
 		if (context == null)
@@ -61,7 +61,7 @@ public abstract class SimpleFunction extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs)
+	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException
 	{
 		compute(inputs, outputs);
 	}
@@ -72,6 +72,8 @@ public abstract class SimpleFunction extends Function
 	 *   should be equal to the function's declared input arity.
 	 * @param outputs The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
+	 * @throws FunctionException Any exception occurring during the
+	 *   evaluation of the function
 	 */
-	public abstract void compute(Object[] inputs, Object[] outputs);
+	public abstract void compute(Object[] inputs, Object[] outputs) throws FunctionException;
 }

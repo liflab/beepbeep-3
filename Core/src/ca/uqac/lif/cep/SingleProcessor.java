@@ -48,7 +48,7 @@ public abstract class SingleProcessor extends Processor
 	 * method
 	 */
 	protected final Queue<Object[]> m_tempQueue;
-	
+
 	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity
@@ -83,8 +83,10 @@ public abstract class SingleProcessor extends Processor
 	 * @param outputs TODO
 	 * @return A queue of vectors of output events, or null
 	 *   if no event could be produced
+	 * @throws ProcessorException Any exception occurring during the evaluation
+	 *   of the processor
 	 */
-	protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs);
+	protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException;
 
 	/**
 	 * Implementation of a {@link Pushable} for a single processor.
@@ -154,7 +156,15 @@ public abstract class SingleProcessor extends Processor
 			}
 			// Compute output event
 			m_tempQueue.clear();
-			boolean outs = compute(inputs, m_tempQueue);
+			boolean outs;
+			try
+			{
+				outs = compute(inputs, m_tempQueue);
+			}
+			catch (ProcessorException e)
+			{
+				throw new PushableException(e);
+			}
 			if (outs != false && !m_tempQueue.isEmpty())
 			{
 				for (Object[] evt : m_tempQueue)
@@ -316,7 +326,15 @@ public abstract class SingleProcessor extends Processor
 				}
 				// Compute output event(s)
 				m_tempQueue.clear();
-				boolean computed = compute(inputs, m_tempQueue);
+				boolean computed;
+				try
+				{
+					computed = compute(inputs, m_tempQueue);
+				}
+				catch (ProcessorException e)
+				{
+					throw new PullableException(e);
+				}
 				NextStatus status_to_return = NextStatus.NO;
 				if (computed == false)
 				{
@@ -392,7 +410,15 @@ public abstract class SingleProcessor extends Processor
 			// Compute output event(s)
 			NextStatus status_to_return = NextStatus.MAYBE;
 			m_tempQueue.clear();
-			boolean computed = compute(inputs, m_tempQueue);
+			boolean computed;
+			try
+			{
+				computed = compute(inputs, m_tempQueue);
+			}
+			catch (ProcessorException e)
+			{
+				throw new PullableException(e);
+			}
 			if (computed == false)
 			{
 				status_to_return = NextStatus.NO;

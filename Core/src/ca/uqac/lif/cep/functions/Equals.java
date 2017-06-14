@@ -48,6 +48,10 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 			Collection<?> set_y = (Collection<?>) y;
 			return set_x.size() == set_y.size() && set_x.containsAll(set_y);
 		}
+		if (x instanceof String && y instanceof String)
+		{
+			return ((String) x).compareTo((String) y) == 0;
+		}
 		return x.equals(y);
 	}
 

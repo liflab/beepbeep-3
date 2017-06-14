@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.functions;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
@@ -55,9 +56,16 @@ public class FunctionProcessor extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
 	{
-		m_function.evaluate(inputs, outputs, m_context);
+		try
+		{
+			m_function.evaluate(inputs, outputs, m_context);
+		}
+		catch (FunctionException e)
+		{
+			throw new ProcessorException(e);
+		}
 		return true;
 	}
 

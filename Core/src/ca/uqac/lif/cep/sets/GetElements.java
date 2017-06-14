@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.sets;
 
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
@@ -56,7 +57,7 @@ public class GetElements extends UnaryFunction<Multiset,Multiset>
 	}
 
 	@Override
-	public Multiset getValue(Multiset x)
+	public Multiset getValue(Multiset x) throws FunctionException
 	{
 		Multiset out = new Multiset();
 		for (Object o : x)

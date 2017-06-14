@@ -87,8 +87,10 @@ public abstract class UniformProcessor extends Processor
 	 * @param outputs An array where the outputs are produced
 	 * @return A queue of vectors of output events, or null
 	 *   if no event could be produced
+	 * @throws ProcessorException Any exception thrown during the evaluation
+	 *   of the processor
 	 */
-	protected abstract boolean compute(Object[] inputs, Object[] outputs);
+	protected abstract boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException;
 
 	/**
 	 * Implementation of a {@link Pushable} for a single processor.
@@ -157,7 +159,15 @@ public abstract class UniformProcessor extends Processor
 				inputs[i] = ob;
 			}
 			// Compute output event
-			boolean outs = compute(inputs, m_outputArray);
+			boolean outs;
+			try
+			{
+				outs = compute(inputs, m_outputArray);
+			}
+			catch (ProcessorException e)
+			{
+				throw new PushableException(e);
+			}
 			if (outs != false)
 			{
 				for (int i = 0; i < m_outputPushables.length; i++)
@@ -309,7 +319,15 @@ public abstract class UniformProcessor extends Processor
 				inputs[i] = o;
 			}
 			// Compute output event(s)
-			boolean computed = compute(inputs, m_outputArray);
+			boolean computed;
+			try
+			{
+				computed = compute(inputs, m_outputArray);
+			}
+			catch (ProcessorException e)
+			{
+				throw new PullableException(e);
+			}
 			if (computed == false)
 			{
 				// No output will ever be returned: stop there
@@ -359,7 +377,15 @@ public abstract class UniformProcessor extends Processor
 				}
 			}
 			// Compute output event(s)
-			boolean computed = compute(inputs, m_outputArray);
+			boolean computed;
+			try
+			{
+				computed = compute(inputs, m_outputArray);
+			}
+			catch (ProcessorException e)
+			{
+				throw new PullableException(e);
+			}
 			if (computed == false)
 			{
 				return NextStatus.NO;

@@ -44,8 +44,10 @@ public abstract class Function implements Cloneable, Contextualizable
 	 *   evaluating the function
 	 * @return The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
+	 * @throws FunctionException Any exception that may occur during the
+	 *   evaluation of a function
 	 */
-	public abstract void evaluate(Object[] inputs, Object[] outputs, Context context);
+	public abstract void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException;
 
 	/**
 	 * Evaluates the outputs of the function, given some inputs
@@ -53,8 +55,10 @@ public abstract class Function implements Cloneable, Contextualizable
 	 *   should be equal to the function's declared input arity.
 	 * @return The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
+	 * @throws FunctionException Any exception that may occur during the
+	 *   evaluation of a function
 	 */
-	public abstract void evaluate(Object[] inputs, Object[] outputs);
+	public abstract void evaluate(Object[] inputs, Object[] outputs) throws FunctionException;
 
 	/**
 	 * Gets the function's input arity, i.e. the number of arguments
@@ -128,7 +132,7 @@ public abstract class Function implements Cloneable, Contextualizable
 		return null;
 	}
 	
-	public void evaluateFast(Object[] inputs, Object[] outputs, Context context)
+	public void evaluateFast(Object[] inputs, Object[] outputs, Context context) throws FunctionException
 	{
 		evaluate(inputs, outputs, context);
 	}

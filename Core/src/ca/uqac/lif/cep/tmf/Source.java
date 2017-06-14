@@ -20,7 +20,9 @@ package ca.uqac.lif.cep.tmf;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.Pushable.PushableException;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
@@ -49,7 +51,14 @@ public abstract class Source extends SingleProcessor
 	public final void push()
 	{
 		Queue<Object[]> output = new ArrayDeque<Object[]>(1);
-		compute(null, output);
+		try
+		{
+			compute(null, output);
+		}
+		catch (ProcessorException e)
+		{
+			throw new PushableException(e);
+		}
 		if (output == null || output.isEmpty())
 		{
 			return;

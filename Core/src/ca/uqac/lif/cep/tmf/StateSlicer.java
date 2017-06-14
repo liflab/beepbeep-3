@@ -31,9 +31,11 @@ import java.util.logging.Level;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
@@ -118,11 +120,18 @@ public class StateSlicer extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
 	{
 		int output_arity = getOutputArity();
 		Object[] f_value = new Object[1];
-		m_slicingFunction.evaluate(inputs, f_value);
+		try
+		{
+			m_slicingFunction.evaluate(inputs, f_value);
+		}
+		catch (FunctionException e)
+		{
+			throw new ProcessorException(e);
+		}
 		Object slice_id = f_value[0];
 		Set<Object> slices_to_process = new HashSet<Object>();
 		if (slice_id instanceof ToAllSlices || slice_id == null)
@@ -180,7 +189,14 @@ public class StateSlicer extends UniformProcessor
 				Object[] can_clean = new Object[1];
 				if (m_cleaningFunction != null)
 				{
-					m_cleaningFunction.evaluate(out, can_clean);
+					try
+					{
+						m_cleaningFunction.evaluate(out, can_clean);
+					}
+					catch (FunctionException e)
+					{
+						throw new ProcessorException(e);
+					}
 				}
 				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]) == true)
 				{

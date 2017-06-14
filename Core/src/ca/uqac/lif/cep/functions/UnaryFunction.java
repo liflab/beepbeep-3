@@ -51,7 +51,7 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 1 */
-	public void compute(/*@NonNull*/ Object[] inputs, Object[] outputs)
+	public void compute(/*@NonNull*/ Object[] inputs, Object[] outputs) throws FunctionException
 	{
 		outputs[0] = getValue((T) inputs[0]);
 	}
@@ -60,8 +60,10 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 	 * Evaluates the function
 	 * @param x The argument
 	 * @return The return value of the function
+	 * @throws FunctionException Any exception occurring during the
+	 *   evaluation of the underlying function  
 	 */
-	public abstract U getValue(T x);
+	public abstract U getValue(T x) throws FunctionException;
 
 	@Override
 	public final int getInputArity()

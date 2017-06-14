@@ -22,6 +22,7 @@ import java.util.ArrayDeque;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.tmf.Collator;
 
@@ -77,9 +78,16 @@ public class FunctionCollator extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
 	{
-		m_function.evaluate(inputs, outputs);
+		try
+		{
+			m_function.evaluate(inputs, outputs);
+		}
+		catch (FunctionException e)
+		{
+			throw new ProcessorException(e);
+		}
 		return true;
 	}
 

@@ -5,6 +5,7 @@ import java.util.Set;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 public class NonBlockingFunction extends Function implements Runnable
 {
@@ -28,7 +29,7 @@ public class NonBlockingFunction extends Function implements Runnable
 		m_thread = null;
 	}
 	
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException
 	{
 		m_function.evaluate(inputs, outputs, context);
 	}
@@ -72,7 +73,14 @@ public class NonBlockingFunction extends Function implements Runnable
 	@Override
 	public void run() 
 	{
-		m_function.evaluate(m_inputs, m_outputs, m_context);
+		try
+		{
+			m_function.evaluate(m_inputs, m_outputs, m_context);
+		}
+		catch (FunctionException e)
+		{
+			// TODO: auto-generated catch block
+		}
 		if (m_thread != null)
 		{
 			m_thread.dispose();
@@ -80,7 +88,7 @@ public class NonBlockingFunction extends Function implements Runnable
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) 
+	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException 
 	{
 		m_function.evaluate(inputs, outputs);
 		if (m_thread != null)

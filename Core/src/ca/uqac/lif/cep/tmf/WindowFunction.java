@@ -21,8 +21,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Takes a sliding window of <i>n</i> successive input events,
@@ -70,7 +72,7 @@ public class WindowFunction extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
 	{
 		m_window.add(inputs[0]);
 		int size = m_window.size();
@@ -78,14 +80,28 @@ public class WindowFunction extends SingleProcessor
 		{
 			m_window.remove(0);
 			Object[] val = new Object[1];
-			m_function.evaluate(m_window.toArray(), val);
+			try
+			{
+				m_function.evaluate(m_window.toArray(), val);
+			}
+			catch (FunctionException e)
+			{
+				throw new ProcessorException(e);
+			}
 			outputs.add(wrapObject(val[0]));
 			return true;
 		}
 		if (size == m_width)
 		{
 			Object[] val = new Object[1];
-			m_function.evaluate(m_window.toArray(), val);
+			try
+			{
+				m_function.evaluate(m_window.toArray(), val);
+			}
+			catch (FunctionException e)
+			{
+				throw new ProcessorException(e);
+			}
 			outputs.add(wrapObject(val[0]));
 			return true;
 		}

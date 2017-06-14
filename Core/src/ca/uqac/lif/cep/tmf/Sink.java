@@ -17,7 +17,9 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.Pullable.PullableException;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
@@ -47,7 +49,7 @@ public abstract class Sink extends SingleProcessor
 	/**
 	 * Tells the sink to pull events from the pipeline
 	 */
-	public final void pull()
+	public final void pull() throws PullableException
 	{
 		Object[] inputs = new Object[getInputArity()];
 		for (int i = 0; i < getInputArity(); i++)
@@ -55,7 +57,14 @@ public abstract class Sink extends SingleProcessor
 			Pullable p = m_inputPullables[i];
 			inputs[i] = p.pullSoft();
 		}
-		compute(inputs, null);
+		try
+		{
+			compute(inputs, null);
+		}
+		catch (ProcessorException e)
+		{
+			throw new PullableException(e);
+		}
 	}
 
 	/**
@@ -69,7 +78,14 @@ public abstract class Sink extends SingleProcessor
 			Pullable p = m_inputPullables[i];
 			inputs[i] = p.pull();
 		}
-		compute(inputs, null);
+		try
+		{
+			compute(inputs, null);
+		}
+		catch (ProcessorException e)
+		{
+			throw new PullableException(e);
+		}
 	}
 
 }

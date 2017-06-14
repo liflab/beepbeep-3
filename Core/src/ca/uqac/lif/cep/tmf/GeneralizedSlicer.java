@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -27,14 +27,13 @@ import java.util.logging.Level;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
-import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
+ * <b>TODO:</b> update doc
+ * <p>
  * Separates an input trace into different "slices". The slicer
  * takes as input a processor <i>p</i> and
  * a slicing function <i>f</i>.
@@ -53,13 +52,8 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
  * 
  * @author Sylvain Hallé
  */
-public class Slicer extends UniformProcessor
+public class GeneralizedSlicer extends UniformProcessor
 {
-	/**
-	 * The slicing function
-	 */
-	protected Function m_slicingFunction = null;
-
 	/**
 	 * The internal processor
 	 */
@@ -68,35 +62,28 @@ public class Slicer extends UniformProcessor
 	protected Map<Object,Processor> m_slices;
 
 	protected Map<Object,QueueSink> m_sinks;
+	
+	protected Map<Object,Object> m_values;
 
-	Slicer()
+	GeneralizedSlicer()
 	{
-		super(1, 1);
+		super(2, 1);
 	}
 
-	public Slicer(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc)
+	public GeneralizedSlicer(/*@NonNull*/ Processor proc)
 	{
-		super(proc.getInputArity(), proc.getOutputArity());
+		super(proc.getInputArity() + 1, proc.getOutputArity());
 		m_processor = proc;
-		m_slicingFunction = func;
 		m_slices = new HashMap<Object,Processor>();
 		m_sinks = new HashMap<Object,QueueSink>();
+		m_values = new HashMap<Object,Object>();
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		int output_arity = getOutputArity();
-		Object[] f_value = new Object[1];
-		try
-		{
-			m_slicingFunction.evaluate(inputs, f_value);
-		}
-		catch (FunctionException e)
-		{
-			throw new ProcessorException(e);
-		}
-		Object slice_id = f_value[0];
+		Object slice_id = inputs[inputs.length - 1];
 		Set<Object> slices_to_process = new HashSet<Object>();
 		if (slice_id instanceof AllSlices || slice_id == null)
 		{
@@ -129,8 +116,8 @@ public class Slicer extends UniformProcessor
 			Processor slice_p = m_slices.get(s_id);
 			QueueSink sink_p = m_sinks.get(s_id);
 			// Push the input into the processor
-			Pushable[] p_array = new Pushable[inputs.length];
-			for (int i = 0; i < inputs.length; i++)
+			Pushable[] p_array = new Pushable[inputs.length - 1];
+			for (int i = 0; i < inputs.length - 1; i++)
 			{
 
 				Object o_i = inputs[i];
@@ -138,13 +125,14 @@ public class Slicer extends UniformProcessor
 				p.push(o_i);
 				p_array[i] = p;
 			}
-			for (int i = 0; i < inputs.length; i++)
+			for (int i = 0; i < inputs.length - 1; i++)
 			{
 				p_array[i].waitFor();
 			}
-			// Collect the output from that processor
-			outputs[0] = sink_p.remove()[0];
+			// Collect the output from that processor and update the map
+			m_values.put(s_id, sink_p.remove()[0]);
 		}
+		outputs[0] = m_values;
 		return true;
 	}
 
@@ -158,12 +146,13 @@ public class Slicer extends UniformProcessor
 	{
 		super.reset();
 		m_slices.clear();
-		m_slicingFunction.reset();
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
-		Function f = (Function) stack.pop();
+		stack.pop(); // (
+		Processor p = (Processor) stack.pop();
+		stack.pop(); // )
 		stack.pop(); // ON
 		//stack.pop(); // (
 		Processor p2 = (Processor) stack.pop();
@@ -173,15 +162,16 @@ public class Slicer extends UniformProcessor
 		Processor p1 = (Processor) stack.pop();
 		//stack.pop(); // )
 		stack.pop(); // SLICE
-		Slicer out = new Slicer(f, p2);
-		Connector.connect(p1, out);
+		GeneralizedSlicer out = new GeneralizedSlicer(p2);
+		Connector.connect(p1, 0, out, 0);
+		Connector.connect(p, 0, out, 1);
 		stack.push(out);
 	}
 
 	@Override
-	public Slicer clone()
+	public GeneralizedSlicer clone()
 	{
-		return new Slicer(m_slicingFunction.clone(m_context), m_processor.clone());
+		return new GeneralizedSlicer(m_processor.clone());
 	}
 
 	/**
