@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Queue;
 import java.util.Vector;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -33,6 +34,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;
 
+@Ignore
 public class ThroughputTest extends BeepBeepUnitTest
 {
 	/**

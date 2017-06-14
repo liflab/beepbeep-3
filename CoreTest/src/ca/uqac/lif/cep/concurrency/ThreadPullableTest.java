@@ -32,7 +32,7 @@ public class ThreadPullableTest
 {
 	/* Test with a small number, just to make sure the computation is OK */
 	
-	@Test
+	@Test(timeout=2000)
 	public void testContinuousPullWithThreads()
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
@@ -46,7 +46,7 @@ public class ThreadPullableTest
 		t_pull.stop();
 	}
 	
-	@Test
+	@Test(timeout=2000)
 	public void testContinuousPullWithoutThreads()
 	{
 		ThreadManager tm = new ThreadManager(0); // No thread
@@ -67,7 +67,7 @@ public class ThreadPullableTest
 	 * processor B that takes another 500 ms to create its output. Since
 	 * A and B are in the same thread, both cannot work at the same time.
 	 */
-	@Test
+	@Test(timeout=2000)
 	public void testSequentialChain1()
 	{
 		DelayProcessor delay_1 = new DelayProcessor(0, 500);
@@ -97,7 +97,7 @@ public class ThreadPullableTest
 	 * that the first output event takes 1 s to be produced, but all the
 	 * others now only take 500 ms. The chain works twice as fast.  
 	 */
-	@Test
+	@Test(timeout=10000)
 	public void testContinuousChain1()
 	{
 		ThreadManager tm = new ThreadManager(-1);
@@ -139,7 +139,7 @@ public class ThreadPullableTest
 	 * encased in a GroupProcessor.
 	 * @throws ConnectorException 
 	 */
-	@Test
+	@Test(timeout=10000)
 	public void testContinuousGroup1() throws ConnectorException
 	{
 		DelayProcessor delay_1 = new DelayProcessor(0, 500);

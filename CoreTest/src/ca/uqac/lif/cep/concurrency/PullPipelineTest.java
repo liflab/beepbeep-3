@@ -13,7 +13,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 
 public class PullPipelineTest 
 {
-	@Test
+	@Test(timeout=10000)
 	public void testWithoutThreads1() throws ConnectorException
 	{
 		ThreadManager tm = new ThreadManager(0);
@@ -37,7 +37,7 @@ public class PullPipelineTest
 		pp.stop();
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void testWithUnlimitedThreads1() throws ConnectorException
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
@@ -61,7 +61,7 @@ public class PullPipelineTest
 		pp.stop();
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void testWithTwoThreads1() throws ConnectorException
 	{
 		ThreadManager tm = new ThreadManager(4);
@@ -87,7 +87,7 @@ public class PullPipelineTest
 		pp.stop();
 	}
 	
-	@Test
+	@Test(timeout=12000)
 	public void test2() throws ConnectorException
 	{
 		QueueSource qs = new QueueSource(1);
@@ -107,7 +107,7 @@ public class PullPipelineTest
 		}
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void testClone1() throws ConnectorException
 	{
 		GroupProcessor gp = new GroupProcessor(0, 1);
@@ -124,5 +124,4 @@ public class PullPipelineTest
 		Object o = p.pull();
 		assertNotNull(o);
 	}
-
 }
