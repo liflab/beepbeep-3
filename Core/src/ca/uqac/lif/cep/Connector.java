@@ -102,13 +102,13 @@ public class Connector
 	 * a processor's first input or output
 	 */
 	public static final int BOTTOM = 1;
-	
+
 	/**
 	 * Utility classes should not have public constructors
 	 */
 	private Connector()
 	{
-	    throw new IllegalAccessError("Utility class");
+		throw new IllegalAccessError("Utility class");
 	}
 
 	/**
@@ -136,11 +136,27 @@ public class Connector
 			throw new SelfLoopException(p1, p2, i, j);
 		}
 		// Pull
-		Pullable p1_out = p1.getPullableOutput(i);
-		p2.setPullableInput(j, p1_out);
+		try
+		{
+			Pullable p1_out = p1.getPullableOutput(i);
+			p2.setPullableInput(j, p1_out);
+		}
+		catch (UnsupportedOperationException e)
+		{
+			// It's OK. Some processors deliberately throw this
+			// exception to warn an end user that they don't have a pushable
+			// or a pullable, but the connector does not care.
+		}
 		// Push
-		Pushable p2_in = p2.getPushableInput(j);
-		p1.setPushableOutput(i, p2_in);
+		try
+		{
+			Pushable p2_in = p2.getPushableInput(j);
+			p1.setPushableOutput(i, p2_in);
+		}
+		catch (UnsupportedOperationException e)
+		{
+			// Same as above
+		}
 		return p2;
 	}
 
