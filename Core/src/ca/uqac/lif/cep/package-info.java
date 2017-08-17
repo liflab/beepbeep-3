@@ -21,15 +21,15 @@
  * processing. Here are some of the important objects defined in this
  * package.
  * <ul>
- * <li>A {@link Processor} is an object that takes zero or
+ * <li>A {@link ca.uqac.lif.cep.Processor Processor} is an object that takes zero or
  *   more event <em>traces</em>, and produces zero or more event
  *   <em>traces</em> as its output.</li>
- * <li>{@link Pullable} and {@link Pushable} are two interfaces for
+ * <li>{@link ca.uqac.lif.cep.Pullable Pullable} and
+ *   {@link ca.uqac.lif.cep.Pushable Pushable} are two interfaces for
  *   receiving and giving events from/to a processor, respectively.</li>
- * <li>{@link Connector} provides static methods for easily linking one
- *   processor's output to another's input</li>
+ * <li>{@link ca.uqac.lif.cep.Connector Connector} provides static
+ *   methods for easily linking one processor's output to another's input</li>
  * </ul>
- * 
  * 
  * @author Sylvain Hallé
  */

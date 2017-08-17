@@ -57,7 +57,7 @@ public interface Pushable
 	 * operation, one must call {@link #waitFor()}.
 	 * <p>
 	 * Some implementations of this interface do not implement non-blocking
-	 * calls; in such a case, a call to {@link #pushFast() pushFast()} will
+	 * calls; in such a case, a call to {@link #pushFast(Object) pushFast()} will
 	 * be identical to a call to {@link #push(Object) push()}, and
 	 * calling {@link #waitFor()} will return immediately.
 	 * @param o The event. Although you can technically push <code>null</code>,

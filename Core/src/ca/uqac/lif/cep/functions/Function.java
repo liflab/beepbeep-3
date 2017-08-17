@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -38,12 +38,12 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * Evaluates the outputs of the function, given some inputs
 	 * @param inputs The arguments of the function. The size of the array
 	 *   should be equal to the function's declared input arity.
+	 * @param outputs The outputs of the function. The size of the array returned
+	 *   should be equal to the function's declared output arity.
 	 * @param context The context in which the evaluation is done. If the
 	 *   function's arguments contains placeholders, they will be replaced
 	 *   by the corresponding object fetched from this map before
 	 *   evaluating the function
-	 * @return The outputs of the function. The size of the array returned
-	 *   should be equal to the function's declared output arity.
 	 * @throws FunctionException Any exception that may occur during the
 	 *   evaluation of a function
 	 */
@@ -53,7 +53,7 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * Evaluates the outputs of the function, given some inputs
 	 * @param inputs The arguments of the function. The size of the array
 	 *   should be equal to the function's declared input arity.
-	 * @return The outputs of the function. The size of the array returned
+	 * @param outputs The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
 	 * @throws FunctionException Any exception that may occur during the
 	 *   evaluation of a function

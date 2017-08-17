@@ -27,10 +27,9 @@ import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.tmf.Collator;
 
 /**
- * Applies a function to a input events from one or more traces.
- * This processor must work in tandem with the
- * {@link ca.uqac.lif.tmf.Collator Collator}: its input is a
- * {@link ca.uqac.lif.util.CacheMap CacheMap} of input events
+ * Applies a function to input events from one or more traces.
+ * Its input is a
+ * {@link ca.uqac.lif.cep.util.CacheMap CacheMap} of input events
  * associated with names.
  * <p>
  * The usefulness of this processor lies mostly in the ESQL language.

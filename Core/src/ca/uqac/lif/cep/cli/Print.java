@@ -89,7 +89,7 @@ public class Print extends Sink
 
 	/**
 	 * Prints an object in an eye-pleasing way
-	 * @param n The object
+	 * @param o The object
 	 */
 	protected void prettyPrint(Object o)
 	{

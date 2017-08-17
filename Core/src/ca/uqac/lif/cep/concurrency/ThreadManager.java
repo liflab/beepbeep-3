@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -96,7 +96,7 @@ public class ThreadManager implements Runnable
 	 * Gets a new instance of managed thread. This method is blocking,
 	 * i.e. if the manager already has the maximum number of threads
 	 * allowed, it waits until a new thread can be created.
-	 * @param r The runnable to put into the new thread
+	 * @param runnable The runnable to put into the new thread
 	 * @return A new thread
 	 */
 	public ManagedThread waitForNewThread(Runnable runnable)

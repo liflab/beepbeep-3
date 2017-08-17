@@ -17,7 +17,8 @@
  */
 
 /**
- * Definition of the {@link Function} object and basic concepts around
+ * Definition of the {@link ca.uqac.lif.cep.functions.Function Function}
+ * object and basic concepts around
  * functions. This package also defines a few commonly used functions,
  * such as equality and Boolean connectives.
  * 

@@ -167,7 +167,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * <li>If all inputs answer "yes" when called for
 	 * {@link #hasNextSoft()}, and an event is produced with the given inputs,
 	 * returns "yes"</li>
-	 * <li>Otherwise, the method will keep calling {@link #hasNextHard} on
+	 * <li>Otherwise, the method will keep calling {@link #hasNext()} on
 	 * the inputs as long as they don't answer "no", and will try to produce
 	 * an output event until one is produced.</li>
 	 * <li>To avoid infinite looping, the method eventually gives up (and

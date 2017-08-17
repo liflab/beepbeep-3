@@ -39,8 +39,8 @@ import java.util.Queue;
  * <p>
  * The only thing that is left undefined is what to do
  * when new input events have been received from all input traces. This
- * is the task of abstract method {@link #compute(Object[], Queue)}, which descendants
- * of this class must implement.
+ * is the task of abstract method {@link #compute(Object[], Object[])},
+ * which descendants of this class must implement.
  * 
  * @author Sylvain Hallé
  *
@@ -442,7 +442,7 @@ public abstract class UniformProcessor extends Processor
 	 * Puts an array of objects (given as an argument) into an
 	 * empty queue of arrays of objects. This is a convenience method
 	 * that descendants of {@link UniformProcessor} (which implement
-	 * {@link #compute(Object[], Queue)}) can use to avoid
+	 * {@link #compute(Object[], Object[])}) can use to avoid
 	 * a few lines of code when they output a single array of events.
 	 * @param v The array of objects
 	 * @return The queue, or <code>null</code> if all elements of
@@ -464,7 +464,7 @@ public abstract class UniformProcessor extends Processor
 	 * Puts a object (given as an argument) into an
 	 *  array of objects. This is a convenience method
 	 * that descendants of {@link UniformProcessor} (which implement
-	 * {@link #compute(Object[], Queue)}) can use to avoid
+	 * {@link #compute(Object[], Object[])}) can use to avoid
 	 * a few lines of code when they output a single event.
 	 * @param o The object
 	 * @return The queue

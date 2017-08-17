@@ -107,7 +107,7 @@ public class Setting
 
 	/**
 	 * Sets the description of this setting
-	 * @param o The description
+	 * @param d The description
 	 */
 	public void setDescription(String d)
 	{
