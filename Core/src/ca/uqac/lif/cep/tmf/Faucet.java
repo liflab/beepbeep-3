@@ -282,5 +282,11 @@ public abstract class Faucet extends Processor
 		{
 			// Nothing to do
 		}
+		
+		@Override
+		public void remove()
+		{
+			// Nothing to do
+		}
 	}
 }
