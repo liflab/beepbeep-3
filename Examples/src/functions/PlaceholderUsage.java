@@ -19,6 +19,7 @@ package functions;
 
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Basic usage of the {@link ca.uqac.lif.cep.functions.ArgumentPlaceholder}
@@ -27,7 +28,7 @@ import ca.uqac.lif.cep.functions.Function;
  */
 public class PlaceholderUsage
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws FunctionException
 	{
 		// SNIP
 		Function foo = new ArgumentPlaceholder(1);

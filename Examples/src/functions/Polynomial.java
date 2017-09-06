@@ -20,6 +20,7 @@ package functions;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.PassthroughFunction;
 import ca.uqac.lif.cep.numbers.Addition;
@@ -54,7 +55,7 @@ public class Polynomial extends PassthroughFunction
 	/*
 	 * Small main() to illustrate the concept
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws FunctionException
 	{
 		// SNAP
 		Polynomial poly = new Polynomial();

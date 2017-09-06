@@ -17,6 +17,7 @@
  */
 package functions;
 
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
@@ -67,7 +68,7 @@ public class IsPrime extends UnaryFunction<Number,Boolean>
 	/*
 	 * A small main method to illustrate the function
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws FunctionException
 	{
 		IsPrime ip = IsPrime.instance;
 		Object[] value = new Object[1];

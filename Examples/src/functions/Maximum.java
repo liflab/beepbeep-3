@@ -18,6 +18,7 @@
 package functions;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Binary function that returns the maximum of two values.
@@ -61,7 +62,7 @@ public class Maximum extends BinaryFunction<Number,Number,Number>
 	/*
 	 * A small main method to illustrate the function
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws FunctionException
 	{
 		Maximum max = Maximum.instance;
 		Object[] value = new Object[1];

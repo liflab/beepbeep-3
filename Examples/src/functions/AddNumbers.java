@@ -18,6 +18,7 @@
 package functions;
 
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.numbers.Addition;
 
 /**
@@ -27,7 +28,7 @@ import ca.uqac.lif.cep.numbers.Addition;
  */
 public class AddNumbers
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws FunctionException
 	{
 		// SNIP
 		Function add = Addition.instance;

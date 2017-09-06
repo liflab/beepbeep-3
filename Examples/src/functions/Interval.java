@@ -19,6 +19,7 @@ package functions;
 
 import ca.uqac.lif.cep.functions.And;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.numbers.IsLessThan;
@@ -33,7 +34,7 @@ import ca.uqac.lif.cep.numbers.IsLessThan;
  */
 public class Interval
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws FunctionException
 	{
 		/*
 		 * A FunctionTree is a function object created by
