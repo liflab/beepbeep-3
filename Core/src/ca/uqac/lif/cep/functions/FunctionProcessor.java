@@ -61,11 +61,20 @@ public class FunctionProcessor extends UniformProcessor
 		try
 		{
 			m_function.evaluate(inputs, outputs, m_context);
+			if (m_eventTracker != null)
+			{
+				for (int i = 0; i < inputs.length; i++)
+					for (int j = 0; j < outputs.length; j++)
+						associateToInput(i, m_inputCount, j, m_outputCount);
+				m_inputCount++;
+				m_outputCount++;
+			}
 		}
 		catch (FunctionException e)
 		{
 			throw new ProcessorException(e);
 		}
+		
 		return true;
 	}
 
@@ -73,8 +82,13 @@ public class FunctionProcessor extends UniformProcessor
 	public synchronized FunctionProcessor clone()
 	{
 		FunctionProcessor out = new FunctionProcessor(m_function.clone(m_context));
-		out.setContext(m_context);
+		cloneInto(out);
 		return out;
+	}
+	
+	public synchronized void cloneInto(FunctionProcessor out)
+	{
+		super.cloneInto(out);
 	}
 
 	@Override

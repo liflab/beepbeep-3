@@ -20,8 +20,12 @@ package ca.uqac.lif.cep.functions;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.EventIndex;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.petitpoucet.DirectValue;
+import ca.uqac.lif.petitpoucet.NodeFunction;
 
 /**
  * Creates a cumulative processor out of a cumulative function.
@@ -35,6 +39,40 @@ public class CumulativeProcessor extends FunctionProcessor
 	public CumulativeProcessor(CumulativeFunction<?> f)
 	{
 		super(f);
+	}
+
+	@Override
+	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
+	{
+		// We override compute() from FunctionProcessor, only to complete the
+		// association between input and output events (each output event depends on
+		// the current input event and also the previous output event front)
+		boolean b = super.compute(inputs, outputs);
+		if (m_eventTracker != null)
+		{
+			for (int j = 0; j < outputs.length; j++)
+			{
+				if (m_outputCount > 1)
+				{
+					for (int k = 0; k < outputs.length; k++)
+					{
+						// -1 and -2 since the count has already been incremented by the
+						// call to super.compute() above
+						associateToOutput(j, m_outputCount - 2, k, m_outputCount - 1);
+					}
+				}
+				else
+				{
+					for (int k = 0; k < outputs.length; k++)
+					{
+						// -1 and -2 since the count has already been incremented by the
+						// call to super.compute() above
+						associateTo(new StartValue(getId(), j, m_outputCount - 1, new DirectValue()), k, m_outputCount - 1);
+					}
+				}
+			}
+		}
+		return b;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException
@@ -59,5 +97,19 @@ public class CumulativeProcessor extends FunctionProcessor
 		CumulativeProcessor out = new CumulativeProcessor(func);
 		Connector.connect(p, out);
 		stack.push(out);
+	}
+
+	public static class StartValue extends EventIndex
+	{
+		public StartValue(int id, int index, int position, NodeFunction dependency) 
+		{
+			super(id, index, position, new DirectValue());
+		}
+
+		@Override
+		public String toString()
+		{
+			return "Start value";
+		}
 	}
 }

@@ -56,7 +56,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 		m_lastValue = value;
 		return value;
 	}
-
+	
 	@Override
 	public void reset()
 	{

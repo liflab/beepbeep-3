@@ -25,6 +25,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.petitpoucet.NodeFunction;
 
 /**
  * Receives zero or more input events, and produces zero or more output
@@ -70,14 +71,20 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * be stored before the processor consumes them. There are as many
 	 * input queues as the input arity of the processor.
 	 */
-	protected Queue<Object>[] m_inputQueues;
+	protected transient Queue<Object>[] m_inputQueues;
+	
+	/**
+	 * An object that keeps track of the relationship between input and
+	 * output events.
+	 */
+	protected transient EventTracker m_eventTracker = null;
 
 	/**
 	 * An array of output event queues. This is where the output events will
 	 * be stored when the processor does its computation. There are as many
 	 * output queues as the output arity of the processor.
 	 */
-	protected Queue<Object>[] m_outputQueues;
+	protected transient Queue<Object>[] m_outputQueues;
 
 	/**
 	 * An array of {@link Pullable}s, one for each input trace this processor
@@ -90,6 +97,16 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * produces
 	 */
 	protected Pushable[] m_outputPushables;
+	
+	/**
+	 * A counter incremented upon each input front processed
+	 */
+	protected int m_inputCount = 0;
+	
+	/**
+	 * A counter incremented upon each output front processed
+	 */
+	protected int m_outputCount = 0;
 
 	/**
 	 * A static counter, to be incremented every time a new {@link Processor}
@@ -423,6 +440,16 @@ public abstract class Processor implements Cloneable, Contextualizable
 
 	@Override
 	public abstract Processor clone();
+	
+	/**
+	 * Copies the contents and state of the current processor into another
+	 * @param p The processor to copy contents into
+	 */
+	public void cloneInto(Processor p)
+	{
+		p.m_eventTracker = m_eventTracker;
+		p.setContext(m_context);
+	}
 
 	/**
 	 * Gets the type of events the processor accepts for its <i>i</i>-th
@@ -525,5 +552,40 @@ public abstract class Processor implements Cloneable, Contextualizable
 	public void stop()
 	{
 		// Nothing
+	}
+	
+	public final EventTracker getEventTracker()
+	{
+		return m_eventTracker;
+	}
+	
+	public final Processor setEventTracker(EventTracker tracker)
+	{
+		m_eventTracker = tracker;
+		return this;
+	}
+		
+	public void associateToInput(int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
+	{
+		if (m_eventTracker != null)
+		{
+			m_eventTracker.associateToInput(m_uniqueId, in_stream_index, in_stream_pos, out_stream_index, out_stream_pos);
+		}
+	}
+	
+	public void associateTo(NodeFunction f, int out_stream_index, int out_stream_pos)
+	{
+		if (m_eventTracker != null)
+		{
+			m_eventTracker.associateTo(m_uniqueId, f, out_stream_index, out_stream_pos);
+		}
+	}
+	
+	public void associateToOutput(int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
+	{
+		if (m_eventTracker != null)
+		{
+			m_eventTracker.associateToOutput(m_uniqueId, in_stream_index, in_stream_pos, out_stream_index, out_stream_pos);
+		}
 	}
 }

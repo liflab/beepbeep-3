@@ -376,7 +376,7 @@ public class Connector
 			return out.toString();
 		}
 	}
-
+	
 	/**
 	 * Exception thrown when trying to connect the output of a processor to
 	 * its own input
