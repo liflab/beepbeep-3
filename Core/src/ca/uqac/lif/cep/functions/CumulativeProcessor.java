@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -20,11 +20,9 @@ package ca.uqac.lif.cep.functions;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.EventIndex;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.petitpoucet.DirectValue;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 
 /**
@@ -65,9 +63,7 @@ public class CumulativeProcessor extends FunctionProcessor
 				{
 					for (int k = 0; k < outputs.length; k++)
 					{
-						// -1 and -2 since the count has already been incremented by the
-						// call to super.compute() above
-						associateTo(new StartValue(getId(), j, m_outputCount - 1, new DirectValue()), k, m_outputCount - 1);
+						associateTo(new StartValue(getId(), j), k, m_outputCount - 1);
 					}
 				}
 			}
@@ -99,17 +95,73 @@ public class CumulativeProcessor extends FunctionProcessor
 		stack.push(out);
 	}
 
-	public static class StartValue extends EventIndex
+	/**
+	 * Node function representing the start value defined for a particular
+	 * function.
+	 */
+	public static class StartValue implements NodeFunction
 	{
-		public StartValue(int id, int index, int position, NodeFunction dependency) 
+		/**
+		 * The ID of the  processor this start value is associated
+		 * with
+		 */
+		protected int m_processorId;
+		
+		/**
+		 * In case the corresponding function is n-ary (with n &geq; 2),
+		 * the index of the input stream
+		 */
+		protected int m_index;
+		
+		/**
+		 * Empty constructor. Only there to support deserialization
+		 * with Azrael.
+		 */
+		protected StartValue()
 		{
-			super(id, index, position, new DirectValue());
+			super();
+		}
+		
+		/**
+		 * Creates a new start value function
+		 * @param id The ID of the processor this start value is associated
+		 * with
+		 * @param index The index of the input stream
+		 */
+		public StartValue(int id, int index) 
+		{
+			super();
+			m_processorId = id;
+		}
+		
+		/**
+		 * Creates a new start value function
+		 * @param id The ID of the processor this start value is associated
+		 * with
+		 */
+		public StartValue(int id)
+		{
+			this(id, 0);
 		}
 
 		@Override
 		public String toString()
 		{
 			return "Start value";
+		}
+
+		@Override
+		public String getDataPointId() 
+		{
+			return "";
+		}
+
+		@Override
+		public NodeFunction dependsOn() 
+		{
+			// This is normal. This function is a leaf node in the dependency
+			// tree, so its dependency is null.
+			return null;
 		}
 	}
 }

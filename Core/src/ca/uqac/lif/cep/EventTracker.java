@@ -37,14 +37,14 @@ public class EventTracker
 	public void associateToInput(int id, int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
 		ProvenanceNode pn_child = getProvenanceNode(id, out_stream_index, out_stream_pos);
-		ProvenanceNode pn_parent = new ProvenanceNode(new InputValue(-1, in_stream_index, in_stream_pos));
+		ProvenanceNode pn_parent = new ProvenanceNode(new EventFunction.InputValue(-1, in_stream_index, in_stream_pos));
 		pn_child.addParent(pn_parent);
 	}
 	
 	public void associateToOutput(int id, int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
 		ProvenanceNode pn_child = getProvenanceNode(id, out_stream_index, out_stream_pos);
-		ProvenanceNode pn_parent = new ProvenanceNode(new OutputValue(id, in_stream_index, in_stream_pos));
+		ProvenanceNode pn_parent = new ProvenanceNode(new EventFunction.OutputValue(id, in_stream_index, in_stream_pos));
 		pn_child.addParent(pn_parent);
 	}
 	
@@ -70,8 +70,7 @@ public class EventTracker
 		Map<Integer,ProvenanceNode> m2 = m1.get(stream_index);
 		if (!m2.containsKey(stream_pos))
 		{
-			
-			m2.put(stream_pos, new ProvenanceNode(new OutputValue(proc_id, stream_index, stream_pos)));
+			m2.put(stream_pos, new ProvenanceNode(new EventFunction.OutputValue(proc_id, stream_index, stream_pos)));
 		}
 		return (ProvenanceNode) m2.get(stream_pos);
 	}
