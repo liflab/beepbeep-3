@@ -84,6 +84,33 @@ public abstract class EventFunction implements NodeFunction
 		return s_dependencyFunction;
 	}
 	
+	/**
+	 * Gets the processor ID associated to this event function
+	 * @return The ID
+	 */
+	public int getProcessorId()
+	{
+		return m_processorId;
+	}
+	
+	/**
+	 * Gets the stream index associated to this event function
+	 * @return The index
+	 */
+	public int getStreamIndex()
+	{
+		return m_streamIndex;
+	}
+	
+	/**
+	 * Gets the stream position associated to this event function
+	 * @return The position
+	 */
+	public int getStreamPosition()
+	{
+		return m_streamPosition;
+	}
+	
 	public static class InputValue extends EventFunction
 	{
 		public InputValue(int id, int index, int position)
