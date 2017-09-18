@@ -170,9 +170,14 @@ public class QueueSource extends Source
 		outputs.add(output);
 		if (m_eventTracker != null)
 		{
+			int index = m_index - 1;
+			if (index < 0)
+			{
+				index += size;
+			}
 			for (int i = 0; i < getOutputArity(); i++)
 			{
-				associateTo(new QueueFunction(getId(), (m_index - 1) % size), i, m_outputCount);
+				associateTo(new QueueFunction(getId(), index), i, m_outputCount);
 			}
 		}
 		m_outputCount++;
