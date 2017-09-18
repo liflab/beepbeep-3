@@ -40,7 +40,13 @@ public class Passthrough extends UniformProcessor
 		for (int i = 0; i < inputs.length; i++)
 		{
 			outputs[i] = inputs[i];
+			if (m_eventTracker != null)
+			{
+				m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
+			}
 		}
+		m_inputCount++;
+		m_outputCount++;
 		return true;
 	}
 

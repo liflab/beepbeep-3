@@ -69,7 +69,16 @@ public class Trim extends SingleProcessor
 		if (m_eventsReceived > m_delay)
 		{
 			outputs.add(inputs);
+			if (m_eventTracker != null)
+			{
+				for (int i = 0; i < inputs.length; i++)
+				{
+					m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
+				}
+			}
+			m_outputCount++;
 		}
+		m_inputCount++;
 		return true;
 	}
 

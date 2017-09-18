@@ -234,7 +234,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 			m_context.putAll(context);
 		}
 	}
-
+	
 	@Override
 	public int hashCode()
 	{

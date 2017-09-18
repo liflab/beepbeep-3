@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.petitpoucet.DirectValue;
+import ca.uqac.lif.petitpoucet.NodeFunction;
 
 /**
  * Source whose input is a queue of objects. One gives the
@@ -166,6 +168,14 @@ public class QueueSource extends Source
 			output[i] = event;
 		}
 		outputs.add(output);
+		if (m_eventTracker != null)
+		{
+			for (int i = 0; i < getOutputArity(); i++)
+			{
+				associateTo(new QueueFunction(getId(), (m_index - 1) % size), i, m_outputCount);
+			}
+		}
+		m_outputCount++;
 		return true;
 	}
 
@@ -196,5 +206,42 @@ public class QueueSource extends Source
 			}
 		}
 		return Variant.class;
+	}
+	
+	public static class QueueFunction implements NodeFunction
+	{
+		protected int m_queueIndex = 0;
+		
+		protected int m_processorId = 0;
+		
+		public QueueFunction(int proc_id, int index)
+		{
+			super();
+			m_processorId = proc_id;
+			m_queueIndex = index;
+		}
+
+		@Override
+		public String getDataPointId() 
+		{
+			return "BP" + m_processorId + ".Q." + m_queueIndex;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return getDataPointId();
+		}
+
+		@Override
+		public NodeFunction dependsOn() 
+		{
+			return DirectValue.instance;
+		}
+		
+		public int getIndex()
+		{
+			return m_queueIndex;
+		}
 	}
 }

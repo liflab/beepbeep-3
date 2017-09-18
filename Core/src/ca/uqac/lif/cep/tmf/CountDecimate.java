@@ -69,6 +69,7 @@ public class CountDecimate extends SingleProcessor
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out = null;
+		m_inputCount++;
 		if (m_current == 0)
 		{
 			out = inputs;
@@ -77,6 +78,14 @@ public class CountDecimate extends SingleProcessor
 		if (out == null)
 		{
 			return true;
+		}
+		m_outputCount++;
+		if (m_eventTracker != null)
+		{
+			for (int i = 0; i < inputs.length; i++)
+			{
+				associateToInput(i, m_inputCount - 1, i, m_outputCount - 1);
+			}
 		}
 		outputs.add(out);
 		return true;

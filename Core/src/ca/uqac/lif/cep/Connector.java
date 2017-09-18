@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -71,37 +71,37 @@ public class Connector
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's unique input
 	 */
-	public static final int INPUT = 0;
+	public static final transient int INPUT = 0;
 
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's unique output
 	 */
-	public static final int OUTPUT = 0;
+	public static final transient int OUTPUT = 0;
 
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's first input or output
 	 */
-	public static final int LEFT = 0;
+	public static final transient int LEFT = 0;
 
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's first input or output
 	 */
-	public static final int TOP = 0;
+	public static final transient int TOP = 0;
 
 	/**
 	 * Constant used to replace the value 1 when referring to
 	 * a processor's first input or output
 	 */
-	public static final int RIGHT = 1;
+	public static final transient int RIGHT = 1;
 
 	/**
 	 * Constant used to replace the value 1 when referring to
 	 * a processor's first input or output
 	 */
-	public static final int BOTTOM = 1;
+	public static final transient int BOTTOM = 1;
 
 	/**
 	 * Utility classes should not have public constructors
@@ -110,7 +110,7 @@ public class Connector
 	{
 		throw new IllegalAccessError("Utility class");
 	}
-
+	
 	/**
 	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
 	 * <i>j</i>-th input of <tt>p2</tt>
@@ -123,6 +123,23 @@ public class Connector
 	 *   to connect are incompatible
 	 */
 	public static synchronized Processor connect(Processor p1, Processor p2, int i, int j) throws ConnectorException
+	{
+		return connect(p1, p2, i, j, null);
+	}
+
+	/**
+	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
+	 * <i>j</i>-th input of <tt>p2</tt>
+	 * @param p1 The first processor
+	 * @param p2 The second processor
+	 * @param i The output number of the first processor
+	 * @param j The input number of the second processor
+	 * @param tracker An event tracker (optional)
+	 * @return A reference to processor p2
+	 * @throws ConnectorException If the input/output types of the processors
+	 *   to connect are incompatible
+	 */
+	public static synchronized Processor connect(Processor p1, Processor p2, int i, int j, EventTracker tracker) throws ConnectorException
 	{
 		// First check for type compatibility
 		if (s_checkForTypes)
@@ -157,6 +174,10 @@ public class Connector
 		{
 			// Same as above
 		}
+		if (tracker != null)
+		{
+			tracker.setConnection(p1.getId(), i, p2.getId(), j);
+		}
 		return p2;
 	}
 
@@ -173,7 +194,29 @@ public class Connector
 	 */
 	public static synchronized Processor connect(Processor p1, int i, Processor p2, int j) throws ConnectorException
 	{
-		return connect(p1, p2, i, j);
+		return connect(p1, i, p2, j, null);
+	}
+	
+	/**
+	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
+	 * <i>j</i>-th input of <tt>p2</tt>
+	 * @param p1 The first processor
+	 * @param p2 The second processor
+	 * @param i The output number of the first processor
+	 * @param j The input number of the second processor
+	 * @param tracker An event tracker
+	 * @return A reference to processor p2
+	 * @throws ConnectorException If the input/output types of the processors
+	 *   to connect are incompatible
+	 */
+	public static synchronized Processor connect(Processor p1, int i, Processor p2, int j, EventTracker tracker) throws ConnectorException
+	{
+		Processor p = connect(p1, p2, i, j);
+		if (tracker != null)
+		{
+			tracker.setConnection(p1.getId(), i, p2.getId(), j);
+		}
+		return p;
 	}
 
 	/**
@@ -192,7 +235,7 @@ public class Connector
 		connect(p2, p3, 0, 1);
 		return p3;
 	}
-
+	
 	/**
 	 * Connects a chain of processors, by associating the outputs of one
 	 * to the inputs of the next. The output arity of the first must match
@@ -204,6 +247,22 @@ public class Connector
 	 *   to connect are incompatible
 	 */
 	public static synchronized Processor connect(Processor ... procs) throws ConnectorException
+	{
+		return connect(null, procs);
+	}
+
+	/**
+	 * Connects a chain of processors, by associating the outputs of one
+	 * to the inputs of the next. The output arity of the first must match
+	 * that input arity of the next one. In the case the arity is greater
+	 * than 1, the <i>i</i>-th output is linked to the <i>i</i>-th input.
+	 * @param tracker The EventTracker
+	 * @param procs The list of processors
+	 * @return The last processor of the chain
+	 * @throws ConnectorException If the input/output types of the processors
+	 *   to connect are incompatible
+	 */
+	public static synchronized Processor connect(EventTracker tracker, Processor ... procs) throws ConnectorException
 	{
 		if (procs.length == 1)
 		{
@@ -217,7 +276,7 @@ public class Connector
 			int arity = p1.getOutputArity();
 			for (int i = 0; i < arity; i++)
 			{
-				connect(p1, p2, i, i);
+				connect(p1, p2, i, i, tracker);
 			}
 		}
 		return procs[procs.length - 1];

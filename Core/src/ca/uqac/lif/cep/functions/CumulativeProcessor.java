@@ -155,6 +155,15 @@ public class CumulativeProcessor extends FunctionProcessor
 		{
 			return "";
 		}
+		
+		/**
+		 * Gets the index of the input stream
+		 * @return The index
+		 */
+		public int getStreamIndex()
+		{
+			return m_index;
+		}
 
 		@Override
 		public NodeFunction dependsOn() 

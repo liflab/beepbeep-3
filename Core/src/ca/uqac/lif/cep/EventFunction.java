@@ -71,6 +71,12 @@ public abstract class EventFunction implements NodeFunction
 		m_streamIndex = index;
 		m_streamPosition = position;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return getDataPointId();
+	}
 
 	@Override
 	public NodeFunction dependsOn() 
