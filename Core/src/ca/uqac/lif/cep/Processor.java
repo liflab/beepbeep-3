@@ -64,7 +64,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	/**
 	 * A string used to identify the program's version
 	 */
-	public static final transient String s_versionString = "0.6";
+	public static final transient String s_versionString = "0.7";
 
 	/**
 	 * An array of input event queues. This is where the input events will
