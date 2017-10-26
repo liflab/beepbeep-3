@@ -2,7 +2,6 @@ BeepBeep 3: an expressive query processor for event streams
 ===========================================================
 
 [![Travis](https://img.shields.io/travis/liflab/beepbeep-3.svg?style=flat-square)]()
-[![SonarQube Coverage](https://img.shields.io/sonar/http/sonarqube.com/liflab:beepbeep-3/coverage.svg?style=flat-square)]()
 
 BeepBeep is an event stream query engine. It can take as input various
 sources of *events*, pipe them through various *processors*, and produce
