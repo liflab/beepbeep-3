@@ -538,8 +538,9 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * Starts the processor. This has no effect, except for processors
 	 * that use threads; in such a case, calling this method should
 	 * start the thread.
+	 * @throws ProcessorException 
 	 */
-	public void start()
+	public void start() throws ProcessorException
 	{
 		// Nothing
 	}
@@ -549,7 +550,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * that use threads; in such a case, calling this method should
 	 * stop the thread.
 	 */
-	public void stop()
+	public void stop() throws ProcessorException
 	{
 		// Nothing
 	}

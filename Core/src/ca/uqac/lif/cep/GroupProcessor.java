@@ -560,7 +560,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public void start()
+	synchronized public void start() throws ProcessorException
 	{
 		super.start();
 		for (Processor p : m_processors)
@@ -570,7 +570,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public void stop()
+	synchronized public void stop() throws ProcessorException
 	{
 		super.stop();
 		for (Processor p : m_processors)
