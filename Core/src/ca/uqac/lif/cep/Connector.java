@@ -368,12 +368,24 @@ public class Connector
 		 */
 		private static final long serialVersionUID = 1L;
 
-		protected Processor m_source;
+		/**
+		 * The processor at the source of the connection
+		 */
+		protected transient Processor m_source;
 
-		protected Processor m_destination;
+		/**
+		 * The processor at the destination of the connection
+		 */
+		protected transient Processor m_destination;
 
+		/**
+		 * The index of the stream in the source processor
+		 */
 		protected int m_sourceIndex;
 
+		/**
+		 * The index of the stream in the destination processor
+		 */
 		protected int m_destinationIndex;
 
 		ConnectorException(Processor source, Processor destination, int i, int j)

@@ -126,7 +126,7 @@ public interface Pushable
 		/**
 		 * The processor to which the exception is associated (if any)
 		 */
-		protected final Processor m_processor;
+		protected final transient Processor m_processor;
 
 		public PushableException(Throwable t)
 		{

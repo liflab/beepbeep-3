@@ -236,7 +236,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 		/**
 		 * The processor to which the exception is associated (if any)
 		 */
-		protected final Processor m_processor;
+		protected final transient Processor m_processor;
 
 		public PullableException(Throwable t)
 		{

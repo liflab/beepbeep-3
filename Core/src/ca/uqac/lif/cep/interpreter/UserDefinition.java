@@ -119,8 +119,9 @@ public class UserDefinition
 		}
 		if (m_symbolDefs != null && !m_symbolDefs.isEmpty())
 		{
-			for (String symbol : m_symbolDefs.keySet())
+			for (Map.Entry<String,String> entry : m_symbolDefs.entrySet())
 			{
+				String symbol = entry.getKey();
 				String symbol_nonterminal = m_symbolDefs.get(symbol);
 				try
 				{
@@ -214,11 +215,12 @@ public class UserDefinition
 	 */
 	protected String createPattern()
 	{
-		String out = new String(m_pattern);
+		String out = m_pattern;
 		if (m_symbolDefs != null && !m_symbolDefs.isEmpty())
 		{
-			for (String var_name : m_symbolDefs.keySet())
+			for (Map.Entry<String,String> entry : m_symbolDefs.entrySet())
 			{
+				String var_name = entry.getKey();
 				out = out.replaceAll(var_name, "<" + m_symbolDefs.get(var_name) + ">");
 			}
 		}

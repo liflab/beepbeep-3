@@ -70,6 +70,7 @@ public class Multiset implements Set<Object>
 	 * about what element of the multiset you get, as long as you get one.
 	 * @return An element of the multiset, or null if the multiset is empty
 	 */
+	@SuppressWarnings("squid:S1751")
 	public Object getAnyElement()
 	{
 		Set<Object> objects = m_map.keySet();

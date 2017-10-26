@@ -38,7 +38,7 @@ public class Peel extends UnaryFunction<Object,Object>
 		super(Object.class, Object.class);
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({"rawtypes", "squid:S1751"})
 	@Override
 	public Object getValue(Object x)
 	{
