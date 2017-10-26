@@ -26,7 +26,7 @@
   <name>BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.6-alpha</version>
+  <version>0.7-alpha</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -68,12 +68,12 @@
     </dependency>
     <dependency>
       <!--
-      Petit Poucet. Used to track dependencies between events.
+      Petit Poucet. Used to store provenance information.
       -->
       <name>Petit Poucet</name>
-      <classname>ca.uqac.lif.petitpoucet.NodeFunction</classname>
+      <classname>ca.uqac.lif.petitpoucet.ProvenanceNode</classname>
       <files>
-        <zip>https://github.com/liflab/petitpoucet/releases/download/v0.1-alpha/petitpoucet-0.1-alpha.zip</zip>
+        <zip>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.zip</zip>
       </files>
     </dependency>
   </dependencies>
