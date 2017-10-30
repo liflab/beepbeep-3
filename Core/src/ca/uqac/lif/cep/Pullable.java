@@ -260,4 +260,91 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 			m_processor = p;
 		}
 	}
+	
+	/**
+	 * Pullable object that throws an {@link UnsupportedOperationException}
+	 * upon every call to each of its methods (except {@link #getProcessor()}).
+	 * This object can be returned by
+	 * processors to signal that they cannot be pulled.
+	 */
+	public class PullNotSupported implements Pullable
+	{
+		protected Processor m_processor;
+		
+		protected int m_position;
+		
+		public PullNotSupported(Processor p, int position)
+		{
+			super();
+			m_processor = p;
+			m_position = position;
+		}
+		
+		@Override
+		public Iterator<Object> iterator() 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Object pullSoft() throws PullableException 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Object pull() throws PullableException 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Object next() throws PullableException 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public NextStatus hasNextSoft() throws PullableException 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean hasNext() throws PullableException 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return m_processor;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return m_position;
+		}
+
+		@Override
+		public void start() 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void stop() 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void dispose() 
+		{
+			throw new UnsupportedOperationException();
+		}
+		
+	}
 }

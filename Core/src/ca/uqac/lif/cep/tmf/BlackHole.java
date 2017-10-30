@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -15,9 +15,29 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package ca.uqac.lif.cep.tmf;
+
+import java.util.Queue;
+
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 
 /**
- * Some examples of custom processors you can build in BeepBeep 3.
+ * A special type of {@link Sink} that discards everything it receives.
  * @author Sylvain Hallé
  */
-package processors;
+public class BlackHole extends Sink 
+{
+	@Override
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException 
+	{
+		return false;
+	}
+
+	@Override
+	public Processor clone() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

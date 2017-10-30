@@ -73,6 +73,7 @@ public class TimeDecimate extends SingleProcessor
 		if (m_timeLastSent < 0)
 		{
 			out = inputs;
+			m_timeLastSent = System.nanoTime();
 		}
 		else
 		{
@@ -81,6 +82,7 @@ public class TimeDecimate extends SingleProcessor
 			if (time_dif >= m_interval)
 			{
 				out = inputs;
+				m_timeLastSent = current_time;
 			}
 		}
 		if (out != null)
