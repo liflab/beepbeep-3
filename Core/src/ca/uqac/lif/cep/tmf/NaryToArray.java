@@ -35,7 +35,12 @@ public class NaryToArray extends UniformProcessor
 	@Override
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-		outputs[0] = wrapObject(inputs);
+		Object[] out = new Object[inputs.length];
+		for (int i = 0; i < inputs.length; i++)
+		{
+			out[i] = inputs[i];
+		}
+		outputs[0] = out;
 		return true;
 	}
 

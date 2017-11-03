@@ -81,10 +81,12 @@ public interface EventTracker
 	
 	/**
 	 * Gets the provenance tree for a given event.
-	 * @param proc_id
-	 * @param stream_index
-	 * @param stream_pos
-	 * @return
+	 * @param proc_id The ID of the prcoessor
+	 * @param stream_index The index of the stream in the processor
+	 *  corresponding to the input event to associate
+	 * @param stream_pos  The position in the stream corresponding to
+	 *  this event
+	 * @return The provenance tree
 	 */
 	public /*@NotNull*/ ProvenanceNode getProvenanceTree(int proc_id, int stream_index, int stream_pos);
 	
