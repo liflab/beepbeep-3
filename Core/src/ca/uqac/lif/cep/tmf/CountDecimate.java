@@ -25,8 +25,6 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.numbers.EmlNumber;
-import ca.uqac.lif.cep.objectfactory.IntegerSetting;
-import ca.uqac.lif.cep.objectfactory.SettingsSet;
 
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
@@ -113,29 +111,5 @@ public class CountDecimate extends SingleProcessor
 	public CountDecimate clone()
 	{
 		return new CountDecimate(m_interval);
-	}
-
-	/**
-	 * Gets the set of initial settings for this processor
-	 * @return The set of settings
-	 */
-	public static SettingsSet getInitialSettings()
-	{
-		SettingsSet set = new SettingsSet(Window.class);
-		set.add(new IntegerSetting("step", true, "The number of events to discard"));
-		return set;
-	}
-
-	/**
-	 * Creates a new instance of this object based on a set of
-	 * instantiation settings
-	 * @param s The settings
-	 * @return A new instance of the object
-	 */
-	public static CountDecimate getNewInstance(SettingsSet s) throws InstantiationException
-	{
-		int step = ((IntegerSetting) s.get("step")).getIntValue();
-		CountDecimate out = new CountDecimate(step);
-		return out;
 	}
 }
