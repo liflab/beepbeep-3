@@ -555,6 +555,42 @@ public abstract class Processor implements Cloneable, Contextualizable
 		// Nothing
 	}
 	
+	/**
+	 * Starts all processors given as an argument
+	 * @param procs The processors
+	 * @throws ProcessorException Thrown if one of the processors in the
+	 *   list throws an exception; this aborts the starting of all
+	 *   remaining processors
+	 */
+	public static void startAll(Processor ... procs) throws ProcessorException
+	{
+		for (Processor p : procs)
+		{
+			if (p != null)
+			{
+				p.start();
+			}
+		}
+	}
+	
+	/**
+	 * Stops all processors given as an argument
+	 * @param procs The processors
+	 * @throws ProcessorException Thrown if one of the processors in the
+	 *   list throws an exception; this aborts the stopping of all
+	 *   remaining processors
+	 */
+	public static void stopAll(Processor ... procs) throws ProcessorException
+	{
+		for (Processor p : procs)
+		{
+			if (p != null)
+			{
+				p.stop();
+			}
+		}
+	}
+	
 	public final EventTracker getEventTracker()
 	{
 		return m_eventTracker;

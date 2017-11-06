@@ -21,19 +21,58 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 
+/**
+ * Processor that repeatedly pulls its input, and pushes the resulting
+ * events to its output. The Pump is a way to bridge an upstream part of a
+ * processor chain that works in <em>pull</em> mode, to a downstream part
+ * that operates in <em>push</em> mode.
+ * <p>
+ * Graphically, this processor is represented as:
+ * <p>
+ * <a href="{@docRoot}/doc-files/tmf/Pump.png"><img
+ *   src="{@docRoot}/doc-files/tmf/Pump.png"
+ *   alt="Processor graph"></a>
+ * <p>
+ * The repeated pulling of events from its input is started by calling this
+ * processor's {@link #start()} method. In the background, this will
+ * instantiate a new thread, which will endlessly call <tt>pull()</tt> on
+ * whatever input is connected to the pump, and then call <tt>push()</tt>
+ * on whatever input is connected to it.
+ * <p>
+ * The opposite of the Pump is the {@link ca.uqac.lif.cep.tmf.Tank Tank}.
+ * @author Sylvain Hallé
+ *
+ */
 public class Pump extends Processor implements Runnable
 {
 	/**
 	 * Semaphore used to stop the pump
 	 */
 	private volatile boolean m_run;
-	
+
+	/**
+	 * The time interval, in milliseconds, between each pull of the
+	 * pump
+	 */
+	protected long m_interval;
+
 	/**
 	 * Creates a new pump
 	 */
 	public Pump()
 	{
+		this(0);
+	}
+
+	/**
+	 * Creates a new pump
+	 * @param interval The time interval, in milliseconds, between each
+	 * pull of the pump
+	 */
+	public Pump(long interval)
+	{
 		super(1, 1);
+		m_interval = interval;
 	}
 
 	@Override
@@ -46,15 +85,30 @@ public class Pump extends Processor implements Runnable
 		{
 			Object o = pullable.pull();
 			pushable.push(o);
+			if (m_interval >= 0)
+			{
+				try 
+				{
+					Thread.sleep(m_interval);
+				}
+				catch (InterruptedException e) 
+				{
+					// Nothing to do here
+				}
+			}
 		}
 	}
-	
+
 	@Override
 	public void start()
 	{
-		run();
+		if (!m_run)
+		{
+			Thread t = new Thread(this);
+			t.start();
+		}
 	}
-	
+
 	@Override
 	public synchronized void stop()
 	{
@@ -65,14 +119,14 @@ public class Pump extends Processor implements Runnable
 	public Pushable getPushableInput(int index) 
 	{
 		// You are not supposed to push to a pump
-		throw new UnsupportedOperationException();
+		return new Pushable.PushNotSupported(this, index);
 	}
 
 	@Override
 	public Pullable getPullableOutput(int index)
 	{
 		// You are not supposed to pull from a pump
-		throw new UnsupportedOperationException();
+		return new Pullable.PullNotSupported(this, index);
 	}
 
 	@Override
@@ -80,6 +134,4 @@ public class Pump extends Processor implements Runnable
 	{
 		return new Pump();
 	}
-	
-	
 }

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -30,13 +30,16 @@ import java.util.ArrayDeque;
 import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.Source;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Reads chunks of data from an input source.
  * These chunks are returned as events in the form of strings.
- * @author sylvain
+ * 
+ * @author Sylvain Hallé
  */
 public class StreamReader extends Source
 {
@@ -97,6 +100,13 @@ public class StreamReader extends Source
 	protected BufferedReader m_br;
 
 	protected InputStreamReader m_isr;
+	
+	protected StreamListener m_listener;
+
+	/**
+	 * Determines whether the reader operates in "pull" or "push" mode
+	 */
+	protected boolean m_pushMode = false;
 
 	public StreamReader()
 	{
@@ -133,13 +143,26 @@ public class StreamReader extends Source
 	}
 
 	/**
+	 * Sets whether this stream reader works in pull or push mode
+	 * @param b Set to {@code true} for push mode, {@code false} for pull mode
+	 * @return This stream reader
+	 */
+	public StreamReader setPushMode(boolean b)
+	{
+		m_pushMode = b;
+		return this;
+	}
+
+	/**
 	 * Tells the reader whether the input source is a pipe or a
 	 * regular file.
 	 * @param b Set to true if source is a file; false otherwise
+	 * @return This stream reader
 	 */
-	public void setIsFile(boolean b)
+	public StreamReader setIsFile(boolean b)
 	{
 		m_isFile = b;
+		return this;
 	}
 
 	public int getReturnCode()
@@ -151,7 +174,18 @@ public class StreamReader extends Source
 	@SuppressWarnings({"squid:S1168", "squid:S1166"})
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		Object[] out = new String[1];
+		String s_read = readString();
+		if (m_returnCode == ERR_EOF || m_returnCode == ERR_EOT)
+		{
+			// End of stream
+			return false;
+		}
+		outputs.add(new Object[]{s_read});
+		return true;
+	}
+	
+	protected String readString()
+	{
 		try
 		{
 			if (m_br.ready())
@@ -170,7 +204,7 @@ public class StreamReader extends Source
 				}
 				if (chars_read > 0)
 				{
-					out[0] = new String(char_array);
+					return new String(char_array).substring(0, chars_read - 1);
 				}
 			}
 			else
@@ -190,13 +224,7 @@ public class StreamReader extends Source
 			// Not an error in itself, but will cause the thread in which PipeReader
 			// runs to end (gracefully)
 		}
-		if (m_returnCode == ERR_EOF || m_returnCode == ERR_EOT)
-		{
-			// End of stream
-			return false;
-		}
-		outputs.add(out);
-		return true;
+		return null;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException
@@ -227,5 +255,55 @@ public class StreamReader extends Source
 	public StreamReader clone()
 	{
 		return new StreamReader(m_fis);
+	}
+
+	@Override
+	public void start() throws ProcessorException
+	{
+		m_listener = new StreamListener();
+		Thread t = new Thread(m_listener);
+		t.start();
+	}
+	
+	@Override
+	public void stop() throws ProcessorException
+	{
+		if (m_listener != null)
+		{
+			m_listener.stop();
+		}
+	}
+
+	protected class StreamListener implements Runnable
+	{
+		protected volatile boolean m_run;
+
+		@Override
+		public void run()
+		{
+			m_run = true;
+			Pushable p = StreamReader.this.getPushableOutput(0);
+			while (m_run)
+			{
+				String s = readString();
+				if (s != null)
+				{
+					p.push(s);
+				}
+				try
+				{
+					Thread.sleep(m_sleepIntervalMs, m_sleepIntervalNs);
+				}
+				catch (InterruptedException e) 
+				{
+					// Do nothing
+				}
+			}
+		}
+		
+		public void stop()
+		{
+			m_run = false;
+		}
 	}
 }

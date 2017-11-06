@@ -61,7 +61,7 @@ public abstract class SingleProcessor extends Processor
 	}
 
 	@Override
-	synchronized public final Pushable getPushableInput(int index)
+	synchronized public Pushable getPushableInput(int index)
 	{
 		return new InputPushable(index);
 	}

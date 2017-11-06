@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -149,5 +149,62 @@ public interface Pushable
 			super(t);
 			m_processor = p;
 		}
+	}
+	
+	/**
+	 * Pushable object that throws an {@link UnsupportedOperationException}
+	 * upon every call to each of its methods (except {@link #getProcessor()}).
+	 * This object can be returned by
+	 * processors to signal that they cannot be pushed.
+	 */
+	public static class PushNotSupported implements Pushable
+	{
+		protected Processor m_processor;
+		
+		protected int m_position;
+		
+		public PushNotSupported(Processor p, int position)
+		{
+			super();
+			m_processor = p;
+			m_position = position;
+		}
+
+		@Override
+		public Pushable push(Object o) throws PushableException
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Pushable pushFast(Object o) throws PushableException 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return m_processor;
+		}
+
+		@Override
+		public int getPosition() 
+		{
+			return m_position;
+		}
+
+		@Override
+		public void waitFor() 
+		{
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void dispose() 
+		{
+			throw new UnsupportedOperationException();
+		}
+		
 	}
 }

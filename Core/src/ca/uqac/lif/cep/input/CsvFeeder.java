@@ -26,6 +26,12 @@ package ca.uqac.lif.cep.input;
  */
 public class CsvFeeder extends TokenFeeder
 {
+	/**
+	 * Whether to apply the {@link String#trim() trim()} method on the
+	 * resulting token
+	 */
+	protected boolean m_trimSpaces = true;
+	
 	public CsvFeeder()
 	{
 		super();
@@ -37,6 +43,10 @@ public class CsvFeeder extends TokenFeeder
 	protected Object createTokenFromInput(String token)
 	{
 		// Remove trailing comma
+		if (m_trimSpaces)
+		{
+			token.substring(0, token.length() - 1).trim();
+		}
 		return token.substring(0, token.length() - 1);
 	}
 
