@@ -15,49 +15,33 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tmf;
+package ca.uqac.lif.cep.numbers;
 
-import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
- * Returns its input as its output. Although it seems useless,
- * <code>Passthrough</code> is used internally by the ESQL interpreter as
- * a placeholder when building processor chains from an expression.
- * 
+ * Returns the maximum of two numbers.
  * @author Sylvain Hallé
- *
  */
-public class Passthrough extends UniformProcessor
+public class Maximum extends BinaryFunction<Number,Number,Number>
 {
-	public Passthrough(int arity)
+	public static transient final Maximum instance = new Maximum();
+
+	Maximum()
 	{
-		super(arity, arity);
+		super(Number.class, Number.class, Number.class);
+	}
+
+	@Override
+	public Number getValue(Number x, Number y) 
+	{
+		return Math.max(x.floatValue(), y.floatValue());
 	}
 	
-	public Passthrough()
+	@Override
+	public Number getStartValue()
 	{
-		this(1);
+		return Float.MIN_VALUE;
 	}
 
-	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs)
-	{
-		for (int i = 0; i < inputs.length; i++)
-		{
-			outputs[i] = inputs[i];
-			if (m_eventTracker != null)
-			{
-				m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
-			}
-		}
-		m_inputCount++;
-		m_outputCount++;
-		return true;
-	}
-
-	@Override
-	public Passthrough clone()
-	{
-		return new Passthrough(getInputArity());
-	}
 }

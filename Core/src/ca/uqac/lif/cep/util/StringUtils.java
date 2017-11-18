@@ -113,5 +113,35 @@ public class StringUtils
 		InputStream stream = new ByteArrayInputStream(s.getBytes());
 		return stream;
 	}
+	
+	/**
+	 * Attempts to create a constant based on the contents of a string.
+	 * That is, if the string contains only digits, it will create an
+	 * number instead of a string.
+	 * @param s The string to read from
+	 * @return The constant
+	 */
+	public static Object createConstantFromString(String s)
+	{
+		try
+		{
+			int n = Integer.parseInt(s); 
+			return n;
+		}
+		catch (NumberFormatException nfe1)
+		{
+			try
+			{
+				float f = Float.parseFloat(s);
+				return f;
+			}
+			catch (NumberFormatException nfe2)
+			{
+				// Do nothing
+			}
+		}
+		// This is a string
+		return s;
+	}
 
 }

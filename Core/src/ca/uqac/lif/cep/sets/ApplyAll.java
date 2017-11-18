@@ -22,12 +22,12 @@ import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * Given a multiset, returns a <em>new</em> multiset whose content is
+ * Given a multiset/array, returns a <em>new</em> multiset/array whose content is
  * the result of applying a function to each element.
  * 
  * @author Sylvain Hallé
  */
-public class ApplyAll extends UnaryFunction<Multiset,Multiset>
+public class ApplyAll extends UnaryFunction<Object,Object>
 {
 	/**
 	 * The function to apply on each element
@@ -36,7 +36,7 @@ public class ApplyAll extends UnaryFunction<Multiset,Multiset>
 
 	public ApplyAll()
 	{
-		super(Multiset.class, Multiset.class);
+		super(Object.class, Object.class);
 	}
 
 	public ApplyAll(Function function)
@@ -55,16 +55,30 @@ public class ApplyAll extends UnaryFunction<Multiset,Multiset>
 	}
 
 	@Override
-	public Multiset getValue(Multiset x) throws FunctionException
+	public Object getValue(Object x) throws FunctionException
 	{
-		Multiset out = new Multiset();
-		for (Object o : x)
+		if (x instanceof Multiset)
+		{
+			Multiset out = new Multiset();
+			for (Object o : (Multiset) x)
+			{
+				Object[] in = new Object[1];
+				in[0] = o;
+				Object[] values = new Object[1];
+				m_function.evaluate(in, values);
+				out.add(values[0]);
+			}
+			return out;
+		}
+		Object[] in_array = (Object[]) x;
+		Object[] out = new Object[in_array.length];
+		for (int i = 0; i < in_array.length; i++)
 		{
 			Object[] in = new Object[1];
-			in[0] = o;
+			in[0] = in_array[i];
 			Object[] values = new Object[1];
 			m_function.evaluate(in, values);
-			out.add(values[0]);
+			out[i] = values[0];
 		}
 		return out;
 	}
