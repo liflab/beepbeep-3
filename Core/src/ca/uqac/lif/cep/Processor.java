@@ -33,6 +33,11 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * occurs. All of BeepBeep's processors (including yours)
  * are descendants of this class.
  * <p>
+ * A processor is depicted graphically as a "box", with "pipes" representing
+ * its input and output streams.
+ * <p>
+ * <img src="{@docRoot}/doc-files/Processor-generic.png" alt="Processor">
+ * <p>
  * This class itself is abstract; nevertheless, it provides important
  * methods for handling input/output event queues, connecting processors
  * together, etc. However, if you write your own processor, you will
@@ -45,6 +50,7 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * most generic type.
  * 
  * @author Sylvain Hallé
+ * @dictentry
  *
  */
 public abstract class Processor implements Cloneable, Contextualizable

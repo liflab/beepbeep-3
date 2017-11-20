@@ -26,6 +26,7 @@ import ca.uqac.lif.cep.Contextualizable;
  * Represents a stateless <i>m</i>-to-<i>n</i> function.
  * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public abstract class Function implements Cloneable, Contextualizable
 {

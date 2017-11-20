@@ -1,16 +1,17 @@
 package ca.uqac.lif.cep.sets;
 
 import java.util.Collection;
+import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.tmf.SinkLast;
 
-public class ProcessOnSet extends UniformProcessor
+public class ProcessOnSet extends SingleProcessor
 {
 	protected Processor m_processor;
 
@@ -37,7 +38,7 @@ public class ProcessOnSet extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException 
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException 
 	{
 		m_processor.reset();
 		if (inputs[0] instanceof Multiset)
@@ -55,9 +56,14 @@ public class ProcessOnSet extends UniformProcessor
 			}
 		}
 		Object[] last = m_sink.getLast();
-		for (int i = 0; i < outputs.length; i++)
+		if (last != null)
 		{
-			outputs[i] = last[i];
+			Object[] outs = new Object[last.length];
+			for (int i = 0; i < last.length; i++)
+			{
+				outs[i] = last[i];
+			}
+			outputs.add(outs);
 		}
 		return true;
 	}

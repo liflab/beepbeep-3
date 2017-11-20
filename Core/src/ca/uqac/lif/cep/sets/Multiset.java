@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -48,7 +48,7 @@ public class Multiset implements Set<Object>
 	 * @param b The multiset to add
 	 * @return This multiset
 	 */
-	public Multiset addAll(Multiset b)
+	public synchronized Multiset addAll(Multiset b)
 	{
 		for (Object o : b.keySet())
 		{
@@ -71,7 +71,7 @@ public class Multiset implements Set<Object>
 	 * @return An element of the multiset, or null if the multiset is empty
 	 */
 	@SuppressWarnings("squid:S1751")
-	public Object getAnyElement()
+	public synchronized Object getAnyElement()
 	{
 		Set<Object> objects = m_map.keySet();
 		for (Object o : objects)
@@ -88,7 +88,7 @@ public class Multiset implements Set<Object>
 	 * @return true if the element is contained at least once, false otherwise
 	 */
 	@Override
-	public boolean contains(Object o)
+	public synchronized boolean contains(Object o)
 	{
 		if (!m_map.containsKey(o))
 		{
@@ -103,7 +103,7 @@ public class Multiset implements Set<Object>
 	 * @param o The element
 	 * @return This multiset
 	 */
-	public Multiset addElement(Object o)
+	public synchronized Multiset addElement(Object o)
 	{
 		if (!m_map.containsKey(o))
 		{
@@ -118,7 +118,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean add(Object o)
+	public synchronized boolean add(Object o)
 	{
 		addElement(o);
 		return true;
@@ -129,7 +129,7 @@ public class Multiset implements Set<Object>
 	 * @param o The element
 	 * @return The cardinality
 	 */
-	public int get(Object o)
+	public synchronized int get(Object o)
 	{
 		if (!m_map.containsKey(o))
 		{
@@ -143,7 +143,7 @@ public class Multiset implements Set<Object>
 	 * In other words, turns this multiset into a regular set.
 	 * @return The set of elements
 	 */
-	public Set<Object> keySet()
+	public synchronized Set<Object> keySet()
 	{
 		return m_map.keySet();
 	}
@@ -154,7 +154,7 @@ public class Multiset implements Set<Object>
 	 * @param times The number of times to remove this element
 	 * @return This multiset
 	 */
-	public Multiset removeElement(Object o, int times)
+	public synchronized Multiset removeElement(Object o, int times)
 	{
 		if (m_map.containsKey(o))
 		{
@@ -176,7 +176,7 @@ public class Multiset implements Set<Object>
 	 * @return The size
 	 */
 	@Override
-	public int size()
+	public synchronized int size()
 	{
 		int size = 0;
 		for (int i : m_map.values())
@@ -187,19 +187,19 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public void clear()
+	public synchronized void clear()
 	{
 		m_map.clear();
 	}
 
 	@Override
-	public String toString()
+	public synchronized String toString()
 	{
 		return m_map.toString();
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends Object> arg0)
+	public synchronized boolean addAll(Collection<? extends Object> arg0)
 	{
 		if (arg0 instanceof Multiset)
 		{
@@ -214,7 +214,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> arg0)
+	public synchronized boolean containsAll(Collection<?> arg0)
 	{
 		if (arg0 instanceof Multiset)
 		{
@@ -243,19 +243,19 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean isEmpty()
+	public synchronized boolean isEmpty()
 	{
 		return m_map.keySet().isEmpty();
 	}
 
 	@Override
-	public Iterator<Object> iterator()
+	public synchronized Iterator<Object> iterator()
 	{
 		return keySet().iterator();
 	}
 
 	@Override
-	public boolean remove(Object arg0)
+	public synchronized boolean remove(Object arg0)
 	{
 		return remove(arg0, 1);
 	}
@@ -267,7 +267,7 @@ public class Multiset implements Set<Object>
 	 * @return true if the element was removed at least once,
 	 *   false otherwise
 	 */
-	public boolean remove(Object arg0, int times)
+	public synchronized boolean remove(Object arg0, int times)
 	{
 		if (!contains(arg0))
 		{
@@ -278,7 +278,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> arg0)
+	public synchronized boolean removeAll(Collection<?> arg0)
 	{
 		boolean removed = false;
 		if (arg0 instanceof Multiset)
@@ -303,7 +303,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> arg0)
+	public synchronized boolean retainAll(Collection<?> arg0)
 	{
 		boolean changed = false;
 		if (arg0 instanceof Multiset)
@@ -351,13 +351,13 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
-	public Object[] toArray()
+	public synchronized Object[] toArray()
 	{
 		return m_map.values().toArray();
 	}
 
 	@Override
-	public <T> T[] toArray(T[] arg0)
+	public synchronized <T> T[] toArray(T[] arg0)
 	{
 		return arg0;
 	}
