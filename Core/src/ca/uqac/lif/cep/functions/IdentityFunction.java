@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.functions;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.Connector.Variant;
 
 /**
  * Function that returns its input for its output.
@@ -76,21 +77,22 @@ public final class IdentityFunction extends Function
 	}
 
 	@Override
-	public Function clone() {
-		// TODO Auto-generated method stub
-		return null;
+	public IdentityFunction clone()
+	{
+		return new IdentityFunction(m_inArity);
 	}
 
 	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index) {
-		// TODO Auto-generated method stub
+	public void getInputTypesFor(Set<Class<?>> classes, int index) 
+	{
+		classes.add(Variant.class);
 		
 	}
 
 	@Override
-	public Class<?> getOutputTypeFor(int index) {
-		// TODO Auto-generated method stub
-		return null;
+	public Class<?> getOutputTypeFor(int index)
+	{
+		return Variant.class;
 	}
 
 }
