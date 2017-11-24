@@ -177,6 +177,12 @@ public final class SmartFork extends Processor
 			incrementClean();
 			return this;
 		}
+		
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			// TODO Auto-generated method stub
+			
+		}
 
 		@Override
 		synchronized public Processor getProcessor()

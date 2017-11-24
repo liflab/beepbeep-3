@@ -71,6 +71,9 @@ public interface Pushable
 	 */
 	public Pushable pushFast(Object o) throws PushableException;
 
+	
+	public void notifyEndOfTrace() throws PushableException;
+	
 	/**
 	 * Gets the processor instance this Pushable is linked to
 	 * @return The processor
@@ -182,6 +185,11 @@ public interface Pushable
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			throw new UnsupportedOperationException();
+		}
+		
 		@Override
 		public Processor getProcessor() 
 		{

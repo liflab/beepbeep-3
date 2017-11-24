@@ -281,6 +281,12 @@ public class Multiplexer extends Processor
 		}
 
 		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
 		public Processor getProcessor()
 		{
 			return Multiplexer.this;

@@ -45,6 +45,11 @@ public class PushableWrapper implements Pushable
 	{
 		return m_pushable.pushFast(o);
 	}
+	
+	@Override
+	public void notifyEndOfTrace() throws PushableException {
+		m_pushable.notifyEndOfTrace();
+	}
 
 	@Override
 	public Processor getProcessor()

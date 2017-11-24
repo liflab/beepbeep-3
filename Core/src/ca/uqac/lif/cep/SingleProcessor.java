@@ -88,6 +88,11 @@ public abstract class SingleProcessor extends Processor
 	 */
 	protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException;
 
+	
+	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException {
+		return false;
+	}
+	
 	/**
 	 * Implementation of a {@link Pushable} for a single processor.
 	 * 
@@ -186,6 +191,49 @@ public abstract class SingleProcessor extends Processor
 				}
 			}
 			return this;
+		}
+		
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			boolean outs;
+			try 
+			{
+				outs = onEndOfTrace(m_tempQueue);
+			} 
+			catch (ProcessorException e) 
+			{
+				throw new PushableException(e);
+			}
+			
+			if(outs != false && !m_tempQueue.isEmpty()) 
+			{
+				for (Object[] evt : m_tempQueue)
+				{
+					if (evt != null)
+					{
+						for (int i = 0; i < m_outputPushables.length; i++)
+						{
+							Pushable p = m_outputPushables[i];
+							if (p == null)
+							{
+								throw new PushableException("Output " + i + " of this processor is connected to nothing", getProcessor());
+							}
+							p.push(evt[i]);
+							p.waitFor();
+						}
+					}
+				}
+			}
+			
+			for(int i = 0; i < m_outputPushables.length; i++) 
+			{
+				Pushable p = m_outputPushables[i];
+				if(p == null)
+				{
+					throw new PushableException("Output " + i + " of this processor is connected to nothing", getProcessor());
+				}
+				p.notifyEndOfTrace();
+			}
 		}
 
 		@Override

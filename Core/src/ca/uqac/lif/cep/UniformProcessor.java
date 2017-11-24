@@ -21,6 +21,8 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Queue;
 
+import ca.uqac.lif.cep.Pushable.PushableException;
+
 /**
  * Performs a computation on input events to produce output events. A
  * uniform processor always outputs <em>exactly</em> one output front
@@ -92,6 +94,10 @@ public abstract class UniformProcessor extends Processor
 	 */
 	protected abstract boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException;
 
+	protected boolean onEndOfTrace(Object[] outputs) throws ProcessorException {
+		return false;
+	}
+	
 	/**
 	 * Implementation of a {@link Pushable} for a single processor.
 	 * 
@@ -182,6 +188,43 @@ public abstract class UniformProcessor extends Processor
 				}
 			}
 			return this;
+		}
+		
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			boolean outs;
+			try 
+			{
+				outs = onEndOfTrace(m_outputArray);
+			} 
+			catch (ProcessorException e) 
+			{
+				throw new PushableException(e);
+			}
+			
+			if(outs != false) 
+			{
+				for (int i = 0; i < m_outputPushables.length; i++)
+				{
+					Pushable p = m_outputPushables[i];
+					if (p == null)
+					{
+						throw new PushableException("Output " + i + " of this processor is connected to nothing", getProcessor());
+					}
+					p.push(m_outputArray[i]);
+					p.waitFor();
+				}
+			}
+			
+			for(int i = 0; i < m_outputPushables.length; i++) 
+			{
+				Pushable p = m_outputPushables[i];
+				if(p == null)
+				{
+					throw new PushableException("Output " + i + " of this processor is connected to nothing", getProcessor());
+				}
+				p.notifyEndOfTrace();
+			}
 		}
 
 		@Override
