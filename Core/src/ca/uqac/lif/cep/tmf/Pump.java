@@ -97,6 +97,7 @@ public class Pump extends Processor implements Runnable
 				}
 			}
 		}
+		pushable.notifyEndOfTrace();
 	}
 
 	@Override

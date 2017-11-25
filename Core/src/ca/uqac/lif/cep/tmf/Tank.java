@@ -114,8 +114,8 @@ public class Tank extends SingleProcessor
 		
 		@Override
 		public void notifyEndOfTrace() throws PushableException {
-			// TODO Auto-generated method stub
-			
+			// TODO: to be verified
+			m_outputPushables[0].notifyEndOfTrace();
 		}
 
 		@Override

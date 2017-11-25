@@ -180,8 +180,10 @@ public final class SmartFork extends Processor
 		
 		@Override
 		public void notifyEndOfTrace() throws PushableException {
-			// TODO Auto-generated method stub
-			
+			for (int i = 0; i < m_outputPushables.length; i++) 
+			{
+				m_outputPushables[i].notifyEndOfTrace();
+			}
 		}
 
 		@Override

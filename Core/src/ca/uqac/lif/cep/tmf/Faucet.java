@@ -104,7 +104,8 @@ public abstract class Faucet extends Processor
 		
 		@Override
 		public void notifyEndOfTrace() throws PushableException {
-			// TODO Auto-generated method stub
+			// TODO: should we add an onEndOfTace method to Faucet?
+			m_outputPushables[0].notifyEndOfTrace();
 		}
 
 		@Override
