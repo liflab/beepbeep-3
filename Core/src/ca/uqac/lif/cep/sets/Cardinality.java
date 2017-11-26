@@ -31,7 +31,7 @@ public class Cardinality extends UnaryFunction<Set, Integer>
 {
 	public static final transient Cardinality instance = new Cardinality();
 
-	private Cardinality()
+	protected Cardinality()
 	{
 		super(Set.class, Integer.class);
 	}

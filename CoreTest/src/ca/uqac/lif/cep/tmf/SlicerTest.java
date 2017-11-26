@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Queue;
 import java.util.Stack;
 
@@ -27,16 +25,12 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.numbers.PackageExtension;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.Slicer;
 
@@ -69,15 +63,6 @@ public class SlicerTest extends BeepBeepUnitTest
 			sli.reset();
 			qsink.reset();
 		}
-	}
-	
-	@Test
-	public void testSlicerParse() throws ParseException, ConnectorException
-	{
-		Interpreter my_int = new Interpreter();
-		my_int.load(PackageExtension.class);
-		Object o = my_int.parseQuery("SLICE CONSTANT 1 WITH * ON ADDITION");
-		assertTrue(o instanceof Processor);
 	}
 	
 	public static class Sum extends CumulativeProcessor

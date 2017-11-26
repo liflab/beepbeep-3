@@ -17,21 +17,11 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
-
 public class EmlBoolean extends Constant
 {
 	public EmlBoolean(Object o)
 	{
 		super(parseBoolValue(o));
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Object o = stack.pop();
-		stack.push(new EmlBoolean(o));
 	}
 
 	public static boolean toEmlBoolean(Object o)

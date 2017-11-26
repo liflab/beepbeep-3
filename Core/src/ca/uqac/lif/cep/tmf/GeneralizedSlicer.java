@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -146,26 +145,6 @@ public class GeneralizedSlicer extends UniformProcessor
 	{
 		super.reset();
 		m_slices.clear();
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // ON
-		//stack.pop(); // (
-		Processor p2 = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // WITH
-		//stack.pop(); // (
-		Processor p1 = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // SLICE
-		GeneralizedSlicer out = new GeneralizedSlicer(p2);
-		Connector.connect(p1, 0, out, 0);
-		Connector.connect(p, 0, out, 1);
-		stack.push(out);
 	}
 
 	@Override

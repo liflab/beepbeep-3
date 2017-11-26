@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -159,23 +158,6 @@ public class Slicer extends UniformProcessor
 		super.reset();
 		m_slices.clear();
 		m_slicingFunction.reset();
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Function f = (Function) stack.pop();
-		stack.pop(); // ON
-		//stack.pop(); // (
-		Processor p2 = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // WITH
-		//stack.pop(); // (
-		Processor p1 = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // SLICE
-		Slicer out = new Slicer(f, p2);
-		Connector.connect(p1, out);
-		stack.push(out);
 	}
 
 	@Override

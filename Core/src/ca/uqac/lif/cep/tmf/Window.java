@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -28,7 +27,6 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.EmlNumber;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
@@ -50,7 +48,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The window's width
 	 */
-	protected int m_width;
+	private int m_width;
 
 	/**
 	 * The internal processor
@@ -180,29 +178,17 @@ public class Window extends SingleProcessor
 		}
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		EmlNumber width = (EmlNumber) stack.pop();
-		stack.pop(); // OF
-		stack.pop(); // WINDOW
-		stack.pop(); // A
-		stack.pop(); // ON
-		//stack.pop(); // (
-		Processor input_trace = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // FROM
-		//stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // GET
-		Window out = new Window(p, width.intValue());
-		Connector.connect(input_trace, out);
-		stack.push(out);
-	}
-
 	@Override
 	public Window clone()
 	{
 		return new Window(m_processor.clone(), m_width);
+	}
+
+	public int getWidth() {
+		return m_width;
+	}
+
+	public void setWidth(int m_width) {
+		this.m_width = m_width;
 	}
 }

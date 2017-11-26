@@ -17,10 +17,8 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
@@ -53,11 +51,6 @@ public class Filter extends SingleProcessor
 		}
 		outputs.add(out);
 		return true;
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		// TODO
 	}
 
 	@Override

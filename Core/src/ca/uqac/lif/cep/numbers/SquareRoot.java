@@ -17,10 +17,6 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
@@ -51,22 +47,4 @@ public class SquareRoot extends UnaryFunction<Number,Number>
 		return "√";
 	}
 
-	public static void build(ArrayDeque<Object> stack)
-	{
-		Object o;
-		Function arg;
-		o = stack.pop(); // ) ?
-		if (o instanceof String)
-		{
-			arg = (Function) stack.pop();
-			stack.pop(); // (
-		}
-		else
-		{
-			arg = (Function) o;
-		}
-		stack.pop(); // √
-		FunctionTree ft = new FunctionTree(instance, arg);
-		stack.push(ft);
-	}
 }

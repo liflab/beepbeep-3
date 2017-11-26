@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.ArrayDeque;
-
 /**
  * Function processor returning a constant value.
  * This processor exists only to facilitate the creation of constant
@@ -37,24 +35,5 @@ public class ConstantProcessor extends FunctionProcessor
 	public ConstantProcessor(Constant comp)
 	{
 		super(comp);
-	}
-
-	public static void build(ArrayDeque<Object> stack)
-	{
-		Object o;
-		Constant c;
-		o = stack.pop(); // ( ?
-		if (o instanceof String && o.toString().compareTo("(") == 0)
-		{
-			c = (Constant) stack.pop();
-			stack.pop(); // )
-		}
-		else
-		{
-			c = (Constant) o;
-		}
-		stack.pop(); // CONSTANT
-		FunctionProcessor fp = new FunctionProcessor(c);
-		stack.push(fp);
 	}
 }

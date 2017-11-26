@@ -17,12 +17,7 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
-import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionTree;
 
 public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
 {
@@ -31,22 +26,9 @@ public class IsLessThan extends BinaryFunction<Number,Number,Boolean>
 	 */
 	public static final transient IsLessThan instance = new IsLessThan();
 
-	private IsLessThan()
+	protected IsLessThan()
 	{
 		super(Number.class, Number.class, Boolean.class);
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		stack.pop(); // (
-		Function right = (Function) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // symbol
-		stack.pop(); // (
-		Function left = (Function) stack.pop();
-		stack.pop(); // )
-		FunctionTree ft = new FunctionTree(instance, left, right);
-		stack.push(ft);
 	}
 
 	@Override

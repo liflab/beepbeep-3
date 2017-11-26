@@ -17,10 +17,6 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
-
 /**
  * Implementation of the logical negation
  * 
@@ -30,7 +26,7 @@ public class Negation extends UnaryFunction<Boolean,Boolean>
 {
 	public static final transient Negation instance = new Negation();
 
-	Negation()
+	protected Negation()
 	{
 		super(Boolean.class, Boolean.class);
 	}
@@ -45,24 +41,5 @@ public class Negation extends UnaryFunction<Boolean,Boolean>
 	public String toString()
 	{
 		return "¬";
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Object o;
-		Function f;
-		o = stack.pop(); // ( ?
-		if (o instanceof String)
-		{
-			f = (Function) stack.pop();
-			stack.pop(); // )
-		}
-		else
-		{
-			f = (Function) o;
-		}
-		stack.pop(); // symbol
-		FunctionTree ft = new FunctionTree(instance, f);
-		stack.push(ft);
 	}
 }

@@ -18,11 +18,7 @@
 package ca.uqac.lif.cep.cli;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.tmf.Sink;
 import ca.uqac.lif.cep.util.AnsiPrinter;
 
@@ -194,16 +190,6 @@ public class Print extends Sink
 			m_out.print(m_separator);
 		}
 		return true;
-	}
-
-	@SuppressWarnings("squid:S106")
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // PRINT
-		Print out = new Print(1, new AnsiPrinter(System.out));
-		Connector.connect(p, out);
-		stack.push(out);
 	}
 
 	/**

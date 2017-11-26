@@ -17,9 +17,6 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 public class IsGreaterOrEqual extends BinaryFunction<Number,Number,Boolean>
@@ -32,11 +29,6 @@ public class IsGreaterOrEqual extends BinaryFunction<Number,Number,Boolean>
 	private IsGreaterOrEqual()
 	{
 		super(Number.class, Number.class, Boolean.class);
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override

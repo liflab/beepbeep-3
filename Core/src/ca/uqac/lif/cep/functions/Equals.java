@@ -18,9 +18,6 @@
 package ca.uqac.lif.cep.functions;
 
 import java.util.Collection;
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 
 /**
  * Checks for the equality of various data types
@@ -59,10 +56,5 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 	public String toString()
 	{
 		return "=";
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 }

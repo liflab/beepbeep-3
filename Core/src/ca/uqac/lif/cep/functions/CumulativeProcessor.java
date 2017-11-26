@@ -17,12 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 
 /**
@@ -71,30 +66,6 @@ public class CumulativeProcessor extends FunctionProcessor
 		return b;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Object o;
-		Processor p;
-		BinaryFunction<?,?,?> com = (BinaryFunction<?,?,?>) stack.pop();
-		stack.pop(); // WITH
-		o = stack.pop(); // ) ?
-		if (o instanceof String)
-		{
-			p = Processor.liftProcessor(stack.pop());
-			stack.pop(); // (
-		}
-		else
-		{
-			p = (Processor) o;
-		}
-		stack.pop(); // COMBINE
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		CumulativeFunction<?> func = new CumulativeFunction(com);
-		CumulativeProcessor out = new CumulativeProcessor(func);
-		Connector.connect(p, out);
-		stack.push(out);
-	}
-
 	/**
 	 * Node function representing the start value defined for a particular
 	 * function.
@@ -106,13 +77,13 @@ public class CumulativeProcessor extends FunctionProcessor
 		 * with
 		 */
 		protected int m_processorId;
-		
+
 		/**
 		 * In case the corresponding function is n-ary (with n &geq; 2),
 		 * the index of the input stream
 		 */
 		protected int m_index;
-		
+
 		/**
 		 * Empty constructor. Only there to support deserialization
 		 * with Azrael.
@@ -121,7 +92,7 @@ public class CumulativeProcessor extends FunctionProcessor
 		{
 			super();
 		}
-		
+
 		/**
 		 * Creates a new start value function
 		 * @param id The ID of the processor this start value is associated
@@ -133,7 +104,7 @@ public class CumulativeProcessor extends FunctionProcessor
 			super();
 			m_processorId = id;
 		}
-		
+
 		/**
 		 * Creates a new start value function
 		 * @param id The ID of the processor this start value is associated
@@ -155,7 +126,7 @@ public class CumulativeProcessor extends FunctionProcessor
 		{
 			return "";
 		}
-		
+
 		/**
 		 * Gets the index of the input stream
 		 * @return The index

@@ -30,7 +30,7 @@ public class Signum extends UnaryFunction<Number,Number>
 	 */
 	public static final transient Signum instance = new Signum();
 
-	private Signum()
+	protected Signum()
 	{
 		super(Number.class, Number.class);
 	}

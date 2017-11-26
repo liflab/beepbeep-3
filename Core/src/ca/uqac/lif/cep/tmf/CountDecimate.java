@@ -17,14 +17,9 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
@@ -37,7 +32,7 @@ public class CountDecimate extends SingleProcessor
 	/**
 	 * The decimation interval
 	 */
-	protected final int m_interval;
+	private final int m_interval;
 
 	/**
 	 * Index of last event received
@@ -93,23 +88,13 @@ public class CountDecimate extends SingleProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		//stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // OF
-		stack.pop(); // TH
-		EmlNumber interval = (EmlNumber) stack.pop();
-		stack.pop(); // EVERY
-		CountDecimate out = new CountDecimate(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
-	}
-
 	@Override
 	public CountDecimate clone()
 	{
 		return new CountDecimate(m_interval);
+	}
+
+	public int getInterval() {
+		return m_interval;
 	}
 }

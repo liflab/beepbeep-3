@@ -18,13 +18,8 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * After returning an input event, discards all others for the next
@@ -91,15 +86,6 @@ public class TimeDecimate extends SingleProcessor
 			return true;
 		}
 		return true;
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Processor p = (Processor) stack.pop();
-		EmlNumber interval = (EmlNumber) stack.pop();
-		TimeDecimate out = new TimeDecimate(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
 	}
 
 	@Override

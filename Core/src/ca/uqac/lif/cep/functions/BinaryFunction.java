@@ -1,9 +1,6 @@
 package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 
 /**
  * Function of two inputs and one output
@@ -126,43 +123,6 @@ public abstract class BinaryFunction<T,V,U> extends SimpleFunction
 	public final Class<?> getOutputTypeFor(int index)
 	{
 		return m_outputType;
-	}
-
-	/**
-	 * Builds a binary infix function from a parse stack
-	 * @param stack The parse stack
-	 * @param instance The instance of binary function to build
-	 * @throws ConnectorException
-	 */
-	public static void buildInfix(ArrayDeque<Object> stack, BinaryFunction<?,?,?> instance) throws ConnectorException
-	{
-		// We take care of the fact that either of the arguments
-		// can be surrounded by parentheses or not
-		Object o;
-		Function left, right;
-		o = stack.pop(); // ) ?
-		if (o instanceof String)
-		{
-			right = (Function) stack.pop();
-			stack.pop(); // (
-		}
-		else
-		{
-			right = (Function) o;
-		}
-		stack.pop(); // symbol
-		o = stack.pop(); // ) ?
-		if (o instanceof String)
-		{
-			left = (Function) stack.pop();
-			stack.pop(); // (
-		}
-		else
-		{
-			left = (Function) o;
-		}
-		FunctionTree ft = new FunctionTree(instance, left, right);
-		stack.push(ft);
 	}
 
 }

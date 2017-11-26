@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.ArrayDeque;
 import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector;
@@ -262,23 +261,6 @@ public class StateSlicer extends UniformProcessor
 	public int getClosedSliceCount()
 	{
 		return m_fixedValues.size();
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Function f = (Function) stack.pop();
-		stack.pop(); // ON
-		stack.pop(); // (
-		Processor p2 = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // WITH
-		stack.pop(); // (
-		Processor p1 = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // SLICE
-		StateSlicer out = new StateSlicer(f, p2);
-		Connector.connect(p1, out);
-		stack.push(out);
 	}
 
 	@Override

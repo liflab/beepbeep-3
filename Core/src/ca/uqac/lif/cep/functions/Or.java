@@ -17,10 +17,6 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
-
 /**
  * Implementation of the logical disjunction
  * 
@@ -30,7 +26,7 @@ public class Or extends BinaryFunction<Boolean,Boolean,Boolean>
 {
 	public static final transient Or instance = new Or();
 
-	Or()
+	protected Or()
 	{
 		super(Boolean.class, Boolean.class, Boolean.class);
 	}
@@ -45,10 +41,5 @@ public class Or extends BinaryFunction<Boolean,Boolean,Boolean>
 	public String toString()
 	{
 		return "∨";
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 }
