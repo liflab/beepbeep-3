@@ -50,6 +50,16 @@ public abstract class SingleProcessor extends Processor
 	protected final Queue<Object[]> m_tempQueue;
 
 	/**
+	 * An array of input pushables
+	 */
+	protected final Pushable[] m_inputPushables;
+
+	/**
+	 * An array of output pullables
+	 */
+	protected final Pullable[] m_outputPullables;
+
+	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
@@ -58,29 +68,38 @@ public abstract class SingleProcessor extends Processor
 	{
 		super(in_arity, out_arity);
 		m_tempQueue = new ArrayDeque<Object[]>(1);
+		m_inputPushables = new Pushable[in_arity];
+		m_outputPullables = new Pullable[out_arity];
 	}
 
 	@Override
 	synchronized public Pushable getPushableInput(int index)
 	{
-		return new InputPushable(index);
+		if (m_inputPushables[index] == null)
+		{
+			m_inputPushables[index] = new InputPushable(index);
+		}
+		return m_inputPushables[index];
 	}
 
 	@Override
 	synchronized public Pullable getPullableOutput(int index)
 	{
-		if (index >= 0 && index < m_outputArity)
+		if (m_outputPullables[index] == null)
 		{
-			return new OutputPullable(index);
+			m_outputPullables[index] = new OutputPullable(index);
 		}
-		return null;
+		return m_outputPullables[index];
 	}
 
 	/**
 	 * Computes one or more output events from its input events
 	 * @param inputs An array of input events; its length corresponds to the
 	 *   processor's input arity
-	 * @param outputs TODO
+	 * @param outputs A queue of arrays of objects. The processor should push
+	 * arrays into this queue for every output front it produces. The size
+	 * of each array should be equal to the processor's output arity, although
+	 * this is not enforced.
 	 * @return A queue of vectors of output events, or null
 	 *   if no event could be produced
 	 * @throws ProcessorException Any exception occurring during the evaluation

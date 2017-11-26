@@ -67,6 +67,11 @@ public class Slicer extends UniformProcessor
 	protected Map<Object,Processor> m_slices;
 
 	protected Map<Object,QueueSink> m_sinks;
+	
+	/**
+	 * The last values output by every slice 
+	 */
+	protected Map<Object,Object> m_values;
 
 	Slicer()
 	{
@@ -80,6 +85,7 @@ public class Slicer extends UniformProcessor
 		m_slicingFunction = func;
 		m_slices = new HashMap<Object,Processor>();
 		m_sinks = new HashMap<Object,QueueSink>();
+		m_values = new HashMap<Object,Object>();
 	}
 
 	@Override
@@ -142,8 +148,12 @@ public class Slicer extends UniformProcessor
 				p_array[i].waitFor();
 			}
 			// Collect the output from that processor
-			outputs[0] = sink_p.remove()[0];
+			if (!sink_p.getQueue().isEmpty())
+			{
+				m_values.put(s_id, sink_p.remove()[0]);
+			}
 		}
+		outputs[0] = m_values;
 		return true;
 	}
 

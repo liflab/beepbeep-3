@@ -17,50 +17,25 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
-
-import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.Pushable;
 
 /**
- * Faucet that creates an output event based on the last event
+ * Tank that, when pulled, creates an output event based on the last event
  * received
  * @author Sylvain Hallé
  */
-public class LastFaucet extends Faucet
+public class TankLast extends Tank
 {
-	/**
-	 * The last event received
-	 */
-	protected Object m_last;
-
 	@Override
-	public void onPush(Object e)
+	public Pushable getPushableInput(int index)
 	{
-		m_last = e;
-	}
-
-	@Override
-	public final boolean onPull(Queue<Object[]> queue) throws ProcessorException
-	{
-		queue.add(new Object[]{onPull(m_last)});
-		return true;
+		return new QueuePushable(true);
 	}
 	
-	/**
-	 * Create an output event from the last event received
-	 * @param o The last event received
-	 * @return An output event
-	 * @throws ProcessorException 
-	 */
-	public Object onPull(Object o) throws ProcessorException
-	{
-		return o;
-	}
-
 	@Override
-	public LastFaucet clone()
+	public TankLast clone()
 	{
-		return new LastFaucet();
+		return new TankLast();
 	}
 
 }

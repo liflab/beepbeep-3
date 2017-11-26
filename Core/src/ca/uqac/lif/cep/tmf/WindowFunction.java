@@ -30,6 +30,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * Takes a sliding window of <i>n</i> successive input events,
  * passes them to an <i>n</i>-ary function and outputs the result.
  * This currently only works for functions with an output arity of 1.
+ * @see Window
  * @author Sylvain Hallé
  */
 public class WindowFunction extends SingleProcessor

@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**

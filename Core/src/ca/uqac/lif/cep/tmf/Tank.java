@@ -87,20 +87,27 @@ public class Tank extends SingleProcessor
 	@Override
 	public Pushable getPushableInput(int index)
 	{
-		return new QueuePushable();
+		return new QueuePushable(false);
 	}
 	
 	protected class QueuePushable implements Pushable
 	{
-		public QueuePushable()
+		private final boolean m_singleObject;
+		
+		public QueuePushable(boolean single_object)
 		{
 			super();
+			m_singleObject = single_object;
 		}
 
 		@Override
 		public Pushable push(Object o) throws PushableException 
 		{
 			m_lock.lock();
+			if (m_singleObject)
+			{
+				m_queue.clear();
+			}
 			m_queue.add(o);
 			m_lock.unlock();
 			return this;

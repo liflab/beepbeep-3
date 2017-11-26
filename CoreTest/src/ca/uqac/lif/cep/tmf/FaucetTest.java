@@ -30,7 +30,7 @@ public class FaucetTest
 	public void test1()
 	{
 		Object o;
-		LastFaucet faucet = new LastFaucet();
+		TankLast faucet = new TankLast();
 		Pushable pushable = faucet.getPushableInput();
 		Pullable pullable = faucet.getPullableOutput();
 		pushable.push("A");

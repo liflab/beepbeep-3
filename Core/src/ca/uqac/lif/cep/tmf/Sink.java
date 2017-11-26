@@ -86,6 +86,5 @@ public abstract class Sink extends SingleProcessor
 		{
 			throw new PullableException(e);
 		}
-	}
-
+	}	
 }

@@ -15,12 +15,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.cli;
+package ca.uqac.lif.cep.io;
 
 import java.util.Queue;
 
 import ca.uqac.lif.cep.tmf.Sink;
-import ca.uqac.lif.cep.util.AnsiPrinter;
 
 /**
  * Sends its input to an {@link ca.uqac.lif.cep.util.AnsiPrinter ANSI printer}
