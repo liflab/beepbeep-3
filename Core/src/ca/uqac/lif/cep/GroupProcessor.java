@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
-import ca.uqac.lif.bullwinkle.BnfRule;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
@@ -82,12 +81,6 @@ public class GroupProcessor extends Processor
 	private String m_ruleName;
 
 	/**
-	 * If this group processor is associated to a BNF rule, this contains
-	 * the name right-hand side of the rule
-	 */
-	private BnfRule m_rule;
-
-	/**
 	 * Crate a group processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
@@ -118,15 +111,6 @@ public class GroupProcessor extends Processor
 	public synchronized String getRuleName()
 	{
 		return m_ruleName;
-	}
-
-	/**
-	 * Retrieves the BNF parsing rule associated to this group processor
-	 * @return The parsing rule
-	 */
-	public synchronized BnfRule getRule()
-	{
-		return m_rule;
 	}
 
 	/**
