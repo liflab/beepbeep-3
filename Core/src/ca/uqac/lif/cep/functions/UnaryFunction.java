@@ -84,7 +84,7 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 	}
 
 	@Override
-	public UnaryFunction<T,U> clone()
+	public UnaryFunction<T,U> duplicate()
 	{
 		return this;
 	}

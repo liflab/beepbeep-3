@@ -142,7 +142,7 @@ public class StateSlicer extends UniformProcessor
 			if (!m_slices.containsKey(slice_id))
 			{
 				// First time we see this value: create new slice
-				Processor p = m_processor.clone();
+				Processor p = m_processor.duplicate();
 				m_slices.put(slice_id, p);
 				addContextFromSlice(p, slice_id);
 				QueueSink sink = new QueueSink(output_arity);
@@ -264,9 +264,9 @@ public class StateSlicer extends UniformProcessor
 	}
 
 	@Override
-	public StateSlicer clone()
+	public StateSlicer duplicate()
 	{
-		return new StateSlicer(m_slicingFunction.clone(m_context), m_processor.clone(), m_cleaningFunction.clone());
+		return new StateSlicer(m_slicingFunction.duplicate(m_context), m_processor.duplicate(), m_cleaningFunction.duplicate());
 	}
 
 	/**

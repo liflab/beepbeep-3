@@ -192,7 +192,7 @@ public class QueueSource extends Source
 	}
 
 	@Override
-	public QueueSource clone()
+	public QueueSource duplicate()
 	{
 		QueueSource out = new QueueSource(getOutputArity());
 		out.setEvents(m_events);

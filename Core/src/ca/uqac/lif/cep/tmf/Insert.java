@@ -86,7 +86,7 @@ public class Insert extends SingleProcessor
 	}
 
 	@Override
-	public Insert clone()
+	public Insert duplicate()
 	{
 		return new Insert(m_pad, m_times);
 	}

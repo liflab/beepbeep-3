@@ -35,7 +35,7 @@ public class BlackHole extends Sink
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor duplicate() 
 	{
 		// TODO Auto-generated method stub
 		return null;

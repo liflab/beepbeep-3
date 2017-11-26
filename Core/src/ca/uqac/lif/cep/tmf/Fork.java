@@ -37,7 +37,7 @@ public class Fork extends UniformProcessor
 	}
 
 	@Override
-	public Fork clone()
+	public Fork duplicate()
 	{
 		return new Fork(getOutputArity());
 	}

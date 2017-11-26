@@ -89,7 +89,7 @@ public class TimeDecimate extends SingleProcessor
 	}
 
 	@Override
-	public TimeDecimate clone()
+	public TimeDecimate duplicate()
 	{
 		return new TimeDecimate(m_interval);
 	}

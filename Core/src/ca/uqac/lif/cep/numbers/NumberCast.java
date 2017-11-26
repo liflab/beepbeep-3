@@ -18,7 +18,7 @@ public class NumberCast extends UnaryFunction<Object,Number>
 	}
 
 	@Override
-	public NumberCast clone()
+	public NumberCast duplicate()
 	{
 		return this;
 	}

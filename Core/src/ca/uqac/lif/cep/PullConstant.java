@@ -47,7 +47,7 @@ public class PullConstant extends UniformProcessor
 	}
 
 	@Override
-	public PullConstant clone()
+	public PullConstant duplicate()
 	{
 		return new PullConstant(m_toReturn);
 	}

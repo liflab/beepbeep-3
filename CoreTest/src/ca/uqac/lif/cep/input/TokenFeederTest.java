@@ -106,7 +106,7 @@ public class TokenFeederTest extends BeepBeepUnitTest
 		}
 
 		@Override
-		public Processor clone() 
+		public Processor duplicate() 
 		{
 			return new MyFeeder(m_separatorBegin, m_separatorEnd);
 		}

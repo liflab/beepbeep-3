@@ -34,7 +34,7 @@ public class Addition extends BinaryFunction<Number,Number,Number>
 	 * Make constructor private, to force users to refer to the static
 	 * instance of addition
 	 */
-	Addition()
+	protected Addition()
 	{
 		super(Number.class, Number.class, Number.class);
 	}

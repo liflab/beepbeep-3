@@ -36,122 +36,122 @@ public class AnsiPrinter extends PrintStream
 	 */
 	public static enum Color {BLACK, BLUE, GREEN, CYAN, RED, PURPLE, BROWN,
 		LIGHT_GRAY, DARK_GRAY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_CYAN, LIGHT_RED,
-		LIGHT_PURPLE, YELLOW, WHITE};
+		LIGHT_PURPLE, YELLOW, WHITE}
 
-		/**
-		 * Whether ANSI codes are enabled. If set to false (with
-		 * {@link #disableColors()}), behaves like a normal PrintStream
-		 */
-		protected boolean m_enabled = true;
+	/**
+	 * Whether ANSI codes are enabled. If set to false (with
+	 * {@link #disableColors()}), behaves like a normal PrintStream
+	 */
+	protected boolean m_enabled = true;
 
-		/**
-		 * Instantiates an AnsiPrinter.
-		 * @param out The OutputStream where the printer will send its output
-		 */
-		public AnsiPrinter(OutputStream out)
+	/**
+	 * Instantiates an AnsiPrinter.
+	 * @param out The OutputStream where the printer will send its output
+	 */
+	public AnsiPrinter(OutputStream out)
+	{
+		super(out);
+	}
+
+	/**
+	 * Enables the output of ANSI codes in the output stream
+	 */
+	public void enableColors()
+	{
+		m_enabled = true;
+	}
+
+	/**
+	 * Disables the output of ANSI codes in the output stream
+	 */
+	public void disableColors()
+	{
+		m_enabled = false;
+	}
+
+	/**
+	 * Sets the foreground color for printed text.
+	 * Until this color is changed, the text will be printed using
+	 * that color.
+	 * @param c The color
+	 */
+	public void setForegroundColor(AnsiPrinter.Color c)
+	{
+		if (!m_enabled)
 		{
-			super(out);
+			return;
 		}
-
-		/**
-		 * Enables the output of ANSI codes in the output stream
-		 */
-		public void enableColors()
+		String to_print = "";
+		switch (c)
 		{
-			m_enabled = true;
+		case BLACK:
+			to_print = "\u001B[0;30m";
+			break;
+		case RED:
+			to_print = "\u001B[0;31m";
+			break;
+		case GREEN:
+			to_print = "\u001B[0;32m";
+			break;
+		case BROWN:
+			to_print = "\u001B[0;33m";
+			break;
+		case BLUE:
+			to_print = "\u001B[0;34m";
+			break;
+		case PURPLE:
+			to_print = "\u001B[0;35m";
+			break;
+		case CYAN:
+			to_print = "\u001B[0;36m";
+			break;
+		case LIGHT_GRAY:
+			to_print = "\u001B[0;37m";
+			break;
+		case DARK_GRAY:
+			to_print = "\u001B[1;30m";
+			break;
+		case LIGHT_RED:
+			to_print = "\u001B[1;31m";
+			break;
+		case LIGHT_GREEN:
+			to_print = "\u001B[1;32m";
+			break;
+		case YELLOW:
+			to_print = "\u001B[1;33m";
+			break;
+		case LIGHT_BLUE:
+			to_print = "\u001B[1;34m";
+			break;
+		case LIGHT_PURPLE:
+			to_print = "\u001B[1;35m";
+			break;
+		case LIGHT_CYAN:
+			to_print = "\u001B[1;36m";
+			break;
+		case WHITE:
+			to_print = "\u001B[1;37m";
+			break;
+		default:
+			// Do nothing
+			break;
 		}
-
-		/**
-		 * Disables the output of ANSI codes in the output stream
-		 */
-		public void disableColors()
+		try
 		{
-			m_enabled = false;
+			out.write(to_print.getBytes());
 		}
-
-		/**
-		 * Sets the foreground color for printed text.
-		 * Until this color is changed, the text will be printed using
-		 * that color.
-		 * @param c The color
-		 */
-		public void setForegroundColor(AnsiPrinter.Color c)
+		catch (IOException e)
 		{
-			if (!m_enabled)
-			{
-				return;
-			}
-			String to_print = "";
-			switch (c)
-			{
-			case BLACK:
-				to_print = "\u001B[0;30m";
-				break;
-			case RED:
-				to_print = "\u001B[0;31m";
-				break;
-			case GREEN:
-				to_print = "\u001B[0;32m";
-				break;
-			case BROWN:
-				to_print = "\u001B[0;33m";
-				break;
-			case BLUE:
-				to_print = "\u001B[0;34m";
-				break;
-			case PURPLE:
-				to_print = "\u001B[0;35m";
-				break;
-			case CYAN:
-				to_print = "\u001B[0;36m";
-				break;
-			case LIGHT_GRAY:
-				to_print = "\u001B[0;37m";
-				break;
-			case DARK_GRAY:
-				to_print = "\u001B[1;30m";
-				break;
-			case LIGHT_RED:
-				to_print = "\u001B[1;31m";
-				break;
-			case LIGHT_GREEN:
-				to_print = "\u001B[1;32m";
-				break;
-			case YELLOW:
-				to_print = "\u001B[1;33m";
-				break;
-			case LIGHT_BLUE:
-				to_print = "\u001B[1;34m";
-				break;
-			case LIGHT_PURPLE:
-				to_print = "\u001B[1;35m";
-				break;
-			case LIGHT_CYAN:
-				to_print = "\u001B[1;36m";
-				break;
-			case WHITE:
-				to_print = "\u001B[1;37m";
-				break;
-			default:
-				// Do nothing
-				break;
-			}
-			try
-			{
-				out.write(to_print.getBytes());
-			}
-			catch (IOException e)
-			{
-				BeepBeepLogger.logger.log(Level.WARNING, "", e);
-			}
+			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
+	}
 
-		/**
-		 * Resets the colors to their default values
-		 */
-		public void resetColors()
-		{
-			setForegroundColor(Color.LIGHT_GRAY);
-		}
+	/**
+	 * Resets the colors to their default values
+	 */
+	public void resetColors()
+	{
+		setForegroundColor(Color.LIGHT_GRAY);
+	}
 
 }

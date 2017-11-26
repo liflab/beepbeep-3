@@ -73,7 +73,7 @@ public class Multiplexer extends Processor
 	}
 
 	@Override
-	public Multiplexer clone()
+	public Multiplexer duplicate()
 	{
 		return new Multiplexer(getInputArity());
 	}

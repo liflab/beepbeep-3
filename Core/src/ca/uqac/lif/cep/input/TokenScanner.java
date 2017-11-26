@@ -64,7 +64,7 @@ public class TokenScanner extends UniformProcessor
 	}
 
 	@Override
-	public TokenScanner clone()
+	public TokenScanner duplicate()
 	{
 		return new TokenScanner(m_file, m_pattern.toString());
 	}

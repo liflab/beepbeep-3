@@ -88,7 +88,7 @@ public class Demultiplexer extends SingleProcessor
 	}
 
 	@Override
-	public Demultiplexer clone()
+	public Demultiplexer duplicate()
 	{
 		return new Demultiplexer(m_width);
 	}

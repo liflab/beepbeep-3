@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.Contextualizable;
  * @author Sylvain Hallé
  * @dictentry
  */
-public abstract class Function implements Cloneable, Contextualizable
+public abstract class Function implements DuplicableFunction, Contextualizable
 {
 	/**
 	 * The maximum input arity that a function can have
@@ -87,17 +87,10 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * @param context The context in which to clone this function
 	 * @return The copy
 	 */
-	public Function clone(Context context)
+	public Function duplicate(Context context)
 	{
-		return clone();
+		return duplicate();
 	}
-
-	/**
-	 * Creates a copy of the function
-	 * @return The copy
-	 */
-	@Override
-	public abstract Function clone();
 
 	/**
 	 * Populates the set of classes accepted by the function for its

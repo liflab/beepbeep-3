@@ -57,7 +57,7 @@ public class Freeze extends UniformProcessor
 	}
 
 	@Override
-	public Freeze clone()
+	public Freeze duplicate()
 	{
 		return new Freeze();
 	}

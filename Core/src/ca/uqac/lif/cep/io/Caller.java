@@ -55,7 +55,7 @@ public class Caller extends UniformProcessor
 	}
 
 	@Override
-	public Caller clone()
+	public Caller duplicate()
 	{
 		return new Caller(m_command);
 	}

@@ -37,7 +37,7 @@ public class NthElement extends UnaryFunction<Object,Object>
 	}
 
 	@Override
-	public NthElement clone()
+	public NthElement duplicate()
 	{
 		return new NthElement(m_n);
 	}

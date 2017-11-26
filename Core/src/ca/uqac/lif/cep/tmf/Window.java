@@ -179,9 +179,9 @@ public class Window extends SingleProcessor
 	}
 
 	@Override
-	public Window clone()
+	public Window duplicate()
 	{
-		return new Window(m_processor.clone(), m_width);
+		return new Window(m_processor.duplicate(), m_width);
 	}
 
 	public int getWidth() {

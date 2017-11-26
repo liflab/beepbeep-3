@@ -78,7 +78,7 @@ public class Trim extends SingleProcessor
 	}
 
 	@Override
-	public Trim clone()
+	public Trim duplicate()
 	{
 		return new Trim(getDelay());
 	}

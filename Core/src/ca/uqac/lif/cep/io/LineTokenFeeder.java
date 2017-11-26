@@ -63,7 +63,7 @@ public class LineTokenFeeder extends SingleProcessor
 	}
 
 	@Override
-	public LineTokenFeeder clone()
+	public LineTokenFeeder duplicate()
 	{
 		LineTokenFeeder ltf = new LineTokenFeeder(m_startToken, m_endToken);
 		ltf.setContext(m_context);

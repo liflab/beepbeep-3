@@ -126,9 +126,9 @@ public class ProcessorWrapper extends Processor
 
 
 	@Override
-	public Processor clone()
+	public ProcessorWrapper duplicate()
 	{
-		ProcessorWrapper pw = new ProcessorWrapper(m_processor.clone());
+		ProcessorWrapper pw = new ProcessorWrapper(m_processor.duplicate());
 		cloneInto(pw);
 		return pw;
 	}

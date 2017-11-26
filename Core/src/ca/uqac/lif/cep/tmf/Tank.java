@@ -79,7 +79,7 @@ public class Tank extends SingleProcessor
 	}
 
 	@Override
-	public Tank clone() 
+	public Tank duplicate() 
 	{
 		return new Tank();
 	}

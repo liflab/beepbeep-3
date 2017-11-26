@@ -64,7 +64,7 @@ public class ToList extends SimpleFunction
 	}
 
 	@Override
-	public ToList clone() 
+	public ToList duplicate() 
 	{
 		return new ToList(m_types);
 	}

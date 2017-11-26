@@ -33,7 +33,7 @@ public class TankLast extends Tank
 	}
 	
 	@Override
-	public TankLast clone()
+	public TankLast duplicate()
 	{
 		return new TankLast();
 	}

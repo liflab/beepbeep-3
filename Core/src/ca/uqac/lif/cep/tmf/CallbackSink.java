@@ -43,7 +43,7 @@ public class CallbackSink extends SingleProcessor
 	}
 
 	@Override
-	public CallbackSink clone() 
+	public CallbackSink duplicate() 
 	{
 		return new CallbackSink(getInputArity());
 	}

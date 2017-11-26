@@ -45,13 +45,13 @@ public class CsvFeeder extends TokenFeeder
 		// Remove trailing comma
 		if (m_trimSpaces)
 		{
-			token.substring(0, token.length() - 1).trim();
+			token = token.substring(0, token.length() - 1).trim();
 		}
 		return token.substring(0, token.length() - 1);
 	}
 
 	@Override
-	public CsvFeeder clone()
+	public CsvFeeder duplicate()
 	{
 		return new CsvFeeder();
 	}

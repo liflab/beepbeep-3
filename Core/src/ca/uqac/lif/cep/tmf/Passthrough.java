@@ -56,7 +56,7 @@ public class Passthrough extends UniformProcessor
 	}
 
 	@Override
-	public Passthrough clone()
+	public Passthrough duplicate()
 	{
 		return new Passthrough(getInputArity());
 	}

@@ -223,7 +223,7 @@ public class StreamReader extends Source
 	}
 
 	@Override
-	public StreamReader clone()
+	public StreamReader duplicate()
 	{
 		return new StreamReader(m_fis);
 	}
@@ -267,7 +267,8 @@ public class StreamReader extends Source
 				}
 				catch (InterruptedException e) 
 				{
-					// Do nothing
+					// Restore interrupted state
+					Thread.currentThread().interrupt();
 				}
 			}
 		}

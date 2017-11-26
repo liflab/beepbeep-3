@@ -136,7 +136,7 @@ public class FileWriter extends Sink
 	}
 
 	@Override
-	public FileWriter clone()
+	public FileWriter duplicate()
 	{
 		return new FileWriter(m_file, m_append);
 	}

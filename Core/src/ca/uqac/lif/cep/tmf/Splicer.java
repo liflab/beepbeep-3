@@ -149,7 +149,7 @@ public class Splicer extends Source
 	}
 
 	@Override
-	public Splicer clone()
+	public Splicer duplicate()
 	{
 		return new Splicer(m_processors);
 	}

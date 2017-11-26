@@ -96,7 +96,7 @@ public class LineReader extends UniformProcessor
 	}
 
 	@Override
-	public Processor clone()
+	public Processor duplicate()
 	{
 		return new LineReader(m_inStream);
 	}

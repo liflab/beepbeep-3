@@ -107,7 +107,7 @@ public class ArgumentPlaceholder extends Function
 	}
 
 	@Override
-	public ArgumentPlaceholder clone()
+	public ArgumentPlaceholder duplicate()
 	{
 		ArgumentPlaceholder aph = new ArgumentPlaceholder(m_index);
 		return aph;

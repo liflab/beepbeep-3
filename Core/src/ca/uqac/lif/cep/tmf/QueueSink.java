@@ -115,7 +115,7 @@ public class QueueSink extends Sink
 	}
 
 	@Override
-	public QueueSink clone()
+	public QueueSink duplicate()
 	{
 		return new QueueSink(getInputArity());
 	}

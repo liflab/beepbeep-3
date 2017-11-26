@@ -77,7 +77,7 @@ public final class IdentityFunction extends Function
 	}
 
 	@Override
-	public IdentityFunction clone()
+	public IdentityFunction duplicate()
 	{
 		return new IdentityFunction(m_inArity);
 	}

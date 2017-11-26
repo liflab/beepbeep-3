@@ -73,7 +73,7 @@ public class Constant extends Function
 	}
 
 	@Override
-	public Constant clone()
+	public Constant duplicate()
 	{
 		return new Constant(m_value);
 	}

@@ -44,7 +44,7 @@ public class NaryToArray extends UniformProcessor
 	}
 
 	@Override
-	public NaryToArray clone()
+	public NaryToArray duplicate()
 	{
 		return new NaryToArray(getInputArity());
 	}

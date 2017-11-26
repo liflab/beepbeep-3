@@ -78,7 +78,7 @@ public class IfThenElse extends SimpleFunction
 	}
 
 	@Override
-	public IfThenElse clone() 
+	public IfThenElse duplicate() 
 	{
 		return instance;
 	}

@@ -89,7 +89,7 @@ public class CountDecimate extends SingleProcessor
 	}
 
 	@Override
-	public CountDecimate clone()
+	public CountDecimate duplicate()
 	{
 		return new CountDecimate(m_interval);
 	}

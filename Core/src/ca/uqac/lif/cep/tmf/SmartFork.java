@@ -105,7 +105,7 @@ public final class SmartFork extends Processor
 	}
 
 	@Override
-	public synchronized SmartFork clone()
+	public synchronized SmartFork duplicate()
 	{
 		SmartFork sm = new SmartFork(getOutputArity());
 		sm.setContext(getContext());

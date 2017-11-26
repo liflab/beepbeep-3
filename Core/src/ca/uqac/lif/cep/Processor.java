@@ -53,7 +53,7 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * @dictentry
  *
  */
-public abstract class Processor implements Cloneable, Contextualizable
+public abstract class Processor implements DuplicableProcessor, Contextualizable
 {
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires
@@ -428,25 +428,6 @@ public abstract class Processor implements Cloneable, Contextualizable
 		return true;
 	}
 
-	/**
-	 * Extracts a processor out of the object passed as an argument. A
-	 * instance of Processor will be returned as is, while other objects
-	 * will be wrapped into a constant processor returning that object.
-	 * @param o The input object
-	 * @return A processor
-	 */
-	public static Processor liftProcessor(Object o)
-	{
-		if (o instanceof Processor)
-		{
-			return (Processor) o;
-		}
-		return new PullConstant(o);
-	}
-
-	@Override
-	public abstract Processor clone();
-	
 	/**
 	 * Copies the contents and state of the current processor into another
 	 * @param p The processor to copy contents into

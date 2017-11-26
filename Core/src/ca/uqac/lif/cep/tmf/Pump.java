@@ -93,7 +93,8 @@ public class Pump extends Processor implements Runnable
 				}
 				catch (InterruptedException e) 
 				{
-					// Nothing to do here
+					// Restore interrupted state
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -130,7 +131,7 @@ public class Pump extends Processor implements Runnable
 	}
 
 	@Override
-	public Pump clone()
+	public Pump duplicate()
 	{
 		return new Pump();
 	}

@@ -87,7 +87,7 @@ public abstract class PassthroughFunction extends Function
 	}
 
 	@Override
-	public final Function clone()
+	public final Function duplicate()
 	{
 		return this;
 	}

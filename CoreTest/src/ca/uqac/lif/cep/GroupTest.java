@@ -125,7 +125,7 @@ public class GroupTest extends BeepBeepUnitTest
 		gp.addProcessor(pt1);
 		gp.associateInput(0, pt1, 0);
 		gp.associateOutput(0, pt1, 0);
-		GroupProcessor gp_clone = gp.clone();
+		GroupProcessor gp_clone = gp.duplicate();
 		assertNotNull(gp_clone);
 		// Make sure we don't refer accidentally to the original objects
 		pt1 = null;
@@ -152,7 +152,7 @@ public class GroupTest extends BeepBeepUnitTest
 		gp.associateInput(1, pt1, 0);
 		gp.associateOutput(0, pt1, 0);
 		gp.associateOutput(1, pt1, 1);
-		GroupProcessor gp_clone = gp.clone();
+		GroupProcessor gp_clone = gp.duplicate();
 		// Make sure we don't refer accidentally to the original objects
 		pt1 = null;
 		gp = null;
@@ -190,7 +190,7 @@ public class GroupTest extends BeepBeepUnitTest
 		gp.addProcessor(pt2);
 		gp.associateInput(0, pt1, 0);
 		gp.associateOutput(0, pt2, 0);
-		GroupProcessor gp_clone = gp.clone();
+		GroupProcessor gp_clone = gp.duplicate();
 		assertNotNull(gp_clone);
 		// Make sure we don't refer accidentally to the original objects
 		pt1 = null;
@@ -222,7 +222,7 @@ public class GroupTest extends BeepBeepUnitTest
 		gp.associateInput(1, pt1, 1);
 		gp.associateOutput(0, pt2, 0);
 		gp.associateOutput(1, pt2, 1);
-		GroupProcessor gp_clone = gp.clone();
+		GroupProcessor gp_clone = gp.duplicate();
 		pt1 = null;
 		pt2 = null;
 		gp = null;
@@ -253,7 +253,7 @@ public class GroupTest extends BeepBeepUnitTest
 	/**
 	 * Try to clone a group processor that is already connected
 	 * to something else. The goal of this test is only to check
-	 * that the call to <code>clone()</code> does not throw an exception.
+	 * that the call to <code>duplicate()</code> does not throw an exception.
 	 * @throws ConnectorException
 	 */
 	@Test
@@ -273,7 +273,7 @@ public class GroupTest extends BeepBeepUnitTest
 		QueueSource qs = new QueueSource(2);
 		qs.addEvent(0);
 		Connector.connect(qs, gp);
-		GroupProcessor gp_clone = gp.clone();
+		GroupProcessor gp_clone = gp.duplicate();
 		QueueSource qs2 = new QueueSource(2);
 		qs2.addEvent(100);
 		Connector.connect(qs2, gp_clone);
@@ -312,7 +312,7 @@ public class GroupTest extends BeepBeepUnitTest
 			assertEquals(0, ((Number) o).intValue());
 		}
 		// Now clone
-		GroupProcessor g_clone = g_out.clone();
+		GroupProcessor g_clone = g_out.duplicate();
 		{
 			QueueSource qs = new QueueSource(1);
 			qs.addEvent(0);
@@ -359,7 +359,7 @@ public class GroupTest extends BeepBeepUnitTest
 			assertEquals(0, ((Number) o).intValue());
 		}
 		// Now clone
-		GroupProcessor g_clone = g_out.clone();
+		GroupProcessor g_clone = g_out.duplicate();
 		{
 			QueueSource qs = new QueueSource(1);
 			qs.addEvent(0);
@@ -509,7 +509,7 @@ public class GroupTest extends BeepBeepUnitTest
 		gp.addProcessor(pw);
 		gp.associateInput(0, pw, 0);
 		gp.associateOutput(0, pw, 0);
-		GroupProcessor gp_new = gp.clone();
+		GroupProcessor gp_new = gp.duplicate();
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(gp_new, qs);
 		Pushable p = gp_new.getPushableInput();
@@ -528,7 +528,7 @@ public class GroupTest extends BeepBeepUnitTest
 		Connector.connect(pw, pt2);
 		gp.associateInput(0, pw, 0);
 		gp.associateOutput(0, pt2, 0);
-		GroupProcessor gp_new = gp.clone();
+		GroupProcessor gp_new = gp.duplicate();
 		QueueSink qs = new QueueSink(1);
 		Connector.connect(gp_new, qs);
 		Pushable p = gp_new.getPushableInput();
@@ -568,7 +568,7 @@ public class GroupTest extends BeepBeepUnitTest
 			super(arity);
 		}
 		
-		public PassthroughIn clone()
+		public PassthroughIn duplicate()
 		{
 			return new PassthroughIn(getInputArity());
 		}
@@ -583,7 +583,7 @@ public class GroupTest extends BeepBeepUnitTest
 			// TODO Auto-generated constructor stub
 		}
 		
-		public GroupIn clone()
+		public GroupIn duplicate()
 		{
 			GroupIn in = new GroupIn(getInputArity(), getOutputArity());
 			super.cloneInto(in);

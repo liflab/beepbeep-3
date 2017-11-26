@@ -86,7 +86,7 @@ public abstract class BinaryFunction<T,V,U> extends SimpleFunction
 	}
 
 	@Override
-	public BinaryFunction<T,V,U> clone()
+	public BinaryFunction<T,V,U> duplicate()
 	{
 		return this;
 	}

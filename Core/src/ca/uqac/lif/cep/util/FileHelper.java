@@ -27,6 +27,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.logging.Level;
 
 /**
@@ -121,12 +122,13 @@ public class FileHelper
 	public static byte[] readToBytes(File f)
 	{
 		FileInputStream fileInputStream = null;
+		int bytes_read = 0;
 		byte[] bFile = new byte[(int) f.length()];
 		try
 		{
 			//convert file into array of bytes
 			fileInputStream = new FileInputStream(f);
-			fileInputStream.read(bFile);
+			bytes_read = fileInputStream.read(bFile);
 		}
 		catch (Exception e)
 		{
@@ -146,7 +148,7 @@ public class FileHelper
 				}
 			}
 		}
-		return bFile;
+		return Arrays.copyOf(bFile, bytes_read);
 	}
 
 	/**

@@ -308,7 +308,7 @@ public class GroupProcessor extends Processor
 			{
 				start = p;
 			}
-			Processor clone_p = p.clone();
+			Processor clone_p = p.duplicate();
 			clone_p.setContext(p.m_context);
 			new_procs.put(p.getId(), clone_p);
 			group.addProcessor(clone_p);
@@ -334,9 +334,9 @@ public class GroupProcessor extends Processor
 		cc.crawl(start);
 		return new_procs;
 	}
-
+	
 	@Override
-	public synchronized GroupProcessor clone()
+	public synchronized GroupProcessor duplicate()
 	{
 		GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
 		cloneInto(group);

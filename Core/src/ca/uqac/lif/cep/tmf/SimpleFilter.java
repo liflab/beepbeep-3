@@ -69,8 +69,8 @@ public class SimpleFilter extends SingleProcessor
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor duplicate() 
 	{
-		return new SimpleFilter(getInputArity(), m_condition.clone());
+		return new SimpleFilter(getInputArity(), m_condition.duplicate());
 	}
 }

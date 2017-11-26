@@ -69,9 +69,9 @@ public class ProcessOnSet extends SingleProcessor
 	}
 
 	@Override
-	public Processor clone()
+	public Processor duplicate()
 	{
-		return new ProcessOnSet(m_processor.clone());
+		return new ProcessOnSet(m_processor.duplicate());
 	}
 
 }

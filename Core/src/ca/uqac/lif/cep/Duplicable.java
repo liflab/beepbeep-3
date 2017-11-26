@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -15,47 +15,27 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tmf;
-
-import java.util.Queue;
-
-import ca.uqac.lif.cep.SingleProcessor;
+package ca.uqac.lif.cep;
 
 /**
- * Discards events from an input trace based on a selection criterion.
- * The processor takes as input two events simultaneously; it outputs
- * the first if the second is true.
+ * Interface indicating that an object can be duplicated. Note that
+ * while duplication looks very similar to cloning, it is actually
+ * different. A duplicated object may not have the exact same state as
+ * the original. This is particularly true of {@link Processor} objects,
+ * which <em>always</em> have a different numerical ID. Moreover,
+ * duplication may be dependent on a {@link Context} object, which cannot
+ * be the case with Java's meaning of cloning. Hence the need for a
+ * different interface.
  * 
  * @author Sylvain Hallé
+ *
  */
-public class Filter extends SingleProcessor
+public interface Duplicable
 {
-	public Filter()
-	{
-		super(2, 1);
-	}
-
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		Object o = inputs[0];
-		Object[] out = new Object[1];
-		boolean b = (Boolean) inputs[inputs.length - 1];
-		if (b)
-		{
-			out[0] = o;
-		}
-		else
-		{
-			return true;
-		}
-		outputs.add(out);
-		return true;
-	}
-
-	@Override
-	public Filter duplicate()
-	{
-		return new Filter();
-	}
+	/**
+	 * Duplicates an object
+	 * @return Another object
+	 */
+	public Object duplicate();
+	
 }

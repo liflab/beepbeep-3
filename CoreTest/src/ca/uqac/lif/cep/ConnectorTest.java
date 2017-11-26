@@ -171,7 +171,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 
 		@Override
-		public Processor clone() 
+		public Processor duplicate() 
 		{
 			// TODO Auto-generated method stub
 			return null;
@@ -205,7 +205,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 
 		@Override
-		public Processor clone() 
+		public Processor duplicate() 
 		{
 			// TODO Auto-generated method stub
 			return null;

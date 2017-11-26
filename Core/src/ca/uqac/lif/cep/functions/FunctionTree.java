@@ -138,12 +138,12 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public synchronized FunctionTree clone()
+	public synchronized FunctionTree duplicate()
 	{
-		FunctionTree out = new FunctionTree(m_function.clone());
+		FunctionTree out = new FunctionTree(m_function.duplicate());
 		for (int i = 0; i < m_children.length; i++)
 		{
-			out.m_children[i] = m_children[i].clone();
+			out.m_children[i] = m_children[i].duplicate();
 		}
 		out.setContext(getContext());
 		return out;

@@ -225,7 +225,7 @@ public class Print extends Sink
 	}
 
 	@Override
-	public /*@NotNull*/ Print clone()
+	public /*@NotNull*/ Print duplicate()
 	{
 		return new Print(getInputArity(), m_out);
 	}

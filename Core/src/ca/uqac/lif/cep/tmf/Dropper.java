@@ -58,7 +58,7 @@ public class Dropper extends SingleProcessor
 	}
 
 	@Override
-	public Dropper clone()
+	public Dropper duplicate()
 	{
 		return new Dropper();
 	}
