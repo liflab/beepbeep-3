@@ -23,7 +23,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class SimpleFilter extends SingleProcessor 
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 8775875821165936641L;
 
@@ -68,7 +68,7 @@ public class SimpleFilter extends SingleProcessor
 		{
 			throw new ProcessorException(e);
 		}
-		if ((Boolean) m_conditionValue[0] == true)
+		if ((Boolean) m_conditionValue[0])
 			outputs.add(inputs);
 		return true;
 	}

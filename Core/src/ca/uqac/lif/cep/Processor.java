@@ -199,7 +199,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * @return The object, or <code>null</code> if no object exists
 	 *   with such key
 	 */
-	public synchronized final Object getContext(String key)
+	public final synchronized Object getContext(String key)
 	{
 		if (m_context == null || !m_context.containsKey(key))
 		{

@@ -277,8 +277,7 @@ public abstract class SingleProcessor extends Processor
 				// return it and don't pull anything from the input
 				if (!out_queue.isEmpty())
 				{
-					Object o = out_queue.remove();
-					return o;
+					return out_queue.remove();
 				}
 			}
 			return null;
@@ -287,7 +286,7 @@ public abstract class SingleProcessor extends Processor
 		@Override
 		public synchronized Object pull()
 		{
-			if (hasNext() != true)
+			if (!hasNext())
 			{
 				return null;
 			}
@@ -298,15 +297,14 @@ public abstract class SingleProcessor extends Processor
 				// return it and don't pull anything from the input
 				if (!out_queue.isEmpty())
 				{
-					Object o = out_queue.remove();
-					return o;
+					return out_queue.remove();
 				}
 			}
 			return null;
 		}
 
 		@Override
-		public synchronized final Object next()
+		public final synchronized Object next()
 		{
 			return pull();
 		}
@@ -359,7 +357,7 @@ public abstract class SingleProcessor extends Processor
 					throw new PullableException(e);
 				}
 				NextStatus status_to_return = NextStatus.NO;
-				if (computed == false)
+				if (!computed)
 				{
 					// No output will ever be returned: stop there
 					return false;
@@ -442,7 +440,7 @@ public abstract class SingleProcessor extends Processor
 			{
 				throw new PullableException(e);
 			}
-			if (computed == false)
+			if (!computed)
 			{
 				status_to_return = NextStatus.NO;
 			}

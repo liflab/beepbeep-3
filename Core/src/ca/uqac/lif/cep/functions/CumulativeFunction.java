@@ -66,7 +66,6 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 	@Override
 	public CumulativeFunction<T> duplicate()
 	{
-		CumulativeFunction<T> out = new CumulativeFunction<T>(m_function.duplicate());
-		return out;
+		return new CumulativeFunction<T>(m_function.duplicate());
 	}
 }

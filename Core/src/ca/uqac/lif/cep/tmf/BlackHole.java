@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.tmf;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 
 /**
@@ -29,7 +28,7 @@ import ca.uqac.lif.cep.ProcessorException;
 public class BlackHole extends Sink 
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 4930838132907988617L;
 
@@ -40,9 +39,8 @@ public class BlackHole extends Sink
 	}
 
 	@Override
-	public Processor duplicate() 
+	public BlackHole duplicate() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new BlackHole();
 	}
 }

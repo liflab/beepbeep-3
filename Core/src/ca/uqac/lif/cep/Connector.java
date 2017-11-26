@@ -59,49 +59,49 @@ public class Connector
 	 * Whether the connector checks that the input-output types of the
 	 * processor it connects are compatible.
 	 */
-	public static final transient boolean s_checkForTypes = true;
+	public static final boolean s_checkForTypes = true;
 
 	/**
 	 * Whether the connector checks that the processors are connected
 	 * using in/out indexes within the bounds of their arity
 	 */
-	public static final transient boolean s_checkForBounds = false;
+	public static final boolean s_checkForBounds = false;
 
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's unique input
 	 */
-	public static final transient int INPUT = 0;
+	public static final int INPUT = 0;
 
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's unique output
 	 */
-	public static final transient int OUTPUT = 0;
+	public static final int OUTPUT = 0;
 
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's first input or output
 	 */
-	public static final transient int LEFT = 0;
+	public static final int LEFT = 0;
 
 	/**
 	 * Constant used to replace the value 0 when referring to
 	 * a processor's first input or output
 	 */
-	public static final transient int TOP = 0;
+	public static final int TOP = 0;
 
 	/**
 	 * Constant used to replace the value 1 when referring to
 	 * a processor's first input or output
 	 */
-	public static final transient int RIGHT = 1;
+	public static final int RIGHT = 1;
 
 	/**
 	 * Constant used to replace the value 1 when referring to
 	 * a processor's first input or output
 	 */
-	public static final transient int BOTTOM = 1;
+	public static final int BOTTOM = 1;
 
 	/**
 	 * Utility classes should not have public constructors
@@ -371,22 +371,22 @@ public class Connector
 		/**
 		 * The processor at the source of the connection
 		 */
-		protected transient Processor m_source;
+		protected final transient Processor m_source;
 
 		/**
 		 * The processor at the destination of the connection
 		 */
-		protected transient Processor m_destination;
+		protected final transient Processor m_destination;
 
 		/**
 		 * The index of the stream in the source processor
 		 */
-		protected int m_sourceIndex;
+		protected final int m_sourceIndex;
 
 		/**
 		 * The index of the stream in the destination processor
 		 */
-		protected int m_destinationIndex;
+		protected final int m_destinationIndex;
 
 		ConnectorException(Processor source, Processor destination, int i, int j)
 		{

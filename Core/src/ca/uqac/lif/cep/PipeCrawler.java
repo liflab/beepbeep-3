@@ -33,7 +33,7 @@ public abstract class PipeCrawler
 	 * This is intended as a safety measure to make sure that method
 	 * {@link #crawl(Processor)} always terminates.
 	 */
-	protected static final transient int s_maxCrawls = 10000;
+	protected static final int s_maxCrawls = 10000;
 
 	/**
 	 * Crawls a graph from some starting point
@@ -58,25 +58,23 @@ public abstract class PipeCrawler
 			for (int i = 0; i < out_arity; i++)
 			{
 				Pushable p = proc.getPushableOutput(i);
-				if (p != null)
+				if (p == null)
+					continue;
+				Processor target = p.getProcessor();
+				if (!to_visit.contains(target) && !visited.contains(target))
 				{
-					Processor target = p.getProcessor();
-					if (!to_visit.contains(target) && !visited.contains(target))
-					{
-						to_visit.add(target);
-					}
+					to_visit.add(target);
 				}
 			}
 			for (int i = 0; i < in_arity; i++)
 			{
 				Pullable p = proc.getPullableInput(i);
-				if (p != null)
+				if (p == null)
+					continue;
+				Processor target = p.getProcessor();
+				if (!to_visit.contains(target) && !visited.contains(target))
 				{
-					Processor target = p.getProcessor();
-					if (!to_visit.contains(target) && !visited.contains(target))
-					{
-						to_visit.add(target);
-					}
+					to_visit.add(target);
 				}
 			}
 		}

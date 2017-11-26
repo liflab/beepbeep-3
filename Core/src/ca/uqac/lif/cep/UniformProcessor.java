@@ -48,9 +48,10 @@ import java.util.Queue;
 public abstract class UniformProcessor extends Processor
 {	
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = -4956827142858091212L;
+	
 	/**
 	 * An array that will be used by the processor to compute
 	 * its output
@@ -69,7 +70,7 @@ public abstract class UniformProcessor extends Processor
 	}
 
 	@Override
-	public synchronized final Pushable getPushableInput(int index)
+	public final synchronized Pushable getPushableInput(int index)
 	{
 		return new InputPushable(index);
 	}
@@ -172,7 +173,7 @@ public abstract class UniformProcessor extends Processor
 			{
 				throw new PushableException(e);
 			}
-			if (outs != false)
+			if (outs)
 			{
 				for (int i = 0; i < m_outputPushables.length; i++)
 				{
@@ -274,15 +275,14 @@ public abstract class UniformProcessor extends Processor
 				// return it and don't pull anything from the input
 				if (!out_queue.isEmpty())
 				{
-					Object o = out_queue.remove();
-					return o;
+					return out_queue.remove();
 				}
 			}
 			return null;
 		}
 
 		@Override
-		public synchronized final Object next()
+		public final synchronized Object next()
 		{
 			return pull();
 		}

@@ -25,7 +25,7 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  */
 public class Maximum extends BinaryFunction<Number,Number,Number>
 {
-	public static transient final Maximum instance = new Maximum();
+	public static final transient Maximum instance = new Maximum();
 
 	Maximum()
 	{

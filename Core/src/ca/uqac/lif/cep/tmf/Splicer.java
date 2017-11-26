@@ -125,7 +125,7 @@ public class Splicer extends Source
 			for (int i = 0; i < m_pullables.length; i++)
 			{
 				boolean status = m_pullables[i].hasNext();
-				if (status == false)
+				if (!status)
 				{
 					// No use in trying further
 					has_null = true;

@@ -24,6 +24,7 @@ package ca.uqac.lif.cep.functions;
  * type, it should rather throw a {@link InvalidArgumentException}.  
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2166")
 public class NothingToReturnException extends FunctionException
 {
 	/**

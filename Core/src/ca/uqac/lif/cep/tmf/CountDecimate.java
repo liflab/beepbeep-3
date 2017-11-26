@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class CountDecimate extends SingleProcessor
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = -1528026169905098741L;
 
@@ -64,6 +64,7 @@ public class CountDecimate extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out = null;

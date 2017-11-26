@@ -67,6 +67,7 @@ public class TimeDecimate extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out = null;

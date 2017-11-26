@@ -110,6 +110,7 @@ public class Window extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		// Add the inputs to each window

@@ -280,7 +280,7 @@ public class StateSlicer extends UniformProcessor
 	 */
 	public static class ToAllSlices
 	{
-		public static final transient ToAllSlices instance = new ToAllSlices();
+		public static final ToAllSlices instance = new ToAllSlices();
 
 		private ToAllSlices()
 		{

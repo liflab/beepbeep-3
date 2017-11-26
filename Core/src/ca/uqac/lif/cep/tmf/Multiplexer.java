@@ -205,12 +205,9 @@ public class Multiplexer extends Processor
 				for (Pullable p : m_inputPullables)
 				{
 					boolean ns = p.hasNext();
-					if (ns != false)
+					if (ns)
 					{
 						all_no = false;
-					}
-					if (ns == true)
-					{
 						// We don't do a "break" here.
 						// We must go through ALL pullables, even if we encounter one
 						// that says yes. Otherwise, we might end up pulling events from

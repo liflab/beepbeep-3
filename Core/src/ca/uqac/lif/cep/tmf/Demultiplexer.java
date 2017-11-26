@@ -66,6 +66,7 @@ public class Demultiplexer extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected final boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_window.size() == m_width)

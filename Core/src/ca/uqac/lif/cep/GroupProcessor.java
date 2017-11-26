@@ -240,30 +240,30 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public synchronized final void setPullableInput(int i, Pullable p)
+	public final synchronized void setPullableInput(int i, Pullable p)
 	{
 		ProcessorAssociation a = m_inputPullableAssociations.get(i);
 		a.m_processor.setPullableInput(a.m_ioNumber, p);
 	}
 
-	public synchronized final void setPushableOutputAssociation(int i, Processor p, int j)
+	public final synchronized void setPushableOutputAssociation(int i, Processor p, int j)
 	{
 		m_outputPushableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
 	}
 
 	@Override
-	public synchronized final void setPushableOutput(int i, Pushable p)
+	public final synchronized void setPushableOutput(int i, Pushable p)
 	{
 		ProcessorAssociation a = m_outputPushableAssociations.get(i);
 		a.m_processor.setPushableOutput(a.m_ioNumber, p);
 	}
 
-	public synchronized final void setPullableInputAssociation(int i, Processor p, int j)
+	public final synchronized void setPullableInputAssociation(int i, Processor p, int j)
 	{
 		m_inputPullableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
 	}
 
-	public synchronized final void setPushableInput(int i, Pushable p)
+	public final synchronized void setPushableInput(int i, Pushable p)
 	{
 		if (i == m_inputPushables.size())
 		{
@@ -275,7 +275,7 @@ public class GroupProcessor extends Processor
 		}
 	}
 
-	public synchronized final void setPullableOutput(int i, Pullable p)
+	public final synchronized void setPullableOutput(int i, Pullable p)
 	{
 		if (i == m_outputPullables.size())
 		{
@@ -288,14 +288,14 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public synchronized final Pushable getPushableOutput(int index)
+	public final synchronized Pushable getPushableOutput(int index)
 	{
 		ProcessorAssociation a = m_outputPushableAssociations.get(index);
 		return a.m_processor.getPushableOutput(a.m_ioNumber);
 	}
 
 	@Override
-	public synchronized final Pullable getPullableInput(int index)
+	public final synchronized Pullable getPullableInput(int index)
 	{
 		ProcessorAssociation a = m_inputPullableAssociations.get(index);
 		return a.m_processor.getPullableInput(a.m_ioNumber);
@@ -375,7 +375,8 @@ public class GroupProcessor extends Processor
 				{
 					Processor target = push.getProcessor();
 					int j = push.getPosition();
-					Processor new_p, new_target;
+					Processor new_p;
+					Processor new_target;
 					synchronized (m_correspondences)
 					{
 						new_p = m_correspondences.get(p.getId());

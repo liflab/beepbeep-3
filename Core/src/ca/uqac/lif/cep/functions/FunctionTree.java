@@ -117,7 +117,6 @@ public class FunctionTree extends Function
 			}
 		}
 		return max_arity;
-		//return m_function.getInputArity();
 	}
 
 	@Override
@@ -163,7 +162,6 @@ public class FunctionTree extends Function
 				}
 			}
 		}
-		//m_function.getInputTypesFor(classes, index);
 	}
 
 	@Override

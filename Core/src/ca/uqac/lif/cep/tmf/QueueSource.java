@@ -132,12 +132,6 @@ public class QueueSource extends Source
 		return this;
 	}
 
-	/*@Override
-	public Pullable getPullableOutput(int index)
-	{
-		return new SentinelPullable(index);
-	}*/
-
 	@Override
 	@SuppressWarnings("squid:S1168")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)

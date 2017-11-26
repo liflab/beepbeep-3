@@ -361,7 +361,7 @@ public final class SmartFork extends Processor
 	 * Cleans the input list, and removes all events at the beginning that
 	 * have been consumed by all outputs
 	 */
-	synchronized protected void cleanQueue()
+	protected synchronized void cleanQueue()
 	{
 		int i = 0;
 		int to_shift = 0;

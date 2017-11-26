@@ -34,7 +34,7 @@ public class AnsiPrinter extends PrintStream
 	/**
 	 * Default 16-color scheme for foreground and background text
 	 */
-	public static enum Color {BLACK, BLUE, GREEN, CYAN, RED, PURPLE, BROWN,
+	public enum Color {BLACK, BLUE, GREEN, CYAN, RED, PURPLE, BROWN,
 		LIGHT_GRAY, DARK_GRAY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_CYAN, LIGHT_RED,
 		LIGHT_PURPLE, YELLOW, WHITE}
 

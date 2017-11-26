@@ -61,6 +61,7 @@ public class Last extends Passthrough
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		// Don't do anything, as the computation is taken care of by

@@ -39,7 +39,7 @@ public class LineTokenFeeder extends SingleProcessor
 	}
 
 	@Override
-	@SuppressWarnings("squid:S106") 
+	@SuppressWarnings({"squid:S106", "squid:S3516"}) 
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		String line = ((String) inputs[0]).trim();

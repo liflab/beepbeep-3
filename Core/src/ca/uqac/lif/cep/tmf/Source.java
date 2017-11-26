@@ -64,7 +64,7 @@ public abstract class Source extends SingleProcessor
 		{
 			throw new PushableException(e);
 		}
-		if (output == null || output.isEmpty())
+		if (output.isEmpty())
 		{
 			return;
 		}

@@ -89,11 +89,6 @@ public class FunctionProcessor extends UniformProcessor
 		cloneInto(out);
 		return out;
 	}
-	
-	public synchronized void cloneInto(FunctionProcessor out)
-	{
-		super.cloneInto(out);
-	}
 
 	@Override
 	public final void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)

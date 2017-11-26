@@ -99,7 +99,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * @author Sylvain Hallé
 	 *
 	 */
-	public static enum NextStatus {YES, NO, MAYBE}
+	public enum NextStatus {YES, NO, MAYBE}
 
 	/**
 	 * Number of times the {@link #hasNext()} method tries to produce an

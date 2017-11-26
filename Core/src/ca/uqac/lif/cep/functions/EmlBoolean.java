@@ -38,22 +38,14 @@ public class EmlBoolean extends Constant
 		else if (o instanceof String)
 		{
 			String s = (String) o;
-			if (s.compareToIgnoreCase("true") == 0
+			return s.compareToIgnoreCase("true") == 0
 					|| s.compareToIgnoreCase("T") == 0
-					|| s.compareToIgnoreCase("1") == 0)
-			{
-				return true;
-			}
-			return false;
+					|| s.compareToIgnoreCase("1") == 0;
 		}
 		if (o instanceof Number)
 		{
 			Number n = (Number) o;
-			if (Math.abs(n.doubleValue()) < 0.00001)
-			{
-				return false;
-			}
-			return true;
+			return !(Math.abs(n.doubleValue()) < 0.00001);
 		}
 		// When in doubt, return false
 		return false;

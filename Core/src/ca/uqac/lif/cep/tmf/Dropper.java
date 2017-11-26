@@ -41,6 +41,7 @@ public class Dropper extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object o = inputs[0];

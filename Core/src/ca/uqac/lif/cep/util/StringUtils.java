@@ -110,8 +110,7 @@ public class StringUtils
 	 */
 	public static InputStream toInputStream(String s)
 	{
-		InputStream stream = new ByteArrayInputStream(s.getBytes());
-		return stream;
+		return new ByteArrayInputStream(s.getBytes());
 	}
 	
 	/**
@@ -125,15 +124,13 @@ public class StringUtils
 	{
 		try
 		{
-			int n = Integer.parseInt(s); 
-			return n;
+			return Integer.parseInt(s); 
 		}
 		catch (NumberFormatException nfe1)
 		{
 			try
 			{
-				float f = Float.parseFloat(s);
-				return f;
+				return Float.parseFloat(s);
 			}
 			catch (NumberFormatException nfe2)
 			{
