@@ -26,6 +26,11 @@ import java.util.Queue;
  */
 public class Prefix extends Trim
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9099795445029126011L;
+
 	public Prefix(int k)
 	{
 		super(k);

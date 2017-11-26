@@ -28,6 +28,11 @@ import ca.uqac.lif.cep.ProcessorException;
  */
 public class BlackHole extends Sink 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4930838132907988617L;
+
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException 
 	{

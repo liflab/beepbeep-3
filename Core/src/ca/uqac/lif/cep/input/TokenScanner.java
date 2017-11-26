@@ -12,6 +12,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class TokenScanner extends UniformProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2574308236776766938L;
+
+	/**
 	 * The scanner to read from
 	 */
 	protected Scanner m_scanner;

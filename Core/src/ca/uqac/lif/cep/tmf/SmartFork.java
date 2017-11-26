@@ -39,6 +39,11 @@ import ca.uqac.lif.cep.Pushable;
 public final class SmartFork extends Processor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9020012031973273018L;
+
+	/**
 	 * The buffer of input events
 	 */
 	private List<Object> m_inputEvents;
@@ -129,7 +134,7 @@ public final class SmartFork extends Processor
 	 * should be used with much caution.
 	 * @param o The event to insert
 	 */
-	synchronized public void putInQueue(Object o)
+	public synchronized void putInQueue(Object o)
 	{
 		m_inputEvents.add(o);
 	}
@@ -142,7 +147,7 @@ public final class SmartFork extends Processor
 	}
 
 	@Override
-	synchronized public Pullable getPullableOutput(int index)
+	public synchronized Pullable getPullableOutput(int index)
 	{
 		return new QueuePullable(index);
 	}
@@ -155,7 +160,7 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		synchronized public Pushable push(Object o)
+		public synchronized Pushable push(Object o)
 		{
 			// Just push the event directly to the output pushables
 			for (int i = 0; i < m_outputPushables.length; i++)
@@ -167,7 +172,7 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		synchronized public Pushable pushFast(Object o)
+		public synchronized Pushable pushFast(Object o)
 		{
 			// Just push the event directly to the output pushables
 			for (int i = 0; i < m_outputPushables.length; i++)
@@ -179,19 +184,19 @@ public final class SmartFork extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return SmartFork.this;
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return 0;
 		}
 
 		@Override
-		synchronized public void waitFor()
+		public synchronized void waitFor()
 		{
 			for (int i = 0; i < m_outputPushables.length; i++)
 			{
@@ -399,7 +404,7 @@ public final class SmartFork extends Processor
 	 * Creates a copy of the current fork with a greater arity
 	 * @param out_arity The desired arity for the output fork
 	 */
-	synchronized public void extendOutputArity(int out_arity)
+	public synchronized void extendOutputArity(int out_arity)
 	{
 		m_outputArity = out_arity;
 		m_cursors = new int[out_arity];

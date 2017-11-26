@@ -27,6 +27,10 @@ package ca.uqac.lif.cep.input;
 public class CsvFeeder extends TokenFeeder
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5141532668453381253L;
+	/**
 	 * Whether to apply the {@link String#trim() trim()} method on the
 	 * resulting token
 	 */
@@ -45,7 +49,7 @@ public class CsvFeeder extends TokenFeeder
 		// Remove trailing comma
 		if (m_trimSpaces)
 		{
-			token = token.substring(0, token.length() - 1).trim();
+			return token.substring(0, token.length() - 1).trim();
 		}
 		return token.substring(0, token.length() - 1);
 	}

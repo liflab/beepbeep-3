@@ -26,6 +26,11 @@ import ca.uqac.lif.cep.UniformProcessor;
  */
 public class NaryToArray extends UniformProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5618657346614790685L;
+
 	public NaryToArray(int in_arity)
 	{
 		super(in_arity, 1);

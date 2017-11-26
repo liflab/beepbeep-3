@@ -13,6 +13,11 @@ import ca.uqac.lif.cep.tmf.SinkLast;
 
 public class ProcessOnSet extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 901561737275437783L;
+
 	protected Processor m_processor;
 
 	protected transient SinkLast m_sink;

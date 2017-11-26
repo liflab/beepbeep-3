@@ -45,6 +45,11 @@ import ca.uqac.lif.cep.tmf.Sink;
 public class Print extends Sink
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3630027954542507950L;
+
+	/**
 	 * The stream to print to
 	 */
 	protected AnsiPrinter m_out;

@@ -38,6 +38,11 @@ import ca.uqac.lif.cep.Pullable;
 public class Splicer extends Source
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5691358257278248882L;
+
+	/**
 	 * The list of processors to splice together
 	 */
 	protected Processor[] m_processors;

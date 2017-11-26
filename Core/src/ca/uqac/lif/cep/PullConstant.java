@@ -25,6 +25,11 @@ package ca.uqac.lif.cep;
 public class PullConstant extends UniformProcessor
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -2533060615859360214L;
+	
+	/**
 	 * The event to return
 	 */
 	private final Object m_toReturn;

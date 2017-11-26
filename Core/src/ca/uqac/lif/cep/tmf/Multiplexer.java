@@ -48,6 +48,11 @@ import ca.uqac.lif.cep.Pushable;
 public class Multiplexer extends Processor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5567052153423011112L;
+
+	/**
 	 * Instantiates a multiplexer
 	 * @param in_arity The input arity of the multiplexer. This is the
 	 *   number of input traces that should be merged together in the output

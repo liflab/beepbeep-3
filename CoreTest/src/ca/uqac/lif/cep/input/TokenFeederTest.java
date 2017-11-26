@@ -92,6 +92,11 @@ public class TokenFeederTest extends BeepBeepUnitTest
 	
 	public static class MyFeeder extends TokenFeeder
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1208659111574593098L;
+
 		public MyFeeder(String sep_beg, String sep_end)
 		{
 			super();

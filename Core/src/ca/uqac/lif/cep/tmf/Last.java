@@ -33,6 +33,11 @@ import ca.uqac.lif.cep.Pullable;
 public class Last extends Passthrough
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3367264654982234239L;
+
+	/**
 	 * The last event received
 	 */
 	protected Object m_lastReceived;

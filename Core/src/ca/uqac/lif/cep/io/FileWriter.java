@@ -34,6 +34,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class FileWriter extends Sink
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2468469352121292509L;
+
+	/**
 	 * The output stream to which contents will be written
 	 */
 	private FileOutputStream m_outStream;

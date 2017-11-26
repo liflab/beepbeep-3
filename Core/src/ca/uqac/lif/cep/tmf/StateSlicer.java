@@ -62,6 +62,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class StateSlicer extends UniformProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -114576230212668496L;
+
+	/**
 	 * The slicing function
 	 */
 	protected Function m_slicingFunction = null;

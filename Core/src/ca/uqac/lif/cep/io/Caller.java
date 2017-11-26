@@ -30,6 +30,10 @@ import ca.uqac.lif.cep.util.CommandRunner;
 public class Caller extends UniformProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 150932735172216286L;
+	/**
 	 * The command to call
 	 */
 	protected final String m_command;

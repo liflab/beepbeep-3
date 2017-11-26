@@ -34,6 +34,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class Demultiplexer extends SingleProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9019614854946803124L;
+
+	/**
 	 * The window of objects to be stored
 	 */
 	protected List<Object> m_window;

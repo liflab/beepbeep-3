@@ -31,6 +31,11 @@ import ca.uqac.lif.cep.UniformProcessor;
  */
 public class Fork extends UniformProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1337534560419116997L;
+
 	public Fork(int out_arity)
 	{
 		super(1, out_arity);

@@ -39,6 +39,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class StreamReader extends Source
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5927425600222556297L;
+
+	/**
 	 * The input stream from which data will be read
 	 */
 	protected InputStream m_fis = null;

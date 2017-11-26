@@ -32,6 +32,11 @@ package ca.uqac.lif.cep.functions;
  */
 public class ConstantProcessor extends FunctionProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8219535000885119220L;
+
 	public ConstantProcessor(Constant comp)
 	{
 		super(comp);

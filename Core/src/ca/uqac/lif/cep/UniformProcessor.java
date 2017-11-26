@@ -48,6 +48,10 @@ import java.util.Queue;
 public abstract class UniformProcessor extends Processor
 {	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4956827142858091212L;
+	/**
 	 * An array that will be used by the processor to compute
 	 * its output
 	 */
@@ -65,13 +69,13 @@ public abstract class UniformProcessor extends Processor
 	}
 
 	@Override
-	synchronized public final Pushable getPushableInput(int index)
+	public synchronized final Pushable getPushableInput(int index)
 	{
 		return new InputPushable(index);
 	}
 
 	@Override
-	synchronized public Pullable getPullableOutput(int index)
+	public synchronized Pullable getPullableOutput(int index)
 	{
 		if (index >= 0 && index < m_outputArity)
 		{
@@ -121,19 +125,19 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Pushable pushFast(Object o)
+		public synchronized Pushable pushFast(Object o)
 		{
 			return push(o);
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		synchronized public Pushable push(Object o)
+		public synchronized Pushable push(Object o)
 		{
 			if (m_index < m_inputQueues.length)
 			{
@@ -185,20 +189,20 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return UniformProcessor.this;
 		}
 
 		@Override
-		synchronized public void waitFor()
+		public synchronized void waitFor()
 		{
 			// Since this pushable is blocking
 			return;
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}
@@ -230,14 +234,14 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public void remove()
+		public synchronized void remove()
 		{
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		synchronized public Object pullSoft()
+		public synchronized Object pullSoft()
 		{
 			if (hasNextSoft() != NextStatus.YES)
 			{
@@ -250,17 +254,16 @@ public abstract class UniformProcessor extends Processor
 				// return it and don't pull anything from the input
 				if (!out_queue.isEmpty())
 				{
-					Object o = out_queue.remove();
-					return o;
+					return out_queue.remove();
 				}
 			}
 			return null;
 		}
 
 		@Override
-		synchronized public Object pull()
+		public synchronized Object pull()
 		{
-			if (hasNext() != true)
+			if (!hasNext())
 			{
 				return null;
 			}
@@ -279,13 +282,13 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public final Object next()
+		public synchronized final Object next()
 		{
 			return pull();
 		}
 
 		@Override
-		synchronized public boolean hasNext()
+		public synchronized boolean hasNext()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -303,7 +306,7 @@ public abstract class UniformProcessor extends Processor
 					throw new PullableException("Input " + i + " of this processor is connected to nothing", getProcessor());
 				}
 				boolean status = p.hasNext();
-				if (status == false)
+				if (!status)
 				{
 					return false;
 				}
@@ -328,7 +331,7 @@ public abstract class UniformProcessor extends Processor
 			{
 				throw new PullableException(e);
 			}
-			if (computed == false)
+			if (!computed)
 			{
 				// No output will ever be returned: stop there
 				return false;
@@ -342,7 +345,7 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public NextStatus hasNextSoft()
+		public synchronized NextStatus hasNextSoft()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -386,7 +389,7 @@ public abstract class UniformProcessor extends Processor
 			{
 				throw new PullableException(e);
 			}
-			if (computed == false)
+			if (!computed)
 			{
 				return NextStatus.NO;
 			}
@@ -402,37 +405,37 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return UniformProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		synchronized public Iterator<Object> iterator()
+		public synchronized Iterator<Object> iterator()
 		{
 			return this;
 		}
 
 		@Override
-		synchronized public void start()
+		public synchronized void start()
 		{
 			// Do nothing
 		}
 
 		@Override
-		synchronized public void stop()
+		public synchronized void stop()
 		{
 			// Do nothing
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}

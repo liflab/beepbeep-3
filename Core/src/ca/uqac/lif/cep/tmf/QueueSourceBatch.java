@@ -27,6 +27,11 @@ import java.util.Queue;
  */
 public class QueueSourceBatch extends QueueSource
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 566108093554996863L;
+
 	public QueueSourceBatch(int arity)
 	{
 		super(arity);

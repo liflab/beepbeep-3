@@ -17,6 +17,11 @@ import ca.uqac.lif.cep.UniformProcessor;
 public class LineReader extends UniformProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3187087342912223147L;
+
+	/**
 	 * The scanner to read from
 	 */
 	protected Scanner m_scanner;

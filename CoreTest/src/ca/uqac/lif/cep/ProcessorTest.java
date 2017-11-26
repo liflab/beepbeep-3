@@ -481,6 +481,11 @@ public class ProcessorTest extends BeepBeepUnitTest
 	
 	public static class Sum extends CumulativeProcessor
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1540010888611939050L;
+
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{

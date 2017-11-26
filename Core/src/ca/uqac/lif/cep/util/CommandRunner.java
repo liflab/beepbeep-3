@@ -242,7 +242,7 @@ public class CommandRunner extends Thread
 	 * Gets the contents of stdout sent by the command as an array of bytes
 	 * @return The contents of stdout
 	 */
-	synchronized public byte[] getBytes()
+	public synchronized byte[] getBytes()
 	{
 		return m_stdoutGobbler.getBytes();
 	}
@@ -251,13 +251,13 @@ public class CommandRunner extends Thread
 	 * Gets the contents of stdout sent by the command as a string
 	 * @return The contents of stdout
 	 */
-	synchronized public String getString()
+	public synchronized String getString()
 	{
 		byte[] out = m_stdoutGobbler.getBytes();
 		return new String(out);
 	}
 
-	synchronized public void stopCommand()
+	public synchronized void stopCommand()
 	{
 		m_stop = true;
 	}

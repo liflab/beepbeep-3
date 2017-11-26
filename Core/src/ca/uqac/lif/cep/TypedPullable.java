@@ -54,7 +54,7 @@ public class TypedPullable<T> implements Pullable
 	}
 
 	@Override
-	public void remove()
+	public final void remove()
 	{
 		// Cannot remove an event on a pullable
 		throw new UnsupportedOperationException();
@@ -63,13 +63,27 @@ public class TypedPullable<T> implements Pullable
 	@Override
 	public T pullSoft()
 	{
-		return (T) m_pullable.pullSoft();
+		try
+		{
+			return (T) m_pullable.pullSoft();
+		}
+		catch (ClassCastException e)
+		{
+			throw new PullableException(e);
+		}
 	}
 
 	@Override
 	public T pull()
 	{
-		return (T) m_pullable.pull();
+		try
+		{
+			return (T) m_pullable.pull();
+		}
+		catch (ClassCastException e)
+		{
+			throw new PullableException(e);
+		}
 	}
 
 	@Override

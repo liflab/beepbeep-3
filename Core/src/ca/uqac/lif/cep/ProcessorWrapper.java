@@ -20,6 +20,11 @@ package ca.uqac.lif.cep;
 public class ProcessorWrapper extends Processor
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 5134766706332445872L;
+
+	/**
 	 * The processor being wrapped around
 	 */
 	protected Processor m_processor;

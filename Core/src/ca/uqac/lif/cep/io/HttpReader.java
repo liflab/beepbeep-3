@@ -35,6 +35,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class HttpReader extends StreamReader
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4529083150218166174L;
+
+	/**
 	 * The User-Agent string that the reader will send in its HTTP
 	 * requests
 	 */

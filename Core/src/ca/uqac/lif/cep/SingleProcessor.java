@@ -44,6 +44,11 @@ import java.util.Queue;
 public abstract class SingleProcessor extends Processor
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -1296312555379963210L;
+
+	/**
 	 * A queue object that will be passed to the {@link #compute(Object[], Queue)}
 	 * method
 	 */
@@ -73,7 +78,7 @@ public abstract class SingleProcessor extends Processor
 	}
 
 	@Override
-	synchronized public Pushable getPushableInput(int index)
+	public synchronized Pushable getPushableInput(int index)
 	{
 		if (m_inputPushables[index] == null)
 		{
@@ -83,7 +88,7 @@ public abstract class SingleProcessor extends Processor
 	}
 
 	@Override
-	synchronized public Pullable getPullableOutput(int index)
+	public synchronized Pullable getPullableOutput(int index)
 	{
 		if (m_outputPullables[index] == null)
 		{
@@ -136,19 +141,19 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Pushable pushFast(Object o)
+		public synchronized Pushable pushFast(Object o)
 		{
 			return push(o);
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		synchronized public Pushable push(Object o)
+		public synchronized Pushable push(Object o)
 		{
 			if (m_index < m_inputQueues.length)
 			{
@@ -184,13 +189,12 @@ public abstract class SingleProcessor extends Processor
 			{
 				throw new PushableException(e);
 			}
-			if (outs != false && !m_tempQueue.isEmpty())
+			if (outs && !m_tempQueue.isEmpty())
 			{
 				for (Object[] evt : m_tempQueue)
 				{
 					if (evt != null)
 					{
-						//assert evt.length >= m_outputPushables.size();
 						for (int i = 0; i < m_outputPushables.length; i++)
 						{
 							Pushable p = m_outputPushables[i];
@@ -208,20 +212,20 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return SingleProcessor.this;
 		}
 
 		@Override
-		synchronized public void waitFor()
+		public synchronized void waitFor()
 		{
 			// Since this pushable is blocking
 			return;
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}
@@ -253,14 +257,14 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public void remove()
+		public synchronized void remove()
 		{
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		synchronized public Object pullSoft()
+		public synchronized Object pullSoft()
 		{
 			if (hasNextSoft() != NextStatus.YES)
 			{
@@ -281,7 +285,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Object pull()
+		public synchronized Object pull()
 		{
 			if (hasNext() != true)
 			{
@@ -302,13 +306,13 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public final Object next()
+		public synchronized final Object next()
 		{
 			return pull();
 		}
 
 		@Override
-		synchronized public boolean hasNext()
+		public synchronized boolean hasNext()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -392,7 +396,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public NextStatus hasNextSoft()
+		public synchronized NextStatus hasNextSoft()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -464,37 +468,37 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return SingleProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		synchronized public Iterator<Object> iterator()
+		public synchronized Iterator<Object> iterator()
 		{
 			return this;
 		}
 
 		@Override
-		synchronized public void start()
+		public synchronized void start()
 		{
 			// Do nothing
 		}
 
 		@Override
-		synchronized public void stop()
+		public synchronized void stop()
 		{
 			// Do nothing
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}

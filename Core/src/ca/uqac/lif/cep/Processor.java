@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Queue;
@@ -53,8 +54,13 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * @dictentry
  *
  */
-public abstract class Processor implements DuplicableProcessor, Contextualizable
+public abstract class Processor implements DuplicableProcessor, Contextualizable, Serializable
 {
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -1686796980363286206L;
+
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires
 	 * to produce an output
@@ -193,7 +199,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * @return The object, or <code>null</code> if no object exists
 	 *   with such key
 	 */
-	synchronized public final Object getContext(String key)
+	public synchronized final Object getContext(String key)
 	{
 		if (m_context == null || !m_context.containsKey(key))
 		{
@@ -203,7 +209,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	@Override
-	synchronized public Context getContext()
+	public synchronized Context getContext()
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -215,7 +221,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	@Override
-	synchronized public void setContext(String key, Object value)
+	public synchronized void setContext(String key, Object value)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not

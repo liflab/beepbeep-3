@@ -30,6 +30,11 @@ import ca.uqac.lif.cep.SingleProcessor;
  */
 public class Filter extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7780260847522359589L;
+
 	public Filter()
 	{
 		super(2, 1);

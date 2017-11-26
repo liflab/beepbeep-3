@@ -6,6 +6,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public class LineTokenFeeder extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 230382528486632578L;
+
 	StringBuilder m_currentEvent;
 
 	protected String m_startToken;
