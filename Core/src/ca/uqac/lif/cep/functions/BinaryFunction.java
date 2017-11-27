@@ -8,7 +8,7 @@ import java.util.Set;
  * @param <V> The type of the second input
  * @param <U> The type of the output
  */
-public abstract class BinaryFunction<T,V,U> extends SimpleFunction
+public abstract class BinaryFunction<T,V,U> extends Function
 {
 	/**
 	 * The class of the first input
@@ -42,7 +42,7 @@ public abstract class BinaryFunction<T,V,U> extends SimpleFunction
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 2 */
-	public void compute(/*@NonNull*/ Object[] inputs, Object[] outputs)
+	public void evaluate(/*@NonNull*/ Object[] inputs, Object[] outputs)
 	{
 		outputs[0] = getValue((T) inputs[0], (V) inputs[1]);
 	}

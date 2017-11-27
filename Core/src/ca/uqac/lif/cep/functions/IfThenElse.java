@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.Connector.Variant;
  * 
  * @author Sylvain Hallé
  */
-public class IfThenElse extends SimpleFunction
+public class IfThenElse extends Function
 {
 	/**
 	 * The unique visible instance of this function
@@ -40,7 +40,7 @@ public class IfThenElse extends SimpleFunction
 	}
 
 	@Override
-	public void compute(Object[] inputs, Object[] outputs) throws FunctionException 
+	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException 
 	{
 		try
 		{

@@ -47,7 +47,10 @@ public abstract class Function implements DuplicableFunction
 	 * @throws FunctionException Any exception that may occur during the
 	 *   evaluation of a function
 	 */
-	public abstract void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException;
+	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException
+	{
+		evaluate(inputs, outputs);
+	}
 
 	/**
 	 * Evaluates the outputs of the function, given some inputs
