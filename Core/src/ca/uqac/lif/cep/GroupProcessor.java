@@ -536,7 +536,7 @@ public class GroupProcessor extends Processor
 		
 		@Override
 		public void notifyEndOfTrace() throws PushableException {
-			notifyEndOfTrace();
+			m_pushable.notifyEndOfTrace();
 		}
 
 		@Override

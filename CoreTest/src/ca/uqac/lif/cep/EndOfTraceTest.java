@@ -14,6 +14,8 @@ import ca.uqac.lif.cep.tmf.Pump;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
+import javax.swing.*;
+
 public class EndOfTraceTest {
 	
 	private final static String END_OF_TRACE = "End of trace";
@@ -101,5 +103,37 @@ public class EndOfTraceTest {
 			assertEquals(i, (int) queue.remove());
 		
 		assertEquals(END_OF_TRACE, (String) queue.remove());		
+	}
+
+	@Test
+	public void testGroupProcessor() throws ConnectorException {
+		Passthrough
+				passthrough0 = new EndOfTracePassthrough(1),
+				passthrough1 = new EndOfTracePassthrough(1);
+		Connector.connect(passthrough0, passthrough1);
+
+		GroupProcessor groupProcessor = new GroupProcessor(1, 1);
+		groupProcessor.associateInput(0, passthrough0, 0);
+		groupProcessor.associateOutput(0, passthrough1, 0);
+
+
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(groupProcessor, sink);
+
+		Pushable pushable = groupProcessor.getPushableInput(0);
+		Queue<Object> queueSink = sink.getQueue(0);
+
+		for(int i = 0; i < 10; i++)
+		{
+			pushable.push(i);
+			assertEquals(i, (int) queueSink.remove());
+		}
+
+		pushable.notifyEndOfTrace();
+		assertEquals(END_OF_TRACE, (String) queueSink.remove());
+
+
+
+
 	}
 }
