@@ -504,28 +504,6 @@ public abstract class SingleProcessor extends Processor
 	}
 
 	/**
-	 * Puts an array of objects (given as an argument) into an
-	 * empty queue of arrays of objects. This is a convenience method
-	 * that descendants of {@link SingleProcessor} (which implement
-	 * {@link #compute(Object[], Queue)}) can use to avoid
-	 * a few lines of code when they output a single array of events.
-	 * @param v The array of objects
-	 * @return The queue, or <code>null</code> if all elements of
-	 *   <code>v</code> are null
-	 */
-	@SuppressWarnings("squid:S1168")
-	protected static final Queue<Object[]> wrapVector(Object[] v)
-	{
-		if (v == null || allNull(v))
-		{
-			return null;
-		}
-		Queue<Object[]> out = new ArrayDeque<Object[]>();
-		out.add(v);
-		return out;
-	}
-
-	/**
 	 * Puts a object (given as an argument) into an
 	 *  array of objects. This is a convenience method
 	 * that descendants of {@link SingleProcessor} (which implement
