@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.functions;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.Contextualizable;
 
 /**
  * Represents a stateless <i>m</i>-to-<i>n</i> function.
@@ -28,7 +27,7 @@ import ca.uqac.lif.cep.Contextualizable;
  * @author Sylvain Hallé
  * @dictentry
  */
-public abstract class Function implements DuplicableFunction, Contextualizable
+public abstract class Function implements DuplicableFunction
 {
 	/**
 	 * The maximum input arity that a function can have
@@ -107,24 +106,6 @@ public abstract class Function implements DuplicableFunction, Contextualizable
 	 * @return The type of the output
 	 */
 	public abstract Class<?> getOutputTypeFor(int index);
-
-	@Override
-	public void setContext(Context context)
-	{
-		// Do nothing
-	}
-
-	@Override
-	public void setContext(String key, Object value)
-	{
-		// Do nothing
-	}
-
-	@Override
-	public Context getContext()
-	{
-		return null;
-	}
 	
 	public void evaluateFast(Object[] inputs, Object[] outputs, Context context) throws FunctionException
 	{

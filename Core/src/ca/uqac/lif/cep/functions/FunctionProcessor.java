@@ -108,14 +108,12 @@ public class FunctionProcessor extends UniformProcessor
 	public synchronized void setContext(Context context)
 	{
 		super.setContext(context);
-		m_function.setContext(context);
 	}
 
 	@Override
 	public synchronized void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
-		m_function.setContext(key, value);
 	}
 
 	@Override

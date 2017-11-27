@@ -144,7 +144,6 @@ public class FunctionTree extends Function
 		{
 			out.m_children[i] = m_children[i].duplicate();
 		}
-		out.setContext(getContext());
 		return out;
 	}
 
@@ -192,27 +191,5 @@ public class FunctionTree extends Function
 			out.append("]");
 		}
 		return out.toString();
-	}
-
-	@Override
-	public synchronized void setContext(Context context)
-	{
-		super.setContext(context);
-		m_function.setContext(context);
-		for (Function f : m_children)
-		{
-			f.setContext(context);
-		}
-	}
-
-	@Override
-	public synchronized void setContext(String key, Object value)
-	{
-		super.setContext(key, value);
-		m_function.setContext(key, value);
-		for (Function f : m_children)
-		{
-			f.setContext(key, value);
-		}
 	}
 }
