@@ -213,8 +213,8 @@ public class GroupTest extends BeepBeepUnitTest
 	{
 		Passthrough pt1 = new Passthrough(2);
 		Passthrough pt2 = new Passthrough(2);
-		Connector.connect(pt1, pt2, 0, 1);
-		Connector.connect(pt1, pt2, 1, 0);
+		Connector.connect(pt1, 0, pt2, 1);
+		Connector.connect(pt1, 1, pt2, 0);
 		GroupProcessor gp = new GroupProcessor(2, 2);
 		gp.addProcessor(pt1);
 		gp.addProcessor(pt2);
@@ -261,8 +261,8 @@ public class GroupTest extends BeepBeepUnitTest
 	{
 		Passthrough pt1 = new Passthrough(2);
 		Passthrough pt2 = new Passthrough(2);
-		Connector.connect(pt1, pt2, 0, 1);
-		Connector.connect(pt1, pt2, 1, 0);
+		Connector.connect(pt1, 0, pt2, 1);
+		Connector.connect(pt1, 1, pt2, 0);
 		GroupProcessor gp = new GroupProcessor(2, 2);
 		gp.addProcessor(pt1);
 		gp.addProcessor(pt2);
@@ -397,7 +397,8 @@ public class GroupTest extends BeepBeepUnitTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
-		Connector.connectFork(input1, input2, add_plus_10);
+		Connector.connect(input1, 0, add_plus_10, 0);
+		Connector.connect(input2, 0, add_plus_10, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;
@@ -439,7 +440,7 @@ public class GroupTest extends BeepBeepUnitTest
 		// Create the group
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		Incrementer inc = new Incrementer(10);
-		Connector.connect(inc, add, 0, 0);
+		Connector.connect(inc, add);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, inc, 0);
@@ -461,7 +462,8 @@ public class GroupTest extends BeepBeepUnitTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
-		Connector.connectFork(input1, input2, add_plus_10);
+		Connector.connect(input1, 0, add_plus_10, 0);
+		Connector.connect(input2, 0, add_plus_10, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv;

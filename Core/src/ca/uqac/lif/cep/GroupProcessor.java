@@ -372,7 +372,7 @@ public class GroupProcessor extends Processor
 						// outside of the group
 						try
 						{
-							Connector.connect(new_p, new_target, i, j);
+							Connector.connect(new_p, i, new_target, j);
 						}
 						catch (ConnectorException e)
 						{

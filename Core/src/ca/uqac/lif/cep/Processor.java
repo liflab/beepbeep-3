@@ -483,23 +483,6 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	/**
-	 * Gets the type of events the processor produces for its <i>i</i>-th
-	 * output trace.
-	 * @param index The index of the output to query
-	 * @return A set of classes. If <code>index</code> it less than 0 or
-	 *   greater than the processor's declared output arity, the response
-	 *   will be <code>null</code>.
-	 */
-	public final Class<?> getOutputType(int index)
-	{
-		if (index >= 0 && index < m_outputArity)
-		{
-			return getOutputTypeFor(index);
-		}
-		return null;
-	}
-
-	/**
 	 * Returns the type of the events produced by the processor for its
 	 * <i>i</i>-th output.
 	 * <p>
@@ -509,9 +492,11 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * A descendant of this class may choose to define specific types for
 	 * its input and output, thereby activating runtime type checking.
 	 * @param index The index of the output to query
-	 * @return The type of the output
+	 * @return The type of the output. If <code>index</code> it less than 0 or
+	 *   greater than the processor's declared output arity, this method
+	 *   <em>may</em> throw an IndexOutOfBoundsException.
 	 */
-	public Class<?> getOutputTypeFor(int index)
+	public Class<?> getOutputType(int index)
 	{
 		return Variant.class;
 	}

@@ -205,7 +205,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
-		Connector.connectFork(input1, input2, add);
+		Connector.connect(input1, 0, add, 0);
+		Connector.connect(input2, 0, add, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add, sink);
 		Number recv;
@@ -247,7 +248,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 		QueueSource input2 = new QueueSource();
 		input2.setEvents(new Boolean[]{true, false, true, false});
 		Filter f = new Filter();
-		Connector.connectFork(input1, input2, f);
+		Connector.connect(input1, 0, f, 0);
+		Connector.connect(input2, 0, f, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(f, sink);
 		Number recv;
@@ -290,10 +292,10 @@ public class ProcessorTest extends BeepBeepUnitTest
 		Fork fork = new Fork(2);
 		Connector.connect(input1, fork);
 		Filter filter = new Filter();
-		Connector.connect(fork, filter, 0, 0);
+		Connector.connect(fork, 0, filter, 0);
 		FunctionProcessor even = new FunctionProcessor(new IsEven());
-		Connector.connect(fork, even, 1, 0);
-		Connector.connect(even, filter, 0, 1);
+		Connector.connect(fork, 1, even, 0);
+		Connector.connect(even, 0, filter, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(filter, sink);
 		Number recv;
@@ -346,7 +348,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
-		Connector.connectFork(input1, input2, add_plus_10);
+		Connector.connect(input1, 0, add_plus_10, 0);
+		Connector.connect(input2, 0, add_plus_10, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;
@@ -405,8 +408,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 			src_right.setEvents(input_events);
 		}
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
-		Connector.connect(src_left, add, 0, 0);
-		Connector.connect(src_right, add, 0, 1);
+		Connector.connect(src_left, 0, add, 0);
+		Connector.connect(src_right, 0, add, 1);
 		Pullable p = add.getPullableOutput(0);
 		Number n;
 		n = (Number) p.pullSoft();

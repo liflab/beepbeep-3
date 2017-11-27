@@ -83,8 +83,8 @@ public class MultiplexerTest extends BeepBeepUnitTest
 			qsource2.setEvents(contents);
 		}
 		Multiplexer mux = new Multiplexer(2);
-		Connector.connect(qsource1, mux, 0, 0);
-		Connector.connect(qsource2, mux, 0, 1);
+		Connector.connect(qsource1, 0, mux, 0);
+		Connector.connect(qsource2, 0, mux, 1);
 		QueueSink qsink = new QueueSink(1);
 		Connector.connect(mux, qsink);
 		Queue<Object> queue = qsink.getQueue(0);
@@ -129,8 +129,8 @@ public class MultiplexerTest extends BeepBeepUnitTest
 			qsource2.setEvents(contents);
 		}
 		Multiplexer mux = new Multiplexer(2);
-		Connector.connect(qsource1, mux, 0, 0);
-		Connector.connect(qsource2, mux, 0, 1);
+		Connector.connect(qsource1, 0, mux, 0);
+		Connector.connect(qsource2, 0, mux, 1);
 		QueueSink qsink = new QueueSink(1);
 		Connector.connect(mux, qsink);
 		Queue<Object> queue = qsink.getQueue(0);

@@ -78,11 +78,7 @@ public abstract class UniformProcessor extends Processor
 	@Override
 	public synchronized Pullable getPullableOutput(int index)
 	{
-		if (index >= 0 && index < m_outputArity)
-		{
-			return new OutputPullable(index);
-		}
-		return null;
+		return new OutputPullable(index);
 	}
 
 	/**
@@ -119,10 +115,7 @@ public abstract class UniformProcessor extends Processor
 		InputPushable(int index)
 		{
 			super();
-			synchronized (this)
-			{
-				m_index = index;
-			}
+			m_index = index;
 		}
 
 		@Override

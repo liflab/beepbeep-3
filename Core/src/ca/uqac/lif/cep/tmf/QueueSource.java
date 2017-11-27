@@ -199,7 +199,7 @@ public class QueueSource extends Source
 	}
 
 	@Override
-	public Class<?> getOutputTypeFor(int index)
+	public Class<?> getOutputType(int index)
 	{
 		// We return the type of the first non-null object in the queue
 		for (Object o : m_events)

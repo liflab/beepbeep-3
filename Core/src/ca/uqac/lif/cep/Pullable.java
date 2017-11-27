@@ -324,19 +324,19 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 		@Override
 		public void start() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 
 		@Override
 		public void stop() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 
 		@Override
 		public void dispose() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 		
 	}

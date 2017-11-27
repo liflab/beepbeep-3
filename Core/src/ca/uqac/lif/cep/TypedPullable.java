@@ -63,27 +63,13 @@ public class TypedPullable<T> implements Pullable
 	@Override
 	public T pullSoft()
 	{
-		try
-		{
-			return (T) m_pullable.pullSoft();
-		}
-		catch (ClassCastException e)
-		{
-			throw new PullableException(e);
-		}
+		return (T) m_pullable.pullSoft();
 	}
 
 	@Override
 	public T pull()
 	{
-		try
-		{
-			return (T) m_pullable.pull();
-		}
-		catch (ClassCastException e)
-		{
-			throw new PullableException(e);
-		}
+		return (T) m_pullable.pull();
 	}
 
 	@Override

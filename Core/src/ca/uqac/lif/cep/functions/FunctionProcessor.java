@@ -98,7 +98,7 @@ public class FunctionProcessor extends UniformProcessor
 	}
 
 	@Override
-	public final synchronized Class<?> getOutputTypeFor(int index)
+	public final synchronized Class<?> getOutputType(int index)
 	{
 		// The type is determined by that of the underlying function
 		return m_function.getOutputTypeFor(index);

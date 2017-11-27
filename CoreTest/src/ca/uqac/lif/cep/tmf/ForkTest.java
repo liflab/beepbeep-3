@@ -56,7 +56,7 @@ public class ForkTest extends BeepBeepUnitTest
 		for (int i = 0; i < 3; i++)
 		{
 			sinks[i] = new QueueSink(1);
-			Connector.connect(fork, sinks[i], i, 0);
+			Connector.connect(fork, i, sinks[i], 0);
 			queues[i] = sinks[i].getQueue(0);
 		}
 		for (int k = 0; k < 2; k++)
@@ -85,7 +85,7 @@ public class ForkTest extends BeepBeepUnitTest
 		for (int i = 0; i < 3; i++)
 		{
 			sinks[i] = new QueueSink(1);
-			Connector.connect(fork, sinks[i], i, 0);
+			Connector.connect(fork, i, sinks[i], 0);
 			queues[i] = sinks[i].getQueue(0);
 		}
 		for (int k = 0; k < 2; k++)
@@ -115,12 +115,12 @@ public class ForkTest extends BeepBeepUnitTest
 		for (int i = 0; i < 2; i++)
 		{
 			sinks[i] = new QueueSink(1);
-			Connector.connect(fork, sinks[i], i, 0);
+			Connector.connect(fork, i, sinks[i], 0);
 			queues[i] = sinks[i].getQueue(0);
 		}
 		fork.extendOutputArity(3);
 		sinks[2] = new QueueSink(1);
-		Connector.connect(fork, sinks[2], 2, 0);
+		Connector.connect(fork, 2, sinks[2], 0);
 		queues[2] = sinks[2].getQueue(0);
 		for (int k = 0; k < 2; k++)
 		{
@@ -148,12 +148,12 @@ public class ForkTest extends BeepBeepUnitTest
 		for (int i = 0; i < 2; i++)
 		{
 			sinks[i] = new QueueSink(1);
-			Connector.connect(fork, sinks[i], i, 0);
+			Connector.connect(fork, i, sinks[i], 0);
 			queues[i] = sinks[i].getQueue(0);
 		}
 		fork.extendOutputArity(3);
 		sinks[2] = new QueueSink(1);
-		Connector.connect(fork, sinks[2], 2, 0);
+		Connector.connect(fork, 2, sinks[2], 0);
 		queues[2] = sinks[2].getQueue(0);
 		for (int k = 0; k < 2; k++)
 		{
@@ -168,7 +168,6 @@ public class ForkTest extends BeepBeepUnitTest
 		}
 	}
 
-	
 	@Test
 	public void testFork1() throws ConnectorException
 	{
@@ -340,14 +339,13 @@ public class ForkTest extends BeepBeepUnitTest
 		SmartFork fork = new SmartFork(2);
 		Connector.connect(qsource, fork);
 		QueueSink qs1 = new QueueSink(1);
-		Connector.connect(fork, qs1, 0, 0);
+		Connector.connect(fork, 0, qs1, 0);
 		QueueSink qs2 = new QueueSink(1);
-		Connector.connect(fork, qs2, 1, 0);
+		Connector.connect(fork, 1, qs2, 0);
 		Queue<Object> q1 = qs1.getQueue(0);
 		Queue<Object> q2 = qs2.getQueue(0);
 		qs1.pull();
 		Utilities.queueContains(0, q1);
 		assertEquals(0, q2.size());
 	}
-
 }

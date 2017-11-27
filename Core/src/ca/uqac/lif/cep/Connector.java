@@ -110,53 +110,41 @@ public class Connector
 	{
 		throw new IllegalAccessError("Utility class");
 	}
-	
-	/**
-	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
-	 * <i>j</i>-th input of <tt>p2</tt>
-	 * @param p1 The first processor
-	 * @param p2 The second processor
-	 * @param i The output number of the first processor
-	 * @param j The input number of the second processor
-	 * @return A reference to processor p2
-	 * @throws ConnectorException If the input/output types of the processors
-	 *   to connect are incompatible
-	 */
-	public static synchronized Processor connect(Processor p1, Processor p2, int i, int j) throws ConnectorException
-	{
-		return connect(p1, p2, i, j, null);
-	}
 
 	/**
 	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
 	 * <i>j</i>-th input of <tt>p2</tt>
-	 * @param p1 The first processor
-	 * @param p2 The second processor
-	 * @param i The output number of the first processor
-	 * @param j The input number of the second processor
 	 * @param tracker An event tracker (optional)
+	 * @param p1 The first processor
+	 * @param i The output number of the first processor
+	 * @param p2 The second processor
+	 * @param j The input number of the second processor
 	 * @return A reference to processor p2
 	 * @throws ConnectorException If the input/output types of the processors
 	 *   to connect are incompatible
 	 */
-	public static synchronized Processor connect(Processor p1, Processor p2, int i, int j, EventTracker tracker) throws ConnectorException
+	public static Processor connect(EventTracker tracker, Processor p1, int i, Processor p2, int j) throws ConnectorException
 	{
 		// First check for type compatibility
 		if (s_checkForTypes)
 		{
 			// This will throw an exception if the connection is impossible
-			checkForException(p1, p2, i, j);
+			checkForException(p1, i, p2, j);
 		}
 		if (p1 == p2)
 		{
 			// This is weird: you try to connect a processor to itself
-			throw new SelfLoopException(p1, p2, i, j);
+			throw new SelfLoopException(p1, i, p2, j);
 		}
 		// Pull
 		try
 		{
 			Pullable p1_out = p1.getPullableOutput(i);
 			p2.setPullableInput(j, p1_out);
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new Connector.IndexOutOfBoundsException(p1, i, p2, j);
 		}
 		catch (UnsupportedOperationException e)
 		{
@@ -169,6 +157,10 @@ public class Connector
 		{
 			Pushable p2_in = p2.getPushableInput(j);
 			p1.setPushableOutput(i, p2_in);
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new Connector.IndexOutOfBoundsException(p1, i, p2, j);
 		}
 		catch (UnsupportedOperationException e)
 		{
@@ -192,50 +184,11 @@ public class Connector
 	 * @throws ConnectorException If the input/output types of the processors
 	 *   to connect are incompatible
 	 */
-	public static synchronized Processor connect(Processor p1, int i, Processor p2, int j) throws ConnectorException
+	public static Processor connect(Processor p1, int i, Processor p2, int j) throws ConnectorException
 	{
-		return connect(p1, i, p2, j, null);
+		return connect(null, p1, i, p2, j);
 	}
-	
-	/**
-	 * Connects the <i>i</i>-th output of <tt>p1</tt> to the
-	 * <i>j</i>-th input of <tt>p2</tt>
-	 * @param p1 The first processor
-	 * @param p2 The second processor
-	 * @param i The output number of the first processor
-	 * @param j The input number of the second processor
-	 * @param tracker An event tracker
-	 * @return A reference to processor p2
-	 * @throws ConnectorException If the input/output types of the processors
-	 *   to connect are incompatible
-	 */
-	public static synchronized Processor connect(Processor p1, int i, Processor p2, int j, EventTracker tracker) throws ConnectorException
-	{
-		Processor p = connect(p1, p2, i, j);
-		if (tracker != null)
-		{
-			tracker.setConnection(p1.getId(), i, p2.getId(), j);
-		}
-		return p;
-	}
-
-	/**
-	 * Connects three processors, by associating the (first) output of <tt>p1</tt>
-	 * and <tt>p2</tt> respectively to the first and second input of <tt>p3</tt>
-	 * @param p1 The first processor
-	 * @param p2 The second processor
-	 * @param p3 The third processor
-	 * @return A reference to processor p3
-	 * @throws ConnectorException If the input/output types of the processors
-	 *   to connect are incompatible
-	 */
-	public static synchronized Processor connectFork(Processor p1, Processor p2, Processor p3) throws ConnectorException
-	{
-		connect(p1, p3, 0, 0);
-		connect(p2, p3, 0, 1);
-		return p3;
-	}
-	
+		
 	/**
 	 * Connects a chain of processors, by associating the outputs of one
 	 * to the inputs of the next. The output arity of the first must match
@@ -246,7 +199,7 @@ public class Connector
 	 * @throws ConnectorException If the input/output types of the processors
 	 *   to connect are incompatible
 	 */
-	public static synchronized Processor connect(Processor ... procs) throws ConnectorException
+	public static Processor connect(Processor ... procs) throws ConnectorException
 	{
 		return connect(null, procs);
 	}
@@ -262,7 +215,7 @@ public class Connector
 	 * @throws ConnectorException If the input/output types of the processors
 	 *   to connect are incompatible
 	 */
-	public static synchronized Processor connect(EventTracker tracker, Processor ... procs) throws ConnectorException
+	public static Processor connect(EventTracker tracker, Processor ... procs) throws ConnectorException
 	{
 		if (procs.length == 1)
 		{
@@ -276,7 +229,7 @@ public class Connector
 			int arity = p1.getOutputArity();
 			for (int i = 0; i < arity; i++)
 			{
-				connect(p1, p2, i, i, tracker);
+				connect(tracker, p1, i, p2, i);
 			}
 		}
 		return procs[procs.length - 1];
@@ -287,17 +240,17 @@ public class Connector
 	 * declared type compatible with the <i>j</i>-th input of processor
 	 * <code>p2</code>
 	 * @param p1 The first processor
-	 * @param p2 The second processor
 	 * @param i The index of the output on the first processor
+	 * @param p2 The second processor
 	 * @param j The index of the input on the second processor
 	 * @return true if the types are compatible, false otherwise
 	 */
 	@SuppressWarnings("squid:S1166")
-	public static boolean isCompatible(Processor p1, Processor p2, int i, int j)
+	public static boolean isCompatible(Processor p1, int i, Processor p2, int j)
 	{
 		try
 		{
-			checkForException(p1, p2, i, j);
+			checkForException(p1, i, p2, j);
 		}
 		catch (ConnectorException e)
 		{
@@ -311,50 +264,57 @@ public class Connector
 	 * declared type compatible with the <i>j</i>-th input of processor
 	 * <code>p2</code>, and throws an appropriate exception if not
 	 * @param p1 The first processor
-	 * @param p2 The second processor
 	 * @param i The index of the output on the first processor
+	 * @param p2 The second processor
 	 * @param j The index of the input on the second processor
 	 * @throws ConnectorException An exception describing why the connection
 	 *   cannot be mande
 	 */
 	@SuppressWarnings("unused")
-	protected static void checkForException(Processor p1, Processor p2, int i, int j) throws ConnectorException
+	protected static void checkForException(Processor p1, int i, Processor p2, int j) throws ConnectorException
 	{
-		Class<?> out_class = p1.getOutputType(i);
-		if (s_checkForBounds && out_class == null)
+		try
 		{
-			// p1 has no output, so how would you connect it to p2?
-			throw new IndexOutOfBoundsException(p1, p2, i, j);
-		}
-		if (out_class != null && out_class.equals(Variant.class))
-		{
-			// Skip type checking
-			return;
-		}
-		/*@NotNull*/ Set<Class<?>> in_classes = p2.getInputType(j);
-		if (in_classes.isEmpty())
-		{
-			if (s_checkForBounds)
+			Class<?> out_class = p1.getOutputType(i);
+			if (s_checkForBounds && out_class == null)
 			{
-				// p2 has no input, so how would you connect it to p1?
-				throw new IndexOutOfBoundsException(p1, p2, i, j);
+				// p1 has no output, so how would you connect it to p2?
+				throw new IndexOutOfBoundsException(p1, i, p2, j);
 			}
-			else
+			if (out_class != null && out_class.equals(Variant.class))
 			{
-				// We don't mind that we connect an output to something
-				// that has no input
+				// Skip type checking
 				return;
 			}
-		}
-		for (Class<?> in_class : in_classes)
-		{
-			if (in_class.equals(Variant.class) || in_class.isAssignableFrom(out_class) || in_class.equals(Object.class))
+			/*@NotNull*/ Set<Class<?>> in_classes = p2.getInputType(j);
+			if (in_classes.isEmpty())
 			{
-				// Found a compatible in/out pair of types: return without exception
-				return;
+				if (s_checkForBounds)
+				{
+					// p2 has no input, so how would you connect it to p1?
+					throw new IndexOutOfBoundsException(p1, i, p2, j);
+				}
+				else
+				{
+					// We don't mind that we connect an output to something
+					// that has no input
+					return;
+				}
 			}
+			for (Class<?> in_class : in_classes)
+			{
+				if (in_class.equals(Variant.class) || in_class.isAssignableFrom(out_class) || in_class.equals(Object.class))
+				{
+					// Found a compatible in/out pair of types: return without exception
+					return;
+				}
+			}
+			throw new IncompatibleTypesException(p1, i, p2, j);			
 		}
-		throw new IncompatibleTypesException(p1, p2, i, j);
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new IndexOutOfBoundsException(p1, i, p2, j);
+		}
 	}
 
 	/**
@@ -409,7 +369,7 @@ public class Connector
 		 */
 		private static final long serialVersionUID = 1L;
 
-		IncompatibleTypesException(Processor source, Processor destination, int i, int j)
+		IncompatibleTypesException(Processor source, int i, Processor destination, int j)
 		{
 			super(source, destination, i, j);
 		}
@@ -434,7 +394,7 @@ public class Connector
 		 */
 		private static final long serialVersionUID = 1L;
 
-		IndexOutOfBoundsException(Processor source, Processor destination, int i, int j)
+		IndexOutOfBoundsException(Processor source, int i, Processor destination, int j)
 		{
 			super(source, destination, i, j);
 		}
@@ -459,7 +419,7 @@ public class Connector
 		 */
 		private static final long serialVersionUID = 1L;
 
-		SelfLoopException(Processor source, Processor destination, int i, int j)
+		SelfLoopException(Processor source, int i, Processor destination, int j)
 		{
 			super(source, destination, i, j);
 		}
