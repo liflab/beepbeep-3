@@ -75,12 +75,6 @@ public class GroupProcessor extends Processor
 	private Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
 
 	/**
-	 * If this group processor is associated to a BNF rule, this contains
-	 * the name of the non-terminal part (left-hand side) of the rule
-	 */
-	private String m_ruleName;
-
-	/**
 	 * Crate a group processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity

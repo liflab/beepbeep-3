@@ -125,6 +125,38 @@ public class SingleProcessorTest
 		assertEquals(2, ((Integer) p.next()).intValue());
 	}
 	
+	@Test
+	public void testStop() throws ConnectorException
+	{
+		QueueSource qsb = new QueueSource(1);
+		qsb.setEvents(new Object[]{0, 1});
+		qsb.loop(false);
+		Passthrough pt = new Passthrough();
+		Connector.connect(qsb, pt);
+		Pullable p = pt.getPullableOutput();
+		assertTrue(p.hasNext());
+		p.next();
+		assertTrue(p.hasNext());
+		p.next();
+		assertFalse(p.hasNext());
+	}
+	
+	@Test
+	public void testStopSoft() throws ConnectorException
+	{
+		QueueSource qsb = new QueueSource(1);
+		qsb.setEvents(new Object[]{0, 1});
+		qsb.loop(false);
+		Passthrough pt = new Passthrough();
+		Connector.connect(qsb, pt);
+		Pullable p = pt.getPullableOutput();
+		assertEquals(Pullable.NextStatus.YES, p.hasNextSoft());
+		p.next();
+		assertEquals(Pullable.NextStatus.YES, p.hasNextSoft());
+		p.next();
+		assertEquals(Pullable.NextStatus.NO, p.hasNextSoft());
+	}
+	
 	public static class ThrowException extends SingleProcessor
 	{
 		/**
