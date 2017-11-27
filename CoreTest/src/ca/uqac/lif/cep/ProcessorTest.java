@@ -17,15 +17,11 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.Queue;
 import java.util.Vector;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -42,13 +38,90 @@ import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
+/**
+ * Unit tests for the basic {@link Processor} functionalities.
+ */
 public class ProcessorTest extends BeepBeepUnitTest
 {
 
-	@Before
-	public void setUp() throws Exception
+	@Test
+	public void testContext1()
 	{
-		// Nothing to do
+		Passthrough pt = new Passthrough();
+		Context c = pt.newContext();
+		assertTrue(c.isEmpty());
+	}
+	
+	@Test
+	public void testContext2()
+	{
+		Passthrough pt = new Passthrough();
+		Context c = pt.getContext();
+		assertTrue(c.isEmpty());
+	}
+	
+	@Test
+	public void testContext3()
+	{
+		Passthrough pt = new Passthrough();
+		pt.setContext("a", 0);
+		assertEquals(0, pt.getContext("a"));
+	}
+	
+	@Test
+	public void testContext4()
+	{
+		Passthrough pt = new Passthrough();
+		Context c = pt.getContext();
+		c.put("a", 0);
+		assertEquals(0, pt.getContext("a"));
+	}
+	
+	@Test
+	public void testContext5()
+	{
+		Passthrough pt = new Passthrough();
+		Context c = pt.newContext();
+		c.put("a", 0);
+		assertTrue(pt.getContext().isEmpty());
+		pt.setContext(c);
+		assertEquals(0, pt.getContext("a"));
+		assertNull(pt.getContext("b"));
+		pt.setContext("b", 1);
+		assertEquals(1, pt.getContext("b"));
+	}
+	
+	@Test
+	public void testContext6()
+	{
+		Passthrough pt = new Passthrough();
+		assertNull(pt.getContext("a"));
+	}
+	
+	@Test
+	public void testAllNull1()
+	{
+		Object[] os = new Object[3];
+		assertTrue(Processor.allNull(os));
+	}
+	
+	@Test
+	public void testAllNull2()
+	{
+		Object[] os = new Object[]{null, 0, null};
+		assertFalse(Processor.allNull(os));
+	}
+	
+	@Test
+	public void testDuplicate()
+	{
+		FunctionProcessor pt1 = new FunctionProcessor(Addition.instance);
+		pt1.setContext("a", 0);
+		FunctionProcessor pt2 = pt1.duplicate();
+		assertNotEquals(pt1.getId(), pt2.getId());
+		assertEquals(0, pt2.getContext("a"));
+		pt1.setContext("a", 1);
+		assertEquals(0, pt2.getContext("a"));
 	}
 	
 	@Test

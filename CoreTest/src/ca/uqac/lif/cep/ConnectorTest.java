@@ -392,12 +392,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 		
 		@Override
-		public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
-		{
-			classes.add(Connector.Variant.class);
-		}
-		
-		@Override
 		public Class<?> getOutputType(int index)
 		{
 			if (index != 0)
