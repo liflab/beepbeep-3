@@ -26,6 +26,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
  * Unit tests for a few simple processors: {@link PullConstant}, 
@@ -38,7 +39,8 @@ public class SimpleTests extends BeepBeepUnitTest
 	public void testConstant() throws ConnectorException
 	{
 		String out = null;
-		PullConstant c = new PullConstant("A");
+		QueueSource c = new QueueSource();
+		c.setEvents(new Object[]{"A"});
 		TypedPullable<String> p = new TypedPullable<String>(c.getPullableOutput(0));
 		out = p.pullSoft();
 		assertEquals("A", out);

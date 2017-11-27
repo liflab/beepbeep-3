@@ -41,12 +41,13 @@ public class ProvenanceTest
 	{
 		QueueSource source = new QueueSource();
 		source.setEvents(new Object[]{1, 2, 3, 4, 5});
-		EventTracker tracker = new EventTracker.NoOpEventTracker();
+		EventTracker tracker = EventTracker.NOOP_TRACKER;
 		source.setEventTracker(tracker);
 		Pullable p = source.getPullableOutput();
 		p.pull();
 		ProvenanceNode tree = tracker.getProvenanceTree(source.getId(), 0, 0);
 		assertTrue(tree instanceof BrokenChain);
+		assertEquals(tracker, source.getEventTracker());
 	}
 	
 	@Test
@@ -56,12 +57,14 @@ public class ProvenanceTest
 		source.setEvents(new Object[]{1, 2, 3, 4, 5});
 		Passthrough pt = new Passthrough();
 		Connector.connect(source, pt);
-		EventTracker tracker = new EventTracker.NoOpEventTracker();
+		EventTracker tracker = new DummyTracker();
 		tracker.setTo(source, pt);
 		Pullable p = pt.getPullableOutput();
 		p.pull();
 		ProvenanceNode tree = tracker.getProvenanceTree(pt.getId(), 0, 0);
-		assertTrue(tree instanceof BrokenChain);
+		assertNull(tree);
+		assertEquals(tracker, source.getEventTracker());
+		assertEquals(tracker, pt.getEventTracker());
 	}
 	
 	/**

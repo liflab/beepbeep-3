@@ -57,6 +57,16 @@ public abstract class UniformProcessor extends Processor
 	 * its output
 	 */
 	protected Object[] m_outputArray;
+	
+	/**
+	 * An array of input pushables
+	 */
+	protected final Pushable[] m_inputPushables;
+
+	/**
+	 * An array of output pullables
+	 */
+	protected Pullable[] m_outputPullables;
 
 	/**
 	 * Initializes a processor
@@ -67,18 +77,28 @@ public abstract class UniformProcessor extends Processor
 	{
 		super(in_arity, out_arity);
 		m_outputArray = new Object[out_arity];
+		m_inputPushables = new Pushable[in_arity];
+		m_outputPullables = new Pullable[out_arity];
 	}
 
 	@Override
-	public final synchronized Pushable getPushableInput(int index)
+	public synchronized Pushable getPushableInput(int index)
 	{
-		return new InputPushable(index);
+		if (m_inputPushables[index] == null)
+		{
+			m_inputPushables[index] = new InputPushable(index);
+		}
+		return m_inputPushables[index];
 	}
 
 	@Override
 	public synchronized Pullable getPullableOutput(int index)
 	{
-		return new OutputPullable(index);
+		if (m_outputPullables[index] == null)
+		{
+			m_outputPullables[index] = new OutputPullable(index);
+		}
+		return m_outputPullables[index];
 	}
 
 	/**

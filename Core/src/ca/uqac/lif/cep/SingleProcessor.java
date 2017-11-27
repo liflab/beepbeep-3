@@ -134,10 +134,7 @@ public abstract class SingleProcessor extends Processor
 		InputPushable(int index)
 		{
 			super();
-			synchronized (this)
-			{
-				m_index = index;
-			}
+			m_index = index;
 		}
 
 		@Override
@@ -155,10 +152,14 @@ public abstract class SingleProcessor extends Processor
 		@Override
 		public synchronized Pushable push(Object o)
 		{
-			if (m_index < m_inputQueues.length)
+			try
 			{
 				Queue<Object> q = m_inputQueues[m_index];
 				q.add(o);
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				throw new PushableException(e);
 			}
 			// Check if each input queue has an event ready
 			for (int i = 0; i < m_inputArity; i++)
@@ -519,7 +520,7 @@ public abstract class SingleProcessor extends Processor
 		{
 			return null;
 		}
-		Queue<Object[]> out = newQueue();
+		Queue<Object[]> out = new ArrayDeque<Object[]>();
 		out.add(v);
 		return out;
 	}
@@ -539,14 +540,4 @@ public abstract class SingleProcessor extends Processor
 		v[0] = o;
 		return v;
 	}
-
-	/**
-	 * Gets a new instance of an empty object queue
-	 * @return The queue
-	 */
-	public static Queue<Object[]> newQueue()
-	{
-		return new ArrayDeque<Object[]>();
-	}
-
 }

@@ -75,6 +75,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 		Context c = pt.getContext();
 		c.put("a", 0);
 		assertEquals(0, pt.getContext("a"));
+		c = pt.getContext();
+		assertEquals(0, c.get("a"));
 	}
 	
 	@Test
@@ -122,6 +124,30 @@ public class ProcessorTest extends BeepBeepUnitTest
 		assertEquals(0, pt2.getContext("a"));
 		pt1.setContext("a", 1);
 		assertEquals(0, pt2.getContext("a"));
+	}
+	
+	@Test
+	public void testEquals()
+	{
+		FunctionProcessor pt1 = new FunctionProcessor(Addition.instance);
+		FunctionProcessor pt2 = new FunctionProcessor(Addition.instance);
+		assertTrue(pt1.equals(pt1));
+		assertFalse(pt1.equals(pt2));
+		assertFalse(pt1.equals(Addition.instance));
+		assertFalse(pt1.equals(null));
+		
+	}
+	
+	@Test
+	public void testStartStop() throws ProcessorException
+	{
+		Processor.startAll();
+		ConnectorTest.Oranges o1 = new ConnectorTest.Oranges();
+		ConnectorTest.Oranges o2 = new ConnectorTest.Oranges();
+		Processor.startAll(o1, null, o2);
+		assertTrue(o1.started && o2.started);
+		Processor.stopAll(o1, o2, null);
+		assertTrue(!o1.started && !o2.started);
 	}
 	
 	@Test
@@ -539,6 +565,31 @@ public class ProcessorTest extends BeepBeepUnitTest
 		assertTrue(!q.isEmpty());
 		i = (Integer) q.remove();
 		assertEquals(1, i.intValue());
+	}
+	
+	@Test
+	@SuppressWarnings("unused")
+	public void testProcessorException2()
+	{
+		// Constructor test; we just check that it runs
+		ProcessorException pe = new ProcessorException("foo");
+	}
+	
+	@Test
+	@SuppressWarnings("unused")
+	public void testProcessorException3()
+	{
+		// Constructor test; we just check that it runs
+		try
+		{
+			// Create an exception
+			int a = 0;
+			int b = 4 / a;
+		}
+		catch (Exception e)
+		{
+			ProcessorException pe = new ProcessorException(e);
+		}
 	}
 	
 	public static class IsEven extends UnaryFunction<Number,Boolean>

@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.PullConstant;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
@@ -32,9 +31,10 @@ import ca.uqac.lif.cep.UniformProcessor;
 public class Freeze extends UniformProcessor
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 5741791487727533735L;
+	
 	protected Object[] m_output;
 
 	public Freeze()

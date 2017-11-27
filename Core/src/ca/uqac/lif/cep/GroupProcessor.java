@@ -96,24 +96,6 @@ public class GroupProcessor extends Processor
 	}
 
 	/**
-	 * Sets the name of the rule associated to this processor
-	 * @param rule_name The rule name
-	 */
-	public synchronized void setRuleName(String rule_name)
-	{
-		m_ruleName = rule_name;
-	}
-
-	/**
-	 * Retrieves the name of the rule associated to this processor
-	 * @return The rule name
-	 */
-	public synchronized String getRuleName()
-	{
-		return m_ruleName;
-	}
-
-	/**
 	 * Tuple made of a number and a processor.
 	 * 
 	 * @author Sylvain Hallé
@@ -147,12 +129,9 @@ public class GroupProcessor extends Processor
 	public synchronized void reset()
 	{
 		// Reset all processors inside the group
-		if (m_processors != null)
+		for (Processor p : m_processors)
 		{
-			for (Processor p : m_processors)
-			{
-				p.reset();
-			}
+			p.reset();
 		}
 	}
 
@@ -323,7 +302,7 @@ public class GroupProcessor extends Processor
 		cc.crawl(start);
 		return new_procs;
 	}
-	
+
 	@Override
 	public synchronized GroupProcessor duplicate()
 	{

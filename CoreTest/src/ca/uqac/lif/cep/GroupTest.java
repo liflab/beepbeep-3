@@ -17,10 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -488,59 +485,73 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testWrapperInGroup1() throws ConnectorException
+	public void testReset() throws ProcessorException
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);
-		Passthrough pt = new Passthrough(1);
-		ProcessorWrapper pw = new ProcessorWrapper(pt);
-		gp.addProcessor(pw);
-		gp.associateInput(0, pw, 0);
-		gp.associateOutput(0, pw, 0);
-		QueueSink qs = new QueueSink(1);
-		Connector.connect(gp, qs);
-		Pushable p = gp.getPushableInput();
-		p.push(0);
+		ConnectorTest.Oranges v = new ConnectorTest.Oranges();
+		gp.addProcessors(v);
+		gp.associateInput(0, v, 0);
+		gp.associateOutput(0, v, 0);
+		gp.start();
+		assertTrue(v.started);
+		gp.stop();
+		assertFalse(v.started);
+		assertFalse(v.reset);
+		gp.reset();
+		assertTrue(v.reset);
 	}
 	
 	@Test
-	public void testWrapperInGroup2() throws ConnectorException
+	public void testContext() throws ProcessorException
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);
-		Passthrough pt = new Passthrough(1);
-		ProcessorWrapper pw = new ProcessorWrapper(pt);
-		gp.addProcessor(pw);
-		gp.associateInput(0, pw, 0);
-		gp.associateOutput(0, pw, 0);
-		GroupProcessor gp_new = gp.duplicate();
-		QueueSink qs = new QueueSink(1);
-		Connector.connect(gp_new, qs);
-		Pushable p = gp_new.getPushableInput();
-		p.push(0);
+		ConnectorTest.Oranges v = new ConnectorTest.Oranges();
+		gp.addProcessors(v);
+		gp.associateInput(0, v, 0);
+		gp.associateOutput(0, v, 0);
+		gp.start();
+		assertTrue(v.started);
+		gp.stop();
+		assertFalse(v.started);
+		assertFalse(v.reset);
+		gp.reset();
+		assertTrue(v.reset);
+		gp.setContext("a", 0);
+		assertEquals(0, v.getContext().get("a"));
+		assertEquals(0, gp.getContext().get("a"));
 	}
 	
 	@Test
-	public void testWrapperInGroup3() throws ConnectorException
+	public void testPullable1() throws ProcessorException, ConnectorException
 	{
+		QueueSource source = new QueueSource();
+		source.setEvents(new Object[]{0, 1});
 		GroupProcessor gp = new GroupProcessor(1, 1);
-		Passthrough pt = new Passthrough(1);
-		ProcessorWrapper pw = new ProcessorWrapper(pt);
-		gp.addProcessor(pw);
-		Passthrough pt2 = new Passthrough(1);
-		gp.addProcessor(pt2);
-		Connector.connect(pw, pt2);
-		gp.associateInput(0, pw, 0);
-		gp.associateOutput(0, pt2, 0);
-		GroupProcessor gp_new = gp.duplicate();
-		QueueSink qs = new QueueSink(1);
-		Connector.connect(gp_new, qs);
-		Pushable p = gp_new.getPushableInput();
-		p.push(0);
+		Passthrough v = new Passthrough();
+		gp.addProcessors(v);
+		gp.associateInput(0, v, 0);
+		gp.associateOutput(0, v, 0);
+		Connector.connect(source, gp);
+		Pullable p = gp.getPullableOutput();
+		assertNotNull(p.pull());
+		boolean got_exception = false;
+		try
+		{
+			p.remove();
+		}
+		catch (UnsupportedOperationException e)
+		{
+			got_exception = true;
+		}
+		assertTrue(got_exception);
+		assertEquals(gp.getId(), p.getProcessor().getId());
+		assertEquals(0, p.getPosition());
 	}
 	
 	public static class Incrementer extends FunctionProcessor
 	{
 		/**
-		 * 
+		 * Dummy UID
 		 */
 		private static final long serialVersionUID = 1503097815282943066L;
 

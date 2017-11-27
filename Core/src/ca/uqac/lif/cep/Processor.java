@@ -72,7 +72,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * events it produces
 	 */
 	protected int m_outputArity;
-	
+
 	/**
 	 * A string used to identify the program's version
 	 */
@@ -84,7 +84,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * input queues as the input arity of the processor.
 	 */
 	protected transient Queue<Object>[] m_inputQueues;
-	
+
 	/**
 	 * An object that keeps track of the relationship between input and
 	 * output events.
@@ -109,12 +109,12 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * produces
 	 */
 	protected Pushable[] m_outputPushables;
-	
+
 	/**
 	 * A counter incremented upon each input front processed
 	 */
 	protected int m_inputCount = 0;
-	
+
 	/**
 	 * A counter incremented upon each output front processed
 	 */
@@ -140,7 +140,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	/**
 	 * The context in which the processor is instantiated
 	 */
-	protected Context m_context;
+	protected Context m_context = null;
 
 	/**
 	 * Initializes a processor. This has for effect of executing the basic
@@ -180,15 +180,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 		}
 		m_inputPullables = new Pullable[m_inputArity];
 		m_outputPushables = new Pushable[m_outputArity];
-		// The context object
-		m_context = null;
 	}
 
 	/**
 	 * Creates a new empty context map
 	 * @return The context map
 	 */
-	protected final Context newContext()
+	protected final /*@NotNull*/ Context newContext()
 	{
 		return new Context();
 	}
@@ -199,7 +197,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * @return The object, or <code>null</code> if no object exists
 	 *   with such key
 	 */
-	public final synchronized Object getContext(String key)
+	public final synchronized /*@Null*/ Object getContext(/*@NotNull*/ String key)
 	{
 		if (m_context == null || !m_context.containsKey(key))
 		{
@@ -209,7 +207,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	@Override
-	public synchronized Context getContext()
+	public synchronized /*@NotNull*/ Context getContext()
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -221,7 +219,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	@Override
-	public synchronized void setContext(String key, Object value)
+	public synchronized void setContext(/*@NotNull*/ String key, Object value)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -233,7 +231,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	@Override
-	public synchronized void setContext(Context context)
+	public synchronized void setContext(/*@Null*/ Context context)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -246,7 +244,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 			m_context.putAll(context);
 		}
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
@@ -298,18 +296,19 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * <i>i</i>-th input trace.
 	 * @param index The index. Should be between 0 and the processor's
 	 *   input arity - 1 (since indices start at 0).
-	 * @return The pushable if the index is within the appropriate range,
-	 *   <code>null</code> otherwise.
+	 * @return The pushable if the index is within the appropriate range.
+	 * Outside of the range, 
 	 */
-	public abstract Pushable getPushableInput(int index);
+	public abstract /*@NotNull*/ Pushable getPushableInput(int index);
 
 	/**
 	 * Returns the {@link Pushable} corresponding to the processor's
 	 * first input trace
-	 * @return The pushable if the processor has at least one input,
-	 *   <code>null</code> otherwise.
+	 * @return The pushable if the processor has at least one input.
+	 * An ArrayIndexOutOfBounds will be thrown
+	 * if the processor has an input arity of 0.
 	 */
-	public final synchronized Pushable getPushableInput()
+	public final synchronized /*@NotNull*/ Pushable getPushableInput()
 	{
 		return getPushableInput(0);
 	}
@@ -322,60 +321,54 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * @return The pullable if the index is within the appropriate range,
 	 *   <code>null</code> otherwise.
 	 */
-	public abstract Pullable getPullableOutput(int index);
+	public abstract /*@NotNull*/ Pullable getPullableOutput(int index);
 
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's
 	 * first output trace
-	 * @return The pullable if the processor has at least one output,
-	 *   <code>null</code> otherwise.
+	 * @return The pullable if the processor has at least one output.
+	 * An ArrayIndexOutOfBounds will be thrown
+	 * if the processor has an output arity of 0.
 	 */
-	public final synchronized Pullable getPullableOutput()
+	public final synchronized /*@NotNull*/ Pullable getPullableOutput()
 	{
 		return getPullableOutput(0);
 	}
 
 	/**
 	 * Assigns a {@link Pullable} to the processor's <i>i</i>-th input.
-	 * @param i The index of the input
+	 * @param i The index of the input. An ArrayIndexOutOfBounds will be thrown
+	 * if it is out of range.
 	 * @param p The pullable to assign it to
 	 */
-	public synchronized void setPullableInput(int i, Pullable p)
+	public synchronized void setPullableInput(int i, /*@NotNull*/ Pullable p)
 	{
-		if (i < m_inputPullables.length)
-		{
-			m_inputPullables[i] = p;
-		}
+		m_inputPullables[i] = p;
 	}
 
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's
 	 * <i>i</i>-th input
-	 * @param i The index of the input
+	 * @param i The index of the input. Should be greater than 0
+	 *   and less than the processor's output arity.
+	 *   Outside these bounds, an ArrayIndexOutOfBounds will be thrown.
 	 * @return The pullable
 	 */
 	public synchronized Pullable getPullableInput(int i)
 	{
-		if (i < m_inputPullables.length)
-		{
-			return m_inputPullables[i];
-		}
-		return null;
+		return m_inputPullables[i];
 	}
 
 	/**
 	 * Assigns a {@link Pushable} to the processor's <i>i</i>-th output.
 	 * @param i The index of the output. Should be greater than 0
-	 *   (not checked) and less than the processor's output arity.
-	 *   Outside these bounds, nothing will occur.
+	 *   and less than the processor's output arity.
+	 *   Outside these bounds, an ArrayIndexOutOfBounds will be thrown.
 	 * @param p The pushable to assign it to
 	 */
-	public synchronized void setPushableOutput(int i, Pushable p)
+	public synchronized void setPushableOutput(int i, /*@NotNull*/ Pushable p)
 	{
-		if (i < m_outputPushables.length)
-		{
-			m_outputPushables[i] = p;
-		}
+		m_outputPushables[i] = p;
 	}
 
 	/**
@@ -383,17 +376,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * <i>i</i>-th output.
 	 * @param i The index of the output. Should be greater than 0
 	 *   (not checked) and less than the processor's output arity.
-	 *   Outside these bounds, nothing will occur.
-	 * @return The pushable, <code>null</code> if <code>i</code> is
-	 *   out of range
+	 *   Outside these bounds, an ArrayIndexOutOfBounds will be thrown.
+	 * @param p The pushable to assign it to
+	 * @return The pushable
 	 */
-	public synchronized Pushable getPushableOutput(int i)
+	public synchronized /*@NotNull*/ Pushable getPushableOutput(int i)
 	{
-		if (i < m_outputPushables.length)
-		{
-			return m_outputPushables[i];
-		}
-		return null;
+		return m_outputPushables[i];
 	}
 
 	/**
@@ -532,7 +521,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	{
 		// Nothing
 	}
-	
+
 	/**
 	 * Starts all processors given as an argument
 	 * @param procs The processors
@@ -550,7 +539,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 			}
 		}
 	}
-	
+
 	/**
 	 * Stops all processors given as an argument
 	 * @param procs The processors
@@ -568,18 +557,18 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 			}
 		}
 	}
-	
+
 	public final EventTracker getEventTracker()
 	{
 		return m_eventTracker;
 	}
-	
+
 	public final Processor setEventTracker(EventTracker tracker)
 	{
 		m_eventTracker = tracker;
 		return this;
 	}
-		
+
 	public void associateToInput(int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
 		if (m_eventTracker != null)
@@ -587,7 +576,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 			m_eventTracker.associateToInput(m_uniqueId, in_stream_index, in_stream_pos, out_stream_index, out_stream_pos);
 		}
 	}
-	
+
 	public void associateTo(NodeFunction f, int out_stream_index, int out_stream_pos)
 	{
 		if (m_eventTracker != null)
@@ -595,7 +584,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 			m_eventTracker.associateTo(m_uniqueId, f, out_stream_index, out_stream_pos);
 		}
 	}
-	
+
 	public void associateToOutput(int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
 		if (m_eventTracker != null)

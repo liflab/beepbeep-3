@@ -29,7 +29,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.Constant;
+import ca.uqac.lif.cep.functions.ConstantProcessor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
@@ -230,7 +230,7 @@ public class MathTest extends BeepBeepUnitTest
 			// Left part: sum of x^n
 			Fork fork2 = new Fork(2);
 			Connector.connect(fork, 0 ,fork2, 0);
-			FunctionProcessor exponent = new FunctionProcessor(new Constant(1));
+			ConstantProcessor exponent = new ConstantProcessor(1);
 			Connector.connect(fork2, 0, exponent, 0);
 			FunctionProcessor pow = new FunctionProcessor(new Power());
 			Connector.connect(fork2, 1, pow, 0);
@@ -240,7 +240,7 @@ public class MathTest extends BeepBeepUnitTest
 		Sum sum_right = new Sum();
 		{
 			// Right part: sum of 1
-			FunctionProcessor one = new FunctionProcessor(new Constant(1));
+			ConstantProcessor one = new ConstantProcessor(1);
 			Connector.connect(fork, 1, one, 0);
 			Connector.connect(one, sum_right);
 		}
@@ -257,7 +257,7 @@ public class MathTest extends BeepBeepUnitTest
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
 		FunctionProcessor greater = new FunctionProcessor(IsGreaterThan.instance);
-		FunctionProcessor five = new FunctionProcessor(new Constant(5));
+		ConstantProcessor five = new ConstantProcessor(5);
 		Connector.connect(fork, 0, five, 0);
 		Connector.connect(fork, 1, greater, 0);
 		Connector.connect(five, 0, greater, 1);

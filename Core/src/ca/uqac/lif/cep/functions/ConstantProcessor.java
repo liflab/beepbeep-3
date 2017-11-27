@@ -17,28 +17,53 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import java.util.Queue;
+
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.SingleProcessor;
+
 /**
- * Function processor returning a constant value.
- * This processor exists only to facilitate the creation of constant
- * processors in ESQL. If you want to create a constant processor
- * programmatically, then both of these two calls amount to the
- * same thing:
- * <pre>
- * x = new FunctionProcessor(new Constant(foo));
- * x = new ConstantProcessor(foo);
- * </pre>
+ * Function processor that turns input events into the same
+ * constant.
  * 
  * @author Sylvain Hallé
  */
-public class ConstantProcessor extends FunctionProcessor
+public class ConstantProcessor extends SingleProcessor
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 8219535000885119220L;
+	
+	/**
+	 * The constant to return
+	 */
+	protected Object m_constant;
 
-	public ConstantProcessor(Constant comp)
+	public ConstantProcessor(int in_arity, Object comp)
 	{
-		super(comp);
+		super(in_arity, 1);
+		m_constant = comp;
+	}
+	
+	public ConstantProcessor(Object comp)
+	{
+		this(1, comp);
+	}
+
+	@Override
+	public Processor duplicate()
+	{
+		ConstantProcessor cp = new ConstantProcessor(m_constant);
+		cp.setContext(m_context);
+		return cp;
+	}
+
+	@Override
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	{
+		outputs.add(new Object[]{m_constant});
+		return true;
 	}
 }

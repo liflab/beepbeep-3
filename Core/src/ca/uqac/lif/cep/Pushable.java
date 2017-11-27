@@ -193,13 +193,13 @@ public interface Pushable
 		@Override
 		public void waitFor() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 
 		@Override
 		public void dispose() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 		
 	}

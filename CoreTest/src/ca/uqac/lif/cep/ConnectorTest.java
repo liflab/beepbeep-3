@@ -332,6 +332,10 @@ public class ConnectorTest extends BeepBeepUnitTest
 		 * Dummy UID 
 		 */
 		private static final long serialVersionUID = -3498569238430262588L;
+		
+		public boolean started = false;
+		
+		boolean reset = false;
 
 		public Oranges()
 		{
@@ -343,6 +347,12 @@ public class ConnectorTest extends BeepBeepUnitTest
 		{
 			// TODO Auto-generated method stub
 			return false;
+		}
+		
+		@Override
+		public void reset()
+		{
+			reset = true;
 		}
 
 		@Override
@@ -363,6 +373,18 @@ public class ConnectorTest extends BeepBeepUnitTest
 			if (index != 0)
 				throw new ArrayIndexOutOfBoundsException();
 			return String.class;
+		}
+		
+		@Override
+		public void start()
+		{
+			started = true;
+		}
+		
+		@Override
+		public void stop()
+		{
+			started = false;
 		}
 	}
 	
