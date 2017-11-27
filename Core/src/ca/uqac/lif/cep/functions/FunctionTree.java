@@ -69,16 +69,15 @@ public class FunctionTree extends Function
 
 	/**
 	 * Sets the <i>i</i>-th child of the tree
-	 * @param index The index
+	 * @param index The index. The method does not check ranges, so an
+	 * ArrayIndexOutOfBounds exception will be thrown if attempting to
+	 * set a child in an invalid position.
 	 * @param f The function
 	 * @return This tree
 	 */
 	public FunctionTree setChild(int index, Function f)
 	{
-		if (index >= 0 && index < m_children.length)
-		{
-			m_children[index] = f;
-		}
+		m_children[index] = f;
 		return this;
 	}
 

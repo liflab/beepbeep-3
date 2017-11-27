@@ -96,7 +96,7 @@ public class ContextPlaceholder extends Function
 	@Override
 	public int getOutputArity()
 	{
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class ContextPlaceholder extends Function
 	@Override
 	public void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
-		// Nothing to do
+		classes.add(Variant.class);
 	}
 
 	@Override

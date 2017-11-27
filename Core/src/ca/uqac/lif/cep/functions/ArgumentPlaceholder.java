@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
 
+import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
 
 /**
@@ -115,13 +116,13 @@ public class ArgumentPlaceholder extends Function
 	@Override
 	public void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
-		// Nothing to do
+		classes.add(Variant.class);
 	}
 
 	@Override
 	public Class<?> getOutputTypeFor(int index)
 	{
-		return null;
+		return Variant.class;
 	}
 
 	@Override

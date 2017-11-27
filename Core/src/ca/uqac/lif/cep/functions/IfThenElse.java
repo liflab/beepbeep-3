@@ -90,6 +90,10 @@ public class IfThenElse extends Function
 		{
 			classes.add(Boolean.class);
 		}
+		else
+		{
+			classes.add(Variant.class);
+		}
 	}
 
 	@Override

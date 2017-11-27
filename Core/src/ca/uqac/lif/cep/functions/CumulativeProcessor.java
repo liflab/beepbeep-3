@@ -54,9 +54,13 @@ public class CumulativeProcessor extends FunctionProcessor
 				{
 					for (int k = 0; k < outputs.length; k++)
 					{
+						// The output event is associated to the current input event
+						// (this is already taken care of by super.compute)...
+						// ...and to the previous output event
 						// -1 and -2 since the count has already been incremented by the
 						// call to super.compute() above
 						associateToOutput(j, m_outputCount - 2, k, m_outputCount - 1);
+						
 					}
 				}
 				else

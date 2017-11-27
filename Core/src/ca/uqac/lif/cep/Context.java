@@ -33,6 +33,9 @@ public class Context extends HashMap<String,Object>
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Creates a new empty context
+	 */
 	public Context()
 	{
 		super();
@@ -48,24 +51,28 @@ public class Context extends HashMap<String,Object>
 	}
 	
 	@Override
+	@SuppressWarnings("squid:S1185")
 	public synchronized void putAll(Map<? extends String,? extends Object> o)
 	{
 		super.putAll(o);
 	}
 	
 	@Override
+	@SuppressWarnings("squid:S1185")
 	public synchronized Object get(Object key)
 	{
 		return super.get(key);
 	}
 	
 	@Override
+	@SuppressWarnings("squid:S1185")
 	public synchronized Object put(String key, Object value)
 	{
 		return super.put(key, value);
 	}
 
 	@Override
+	@SuppressWarnings("squid:S1185")
 	public synchronized boolean containsKey(Object key)
 	{
 		return super.containsKey(key);
