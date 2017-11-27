@@ -108,8 +108,7 @@ public class ContextPlaceholder extends Function
 	@Override
 	public ContextPlaceholder duplicate()
 	{
-		ContextPlaceholder aph = new ContextPlaceholder(m_name);
-		return aph;
+		return new ContextPlaceholder(m_name);
 	}
 
 	@Override

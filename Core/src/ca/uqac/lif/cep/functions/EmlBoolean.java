@@ -45,7 +45,7 @@ public class EmlBoolean extends Constant
 		if (o instanceof Number)
 		{
 			Number n = (Number) o;
-			return !(Math.abs(n.doubleValue()) < 0.00001);
+			return Math.abs(n.doubleValue()) >= 0.00001;
 		}
 		// When in doubt, return false
 		return false;

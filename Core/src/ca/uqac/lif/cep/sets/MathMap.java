@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.sets;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Implementation of a map with a few extra methods.
@@ -41,11 +42,11 @@ public class MathMap<K,V> extends HashMap<K,V>
 	 */
 	public K getWithValue(V value)
 	{
-		for (K i : keySet())
+		for (Map.Entry<K, V> e : entrySet())
 		{
-			if (get(i).equals(value))
+			if (e.getValue().equals(value))
 			{
-				return i;
+				return e.getKey();
 			}
 		}
 		return null;

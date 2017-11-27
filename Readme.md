@@ -27,8 +27,8 @@ BeepBeep tries to have as few dependencies as possible. However, the
 following companion library needs to be installed for BeepBeep to
 compile and run:
 
-- The [Bullwinkle parser](https://github.com/sylvainhalle/Bullwinkle),
-  an on-the-fly parser for BNF grammars *(tested with version 1.3.1)*
+- [Petit Poucet](https://github.com/liflab/petitpoucet), a library for
+  managing data traceability
 
 ### Extensions
 

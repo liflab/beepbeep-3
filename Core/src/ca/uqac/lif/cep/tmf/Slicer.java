@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -185,8 +186,13 @@ public class Slicer extends UniformProcessor
 	 * Dummy object telling the slicer that the event must be sent to
 	 * all slices
 	 */
-	public static class AllSlices
+	public static class AllSlices implements Serializable
 	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = -7000516863407090299L;
+		
 		public static final transient AllSlices instance = new AllSlices();
 
 		AllSlices()

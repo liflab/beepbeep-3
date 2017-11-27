@@ -330,7 +330,7 @@ public abstract class SingleProcessor extends Processor
 						throw new PullableException("Input " + i + " of this processor is connected to nothing", getProcessor());
 					}
 					boolean status = p.hasNext();
-					if (status == false)
+					if (!status)
 					{
 						return false;
 					}

@@ -167,13 +167,13 @@ public interface Pushable
 		}
 
 		@Override
-		public Pushable push(Object o) throws PushableException
+		public Pushable push(Object o)
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public Pushable pushFast(Object o) throws PushableException 
+		public Pushable pushFast(Object o) 
 		{
 			throw new UnsupportedOperationException();
 		}

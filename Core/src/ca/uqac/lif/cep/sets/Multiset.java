@@ -199,6 +199,7 @@ public class Multiset implements Set<Object>
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	public synchronized boolean addAll(Collection<? extends Object> arg0)
 	{
 		if (arg0 instanceof Multiset)

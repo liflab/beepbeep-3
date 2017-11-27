@@ -202,7 +202,7 @@ public class StateSlicer extends UniformProcessor
 						throw new ProcessorException(e);
 					}
 				}
-				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]) == true)
+				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]))
 				{
 					// Yes: set the processor for that slice to null so it
 					// can be garbage collected
