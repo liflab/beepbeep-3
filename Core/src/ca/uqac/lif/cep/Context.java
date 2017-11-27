@@ -18,9 +18,11 @@
 package ca.uqac.lif.cep;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Associative map used by processors to store persistent data
+ * Associative map used by processors to store persistent data. In addition,
+ * all operations on a Context object are synchronized.
  * @author Sylvain Hallé
  *
  */
@@ -44,5 +46,28 @@ public class Context extends HashMap<String,Object>
 			putAll(c);
 		}
 	}
+	
+	@Override
+	public synchronized void putAll(Map<? extends String,? extends Object> o)
+	{
+		super.putAll(o);
+	}
+	
+	@Override
+	public synchronized Object get(Object key)
+	{
+		return super.get(key);
+	}
+	
+	@Override
+	public synchronized Object put(String key, Object value)
+	{
+		return super.put(key, value);
+	}
 
+	@Override
+	public synchronized boolean containsKey(Object key)
+	{
+		return super.containsKey(key);
+	}
 }
