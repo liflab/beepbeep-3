@@ -85,7 +85,7 @@ public class FunctionProcessor extends UniformProcessor
 	@Override
 	public synchronized FunctionProcessor duplicate()
 	{
-		FunctionProcessor out = new FunctionProcessor(m_function.duplicate(m_context));
+		FunctionProcessor out = new FunctionProcessor(m_function.duplicate());
 		cloneInto(out);
 		return out;
 	}

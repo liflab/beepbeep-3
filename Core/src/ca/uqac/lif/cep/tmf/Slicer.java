@@ -179,7 +179,7 @@ public class Slicer extends UniformProcessor
 	@Override
 	public Slicer duplicate()
 	{
-		return new Slicer(m_slicingFunction.duplicate(m_context), m_processor.duplicate());
+		return new Slicer(m_slicingFunction.duplicate(), m_processor.duplicate());
 	}
 
 	/**

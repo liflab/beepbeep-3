@@ -82,16 +82,6 @@ public abstract class Function implements DuplicableFunction
 	public abstract void reset();
 
 	/**
-	 * Creates a copy of the function
-	 * @param context The context in which to clone this function
-	 * @return The copy
-	 */
-	public Function duplicate(Context context)
-	{
-		return duplicate();
-	}
-
-	/**
 	 * Populates the set of classes accepted by the function for its
 	 * <i>i</i>-th input
 	 * @param classes The set of to fill with classes
@@ -107,11 +97,22 @@ public abstract class Function implements DuplicableFunction
 	 */
 	public abstract Class<?> getOutputTypeFor(int index);
 	
+	/**
+	 * Utility method that delegates the call to evaluate()
+	 * @param inputs Input arguments
+	 * @param outputs Output values
+	 * @param context Context object
+	 * @throws FunctionException Thrown when evaluating the function
+	 */
 	public void evaluateFast(Object[] inputs, Object[] outputs, Context context) throws FunctionException
 	{
 		evaluate(inputs, outputs, context);
 	}
 	
+	/**
+	 * Wait for the function to be finished computing. By default, this method
+	 * returns immediately.
+	 */
 	public void waitFor()
 	{
 		return;

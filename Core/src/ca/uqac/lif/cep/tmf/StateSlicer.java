@@ -271,7 +271,7 @@ public class StateSlicer extends UniformProcessor
 	@Override
 	public StateSlicer duplicate()
 	{
-		return new StateSlicer(m_slicingFunction.duplicate(m_context), m_processor.duplicate(), m_cleaningFunction.duplicate());
+		return new StateSlicer(m_slicingFunction.duplicate(), m_processor.duplicate(), m_cleaningFunction.duplicate());
 	}
 
 	/**
