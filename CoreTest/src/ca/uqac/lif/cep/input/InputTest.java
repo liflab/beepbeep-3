@@ -13,8 +13,8 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.util.FileHelper;
 import ca.uqac.lif.cep.util.StringUtils;
-import ca.uqac.lif.util.PackageFileReader;
 
 public class InputTest extends BeepBeepUnitTest
 {
@@ -27,7 +27,7 @@ public class InputTest extends BeepBeepUnitTest
 	@Test
 	public void testCsvFeeder() throws IOException, ConnectorException
 	{
-		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.csv");
+		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.csv");
 		InputStream stream = StringUtils.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
 		CsvFeeder csv = new CsvFeeder();

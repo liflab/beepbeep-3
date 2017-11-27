@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.BeepBeepUnitTest;
@@ -33,25 +32,19 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pullable.NextStatus;
 import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.util.FileHelper;
 import ca.uqac.lif.cep.util.StringUtils;
-import ca.uqac.lif.util.PackageFileReader;
 
 /**
  * Unit tests for input-output processors
  * @author Sylvain Hallé
  */
 public class IoTest extends BeepBeepUnitTest
-{
-
-	@Before
-	public void setUp() throws Exception
-	{
-	}
-	
+{	
 	@Test
 	public void testStreamReaderPush1() throws FileNotFoundException, ConnectorException
 	{
-		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.txt");
+		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
 		QueueSink sink = new QueueSink(1);
@@ -66,7 +59,7 @@ public class IoTest extends BeepBeepUnitTest
 	@Test
 	public void testStreamReaderPull1() throws FileNotFoundException, ConnectorException
 	{
-		String file_contents = PackageFileReader.readPackageFile(this.getClass(), "resource/test1.txt");
+		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
 		sr.setIsFile(true);
