@@ -29,6 +29,7 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionsTest;
 import ca.uqac.lif.cep.tmf.ConstantProcessor;
@@ -48,6 +49,173 @@ public class MathTest extends BeepBeepUnitTest
 	public void testAddition()
 	{
 		assertEquals(8f, FunctionsTest.evaluate(Addition.instance, 3, 5));
+		assertTrue(Addition.instance.toString().length() >= 1);
+		assertEquals(0f, Addition.instance.getStartValue());
+	}
+	
+	@Test
+	public void testSubtraction()
+	{
+		assertEquals(-2f, FunctionsTest.evaluate(Subtraction.instance, 3, 5));
+		assertTrue(Subtraction.instance.toString().length() >= 1);
+		assertEquals(0f, Subtraction.instance.getStartValue());
+	}
+	
+	@Test
+	public void testMultiplication()
+	{
+		assertEquals(15f, FunctionsTest.evaluate(Multiplication.instance, 3, 5));
+		assertTrue(Multiplication.instance.toString().length() >= 1);
+		assertEquals(1f, Multiplication.instance.getStartValue());
+	}
+	
+	@Test
+	public void testDivision()
+	{
+		assertEquals(0.6f, FunctionsTest.evaluate(Division.instance, 3, 5));
+		assertTrue(Division.instance.toString().length() >= 1);
+		assertEquals(1f, Division.instance.getStartValue());
+	}
+	
+	@Test
+	public void testPower()
+	{
+		assertEquals(81d, FunctionsTest.evaluate(Power.instance, 3, 4));
+		assertTrue(Power.instance.toString().length() >= 1);
+		assertEquals(1f, Power.instance.getStartValue());
+	}
+	
+	@Test
+	public void testSqrt()
+	{
+		assertEquals(3d, FunctionsTest.evaluate(SquareRoot.instance, 9));
+		assertTrue(SquareRoot.instance.toString().length() >= 1);
+	}
+	
+	@Test
+	public void testSignum()
+	{
+		assertEquals(1, FunctionsTest.evaluate(Signum.instance, 9));
+		assertEquals(0, FunctionsTest.evaluate(Signum.instance, 0));
+		assertEquals(-1, FunctionsTest.evaluate(Signum.instance, -2));
+		assertTrue(Signum.instance.toString().length() >= 1);
+	}
+	
+	@Test
+	public void testMaximum()
+	{
+		assertEquals(4f, FunctionsTest.evaluate(Maximum.instance, 3, 4));
+		assertEquals(4f, FunctionsTest.evaluate(Maximum.instance, 4, 3));
+		assertTrue(Maximum.instance.toString().length() >= 1);
+		assertEquals(Float.MIN_VALUE, Maximum.instance.getStartValue());
+	}
+	
+	@Test
+	public void testMinimum()
+	{
+		assertEquals(3f, FunctionsTest.evaluate(Minimum.instance, 3, 4));
+		assertEquals(3f, FunctionsTest.evaluate(Minimum.instance, 4, 3));
+		assertTrue(Minimum.instance.toString().length() >= 1);
+		assertEquals(Float.MAX_VALUE, Minimum.instance.getStartValue());
+	}
+	
+	@Test
+	public void testGte()
+	{
+		assertEquals(false, FunctionsTest.evaluate(IsGreaterOrEqual.instance, 3, 4));
+		assertEquals(true, FunctionsTest.evaluate(IsGreaterOrEqual.instance, 4, 3));
+		assertEquals(true, FunctionsTest.evaluate(IsGreaterOrEqual.instance, 3, 3));
+		assertTrue(IsGreaterOrEqual.instance.toString().length() >= 1);
+		assertEquals(false, IsGreaterOrEqual.instance.getStartValue());
+	}
+	
+	@Test
+	public void testGt()
+	{
+		assertEquals(false, FunctionsTest.evaluate(IsGreaterThan.instance, 3, 4));
+		assertEquals(true, FunctionsTest.evaluate(IsGreaterThan.instance, 4, 3));
+		assertEquals(false, FunctionsTest.evaluate(IsGreaterThan.instance, 3, 3));
+		assertTrue(IsGreaterThan.instance.toString().length() >= 1);
+		assertEquals(false, IsGreaterThan.instance.getStartValue());
+	}
+	
+	@Test
+	public void testLte()
+	{
+		assertEquals(true, FunctionsTest.evaluate(IsLessOrEqual.instance, 3, 4));
+		assertEquals(false, FunctionsTest.evaluate(IsLessOrEqual.instance, 4, 3));
+		assertEquals(true, FunctionsTest.evaluate(IsLessOrEqual.instance, 3, 3));
+		assertTrue(IsLessOrEqual.instance.toString().length() >= 1);
+		assertEquals(false, IsLessOrEqual.instance.getStartValue());
+	}
+	
+	@Test
+	public void testLt()
+	{
+		assertEquals(true, FunctionsTest.evaluate(IsLessThan.instance, 3, 4));
+		assertEquals(false, FunctionsTest.evaluate(IsLessThan.instance, 4, 3));
+		assertEquals(false, FunctionsTest.evaluate(IsLessThan.instance, 3, 3));
+		assertTrue(IsLessThan.instance.toString().length() >= 1);
+		assertEquals(false, IsLessThan.instance.getStartValue());
+	}
+	
+	@Test
+	public void testAbsoluteValue()
+	{
+		assertEquals(3f, FunctionsTest.evaluate(AbsoluteValue.instance, 3));
+		assertEquals(3f, FunctionsTest.evaluate(AbsoluteValue.instance, -3));
+		assertEquals(0f, FunctionsTest.evaluate(AbsoluteValue.instance, 0));
+		assertTrue(AbsoluteValue.instance.toString().length() >= 1);
+	}
+	
+	@Test
+	public void testIsEven()
+	{
+		assertEquals(true, FunctionsTest.evaluate(IsEven.instance, 2));
+		assertEquals(true, FunctionsTest.evaluate(IsEven.instance, -2));
+		assertEquals(false, FunctionsTest.evaluate(IsEven.instance, 3));
+		assertEquals(false, FunctionsTest.evaluate(IsEven.instance, 2.4));
+		assertTrue(IsEven.instance.toString().length() >= 1);
+	}
+	
+	@Test
+	public void testNumberCast1()
+	{
+		Number n;
+		n = (Number) FunctionsTest.evaluate(NumberCast.instance, 2);
+		assertTrue(n instanceof Integer);
+		assertEquals(2, n.intValue());
+		n = (Number) FunctionsTest.evaluate(NumberCast.instance, "2");
+		assertTrue(n instanceof Integer);
+		assertEquals(2, n.intValue());
+		n = (Number) FunctionsTest.evaluate(NumberCast.instance, "2.5");
+		assertTrue(n instanceof Float);
+		assertEquals(2.5f, n.floatValue(), 0.01f);
+		n = (Number) FunctionsTest.evaluate(NumberCast.instance, 2.5f);
+		assertTrue(n instanceof Float);
+		assertEquals(2.5f, n.floatValue(), 0.01f);
+		n = (Number) FunctionsTest.evaluate(NumberCast.instance, 2.5d);
+		assertTrue(n instanceof Double);
+		assertEquals(2.5d, n.doubleValue(), 0.01d);
+	}
+	
+	@Test(expected=FunctionException.class)
+	public void testNumberCast2()
+	{
+		FunctionsTest.evaluate(NumberCast.instance, new Object());
+	}
+	
+	@Test(expected=FunctionException.class)
+	public void testNumberCast3()
+	{
+		FunctionsTest.evaluate(NumberCast.instance, "foo");
+	}
+	
+	@Test
+	public void testNumberCastDuplicate()
+	{
+		NumberCast nc = NumberCast.instance.duplicate();
+		assertTrue(nc == NumberCast.instance);
 	}
 	
 	@Test
@@ -100,50 +268,6 @@ public class MathTest extends BeepBeepUnitTest
 		if (n.intValue() != 3)
 		{
 			fail("Wrong number");
-		}
-	}
-
-	@Test
-	public void testPower() 
-	{
-		Vector<Object> l_input1 = new Vector<Object>();
-		l_input1.add(2);
-		l_input1.add(3);
-		l_input1.add(2);
-		Vector<Object> l_input2 = new Vector<Object>();
-		l_input2.add(4);
-		l_input2.add(2);
-		l_input2.add(0);
-		QueueSource input1 = new QueueSource(1);
-		input1.setEvents(l_input1);
-		QueueSource input2 = new QueueSource(1);
-		input2.setEvents(l_input2);
-		FunctionProcessor pow = new FunctionProcessor(new Power());
-		Connector.connect(input1, 0, pow, 0);
-		Connector.connect(input2, 0, pow, 1);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(pow, sink);
-		Number recv;
-		input1.push();
-		input2.push();
-		recv = (Number) sink.remove()[0]; // 2^4
-		if (recv == null || recv.intValue() != 16)
-		{
-			fail("Expected 16, got " + recv);
-		}
-		input1.push();
-		input2.push();
-		recv = (Number) sink.remove()[0]; // 3^2
-		if (recv == null || recv.intValue() != 9)
-		{
-			fail("Expected 9, got " + recv);
-		}
-		input1.push();
-		input2.push();
-		recv = (Number) sink.remove()[0]; // 2^0
-		if (recv == null || recv.intValue() != 1)
-		{
-			fail("Expected 1, got " + recv);
 		}
 	}
 	

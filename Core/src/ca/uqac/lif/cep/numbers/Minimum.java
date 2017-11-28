@@ -17,32 +17,36 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import ca.uqac.lif.cep.functions.Constant;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
- * Used to create a constant out of a number
+ * Returns the minimum of two numbers.
  * @author Sylvain Hallé
- *
  */
-public class EmlNumber extends Constant
+public class Minimum extends BinaryFunction<Number,Number,Number>
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
-	private static final long serialVersionUID = 4248220563985957652L;
+	private static final long serialVersionUID = 2831193067720029820L;
+	
+	public static final transient Minimum instance = new Minimum();
 
-	public EmlNumber()
+	Minimum()
 	{
-		super(null);
+		super(Number.class, Number.class, Number.class);
 	}
 
-	public EmlNumber(Object o)
+	@Override
+	public Number getValue(Number x, Number y) 
 	{
-		super(o);
+		return Math.min(x.floatValue(), y.floatValue());
+	}
+	
+	@Override
+	public Number getStartValue()
+	{
+		return Float.MAX_VALUE;
 	}
 
-	public int intValue()
-	{
-		return ((Number) getValue()).intValue();
-	}
 }

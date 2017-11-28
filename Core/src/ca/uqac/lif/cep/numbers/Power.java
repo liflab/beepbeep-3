@@ -48,6 +48,6 @@ public class Power extends BinaryFunction<Number,Number,Number>
 	@Override
 	public Number getStartValue()
 	{
-		return 1;
+		return 1f;
 	}
 }

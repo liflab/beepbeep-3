@@ -26,9 +26,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Addition extends BinaryFunction<Number,Number,Number>
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = -7410938141238455733L;
+	
 	/**
 	 * A static instance of addition
 	 */
@@ -52,7 +53,7 @@ public class Addition extends BinaryFunction<Number,Number,Number>
 	@Override
 	public Number getStartValue()
 	{
-		return 0;
+		return 0f;
 	}
 
 	@Override

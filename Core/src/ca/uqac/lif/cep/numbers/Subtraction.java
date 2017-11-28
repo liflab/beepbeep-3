@@ -48,7 +48,7 @@ public class Subtraction extends BinaryFunction<Number,Number,Number>
 	@Override
 	public Number getStartValue()
 	{
-		return 0;
+		return 0f;
 	}
 
 	@Override
