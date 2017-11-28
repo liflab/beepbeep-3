@@ -23,12 +23,15 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
  * is called the <em>decimation interval</em>.
+ * However, a mode can be specified in order to output the <i>n</i>-<i>i</i>th input
+ * event if it is the last event of the trace and it has not been output already.
  * 
  * @author Sylvain Hallé
  */
@@ -40,6 +43,16 @@ public class CountDecimate extends SingleProcessor
 	protected final int m_interval;
 
 	/**
+	 * Indicates if the last inputs should be output even if its index does not correspond to the interval
+	 */
+	protected final boolean m_shouldOutputLastInputsAnyway;
+
+	/**
+	 * The last input received
+	 */
+	protected Object[] m_lastInputs;
+
+	/**
 	 * Index of last event received
 	 */
 	protected int m_current;
@@ -49,11 +62,17 @@ public class CountDecimate extends SingleProcessor
 		this(1);
 	}
 
-	public CountDecimate(int interval)
-	{
+	public CountDecimate(int interval, boolean shouldOutputLastInputsAnyway) {
 		super(1, 1);
 		m_interval = interval;
+		m_shouldOutputLastInputsAnyway = shouldOutputLastInputsAnyway;
+		m_lastInputs = null;
 		m_current = 0;
+	}
+
+	public CountDecimate(int interval)
+	{
+		this(interval, false);
 	}
 
 	@Override
@@ -71,6 +90,10 @@ public class CountDecimate extends SingleProcessor
 		if (m_current == 0)
 		{
 			out = inputs;
+		}
+		else if(m_shouldOutputLastInputsAnyway)
+		{
+			m_lastInputs = inputs;
 		}
 		m_current = (m_current + 1) % m_interval;
 		if (out == null)
@@ -90,6 +113,18 @@ public class CountDecimate extends SingleProcessor
 			}
 		}
 		outputs.add(out);
+		return true;
+	}
+
+	@Override
+	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException {
+		if(!m_shouldOutputLastInputsAnyway || m_current == 1)
+			return super.onEndOfTrace(outputs);
+
+		m_outputCount++;
+		outputs.add(m_lastInputs);
+		m_lastInputs = null;
+
 		return true;
 	}
 

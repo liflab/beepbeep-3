@@ -1,18 +1,16 @@
 package ca.uqac.lif.cep;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Queue;
 
+import ca.uqac.lif.cep.tmf.*;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.tmf.Multiplexer;
-import ca.uqac.lif.cep.tmf.Passthrough;
-import ca.uqac.lif.cep.tmf.Pump;
-import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tmf.QueueSource;
 
 import javax.swing.*;
 
@@ -131,9 +129,52 @@ public class EndOfTraceTest {
 
 		pushable.notifyEndOfTrace();
 		assertEquals(END_OF_TRACE, (String) queueSink.remove());
+	}
 
+	@Test
+	public void testCountDecimate() throws ConnectorException {
 
+		int interval = 3;
 
+		CountDecimate countDecimate0 = new CountDecimate(interval);
+		CountDecimate countDecimate1 = new CountDecimate(interval, true);
 
+		QueueSink sink0 = new QueueSink(1);
+		QueueSink sink1 = new QueueSink(1);
+
+		Connector.connect(countDecimate0, sink0);
+		Connector.connect(countDecimate1, sink1);
+
+		Pushable pushable0 = countDecimate0.getPushableInput(0);
+		Pushable pushable1 = countDecimate1.getPushableInput(0);
+
+		Queue<Object> queueSink0 = sink0.getQueue(0);
+		Queue<Object> queueSink1 = sink1.getQueue(0);
+
+		int lastInput = 0;
+
+		for(int i = 0; i < 9; i++)
+		{
+			pushable0.push(i);
+			pushable1.push(i);
+
+			if(i % interval == 0)
+			{
+				assertEquals(i, (int) queueSink0.remove());
+				assertEquals(i, (int) queueSink1.remove());
+			}
+
+			lastInput = i;
+		}
+
+		pushable0.notifyEndOfTrace();
+		assertTrue(queueSink0.isEmpty());
+
+		pushable1.notifyEndOfTrace();
+		if(lastInput % interval != 0)
+		{
+			assertEquals(lastInput, (int) queueSink1.remove());
+		}
+		assertTrue(queueSink1.isEmpty());
 	}
 }
