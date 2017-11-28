@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable.PullableException;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Constant;
@@ -46,7 +45,7 @@ public class PullableTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPullNotSupported1() throws ConnectorException
+	public void testPullNotSupported1() 
 	{
 		QueueSource s = new QueueSource();
 		s.setEvents(new Object[]{0});

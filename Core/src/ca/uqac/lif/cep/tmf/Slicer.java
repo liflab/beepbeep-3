@@ -22,17 +22,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Separates an input trace into different "slices". The slicer
@@ -122,14 +118,7 @@ public class Slicer extends UniformProcessor
 				m_slices.put(slice_id, p);
 				addContextFromSlice(p, slice_id);
 				QueueSink sink = new QueueSink(output_arity);
-				try
-				{
-					Connector.connect(p, sink);
-				}
-				catch (ConnectorException e)
-				{
-					BeepBeepLogger.logger.log(Level.SEVERE, "", e);
-				}
+				Connector.connect(p, sink);
 				m_sinks.put(slice_id, sink);
 			}
 			slices_to_process.add(slice_id);

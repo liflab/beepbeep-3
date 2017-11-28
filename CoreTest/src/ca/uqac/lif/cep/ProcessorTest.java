@@ -24,7 +24,6 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
@@ -151,7 +150,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPush1() throws ConnectorException
+	public void testPush1() 
 	{
 		QueueSource cp = new QueueSource(1);
 		cp.addEvent("A");
@@ -170,7 +169,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPull1() throws ConnectorException
+	public void testPull1() 
 	{
 		QueueSource cp = new QueueSource(1);
 		cp.addEvent("A");
@@ -189,7 +188,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	
 	
 	@Test
-	public void testDecimatePull1() throws ConnectorException
+	public void testDecimatePull1() 
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1);
@@ -239,7 +238,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testDecimatePush1() throws ConnectorException
+	public void testDecimatePush1() 
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1);
@@ -289,7 +288,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testAdditionPush1() throws ConnectorException
+	public void testAdditionPush1() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(1);
@@ -340,7 +339,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testFilter1() throws ConnectorException
+	public void testFilter1() 
 	{
 		QueueSource input1 = new QueueSource();
 		input1.setEvents(new Integer[]{1, 2, 3, 4});
@@ -384,7 +383,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testFilter2() throws ConnectorException
+	public void testFilter2() 
 	{
 		QueueSource input1 = new QueueSource();
 		input1.setEvents(new Integer[]{2, 3, 4, 6});
@@ -422,7 +421,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGroupPush1() throws ConnectorException
+	public void testGroupPush1() 
 	{
 		// Create the group
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
@@ -489,7 +488,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testBinaryPull() throws ConnectorException
+	public void testBinaryPull() 
 	{
 		QueueSource src_left = new QueueSource();
 		QueueSource src_right = new QueueSource();
@@ -524,7 +523,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	 * of the {@link SingleProcessor.OutputPullable#hasNextSoft()} method.
 	 */
 	@Test
-	public void testHasNext() throws ConnectorException
+	public void testHasNext() 
 	{
 		Vector<Object> events = new Vector<Object>();
 		events.add("A");
@@ -547,7 +546,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMuxerPush1() throws ConnectorException
+	public void testMuxerPush1() 
 	{
 		Integer i;
 		Multiplexer mux = new Multiplexer(2);

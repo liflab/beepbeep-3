@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.petitpoucet.BrokenChain;
@@ -51,7 +50,7 @@ public class ProvenanceTest
 	}
 	
 	@Test
-	public void testNoOp2() throws ConnectorException
+	public void testNoOp2() 
 	{
 		QueueSource source = new QueueSource();
 		source.setEvents(new Object[]{1, 2, 3, 4, 5});

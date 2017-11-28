@@ -25,7 +25,6 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Multiplexer;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -37,7 +36,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class MultiplexerTest extends BeepBeepUnitTest 
 {
 	@Test
-	public void testMultiplexerPush() throws ConnectorException
+	public void testMultiplexerPush() 
 	{
 		Multiplexer mux = new Multiplexer(2);
 		Pushable push1 = mux.getPushableInput(0);
@@ -63,7 +62,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMultiplexerPull() throws ConnectorException
+	public void testMultiplexerPull() 
 	{
 		int i = -1;
 		QueueSource qsource1 = new QueueSource(1);
@@ -109,7 +108,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMultiplexerPullHard() throws ConnectorException
+	public void testMultiplexerPullHard() 
 	{
 		int i = -1;
 		QueueSource qsource1 = new QueueSource(1);

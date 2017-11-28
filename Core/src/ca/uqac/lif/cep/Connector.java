@@ -321,7 +321,7 @@ public class Connector
 	 * Exception thrown when a problem occurs when connecting two
 	 * processors
 	 */
-	public static class ConnectorException extends Exception
+	public static class ConnectorException extends RuntimeException
 	{
 		/**
 		 * Dummy UID

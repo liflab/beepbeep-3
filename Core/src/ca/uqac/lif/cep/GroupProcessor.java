@@ -24,10 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Encapsulates a chain of processors as if it were a single one.
@@ -343,14 +339,7 @@ public class GroupProcessor extends Processor
 					{
 						// new_p and new_target may be null if they refer to a processor
 						// outside of the group
-						try
-						{
-							Connector.connect(new_p, i, new_target, j);
-						}
-						catch (ConnectorException e)
-						{
-							BeepBeepLogger.logger.log(Level.SEVERE, "", e);
-						}
+						Connector.connect(new_p, i, new_target, j);
 					}
 				}
 			}

@@ -24,7 +24,6 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
@@ -249,7 +248,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testProvenance() throws FunctionException, ConnectorException
+	public void testProvenance() throws FunctionException
 	{
 		IdentityFunction id = new IdentityFunction(1);
 		FunctionProcessor fp = new FunctionProcessor(id);
@@ -264,7 +263,7 @@ public class FunctionsTest
 	}
 	
 	@Test(expected=PushableException.class)
-	public void testFunctionProcessorException() throws FunctionException, ConnectorException
+	public void testFunctionProcessorException() throws FunctionException
 	{
 		ExceptionFunction ef = new ExceptionFunction();
 		FunctionProcessor fp = new FunctionProcessor(ef);
@@ -302,7 +301,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testCumulative1() throws ConnectorException
+	public void testCumulative1() 
 	{
 		CumulativeProcessor sum = new CumulativeProcessor(new CumulativeFunction<Number>(Multiplication.instance));
 		DummyTracker tracker = new DummyTracker();

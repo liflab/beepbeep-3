@@ -20,14 +20,10 @@ package ca.uqac.lif.cep.tmf;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.logging.Level;
-
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Simulates the application of a "sliding window" to a trace.
@@ -99,14 +95,7 @@ public class Window extends SingleProcessor
 			m_innerInputs[i] = m_processor.getPushableInput(i);
 		}
 		m_sink.reset();
-		try
-		{
-			Connector.connect(m_processor, m_sink);
-		}
-		catch (ConnectorException e)
-		{
-			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
-		}
+		Connector.connect(m_processor, m_sink);
 	}
 
 	@Override

@@ -8,7 +8,6 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
@@ -23,7 +22,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class TokenFeederTest extends BeepBeepUnitTest 
 {
 	@Test
-	public void testTokenFeederPush1() throws ConnectorException
+	public void testTokenFeederPush1() 
 	{
 		String s;
 		MyFeeder mf = new MyFeeder("|", ".");
@@ -40,7 +39,7 @@ public class TokenFeederTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testTokenFeederPush2() throws ConnectorException
+	public void testTokenFeederPush2() 
 	{
 		String s;
 		MyFeeder mf = new MyFeeder("|", ".");
@@ -57,7 +56,7 @@ public class TokenFeederTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testTokenFeederPush3() throws ConnectorException
+	public void testTokenFeederPush3() 
 	{
 		String s;
 		MyFeeder mf = new MyFeeder("", "\n");
@@ -74,7 +73,7 @@ public class TokenFeederTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testTokenFeederPull1() throws ConnectorException
+	public void testTokenFeederPull1() 
 	{
 		Object o;
 		QueueSource qsource = new QueueSource(1);

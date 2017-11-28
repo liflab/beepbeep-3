@@ -19,6 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
@@ -291,7 +292,7 @@ public abstract class UniformProcessor extends Processor
 					return out_queue.remove();
 				}
 			}
-			return null;
+			throw new NoSuchElementException();
 		}
 
 		@Override

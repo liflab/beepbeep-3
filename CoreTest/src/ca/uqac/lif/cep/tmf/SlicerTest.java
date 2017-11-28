@@ -26,7 +26,6 @@ import java.util.Stack;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
@@ -44,7 +43,7 @@ public class SlicerTest extends BeepBeepUnitTest
 {
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testSlicer1() throws ConnectorException
+	public void testSlicer1() 
 	{
 		Slicer sli = new Slicer(new IsEven(), new Sum());
 		QueueSink qsink = new QueueSink(1);
@@ -103,7 +102,7 @@ public class SlicerTest extends BeepBeepUnitTest
 			return x.intValue() % 2 == 0;
 		}
 		
-		public static void build(Stack<Object> stack) throws ConnectorException
+		public static void build(Stack<Object> stack) 
 		{
 			stack.pop(); // ISEVEN
 			stack.push(new IsEven());

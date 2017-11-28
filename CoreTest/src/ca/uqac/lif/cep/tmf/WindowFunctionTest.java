@@ -7,7 +7,6 @@ import java.util.Queue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.WindowFunction;
@@ -20,7 +19,7 @@ import ca.uqac.lif.cep.Pushable;
 public class WindowFunctionTest
 {
 	@Test
-	public void test1() throws ConnectorException
+	public void test1() 
 	{
 		Object value = 0;
 		WindowFunction wf = new WindowFunction(new DummyPlus());

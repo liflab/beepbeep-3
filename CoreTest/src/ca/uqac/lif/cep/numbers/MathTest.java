@@ -26,7 +26,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
@@ -52,7 +51,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSumPush() throws ConnectorException
+	public void testSumPush() 
 	{
 		QueueSource cp = new QueueSource(1);
 		cp.addEvent(1);
@@ -83,7 +82,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSumPull() throws ConnectorException
+	public void testSumPull() 
 	{
 		QueueSource cp = new QueueSource(1);
 		cp.addEvent(1);
@@ -114,7 +113,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testPower() throws ConnectorException
+	public void testPower() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -158,7 +157,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testStatisticalMomentPull1() throws ConnectorException
+	public void testStatisticalMomentPull1() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -190,7 +189,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testStatisticalMomentPush1() throws ConnectorException
+	public void testStatisticalMomentPush1() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -221,7 +220,7 @@ public class MathTest extends BeepBeepUnitTest
 		} 
 	}
 	
-	protected static void setupStatisticalMoment(Processor source, Processor sink, int n) throws ConnectorException
+	protected static void setupStatisticalMoment(Processor source, Processor sink, int n) 
 	{
 		Fork fork = new Fork(2);
 		Connector.connect(source, fork);
@@ -250,7 +249,7 @@ public class MathTest extends BeepBeepUnitTest
 		Connector.connect(div, sink);
 	}
 	
-	protected static void setupSumIfGreater(Processor source, Processor sink) throws ConnectorException
+	protected static void setupSumIfGreater(Processor source, Processor sink) 
 	{
 		Window win = new Window(new Sum(), 2);
 		Connector.connect(source, win);
@@ -268,7 +267,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testSumIfGreaterPush() throws ConnectorException
+	public void testSumIfGreaterPush() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -309,7 +308,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSumIfGreaterPullHard() throws ConnectorException
+	public void testSumIfGreaterPullHard() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);

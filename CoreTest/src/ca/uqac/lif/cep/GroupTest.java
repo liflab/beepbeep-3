@@ -24,7 +24,6 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.numbers.Addition;
@@ -39,7 +38,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class GroupTest extends BeepBeepUnitTest 
 {
 	@Test
-	public void testGroup1() throws ConnectorException
+	public void testGroup1() 
 	{
 		Passthrough pt1 = new Passthrough(1);
 		GroupProcessor gp = new GroupProcessor(1, 1);
@@ -59,7 +58,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGroup2() throws ConnectorException
+	public void testGroup2() 
 	{
 		Passthrough pt1 = new Passthrough(2);
 		GroupProcessor gp = new GroupProcessor(2, 2);
@@ -92,7 +91,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGroup3() throws ConnectorException
+	public void testGroup3() 
 	{
 		Passthrough pt1 = new Passthrough(1);
 		Passthrough pt2 = new Passthrough(1);
@@ -115,7 +114,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testClone1() throws ConnectorException
+	public void testClone1() 
 	{
 		Passthrough pt1 = new Passthrough(1);
 		GroupProcessor gp = new GroupProcessor(1, 1);
@@ -140,7 +139,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testClone2() throws ConnectorException
+	public void testClone2() 
 	{
 		Passthrough pt1 = new Passthrough(2);
 		GroupProcessor gp = new GroupProcessor(2, 2);
@@ -177,7 +176,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testClone3() throws ConnectorException
+	public void testClone3() 
 	{
 		Passthrough pt1 = new Passthrough(1);
 		Passthrough pt2 = new Passthrough(1);
@@ -206,7 +205,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testClone4() throws ConnectorException
+	public void testClone4() 
 	{
 		Passthrough pt1 = new Passthrough(2);
 		Passthrough pt2 = new Passthrough(2);
@@ -251,10 +250,10 @@ public class GroupTest extends BeepBeepUnitTest
 	 * Try to clone a group processor that is already connected
 	 * to something else. The goal of this test is only to check
 	 * that the call to <code>duplicate()</code> does not throw an exception.
-	 * @throws ConnectorException
+	 * @
 	 */
 	@Test
-	public void testClone5() throws ConnectorException
+	public void testClone5() 
 	{
 		Passthrough pt1 = new Passthrough(2);
 		Passthrough pt2 = new Passthrough(2);
@@ -278,10 +277,9 @@ public class GroupTest extends BeepBeepUnitTest
 	
 	/**
 	 * Clone a group within a group
-	 * @throws ConnectorException 
 	 */
 	@Test
-	public void testClone6() throws ConnectorException
+	public void testClone6() 
 	{
 		Object o = null;
 		GroupIn g_within = new GroupIn(1, 1);
@@ -325,10 +323,9 @@ public class GroupTest extends BeepBeepUnitTest
 	 * Clone a group within a group.
 	 * The difference with {@link #testClone6()} is that the
 	 * group and the passthrough are in the reverse order.
-	 * @throws ConnectorException 
 	 */
 	@Test
-	public void testClone7() throws ConnectorException
+	public void testClone7() 
 	{
 		Object o = null;
 		GroupIn g_within = new GroupIn(1, 1);
@@ -369,7 +366,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGroupPull1() throws ConnectorException
+	public void testGroupPull1() 
 	{
 		// Create the group
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
@@ -432,7 +429,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGroupPush2() throws ConnectorException
+	public void testGroupPush2() 
 	{
 		// Create the group
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
@@ -522,7 +519,7 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPullable1() throws ProcessorException, ConnectorException
+	public void testPullable1() throws ProcessorException
 	{
 		QueueSource source = new QueueSource();
 		source.setEvents(new Object[]{0, 1});

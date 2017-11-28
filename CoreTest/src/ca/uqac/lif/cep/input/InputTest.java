@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.util.FileHelper;
@@ -25,7 +24,7 @@ public class InputTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testCsvFeeder() throws IOException, ConnectorException
+	public void testCsvFeeder() throws IOException
 	{
 		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.csv");
 		InputStream stream = StringUtils.toInputStream(file_contents);

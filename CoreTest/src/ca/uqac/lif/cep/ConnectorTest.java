@@ -76,7 +76,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testConnectWithTracker() throws ConnectorException
+	public void testConnectWithTracker() 
 	{
 		Apples a1 = new Apples();
 		Apples a2 = new Apples();
@@ -87,7 +87,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testConnectNothing() throws ConnectorException
+	public void testConnectNothing() 
 	{
 		Apples a = new Apples();
 		Connector.connect(a);
@@ -134,7 +134,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testTwoUnary() throws ConnectorException
+	public void testTwoUnary() 
 	{
 		Passthrough p1 = new Passthrough(1);
 		QueueSink qs1 = new QueueSink(1);
@@ -154,7 +154,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testTwoBinary() throws ConnectorException
+	public void testTwoBinary() 
 	{
 		Passthrough p1 = new Passthrough(2);
 		QueueSink qs1 = new QueueSink(2);
@@ -179,7 +179,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testThreeUnary1() throws ConnectorException
+	public void testThreeUnary1() 
 	{
 		Passthrough p1 = new Passthrough(1);
 		QueueSink qs1 = new QueueSink(1);
@@ -199,7 +199,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testThreeUnary2() throws ConnectorException
+	public void testThreeUnary2() 
 	{
 		Passthrough p1 = new Passthrough(1);
 		Incrementer p2 = new Incrementer(10);
@@ -220,7 +220,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testIncompatibleTypes() throws ConnectorException
+	public void testIncompatibleTypes() 
 	{
 		Processor apples = new Apples();
 		Processor oranges = new Oranges();

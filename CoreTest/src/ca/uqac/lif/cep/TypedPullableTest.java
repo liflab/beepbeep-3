@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
@@ -32,7 +31,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class TypedPullableTest 
 {
 	@Test
-	public void testTypedPullable1() throws ConnectorException
+	public void testTypedPullable1() 
 	{
 		QueueSource qs = new QueueSource(1);
 		qs.addEvent("A");
@@ -48,7 +47,7 @@ public class TypedPullableTest
 	}
 
 	@Test
-	public void testTypedPullable2() throws ConnectorException
+	public void testTypedPullable2() 
 	{
 		QueueSource qs = new QueueSource(1);
 		qs.addEvent("A");
@@ -77,7 +76,7 @@ public class TypedPullableTest
 	
 	@SuppressWarnings("unused")
 	@Test
-	public void testTypedPullable3() throws ConnectorException
+	public void testTypedPullable3() 
 	{
 		QueueSource qs = new QueueSource(1);
 		qs.addEvent("A");

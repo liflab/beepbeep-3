@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pushable.PushableException;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Constant;
@@ -43,7 +42,7 @@ public class PushableTest
 	}
 	
 	@Test
-	public void testPushNotSupported1() throws ConnectorException
+	public void testPushNotSupported1() 
 	{
 		Pump pump = new Pump();
 		Pushable p = pump.getPushableInput();

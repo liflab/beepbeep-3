@@ -23,7 +23,6 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -36,7 +35,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class SimpleTests extends BeepBeepUnitTest
 {
 	@Test
-	public void testConstant() throws ConnectorException
+	public void testConstant() 
 	{
 		String out = null;
 		QueueSource c = new QueueSource();
@@ -49,7 +48,7 @@ public class SimpleTests extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPassthrough() throws ConnectorException
+	public void testPassthrough() 
 	{
 		Passthrough c = new Passthrough(1);
 		QueueSink sink = new QueueSink(1);

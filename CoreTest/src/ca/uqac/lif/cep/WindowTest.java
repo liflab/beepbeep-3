@@ -24,7 +24,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.ProcessorTest.Sum;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -37,7 +36,7 @@ import ca.uqac.lif.cep.tmf.Window;
 public class WindowTest extends BeepBeepUnitTest 
 {
 	@Test
-	public void testWindowPull1() throws ConnectorException
+	public void testWindowPull1() 
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1); // Sequence of 1s
@@ -57,7 +56,7 @@ public class WindowTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testWindowPull2() throws ConnectorException
+	public void testWindowPull2() 
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1); // Sequence of 1s
@@ -80,7 +79,7 @@ public class WindowTest extends BeepBeepUnitTest
 
 	
 	@Test
-	public void testWindowPush1() throws ConnectorException
+	public void testWindowPush1() 
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1); // Sequence of 1s

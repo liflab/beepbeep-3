@@ -23,7 +23,6 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable.PullableException;
 import ca.uqac.lif.cep.Pushable.PushableException;
 import ca.uqac.lif.cep.tmf.BlackHole;
@@ -37,7 +36,7 @@ import ca.uqac.lif.cep.tmf.QueueSourceBatch;
 public class SingleProcessorTest 
 {
 	@Test(expected=PullableException.class)
-	public void testPullException1() throws ConnectorException
+	public void testPullException1() 
 	{
 		QueueSource qs = new QueueSource();
 		qs.setEvents(new Object[]{0});
@@ -49,7 +48,7 @@ public class SingleProcessorTest
 	}
 	
 	@Test(expected=PushableException.class)
-	public void testPushException1() throws ConnectorException
+	public void testPushException1() 
 	{
 		ThrowException te = new ThrowException();
 		Passthrough pt = new Passthrough();
@@ -60,7 +59,7 @@ public class SingleProcessorTest
 	}
 	
 	@Test(expected=PullableException.class)
-	public void testPullSoftException1() throws ConnectorException
+	public void testPullSoftException1() 
 	{
 		QueueSource qs = new QueueSource();
 		qs.setEvents(new Object[]{0});
@@ -82,7 +81,7 @@ public class SingleProcessorTest
 	}
 	
 	@Test(expected=PushableException.class)
-	public void testPushFastException1() throws ConnectorException
+	public void testPushFastException1() 
 	{
 		ThrowException te = new ThrowException();
 		Passthrough pt = new Passthrough();
@@ -111,7 +110,7 @@ public class SingleProcessorTest
 	}
 	
 	@Test
-	public void testWithQueue() throws ConnectorException
+	public void testWithQueue() 
 	{
 		// This tests the fact that the queue inside the pullable
 		// will not be empty the second time next() is called
@@ -126,7 +125,7 @@ public class SingleProcessorTest
 	}
 	
 	@Test
-	public void testStop() throws ConnectorException
+	public void testStop() 
 	{
 		QueueSource qsb = new QueueSource(1);
 		qsb.setEvents(new Object[]{0, 1});
@@ -142,7 +141,7 @@ public class SingleProcessorTest
 	}
 	
 	@Test
-	public void testStopSoft() throws ConnectorException
+	public void testStopSoft() 
 	{
 		QueueSource qsb = new QueueSource(1);
 		qsb.setEvents(new Object[]{0, 1});

@@ -28,7 +28,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pullable.NextStatus;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -42,7 +41,7 @@ import ca.uqac.lif.cep.util.StringUtils;
 public class IoTest extends BeepBeepUnitTest
 {	
 	@Test
-	public void testStreamReaderPush1() throws FileNotFoundException, ConnectorException
+	public void testStreamReaderPush1() throws FileNotFoundException
 	{
 		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
@@ -57,7 +56,7 @@ public class IoTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testStreamReaderPull1() throws FileNotFoundException, ConnectorException
+	public void testStreamReaderPull1() throws FileNotFoundException
 	{
 		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.txt");
 		InputStream stream = StringUtils.toInputStream(file_contents);
@@ -78,7 +77,7 @@ public class IoTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testUrlFeeder1() throws ConnectorException
+	public void testUrlFeeder1() 
 	{
 		HttpReader hr = new HttpReader("https://raw.githubusercontent.com/liflab/beepbeep-3/master/CoreTest/tuples1.csv");
 		Pullable p = hr.getPullableOutput(0);

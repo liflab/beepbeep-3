@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
@@ -31,15 +30,7 @@ public class ProcessOnSet extends SingleProcessor
 		m_processor = processor;
 		m_pushable = m_processor.getPushableInput();
 		m_sink = new SinkLast(out_arity);
-		try
-		{
-			Connector.connect(m_processor, m_sink);
-		} 
-		catch (ConnectorException e) 
-		{
-			// Not much to do
-			e.printStackTrace();
-		}
+		Connector.connect(m_processor, m_sink);
 	}
 
 	@Override
