@@ -29,7 +29,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.Pullable.NextStatus;
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.util.FileHelper;
 import ca.uqac.lif.cep.util.StringUtils;

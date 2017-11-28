@@ -120,10 +120,8 @@ public class Connector
 	 * @param p2 The second processor
 	 * @param j The input number of the second processor
 	 * @return A reference to processor p2
-	 * @throws ConnectorException If the input/output types of the processors
-	 *   to connect are incompatible
 	 */
-	public static Processor connect(EventTracker tracker, Processor p1, int i, Processor p2, int j) throws ConnectorException
+	public static Processor connect(EventTracker tracker, Processor p1, int i, Processor p2, int j)
 	{
 		// First check for type compatibility
 		if (s_checkForTypes)
@@ -181,10 +179,8 @@ public class Connector
 	 * @param i The output number of the first processor
 	 * @param j The input number of the second processor
 	 * @return A reference to processor p2
-	 * @throws ConnectorException If the input/output types of the processors
-	 *   to connect are incompatible
 	 */
-	public static Processor connect(Processor p1, int i, Processor p2, int j) throws ConnectorException
+	public static Processor connect(Processor p1, int i, Processor p2, int j)
 	{
 		return connect(null, p1, i, p2, j);
 	}
@@ -196,10 +192,8 @@ public class Connector
 	 * than 1, the <i>i</i>-th output is linked to the <i>i</i>-th input.
 	 * @param procs The list of processors
 	 * @return The last processor of the chain
-	 * @throws ConnectorException If the input/output types of the processors
-	 *   to connect are incompatible
 	 */
-	public static Processor connect(Processor ... procs) throws ConnectorException
+	public static Processor connect(Processor ... procs)
 	{
 		return connect(null, procs);
 	}
@@ -212,10 +206,8 @@ public class Connector
 	 * @param tracker The EventTracker
 	 * @param procs The list of processors
 	 * @return The last processor of the chain
-	 * @throws ConnectorException If the input/output types of the processors
-	 *   to connect are incompatible
 	 */
-	public static Processor connect(EventTracker tracker, Processor ... procs) throws ConnectorException
+	public static Processor connect(EventTracker tracker, Processor ... procs)
 	{
 		if (procs.length == 1)
 		{
@@ -267,11 +259,9 @@ public class Connector
 	 * @param i The index of the output on the first processor
 	 * @param p2 The second processor
 	 * @param j The index of the input on the second processor
-	 * @throws ConnectorException An exception describing why the connection
-	 *   cannot be mande
 	 */
 	@SuppressWarnings("unused")
-	protected static void checkForException(Processor p1, int i, Processor p2, int j) throws ConnectorException
+	protected static void checkForException(Processor p1, int i, Processor p2, int j)
 	{
 		try
 		{

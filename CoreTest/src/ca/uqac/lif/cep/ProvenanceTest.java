@@ -40,7 +40,7 @@ public class ProvenanceTest
 	{
 		QueueSource source = new QueueSource();
 		source.setEvents(new Object[]{1, 2, 3, 4, 5});
-		EventTracker tracker = EventTracker.NOOP_TRACKER;
+		EventTracker tracker = EventTracker.NoOpEventTracker.instance;
 		source.setEventTracker(tracker);
 		Pullable p = source.getPullableOutput();
 		p.pull();

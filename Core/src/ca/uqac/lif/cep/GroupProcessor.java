@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Encapsulates a chain of processors as if it were a single one.
@@ -40,19 +39,19 @@ public class GroupProcessor extends Processor
 	/**
 	 * The set of processors included in the group
 	 */
-	private Set<Processor> m_processors = null;
+	private HashSet<Processor> m_processors = null;
 
 	/**
 	 * The {@link Pushable}s associated to each of the processor's
 	 * input traces
 	 */
-	private List<Pushable> m_inputPushables = null;
+	private transient List<Pushable> m_inputPushables = null;
 
 	/**
 	 * The {@link Pullable}s associated to each of the processor's
 	 * output traces
 	 */
-	private List<Pullable> m_outputPullables = null;
+	private transient List<Pullable> m_outputPullables = null;
 
 	/**
 	 * A map between numbers and processor associations. An element
@@ -60,7 +59,7 @@ public class GroupProcessor extends Processor
 	 * group processor is in fact the <i>n</i>-th input of processor
 	 * <code>p</code>
 	 */
-	private Map<Integer,ProcessorAssociation> m_inputPullableAssociations;
+	private HashMap<Integer,ProcessorAssociation> m_inputPullableAssociations;
 
 	/**
 	 * A map between numbers and processor associations. An element
@@ -68,7 +67,7 @@ public class GroupProcessor extends Processor
 	 * group processor is in fact the <i>n</i>-th output of processor
 	 * <code>p</code>
 	 */
-	private Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
+	private HashMap<Integer,ProcessorAssociation> m_outputPushableAssociations;
 
 	/**
 	 * Crate a group processor

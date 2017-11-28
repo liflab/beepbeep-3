@@ -296,6 +296,7 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
+		@SuppressWarnings("squid:S2272") // since() pull throws the exception
 		public final synchronized Object next()
 		{
 			return pull();

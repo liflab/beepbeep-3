@@ -39,7 +39,7 @@ public class TypedPullableTest
 		Connector.connect(qs, pt);
 		Pullable p = pt.getPullableOutput(0);
 		TypedPullable<String> tp = new TypedPullable<String>(p);
-		assertEquals(Pullable.NextStatus.YES, tp.hasNextSoft());
+		assertEquals(NextStatus.YES, tp.hasNextSoft());
 		String s = tp.pullSoft();
 		assertEquals("A", s);
 		assertEquals(pt.getId(), tp.getProcessor().getId());

@@ -73,6 +73,7 @@ public class TypedPullable<T> implements Pullable
 	}
 
 	@Override
+	@SuppressWarnings("squid:S2272") // since() pull throws the exception
 	public final T next()
 	{
 		return pull();

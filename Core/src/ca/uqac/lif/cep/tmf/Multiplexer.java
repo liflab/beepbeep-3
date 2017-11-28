@@ -18,7 +18,9 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -150,10 +152,11 @@ public class Multiplexer extends Processor
 			{
 				return m_outputQueues[0].remove();
 			}
-			return null;
+			throw new NoSuchElementException();
 		}
 
 		@Override
+		@SuppressWarnings("squid:S2272") // since() pull throws the exception
 		public final Object next()
 		{
 			return pull();

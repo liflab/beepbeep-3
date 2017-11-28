@@ -100,15 +100,15 @@ public interface EventTracker
 	public void setTo(Processor ... processors);
 	
 	/**
-	 * A single instance of a "no-op" event tracker
-	 */
-	public NoOpEventTracker NOOP_TRACKER = new NoOpEventTracker();
-	
-	/**
 	 * Dummy event tracker that does nothing
 	 */
 	public class NoOpEventTracker implements EventTracker
 	{
+		/**
+		 * A single instance of this tracker
+		 */
+		public static final NoOpEventTracker instance = new NoOpEventTracker();
+		
 		private NoOpEventTracker()
 		{
 			super();

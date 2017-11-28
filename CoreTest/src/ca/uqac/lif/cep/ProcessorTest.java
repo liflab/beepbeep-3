@@ -537,7 +537,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 		Pullable p = pt.getPullableOutput(0);
 		for (int i = 0; i < 10; i++)
 		{
-			if (p.hasNextSoft() == Pullable.NextStatus.YES)
+			if (p.hasNextSoft() == NextStatus.YES)
 			{
 				p.pullSoft();
 			}

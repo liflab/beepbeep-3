@@ -102,13 +102,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * An array of {@link Pullable}s, one for each input trace this processor
 	 * receives
 	 */
-	protected Pullable[] m_inputPullables;
+	protected transient Pullable[] m_inputPullables;
 
 	/**
 	 * An array of {@link Pushable}s, one for each output trace this processor
 	 * produces
 	 */
-	protected Pushable[] m_outputPushables;
+	protected transient Pushable[] m_outputPushables;
 
 	/**
 	 * A counter incremented upon each input front processed
