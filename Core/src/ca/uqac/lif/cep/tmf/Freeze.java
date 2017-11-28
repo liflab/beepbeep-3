@@ -35,8 +35,14 @@ public class Freeze extends UniformProcessor
 	 */
 	private static final long serialVersionUID = 5741791487727533735L;
 	
-	protected Object[] m_output;
+	/**
+	 * The event front to freeze
+	 */
+	protected transient Object[] m_output;
 
+	/**
+	 * Creates a new freeze processor
+	 */
 	public Freeze()
 	{
 		super(1, 1);

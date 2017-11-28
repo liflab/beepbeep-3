@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.ProcessorException;
@@ -53,7 +52,7 @@ public class WindowFunction extends SingleProcessor
 	/**
 	 * The event window
 	 */
-	protected List<Object> m_window;
+	protected LinkedList<Object> m_window;
 
 	WindowFunction()
 	{

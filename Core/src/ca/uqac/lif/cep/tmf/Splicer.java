@@ -55,7 +55,7 @@ public class Splicer extends Source
 	/**
 	 * The pullables of the processor we are currently reading from
 	 */
-	protected Pullable[] m_pullables;
+	protected transient Pullable[] m_pullables;
 
 	/**
 	 * 

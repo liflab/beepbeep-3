@@ -24,11 +24,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 public abstract class TokenFeeder extends SingleProcessor
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = -946838107083580993L;
 
-	protected StringBuilder m_bufferedContents;
+	protected transient StringBuilder m_bufferedContents;
 
 	protected String m_separatorBegin;
 	protected String m_separatorEnd;

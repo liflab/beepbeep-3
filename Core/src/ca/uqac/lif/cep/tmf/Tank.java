@@ -46,7 +46,7 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class Tank extends SingleProcessor 
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 1780400006191856512L;
 
@@ -58,7 +58,7 @@ public class Tank extends SingleProcessor
 	/**
 	 * A lock for accessing the queue in a thread-safe manner
 	 */
-	protected Lock m_lock;
+	protected transient Lock m_lock;
 	
 	/**
 	 * Creates a new empty tank

@@ -59,7 +59,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The internal processor's input pushables
 	 */
-	protected Pushable[] m_innerInputs;
+	protected transient Pushable[] m_innerInputs;
 
 	/**
 	 * The sink that will receive the events produced by the inner processor
@@ -69,7 +69,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The event windows
 	 */
-	protected List<Object>[] m_window;
+	protected LinkedList<Object>[] m_window;
 
 	public Window(Processor in_processor, int width)
 	{
@@ -86,7 +86,7 @@ public class Window extends SingleProcessor
 	{
 		super.reset();
 		int arity = getInputArity();
-		m_window = new List[arity];
+		m_window = new LinkedList[arity];
 		m_innerInputs = new Pushable[arity];
 		m_processor.reset();
 		for (int i = 0; i < arity; i++)
@@ -107,7 +107,7 @@ public class Window extends SingleProcessor
 		int arity = inputs.length;
 		for (int i = 0; i < arity; i++)
 		{
-			List<Object> q = m_window[i];
+			LinkedList<Object> q = m_window[i];
 			q.add(inputs[i]);
 			int size_diff = q.size() - m_width;
 			leftTrim(size_diff, q);
@@ -127,7 +127,7 @@ public class Window extends SingleProcessor
 				for (int j = 0; j < getInputArity(); j++)
 				{
 					// Feed
-					List<Object> q = m_window[j];
+					LinkedList<Object> q = m_window[j];
 					Object o = q.get(i);
 					Pushable p = m_innerInputs[j];
 					p.push(o);

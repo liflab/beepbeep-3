@@ -53,17 +53,17 @@ public abstract class SingleProcessor extends Processor
 	 * A queue object that will be passed to the {@link #compute(Object[], Queue)}
 	 * method
 	 */
-	protected final Queue<Object[]> m_tempQueue;
+	protected final transient Queue<Object[]> m_tempQueue;
 
 	/**
 	 * An array of input pushables
 	 */
-	protected final Pushable[] m_inputPushables;
+	protected final transient Pushable[] m_inputPushables;
 
 	/**
 	 * An array of output pullables
 	 */
-	protected final Pullable[] m_outputPullables;
+	protected final transient Pullable[] m_outputPullables;
 
 	/**
 	 * Initializes a processor

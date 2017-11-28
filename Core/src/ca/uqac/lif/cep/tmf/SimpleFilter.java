@@ -35,7 +35,7 @@ public class SimpleFilter extends SingleProcessor
 	/**
 	 * An array to store the value of the condition
 	 */
-	protected Object[] m_conditionValue = new Object[1];
+	protected transient Object[] m_conditionValue = new Object[1];
 
 	/**
 	 * Creates a new simple filter

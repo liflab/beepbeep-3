@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.tmf;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -66,14 +65,14 @@ public class Slicer extends UniformProcessor
 	 */
 	protected Processor m_processor = null;
 
-	protected Map<Object,Processor> m_slices;
+	protected HashMap<Object,Processor> m_slices;
 
-	protected Map<Object,QueueSink> m_sinks;
+	protected HashMap<Object,QueueSink> m_sinks;
 	
 	/**
 	 * The last values output by every slice 
 	 */
-	protected Map<Object,Object> m_values;
+	protected HashMap<Object,Object> m_values;
 
 	Slicer()
 	{

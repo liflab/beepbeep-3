@@ -17,19 +17,19 @@ import ca.uqac.lif.cep.UniformProcessor;
 public class LineReader extends UniformProcessor
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 3187087342912223147L;
 
 	/**
 	 * The scanner to read from
 	 */
-	protected Scanner m_scanner;
+	protected transient Scanner m_scanner;
 
 	/**
 	 * The input stream to read from
 	 */
-	protected InputStream m_inStream;
+	protected transient InputStream m_inStream;
 
 	/**
 	 * Whether to update a status line about the number of lines read

@@ -57,17 +57,17 @@ public abstract class UniformProcessor extends Processor
 	 * An array that will be used by the processor to compute
 	 * its output
 	 */
-	protected Object[] m_outputArray;
+	protected transient Object[] m_outputArray;
 	
 	/**
 	 * An array of input pushables
 	 */
-	protected final Pushable[] m_inputPushables;
+	protected final transient Pushable[] m_inputPushables;
 
 	/**
 	 * An array of output pullables
 	 */
-	protected Pullable[] m_outputPullables;
+	protected transient Pullable[] m_outputPullables;
 
 	/**
 	 * Initializes a processor

@@ -39,14 +39,14 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class StreamReader extends Source
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = -5927425600222556297L;
 
 	/**
 	 * The input stream from which data will be read
 	 */
-	protected InputStream m_fis = null;
+	protected transient InputStream m_fis = null;
 
 	/**
 	 * The size of chunks. The PipeReader will try to read this number
@@ -77,7 +77,7 @@ public class StreamReader extends Source
 	 * of transmission character (EOT)</a>. This has no effect when the
 	 * underlying input is not a pipe.
 	 */
-	public static final String END_CHARACTER = String.valueOf((char) 4);
+	public static final transient String END_CHARACTER = String.valueOf((char) 4);
 
 	/**
 	 * Remembers whether the underlying input stream is a file or
@@ -92,16 +92,16 @@ public class StreamReader extends Source
 	 * end or error of some kind)
 	 */
 	protected int m_returnCode;
-	public static final int ERR_OK = 0;
-	public static final int ERR_THREAD = 1;
-	public static final int ERR_EOF = 2;  // Encountered EOF (for a file)
-	public static final int ERR_EOT = 3;  // Encountered EOT (for a pipe)
+	public static final transient int ERR_OK = 0;
+	public static final transient int ERR_THREAD = 1;
+	public static final transient int ERR_EOF = 2;  // Encountered EOF (for a file)
+	public static final transient int ERR_EOT = 3;  // Encountered EOT (for a pipe)
 
-	protected BufferedReader m_br;
+	protected transient BufferedReader m_br;
 
-	protected InputStreamReader m_isr;
+	protected transient InputStreamReader m_isr;
 	
-	protected StreamListener m_listener;
+	protected transient StreamListener m_listener;
 
 	/**
 	 * Determines whether the reader operates in "pull" or "push" mode

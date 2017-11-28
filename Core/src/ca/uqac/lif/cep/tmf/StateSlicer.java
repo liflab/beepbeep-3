@@ -22,8 +22,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -77,24 +75,24 @@ public class StateSlicer extends UniformProcessor
 	 */
 	protected Function m_cleaningFunction = null;
 
-	protected Map<Object,Processor> m_slices;
+	protected HashMap<Object,Processor> m_slices;
 
-	protected Map<Object,QueueSink> m_sinks;
+	protected HashMap<Object,QueueSink> m_sinks;
 
 	/**
 	 * The last value output by the processor for each slice
 	 */
-	protected List<Object> m_lastValues;
+	protected ArrayList<Object> m_lastValues;
 
 	/**
 	 * A map between slices and their index in the various arrays
 	 */
-	protected Map<Object,Integer> m_sliceIndices;
+	protected HashMap<Object,Integer> m_sliceIndices;
 
 	/**
 	 * The values of the slices that are no longer changing
 	 */
-	protected List<Object> m_fixedValues;
+	protected LinkedList<Object> m_fixedValues;
 
 	StateSlicer()
 	{
