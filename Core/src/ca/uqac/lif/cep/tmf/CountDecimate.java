@@ -90,6 +90,7 @@ public class CountDecimate extends SingleProcessor
 		if (m_current == 0)
 		{
 			out = inputs;
+			m_lastInputs = null;
 		}
 		else if(m_shouldOutputLastInputsAnyway)
 		{
@@ -117,11 +118,11 @@ public class CountDecimate extends SingleProcessor
 	}
 
 	@Override
-	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException {
-		if(!m_shouldOutputLastInputsAnyway || m_current == 1)
+	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
+	{
+		if(!m_shouldOutputLastInputsAnyway || m_lastInputs == null)
 			return super.onEndOfTrace(outputs);
 
-		m_outputCount++;
 		outputs.add(m_lastInputs);
 		m_lastInputs = null;
 

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Queue;
 
@@ -25,7 +26,6 @@ public class EndOfTraceTest {
 
 		@Override
 		protected boolean onEndOfTrace(Object[] outputs) throws ProcessorException {
-			System.out.println(END_OF_TRACE);
 			Arrays.fill(outputs, END_OF_TRACE);
 			return true;
 		}
@@ -33,7 +33,8 @@ public class EndOfTraceTest {
 	
 	
 	@Test
-	public void testEndOfTracePrinter() throws ConnectorException {
+	public void testEndOfTracePrinter() throws ConnectorException
+	{
 		EndOfTracePassthrough endOfTracePassthrough = new EndOfTracePassthrough(1);
 		QueueSink sink = new QueueSink(1);
 		
@@ -52,7 +53,8 @@ public class EndOfTraceTest {
 	
 	
 	@Test
-	public void testMultiplexer() throws ConnectorException {
+	public void testMultiplexer() throws ConnectorException
+	{
 		Multiplexer multiplexer = new Multiplexer(2);
 		EndOfTracePassthrough endOfTracePassthrough = new EndOfTracePassthrough(1);
 		QueueSink sink = new QueueSink(1);
@@ -82,7 +84,8 @@ public class EndOfTraceTest {
 
 	
 	@Test
-	public void testPump() throws ConnectorException {
+	public void testPump() throws ConnectorException
+	{
 		QueueSource source = new QueueSource();
 		Pump pump = new Pump();
 		Passthrough passthrough = new EndOfTracePassthrough(1);
@@ -104,7 +107,8 @@ public class EndOfTraceTest {
 	}
 
 	@Test
-	public void testGroupProcessor() throws ConnectorException {
+	public void testGroupProcessor() throws ConnectorException
+	{
 		Passthrough
 				passthrough0 = new EndOfTracePassthrough(1),
 				passthrough1 = new EndOfTracePassthrough(1);
@@ -132,9 +136,9 @@ public class EndOfTraceTest {
 	}
 
 	@Test
-	public void testCountDecimate() throws ConnectorException {
-
-		int interval = 3;
+	public void testCountDecimate() throws ConnectorException
+	{
+		int interval = 4;
 
 		CountDecimate countDecimate0 = new CountDecimate(interval);
 		CountDecimate countDecimate1 = new CountDecimate(interval, true);
@@ -153,7 +157,7 @@ public class EndOfTraceTest {
 
 		int lastInput = 0;
 
-		for(int i = 0; i < 9; i++)
+		for(int i = 0; i < 25; i++)
 		{
 			pushable0.push(i);
 			pushable1.push(i);
@@ -175,6 +179,52 @@ public class EndOfTraceTest {
 		{
 			assertEquals(lastInput, (int) queueSink1.remove());
 		}
+		assertTrue(queueSink1.isEmpty());
+	}
+
+
+	@Test
+	public void testTimeDecimate() throws ConnectorException, InterruptedException {
+		int interval = 100000000;
+		TimeDecimate timeDecimate0 = new TimeDecimate(interval);
+		TimeDecimate timeDecimate1 = new TimeDecimate(interval, true);
+
+		QueueSink sink0 = new QueueSink(1);
+		QueueSink sink1 = new QueueSink(1);
+
+		Connector.connect(timeDecimate0, sink0);
+		Connector.connect(timeDecimate1, sink1);
+
+		Pushable pushable0 = timeDecimate0.getPushableInput(0);
+		Pushable pushable1 = timeDecimate1.getPushableInput(0);
+
+		Queue<Object> queueSink0 = sink0.getQueue(0);
+		Queue<Object> queueSink1 = sink1.getQueue(0);
+
+		int lastInput = 0;
+		for(int i = 0; i < 25; i++)
+		{
+			pushable0.push(i);
+			pushable1.push(i);
+			assertEquals(i, (int) queueSink0.remove());
+			assertEquals(i, (int) queueSink1.remove());
+
+			i++;
+
+			pushable0.push(i);
+			pushable1.push(i);
+			assertTrue(queueSink0.isEmpty());
+			assertTrue(queueSink1.isEmpty());
+
+			Thread.sleep(interval/1000000);
+			lastInput = i;
+		}
+
+		pushable0.notifyEndOfTrace();
+		assertTrue(queueSink0.isEmpty());
+
+		pushable1.notifyEndOfTrace();
+		assertEquals(lastInput, (int) queueSink1.remove());
 		assertTrue(queueSink1.isEmpty());
 	}
 }

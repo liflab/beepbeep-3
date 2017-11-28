@@ -23,6 +23,7 @@ import java.util.ArrayDeque;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.numbers.EmlNumber;
 
@@ -32,6 +33,8 @@ import ca.uqac.lif.cep.numbers.EmlNumber;
  * <p>
  * Note that this processor uses <code>System.nanoTime()</code> as its
  * clock.
+ * However, a mode can be specified in order to output the last input
+ * event of the trace if it has not been output already.
  * 
  * @author Sylvain Hallé
  */
@@ -48,15 +51,31 @@ public class TimeDecimate extends SingleProcessor
 	protected long m_timeLastSent;
 
 	/**
+	 * Indicates if the last input event should be output if does not correspond to the rate
+	 */
+	protected boolean m_shouldOutputLastInputsAnyway;
+
+	/**
+	 *
+	 */
+	protected Object[] m_lastInputs;
+
+	/**
 	 * Instantiates a time decimator
 	 * @param interval The interval (in nanoseconds) during which
 	 *   events should be discarded after an output event is produced
 	 */
-	public TimeDecimate(long interval)
+	public TimeDecimate(long interval, boolean shouldOutputLastInputsAnyway)
 	{
 		super(1, 1);
 		m_interval = interval;
+		m_shouldOutputLastInputsAnyway = shouldOutputLastInputsAnyway;
 		m_timeLastSent = -1;
+		m_lastInputs = null;
+	}
+
+	public TimeDecimate(long interval) {
+		this(interval, false);
 	}
 
 	@Override
@@ -83,6 +102,11 @@ public class TimeDecimate extends SingleProcessor
 			{
 				out = inputs;
 				m_timeLastSent = current_time;
+				m_lastInputs = null;
+			}
+			else if(m_shouldOutputLastInputsAnyway)
+			{
+				m_lastInputs = inputs;
 			}
 		}
 		if (out != null)
@@ -90,6 +114,18 @@ public class TimeDecimate extends SingleProcessor
 			outputs.add(out);
 			return true;
 		}
+		return true;
+	}
+
+	@Override
+	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
+	{
+		if(!m_shouldOutputLastInputsAnyway || m_lastInputs == null)
+			return super.onEndOfTrace(outputs);
+
+		outputs.add(m_lastInputs);
+		m_lastInputs = null;
+
 		return true;
 	}
 
