@@ -41,21 +41,21 @@ import ca.uqac.lif.cep.tmf.Passthrough;
 public class FunctionsTest
 {
 	@Test
-	public void testNegation() throws FunctionException
+	public void testNegation() 
 	{
 		assertEquals(false, evaluate(Negation.instance, true));
 		assertEquals(true, evaluate(Negation.instance, false));
 	}
 	
 	@Test
-	public void testOr() throws FunctionException
+	public void testOr() 
 	{
 		assertEquals(true, evaluate(Or.instance, true, false));
 		assertEquals(false, evaluate(Or.instance, false, false));
 	}
 	
 	@Test
-	public void testException() throws FunctionException
+	public void testException() 
 	{
 		boolean got_exception = false;
 		try
@@ -71,7 +71,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testId() throws FunctionException
+	public void testId() 
 	{
 		IdentityFunction f = new IdentityFunction(1);
 		assertEquals(false, evaluate(f, false));
@@ -90,14 +90,14 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testAnd() throws FunctionException
+	public void testAnd() 
 	{
 		assertEquals(false, evaluate(And.instance, true, false));
 		assertEquals(true, evaluate(And.instance, true, true));
 	}
 	
 	@Test
-	public void testPassthroughFunction() throws FunctionException
+	public void testPassthroughFunction() 
 	{
 		IdentityFunction id = new IdentityFunction(1);
 		TestPassthroughFunction ptf = new TestPassthroughFunction();
@@ -113,7 +113,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testContext1() throws FunctionException
+	public void testContext1() 
 	{
 		ContextPlaceholder cph = new ContextPlaceholder("a");
 		Context c = new Context();
@@ -137,7 +137,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testContext2() throws FunctionException
+	public void testContext2() 
 	{
 		Context c = new Context();
 		c.put("a", 6);
@@ -146,7 +146,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testArgumentPlaceholder1() throws FunctionException
+	public void testArgumentPlaceholder1() 
 	{
 		ArgumentPlaceholder aph = new ArgumentPlaceholder(0);
 		assertEquals("foo", evaluate(aph, "foo", "bar", "baz"));
@@ -165,7 +165,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testFunctionTree1() throws FunctionException
+	public void testFunctionTree1() 
 	{
 		FunctionTree ft = new FunctionTree(Addition.instance, new Constant(1), new ArgumentPlaceholder(0));
 		assertEquals(6f, evaluate(ft, 5));
@@ -182,7 +182,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testFunctionTree3() throws FunctionException
+	public void testFunctionTree3() 
 	{
 		FunctionTree ft = new FunctionTree(IfThenElse.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(1), new ArgumentPlaceholder(2));
 		assertEquals(6, evaluate(ft, false, 5, 6));
@@ -199,14 +199,14 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testFunctionTree2() throws FunctionException
+	public void testFunctionTree2() 
 	{
 		FunctionTree ft = new FunctionTree(Addition.instance, new Constant(1), new ArgumentPlaceholder(0));
 		assertEquals(6f, evaluate(ft, 5));
 	}
 	
 	@Test
-	public void testIfThenElse1() throws FunctionException
+	public void testIfThenElse1() 
 	{
 		assertEquals(3, IfThenElse.instance.getInputArity());
 		assertEquals(1, IfThenElse.instance.getOutputArity());
@@ -215,13 +215,13 @@ public class FunctionsTest
 	}
 	
 	@Test(expected=InvalidArgumentException.class)
-	public void testIfThenElse2() throws FunctionException
+	public void testIfThenElse2() 
 	{
 		evaluate(IfThenElse.instance, "foo", 5, 6);
 	}
 	
 	@Test
-	public void testConstant() throws FunctionException
+	public void testConstant() 
 	{
 		Constant ct = new Constant(6);
 		assertEquals(6, ct.getValue());
@@ -234,7 +234,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testConstantNull() throws FunctionException
+	public void testConstantNull() 
 	{
 		Constant ct = new Constant(null);
 		assertEquals(null, ct.getValue());
@@ -248,7 +248,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testProvenance() throws FunctionException
+	public void testProvenance() 
 	{
 		IdentityFunction id = new IdentityFunction(1);
 		FunctionProcessor fp = new FunctionProcessor(id);
@@ -263,7 +263,7 @@ public class FunctionsTest
 	}
 	
 	@Test(expected=PushableException.class)
-	public void testFunctionProcessorException() throws FunctionException
+	public void testFunctionProcessorException() 
 	{
 		ExceptionFunction ef = new ExceptionFunction();
 		FunctionProcessor fp = new FunctionProcessor(ef);
@@ -274,7 +274,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testEquals() throws FunctionException
+	public void testEquals() 
 	{
 		assertEquals(false, (Boolean) evaluate(Equals.instance, 0, null));
 		assertEquals(true, (Boolean) evaluate(Equals.instance, 0, 0));
@@ -295,7 +295,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testEvaluateFast() throws FunctionException
+	public void testEvaluateFast() 
 	{
 		assertEquals(evaluateFast(And.instance, true, false), evaluate(And.instance, true, false));
 	}
@@ -317,7 +317,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testEmlBoolean1() throws FunctionException
+	public void testEmlBoolean1() 
 	{
 		EmlBoolean eb = new EmlBoolean(true);
 		assertEquals(true, evaluate(eb));
@@ -334,7 +334,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testContextAssignment1() throws FunctionException
+	public void testContextAssignment1() 
 	{
 		ContextAssignment ca = new ContextAssignment("a", new Constant(6));
 		Object[] ins = new Object[]{};
@@ -345,7 +345,7 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testContextAssignment2() throws FunctionException
+	public void testContextAssignment2() 
 	{
 		ContextAssignment ca = new ContextAssignment("a", new Constant(6));
 		Object[] ins = new Object[]{};
@@ -355,7 +355,7 @@ public class FunctionsTest
 		assertEquals(6, pt.getContext("a"));
 	}
 	
-	public static Object evaluate(Function f, Context c, Object ... inputs) throws FunctionException
+	public static Object evaluate(Function f, Context c, Object ... inputs) 
 	{
 		Object[] ins = inputs;
 		Object[] out = new Object[1];
@@ -363,7 +363,7 @@ public class FunctionsTest
 		return out[0];
 	}
 	
-	public static Object evaluate(Function f, Object ... inputs) throws FunctionException
+	public static Object evaluate(Function f, Object ... inputs) 
 	{
 		Object[] ins = inputs;
 		Object[] out = new Object[1];
@@ -371,7 +371,7 @@ public class FunctionsTest
 		return out[0];
 	}
 	
-	public static Object evaluateFast(Function f, Object ... inputs) throws FunctionException
+	public static Object evaluateFast(Function f, Object ... inputs) 
 	{
 		Object[] ins = inputs;
 		Object[] out = new Object[1];
@@ -392,7 +392,7 @@ public class FunctionsTest
 		}
 
 		@Override
-		public Number getValue(Number x) throws FunctionException 
+		public Number getValue(Number x)  
 		{
 			throw new FunctionException("foo");
 		}

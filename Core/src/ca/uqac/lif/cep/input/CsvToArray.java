@@ -1,6 +1,5 @@
 package ca.uqac.lif.cep.input;
 
-import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.StringUtils;
 
@@ -28,7 +27,7 @@ public class CsvToArray extends UnaryFunction<String,Object>
 	}
 
 	@Override
-	public Object getValue(String s) throws FunctionException
+	public Object getValue(String s) 
 	{
 		String[] parts = s.split(m_separator);
 		Object[] typed_parts = new Object[parts.length];

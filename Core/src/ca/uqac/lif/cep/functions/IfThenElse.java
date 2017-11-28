@@ -44,7 +44,7 @@ public class IfThenElse extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException 
+	public void evaluate(Object[] inputs, Object[] outputs)  
 	{
 		try
 		{

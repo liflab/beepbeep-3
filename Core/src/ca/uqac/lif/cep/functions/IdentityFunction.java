@@ -48,7 +48,7 @@ public final class IdentityFunction extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException 
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)  
 	{
 		for (int i = 0; i < inputs.length; i++)
 		{
@@ -57,7 +57,7 @@ public final class IdentityFunction extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException 
+	public void evaluate(Object[] inputs, Object[] outputs)  
 	{
 		evaluate(inputs, outputs, null);
 	}

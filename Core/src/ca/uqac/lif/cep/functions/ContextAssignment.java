@@ -27,10 +27,10 @@ public class ContextAssignment
 	 * Assigns a value to a context element
 	 * @param inputs The inputs to evaluate the assignment function
 	 * @param context The context to update
-	 * @throws FunctionException Any exception occurring when assigning a value
+	 * @ Any exception occurring when assigning a value
 	 *   to the context element
 	 */
-	public void assign(Object[] inputs, Object[] outputs, Context context) throws FunctionException
+	public void assign(Object[] inputs, Object[] outputs, Context context) 
 	{
 		m_value.evaluate(inputs, outputs, context);
 		context.put(m_lvalue, outputs[0]);
@@ -40,10 +40,10 @@ public class ContextAssignment
 	 * Updates the context of an object
 	 * @param inputs The inputs to evaluate the assignment function
 	 * @param c The object
-	 * @throws FunctionException Any exception occurring when assigning a value
+	 * @ Any exception occurring when assigning a value
 	 *   to the context element
 	 */
-	public void assign(Object[] inputs, Object[] outputs, Contextualizable c) throws FunctionException
+	public void assign(Object[] inputs, Object[] outputs, Contextualizable c) 
 	{
 		Context context = c.getContext();
 		assign(inputs, outputs, context);

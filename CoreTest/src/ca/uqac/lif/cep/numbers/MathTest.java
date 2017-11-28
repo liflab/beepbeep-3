@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 import java.util.Queue;
 import java.util.Vector;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
@@ -31,6 +30,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.FunctionsTest;
 import ca.uqac.lif.cep.tmf.ConstantProcessor;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Fork;
@@ -44,10 +44,10 @@ import ca.uqac.lif.cep.tmf.Window;
  */
 public class MathTest extends BeepBeepUnitTest
 {
-
-	@Before
-	public void setUp() throws Exception
+	@Test
+	public void testAddition()
 	{
+		assertEquals(8f, FunctionsTest.evaluate(Addition.instance, 3, 5));
 	}
 	
 	@Test
@@ -63,22 +63,13 @@ public class MathTest extends BeepBeepUnitTest
 		Number n;
 		cp.push();
 		n = (Number) q.remove();
-		if (n.intValue() != 1)
-		{
-			fail("Wrong number");
-		}
+		assertEquals(1, n.intValue());
 		cp.push();
 		n = (Number) q.remove();
-		if (n.intValue() != 2)
-		{
-			fail("Wrong number");
-		}
+		assertEquals(2, n.intValue());
 		cp.push();
 		n = (Number) q.remove();
-		if (n.intValue() != 3)
-		{
-			fail("Wrong number");
-		}
+		assertEquals(3, n.intValue());
 	}
 	
 	@Test
