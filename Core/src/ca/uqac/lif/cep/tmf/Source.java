@@ -40,6 +40,11 @@ import ca.uqac.lif.cep.SingleProcessor;
  */
 public abstract class Source extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 482894656711217843L;
+
 	public Source(int out_arity)
 	{
 		super(0, out_arity);
@@ -59,7 +64,7 @@ public abstract class Source extends SingleProcessor
 		{
 			throw new PushableException(e);
 		}
-		if (output == null || output.isEmpty())
+		if (output.isEmpty())
 		{
 			return;
 		}

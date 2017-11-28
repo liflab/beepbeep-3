@@ -25,7 +25,11 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  */
 public class Maximum extends BinaryFunction<Number,Number,Number>
 {
-	public static transient final Maximum instance = new Maximum();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2831193067720229820L;
+	public static final transient Maximum instance = new Maximum();
 
 	Maximum()
 	{

@@ -7,6 +7,11 @@ import ca.uqac.lif.cep.util.StringUtils;
 public class CsvToArray extends UnaryFunction<String,Object>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1496355704602761974L;
+
+	/**
 	 * An instance of this function with default values 
 	 */
 	public static final transient CsvToArray instance = new CsvToArray(":");

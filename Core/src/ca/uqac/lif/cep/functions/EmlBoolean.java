@@ -17,21 +17,16 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
-
 public class EmlBoolean extends Constant
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5161294239594819954L;
+
 	public EmlBoolean(Object o)
 	{
 		super(parseBoolValue(o));
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Object o = stack.pop();
-		stack.push(new EmlBoolean(o));
 	}
 
 	public static boolean toEmlBoolean(Object o)
@@ -48,22 +43,14 @@ public class EmlBoolean extends Constant
 		else if (o instanceof String)
 		{
 			String s = (String) o;
-			if (s.compareToIgnoreCase("true") == 0
+			return s.compareToIgnoreCase("true") == 0
 					|| s.compareToIgnoreCase("T") == 0
-					|| s.compareToIgnoreCase("1") == 0)
-			{
-				return true;
-			}
-			return false;
+					|| s.compareToIgnoreCase("1") == 0;
 		}
 		if (o instanceof Number)
 		{
 			Number n = (Number) o;
-			if (Math.abs(n.doubleValue()) < 0.00001)
-			{
-				return false;
-			}
-			return true;
+			return Math.abs(n.doubleValue()) >= 0.00001;
 		}
 		// When in doubt, return false
 		return false;

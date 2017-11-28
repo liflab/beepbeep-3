@@ -28,6 +28,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class MultisetAddElement extends BinaryFunction<Multiset,Object,Multiset>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 893561486871547176L;
+	/**
 	 * A static instance of the function
 	 */
 	public static final transient MultisetAddElement instance = new MultisetAddElement();

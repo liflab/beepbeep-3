@@ -17,13 +17,14 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 public class IsLessOrEqual extends BinaryFunction<Number,Number,Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6908912872189051473L;
 	/**
 	 * A static instance of the function
 	 */
@@ -32,11 +33,6 @@ public class IsLessOrEqual extends BinaryFunction<Number,Number,Boolean>
 	private IsLessOrEqual()
 	{
 		super(Number.class, Number.class, Boolean.class);
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override

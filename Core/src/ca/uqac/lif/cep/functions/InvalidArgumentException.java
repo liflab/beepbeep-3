@@ -22,6 +22,7 @@ package ca.uqac.lif.cep.functions;
  * invalid.  
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2166")
 public class InvalidArgumentException extends FunctionException
 {
 	/**

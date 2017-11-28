@@ -18,14 +18,9 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * After returning an input event, discards all others for the next
@@ -35,11 +30,16 @@ import ca.uqac.lif.cep.numbers.EmlNumber;
  * clock.
  * However, a mode can be specified in order to output the last input
  * event of the trace if it has not been output already.
- * 
+ *
  * @author Sylvain Hallé
  */
 public class TimeDecimate extends SingleProcessor
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -7825576479352779012L;
+
 	/**
 	 * Interval of time
 	 */
@@ -86,6 +86,7 @@ public class TimeDecimate extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out = null;
@@ -129,17 +130,8 @@ public class TimeDecimate extends SingleProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Processor p = (Processor) stack.pop();
-		EmlNumber interval = (EmlNumber) stack.pop();
-		TimeDecimate out = new TimeDecimate(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
-	}
-
 	@Override
-	public TimeDecimate clone()
+	public TimeDecimate duplicate()
 	{
 		return new TimeDecimate(m_interval);
 	}

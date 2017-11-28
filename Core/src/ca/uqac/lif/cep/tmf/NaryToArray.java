@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
@@ -27,6 +26,11 @@ import ca.uqac.lif.cep.UniformProcessor;
  */
 public class NaryToArray extends UniformProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5618657346614790685L;
+
 	public NaryToArray(int in_arity)
 	{
 		super(in_arity, 1);
@@ -45,7 +49,7 @@ public class NaryToArray extends UniformProcessor
 	}
 
 	@Override
-	public NaryToArray clone()
+	public NaryToArray duplicate()
 	{
 		return new NaryToArray(getInputArity());
 	}

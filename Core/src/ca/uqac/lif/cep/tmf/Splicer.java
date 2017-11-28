@@ -38,6 +38,11 @@ import ca.uqac.lif.cep.Pullable;
 public class Splicer extends Source
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5691358257278248882L;
+
+	/**
 	 * The list of processors to splice together
 	 */
 	protected Processor[] m_processors;
@@ -50,7 +55,7 @@ public class Splicer extends Source
 	/**
 	 * The pullables of the processor we are currently reading from
 	 */
-	protected Pullable[] m_pullables;
+	protected transient Pullable[] m_pullables;
 
 	/**
 	 * 
@@ -120,7 +125,7 @@ public class Splicer extends Source
 			for (int i = 0; i < m_pullables.length; i++)
 			{
 				boolean status = m_pullables[i].hasNext();
-				if (status == false)
+				if (!status)
 				{
 					// No use in trying further
 					has_null = true;
@@ -149,7 +154,7 @@ public class Splicer extends Source
 	}
 
 	@Override
-	public Splicer clone()
+	public Splicer duplicate()
 	{
 		return new Splicer(m_processors);
 	}

@@ -23,6 +23,11 @@ package ca.uqac.lif.cep.functions;
 public class CumulativeFunction<T> extends UnaryFunction<T,T>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1164680468940040345L;
+
+	/**
 	 * The last value returned by the function
 	 */
 	private T m_lastValue;
@@ -64,9 +69,8 @@ public class CumulativeFunction<T> extends UnaryFunction<T,T>
 	}
 
 	@Override
-	public CumulativeFunction<T> clone()
+	public CumulativeFunction<T> duplicate()
 	{
-		CumulativeFunction<T> out = new CumulativeFunction<T>(m_function.clone());
-		return out;
+		return new CumulativeFunction<T>(m_function.duplicate());
 	}
 }

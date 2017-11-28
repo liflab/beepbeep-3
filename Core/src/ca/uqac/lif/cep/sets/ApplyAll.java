@@ -30,6 +30,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class ApplyAll extends UnaryFunction<Object,Object>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3586573556413770554L;
+	/**
 	 * The function to apply on each element
 	 */
 	protected Function m_function;

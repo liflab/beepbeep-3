@@ -17,9 +17,6 @@
  */
 package ca.uqac.lif.cep.sets;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 
 /**
@@ -39,6 +36,11 @@ import ca.uqac.lif.cep.functions.CumulativeFunction;
 public class BagUnion extends CumulativeFunction<Multiset>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7459604471060231209L;
+
+	/**
 	 * Note that BagUnion <strong>cannot</strong> have a single static
 	 * instance, as a cumulative function has a memory
 	 */
@@ -47,10 +49,4 @@ public class BagUnion extends CumulativeFunction<Multiset>
 		super(MultisetUnion.instance);
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		stack.pop(); // UNION
-		stack.pop(); // BAG
-		stack.push(new BagUnion());
-	}
 }

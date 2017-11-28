@@ -35,6 +35,10 @@ import ca.uqac.lif.cep.UniformProcessor;
 public class FunctionProcessor extends UniformProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1308814238970584958L;
+	/**
 	 * The object responsible for the computation
 	 */
 	protected final Function m_function;
@@ -64,8 +68,12 @@ public class FunctionProcessor extends UniformProcessor
 			if (m_eventTracker != null)
 			{
 				for (int i = 0; i < inputs.length; i++)
+				{
 					for (int j = 0; j < outputs.length; j++)
+					{
 						associateToInput(i, m_inputCount, j, m_outputCount);
+					}
+				}
 				m_inputCount++;
 				m_outputCount++;
 			}
@@ -79,16 +87,11 @@ public class FunctionProcessor extends UniformProcessor
 	}
 
 	@Override
-	public synchronized FunctionProcessor clone()
+	public synchronized FunctionProcessor duplicate()
 	{
-		FunctionProcessor out = new FunctionProcessor(m_function.clone(m_context));
+		FunctionProcessor out = new FunctionProcessor(m_function.duplicate());
 		cloneInto(out);
 		return out;
-	}
-	
-	public synchronized void cloneInto(FunctionProcessor out)
-	{
-		super.cloneInto(out);
 	}
 
 	@Override
@@ -99,7 +102,7 @@ public class FunctionProcessor extends UniformProcessor
 	}
 
 	@Override
-	public final synchronized Class<?> getOutputTypeFor(int index)
+	public final synchronized Class<?> getOutputType(int index)
 	{
 		// The type is determined by that of the underlying function
 		return m_function.getOutputTypeFor(index);
@@ -109,14 +112,12 @@ public class FunctionProcessor extends UniformProcessor
 	public synchronized void setContext(Context context)
 	{
 		super.setContext(context);
-		m_function.setContext(context);
 	}
 
 	@Override
 	public synchronized void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
-		m_function.setContext(key, value);
 	}
 
 	@Override

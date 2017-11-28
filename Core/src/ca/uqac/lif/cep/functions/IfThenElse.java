@@ -22,25 +22,29 @@ import java.util.Set;
 import ca.uqac.lif.cep.Connector.Variant;
 
 /**
- * Processor that acts as an if-then-else. If its first input is true,
+ * Function that acts as an if-then-else. If its first input is true,
  * it returns its second input; otherwise it returns its third input.
  * 
  * @author Sylvain Hallé
  */
-public class IfThenElse extends SimpleFunction
+public class IfThenElse extends Function
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8956885763514327274L;
 	/**
 	 * The unique visible instance of this function
 	 */
 	public static final IfThenElse instance = new IfThenElse();
-	
-	private IfThenElse()
+
+	protected IfThenElse()
 	{
 		super();
 	}
-	
+
 	@Override
-	public void compute(Object[] inputs, Object[] outputs) throws FunctionException 
+	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException 
 	{
 		try
 		{
@@ -61,7 +65,7 @@ public class IfThenElse extends SimpleFunction
 
 	@Override
 	public int getInputArity()
-{
+	{
 		return 3;
 	}
 
@@ -78,9 +82,9 @@ public class IfThenElse extends SimpleFunction
 	}
 
 	@Override
-	public IfThenElse clone() 
+	public IfThenElse duplicate() 
 	{
-		return this;
+		return instance;
 	}
 
 	@Override
@@ -89,6 +93,10 @@ public class IfThenElse extends SimpleFunction
 		if (index == 0)
 		{
 			classes.add(Boolean.class);
+		}
+		else
+		{
+			classes.add(Variant.class);
 		}
 	}
 

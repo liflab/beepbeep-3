@@ -29,6 +29,11 @@ import java.util.Queue;
 public class SinkLast extends Sink
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8285821223160841586L;
+
+	/**
 	 * The last event (or array of events) received
 	 */
 	protected Object[] m_last;
@@ -73,7 +78,7 @@ public class SinkLast extends Sink
 	}
 
 	@Override
-	public SinkLast clone()
+	public SinkLast duplicate()
 	{
 		return new SinkLast(getInputArity());
 	}

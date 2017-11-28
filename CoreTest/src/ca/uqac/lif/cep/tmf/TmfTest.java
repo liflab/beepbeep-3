@@ -24,17 +24,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.Queue;
 import java.util.Vector;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Freeze;
@@ -53,16 +49,8 @@ import ca.uqac.lif.cep.tmf.Window;
  */
 public class TmfTest extends BeepBeepUnitTest 
 {
-	protected Interpreter m_interpreter;
-
-	@Before
-	public void setUp()
-	{
-		m_interpreter = new Interpreter();
-	}
-
 	@Test
-	public void testTrim() throws ConnectorException
+	public void testTrim() 
 	{
 		Trim d = new Trim(3);
 		QueueSink qs = new QueueSink(1);
@@ -86,20 +74,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testTrimGrammar() throws ParseException, ConnectorException
-	{
-		QueueSource qs = new QueueSource();
-		qs.setEvents(new Integer[]{0, 1, 2, 3, 4, 5, 6});
-		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Object q = m_interpreter.parseQuery("TRIM 3 OF @foo");
-		assertNotNull(q);
-		assertTrue(q instanceof Trim);
-		Trim cd = (Trim) q;
-		assertEquals(3, cd.m_delay);
-	}
-
-	@Test
-	public void testFilter() throws ConnectorException
+	public void testFilter() 
 	{
 		Filter f = new Filter();
 		QueueSink qs = new QueueSink(1);
@@ -118,7 +93,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testCountDecimate1() throws ConnectorException
+	public void testCountDecimate1() 
 	{
 		CountDecimate f = new CountDecimate(3);
 		QueueSink qs = new QueueSink(1);
@@ -147,7 +122,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testCountDecimate2() throws ConnectorException
+	public void testCountDecimate2() 
 	{
 		CountDecimate f = new CountDecimate();
 		QueueSink qs = new QueueSink(1);
@@ -168,20 +143,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testCountDecimateGrammar() throws ParseException, ConnectorException
-	{
-		QueueSource qs = new QueueSource();
-		qs.addEvent(1);
-		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Object q = m_interpreter.parseQuery("EVERY 3RD OF @foo");
-		assertNotNull(q);
-		assertTrue(q instanceof CountDecimate);
-		CountDecimate cd = (CountDecimate) q;
-		assertEquals(3, cd.m_interval); 
-	}
-
-	@Test
-	public void testFreeze() throws ConnectorException
+	public void testFreeze() 
 	{
 		Freeze f = new Freeze();
 		QueueSink qs = new QueueSink(1);
@@ -200,17 +162,8 @@ public class TmfTest extends BeepBeepUnitTest
 		}
 	}
 
-
 	@Test
-	public void testFreezeGrammar() throws ParseException, ConnectorException
-	{
-		Object q = m_interpreter.parseQuery("FREEZE CONSTANT 1");
-		assertNotNull(q);
-		assertTrue(q instanceof Freeze); 
-	}
-
-	@Test
-	public void testPrefix1() throws ConnectorException
+	public void testPrefix1() 
 	{
 		Prefix f = new Prefix(3);
 		QueueSink qs = new QueueSink(1);
@@ -236,17 +189,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testPrefixGrammar() throws ParseException, ConnectorException
-	{
-		Object q = m_interpreter.parseQuery("THE FIRST 3 OF CONSTANT 1");
-		assertNotNull(q);
-		assertTrue(q instanceof Prefix);
-		Prefix cd = (Prefix) q;
-		assertEquals(3, cd.m_delay); 
-	}
-
-	@Test
-	public void testQueueSource1() throws ConnectorException
+	public void testQueueSource1() 
 	{
 		Object o = null;
 		QueueSource source = new QueueSource();
@@ -261,7 +204,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testQueueSource2() throws ConnectorException
+	public void testQueueSource2() 
 	{
 		Object o = null;
 		Vector<Object> queue = new Vector<Object>();
@@ -280,7 +223,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testQueueSource3() throws ConnectorException
+	public void testQueueSource3() 
 	{
 		Vector<Object> queue = new Vector<Object>();
 		queue.add(0);
@@ -299,7 +242,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testSinkLast() throws ConnectorException
+	public void testSinkLast() 
 	{
 		Vector<Object> queue = new Vector<Object>();
 		queue.add(0);
@@ -319,7 +262,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testQueueSink1() throws ConnectorException
+	public void testQueueSink1() 
 	{
 		Object[] o = null;
 		QueueSink sink = new QueueSink(2);
@@ -338,7 +281,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testQueueSink2() throws ConnectorException
+	public void testQueueSink2() 
 	{
 		Vector<Object> queue = new Vector<Object>();
 		queue.add(0);
@@ -359,7 +302,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testQueueSink3() throws ConnectorException
+	public void testQueueSink3() 
 	{
 		Vector<Object> queue = new Vector<Object>();
 		queue.add(0);
@@ -380,7 +323,7 @@ public class TmfTest extends BeepBeepUnitTest
 
 
 	@Test
-	public void testWindow1() throws ConnectorException
+	public void testWindow1() 
 	{
 		Passthrough p = new Passthrough(1);
 		Window w = new Window(p, 3);
@@ -401,18 +344,7 @@ public class TmfTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testWindowGrammar() throws ParseException, ConnectorException
-	{
-		String s = "GET CONSTANT 1 FROM CONSTANT 1 ON A WINDOW OF 3";
-		Object q = m_interpreter.parseQuery(s);
-		assertNotNull(q);
-		assertTrue(q instanceof Window);
-		Window cd = (Window) q;
-		assertEquals(3, cd.m_width);
-	}
-
-	@Test
-	public void testInsert() throws ConnectorException
+	public void testInsert() 
 	{
 		Object[] to_insert = {99};
 		Insert ins = new Insert(to_insert, 3);

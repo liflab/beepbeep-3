@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.ProcessorException;
@@ -30,10 +29,16 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * Takes a sliding window of <i>n</i> successive input events,
  * passes them to an <i>n</i>-ary function and outputs the result.
  * This currently only works for functions with an output arity of 1.
+ * @see Window
  * @author Sylvain Hallé
  */
 public class WindowFunction extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5751397491795610794L;
+
 	/**
 	 * The window's width
 	 */
@@ -47,7 +52,7 @@ public class WindowFunction extends SingleProcessor
 	/**
 	 * The event window
 	 */
-	protected List<Object> m_window;
+	protected LinkedList<Object> m_window;
 
 	WindowFunction()
 	{
@@ -109,9 +114,9 @@ public class WindowFunction extends SingleProcessor
 	}
 
 	@Override
-	public WindowFunction clone()
+	public WindowFunction duplicate()
 	{
-		WindowFunction wf = new WindowFunction(m_function.clone());
+		WindowFunction wf = new WindowFunction(m_function.duplicate());
 		wf.m_window.addAll(m_window);
 		return wf;
 	}

@@ -17,19 +17,13 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.logging.Level;
-
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.EmlNumber;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Simulates the application of a "sliding window" to a trace.
@@ -48,9 +42,14 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class Window extends SingleProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1732221465093229578L;
+
+	/**
 	 * The window's width
 	 */
-	protected int m_width;
+	private int m_width;
 
 	/**
 	 * The internal processor
@@ -60,7 +59,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The internal processor's input pushables
 	 */
-	protected Pushable[] m_innerInputs;
+	protected transient Pushable[] m_innerInputs;
 
 	/**
 	 * The sink that will receive the events produced by the inner processor
@@ -70,7 +69,7 @@ public class Window extends SingleProcessor
 	/**
 	 * The event windows
 	 */
-	protected List<Object>[] m_window;
+	protected LinkedList<Object>[] m_window;
 
 	public Window(Processor in_processor, int width)
 	{
@@ -87,7 +86,7 @@ public class Window extends SingleProcessor
 	{
 		super.reset();
 		int arity = getInputArity();
-		m_window = new List[arity];
+		m_window = new LinkedList[arity];
 		m_innerInputs = new Pushable[arity];
 		m_processor.reset();
 		for (int i = 0; i < arity; i++)
@@ -96,17 +95,11 @@ public class Window extends SingleProcessor
 			m_innerInputs[i] = m_processor.getPushableInput(i);
 		}
 		m_sink.reset();
-		try
-		{
-			Connector.connect(m_processor, m_sink);
-		}
-		catch (ConnectorException e)
-		{
-			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
-		}
+		Connector.connect(m_processor, m_sink);
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		// Add the inputs to each window
@@ -114,7 +107,7 @@ public class Window extends SingleProcessor
 		int arity = inputs.length;
 		for (int i = 0; i < arity; i++)
 		{
-			List<Object> q = m_window[i];
+			LinkedList<Object> q = m_window[i];
 			q.add(inputs[i]);
 			int size_diff = q.size() - m_width;
 			leftTrim(size_diff, q);
@@ -134,7 +127,7 @@ public class Window extends SingleProcessor
 				for (int j = 0; j < getInputArity(); j++)
 				{
 					// Feed
-					List<Object> q = m_window[j];
+					LinkedList<Object> q = m_window[j];
 					Object o = q.get(i);
 					Pushable p = m_innerInputs[j];
 					p.push(o);
@@ -180,29 +173,17 @@ public class Window extends SingleProcessor
 		}
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	@Override
+	public Window duplicate()
 	{
-		EmlNumber width = (EmlNumber) stack.pop();
-		stack.pop(); // OF
-		stack.pop(); // WINDOW
-		stack.pop(); // A
-		stack.pop(); // ON
-		//stack.pop(); // (
-		Processor input_trace = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // FROM
-		//stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // GET
-		Window out = new Window(p, width.intValue());
-		Connector.connect(input_trace, out);
-		stack.push(out);
+		return new Window(m_processor.duplicate(), m_width);
 	}
 
-	@Override
-	public Window clone()
-	{
-		return new Window(m_processor.clone(), m_width);
+	public int getWidth() {
+		return m_width;
+	}
+
+	public void setWidth(int m_width) {
+		this.m_width = m_width;
 	}
 }

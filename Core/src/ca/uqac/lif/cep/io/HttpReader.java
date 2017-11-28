@@ -22,10 +22,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Queue;
-import java.util.ArrayDeque;
 import java.util.logging.Level;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
@@ -36,6 +34,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
  */
 public class HttpReader extends StreamReader
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4529083150218166174L;
+
 	/**
 	 * The User-Agent string that the reader will send in its HTTP
 	 * requests
@@ -68,14 +71,6 @@ public class HttpReader extends StreamReader
 			setInputStream(is);
 		}
 		return super.compute(inputs, outputs);
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		String url = (String) stack.pop();
-		stack.pop(); // URL
-		HttpReader hr = new HttpReader(url);
-		stack.push(hr);
 	}
 
 	/**

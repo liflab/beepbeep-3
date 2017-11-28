@@ -29,6 +29,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class MultisetUnion extends BinaryFunction<Multiset,Multiset,Multiset>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7294133208351329729L;
+	/**
 	 * A static instance of the function
 	 */
 	public static final transient MultisetUnion instance = new MultisetUnion();

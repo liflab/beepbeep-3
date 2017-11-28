@@ -36,6 +36,11 @@ import ca.uqac.lif.cep.SingleProcessor;
  */
 public abstract class Sink extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -595334820089223308L;
+
 	public Sink()
 	{
 		this(1);
@@ -49,7 +54,7 @@ public abstract class Sink extends SingleProcessor
 	/**
 	 * Tells the sink to pull events from the pipeline
 	 */
-	public final void pull() throws PullableException
+	public final void pull()
 	{
 		Object[] inputs = new Object[getInputArity()];
 		for (int i = 0; i < getInputArity(); i++)
@@ -86,6 +91,5 @@ public abstract class Sink extends SingleProcessor
 		{
 			throw new PullableException(e);
 		}
-	}
-
+	}	
 }

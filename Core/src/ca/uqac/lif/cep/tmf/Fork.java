@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.tmf;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
 
@@ -31,13 +32,18 @@ import ca.uqac.lif.cep.UniformProcessor;
  */
 public class Fork extends UniformProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1337534560419116997L;
+
 	public Fork(int out_arity)
 	{
 		super(1, out_arity);
 	}
 
 	@Override
-	public Fork clone()
+	public Fork duplicate()
 	{
 		return new Fork(getOutputArity());
 	}
@@ -62,6 +68,12 @@ public class Fork extends UniformProcessor
 	{
 		m_outputArray = new Object[out_arity];
 		m_outputQueues = new Queue[out_arity];
+		Pullable[] new_out_pullables = new Pullable[out_arity]; 
+		for (int i = 0; i < m_outputArity; i++)
+		{
+			new_out_pullables[i] = m_outputPullables[i];
+		}
+		m_outputPullables = new_out_pullables;
 		m_outputArity = out_arity;
 		for (int i = 0; i < m_outputArity; i++)
 		{

@@ -23,12 +23,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-
-import ca.uqac.lif.bullwinkle.BnfRule;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Encapsulates a chain of processors as if it were a single one.
@@ -38,21 +32,26 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class GroupProcessor extends Processor
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * The set of processors included in the group
 	 */
-	private Set<Processor> m_processors = null;
+	private HashSet<Processor> m_processors = null;
 
 	/**
 	 * The {@link Pushable}s associated to each of the processor's
 	 * input traces
 	 */
-	private List<Pushable> m_inputPushables = null;
+	private transient List<Pushable> m_inputPushables = null;
 
 	/**
 	 * The {@link Pullable}s associated to each of the processor's
 	 * output traces
 	 */
-	private List<Pullable> m_outputPullables = null;
+	private transient List<Pullable> m_outputPullables = null;
 
 	/**
 	 * A map between numbers and processor associations. An element
@@ -60,7 +59,7 @@ public class GroupProcessor extends Processor
 	 * group processor is in fact the <i>n</i>-th input of processor
 	 * <code>p</code>
 	 */
-	private Map<Integer,ProcessorAssociation> m_inputPullableAssociations;
+	private HashMap<Integer,ProcessorAssociation> m_inputPullableAssociations;
 
 	/**
 	 * A map between numbers and processor associations. An element
@@ -68,19 +67,7 @@ public class GroupProcessor extends Processor
 	 * group processor is in fact the <i>n</i>-th output of processor
 	 * <code>p</code>
 	 */
-	private Map<Integer,ProcessorAssociation> m_outputPushableAssociations;
-
-	/**
-	 * If this group processor is associated to a BNF rule, this contains
-	 * the name of the non-terminal part (left-hand side) of the rule
-	 */
-	private String m_ruleName;
-
-	/**
-	 * If this group processor is associated to a BNF rule, this contains
-	 * the name right-hand side of the rule
-	 */
-	private BnfRule m_rule;
+	private HashMap<Integer,ProcessorAssociation> m_outputPushableAssociations;
 
 	/**
 	 * Crate a group processor
@@ -95,33 +82,6 @@ public class GroupProcessor extends Processor
 		m_outputPullables = new ArrayList<Pullable>();
 		m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
 		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
-	}
-
-	/**
-	 * Sets the name of the rule associated to this processor
-	 * @param rule_name The rule name
-	 */
-	synchronized public void setRuleName(String rule_name)
-	{
-		m_ruleName = rule_name;
-	}
-
-	/**
-	 * Retrieves the name of the rule associated to this processor
-	 * @return The rule name
-	 */
-	synchronized public String getRuleName()
-	{
-		return m_ruleName;
-	}
-
-	/**
-	 * Retrieves the BNF parsing rule associated to this group processor
-	 * @return The parsing rule
-	 */
-	synchronized public BnfRule getRule()
-	{
-		return m_rule;
 	}
 
 	/**
@@ -155,15 +115,12 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public void reset()
+	public synchronized void reset()
 	{
 		// Reset all processors inside the group
-		if (m_processors != null)
+		for (Processor p : m_processors)
 		{
-			for (Processor p : m_processors)
-			{
-				p.reset();
-			}
+			p.reset();
 		}
 	}
 
@@ -229,36 +186,36 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public Pullable getPullableOutput(int index)
+	public synchronized Pullable getPullableOutput(int index)
 	{
 		return new ProxyPullable(m_outputPullables.get(index), index);
 	}
 
 	@Override
-	synchronized public final void setPullableInput(int i, Pullable p)
+	public final synchronized void setPullableInput(int i, Pullable p)
 	{
 		ProcessorAssociation a = m_inputPullableAssociations.get(i);
 		a.m_processor.setPullableInput(a.m_ioNumber, p);
 	}
 
-	synchronized public final void setPushableOutputAssociation(int i, Processor p, int j)
+	public final synchronized void setPushableOutputAssociation(int i, Processor p, int j)
 	{
 		m_outputPushableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
 	}
 
 	@Override
-	synchronized public final void setPushableOutput(int i, Pushable p)
+	public final synchronized void setPushableOutput(int i, Pushable p)
 	{
 		ProcessorAssociation a = m_outputPushableAssociations.get(i);
 		a.m_processor.setPushableOutput(a.m_ioNumber, p);
 	}
 
-	synchronized public final void setPullableInputAssociation(int i, Processor p, int j)
+	public final synchronized void setPullableInputAssociation(int i, Processor p, int j)
 	{
 		m_inputPullableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
 	}
 
-	synchronized public final void setPushableInput(int i, Pushable p)
+	public final synchronized void setPushableInput(int i, Pushable p)
 	{
 		if (i == m_inputPushables.size())
 		{
@@ -270,7 +227,7 @@ public class GroupProcessor extends Processor
 		}
 	}
 
-	synchronized public final void setPullableOutput(int i, Pullable p)
+	public final synchronized void setPullableOutput(int i, Pullable p)
 	{
 		if (i == m_outputPullables.size())
 		{
@@ -283,14 +240,14 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public final Pushable getPushableOutput(int index)
+	public final synchronized Pushable getPushableOutput(int index)
 	{
 		ProcessorAssociation a = m_outputPushableAssociations.get(index);
 		return a.m_processor.getPushableOutput(a.m_ioNumber);
 	}
 
 	@Override
-	synchronized public final Pullable getPullableInput(int index)
+	public final synchronized Pullable getPullableInput(int index)
 	{
 		ProcessorAssociation a = m_inputPullableAssociations.get(index);
 		return a.m_processor.getPullableInput(a.m_ioNumber);
@@ -308,7 +265,7 @@ public class GroupProcessor extends Processor
 			{
 				start = p;
 			}
-			Processor clone_p = p.clone();
+			Processor clone_p = p.duplicate();
 			clone_p.setContext(p.m_context);
 			new_procs.put(p.getId(), clone_p);
 			group.addProcessor(clone_p);
@@ -336,7 +293,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public synchronized GroupProcessor clone()
+	public synchronized GroupProcessor duplicate()
 	{
 		GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
 		cloneInto(group);
@@ -370,7 +327,8 @@ public class GroupProcessor extends Processor
 				{
 					Processor target = push.getProcessor();
 					int j = push.getPosition();
-					Processor new_p, new_target;
+					Processor new_p;
+					Processor new_target;
 					synchronized (m_correspondences)
 					{
 						new_p = m_correspondences.get(p.getId());
@@ -380,14 +338,7 @@ public class GroupProcessor extends Processor
 					{
 						// new_p and new_target may be null if they refer to a processor
 						// outside of the group
-						try
-						{
-							Connector.connect(new_p, new_target, i, j);
-						}
-						catch (ConnectorException e)
-						{
-							BeepBeepLogger.logger.log(Level.SEVERE, "", e);
-						}
+						Connector.connect(new_p, i, new_target, j);
 					}
 				}
 			}
@@ -419,50 +370,50 @@ public class GroupProcessor extends Processor
 		protected Pullable m_pullable;
 
 		@Override
-		synchronized public void remove()
+		public synchronized void remove()
 		{
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		synchronized public Object pullSoft()
+		public synchronized Object pullSoft()
 		{
 			return m_pullable.pullSoft();
 		}
 
 		@Override
-		synchronized public Object pull()
+		public synchronized Object pull()
 		{
 			return m_pullable.pull();
 		}
 
 		@Override
-		synchronized public Object next()
+		public synchronized Object next()
 		{
 			return m_pullable.next();
 		}
 
 		@Override
-		synchronized public NextStatus hasNextSoft()
+		public synchronized NextStatus hasNextSoft()
 		{
 			return m_pullable.hasNextSoft();
 		}
 
 		@Override
-		synchronized public boolean hasNext()
+		public synchronized boolean hasNext()
 		{
 			return m_pullable.hasNext();
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return GroupProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_position;
 		}
@@ -480,25 +431,25 @@ public class GroupProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Iterator<Object> iterator()
+		public synchronized Iterator<Object> iterator()
 		{
 			return this;
 		}
 
 		@Override
-		synchronized public void start()
+		public synchronized void start()
 		{
 			m_pullable.start();
 		}
 
 		@Override
-		synchronized public void stop()
+		public synchronized void stop()
 		{
 			m_pullable.stop();
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			m_pullable.dispose();
 		}
@@ -521,7 +472,7 @@ public class GroupProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Pushable push(Object o)
+		public synchronized Pushable push(Object o)
 		{
 			m_pushable.push(o);
 			m_pushable.waitFor();
@@ -529,7 +480,7 @@ public class GroupProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Pushable pushFast(Object o)
+		public synchronized Pushable pushFast(Object o)
 		{
 			return push(o);
 		}
@@ -540,32 +491,32 @@ public class GroupProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return GroupProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_position;
 		}
 
 		@Override
-		synchronized public void waitFor()
+		public synchronized void waitFor()
 		{
 			return;
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			m_pushable.dispose();
 		}
 	}
 
 	@Override
-	synchronized public void start() throws ProcessorException
+	public synchronized void start() throws ProcessorException
 	{
 		super.start();
 		for (Processor p : m_processors)
@@ -575,7 +526,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	synchronized public void stop() throws ProcessorException
+	public synchronized void stop() throws ProcessorException
 	{
 		super.stop();
 		for (Processor p : m_processors)

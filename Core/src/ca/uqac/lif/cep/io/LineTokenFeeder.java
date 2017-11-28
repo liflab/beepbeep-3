@@ -6,6 +6,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public class LineTokenFeeder extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 230382528486632578L;
+
 	StringBuilder m_currentEvent;
 
 	protected String m_startToken;
@@ -34,7 +39,7 @@ public class LineTokenFeeder extends SingleProcessor
 	}
 
 	@Override
-	@SuppressWarnings("squid:S106") 
+	@SuppressWarnings({"squid:S106", "squid:S3516"}) 
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		String line = ((String) inputs[0]).trim();
@@ -63,7 +68,7 @@ public class LineTokenFeeder extends SingleProcessor
 	}
 
 	@Override
-	public LineTokenFeeder clone()
+	public LineTokenFeeder duplicate()
 	{
 		LineTokenFeeder ltf = new LineTokenFeeder(m_startToken, m_endToken);
 		ltf.setContext(m_context);

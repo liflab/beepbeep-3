@@ -17,10 +17,6 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
@@ -29,6 +25,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class AbsoluteValue extends UnaryFunction<Number,Number>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7725796754734364813L;
 	/**
 	 * A static instance of absolute value
 	 */
@@ -49,25 +49,5 @@ public class AbsoluteValue extends UnaryFunction<Number,Number>
 	public String toString()
 	{
 		return "ABS";
-	}
-
-	public static void build(ArrayDeque<Object> stack)
-	{
-		Object o;
-		Function arg;
-		stack.pop(); // |
-		o = stack.pop(); // ) ?
-		if (o instanceof String)
-		{
-			arg = (Function) stack.pop();
-			stack.pop(); // )
-		}
-		else
-		{
-			arg = (Function) o;
-		}
-		stack.pop(); // |
-		FunctionTree ft = new FunctionTree(instance, arg);
-		stack.push(ft);
 	}
 }

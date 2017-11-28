@@ -29,6 +29,10 @@ import ca.uqac.lif.cep.Connector.Variant;
 public final class IdentityFunction extends Function 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4405554942798464946L;
+	/**
 	 * The input arity of the function (which is also its output arity)
 	 */
 	protected int m_inArity = 1;
@@ -77,7 +81,7 @@ public final class IdentityFunction extends Function
 	}
 
 	@Override
-	public IdentityFunction clone()
+	public IdentityFunction duplicate()
 	{
 		return new IdentityFunction(m_inArity);
 	}

@@ -46,6 +46,11 @@ import ca.uqac.lif.cep.Pushable;
 public class Pump extends Processor implements Runnable
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1272474302838888267L;
+
+	/**
 	 * Semaphore used to stop the pump
 	 */
 	private volatile boolean m_run;
@@ -93,7 +98,8 @@ public class Pump extends Processor implements Runnable
 				}
 				catch (InterruptedException e) 
 				{
-					// Nothing to do here
+					// Restore interrupted state
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
@@ -131,7 +137,7 @@ public class Pump extends Processor implements Runnable
 	}
 
 	@Override
-	public Pump clone()
+	public Pump duplicate()
 	{
 		return new Pump();
 	}

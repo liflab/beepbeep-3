@@ -39,6 +39,11 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
 public class QueueSource extends Source
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1353902689658016032L;
+
+	/**
 	 * The events to repeat endlessly
 	 */
 	protected List<Object> m_events;
@@ -127,12 +132,6 @@ public class QueueSource extends Source
 		return this;
 	}
 
-	/*@Override
-	public Pullable getPullableOutput(int index)
-	{
-		return new SentinelPullable(index);
-	}*/
-
 	@Override
 	@SuppressWarnings("squid:S1168")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
@@ -192,7 +191,7 @@ public class QueueSource extends Source
 	}
 
 	@Override
-	public QueueSource clone()
+	public QueueSource duplicate()
 	{
 		QueueSource out = new QueueSource(getOutputArity());
 		out.setEvents(m_events);
@@ -200,7 +199,7 @@ public class QueueSource extends Source
 	}
 
 	@Override
-	public Class<?> getOutputTypeFor(int index)
+	public Class<?> getOutputType(int index)
 	{
 		// We return the type of the first non-null object in the queue
 		for (Object o : m_events)

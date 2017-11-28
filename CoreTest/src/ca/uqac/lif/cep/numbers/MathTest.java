@@ -26,15 +26,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
+import ca.uqac.lif.cep.tmf.ConstantProcessor;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -54,7 +51,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSumPush() throws ConnectorException
+	public void testSumPush() 
 	{
 		QueueSource cp = new QueueSource(1);
 		cp.addEvent(1);
@@ -85,7 +82,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSumPull() throws ConnectorException
+	public void testSumPull() 
 	{
 		QueueSource cp = new QueueSource(1);
 		cp.addEvent(1);
@@ -116,7 +113,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 
 	@Test
-	public void testPower() throws ConnectorException
+	public void testPower() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -131,7 +128,8 @@ public class MathTest extends BeepBeepUnitTest
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
 		FunctionProcessor pow = new FunctionProcessor(new Power());
-		Connector.connectFork(input1, input2, pow);
+		Connector.connect(input1, 0, pow, 0);
+		Connector.connect(input2, 0, pow, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(pow, sink);
 		Number recv;
@@ -159,7 +157,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testStatisticalMomentPull1() throws ConnectorException
+	public void testStatisticalMomentPull1() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -191,7 +189,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testStatisticalMomentPush1() throws ConnectorException
+	public void testStatisticalMomentPush1() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -222,7 +220,7 @@ public class MathTest extends BeepBeepUnitTest
 		} 
 	}
 	
-	protected static void setupStatisticalMoment(Processor source, Processor sink, int n) throws ConnectorException
+	protected static void setupStatisticalMoment(Processor source, Processor sink, int n) 
 	{
 		Fork fork = new Fork(2);
 		Connector.connect(source, fork);
@@ -230,45 +228,46 @@ public class MathTest extends BeepBeepUnitTest
 		{
 			// Left part: sum of x^n
 			Fork fork2 = new Fork(2);
-			Connector.connect(fork, fork2, 0, 0);
-			FunctionProcessor exponent = new FunctionProcessor(new Constant(1));
-			Connector.connect(fork2, exponent, 0, 0);
+			Connector.connect(fork, 0 ,fork2, 0);
+			ConstantProcessor exponent = new ConstantProcessor(1);
+			Connector.connect(fork2, 0, exponent, 0);
 			FunctionProcessor pow = new FunctionProcessor(new Power());
-			Connector.connect(fork2, pow, 1, 0);
-			Connector.connect(exponent, pow, 0, 1);
+			Connector.connect(fork2, 1, pow, 0);
+			Connector.connect(exponent, 0, pow, 1);
 			Connector.connect(pow, sum_left);
 		}
 		Sum sum_right = new Sum();
 		{
 			// Right part: sum of 1
-			FunctionProcessor one = new FunctionProcessor(new Constant(1));
-			Connector.connect(fork, one, 1, 0);
+			ConstantProcessor one = new ConstantProcessor(1);
+			Connector.connect(fork, 1, one, 0);
 			Connector.connect(one, sum_right);
 		}
 		FunctionProcessor div = new FunctionProcessor(Division.instance);
-		Connector.connectFork(sum_left, sum_right, div);
+		Connector.connect(sum_left, 0, div, 0);
+		Connector.connect(sum_right, 0, div, 1);
 		Connector.connect(div, sink);
 	}
 	
-	protected static void setupSumIfGreater(Processor source, Processor sink) throws ConnectorException
+	protected static void setupSumIfGreater(Processor source, Processor sink) 
 	{
 		Window win = new Window(new Sum(), 2);
 		Connector.connect(source, win);
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
 		FunctionProcessor greater = new FunctionProcessor(IsGreaterThan.instance);
-		FunctionProcessor five = new FunctionProcessor(new Constant(5));
-		Connector.connect(fork, five, 0, 0);
-		Connector.connect(fork, greater, 1, 0);
-		Connector.connect(five, greater, 0, 1);
+		ConstantProcessor five = new ConstantProcessor(5);
+		Connector.connect(fork, 0, five, 0);
+		Connector.connect(fork, 1, greater, 0);
+		Connector.connect(five, 0, greater, 1);
 		Filter fil = new Filter();
-		Connector.connect(fork, fil, 2, 0);
-		Connector.connect(greater, fil, 0, 1);
+		Connector.connect(fork, 2, fil, 0);
+		Connector.connect(greater, 0, fil, 1);
 		Connector.connect(fil, sink);
 	}
 
 	@Test
-	public void testSumIfGreaterPush() throws ConnectorException
+	public void testSumIfGreaterPush() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -309,7 +308,7 @@ public class MathTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSumIfGreaterPullHard() throws ConnectorException
+	public void testSumIfGreaterPullHard() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(2);
@@ -330,16 +329,13 @@ public class MathTest extends BeepBeepUnitTest
 		assertEquals(6, recv.intValue());
 	}
 	
-	@Test
-	public void testNumberCastGrammar() throws ParseException
-	{
-		Interpreter my_int = Interpreter.newInterpreter();
-		Object o = my_int.parseLanguage("TURN 0 INTO A NUMBER", "<function>");
-		assertNotNull(o);
-	}
-	
 	public static class Sum extends CumulativeProcessor
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -8722049367551551039L;
+
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{

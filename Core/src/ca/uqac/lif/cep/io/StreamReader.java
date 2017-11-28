@@ -18,18 +18,13 @@
 package ca.uqac.lif.cep.io;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Queue;
-import java.util.ArrayDeque;
 import java.util.logging.Level;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.Source;
@@ -44,9 +39,14 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class StreamReader extends Source
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -5927425600222556297L;
+
+	/**
 	 * The input stream from which data will be read
 	 */
-	protected InputStream m_fis = null;
+	protected transient InputStream m_fis = null;
 
 	/**
 	 * The size of chunks. The PipeReader will try to read this number
@@ -77,7 +77,7 @@ public class StreamReader extends Source
 	 * of transmission character (EOT)</a>. This has no effect when the
 	 * underlying input is not a pipe.
 	 */
-	public static final String END_CHARACTER = String.valueOf((char) 4);
+	public static final transient String END_CHARACTER = String.valueOf((char) 4);
 
 	/**
 	 * Remembers whether the underlying input stream is a file or
@@ -92,16 +92,16 @@ public class StreamReader extends Source
 	 * end or error of some kind)
 	 */
 	protected int m_returnCode;
-	public static final int ERR_OK = 0;
-	public static final int ERR_THREAD = 1;
-	public static final int ERR_EOF = 2;  // Encountered EOF (for a file)
-	public static final int ERR_EOT = 3;  // Encountered EOT (for a pipe)
+	public static final transient int ERR_OK = 0;
+	public static final transient int ERR_THREAD = 1;
+	public static final transient int ERR_EOF = 2;  // Encountered EOF (for a file)
+	public static final transient int ERR_EOT = 3;  // Encountered EOT (for a pipe)
 
-	protected BufferedReader m_br;
+	protected transient BufferedReader m_br;
 
-	protected InputStreamReader m_isr;
+	protected transient InputStreamReader m_isr;
 	
-	protected StreamListener m_listener;
+	protected transient StreamListener m_listener;
 
 	/**
 	 * Determines whether the reader operates in "pull" or "push" mode
@@ -227,32 +227,8 @@ public class StreamReader extends Source
 		return null;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		String filename = (String) stack.pop();
-		if (filename.startsWith("\""))
-		{
-			filename = filename.substring(1);
-		}
-		if (filename.endsWith("\""))
-		{
-			filename = filename.substring(0, filename.length() - 1);
-		}
-		stack.pop(); // FILE
-		try
-		{
-			StreamReader sr = new StreamReader(new FileInputStream(new File(filename)));
-			stack.push(sr);
-		}
-		catch (FileNotFoundException e)
-		{
-			BeepBeepLogger.logger.throwing("StreamReader", "build", e);
-			stack.push(new StreamReader(null));
-		}
-	}
-
 	@Override
-	public StreamReader clone()
+	public StreamReader duplicate()
 	{
 		return new StreamReader(m_fis);
 	}
@@ -296,7 +272,8 @@ public class StreamReader extends Source
 				}
 				catch (InterruptedException e) 
 				{
-					// Do nothing
+					// Restore interrupted state
+					Thread.currentThread().interrupt();
 				}
 			}
 		}

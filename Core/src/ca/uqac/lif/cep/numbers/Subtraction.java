@@ -17,9 +17,6 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
@@ -29,6 +26,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Subtraction extends BinaryFunction<Number,Number,Number>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3662033089696998872L;
+	/**
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Subtraction instance = new Subtraction();
@@ -36,11 +37,6 @@ public class Subtraction extends BinaryFunction<Number,Number,Number>
 	private Subtraction()
 	{
 		super(Number.class, Number.class, Number.class);
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override

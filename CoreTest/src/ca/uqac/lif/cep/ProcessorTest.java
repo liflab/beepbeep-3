@@ -17,18 +17,13 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.Queue;
 import java.util.Vector;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
@@ -42,17 +37,120 @@ import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
+/**
+ * Unit tests for the basic {@link Processor} functionalities.
+ */
 public class ProcessorTest extends BeepBeepUnitTest
 {
 
-	@Before
-	public void setUp() throws Exception
+	@Test
+	public void testContext1()
 	{
-		// Nothing to do
+		Passthrough pt = new Passthrough();
+		Context c = pt.newContext();
+		assertTrue(c.isEmpty());
 	}
 	
 	@Test
-	public void testPush1() throws ConnectorException
+	public void testContext2()
+	{
+		Passthrough pt = new Passthrough();
+		Context c = pt.getContext();
+		assertTrue(c.isEmpty());
+	}
+	
+	@Test
+	public void testContext3()
+	{
+		Passthrough pt = new Passthrough();
+		pt.setContext("a", 0);
+		assertEquals(0, pt.getContext("a"));
+	}
+	
+	@Test
+	public void testContext4()
+	{
+		Passthrough pt = new Passthrough();
+		Context c = pt.getContext();
+		c.put("a", 0);
+		assertEquals(0, pt.getContext("a"));
+		c = pt.getContext();
+		assertEquals(0, c.get("a"));
+	}
+	
+	@Test
+	public void testContext5()
+	{
+		Passthrough pt = new Passthrough();
+		Context c = pt.newContext();
+		c.put("a", 0);
+		assertTrue(pt.getContext().isEmpty());
+		pt.setContext(c);
+		assertEquals(0, pt.getContext("a"));
+		assertNull(pt.getContext("b"));
+		pt.setContext("b", 1);
+		assertEquals(1, pt.getContext("b"));
+	}
+	
+	@Test
+	public void testContext6()
+	{
+		Passthrough pt = new Passthrough();
+		assertNull(pt.getContext("a"));
+	}
+	
+	@Test
+	public void testAllNull1()
+	{
+		Object[] os = new Object[3];
+		assertTrue(Processor.allNull(os));
+	}
+	
+	@Test
+	public void testAllNull2()
+	{
+		Object[] os = new Object[]{null, 0, null};
+		assertFalse(Processor.allNull(os));
+	}
+	
+	@Test
+	public void testDuplicate()
+	{
+		FunctionProcessor pt1 = new FunctionProcessor(Addition.instance);
+		pt1.setContext("a", 0);
+		FunctionProcessor pt2 = pt1.duplicate();
+		assertNotEquals(pt1.getId(), pt2.getId());
+		assertEquals(0, pt2.getContext("a"));
+		pt1.setContext("a", 1);
+		assertEquals(0, pt2.getContext("a"));
+	}
+	
+	@Test
+	public void testEquals()
+	{
+		FunctionProcessor pt1 = new FunctionProcessor(Addition.instance);
+		FunctionProcessor pt2 = new FunctionProcessor(Addition.instance);
+		assertTrue(pt1.equals(pt1));
+		assertFalse(pt1.equals(pt2));
+		assertFalse(pt1.equals(Addition.instance));
+		assertFalse(pt1.equals(null));
+		
+	}
+	
+	@Test
+	public void testStartStop() throws ProcessorException
+	{
+		Processor.startAll();
+		ConnectorTest.Oranges o1 = new ConnectorTest.Oranges();
+		ConnectorTest.Oranges o2 = new ConnectorTest.Oranges();
+		Processor.startAll(o1, null, o2);
+		assertTrue(o1.started && o2.started);
+		Processor.stopAll(o1, o2, null);
+		assertTrue(!o1.started && !o2.started);
+	}
+	
+	@Test
+	public void testPush1() 
 	{
 		QueueSource cp = new QueueSource(1);
 		cp.addEvent("A");
@@ -71,7 +169,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPull1() throws ConnectorException
+	public void testPull1() 
 	{
 		QueueSource cp = new QueueSource(1);
 		cp.addEvent("A");
@@ -90,7 +188,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	
 	
 	@Test
-	public void testDecimatePull1() throws ConnectorException
+	public void testDecimatePull1() 
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1);
@@ -140,7 +238,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testDecimatePush1() throws ConnectorException
+	public void testDecimatePush1() 
 	{
 		int op_num = 0;
 		QueueSource ones = new QueueSource(1);
@@ -190,7 +288,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testAdditionPush1() throws ConnectorException
+	public void testAdditionPush1() 
 	{
 		Vector<Object> l_input1 = new Vector<Object>();
 		l_input1.add(1);
@@ -205,7 +303,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
-		Connector.connectFork(input1, input2, add);
+		Connector.connect(input1, 0, add, 0);
+		Connector.connect(input2, 0, add, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add, sink);
 		Number recv;
@@ -240,14 +339,15 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testFilter1() throws ConnectorException
+	public void testFilter1() 
 	{
 		QueueSource input1 = new QueueSource();
 		input1.setEvents(new Integer[]{1, 2, 3, 4});
 		QueueSource input2 = new QueueSource();
 		input2.setEvents(new Boolean[]{true, false, true, false});
 		Filter f = new Filter();
-		Connector.connectFork(input1, input2, f);
+		Connector.connect(input1, 0, f, 0);
+		Connector.connect(input2, 0, f, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(f, sink);
 		Number recv;
@@ -283,17 +383,17 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testFilter2() throws ConnectorException
+	public void testFilter2() 
 	{
 		QueueSource input1 = new QueueSource();
 		input1.setEvents(new Integer[]{2, 3, 4, 6});
 		Fork fork = new Fork(2);
 		Connector.connect(input1, fork);
 		Filter filter = new Filter();
-		Connector.connect(fork, filter, 0, 0);
+		Connector.connect(fork, 0, filter, 0);
 		FunctionProcessor even = new FunctionProcessor(new IsEven());
-		Connector.connect(fork, even, 1, 0);
-		Connector.connect(even, filter, 0, 1);
+		Connector.connect(fork, 1, even, 0);
+		Connector.connect(even, 0, filter, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(filter, sink);
 		Number recv;
@@ -321,7 +421,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGroupPush1() throws ConnectorException
+	public void testGroupPush1() 
 	{
 		// Create the group
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
@@ -346,7 +446,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 		l_input2.add(4);
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
-		Connector.connectFork(input1, input2, add_plus_10);
+		Connector.connect(input1, 0, add_plus_10, 0);
+		Connector.connect(input2, 0, add_plus_10, 1);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(add_plus_10, sink);
 		Number recv, expected;
@@ -387,7 +488,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testBinaryPull() throws ConnectorException
+	public void testBinaryPull() 
 	{
 		QueueSource src_left = new QueueSource();
 		QueueSource src_right = new QueueSource();
@@ -405,8 +506,8 @@ public class ProcessorTest extends BeepBeepUnitTest
 			src_right.setEvents(input_events);
 		}
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
-		Connector.connect(src_left, add, 0, 0);
-		Connector.connect(src_right, add, 0, 1);
+		Connector.connect(src_left, 0, add, 0);
+		Connector.connect(src_right, 0, add, 1);
 		Pullable p = add.getPullableOutput(0);
 		Number n;
 		n = (Number) p.pullSoft();
@@ -422,7 +523,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	 * of the {@link SingleProcessor.OutputPullable#hasNextSoft()} method.
 	 */
 	@Test
-	public void testHasNext() throws ConnectorException
+	public void testHasNext() 
 	{
 		Vector<Object> events = new Vector<Object>();
 		events.add("A");
@@ -436,7 +537,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 		Pullable p = pt.getPullableOutput(0);
 		for (int i = 0; i < 10; i++)
 		{
-			if (p.hasNextSoft() == Pullable.NextStatus.YES)
+			if (p.hasNextSoft() == NextStatus.YES)
 			{
 				p.pullSoft();
 			}
@@ -445,7 +546,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMuxerPush1() throws ConnectorException
+	public void testMuxerPush1() 
 	{
 		Integer i;
 		Multiplexer mux = new Multiplexer(2);
@@ -465,8 +566,38 @@ public class ProcessorTest extends BeepBeepUnitTest
 		assertEquals(1, i.intValue());
 	}
 	
+	@Test
+	@SuppressWarnings("unused")
+	public void testProcessorException2()
+	{
+		// Constructor test; we just check that it runs
+		ProcessorException pe = new ProcessorException("foo");
+	}
+	
+	@Test
+	@SuppressWarnings("unused")
+	public void testProcessorException3()
+	{
+		// Constructor test; we just check that it runs
+		try
+		{
+			// Create an exception
+			int a = 0;
+			int b = 4 / a;
+		}
+		catch (Exception e)
+		{
+			ProcessorException pe = new ProcessorException(e);
+		}
+	}
+	
 	public static class IsEven extends UnaryFunction<Number,Boolean>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 9181269942689564143L;
+
 		public IsEven()
 		{
 			super(Number.class, Boolean.class);
@@ -481,6 +612,11 @@ public class ProcessorTest extends BeepBeepUnitTest
 	
 	public static class Sum extends CumulativeProcessor
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1540010888611939050L;
+
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{

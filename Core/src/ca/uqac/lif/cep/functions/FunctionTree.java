@@ -28,6 +28,11 @@ import ca.uqac.lif.cep.Context;
 public class FunctionTree extends Function
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6959874694062810304L;
+
+	/**
 	 * The function to evaluate
 	 */
 	protected Function m_function;
@@ -69,16 +74,15 @@ public class FunctionTree extends Function
 
 	/**
 	 * Sets the <i>i</i>-th child of the tree
-	 * @param index The index
+	 * @param index The index. The method does not check ranges, so an
+	 * ArrayIndexOutOfBounds exception will be thrown if attempting to
+	 * set a child in an invalid position.
 	 * @param f The function
 	 * @return This tree
 	 */
 	public FunctionTree setChild(int index, Function f)
 	{
-		if (index >= 0 && index < m_children.length)
-		{
-			m_children[index] = f;
-		}
+		m_children[index] = f;
 		return this;
 	}
 
@@ -117,7 +121,6 @@ public class FunctionTree extends Function
 			}
 		}
 		return max_arity;
-		//return m_function.getInputArity();
 	}
 
 	@Override
@@ -138,14 +141,13 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public synchronized FunctionTree clone()
+	public synchronized FunctionTree duplicate()
 	{
-		FunctionTree out = new FunctionTree(m_function.clone());
+		FunctionTree out = new FunctionTree(m_function.duplicate());
 		for (int i = 0; i < m_children.length; i++)
 		{
-			out.m_children[i] = m_children[i].clone();
+			out.m_children[i] = m_children[i].duplicate();
 		}
-		out.setContext(getContext());
 		return out;
 	}
 
@@ -163,7 +165,6 @@ public class FunctionTree extends Function
 				}
 			}
 		}
-		//m_function.getInputTypesFor(classes, index);
 	}
 
 	@Override
@@ -194,27 +195,5 @@ public class FunctionTree extends Function
 			out.append("]");
 		}
 		return out.toString();
-	}
-
-	@Override
-	public synchronized void setContext(Context context)
-	{
-		super.setContext(context);
-		m_function.setContext(context);
-		for (Function f : m_children)
-		{
-			f.setContext(context);
-		}
-	}
-
-	@Override
-	public synchronized void setContext(String key, Object value)
-	{
-		super.setContext(key, value);
-		m_function.setContext(key, value);
-		for (Function f : m_children)
-		{
-			f.setContext(key, value);
-		}
 	}
 }

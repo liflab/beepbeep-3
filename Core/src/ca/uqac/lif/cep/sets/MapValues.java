@@ -9,6 +9,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 @SuppressWarnings("rawtypes")
 public class MapValues extends UnaryFunction<HashMap,Multiset>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1493502137275551580L;
 	public static final transient MapValues instance = new MapValues();
 	
 	MapValues() 

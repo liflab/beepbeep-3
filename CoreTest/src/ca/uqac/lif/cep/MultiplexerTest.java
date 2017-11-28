@@ -25,7 +25,6 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Multiplexer;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -37,7 +36,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class MultiplexerTest extends BeepBeepUnitTest 
 {
 	@Test
-	public void testMultiplexerPush() throws ConnectorException
+	public void testMultiplexerPush() 
 	{
 		Multiplexer mux = new Multiplexer(2);
 		Pushable push1 = mux.getPushableInput(0);
@@ -63,7 +62,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMultiplexerPull() throws ConnectorException
+	public void testMultiplexerPull() 
 	{
 		int i = -1;
 		QueueSource qsource1 = new QueueSource(1);
@@ -83,13 +82,13 @@ public class MultiplexerTest extends BeepBeepUnitTest
 			qsource2.setEvents(contents);
 		}
 		Multiplexer mux = new Multiplexer(2);
-		Connector.connect(qsource1, mux, 0, 0);
-		Connector.connect(qsource2, mux, 0, 1);
+		Connector.connect(qsource1, 0, mux, 0);
+		Connector.connect(qsource2, 0, mux, 1);
 		QueueSink qsink = new QueueSink(1);
 		Connector.connect(mux, qsink);
 		Queue<Object> queue = qsink.getQueue(0);
 		Pullable pull1 = mux.getPullableOutput(0);
-		assertEquals(Pullable.NextStatus.YES, pull1.hasNextSoft());
+		assertEquals(NextStatus.YES, pull1.hasNextSoft());
 		qsink.pull();
 		assertEquals(1, queue.size());
 		i = ((Number) queue.remove()).intValue();
@@ -109,7 +108,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMultiplexerPullHard() throws ConnectorException
+	public void testMultiplexerPullHard() 
 	{
 		int i = -1;
 		QueueSource qsource1 = new QueueSource(1);
@@ -129,8 +128,8 @@ public class MultiplexerTest extends BeepBeepUnitTest
 			qsource2.setEvents(contents);
 		}
 		Multiplexer mux = new Multiplexer(2);
-		Connector.connect(qsource1, mux, 0, 0);
-		Connector.connect(qsource2, mux, 0, 1);
+		Connector.connect(qsource1, 0, mux, 0);
+		Connector.connect(qsource2, 0, mux, 1);
 		QueueSink qsink = new QueueSink(1);
 		Connector.connect(mux, qsink);
 		Queue<Object> queue = qsink.getQueue(0);

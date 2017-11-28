@@ -19,6 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Pushable.PushableException;
@@ -50,10 +51,25 @@ import ca.uqac.lif.cep.Pushable.PushableException;
 public abstract class UniformProcessor extends Processor
 {	
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -4956827142858091212L;
+	
+	/**
 	 * An array that will be used by the processor to compute
 	 * its output
 	 */
-	protected Object[] m_outputArray;
+	protected transient Object[] m_outputArray;
+	
+	/**
+	 * An array of input pushables
+	 */
+	protected final transient Pushable[] m_inputPushables;
+
+	/**
+	 * An array of output pullables
+	 */
+	protected transient Pullable[] m_outputPullables;
 
 	/**
 	 * Initializes a processor
@@ -64,22 +80,28 @@ public abstract class UniformProcessor extends Processor
 	{
 		super(in_arity, out_arity);
 		m_outputArray = new Object[out_arity];
+		m_inputPushables = new Pushable[in_arity];
+		m_outputPullables = new Pullable[out_arity];
 	}
 
 	@Override
-	synchronized public final Pushable getPushableInput(int index)
+	public synchronized Pushable getPushableInput(int index)
 	{
-		return new InputPushable(index);
-	}
-
-	@Override
-	synchronized public Pullable getPullableOutput(int index)
-	{
-		if (index >= 0 && index < m_outputArity)
+		if (m_inputPushables[index] == null)
 		{
-			return new OutputPullable(index);
+			m_inputPushables[index] = new InputPushable(index);
 		}
-		return null;
+		return m_inputPushables[index];
+	}
+
+	@Override
+	public synchronized Pullable getPullableOutput(int index)
+	{
+		if (m_outputPullables[index] == null)
+		{
+			m_outputPullables[index] = new OutputPullable(index);
+		}
+		return m_outputPullables[index];
 	}
 
 	/**
@@ -120,26 +142,23 @@ public abstract class UniformProcessor extends Processor
 		InputPushable(int index)
 		{
 			super();
-			synchronized (this)
-			{
-				m_index = index;
-			}
+			m_index = index;
 		}
 
 		@Override
-		synchronized public Pushable pushFast(Object o)
+		public synchronized Pushable pushFast(Object o)
 		{
 			return push(o);
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		synchronized public Pushable push(Object o)
+		public synchronized Pushable push(Object o)
 		{
 			if (m_index < m_inputQueues.length)
 			{
@@ -174,7 +193,7 @@ public abstract class UniformProcessor extends Processor
 			{
 				throw new PushableException(e);
 			}
-			if (outs != false)
+			if (outs)
 			{
 				for (int i = 0; i < m_outputPushables.length; i++)
 				{
@@ -228,20 +247,20 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return UniformProcessor.this;
 		}
 
 		@Override
-		synchronized public void waitFor()
+		public synchronized void waitFor()
 		{
 			// Since this pushable is blocking
 			return;
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}
@@ -273,14 +292,14 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public void remove()
+		public synchronized void remove()
 		{
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		synchronized public Object pullSoft()
+		public synchronized Object pullSoft()
 		{
 			if (hasNextSoft() != NextStatus.YES)
 			{
@@ -293,17 +312,16 @@ public abstract class UniformProcessor extends Processor
 				// return it and don't pull anything from the input
 				if (!out_queue.isEmpty())
 				{
-					Object o = out_queue.remove();
-					return o;
+					return out_queue.remove();
 				}
 			}
 			return null;
 		}
 
 		@Override
-		synchronized public Object pull()
+		public synchronized Object pull()
 		{
-			if (hasNext() != true)
+			if (!hasNext())
 			{
 				return null;
 			}
@@ -314,21 +332,21 @@ public abstract class UniformProcessor extends Processor
 				// return it and don't pull anything from the input
 				if (!out_queue.isEmpty())
 				{
-					Object o = out_queue.remove();
-					return o;
+					return out_queue.remove();
 				}
 			}
-			return null;
+			throw new NoSuchElementException();
 		}
 
 		@Override
-		synchronized public final Object next()
+		@SuppressWarnings("squid:S2272") // since() pull throws the exception
+		public final synchronized Object next()
 		{
 			return pull();
 		}
 
 		@Override
-		synchronized public boolean hasNext()
+		public synchronized boolean hasNext()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -346,7 +364,7 @@ public abstract class UniformProcessor extends Processor
 					throw new PullableException("Input " + i + " of this processor is connected to nothing", getProcessor());
 				}
 				boolean status = p.hasNext();
-				if (status == false)
+				if (!status)
 				{
 					return false;
 				}
@@ -371,7 +389,7 @@ public abstract class UniformProcessor extends Processor
 			{
 				throw new PullableException(e);
 			}
-			if (computed == false)
+			if (!computed)
 			{
 				// No output will ever be returned: stop there
 				return false;
@@ -385,7 +403,7 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public NextStatus hasNextSoft()
+		public synchronized NextStatus hasNextSoft()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -429,7 +447,7 @@ public abstract class UniformProcessor extends Processor
 			{
 				throw new PullableException(e);
 			}
-			if (computed == false)
+			if (!computed)
 			{
 				return NextStatus.NO;
 			}
@@ -445,37 +463,37 @@ public abstract class UniformProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return UniformProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		synchronized public Iterator<Object> iterator()
+		public synchronized Iterator<Object> iterator()
 		{
 			return this;
 		}
 
 		@Override
-		synchronized public void start()
+		public synchronized void start()
 		{
 			// Do nothing
 		}
 
 		@Override
-		synchronized public void stop()
+		public synchronized void stop()
 		{
 			// Do nothing
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}

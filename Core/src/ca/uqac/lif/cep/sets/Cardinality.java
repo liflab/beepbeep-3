@@ -29,9 +29,13 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 @SuppressWarnings("rawtypes")
 public class Cardinality extends UnaryFunction<Set, Integer>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3469690418825982252L;
 	public static final transient Cardinality instance = new Cardinality();
 
-	private Cardinality()
+	protected Cardinality()
 	{
 		super(Set.class, Integer.class);
 	}

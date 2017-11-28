@@ -17,26 +17,21 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
+import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.BeepBeepUnitTest;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.Utilities;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.numbers.PackageExtension;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.Slicer;
 
@@ -46,42 +41,48 @@ import ca.uqac.lif.cep.tmf.Slicer;
  */
 public class SlicerTest extends BeepBeepUnitTest
 {
+	@SuppressWarnings("unchecked")
 	@Test
-	public void testSlicer1() throws ConnectorException
+	public void testSlicer1() 
 	{
 		Slicer sli = new Slicer(new IsEven(), new Sum());
 		QueueSink qsink = new QueueSink(1);
 		Connector.connect(sli,  qsink);
 		Pushable in = sli.getPushableInput(0);
+		Map<Object,Object> map;
 		for (int k = 0; k < 2; k++)
 		{
 			Queue<Object> queue = qsink.getQueue(0);
 			in.push(1);
-			Utilities.queueContains(1, queue);
+			map = (Map<Object,Object>) queue.poll();
+			assertEquals(1.0f, map.get(false));
 			in.push(1);
-			Utilities.queueContains(2, queue);
+			map = (Map<Object,Object>) queue.poll();
+			assertEquals(2.0f, map.get(false));
 			in.push(6);
-			Utilities.queueContains(6, queue);
+			map = (Map<Object,Object>) queue.poll();
+			assertEquals(2.0f, map.get(false));
+			assertEquals(6.0f, map.get(true));
 			in.push(2);
-			Utilities.queueContains(8, queue);
+			map = (Map<Object,Object>) queue.poll();
+			assertEquals(2.0f, map.get(false));
+			assertEquals(8.0f, map.get(true));
 			in.push(3);
-			Utilities.queueContains(5, queue);
+			map = (Map<Object,Object>) queue.poll();
+			assertEquals(5.0f, map.get(false));
+			assertEquals(8.0f, map.get(true));
 			sli.reset();
 			qsink.reset();
 		}
 	}
 	
-	@Test
-	public void testSlicerParse() throws ParseException, ConnectorException
-	{
-		Interpreter my_int = new Interpreter();
-		my_int.load(PackageExtension.class);
-		Object o = my_int.parseQuery("SLICE CONSTANT 1 WITH * ON ADDITION");
-		assertTrue(o instanceof Processor);
-	}
-	
 	public static class Sum extends CumulativeProcessor
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 531602687333501751L;
+
 		public Sum()
 		{
 			super(new CumulativeFunction<Number>(Addition.instance));
@@ -90,6 +91,11 @@ public class SlicerTest extends BeepBeepUnitTest
 
 	public static class IsEven extends UnaryFunction<Number,Boolean>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5985158957738807137L;
+
 		public IsEven()
 		{
 			super(Number.class, Boolean.class);
@@ -101,7 +107,7 @@ public class SlicerTest extends BeepBeepUnitTest
 			return x.intValue() % 2 == 0;
 		}
 		
-		public static void build(Stack<Object> stack) throws ConnectorException
+		public static void build(Stack<Object> stack) 
 		{
 			stack.pop(); // ISEVEN
 			stack.push(new IsEven());

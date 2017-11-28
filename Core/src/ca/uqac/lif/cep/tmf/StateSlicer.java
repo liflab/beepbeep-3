@@ -22,21 +22,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.ArrayDeque;
-import java.util.logging.Level;
-
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Separates an input trace into different "slices". The slicer
@@ -63,6 +56,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class StateSlicer extends UniformProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -114576230212668496L;
+
+	/**
 	 * The slicing function
 	 */
 	protected Function m_slicingFunction = null;
@@ -77,24 +75,24 @@ public class StateSlicer extends UniformProcessor
 	 */
 	protected Function m_cleaningFunction = null;
 
-	protected Map<Object,Processor> m_slices;
+	protected HashMap<Object,Processor> m_slices;
 
-	protected Map<Object,QueueSink> m_sinks;
+	protected HashMap<Object,QueueSink> m_sinks;
 
 	/**
 	 * The last value output by the processor for each slice
 	 */
-	protected List<Object> m_lastValues;
+	protected ArrayList<Object> m_lastValues;
 
 	/**
 	 * A map between slices and their index in the various arrays
 	 */
-	protected Map<Object,Integer> m_sliceIndices;
+	protected HashMap<Object,Integer> m_sliceIndices;
 
 	/**
 	 * The values of the slices that are no longer changing
 	 */
-	protected List<Object> m_fixedValues;
+	protected LinkedList<Object> m_fixedValues;
 
 	StateSlicer()
 	{
@@ -143,18 +141,11 @@ public class StateSlicer extends UniformProcessor
 			if (!m_slices.containsKey(slice_id))
 			{
 				// First time we see this value: create new slice
-				Processor p = m_processor.clone();
+				Processor p = m_processor.duplicate();
 				m_slices.put(slice_id, p);
 				addContextFromSlice(p, slice_id);
 				QueueSink sink = new QueueSink(output_arity);
-				try
-				{
-					Connector.connect(p, sink);
-				}
-				catch (ConnectorException e)
-				{
-					BeepBeepLogger.logger.log(Level.SEVERE, "", e);
-				}
+				Connector.connect(p, sink);
 				m_sinks.put(slice_id, sink);
 				// Put dummy value temporarily
 				m_lastValues.add(null);
@@ -198,7 +189,7 @@ public class StateSlicer extends UniformProcessor
 						throw new ProcessorException(e);
 					}
 				}
-				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]) == true)
+				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]))
 				{
 					// Yes: set the processor for that slice to null so it
 					// can be garbage collected
@@ -264,27 +255,10 @@ public class StateSlicer extends UniformProcessor
 		return m_fixedValues.size();
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Function f = (Function) stack.pop();
-		stack.pop(); // ON
-		stack.pop(); // (
-		Processor p2 = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // WITH
-		stack.pop(); // (
-		Processor p1 = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // SLICE
-		StateSlicer out = new StateSlicer(f, p2);
-		Connector.connect(p1, out);
-		stack.push(out);
-	}
-
 	@Override
-	public StateSlicer clone()
+	public StateSlicer duplicate()
 	{
-		return new StateSlicer(m_slicingFunction.clone(m_context), m_processor.clone(), m_cleaningFunction.clone());
+		return new StateSlicer(m_slicingFunction.duplicate(), m_processor.duplicate(), m_cleaningFunction.duplicate());
 	}
 
 	/**
@@ -293,7 +267,7 @@ public class StateSlicer extends UniformProcessor
 	 */
 	public static class ToAllSlices
 	{
-		public static final transient ToAllSlices instance = new ToAllSlices();
+		public static final ToAllSlices instance = new ToAllSlices();
 
 		private ToAllSlices()
 		{

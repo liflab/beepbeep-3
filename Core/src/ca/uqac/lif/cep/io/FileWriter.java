@@ -34,6 +34,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class FileWriter extends Sink
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2468469352121292509L;
+
+	/**
 	 * The output stream to which contents will be written
 	 */
 	private FileOutputStream m_outStream;
@@ -64,25 +69,27 @@ public class FileWriter extends Sink
 	}
 
 	@Override
-	@SuppressWarnings("squid:S1168")
+	@SuppressWarnings({"squid:S1168", "squid:S3516"})
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		// We return false everywhere, since anyway the FileWrite is
+		// We return false everywhere, since anyway the FileWriter is
 		// a sink, so we'll never call pull on it
 		if (inputs == null || inputs[0] == null)
 		{
 			// Don't write anything if the input is null
 			return false;
 		}
-		if (m_append == true)
+		if (m_append)
 		{
-			return append(inputs[0]);
+			append(inputs[0]);
+			return false;
 		}
-		return overwrite(inputs[0]);
+		overwrite(inputs[0]);
+		return false;
 	}
 
 	@SuppressWarnings("squid:S1168")
-	private boolean overwrite(Object o)
+	private void overwrite(Object o)
 	{
 		try
 		{
@@ -94,11 +101,10 @@ public class FileWriter extends Sink
 		{
 			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
-		return false;
 	}
 
 	@SuppressWarnings("squid:S1168")
-	private boolean append(Object o)
+	private void append(Object o)
 	{
 		try
 		{
@@ -115,7 +121,6 @@ public class FileWriter extends Sink
 		{
 			BeepBeepLogger.logger.log(Level.WARNING, "", e);
 		}
-		return false;
 	}
 
 	/**
@@ -136,7 +141,7 @@ public class FileWriter extends Sink
 	}
 
 	@Override
-	public FileWriter clone()
+	public FileWriter duplicate()
 	{
 		return new FileWriter(m_file, m_append);
 	}

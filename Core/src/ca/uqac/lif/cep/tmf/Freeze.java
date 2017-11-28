@@ -17,12 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.PullConstant;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
@@ -36,8 +30,19 @@ import ca.uqac.lif.cep.UniformProcessor;
  */
 public class Freeze extends UniformProcessor
 {
-	protected Object[] m_output;
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 5741791487727533735L;
+	
+	/**
+	 * The event front to freeze
+	 */
+	protected transient Object[] m_output;
 
+	/**
+	 * Creates a new freeze processor
+	 */
 	public Freeze()
 	{
 		super(1, 1);
@@ -61,19 +66,8 @@ public class Freeze extends UniformProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		//stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // FREEZE
-		Freeze out = new Freeze();
-		Connector.connect(p, out);
-		stack.push(out);
-	}
-
 	@Override
-	public Freeze clone()
+	public Freeze duplicate()
 	{
 		return new Freeze();
 	}

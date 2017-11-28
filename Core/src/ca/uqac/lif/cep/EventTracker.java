@@ -104,6 +104,16 @@ public interface EventTracker
 	 */
 	public class NoOpEventTracker implements EventTracker
 	{
+		/**
+		 * A single instance of this tracker
+		 */
+		public static final NoOpEventTracker instance = new NoOpEventTracker();
+		
+		private NoOpEventTracker()
+		{
+			super();
+		}
+		
 		@Override
 		public void associateTo(int id, NodeFunction f, int out_stream_index, int out_stream_pos) 
 		{

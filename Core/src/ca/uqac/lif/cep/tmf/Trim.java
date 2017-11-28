@@ -17,14 +17,9 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * Discards the first <i>n</i> events of the input, and outputs
@@ -36,9 +31,14 @@ import ca.uqac.lif.cep.numbers.EmlNumber;
 public class Trim extends SingleProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3203748738494500265L;
+
+	/**
 	 * How many events to ignore at the beginning of the trace
 	 */
-	protected final int m_delay;
+	private final int m_delay;
 
 	/**
 	 * The number of events received so far
@@ -66,7 +66,7 @@ public class Trim extends SingleProcessor
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_eventsReceived++;
-		if (m_eventsReceived > m_delay)
+		if (m_eventsReceived > getDelay())
 		{
 			outputs.add(inputs);
 			if (m_eventTracker != null)
@@ -82,22 +82,13 @@ public class Trim extends SingleProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	@Override
+	public Trim duplicate()
 	{
-		//stack.pop(); // )
-		Processor p = (Processor) stack.pop();
-		//stack.pop(); // (
-		stack.pop(); // OF
-		EmlNumber delay = (EmlNumber) stack.pop();
-		stack.pop(); // TRIM
-		Trim out = new Trim(delay.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
+		return new Trim(getDelay());
 	}
 
-	@Override
-	public Trim clone()
-	{
-		return new Trim(m_delay);
+	public int getDelay() {
+		return m_delay;
 	}
 }

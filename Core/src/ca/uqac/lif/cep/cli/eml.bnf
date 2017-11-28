@@ -1,6 +1,0 @@
-# -----------------------------------------
-# Special-purpose processors for the CLI
-# -----------------------------------------
-
-<processor>              := <p_print> ;
-<p_print>                := PRINT <processor> ;

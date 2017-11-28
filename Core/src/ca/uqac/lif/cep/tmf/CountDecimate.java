@@ -17,30 +17,30 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
  * is called the <em>decimation interval</em>.
  * However, a mode can be specified in order to output the <i>n</i>-<i>i</i>th input
  * event if it is the last event of the trace and it has not been output already.
- * 
+ *
  * @author Sylvain Hallé
  */
 public class CountDecimate extends SingleProcessor
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -1528026169905098741L;
+
+	/**
 	 * The decimation interval
 	 */
-	protected final int m_interval;
+	private final int m_interval;
 
 	/**
 	 * Indicates if the last inputs should be output even if its index does not correspond to the interval
@@ -83,6 +83,7 @@ public class CountDecimate extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out = null;
@@ -129,23 +130,13 @@ public class CountDecimate extends SingleProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		//stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // OF
-		stack.pop(); // TH
-		EmlNumber interval = (EmlNumber) stack.pop();
-		stack.pop(); // EVERY
-		CountDecimate out = new CountDecimate(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
-	}
-
 	@Override
-	public CountDecimate clone()
+	public CountDecimate duplicate()
 	{
 		return new CountDecimate(m_interval);
+	}
+
+	public int getInterval() {
+		return m_interval;
 	}
 }

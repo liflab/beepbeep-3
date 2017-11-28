@@ -17,9 +17,6 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
@@ -29,18 +26,17 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Power extends BinaryFunction<Number,Number,Number>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9105651144223675623L;
+	/**
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Power instance = new Power();
 
-	public Power()
+	protected Power()
 	{
 		super(Number.class, Number.class, Number.class);
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override

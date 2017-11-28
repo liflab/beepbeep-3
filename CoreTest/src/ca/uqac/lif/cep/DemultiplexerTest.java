@@ -24,7 +24,6 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Demultiplexer;
 import ca.uqac.lif.cep.tmf.QueueSink;
 
@@ -37,7 +36,7 @@ public class DemultiplexerTest extends BeepBeepUnitTest
 {
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testDemultiplexer() throws ConnectorException
+	public void testDemultiplexer() 
 	{
 		Demultiplexer demux = new Demultiplexer(3);
 		QueueSink qsink = new QueueSink(1);

@@ -25,7 +25,6 @@ import java.util.Vector;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.numbers.Addition;
@@ -42,7 +41,7 @@ public class ThroughputTest extends BeepBeepUnitTest
 	 * on 1,000,000 events.
 	 */
 	@Test
-	public void testPassthroughPull() throws ConnectorException
+	public void testPassthroughPull() 
 	{
 		long num_events = 1000000;
 		Vector<Object> events = new Vector<Object>();
@@ -74,7 +73,7 @@ public class ThroughputTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPassthroughPush() throws ConnectorException
+	public void testPassthroughPush() 
 	{
 		long num_events = 1000000;
 		Vector<Object> events = new Vector<Object>();
@@ -108,7 +107,7 @@ public class ThroughputTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testWindow() throws ConnectorException
+	public void testWindow() 
 	{
 		long num_events = 1000000;
 		Vector<Object> events = new Vector<Object>();
@@ -137,6 +136,11 @@ public class ThroughputTest extends BeepBeepUnitTest
 	
 	public static class Sum extends CumulativeProcessor
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5258504145462992014L;
+
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{

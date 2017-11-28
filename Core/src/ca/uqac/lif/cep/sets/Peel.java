@@ -29,6 +29,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class Peel extends UnaryFunction<Object,Object>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3131574650958399872L;
+	/**
 	 * An instance of the peel function
 	 */
 	public static final transient Peel instance = new Peel();

@@ -23,6 +23,11 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class SimpleFilter extends SingleProcessor 
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 8775875821165936641L;
+
+	/**
 	 * The condition to evaluate
 	 */
 	protected Function m_condition;
@@ -30,7 +35,7 @@ public class SimpleFilter extends SingleProcessor
 	/**
 	 * An array to store the value of the condition
 	 */
-	protected Object[] m_conditionValue = new Object[1];
+	protected transient Object[] m_conditionValue = new Object[1];
 
 	/**
 	 * Creates a new simple filter
@@ -63,14 +68,14 @@ public class SimpleFilter extends SingleProcessor
 		{
 			throw new ProcessorException(e);
 		}
-		if ((Boolean) m_conditionValue[0] == true)
+		if ((Boolean) m_conditionValue[0])
 			outputs.add(inputs);
 		return true;
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor duplicate() 
 	{
-		return new SimpleFilter(getInputArity(), m_condition.clone());
+		return new SimpleFilter(getInputArity(), m_condition.duplicate());
 	}
 }

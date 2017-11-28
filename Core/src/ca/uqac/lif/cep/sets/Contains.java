@@ -29,6 +29,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 @SuppressWarnings("rawtypes")
 public class Contains extends BinaryFunction<Set, Object, Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3805319331641617083L;
 	public static final transient Contains instance = new Contains();
 
 	private Contains()

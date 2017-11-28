@@ -9,6 +9,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class CsvToList extends UnaryFunction<String, List>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8652652785650191093L;
+	/**
 	 * Instance of the function
 	 */
 	public static final transient CsvToList instance = new CsvToList();

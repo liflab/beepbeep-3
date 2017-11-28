@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 import java.util.Queue;
 import java.util.Set;
@@ -25,6 +25,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Connector.IncompatibleTypesException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.tmf.Passthrough;
@@ -37,7 +38,103 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 public class ConnectorTest extends BeepBeepUnitTest
 {
 	@Test
-	public void testTwoUnary() throws ConnectorException
+	public void testOutOfBounds1()
+	{
+		Apples a1 = new Apples();
+		Apples a2 = new Apples();
+		boolean got_exception = false;
+		try
+		{
+			Connector.connect(a1, 10, a2, 0);
+		}
+		catch (ConnectorException ce)
+		{
+			Connector.IndexOutOfBoundsException ioobe = (Connector.IndexOutOfBoundsException) ce;
+			assertNotNull(ioobe.getMessage());
+			got_exception = true;
+		}
+		assertTrue(got_exception);
+	}
+	
+	@Test
+	public void testOutOfBounds2()
+	{
+		Apples a1 = new Apples();
+		Apples a2 = new Apples();
+		boolean got_exception = false;
+		try
+		{
+			Connector.connect(a1, 0, a2, 10);
+		}
+		catch (ConnectorException ce)
+		{
+			Connector.IndexOutOfBoundsException ioobe = (Connector.IndexOutOfBoundsException) ce;
+			assertNotNull(ioobe.getMessage());
+			got_exception = true;
+		}
+		assertTrue(got_exception);
+	}
+	
+	@Test
+	public void testConnectWithTracker() 
+	{
+		Apples a1 = new Apples();
+		Apples a2 = new Apples();
+		ProvenanceTest.DummyTracker tracker = new ProvenanceTest.DummyTracker();
+		Connector.connect(tracker, a1, a2);
+		assertTrue(tracker.containsConnection(a1.getId(), 0, a2.getId(), 0));
+		assertFalse(tracker.containsConnection(a2.getId(), 0, a1.getId(), 0));
+	}
+	
+	@Test
+	public void testConnectNothing() 
+	{
+		Apples a = new Apples();
+		Connector.connect(a);
+		// Nothing happens
+	}
+	
+	@Test
+	public void testIsCompatible1()
+	{
+		assertTrue(Connector.isCompatible(new Apples(), 0, new Apples(), 0));
+	}
+	
+	@Test
+	public void testIsCompatible2()
+	{
+		assertFalse(Connector.isCompatible(new Apples(), 10, new Apples(), 0));
+	}
+	
+	@Test
+	public void testIsCompatible3()
+	{
+		assertTrue(!Connector.s_checkForTypes || !Connector.isCompatible(new Apples(), 0, new Oranges(), 0));
+	}
+	
+	@Test
+	public void testSelfLoop()
+	{
+		Apples a = new Apples();
+		boolean got_exception = false;
+		try
+		{
+			Connector.connect(a, a);
+		}
+		catch (Connector.SelfLoopException sle)
+		{
+			assertNotNull(sle.getMessage());
+			got_exception = true;
+		}
+		catch (ConnectorException e)
+		{
+			
+		}
+		assertTrue(got_exception);
+	}
+	
+	@Test
+	public void testTwoUnary() 
 	{
 		Passthrough p1 = new Passthrough(1);
 		QueueSink qs1 = new QueueSink(1);
@@ -57,12 +154,12 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testTwoBinary() throws ConnectorException
+	public void testTwoBinary() 
 	{
 		Passthrough p1 = new Passthrough(2);
 		QueueSink qs1 = new QueueSink(2);
-		Connector.connect(p1, qs1, 0, 1);
-		Connector.connect(p1, qs1, 1, 0);
+		Connector.connect(p1, 0, qs1, 1);
+		Connector.connect(p1, 1, qs1, 0);
 		Pushable push1 = p1.getPushableInput(0);
 		Pushable push2 = p1.getPushableInput(1);
 		for (int k = 0; k < 2; k++)
@@ -82,7 +179,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testThreeUnary1() throws ConnectorException
+	public void testThreeUnary1() 
 	{
 		Passthrough p1 = new Passthrough(1);
 		QueueSink qs1 = new QueueSink(1);
@@ -102,7 +199,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testThreeUnary2() throws ConnectorException
+	public void testThreeUnary2() 
 	{
 		Passthrough p1 = new Passthrough(1);
 		Incrementer p2 = new Incrementer(10);
@@ -123,15 +220,48 @@ public class ConnectorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testIncompatibleTypes() throws ConnectorException
+	public void testIncompatibleTypes() 
 	{
 		Processor apples = new Apples();
 		Processor oranges = new Oranges();
-		assertFalse(Connector.isCompatible(apples, oranges, 0, 0));
+		assertFalse(Connector.isCompatible(apples, 0, oranges, 0));
+	}
+	
+	@Test
+	public void testConnectIncompatible()
+	{
+		Processor apples = new Apples();
+		Processor oranges = new Oranges();
+		try
+		{
+			Connector.connect(apples, oranges);
+		}
+		catch (ConnectorException e)
+		{
+			IncompatibleTypesException ite = (IncompatibleTypesException) e;
+			assertNotNull(ite.getMessage());
+		}
+	}
+	
+	@Test
+	public void testVariantOutput()
+	{
+		assertTrue(Connector.isCompatible(new Variants(), 0, new Oranges(), 0));
+	}
+	
+	@Test
+	public void testVariantInput()
+	{
+		assertTrue(Connector.isCompatible(new Oranges(), 0, new Variants(), 0));
 	}
 	
 	public static class Incrementer extends FunctionProcessor
 	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = -3181129919928028488L;
+
 		public Incrementer(int i)
 		{
 			super(new Plus(i));
@@ -140,6 +270,10 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Plus extends UnaryFunction<Integer,Integer>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7827169077553183667L;
 		int m_plus = 0;
 		
 		public Plus(int i)
@@ -158,6 +292,11 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Apples extends SingleProcessor
 	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 7512600454804881369L;
+
 		public Apples()
 		{
 			super(1, 1);
@@ -171,10 +310,9 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 
 		@Override
-		public Processor clone() 
+		public Processor duplicate() 
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return new Apples();
 		}
 		
 		@Override
@@ -184,15 +322,84 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 		
 		@Override
-		public Class<?> getOutputTypeFor(int index)
+		public Class<?> getOutputType(int index)
 		{
+			if (index != 0)
+				throw new ArrayIndexOutOfBoundsException();
 			return Number.class;
 		}
 	}
 	
 	public static class Oranges extends SingleProcessor
 	{
+		/**
+		 * Dummy UID 
+		 */
+		private static final long serialVersionUID = -3498569238430262588L;
+		
+		public boolean started = false;
+		
+		boolean reset = false;
+
 		public Oranges()
+		{
+			super(1, 1);
+		}
+
+		@Override
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
+		{
+			// TODO Auto-generated method stub
+			return false;
+		}
+		
+		@Override
+		public void reset()
+		{
+			reset = true;
+		}
+
+		@Override
+		public Oranges duplicate() 
+		{
+			return new Oranges();
+		}
+		
+		@Override
+		public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+		{
+			classes.add(String.class);
+		}
+		
+		@Override
+		public Class<?> getOutputType(int index)
+		{
+			if (index != 0)
+				throw new ArrayIndexOutOfBoundsException();
+			return String.class;
+		}
+		
+		@Override
+		public void start()
+		{
+			started = true;
+		}
+		
+		@Override
+		public void stop()
+		{
+			started = false;
+		}
+	}
+	
+	public static class Variants extends SingleProcessor
+	{
+		/**
+		 * Dummy UID 
+		 */
+		private static final long serialVersionUID = -3498569238430262585L;
+
+		public Variants()
 		{
 			super(1, 1);
 		}
@@ -205,22 +412,17 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 
 		@Override
-		public Processor clone() 
+		public Variants duplicate() 
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return new Variants();
 		}
 		
 		@Override
-		public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+		public Class<?> getOutputType(int index)
 		{
-			classes.add(String.class);
-		}
-		
-		@Override
-		public Class<?> getOutputTypeFor(int index)
-		{
-			return String.class;
+			if (index != 0)
+				throw new ArrayIndexOutOfBoundsException();
+			return Connector.Variant.class;
 		}
 	}
 }

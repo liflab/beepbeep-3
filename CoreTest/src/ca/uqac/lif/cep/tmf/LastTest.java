@@ -24,7 +24,6 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Last;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.Pullable;
@@ -32,7 +31,7 @@ import ca.uqac.lif.cep.Pullable;
 public class LastTest 
 {
 	@Test
-	public void test1() throws ConnectorException
+	public void test1() 
 	{
 		Object o;
 		QueueSource source1 = new QueueSource(1);

@@ -26,11 +26,15 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class Signum extends UnaryFunction<Number,Number>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1756325889489847759L;
+	/**
 	 * A static instance of absolute value
 	 */
 	public static final transient Signum instance = new Signum();
 
-	private Signum()
+	protected Signum()
 	{
 		super(Number.class, Number.class);
 	}

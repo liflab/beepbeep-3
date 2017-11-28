@@ -20,19 +20,11 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.util.Queue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.ProcessorTest.Sum;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
-import ca.uqac.lif.cep.numbers.NumberCast;
-import ca.uqac.lif.cep.numbers.PackageExtension;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;
@@ -44,7 +36,7 @@ import ca.uqac.lif.cep.tmf.Window;
 public class WindowTest extends BeepBeepUnitTest 
 {
 	@Test
-	public void testWindowPull1() throws ConnectorException
+	public void testWindowPull1() 
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1); // Sequence of 1s
@@ -64,7 +56,7 @@ public class WindowTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testWindowPull2() throws ConnectorException
+	public void testWindowPull2() 
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1); // Sequence of 1s
@@ -87,7 +79,7 @@ public class WindowTest extends BeepBeepUnitTest
 
 	
 	@Test
-	public void testWindowPush1() throws ConnectorException
+	public void testWindowPush1() 
 	{
 		Number recv;
 		QueueSource cs = new QueueSource(1); // Sequence of 1s
@@ -121,24 +113,5 @@ public class WindowTest extends BeepBeepUnitTest
 		{
 			fail("Expected 3 on fourth push, got " + recv);
 		}
-	}
-	
-	@Test
-	public void testGrammar1() throws ParseException, ConnectorException
-	{
-		Interpreter my_int = new Interpreter();
-		my_int.load(PackageExtension.class);
-		Object o = my_int.parseQuery("GET * FROM CONSTANT 1 ON A WINDOW OF 3");
-		assertTrue(o instanceof Processor);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect((Processor) o, sink);
-		Queue<Object> queue = sink.getQueue(0);
-		sink.pull();
-		assertTrue(queue.isEmpty());
-		sink.pull();
-		assertTrue(queue.isEmpty());
-		sink.pull();
-		int en = NumberCast.getNumber(queue.remove()).intValue();
-		assertEquals(1, en);
 	}
 }

@@ -30,6 +30,10 @@ import ca.uqac.lif.cep.Context;
 public class ContextPlaceholder extends Function
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4062306641182843064L;
+	/**
 	 * The name of this placeholder
 	 */
 	protected final String m_name;
@@ -96,7 +100,7 @@ public class ContextPlaceholder extends Function
 	@Override
 	public int getOutputArity()
 	{
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -106,16 +110,15 @@ public class ContextPlaceholder extends Function
 	}
 
 	@Override
-	public ContextPlaceholder clone()
+	public ContextPlaceholder duplicate()
 	{
-		ContextPlaceholder aph = new ContextPlaceholder(m_name);
-		return aph;
+		return new ContextPlaceholder(m_name);
 	}
 
 	@Override
 	public void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
-		// Nothing to do
+		classes.add(Variant.class);
 	}
 
 	@Override

@@ -19,14 +19,18 @@ package ca.uqac.lif.cep.sets;
 
 import java.util.Set;
 
-import ca.uqac.lif.cep.functions.SimpleFunction;
+import ca.uqac.lif.cep.functions.Function;
 
 /**
  * Converts <i>n</i> input events into a list of size <i>n</i>
  * @author Sylvain Hallé
  */
-public class ToList extends SimpleFunction
+public class ToList extends Function
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -522369408913758577L;
 	protected Class<?>[] m_types;
 	
 	public ToList(Class<?> ... types)
@@ -35,7 +39,7 @@ public class ToList extends SimpleFunction
 		m_types = types;
 	}
 	@Override
-	public void compute(Object[] inputs, Object[] outputs) 
+	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
 		MathList<Object> list = new MathList<Object>();
 		for (Object o : inputs)
@@ -64,7 +68,7 @@ public class ToList extends SimpleFunction
 	}
 
 	@Override
-	public ToList clone() 
+	public ToList duplicate() 
 	{
 		return new ToList(m_types);
 	}

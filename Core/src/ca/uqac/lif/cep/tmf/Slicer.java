@@ -17,22 +17,17 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Separates an input trace into different "slices". The slicer
@@ -56,6 +51,11 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
 public class Slicer extends UniformProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1183983084223556167L;
+
+	/**
 	 * The slicing function
 	 */
 	protected Function m_slicingFunction = null;
@@ -65,9 +65,14 @@ public class Slicer extends UniformProcessor
 	 */
 	protected Processor m_processor = null;
 
-	protected Map<Object,Processor> m_slices;
+	protected HashMap<Object,Processor> m_slices;
 
-	protected Map<Object,QueueSink> m_sinks;
+	protected HashMap<Object,QueueSink> m_sinks;
+	
+	/**
+	 * The last values output by every slice 
+	 */
+	protected HashMap<Object,Object> m_values;
 
 	Slicer()
 	{
@@ -81,6 +86,7 @@ public class Slicer extends UniformProcessor
 		m_slicingFunction = func;
 		m_slices = new HashMap<Object,Processor>();
 		m_sinks = new HashMap<Object,QueueSink>();
+		m_values = new HashMap<Object,Object>();
 	}
 
 	@Override
@@ -107,18 +113,11 @@ public class Slicer extends UniformProcessor
 			if (!m_slices.containsKey(slice_id))
 			{
 				// First time we see this value: create new slice
-				Processor p = m_processor.clone();
+				Processor p = m_processor.duplicate();
 				m_slices.put(slice_id, p);
 				addContextFromSlice(p, slice_id);
 				QueueSink sink = new QueueSink(output_arity);
-				try
-				{
-					Connector.connect(p, sink);
-				}
-				catch (ConnectorException e)
-				{
-					BeepBeepLogger.logger.log(Level.SEVERE, "", e);
-				}
+				Connector.connect(p, sink);
 				m_sinks.put(slice_id, sink);
 			}
 			slices_to_process.add(slice_id);
@@ -143,8 +142,12 @@ public class Slicer extends UniformProcessor
 				p_array[i].waitFor();
 			}
 			// Collect the output from that processor
-			outputs[0] = sink_p.remove()[0];
+			if (!sink_p.getQueue().isEmpty())
+			{
+				m_values.put(s_id, sink_p.remove()[0]);
+			}
 		}
+		outputs[0] = m_values;
 		return true;
 	}
 
@@ -161,35 +164,23 @@ public class Slicer extends UniformProcessor
 		m_slicingFunction.reset();
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Function f = (Function) stack.pop();
-		stack.pop(); // ON
-		//stack.pop(); // (
-		Processor p2 = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // WITH
-		//stack.pop(); // (
-		Processor p1 = (Processor) stack.pop();
-		//stack.pop(); // )
-		stack.pop(); // SLICE
-		Slicer out = new Slicer(f, p2);
-		Connector.connect(p1, out);
-		stack.push(out);
-	}
-
 	@Override
-	public Slicer clone()
+	public Slicer duplicate()
 	{
-		return new Slicer(m_slicingFunction.clone(m_context), m_processor.clone());
+		return new Slicer(m_slicingFunction.duplicate(), m_processor.duplicate());
 	}
 
 	/**
 	 * Dummy object telling the slicer that the event must be sent to
 	 * all slices
 	 */
-	public static class AllSlices
+	public static class AllSlices implements Serializable
 	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = -7000516863407090299L;
+		
 		public static final transient AllSlices instance = new AllSlices();
 
 		AllSlices()

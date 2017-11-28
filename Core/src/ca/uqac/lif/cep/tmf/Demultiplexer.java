@@ -34,9 +34,14 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class Demultiplexer extends SingleProcessor
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -9019614854946803124L;
+
+	/**
 	 * The window of objects to be stored
 	 */
-	protected List<Object> m_window;
+	protected transient List<Object> m_window;
 
 	/**
 	 * The width of the demuxing, i.e. the value of <i>n</i> in the
@@ -61,6 +66,7 @@ public class Demultiplexer extends SingleProcessor
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected final boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_window.size() == m_width)
@@ -88,7 +94,7 @@ public class Demultiplexer extends SingleProcessor
 	}
 
 	@Override
-	public Demultiplexer clone()
+	public Demultiplexer duplicate()
 	{
 		return new Demultiplexer(m_width);
 	}

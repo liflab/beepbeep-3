@@ -17,9 +17,6 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
@@ -29,6 +26,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Division extends BinaryFunction<Number,Number,Number>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4104488749793289369L;
+	/**
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Division instance = new Division();
@@ -36,11 +37,6 @@ public class Division extends BinaryFunction<Number,Number,Number>
 	private Division()
 	{
 		super(Number.class, Number.class, Number.class);
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override

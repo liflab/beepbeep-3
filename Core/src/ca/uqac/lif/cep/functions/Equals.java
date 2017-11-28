@@ -18,9 +18,6 @@
 package ca.uqac.lif.cep.functions;
 
 import java.util.Collection;
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 
 /**
  * Checks for the equality of various data types
@@ -28,6 +25,10 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
  */
 public class Equals extends BinaryFunction<Object,Object,Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1547305811410277809L;
 	public static final transient Equals instance = new Equals();
 
 	private Equals()
@@ -59,10 +60,5 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 	public String toString()
 	{
 		return "=";
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 }

@@ -37,6 +37,10 @@ import ca.uqac.lif.cep.Context;
 public abstract class PassthroughFunction extends Function
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1082448292342947232L;
+	/**
 	 * The function to which all calls will be delegated
 	 */
 	private Function m_function;
@@ -87,7 +91,7 @@ public abstract class PassthroughFunction extends Function
 	}
 
 	@Override
-	public final Function clone()
+	public final Function duplicate()
 	{
 		return this;
 	}

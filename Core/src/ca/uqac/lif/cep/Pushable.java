@@ -43,10 +43,8 @@ public interface Pushable
 	 * @return The same instance of pushable. This is done to allow chain
 	 *   calls to {@link Pushable} objects, e.g.
 	 *   <code>p.push(o1).push(o2)</code>.
-	 * @throws PushableException A runtime exception indicating that something
-	 * went wrong when attempting to push the event
 	 */
-	public Pushable push(Object o) throws PushableException;
+	public Pushable push(Object o);
 
 	/**
 	 * Pushes an event into one of the processor's input trace, but
@@ -66,10 +64,8 @@ public interface Pushable
 	 * @return The same instance of pushable. This is done to allow chain
 	 *   calls to {@link Pushable} objects, e.g.
 	 *   <code>p.push(o1).push(o2)</code>.
-	 * @throws PushableException A runtime exception indicating that something
-	 * went wrong when attempting to push the event
 	 */
-	public Pushable pushFast(Object o) throws PushableException;
+	public Pushable pushFast(Object o);
 
 	
 	public void notifyEndOfTrace() throws PushableException;
@@ -174,13 +170,13 @@ public interface Pushable
 		}
 
 		@Override
-		public Pushable push(Object o) throws PushableException
+		public Pushable push(Object o)
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public Pushable pushFast(Object o) throws PushableException 
+		public Pushable pushFast(Object o) 
 		{
 			throw new UnsupportedOperationException();
 		}
@@ -205,13 +201,13 @@ public interface Pushable
 		@Override
 		public void waitFor() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 
 		@Override
 		public void dispose() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 		
 	}

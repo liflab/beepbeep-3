@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Queue;
@@ -53,8 +54,13 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * @dictentry
  *
  */
-public abstract class Processor implements Cloneable, Contextualizable
+public abstract class Processor implements DuplicableProcessor, Contextualizable, Serializable
 {
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -1686796980363286206L;
+
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires
 	 * to produce an output
@@ -66,7 +72,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * events it produces
 	 */
 	protected int m_outputArity;
-	
+
 	/**
 	 * A string used to identify the program's version
 	 */
@@ -78,7 +84,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * input queues as the input arity of the processor.
 	 */
 	protected transient Queue<Object>[] m_inputQueues;
-	
+
 	/**
 	 * An object that keeps track of the relationship between input and
 	 * output events.
@@ -96,19 +102,19 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * An array of {@link Pullable}s, one for each input trace this processor
 	 * receives
 	 */
-	protected Pullable[] m_inputPullables;
+	protected transient Pullable[] m_inputPullables;
 
 	/**
 	 * An array of {@link Pushable}s, one for each output trace this processor
 	 * produces
 	 */
-	protected Pushable[] m_outputPushables;
-	
+	protected transient Pushable[] m_outputPushables;
+
 	/**
 	 * A counter incremented upon each input front processed
 	 */
 	protected int m_inputCount = 0;
-	
+
 	/**
 	 * A counter incremented upon each output front processed
 	 */
@@ -134,7 +140,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	/**
 	 * The context in which the processor is instantiated
 	 */
-	protected Context m_context;
+	protected Context m_context = null;
 
 	/**
 	 * Initializes a processor. This has for effect of executing the basic
@@ -174,15 +180,13 @@ public abstract class Processor implements Cloneable, Contextualizable
 		}
 		m_inputPullables = new Pullable[m_inputArity];
 		m_outputPushables = new Pushable[m_outputArity];
-		// The context object
-		m_context = null;
 	}
 
 	/**
 	 * Creates a new empty context map
 	 * @return The context map
 	 */
-	protected final Context newContext()
+	protected final /*@NotNull*/ Context newContext()
 	{
 		return new Context();
 	}
@@ -193,7 +197,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * @return The object, or <code>null</code> if no object exists
 	 *   with such key
 	 */
-	synchronized public final Object getContext(String key)
+	public final synchronized /*@Null*/ Object getContext(/*@NotNull*/ String key)
 	{
 		if (m_context == null || !m_context.containsKey(key))
 		{
@@ -203,7 +207,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	}
 
 	@Override
-	synchronized public Context getContext()
+	public synchronized /*@NotNull*/ Context getContext()
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -215,7 +219,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	}
 
 	@Override
-	synchronized public void setContext(String key, Object value)
+	public synchronized void setContext(/*@NotNull*/ String key, Object value)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -227,7 +231,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	}
 
 	@Override
-	public synchronized void setContext(Context context)
+	public synchronized void setContext(/*@Null*/ Context context)
 	{
 		// As the context map is created only on demand, we must first
 		// check if a map already exists and create it if not
@@ -240,7 +244,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 			m_context.putAll(context);
 		}
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
@@ -292,18 +296,19 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * <i>i</i>-th input trace.
 	 * @param index The index. Should be between 0 and the processor's
 	 *   input arity - 1 (since indices start at 0).
-	 * @return The pushable if the index is within the appropriate range,
-	 *   <code>null</code> otherwise.
+	 * @return The pushable if the index is within the appropriate range.
+	 * Outside of the range, 
 	 */
-	public abstract Pushable getPushableInput(int index);
+	public abstract /*@NotNull*/ Pushable getPushableInput(int index);
 
 	/**
 	 * Returns the {@link Pushable} corresponding to the processor's
 	 * first input trace
-	 * @return The pushable if the processor has at least one input,
-	 *   <code>null</code> otherwise.
+	 * @return The pushable if the processor has at least one input.
+	 * An ArrayIndexOutOfBounds will be thrown
+	 * if the processor has an input arity of 0.
 	 */
-	public final synchronized Pushable getPushableInput()
+	public final synchronized /*@NotNull*/ Pushable getPushableInput()
 	{
 		return getPushableInput(0);
 	}
@@ -316,60 +321,54 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * @return The pullable if the index is within the appropriate range,
 	 *   <code>null</code> otherwise.
 	 */
-	public abstract Pullable getPullableOutput(int index);
+	public abstract /*@NotNull*/ Pullable getPullableOutput(int index);
 
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's
 	 * first output trace
-	 * @return The pullable if the processor has at least one output,
-	 *   <code>null</code> otherwise.
+	 * @return The pullable if the processor has at least one output.
+	 * An ArrayIndexOutOfBounds will be thrown
+	 * if the processor has an output arity of 0.
 	 */
-	public final synchronized Pullable getPullableOutput()
+	public final synchronized /*@NotNull*/ Pullable getPullableOutput()
 	{
 		return getPullableOutput(0);
 	}
 
 	/**
 	 * Assigns a {@link Pullable} to the processor's <i>i</i>-th input.
-	 * @param i The index of the input
+	 * @param i The index of the input. An ArrayIndexOutOfBounds will be thrown
+	 * if it is out of range.
 	 * @param p The pullable to assign it to
 	 */
-	public synchronized void setPullableInput(int i, Pullable p)
+	public synchronized void setPullableInput(int i, /*@NotNull*/ Pullable p)
 	{
-		if (i < m_inputPullables.length)
-		{
-			m_inputPullables[i] = p;
-		}
+		m_inputPullables[i] = p;
 	}
 
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's
 	 * <i>i</i>-th input
-	 * @param i The index of the input
+	 * @param i The index of the input. Should be greater than 0
+	 *   and less than the processor's output arity.
+	 *   Outside these bounds, an ArrayIndexOutOfBounds will be thrown.
 	 * @return The pullable
 	 */
 	public synchronized Pullable getPullableInput(int i)
 	{
-		if (i < m_inputPullables.length)
-		{
-			return m_inputPullables[i];
-		}
-		return null;
+		return m_inputPullables[i];
 	}
 
 	/**
 	 * Assigns a {@link Pushable} to the processor's <i>i</i>-th output.
 	 * @param i The index of the output. Should be greater than 0
-	 *   (not checked) and less than the processor's output arity.
-	 *   Outside these bounds, nothing will occur.
+	 *   and less than the processor's output arity.
+	 *   Outside these bounds, an ArrayIndexOutOfBounds will be thrown.
 	 * @param p The pushable to assign it to
 	 */
-	public synchronized void setPushableOutput(int i, Pushable p)
+	public synchronized void setPushableOutput(int i, /*@NotNull*/ Pushable p)
 	{
-		if (i < m_outputPushables.length)
-		{
-			m_outputPushables[i] = p;
-		}
+		m_outputPushables[i] = p;
 	}
 
 	/**
@@ -377,17 +376,13 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * <i>i</i>-th output.
 	 * @param i The index of the output. Should be greater than 0
 	 *   (not checked) and less than the processor's output arity.
-	 *   Outside these bounds, nothing will occur.
-	 * @return The pushable, <code>null</code> if <code>i</code> is
-	 *   out of range
+	 *   Outside these bounds, an ArrayIndexOutOfBounds will be thrown.
+	 * @param p The pushable to assign it to
+	 * @return The pushable
 	 */
-	public synchronized Pushable getPushableOutput(int i)
+	public synchronized /*@NotNull*/ Pushable getPushableOutput(int i)
 	{
-		if (i < m_outputPushables.length)
-		{
-			return m_outputPushables[i];
-		}
-		return null;
+		return m_outputPushables[i];
 	}
 
 	/**
@@ -428,25 +423,6 @@ public abstract class Processor implements Cloneable, Contextualizable
 		return true;
 	}
 
-	/**
-	 * Extracts a processor out of the object passed as an argument. A
-	 * instance of Processor will be returned as is, while other objects
-	 * will be wrapped into a constant processor returning that object.
-	 * @param o The input object
-	 * @return A processor
-	 */
-	public static Processor liftProcessor(Object o)
-	{
-		if (o instanceof Processor)
-		{
-			return (Processor) o;
-		}
-		return new PullConstant(o);
-	}
-
-	@Override
-	public abstract Processor clone();
-	
 	/**
 	 * Copies the contents and state of the current processor into another
 	 * @param p The processor to copy contents into
@@ -496,23 +472,6 @@ public abstract class Processor implements Cloneable, Contextualizable
 	}
 
 	/**
-	 * Gets the type of events the processor produces for its <i>i</i>-th
-	 * output trace.
-	 * @param index The index of the output to query
-	 * @return A set of classes. If <code>index</code> it less than 0 or
-	 *   greater than the processor's declared output arity, the response
-	 *   will be <code>null</code>.
-	 */
-	public final Class<?> getOutputType(int index)
-	{
-		if (index >= 0 && index < m_outputArity)
-		{
-			return getOutputTypeFor(index);
-		}
-		return null;
-	}
-
-	/**
 	 * Returns the type of the events produced by the processor for its
 	 * <i>i</i>-th output.
 	 * <p>
@@ -522,9 +481,11 @@ public abstract class Processor implements Cloneable, Contextualizable
 	 * A descendant of this class may choose to define specific types for
 	 * its input and output, thereby activating runtime type checking.
 	 * @param index The index of the output to query
-	 * @return The type of the output
+	 * @return The type of the output. If <code>index</code> it less than 0 or
+	 *   greater than the processor's declared output arity, this method
+	 *   <em>may</em> throw an IndexOutOfBoundsException.
 	 */
-	public Class<?> getOutputTypeFor(int index)
+	public Class<?> getOutputType(int index)
 	{
 		return Variant.class;
 	}
@@ -560,7 +521,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 	{
 		// Nothing
 	}
-	
+
 	/**
 	 * Starts all processors given as an argument
 	 * @param procs The processors
@@ -578,7 +539,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 			}
 		}
 	}
-	
+
 	/**
 	 * Stops all processors given as an argument
 	 * @param procs The processors
@@ -596,18 +557,18 @@ public abstract class Processor implements Cloneable, Contextualizable
 			}
 		}
 	}
-	
+
 	public final EventTracker getEventTracker()
 	{
 		return m_eventTracker;
 	}
-	
+
 	public final Processor setEventTracker(EventTracker tracker)
 	{
 		m_eventTracker = tracker;
 		return this;
 	}
-		
+
 	public void associateToInput(int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
 		if (m_eventTracker != null)
@@ -615,7 +576,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 			m_eventTracker.associateToInput(m_uniqueId, in_stream_index, in_stream_pos, out_stream_index, out_stream_pos);
 		}
 	}
-	
+
 	public void associateTo(NodeFunction f, int out_stream_index, int out_stream_pos)
 	{
 		if (m_eventTracker != null)
@@ -623,7 +584,7 @@ public abstract class Processor implements Cloneable, Contextualizable
 			m_eventTracker.associateTo(m_uniqueId, f, out_stream_index, out_stream_pos);
 		}
 	}
-	
+
 	public void associateToOutput(int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
 		if (m_eventTracker != null)

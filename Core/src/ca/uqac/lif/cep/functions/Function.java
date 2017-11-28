@@ -17,10 +17,10 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.Contextualizable;
 
 /**
  * Represents a stateless <i>m</i>-to-<i>n</i> function.
@@ -28,8 +28,13 @@ import ca.uqac.lif.cep.Contextualizable;
  * @author Sylvain Hallé
  * @dictentry
  */
-public abstract class Function implements Cloneable, Contextualizable
+public abstract class Function implements DuplicableFunction, Serializable
 {
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 6796994093616010834L;
+	
 	/**
 	 * The maximum input arity that a function can have
 	 */
@@ -48,7 +53,10 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * @throws FunctionException Any exception that may occur during the
 	 *   evaluation of a function
 	 */
-	public abstract void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException;
+	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException
+	{
+		evaluate(inputs, outputs);
+	}
 
 	/**
 	 * Evaluates the outputs of the function, given some inputs
@@ -83,23 +91,6 @@ public abstract class Function implements Cloneable, Contextualizable
 	public abstract void reset();
 
 	/**
-	 * Creates a copy of the function
-	 * @param context The context in which to clone this function
-	 * @return The copy
-	 */
-	public Function clone(Context context)
-	{
-		return clone();
-	}
-
-	/**
-	 * Creates a copy of the function
-	 * @return The copy
-	 */
-	@Override
-	public abstract Function clone();
-
-	/**
 	 * Populates the set of classes accepted by the function for its
 	 * <i>i</i>-th input
 	 * @param classes The set of to fill with classes
@@ -114,30 +105,23 @@ public abstract class Function implements Cloneable, Contextualizable
 	 * @return The type of the output
 	 */
 	public abstract Class<?> getOutputTypeFor(int index);
-
-	@Override
-	public void setContext(Context context)
-	{
-		// Do nothing
-	}
-
-	@Override
-	public void setContext(String key, Object value)
-	{
-		// Do nothing
-	}
-
-	@Override
-	public Context getContext()
-	{
-		return null;
-	}
 	
+	/**
+	 * Utility method that delegates the call to evaluate()
+	 * @param inputs Input arguments
+	 * @param outputs Output values
+	 * @param context Context object
+	 * @throws FunctionException Thrown when evaluating the function
+	 */
 	public void evaluateFast(Object[] inputs, Object[] outputs, Context context) throws FunctionException
 	{
 		evaluate(inputs, outputs, context);
 	}
 	
+	/**
+	 * Wait for the function to be finished computing. By default, this method
+	 * returns immediately.
+	 */
 	public void waitFor()
 	{
 		return;

@@ -191,11 +191,10 @@ public class CommandRunner extends Thread
 				// This happens if the user cancels the command manually
 				runner.stopCommand();
 				runner.interrupt();
-				return null;
+				return new byte[0];
 			}
 		}
-		byte[] out = runner.getBytes();
-		return out;
+		return runner.getBytes();
 	}
 
 	@Override
@@ -215,7 +214,6 @@ public class CommandRunner extends Thread
 				process_stdin.write(m_stdin, 0, m_stdin.length);
 				process_stdin.flush();
 				process_stdin.close();
-				//System.out.println("Writing " + stdin_bytes.length + " bytes");
 			}
 			// Start gobblers
 			m_stderrGobbler.start();
@@ -242,7 +240,7 @@ public class CommandRunner extends Thread
 	 * Gets the contents of stdout sent by the command as an array of bytes
 	 * @return The contents of stdout
 	 */
-	synchronized public byte[] getBytes()
+	public synchronized byte[] getBytes()
 	{
 		return m_stdoutGobbler.getBytes();
 	}
@@ -251,13 +249,13 @@ public class CommandRunner extends Thread
 	 * Gets the contents of stdout sent by the command as a string
 	 * @return The contents of stdout
 	 */
-	synchronized public String getString()
+	public synchronized String getString()
 	{
 		byte[] out = m_stdoutGobbler.getBytes();
 		return new String(out);
 	}
 
-	synchronized public void stopCommand()
+	public synchronized void stopCommand()
 	{
 		m_stop = true;
 	}

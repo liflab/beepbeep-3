@@ -30,12 +30,18 @@ import ca.uqac.lif.cep.SingleProcessor;
  */
 public class Dropper extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 677509797829781434L;
+
 	public Dropper()
 	{
 		super(1, 1);
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object o = inputs[0];
@@ -58,7 +64,7 @@ public class Dropper extends SingleProcessor
 	}
 
 	@Override
-	public Dropper clone()
+	public Dropper duplicate()
 	{
 		return new Dropper();
 	}

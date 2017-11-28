@@ -29,6 +29,11 @@ import ca.uqac.lif.cep.UniformProcessor;
  */
 public class Passthrough extends UniformProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7860452783568756789L;
+
 	public Passthrough(int arity)
 	{
 		super(arity, arity);
@@ -56,7 +61,7 @@ public class Passthrough extends UniformProcessor
 	}
 
 	@Override
-	public Passthrough clone()
+	public Passthrough duplicate()
 	{
 		return new Passthrough(getInputArity());
 	}

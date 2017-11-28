@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import ca.uqac.lif.cep.functions.FunctionException;
+import ca.uqac.lif.cep.functions.NothingToReturnException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
@@ -13,6 +14,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class Normalize extends UnaryFunction<Object,Object> 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7811573609943182462L;
 	public static final transient Normalize instance = new Normalize();
 	
 	protected Normalize()
@@ -32,6 +37,10 @@ public class Normalize extends UnaryFunction<Object,Object>
 			for (Number n : l1)
 			{
 				sum += n.floatValue();
+			}
+			if (sum == 0)
+			{
+				throw new NothingToReturnException(this);
 			}
 			for (Number n : l1)
 			{

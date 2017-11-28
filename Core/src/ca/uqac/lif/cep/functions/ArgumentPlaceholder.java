@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
 
+import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
 
 /**
@@ -27,6 +28,10 @@ import ca.uqac.lif.cep.Context;
  */
 public class ArgumentPlaceholder extends Function
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8288263714674625388L;
 	/**
 	 * The index of this placeholder
 	 */
@@ -107,22 +112,21 @@ public class ArgumentPlaceholder extends Function
 	}
 
 	@Override
-	public ArgumentPlaceholder clone()
+	public ArgumentPlaceholder duplicate()
 	{
-		ArgumentPlaceholder aph = new ArgumentPlaceholder(m_index);
-		return aph;
+		return this;
 	}
 
 	@Override
 	public void getInputTypesFor(Set<Class<?>> classes, int index)
 	{
-		// Nothing to do
+		classes.add(Variant.class);
 	}
 
 	@Override
 	public Class<?> getOutputTypeFor(int index)
 	{
-		return null;
+		return Variant.class;
 	}
 
 	@Override

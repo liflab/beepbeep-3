@@ -18,12 +18,6 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.numbers.EmlNumber;
 
 /**
  * Returns the first <i>n</i> input events and discards the following ones.
@@ -32,6 +26,11 @@ import ca.uqac.lif.cep.numbers.EmlNumber;
  */
 public class Prefix extends Trim
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9099795445029126011L;
+
 	public Prefix(int k)
 	{
 		super(k);
@@ -42,7 +41,7 @@ public class Prefix extends Trim
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_eventsReceived++;
-		if (m_eventsReceived <= m_delay)
+		if (m_eventsReceived <= getDelay())
 		{
 			outputs.add(inputs);
 			return true;
@@ -55,28 +54,5 @@ public class Prefix extends Trim
 	{
 		super.reset();
 		m_eventsReceived = 0;
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Object o;
-		Processor p;
-		o = stack.pop(); // ( ?
-		if (o instanceof String)
-		{
-			p = (Processor) stack.pop();
-			stack.pop(); // )
-		}
-		else
-		{
-			p = (Processor) o;
-		}
-		stack.pop(); // OF
-		EmlNumber interval = (EmlNumber) stack.pop();
-		stack.pop(); // FIRST
-		stack.pop(); // THE
-		Prefix out = new Prefix(interval.intValue());
-		Connector.connect(p, out);
-		stack.push(out);
 	}
 }

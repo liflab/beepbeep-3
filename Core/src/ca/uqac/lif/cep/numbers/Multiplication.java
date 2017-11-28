@@ -17,9 +17,6 @@
  */
 package ca.uqac.lif.cep.numbers;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
@@ -29,18 +26,17 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Multiplication extends BinaryFunction<Number,Number,Number>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -844796828531386011L;
+	/**
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Multiplication instance = new Multiplication();
 
-	Multiplication()
+	protected Multiplication()
 	{
 		super(Number.class, Number.class, Number.class);
-	}
-
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		BinaryFunction.buildInfix(stack, instance);
 	}
 
 	@Override

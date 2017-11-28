@@ -24,8 +24,13 @@ import java.util.Set;
  * @param <T> The type of the input
  * @param <U> The type of the output
  */
-public abstract class UnaryFunction<T,U> extends SimpleFunction
+public abstract class UnaryFunction<T,U> extends Function
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5463369159504250881L;
+
 	/**
 	 * The class of the input
 	 */
@@ -51,7 +56,7 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 1 */
-	public void compute(/*@NonNull*/ Object[] inputs, Object[] outputs) throws FunctionException
+	public void evaluate(/*@NonNull*/ Object[] inputs, Object[] outputs) throws FunctionException
 	{
 		outputs[0] = getValue((T) inputs[0]);
 	}
@@ -84,7 +89,7 @@ public abstract class UnaryFunction<T,U> extends SimpleFunction
 	}
 
 	@Override
-	public UnaryFunction<T,U> clone()
+	public UnaryFunction<T,U> duplicate()
 	{
 		return this;
 	}

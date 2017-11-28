@@ -46,6 +46,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class Tank extends SingleProcessor 
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 1780400006191856512L;
+
+	/**
 	 * A queue to hold incoming events
 	 */
 	protected Queue<Object> m_queue;
@@ -53,7 +58,7 @@ public class Tank extends SingleProcessor
 	/**
 	 * A lock for accessing the queue in a thread-safe manner
 	 */
-	protected Lock m_lock;
+	protected transient Lock m_lock;
 	
 	/**
 	 * Creates a new empty tank
@@ -79,7 +84,7 @@ public class Tank extends SingleProcessor
 	}
 
 	@Override
-	public Tank clone() 
+	public Tank duplicate() 
 	{
 		return new Tank();
 	}
@@ -87,20 +92,27 @@ public class Tank extends SingleProcessor
 	@Override
 	public Pushable getPushableInput(int index)
 	{
-		return new QueuePushable();
+		return new QueuePushable(false);
 	}
 	
 	protected class QueuePushable implements Pushable
 	{
-		public QueuePushable()
+		private final boolean m_singleObject;
+		
+		public QueuePushable(boolean single_object)
 		{
 			super();
+			m_singleObject = single_object;
 		}
 
 		@Override
 		public Pushable push(Object o) throws PushableException 
 		{
 			m_lock.lock();
+			if (m_singleObject)
+			{
+				m_queue.clear();
+			}
 			m_queue.add(o);
 			m_lock.unlock();
 			return this;

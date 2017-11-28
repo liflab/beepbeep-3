@@ -18,7 +18,9 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 
@@ -33,9 +35,14 @@ import ca.uqac.lif.cep.Pullable;
 public class Last extends Passthrough
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -3367264654982234239L;
+
+	/**
 	 * The last event received
 	 */
-	protected Object m_lastReceived;
+	protected transient Object m_lastReceived;
 
 	/**
 	 * Whether the processor has output something
@@ -56,6 +63,7 @@ public class Last extends Passthrough
 	}
 
 	@Override
+	@SuppressWarnings("squid:S3516")
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		// Don't do anything, as the computation is taken care of by
@@ -121,10 +129,11 @@ public class Last extends Passthrough
 					return m_lastReceived;
 				}
 			}
-			return null;
+			throw new NoSuchElementException();
 		}
 
 		@Override
+		@SuppressWarnings("squid:S2272") // since() pull throws the exception
 		public final Object next()
 		{
 			return pull();

@@ -26,6 +26,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class Wrap extends UnaryFunction<Object,Multiset>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -592164180067579744L;
+	/**
 	 * An instance of the peel function
 	 */
 	public static final transient Wrap instance = new Wrap();

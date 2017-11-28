@@ -19,6 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
@@ -44,10 +45,25 @@ import java.util.Queue;
 public abstract class SingleProcessor extends Processor
 {
 	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -1296312555379963210L;
+
+	/**
 	 * A queue object that will be passed to the {@link #compute(Object[], Queue)}
 	 * method
 	 */
-	protected final Queue<Object[]> m_tempQueue;
+	protected final transient Queue<Object[]> m_tempQueue;
+
+	/**
+	 * An array of input pushables
+	 */
+	protected final transient Pushable[] m_inputPushables;
+
+	/**
+	 * An array of output pullables
+	 */
+	protected final transient Pullable[] m_outputPullables;
 
 	/**
 	 * Initializes a processor
@@ -58,29 +74,38 @@ public abstract class SingleProcessor extends Processor
 	{
 		super(in_arity, out_arity);
 		m_tempQueue = new ArrayDeque<Object[]>(1);
+		m_inputPushables = new Pushable[in_arity];
+		m_outputPullables = new Pullable[out_arity];
 	}
 
 	@Override
-	synchronized public Pushable getPushableInput(int index)
+	public synchronized Pushable getPushableInput(int index)
 	{
-		return new InputPushable(index);
-	}
-
-	@Override
-	synchronized public Pullable getPullableOutput(int index)
-	{
-		if (index >= 0 && index < m_outputArity)
+		if (m_inputPushables[index] == null)
 		{
-			return new OutputPullable(index);
+			m_inputPushables[index] = new InputPushable(index);
 		}
-		return null;
+		return m_inputPushables[index];
+	}
+
+	@Override
+	public synchronized Pullable getPullableOutput(int index)
+	{
+		if (m_outputPullables[index] == null)
+		{
+			m_outputPullables[index] = new OutputPullable(index);
+		}
+		return m_outputPullables[index];
 	}
 
 	/**
 	 * Computes one or more output events from its input events
 	 * @param inputs An array of input events; its length corresponds to the
 	 *   processor's input arity
-	 * @param outputs TODO
+	 * @param outputs A queue of arrays of objects. The processor should push
+	 * arrays into this queue for every output front it produces. The size
+	 * of each array should be equal to the processor's output arity, although
+	 * this is not enforced.
 	 * @return A queue of vectors of output events, or null
 	 *   if no event could be produced
 	 * @throws ProcessorException Any exception occurring during the evaluation
@@ -115,31 +140,32 @@ public abstract class SingleProcessor extends Processor
 		InputPushable(int index)
 		{
 			super();
-			synchronized (this)
-			{
-				m_index = index;
-			}
+			m_index = index;
 		}
 
 		@Override
-		synchronized public Pushable pushFast(Object o)
+		public synchronized Pushable pushFast(Object o)
 		{
 			return push(o);
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		synchronized public Pushable push(Object o)
+		public synchronized Pushable push(Object o)
 		{
-			if (m_index < m_inputQueues.length)
+			try
 			{
 				Queue<Object> q = m_inputQueues[m_index];
 				q.add(o);
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				throw new PushableException(e);
 			}
 			// Check if each input queue has an event ready
 			for (int i = 0; i < m_inputArity; i++)
@@ -170,13 +196,12 @@ public abstract class SingleProcessor extends Processor
 			{
 				throw new PushableException(e);
 			}
-			if (outs != false && !m_tempQueue.isEmpty())
+			if (outs && !m_tempQueue.isEmpty())
 			{
 				for (Object[] evt : m_tempQueue)
 				{
 					if (evt != null)
 					{
-						//assert evt.length >= m_outputPushables.size();
 						for (int i = 0; i < m_outputPushables.length; i++)
 						{
 							Pushable p = m_outputPushables[i];
@@ -237,20 +262,20 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return SingleProcessor.this;
 		}
 
 		@Override
-		synchronized public void waitFor()
+		public synchronized void waitFor()
 		{
 			// Since this pushable is blocking
 			return;
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}
@@ -282,14 +307,14 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public void remove()
+		public synchronized void remove()
 		{
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		synchronized public Object pullSoft()
+		public synchronized Object pullSoft()
 		{
 			if (hasNextSoft() != NextStatus.YES)
 			{
@@ -302,17 +327,16 @@ public abstract class SingleProcessor extends Processor
 				// return it and don't pull anything from the input
 				if (!out_queue.isEmpty())
 				{
-					Object o = out_queue.remove();
-					return o;
+					return out_queue.remove();
 				}
 			}
 			return null;
 		}
 
 		@Override
-		synchronized public Object pull()
+		public synchronized Object pull()
 		{
-			if (hasNext() != true)
+			if (!hasNext())
 			{
 				return null;
 			}
@@ -323,21 +347,21 @@ public abstract class SingleProcessor extends Processor
 				// return it and don't pull anything from the input
 				if (!out_queue.isEmpty())
 				{
-					Object o = out_queue.remove();
-					return o;
+					return out_queue.remove();
 				}
 			}
-			return null;
+			throw new NoSuchElementException();			
 		}
 
 		@Override
-		synchronized public final Object next()
+		@SuppressWarnings("squid:S2272") // since() pull throws the exception
+		public final synchronized Object next()
 		{
 			return pull();
 		}
 
 		@Override
-		synchronized public boolean hasNext()
+		public synchronized boolean hasNext()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -357,7 +381,7 @@ public abstract class SingleProcessor extends Processor
 						throw new PullableException("Input " + i + " of this processor is connected to nothing", getProcessor());
 					}
 					boolean status = p.hasNext();
-					if (status == false)
+					if (!status)
 					{
 						return false;
 					}
@@ -384,7 +408,7 @@ public abstract class SingleProcessor extends Processor
 					throw new PullableException(e);
 				}
 				NextStatus status_to_return = NextStatus.NO;
-				if (computed == false)
+				if (!computed)
 				{
 					// No output will ever be returned: stop there
 					return false;
@@ -421,7 +445,7 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public NextStatus hasNextSoft()
+		public synchronized NextStatus hasNextSoft()
 		{
 			Queue<Object> out_queue = m_outputQueues[m_index];
 			// If an event is already waiting in the output queue,
@@ -467,7 +491,7 @@ public abstract class SingleProcessor extends Processor
 			{
 				throw new PullableException(e);
 			}
-			if (computed == false)
+			if (!computed)
 			{
 				status_to_return = NextStatus.NO;
 			}
@@ -493,62 +517,40 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor()
+		public synchronized Processor getProcessor()
 		{
 			return SingleProcessor.this;
 		}
 
 		@Override
-		synchronized public int getPosition()
+		public synchronized int getPosition()
 		{
 			return m_index;
 		}
 
 		@Override
-		synchronized public Iterator<Object> iterator()
+		public synchronized Iterator<Object> iterator()
 		{
 			return this;
 		}
 
 		@Override
-		synchronized public void start()
+		public synchronized void start()
 		{
 			// Do nothing
 		}
 
 		@Override
-		synchronized public void stop()
+		public synchronized void stop()
 		{
 			// Do nothing
 		}
 
 		@Override
-		synchronized public void dispose()
+		public synchronized void dispose()
 		{
 			// Do nothing
 		}
-	}
-
-	/**
-	 * Puts an array of objects (given as an argument) into an
-	 * empty queue of arrays of objects. This is a convenience method
-	 * that descendants of {@link SingleProcessor} (which implement
-	 * {@link #compute(Object[], Queue)}) can use to avoid
-	 * a few lines of code when they output a single array of events.
-	 * @param v The array of objects
-	 * @return The queue, or <code>null</code> if all elements of
-	 *   <code>v</code> are null
-	 */
-	@SuppressWarnings("squid:S1168")
-	protected static final Queue<Object[]> wrapVector(Object[] v)
-	{
-		if (v == null || allNull(v))
-		{
-			return null;
-		}
-		Queue<Object[]> out = newQueue();
-		out.add(v);
-		return out;
 	}
 
 	/**
@@ -566,14 +568,4 @@ public abstract class SingleProcessor extends Processor
 		v[0] = o;
 		return v;
 	}
-
-	/**
-	 * Gets a new instance of an empty object queue
-	 * @return The queue
-	 */
-	public static Queue<Object[]> newQueue()
-	{
-		return new ArrayDeque<Object[]>();
-	}
-
 }

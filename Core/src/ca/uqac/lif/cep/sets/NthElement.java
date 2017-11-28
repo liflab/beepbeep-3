@@ -7,6 +7,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class NthElement extends UnaryFunction<Object,Object>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6888356969599657955L;
+	/**
 	 * The position of the element to get
 	 */
 	protected int m_n;
@@ -37,7 +41,7 @@ public class NthElement extends UnaryFunction<Object,Object>
 	}
 
 	@Override
-	public NthElement clone()
+	public NthElement duplicate()
 	{
 		return new NthElement(m_n);
 	}

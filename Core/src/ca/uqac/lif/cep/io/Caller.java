@@ -17,11 +17,6 @@
  */
 package ca.uqac.lif.cep.io;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.util.CommandRunner;
 
@@ -34,6 +29,10 @@ import ca.uqac.lif.cep.util.CommandRunner;
  */
 public class Caller extends UniformProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 150932735172216286L;
 	/**
 	 * The command to call
 	 */
@@ -59,30 +58,8 @@ public class Caller extends UniformProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
-	{
-		Object o;
-		Processor p;
-		o = stack.pop(); // ( ?
-		if (o instanceof String)
-		{
-			p = (Processor) stack.pop();
-			stack.pop(); // )
-		}
-		else
-		{
-			p = (Processor) o;
-		}
-		stack.pop(); // ON
-		String command = (String) stack.pop();
-		stack.pop(); // CALL
-		Caller c = new Caller(command);
-		Connector.connect(p, c);
-		stack.push(c);
-	}
-
 	@Override
-	public Caller clone()
+	public Caller duplicate()
 	{
 		return new Caller(m_command);
 	}

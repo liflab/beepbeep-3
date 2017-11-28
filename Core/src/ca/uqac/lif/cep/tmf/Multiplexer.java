@@ -19,7 +19,9 @@ package ca.uqac.lif.cep.tmf;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -58,6 +60,11 @@ public class Multiplexer extends Processor
 	
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5567052153423011112L;
+
+	/**
 	 * Instantiates a multiplexer
 	 * @param in_arity The input arity of the multiplexer. This is the
 	 *   number of input traces that should be merged together in the output
@@ -85,7 +92,7 @@ public class Multiplexer extends Processor
 	}
 
 	@Override
-	public Multiplexer clone()
+	public Multiplexer duplicate()
 	{
 		return new Multiplexer(getInputArity());
 	}
@@ -157,10 +164,11 @@ public class Multiplexer extends Processor
 			{
 				return m_outputQueues[0].remove();
 			}
-			return null;
+			throw new NoSuchElementException();
 		}
 
 		@Override
+		@SuppressWarnings("squid:S2272") // since() pull throws the exception
 		public final Object next()
 		{
 			return pull();
@@ -212,12 +220,9 @@ public class Multiplexer extends Processor
 				for (Pullable p : m_inputPullables)
 				{
 					boolean ns = p.hasNext();
-					if (ns != false)
+					if (ns)
 					{
 						all_no = false;
-					}
-					if (ns == true)
-					{
 						// We don't do a "break" here.
 						// We must go through ALL pullables, even if we encounter one
 						// that says yes. Otherwise, we might end up pulling events from

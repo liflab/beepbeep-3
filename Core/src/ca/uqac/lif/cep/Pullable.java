@@ -83,25 +83,6 @@ import java.util.Iterator;
 public interface Pullable extends Iterator<Object>, Iterable<Object>
 {
 	/**
-	 * The "next" status of the pullable. Indicates whether a new output event
-	 * is available (i.e. can be "pulled").
-	 * <ul>
-	 * <li><code>YES</code> indicates that a new event can be pulled right now,
-	 *   using either {@link #pullSoft()} or {@link #pull()}</li>
-	 * <li><code>NO</code> indicates that no event is available, and will
-	 *   ever be. Receiving <code>NO</code> generally indicates that the
-	 *   end of the (output) trace has been reached</li>
-	 * <li><code>MAYBE</code> indicates that no event is available, but that
-	 *   keeping on pulling <em>may </em>produce an event in the future. This
-	 *   value is only returned by {@link #hasNextSoft()}.</li>
-	 * </ul>
-	 * 
-	 * @author Sylvain Hallé
-	 *
-	 */
-	public static enum NextStatus {YES, NO, MAYBE};
-
-	/**
 	 * Number of times the {@link #hasNext()} method tries to produce an
 	 * output from the input before giving up. While in theory, the method
 	 * tries "as long as necessary", in practice a bound was put on the
@@ -114,27 +95,23 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * {@link #hasNextSoft()} returns <code>YES</code>, and <code>null</code>
 	 * is returned otherwise.
 	 * @return An event, or <code>null</code> if none could be retrieved
-	 * @throws PullableException A runtime exception indicating that something
-	 * went wrong when attempting to check if a next event exists.
 	 */
-	public Object pullSoft() throws PullableException;
+	public Object pullSoft();
 
 	/**
 	 * Attempts to pull an event from the source. An event is returned if
 	 * {@link #hasNext()} returns <code>YES</code>, and <code>null</code>
 	 * is returned otherwise.
 	 * @return An event, or <code>null</code> if none could be retrieved
-	 * @throws PullableException A runtime exception indicating that something
-	 * went wrong when attempting to check if a next event exists.
 	 */
-	public Object pull() throws PullableException;
+	public Object pull();
 
 	/**
 	 * Synonym of {@link #pull()}.
 	 * @return An event, or <code>null</code> if none could be retrieved
 	 */
 	@Override
-	public Object next() throws PullableException;
+	public Object next();
 
 	/**
 	 * Determines if an event can be pulled from the output. Depending on
@@ -152,10 +129,8 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * Therefore, the method is lazy in that it asks events from its input only
 	 * once, and attempts to produce an output event only once.
 	 * @return Whether a next event exists
-	 * @throws PullableException A runtime exception indicating that something
-	 * went wrong when attempting to check if a next event exists.
 	 */
-	public NextStatus hasNextSoft() throws PullableException;
+	public NextStatus hasNextSoft();
 
 	/**
 	 * Determines if an event can be pulled from the output, by trying "harder"
@@ -175,11 +150,9 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * is configured by the static field {@link #s_maxRetries}.
 	 * </ul>
 	 * @return Whether a next event exists
-	 * @throws PullableException A runtime exception indicating that something
-	 * went wrong when attempting to check if a next event exists.
 	 */
 	@Override
-	public boolean hasNext() throws PullableException;
+	public boolean hasNext();
 
 	/**
 	 * Gets the processor instance this Pullable is linked to
@@ -287,31 +260,32 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 		}
 
 		@Override
-		public Object pullSoft() throws PullableException 
+		public Object pullSoft() 
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public Object pull() throws PullableException 
+		public Object pull() 
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public Object next() throws PullableException 
+		@SuppressWarnings("squid:S2272")
+		public Object next() 
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public NextStatus hasNextSoft() throws PullableException 
+		public NextStatus hasNextSoft() 
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public boolean hasNext() throws PullableException 
+		public boolean hasNext() 
 		{
 			throw new UnsupportedOperationException();
 		}
@@ -331,19 +305,19 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 		@Override
 		public void start() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 
 		@Override
 		public void stop() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 
 		@Override
 		public void dispose() 
 		{
-			throw new UnsupportedOperationException();
+			// Do nothing
 		}
 		
 	}

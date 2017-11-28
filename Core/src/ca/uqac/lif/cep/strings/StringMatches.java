@@ -24,6 +24,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  */
 public class StringMatches extends BinaryFunction<String,String,Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3777907098105765229L;
 	public static final StringMatches instance = new StringMatches();
 	
 	StringMatches()
