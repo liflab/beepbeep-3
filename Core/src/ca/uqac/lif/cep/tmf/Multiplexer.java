@@ -57,8 +57,7 @@ public class Multiplexer extends Processor
 	 * PushableOutput of the end of trace or not
 	 */
 	private boolean[] m_havePushableInputsReachedEnd;
-	
-	
+
 	/**
 	 * 
 	 */
