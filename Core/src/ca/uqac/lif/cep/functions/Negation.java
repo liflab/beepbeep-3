@@ -24,6 +24,10 @@ package ca.uqac.lif.cep.functions;
  */
 public class Negation extends UnaryFunction<Boolean,Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1701546016082168401L;
 	public static final transient Negation instance = new Negation();
 
 	protected Negation()

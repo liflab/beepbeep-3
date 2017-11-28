@@ -26,6 +26,11 @@ import ca.uqac.lif.cep.functions.Constant;
  */
 public class EmlNumber extends Constant
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4248220563985957652L;
+
 	public EmlNumber()
 	{
 		super(null);

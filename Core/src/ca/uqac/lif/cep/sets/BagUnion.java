@@ -36,6 +36,11 @@ import ca.uqac.lif.cep.functions.CumulativeFunction;
 public class BagUnion extends CumulativeFunction<Multiset>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7459604471060231209L;
+
+	/**
 	 * Note that BagUnion <strong>cannot</strong> have a single static
 	 * instance, as a cumulative function has a memory
 	 */

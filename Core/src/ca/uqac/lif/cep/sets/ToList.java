@@ -27,6 +27,10 @@ import ca.uqac.lif.cep.functions.Function;
  */
 public class ToList extends Function
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -522369408913758577L;
 	protected Class<?>[] m_types;
 	
 	public ToList(Class<?> ... types)

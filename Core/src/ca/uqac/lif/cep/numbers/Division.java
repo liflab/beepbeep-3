@@ -26,6 +26,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Division extends BinaryFunction<Number,Number,Number>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4104488749793289369L;
+	/**
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Division instance = new Division();

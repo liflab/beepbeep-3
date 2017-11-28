@@ -24,6 +24,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  */
 public class StringContains extends BinaryFunction<String,String,Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7158942461998945880L;
 	public static final StringContains instance = new StringContains();
 	
 	StringContains()

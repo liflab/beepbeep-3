@@ -270,6 +270,10 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Plus extends UnaryFunction<Integer,Integer>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7827169077553183667L;
 		int m_plus = 0;
 		
 		public Plus(int i)

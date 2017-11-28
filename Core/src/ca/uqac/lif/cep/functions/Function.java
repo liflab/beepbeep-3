@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
@@ -27,8 +28,13 @@ import ca.uqac.lif.cep.Context;
  * @author Sylvain Hallé
  * @dictentry
  */
-public abstract class Function implements DuplicableFunction
+public abstract class Function implements DuplicableFunction, Serializable
 {
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 6796994093616010834L;
+	
 	/**
 	 * The maximum input arity that a function can have
 	 */

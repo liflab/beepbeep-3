@@ -593,6 +593,11 @@ public class ProcessorTest extends BeepBeepUnitTest
 	
 	public static class IsEven extends UnaryFunction<Number,Boolean>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 9181269942689564143L;
+
 		public IsEven()
 		{
 			super(Number.class, Boolean.class);

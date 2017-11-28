@@ -29,6 +29,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 @SuppressWarnings("rawtypes")
 public class IsSubsetOrEqual extends BinaryFunction<Set,Set,Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8099874203405545675L;
 	public static final transient IsSubsetOrEqual instance = new IsSubsetOrEqual();
 
 	IsSubsetOrEqual()

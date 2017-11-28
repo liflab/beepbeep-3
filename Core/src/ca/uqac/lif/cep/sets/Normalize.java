@@ -14,6 +14,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class Normalize extends UnaryFunction<Object,Object> 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7811573609943182462L;
 	public static final transient Normalize instance = new Normalize();
 	
 	protected Normalize()

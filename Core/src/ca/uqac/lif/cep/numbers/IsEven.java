@@ -26,6 +26,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class IsEven extends UnaryFunction<Number,Boolean>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7401964685442013340L;
+	/**
 	 * A static instance of the function
 	 */
 	public static final transient IsEven instance = new IsEven();

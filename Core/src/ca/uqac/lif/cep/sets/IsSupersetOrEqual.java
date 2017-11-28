@@ -26,6 +26,10 @@ import java.util.Set;
  */
 public class IsSupersetOrEqual extends IsSubsetOrEqual
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6500907866238095705L;
 	public static final transient IsSupersetOrEqual instance = new IsSupersetOrEqual();
 
 	@SuppressWarnings("rawtypes")

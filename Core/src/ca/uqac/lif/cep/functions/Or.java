@@ -24,6 +24,10 @@ package ca.uqac.lif.cep.functions;
  */
 public class Or extends BinaryFunction<Boolean,Boolean,Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9039894119538489038L;
 	public static final transient Or instance = new Or();
 
 	protected Or()

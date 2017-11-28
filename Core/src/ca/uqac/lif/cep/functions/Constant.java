@@ -28,6 +28,10 @@ import ca.uqac.lif.cep.Context;
 public class Constant extends Function
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8483570213334539980L;
+	/**
 	 * The value to return by this constant
 	 */
 	private final Object m_value;

@@ -25,6 +25,10 @@ import java.util.Collection;
  */
 public class Equals extends BinaryFunction<Object,Object,Boolean>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1547305811410277809L;
 	public static final transient Equals instance = new Equals();
 
 	private Equals()

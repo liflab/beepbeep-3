@@ -560,6 +560,10 @@ public class GroupTest extends BeepBeepUnitTest
 	
 	public static class IncrementFunction extends UnaryFunction<Number,Number>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4907523652245702908L;
 		int m_increment;
 		
 		public IncrementFunction(int increment)

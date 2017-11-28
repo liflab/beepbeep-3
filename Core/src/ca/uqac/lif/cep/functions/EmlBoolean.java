@@ -19,6 +19,11 @@ package ca.uqac.lif.cep.functions;
 
 public class EmlBoolean extends Constant
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5161294239594819954L;
+
 	public EmlBoolean(Object o)
 	{
 		super(parseBoolValue(o));

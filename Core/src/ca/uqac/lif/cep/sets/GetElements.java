@@ -32,6 +32,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class GetElements extends UnaryFunction<Multiset,Multiset>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6940674855393134314L;
+	/**
 	 * The condition to evaluate on each element
 	 */
 	protected UnaryFunction<Object,Boolean> m_condition;

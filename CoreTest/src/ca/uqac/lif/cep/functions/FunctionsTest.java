@@ -381,6 +381,11 @@ public class FunctionsTest
 	
 	public static class ExceptionFunction extends UnaryFunction<Number,Number>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 9140464754483927641L;
+
 		public ExceptionFunction()
 		{
 			super(Number.class, Number.class);
@@ -395,6 +400,11 @@ public class FunctionsTest
 	
 	public static class TestPassthroughFunction extends PassthroughFunction
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5273918827247378465L;
+
 		@Override
 		public Function getFunction()
 		{

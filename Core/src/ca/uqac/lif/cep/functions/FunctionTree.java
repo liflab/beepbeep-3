@@ -28,6 +28,11 @@ import ca.uqac.lif.cep.Context;
 public class FunctionTree extends Function
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6959874694062810304L;
+
+	/**
 	 * The function to evaluate
 	 */
 	protected Function m_function;
