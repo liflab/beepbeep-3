@@ -45,7 +45,7 @@ public class EndOfTraceTest {
 		for(int i = 0; i < 10; i++) 
 		{
 			pushable.push(i);
-			assertEquals(i, (int) queue.remove());
+			assertEquals(i, ((Number) queue.remove()).intValue());
 		}
 		pushable.notifyEndOfTrace();
 		assertEquals(END_OF_TRACE, (String) queue.remove());
@@ -75,8 +75,8 @@ public class EndOfTraceTest {
 			pushable1.push(i+100);
 			
 			if(i < 5)
-				assertEquals(i, (int) queue.remove());
-			assertEquals(i+100, (int) queue.remove());
+				assertEquals(i, ((Number) queue.remove()).intValue());
+			assertEquals(i+100, ((Number) queue.remove()).intValue());
 		}		
 		pushable1.notifyEndOfTrace();
 		assertEquals(END_OF_TRACE, (String) queue.remove());
@@ -101,7 +101,7 @@ public class EndOfTraceTest {
 		
 		Queue<Object> queue = sink.getQueue(0);
 		for(int i = 0; i < 10; i++) 
-			assertEquals(i, (int) queue.remove());
+			assertEquals(i, ((Number) queue.remove()).intValue());
 		
 		assertEquals(END_OF_TRACE, (String) queue.remove());		
 	}
@@ -128,7 +128,7 @@ public class EndOfTraceTest {
 		for(int i = 0; i < 10; i++)
 		{
 			pushable.push(i);
-			assertEquals(i, (int) queueSink.remove());
+			assertEquals(i, ((Number) queueSink.remove()).intValue());
 		}
 
 		pushable.notifyEndOfTrace();
@@ -164,8 +164,8 @@ public class EndOfTraceTest {
 
 			if(i % interval == 0)
 			{
-				assertEquals(i, (int) queueSink0.remove());
-				assertEquals(i, (int) queueSink1.remove());
+				assertEquals(i, ((Number) queueSink0.remove()).intValue());
+				assertEquals(i, ((Number) queueSink1.remove()).intValue());
 			}
 
 			lastInput = i;
@@ -177,7 +177,7 @@ public class EndOfTraceTest {
 		pushable1.notifyEndOfTrace();
 		if(lastInput % interval != 0)
 		{
-			assertEquals(lastInput, (int) queueSink1.remove());
+			assertEquals(lastInput, ((Number) queueSink1.remove()).intValue());
 		}
 		assertTrue(queueSink1.isEmpty());
 	}
@@ -206,8 +206,8 @@ public class EndOfTraceTest {
 		{
 			pushable0.push(i);
 			pushable1.push(i);
-			assertEquals(i, (int) queueSink0.remove());
-			assertEquals(i, (int) queueSink1.remove());
+			assertEquals(i, ((Number) queueSink0.remove()).intValue());
+			assertEquals(i, ((Number) queueSink1.remove()).intValue());
 
 			i++;
 
@@ -224,7 +224,7 @@ public class EndOfTraceTest {
 		assertTrue(queueSink0.isEmpty());
 
 		pushable1.notifyEndOfTrace();
-		assertEquals(lastInput, (int) queueSink1.remove());
+		assertEquals(lastInput, ((Number) queueSink1.remove()).intValue());
 		assertTrue(queueSink1.isEmpty());
 	}
 }
