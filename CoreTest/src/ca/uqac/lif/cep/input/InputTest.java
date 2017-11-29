@@ -2,6 +2,7 @@ package ca.uqac.lif.cep.input;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -13,7 +14,6 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.io.StreamReader;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.util.FileHelper;
-import ca.uqac.lif.cep.util.StringUtils;
 
 public class InputTest extends BeepBeepUnitTest
 {
@@ -27,7 +27,7 @@ public class InputTest extends BeepBeepUnitTest
 	public void testCsvFeeder() throws IOException
 	{
 		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.csv");
-		InputStream stream = StringUtils.toInputStream(file_contents);
+		InputStream stream = toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
 		CsvFeeder csv = new CsvFeeder();
 		Connector.connect(sr, csv);
@@ -57,6 +57,14 @@ public class InputTest extends BeepBeepUnitTest
 		}
 	}
 	
-
+	/**
+	 * Converts a string into an input stream
+	 * @param s The string to read from
+	 * @return The input stream with the contents of the string
+	 */
+	public static InputStream toInputStream(String s)
+	{
+		return new ByteArrayInputStream(s.getBytes());
+	}
 
 }

@@ -21,10 +21,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Queue;
-import java.util.logging.Level;
 
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.tmf.Sink;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Writes events to a file on disk
@@ -70,7 +69,7 @@ public class FileWriter extends Sink
 
 	@Override
 	@SuppressWarnings({"squid:S1168", "squid:S3516"})
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
 	{
 		// We return false everywhere, since anyway the FileWriter is
 		// a sink, so we'll never call pull on it
@@ -79,47 +78,38 @@ public class FileWriter extends Sink
 			// Don't write anything if the input is null
 			return false;
 		}
-		if (m_append)
+		try
 		{
-			append(inputs[0]);
-			return false;
+			if (m_append)
+			{
+				append(inputs[0]);
+				return false;
+			}
+			overwrite(inputs[0]);
 		}
-		overwrite(inputs[0]);
+		catch (IOException e)
+		{
+			throw new ProcessorException(e);
+		}
 		return false;
 	}
 
-	@SuppressWarnings("squid:S1168")
-	private void overwrite(Object o)
+	private void overwrite(Object o) throws IOException
 	{
-		try
-		{
-			m_outStream = new FileOutputStream(m_file);
-			append(o);
-			m_outStream.close();
-		}
-		catch (IOException e)
-		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
-		}
+		m_outStream = new FileOutputStream(m_file);
+		append(o);
+		m_outStream.close();
 	}
 
-	@SuppressWarnings("squid:S1168")
-	private void append(Object o)
+	private void append(Object o) throws IOException
 	{
-		try
+		if (o instanceof byte[])
 		{
-			if (o instanceof byte[])
-			{
-				m_outStream.write((byte[]) o);
-			}
-			if (o instanceof String)
-			{
-				m_outStream.write(((String) o).getBytes());
-			}
+			m_outStream.write((byte[]) o);
 		}
-		catch (IOException e)
+		if (o instanceof String)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			m_outStream.write(((String) o).getBytes());
 		}
 	}
 
@@ -127,16 +117,9 @@ public class FileWriter extends Sink
 	 * Closes the file linked to this file writer
 	 * @return A reference to the current file writer
 	 */
-	public FileWriter close()
+	public FileWriter close() throws IOException
 	{
-		try
-		{
-			m_outStream.close();
-		}
-		catch (IOException e)
-		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
-		}
+		m_outStream.close();
 		return this;
 	}
 

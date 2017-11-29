@@ -17,12 +17,14 @@
  */
 package ca.uqac.lif.cep.io;
 
+import java.io.PrintStream;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.tmf.Sink;
+import ca.uqac.lif.cep.util.AnsiPrinter;
 
 /**
- * Sends its input to an {@link ca.uqac.lif.cep.util.AnsiPrinter ANSI printer}
+ * Sends its input to an PrintStream.
  * (such as the standard output). This processor takes whatever event it
  * receives (i.e. any Java <tt>Object</tt>), calls its {@link Object#toString()
  * toString()} method, and pushes the resulting output to the computer's
@@ -37,8 +39,8 @@ import ca.uqac.lif.cep.tmf.Sink;
  * can specify the character string to be displayed before and after each
  * event, and method {@link #setSeparator(String) setSeparator()} defines the
  * symbol that is inserted between each event. Further customization of the
- * output can be achieved by obtaining a reference to the underlying ANSI
- * printer using {@link getAnsiPrinter()}.
+ * output can be achieved by passing to a fancier type of print stream, such
+ * as an ANSI-aware printer.
  * 
  * @author Sylvain Hallé
  */
@@ -52,7 +54,7 @@ public class Print extends Sink
 	/**
 	 * The stream to print to
 	 */
-	protected transient AnsiPrinter m_out;
+	protected transient PrintStream m_out;
 	
 	/**
 	 * The separator between each event
@@ -89,7 +91,7 @@ public class Print extends Sink
 	 * @param in_arity The input arity
 	 * @param out The ANSI printer to use
 	 */
-	public Print(int in_arity, AnsiPrinter out)
+	public Print(int in_arity, PrintStream out)
 	{
 		super(in_arity);
 		m_out = out;
@@ -137,31 +139,11 @@ public class Print extends Sink
 	}
 	
 	/**
-	 * Enables or disables the display of colors in the resulting output.
-	 * This has for effect of enabling/disabling the use of ANSI escape
-	 * sequences in the underlying ANSI printer object.
-	 * @param b Set to {@code true} to enable colors, {@code false} otherwise
-	 * @return This print processor
-	 */
-	public Print setAnsi(boolean b)
-	{
-		if (b)
-		{
-			m_out.enableColors();
-		}
-		else
-		{
-			m_out.disableColors();
-		}
-		return this;
-	}
-	
-	/**
-	 * Gets a reference to the ANSI printer to which the
+	 * Gets a reference to the print stream to which the
 	 * character strings will be sent.
-	 * @return The ANSI printer
+	 * @return The print stream
 	 */
-	public /*@NotNull*/ AnsiPrinter getAnsiPrinter()
+	public /*@NotNull*/ PrintStream getPrintStream()
 	{
 		return m_out;
 	}
@@ -188,19 +170,67 @@ public class Print extends Sink
 		Object o = inputs[0];
 		if (o != null)
 		{
-			m_out.setForegroundColor(AnsiPrinter.Color.LIGHT_GRAY);
-			prettyPrint(m_prefix + o);
-			m_out.setForegroundColor(AnsiPrinter.Color.RED);
+			beforeEvent(m_out);
+			m_out.print(m_prefix); 
+			prettyPrint(m_out, o);
+			afterEvent(m_out);
+			beforeSeparator(m_out);
 			m_out.print(m_separator);
+			afterSeparator(m_out);
 		}
 		return true;
 	}
+	
+	/**
+	 * Method that is called before an event is to be printed.
+	 * Descendants of this call can be used to make special calls to the
+	 * underlying print stream, for example to change its display colors.
+	 * @param ps The print stream
+	 */
+	protected void beforeEvent(PrintStream ps)
+	{
+		// Do nothing
+	}
+	
+	/**
+	 * Method that is called after an event is be printed.
+	 * Descendants of this call can be used to make special calls to the
+	 * underlying print stream, for example to change its display colors.
+	 * @param ps The print stream
+	 */
+	protected void afterEvent(PrintStream ps)
+	{
+		// Do nothing
+	}
+	
+	/**
+	 * Method that is called before an separator is to be printed.
+	 * Descendants of this call can be used to make special calls to the
+	 * underlying print stream, for example to change its display colors.
+	 * @param ps The print stream
+	 */
+	protected void beforeSeparator(PrintStream ps)
+	{
+		// Do nothing
+	}
+	
+	/**
+	 * Method that is called after a separator is be printed.
+	 * Descendants of this call can be used to make special calls to the
+	 * underlying print stream, for example to change its display colors.
+	 * @param ps The print stream
+	 */
+	protected void afterSeparator(PrintStream ps)
+	{
+		// Do nothing
+	}
 
 	/**
-	 * Prints an object in an eye-pleasing way
-	 * @param o The object
+	 * Prints an object in an eye-pleasing way. So far, this method only
+	 * does something special for numbers.
+	 * @param o The object to print
 	 */
-	protected void prettyPrint(/*@NotNull*/ Object o)
+	protected void prettyPrint(/*@NotNull*/ PrintStream ps, /*@NotNull*/ Object o)
 	{
 		if (o instanceof Number)
 		{
@@ -208,7 +238,7 @@ public class Print extends Sink
 		}
 		else
 		{
-			m_out.print(o);
+			ps.print(o);
 		}
 	}
 

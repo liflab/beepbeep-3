@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A number of helpful utilities to read, write and manage files
@@ -69,11 +70,10 @@ public class FileHelper
 			{
 				sb.append(sCurrentLine).append("\n");
 			}
-
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		finally
 		{
@@ -90,7 +90,7 @@ public class FileHelper
 			}
 			catch (IOException ex)
 			{
-				BeepBeepLogger.logger.log(Level.WARNING, "", ex);
+				Logger.getAnonymousLogger().log(Level.WARNING, "", ex);
 			}
 		}
 		return sb.toString();
@@ -132,7 +132,7 @@ public class FileHelper
 		}
 		catch (Exception e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		finally
 		{
@@ -144,7 +144,7 @@ public class FileHelper
 				} 
 				catch (IOException e) 
 				{
-					BeepBeepLogger.logger.log(Level.WARNING, "", e);
+					Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 				}
 			}
 		}
@@ -175,7 +175,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		finally
 		{
@@ -192,7 +192,7 @@ public class FileHelper
 			} 
 			catch (IOException e) 
 			{
-				BeepBeepLogger.logger.log(Level.WARNING, "", e);
+				Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 			}
 		}
 	}
@@ -235,7 +235,7 @@ public class FileHelper
 		}
 		catch(Exception e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		finally
 		{
@@ -247,7 +247,7 @@ public class FileHelper
 				} 
 				catch (IOException e) 
 				{
-					BeepBeepLogger.logger.log(Level.WARNING, "", e);
+					Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 				}
 			}
 		}
@@ -312,7 +312,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 			return null;
 		}
 		return out;
@@ -392,7 +392,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		return buffer.toByteArray();
 	}

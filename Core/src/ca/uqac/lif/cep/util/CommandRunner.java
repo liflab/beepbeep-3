@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Utility class to run commands on the command line and fetch their
@@ -135,7 +136,7 @@ public class CommandRunner extends Thread
 			}
 			catch (IOException ioe)
 			{
-				BeepBeepLogger.logger.log(Level.WARNING, "", ioe);
+				Logger.getAnonymousLogger().log(Level.WARNING, "", ioe);
 			}
 		}
 
@@ -226,7 +227,7 @@ public class CommandRunner extends Thread
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		catch (InterruptedException e)
 		{

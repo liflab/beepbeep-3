@@ -21,7 +21,7 @@ package ca.uqac.lif.cep;
  * Generic class for any exception thrown in the lifecycle of a processor
  * @author Sylvain Hallé
  */
-public class ProcessorException extends Exception
+public class ProcessorException extends RuntimeException
 {
 	/**
 	 * Dummy UID

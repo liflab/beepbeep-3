@@ -22,9 +22,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Queue;
-import java.util.logging.Level;
 
-import ca.uqac.lif.cep.util.BeepBeepLogger;
+import ca.uqac.lif.cep.ProcessorException;
 
 /**
  * Reads chunks of data from an URL, using an HTTP request.
@@ -62,13 +61,21 @@ public class HttpReader extends StreamReader
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
 	{
 		if (m_fis == null)
 		{
 			// No input stream; send HTTP request to get it
-			InputStream is = sendGet(m_url);
-			setInputStream(is);
+			try
+			{
+				InputStream is = sendGet(m_url);
+				setInputStream(is);
+			}
+			catch (IOException e)
+			{
+				throw new ProcessorException(e);
+			}
+			
 		}
 		return super.compute(inputs, outputs);
 	}
@@ -80,22 +87,15 @@ public class HttpReader extends StreamReader
 	 * @return An input stream, where the HTTP response can be
 	 *   read from
 	 */
-	protected static InputStream sendGet(String url)
+	protected static InputStream sendGet(String url) throws IOException
 	{
 		InputStream is = null;
-		try
-		{
-			URL obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("User-Agent", s_userAgent);
-			con.getResponseCode();
-			is = con.getInputStream();
-		}
-		catch (IOException e)
-		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
-		}
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("User-Agent", s_userAgent);
+		con.getResponseCode();
+		is = con.getInputStream();
 		return is;
 	}
 

@@ -17,9 +17,7 @@
  */
 package ca.uqac.lif.cep.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -30,9 +28,9 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.NextStatus;
+import ca.uqac.lif.cep.Utilities;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.util.FileHelper;
-import ca.uqac.lif.cep.util.StringUtils;
 
 /**
  * Unit tests for input-output processors
@@ -44,7 +42,7 @@ public class IoTest extends BeepBeepUnitTest
 	public void testStreamReaderPush1() throws FileNotFoundException
 	{
 		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.txt");
-		InputStream stream = StringUtils.toInputStream(file_contents);
+		InputStream stream = Utilities.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(sr, sink);
@@ -59,7 +57,7 @@ public class IoTest extends BeepBeepUnitTest
 	public void testStreamReaderPull1() throws FileNotFoundException
 	{
 		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.txt");
-		InputStream stream = StringUtils.toInputStream(file_contents);
+		InputStream stream = Utilities.toInputStream(file_contents);
 		StreamReader sr = new StreamReader(stream);
 		sr.setIsFile(true);
 		int turns = 0;
@@ -84,6 +82,18 @@ public class IoTest extends BeepBeepUnitTest
 		assertNotNull(p);
 		Object o = p.pullSoft();
 		assertTrue(o instanceof String);
+	}
+	
+	@Test
+	public void testLineReader()
+	{
+		InputStream is = FileHelper.internalFileToStream(IoTest.class, "resource/test2.txt");
+		LineReader lr = new LineReader(is);
+		Pullable p = lr.getPullableOutput();
+		assertEquals("foo", ((String) p.pull()).trim());
+		assertEquals("bar", ((String) p.pull()).trim());
+		assertEquals("baz", ((String) p.pull()).trim());
+		assertFalse(p.hasNext());
 	}
 	
 }

@@ -15,14 +15,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.io;
+package ca.uqac.lif.cep.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.logging.Level;
-
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Print stream with facilities for producing colored text using
@@ -75,7 +72,7 @@ public class AnsiPrinter extends PrintStream
 	 * that color.
 	 * @param c The color
 	 */
-	public void setForegroundColor(AnsiPrinter.Color c)
+	public void setForegroundColor(AnsiPrinter.Color c) throws IOException
 	{
 		if (!m_enabled)
 		{
@@ -136,20 +133,13 @@ public class AnsiPrinter extends PrintStream
 			// Do nothing
 			break;
 		}
-		try
-		{
-			out.write(to_print.getBytes());
-		}
-		catch (IOException e)
-		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
-		}
+		out.write(to_print.getBytes());
 	}
 
 	/**
 	 * Resets the colors to their default values
 	 */
-	public void resetColors()
+	public void resetColors() throws IOException
 	{
 		setForegroundColor(Color.LIGHT_GRAY);
 	}

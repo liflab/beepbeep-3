@@ -1,3 +1,0 @@
-# Dummy grammar file used in FunctionTest.java. Do not remove!
-
-<foo> := BAR ;
