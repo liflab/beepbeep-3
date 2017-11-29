@@ -31,17 +31,6 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
-import ca.uqac.lif.cep.tmf.CountDecimate;
-import ca.uqac.lif.cep.tmf.Filter;
-import ca.uqac.lif.cep.tmf.Freeze;
-import ca.uqac.lif.cep.tmf.Insert;
-import ca.uqac.lif.cep.tmf.Passthrough;
-import ca.uqac.lif.cep.tmf.Prefix;
-import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tmf.SinkLast;
-import ca.uqac.lif.cep.tmf.Trim;
-import ca.uqac.lif.cep.tmf.Window;
 
 /**
  * Unit tests for classes of the TMF package.

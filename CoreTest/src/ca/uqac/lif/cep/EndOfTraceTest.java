@@ -1,19 +1,15 @@
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.sql.Time;
-import java.util.Arrays;
-import java.util.Queue;
-
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.*;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
+import java.util.Arrays;
+import java.util.Queue;
 
-import javax.swing.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 public class EndOfTraceTest {
 	

@@ -1,26 +1,6 @@
-/*
-    BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
-
-import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.Processor;
 
 /**
  * After returning an input event, discards all others for the next
@@ -33,106 +13,52 @@ import ca.uqac.lif.cep.SingleProcessor;
  *
  * @author Sylvain Hallé
  */
-public class TimeDecimate extends SingleProcessor
-{
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -7825576479352779012L;
+public class TimeDecimate extends Decimate {
 
-	/**
-	 * Interval of time
-	 */
-	protected final long m_interval;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7825576479352779012L;
 
-	/**
-	 * The system time when the last event was output
-	 */
-	protected long m_timeLastSent;
+    /**
+     * Interval of time
+     */
+    protected final long m_interval;
 
-	/**
-	 * Indicates if the last input event should be output if does not correspond to the rate
-	 */
-	protected boolean m_shouldOutputLastInputsAnyway;
+    /**
+     * The system time when the last event was output
+     */
+    protected long m_timeLastSent;
 
-	/**
-	 *
-	 */
-	protected Object[] m_lastInputs;
 
-	/**
-	 * Instantiates a time decimator
-	 * @param interval The interval (in nanoseconds) during which
-	 *   events should be discarded after an output event is produced
-	 */
-	public TimeDecimate(long interval, boolean shouldOutputLastInputsAnyway)
-	{
-		super(1, 1);
-		m_interval = interval;
-		m_shouldOutputLastInputsAnyway = shouldOutputLastInputsAnyway;
-		m_timeLastSent = -1;
-		m_lastInputs = null;
-	}
+    public TimeDecimate(long interval, boolean shouldProcessLastInputs) {
+        super(shouldProcessLastInputs);
+        m_interval = interval;
+        m_timeLastSent = -1;
+    }
 
-	public TimeDecimate(long interval) {
-		this(interval, false);
-	}
+    public TimeDecimate(long interval) {
+        this(interval, false);
+    }
 
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_timeLastSent = -1;
-	}
+    @Override
+    protected boolean shouldOutput() {
+        return m_timeLastSent < 0 || (System.nanoTime() - m_timeLastSent) >= m_interval;
+    }
 
-	@Override
-	@SuppressWarnings("squid:S3516")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		Object[] out = null;
-		if (m_timeLastSent < 0)
-		{
-			out = inputs;
-			m_timeLastSent = System.nanoTime();
-		}
-		else
-		{
-			long current_time = System.nanoTime();
-			long time_dif = current_time - m_timeLastSent;
-			if (time_dif >= m_interval)
-			{
-				out = inputs;
-				m_timeLastSent = current_time;
-				m_lastInputs = null;
-			}
-			else if(m_shouldOutputLastInputsAnyway)
-			{
-				m_lastInputs = inputs;
-			}
-		}
-		if (out != null)
-		{
-			outputs.add(out);
-			return true;
-		}
-		return true;
-	}
+    @Override
+    protected void post() {
+        m_timeLastSent = System.nanoTime();
+    }
 
-	@Override
-	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
-	{
-		if(!m_shouldOutputLastInputsAnyway || m_lastInputs == null)
-			return false;
+    @Override
+    public void reset() {
+        super.reset();
+        m_timeLastSent = -1;
+    }
 
-		outputs.add(m_lastInputs);
-		m_lastInputs = null;
-
-		return true;
-	}
-
-	@Override
-	public TimeDecimate duplicate()
-	{
-		return new TimeDecimate(m_interval);
-	}
+    @Override
+    public Processor duplicate() {
+        return new TimeDecimate(m_interval, m_shouldProcessLastInputs);
+    }
 }
