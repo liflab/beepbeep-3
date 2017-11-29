@@ -19,12 +19,11 @@ package ca.uqac.lif.cep.tmf;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.ProcessorException;
-
 /**
  * A special type of {@link Sink} that discards everything it receives.
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class BlackHole extends Sink 
 {
 	/**
@@ -33,7 +32,7 @@ public class BlackHole extends Sink
 	private static final long serialVersionUID = 4930838132907988617L;
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException 
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
 		return false;
 	}

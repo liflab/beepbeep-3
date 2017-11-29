@@ -83,14 +83,6 @@ import java.util.Iterator;
 public interface Pullable extends Iterator<Object>, Iterable<Object>
 {
 	/**
-	 * Number of times the {@link #hasNext()} method tries to produce an
-	 * output from the input before giving up. While in theory, the method
-	 * tries "as long as necessary", in practice a bound was put on the
-	 * number of attempts as a safeguard to avoid infinite loops.
-	 */
-	public static final int s_maxRetries = 10000000;
-
-	/**
 	 * Attempts to pull an event from the source. An event is returned if
 	 * {@link #hasNextSoft()} returns <code>YES</code>, and <code>null</code>
 	 * is returned otherwise.
@@ -147,7 +139,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 	 * an output event until one is produced.</li>
 	 * <li>To avoid infinite looping, the method eventually gives up (and
 	 * answers "no") after some maximum number of repetitions is reached. This
-	 * is configured by the static field {@link #s_maxRetries}.
+	 * is configured by the static field {@link Processor#MAX_PULL_RETRIES}.
 	 * </ul>
 	 * @return Whether a next event exists
 	 */

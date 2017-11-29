@@ -23,12 +23,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Queue;
-import java.util.logging.Level;
 
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.Source;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Reads chunks of data from an input source.
@@ -36,6 +34,7 @@ import ca.uqac.lif.cep.util.BeepBeepLogger;
  * 
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class StreamReader extends Source
 {
 	/**
@@ -100,7 +99,7 @@ public class StreamReader extends Source
 	protected transient BufferedReader m_br;
 
 	protected transient InputStreamReader m_isr;
-	
+
 	protected transient StreamListener m_listener;
 
 	/**
@@ -118,27 +117,27 @@ public class StreamReader extends Source
 		super(1);
 		m_returnCode = ERR_OK;
 		m_isFile = true;
-		setInputStream(is);
+		try
+		{
+			setInputStream(is);
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			throw new ProcessorException(e);
+		}
 	}
 
 	/**
 	 * Sets the input stream to read from
 	 * @param is The input stream to read from
 	 */
-	public void setInputStream(InputStream is)
+	public void setInputStream(InputStream is) throws UnsupportedEncodingException
 	{
 		m_fis = is;
 		if (m_fis != null)
 		{
-			try
-			{
-				m_isr = new InputStreamReader(is, "UTF8");
-				m_br = new BufferedReader(m_isr);
-			}
-			catch (UnsupportedEncodingException e)
-			{
-				BeepBeepLogger.logger.log(Level.SEVERE, "", e);
-			}
+			m_isr = new InputStreamReader(is, "UTF8");
+			m_br = new BufferedReader(m_isr);
 		}
 	}
 
@@ -183,7 +182,7 @@ public class StreamReader extends Source
 		outputs.add(new Object[]{s_read});
 		return true;
 	}
-	
+
 	protected String readString()
 	{
 		try
@@ -234,15 +233,15 @@ public class StreamReader extends Source
 	}
 
 	@Override
-	public void start() throws ProcessorException
+	public void start()
 	{
 		m_listener = new StreamListener();
 		Thread t = new Thread(m_listener);
 		t.start();
 	}
-	
+
 	@Override
-	public void stop() throws ProcessorException
+	public void stop()
 	{
 		if (m_listener != null)
 		{
@@ -277,7 +276,7 @@ public class StreamReader extends Source
 				}
 			}
 		}
-		
+
 		public void stop()
 		{
 			m_run = false;

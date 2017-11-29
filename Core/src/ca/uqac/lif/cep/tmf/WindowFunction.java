@@ -32,6 +32,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * @see Window
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class WindowFunction extends SingleProcessor
 {
 	/**
@@ -77,7 +78,7 @@ public class WindowFunction extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_window.add(inputs[0]);
 		int size = m_window.size();

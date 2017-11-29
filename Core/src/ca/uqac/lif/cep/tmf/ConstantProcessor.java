@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.tmf;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
@@ -29,6 +28,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * 
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class ConstantProcessor extends SingleProcessor
 {
 	/**
@@ -61,7 +61,7 @@ public class ConstantProcessor extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		outputs.add(new Object[]{m_constant});
 		return true;

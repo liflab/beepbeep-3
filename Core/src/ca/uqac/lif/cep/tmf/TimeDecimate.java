@@ -13,6 +13,7 @@ import ca.uqac.lif.cep.Processor;
  *
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class TimeDecimate extends Decimate {
 
     /**

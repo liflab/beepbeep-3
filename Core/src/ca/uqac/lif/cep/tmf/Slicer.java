@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
@@ -48,6 +49,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * 
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class Slicer extends UniformProcessor
 {
 	/**
@@ -90,7 +92,7 @@ public class Slicer extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		int output_arity = getOutputArity();
 		Object[] f_value = new Object[1];

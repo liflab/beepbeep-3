@@ -20,6 +20,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * @see Filter
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class SimpleFilter extends SingleProcessor 
 {
 	/**
@@ -58,7 +59,7 @@ public class SimpleFilter extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		try
 		{

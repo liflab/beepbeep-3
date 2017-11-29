@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 
 /**
@@ -30,7 +29,7 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
 public class CumulativeProcessor extends FunctionProcessor
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = -545875701095390745L;
 
@@ -40,7 +39,7 @@ public class CumulativeProcessor extends FunctionProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		// We override compute() from FunctionProcessor, only to complete the
 		// association between input and output events (each output event depends on

@@ -29,6 +29,7 @@ import java.util.Map;
  * 
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class GroupProcessor extends Processor
 {
 	/**
@@ -516,7 +517,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public synchronized void start() throws ProcessorException
+	public synchronized void start()
 	{
 		super.start();
 		for (Processor p : m_processors)
@@ -526,7 +527,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public synchronized void stop() throws ProcessorException
+	public synchronized void stop()
 	{
 		super.stop();
 		for (Processor p : m_processors)

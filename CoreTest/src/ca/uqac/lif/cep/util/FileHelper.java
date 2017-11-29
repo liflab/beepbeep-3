@@ -17,18 +17,19 @@
  */
 package ca.uqac.lif.cep.util;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.junit.Test;
 
 /**
  * A number of helpful utilities to read, write and manage files
@@ -42,58 +43,19 @@ public class FileHelper
 	public static final String CRLF = System.getProperty("line.separator");
 
 	/**
-	 * Utility classes should not have public constructors
+	 * Utility classes should not have public constructors. We make an
+	 * exception as this class is part of a jUnit folder.
 	 */
-	private FileHelper()
+	public FileHelper()
 	{
-		throw new IllegalAccessError("Utility class");
+		// Nothing to do
 	}
-
-	/**
-	 * Reads the contents of a file and puts it into a string.
-	 * @param f The file to read
-	 * @return The string with the file's contents, or the empty string if
-	 *   an error occurred.
-	 */
-	public static String readToString(File f)
+	
+	@Test
+	public void dummyTest()
 	{
-		BufferedReader br = null;
-		StringBuilder sb = new StringBuilder();
-		FileReader fr = null;
-		try
-		{
-			String sCurrentLine;
-			fr = new FileReader(f);
-			br = new BufferedReader(fr);
-			while ((sCurrentLine = br.readLine()) != null)
-			{
-				sb.append(sCurrentLine).append("\n");
-			}
-
-		}
-		catch (IOException e)
-		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
-		}
-		finally
-		{
-			try
-			{
-				if (br != null)
-				{
-					br.close();
-				}
-				if (fr != null)
-				{
-					fr.close();
-				}
-			}
-			catch (IOException ex)
-			{
-				BeepBeepLogger.logger.log(Level.WARNING, "", ex);
-			}
-		}
-		return sb.toString();
+		// This is a dummy test to avoid jUnit complaining about
+		// "no runnable methods" for this file
 	}
 
 	/**
@@ -132,7 +94,7 @@ public class FileHelper
 		}
 		catch (Exception e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		finally
 		{
@@ -144,7 +106,7 @@ public class FileHelper
 				} 
 				catch (IOException e) 
 				{
-					BeepBeepLogger.logger.log(Level.WARNING, "", e);
+					Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 				}
 			}
 		}
@@ -175,7 +137,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		finally
 		{
@@ -192,7 +154,7 @@ public class FileHelper
 			} 
 			catch (IOException e) 
 			{
-				BeepBeepLogger.logger.log(Level.WARNING, "", e);
+				Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 			}
 		}
 	}
@@ -235,7 +197,7 @@ public class FileHelper
 		}
 		catch(Exception e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		finally
 		{
@@ -247,7 +209,7 @@ public class FileHelper
 				} 
 				catch (IOException e) 
 				{
-					BeepBeepLogger.logger.log(Level.WARNING, "", e);
+					Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 				}
 			}
 		}
@@ -312,7 +274,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 			return null;
 		}
 		return out;
@@ -392,7 +354,7 @@ public class FileHelper
 		}
 		catch (IOException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		return buffer.toByteArray();
 	}

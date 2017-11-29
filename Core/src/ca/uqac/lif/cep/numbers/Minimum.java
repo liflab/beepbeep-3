@@ -15,35 +15,38 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.sets;
-
-import java.util.Set;
+package ca.uqac.lif.cep.numbers;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
- * Evaluates if the first set is a subset or is equal to the second set.
- * 
+ * Returns the minimum of two numbers.
  * @author Sylvain Hallé
  */
-@SuppressWarnings("rawtypes")
-public class IsSubsetOrEqual extends BinaryFunction<Set,Set,Boolean>
+public class Minimum extends BinaryFunction<Number,Number,Number>
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
-	private static final long serialVersionUID = -8099874203405545675L;
-	public static final transient IsSubsetOrEqual instance = new IsSubsetOrEqual();
+	private static final long serialVersionUID = 2831193067720029820L;
+	
+	public static final transient Minimum instance = new Minimum();
 
-	IsSubsetOrEqual()
+	Minimum()
 	{
-		super(Set.class, Set.class, Boolean.class);
+		super(Number.class, Number.class, Number.class);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Boolean getValue(Set x, Set y)
+	public Number getValue(Number x, Number y) 
 	{
-		return y.containsAll(x);
+		return Math.min(x.floatValue(), y.floatValue());
 	}
+	
+	@Override
+	public Number getStartValue()
+	{
+		return Float.MAX_VALUE;
+	}
+
 }

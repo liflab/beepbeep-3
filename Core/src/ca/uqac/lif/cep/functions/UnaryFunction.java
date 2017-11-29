@@ -56,7 +56,7 @@ public abstract class UnaryFunction<T,U> extends Function
 	@SuppressWarnings("unchecked")
 	@Override
 	/*@ requires inputs.length == 1 */
-	public void evaluate(/*@NonNull*/ Object[] inputs, Object[] outputs) throws FunctionException
+	public void evaluate(/*@NonNull*/ Object[] inputs, Object[] outputs) 
 	{
 		outputs[0] = getValue((T) inputs[0]);
 	}
@@ -65,10 +65,10 @@ public abstract class UnaryFunction<T,U> extends Function
 	 * Evaluates the function
 	 * @param x The argument
 	 * @return The return value of the function
-	 * @throws FunctionException Any exception occurring during the
+	 * @ Any exception occurring during the
 	 *   evaluation of the underlying function  
 	 */
-	public abstract U getValue(T x) throws FunctionException;
+	public abstract U getValue(T x) ;
 
 	@Override
 	public final int getInputArity()

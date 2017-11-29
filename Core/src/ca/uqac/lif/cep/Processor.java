@@ -143,6 +143,14 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	protected Context m_context = null;
 
 	/**
+	 * Number of times the {@link Pullable#hasNext()} method tries to produce
+	 * an output from the input before giving up. While in theory, the method
+	 * tries "as long as necessary", in practice a bound was put on the
+	 * number of attempts as a safeguard to avoid infinite loops.
+	 */
+	public static final int MAX_PULL_RETRIES = 10000000;
+
+	/**
 	 * Initializes a processor. This has for effect of executing the basic
 	 * operations common to every processor:
 	 * <ul>
@@ -246,13 +254,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	@Override
-	public int hashCode()
+	public final int hashCode()
 	{
 		return m_uniqueId;
 	}
 
 	@Override
-	public boolean equals(Object o)
+	public final boolean equals(Object o)
 	{
 		if (o == null || !(o instanceof Processor))
 		{
@@ -505,9 +513,8 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * Starts the processor. This has no effect, except for processors
 	 * that use threads; in such a case, calling this method should
 	 * start the thread.
-	 * @throws ProcessorException 
 	 */
-	public void start() throws ProcessorException
+	public void start()
 	{
 		// Nothing
 	}
@@ -517,7 +524,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	 * that use threads; in such a case, calling this method should
 	 * stop the thread.
 	 */
-	public void stop() throws ProcessorException
+	public void stop()
 	{
 		// Nothing
 	}
@@ -525,11 +532,8 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	/**
 	 * Starts all processors given as an argument
 	 * @param procs The processors
-	 * @throws ProcessorException Thrown if one of the processors in the
-	 *   list throws an exception; this aborts the starting of all
-	 *   remaining processors
 	 */
-	public static void startAll(Processor ... procs) throws ProcessorException
+	public static void startAll(Processor ... procs)
 	{
 		for (Processor p : procs)
 		{
@@ -543,11 +547,8 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	/**
 	 * Stops all processors given as an argument
 	 * @param procs The processors
-	 * @throws ProcessorException Thrown if one of the processors in the
-	 *   list throws an exception; this aborts the stopping of all
-	 *   remaining processors
 	 */
-	public static void stopAll(Processor ... procs) throws ProcessorException
+	public static void stopAll(Processor ... procs)
 	{
 		for (Processor p : procs)
 		{
@@ -558,12 +559,23 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 		}
 	}
 
-	public final EventTracker getEventTracker()
+	/**
+	 * Gets the instance of event tracker associated to this processor
+	 * @return The event tracker, or {@code null} of no event tracker is
+	 * associated to this processor
+	 */
+	public final /*@Null*/ EventTracker getEventTracker()
 	{
 		return m_eventTracker;
 	}
 
-	public final Processor setEventTracker(EventTracker tracker)
+	/**
+	 * Associates an event tracker to this processor
+	 * @param tracker The event tracker, or {@code null} to remove the
+	 * association to an existing tracker
+	 * @return This processor
+	 */
+	public final Processor setEventTracker(/*@Null*/ EventTracker tracker)
 	{
 		m_eventTracker = tracker;
 		return this;

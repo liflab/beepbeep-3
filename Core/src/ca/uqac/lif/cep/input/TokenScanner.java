@@ -3,12 +3,12 @@ package ca.uqac.lif.cep.input;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
+@SuppressWarnings("squid:S2160")
 public class TokenScanner extends UniformProcessor
 {
 	/**
@@ -46,7 +46,7 @@ public class TokenScanner extends UniformProcessor
 		}
 		catch (FileNotFoundException e)
 		{
-			BeepBeepLogger.logger.log(Level.WARNING, "", e);
+			throw new ProcessorException(e);
 		}
 		m_pattern = Pattern.compile(pattern);
 	}

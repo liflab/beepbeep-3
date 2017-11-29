@@ -50,10 +50,10 @@ public abstract class Function implements DuplicableFunction, Serializable
 	 *   function's arguments contains placeholders, they will be replaced
 	 *   by the corresponding object fetched from this map before
 	 *   evaluating the function
-	 * @throws FunctionException Any exception that may occur during the
+	 * @ Any exception that may occur during the
 	 *   evaluation of a function
 	 */
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException
+	public void evaluate(Object[] inputs, Object[] outputs, Context context) 
 	{
 		evaluate(inputs, outputs);
 	}
@@ -64,10 +64,10 @@ public abstract class Function implements DuplicableFunction, Serializable
 	 *   should be equal to the function's declared input arity.
 	 * @param outputs The outputs of the function. The size of the array returned
 	 *   should be equal to the function's declared output arity.
-	 * @throws FunctionException Any exception that may occur during the
+	 * @ Any exception that may occur during the
 	 *   evaluation of a function
 	 */
-	public abstract void evaluate(Object[] inputs, Object[] outputs) throws FunctionException;
+	public abstract void evaluate(Object[] inputs, Object[] outputs) ;
 
 	/**
 	 * Gets the function's input arity, i.e. the number of arguments
@@ -111,9 +111,9 @@ public abstract class Function implements DuplicableFunction, Serializable
 	 * @param inputs Input arguments
 	 * @param outputs Output values
 	 * @param context Context object
-	 * @throws FunctionException Thrown when evaluating the function
+	 * @ Thrown when evaluating the function
 	 */
-	public void evaluateFast(Object[] inputs, Object[] outputs, Context context) throws FunctionException
+	public void evaluateFast(Object[] inputs, Object[] outputs, Context context) 
 	{
 		evaluate(inputs, outputs, context);
 	}

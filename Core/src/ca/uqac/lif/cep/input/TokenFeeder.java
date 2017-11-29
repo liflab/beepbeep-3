@@ -21,6 +21,7 @@ import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
+@SuppressWarnings("squid:S2160")
 public abstract class TokenFeeder extends SingleProcessor
 {
 	/**
@@ -33,29 +34,10 @@ public abstract class TokenFeeder extends SingleProcessor
 	protected String m_separatorBegin;
 	protected String m_separatorEnd;
 
-	/**
-	 * Whether to update a status line about the number of lines read
-	 */
-	protected boolean m_printStatus = false;
-
-	/**
-	 * The number of tokens output so far
-	 */
-	protected int m_tokenCount = 0;
-
 	public TokenFeeder()
 	{
 		super(1, 1);
 		m_bufferedContents = new StringBuilder();
-	}
-	
-	/**
-	 * Sets whether the feeder prints a status line
-	 * @param b Set to <code>true</code> to print a status line
-	 */
-	public void printStatus(boolean b)
-	{
-		m_printStatus = b;
 	}
 
 	protected abstract Object createTokenFromInput(String token);
@@ -96,14 +78,6 @@ public abstract class TokenFeeder extends SingleProcessor
 			{
 				if (!(token instanceof NoToken))
 				{
-					if (m_printStatus)
-					{
-						m_tokenCount++;
-						if (m_tokenCount % 1000 == 0)
-						{
-							System.out.print("Tokens fed: " + m_tokenCount + "    \r");
-						}
-					}
 					Object[] to_fill = new Object[1];
 					to_fill[0] = token;
 					outputs.add(to_fill);

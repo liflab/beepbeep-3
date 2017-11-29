@@ -20,6 +20,8 @@ package ca.uqac.lif.cep;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Queue;
 
 import org.junit.Test;
@@ -46,5 +48,15 @@ public class Utilities extends BeepBeepUnitTest
 	{
 		assertTrue(o instanceof Number);
 		org.junit.Assert.assertEquals(i, ((Number) o).intValue());
+	}
+	
+	/**
+	 * Converts a string into an input stream
+	 * @param s The string to read from
+	 * @return The input stream with the contents of the string
+	 */
+	public static InputStream toInputStream(String s)
+	{
+		return new ByteArrayInputStream(s.getBytes());
 	}
 }

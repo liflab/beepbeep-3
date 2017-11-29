@@ -21,7 +21,7 @@ package ca.uqac.lif.cep.functions;
  * Generic class for any exception thrown during the evaluation of a function
  * @author Sylvain Hallé
  */
-public class FunctionException extends Exception
+public class FunctionException extends RuntimeException
 {
 	/**
 	 * Dummy UID

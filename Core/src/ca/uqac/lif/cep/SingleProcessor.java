@@ -42,6 +42,7 @@ import java.util.Queue;
  * @author Sylvain Hallé
  *
  */
+@SuppressWarnings("squid:S2160")
 public abstract class SingleProcessor extends Processor
 {
 	/**
@@ -114,10 +115,8 @@ public abstract class SingleProcessor extends Processor
 	 * this is not enforced.
 	 * @return A queue of vectors of output events, or null
 	 *   if no event could be produced
-	 * @throws ProcessorException Any exception occurring during the evaluation
-	 *   of the processor
 	 */
-	protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException;
+	protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs);
 
 	
 	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException {
@@ -382,7 +381,7 @@ public abstract class SingleProcessor extends Processor
 				return true;
 			}
 			// Check if each pullable has an event ready
-			for (int tries = 0; tries < Pullable.s_maxRetries; tries++)
+			for (int tries = 0; tries < Processor.MAX_PULL_RETRIES; tries++)
 			{
 				for (int i = 0; i < m_inputArity; i++)
 				{

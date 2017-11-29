@@ -48,6 +48,7 @@ import ca.uqac.lif.cep.Pushable;
  * @author Sylvain Hallé
  *
  */
+@SuppressWarnings("squid:S2160")
 public class Multiplexer extends Processor
 {
 	/** 
@@ -214,7 +215,7 @@ public class Multiplexer extends Processor
 			}
 			boolean all_no = true;
 			NextStatus out = NextStatus.MAYBE;
-			for (int i = 0; i < Pullable.s_maxRetries; i++)
+			for (int i = 0; i < Processor.MAX_PULL_RETRIES; i++)
 			{
 				for (Pullable p : m_inputPullables)
 				{

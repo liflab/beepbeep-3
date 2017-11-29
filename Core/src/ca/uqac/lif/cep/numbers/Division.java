@@ -48,7 +48,7 @@ public class Division extends BinaryFunction<Number,Number,Number>
 	@Override
 	public Number getStartValue()
 	{
-		return 1;
+		return 1f;
 	}
 
 	@Override
