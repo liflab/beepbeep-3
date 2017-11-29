@@ -109,10 +109,8 @@ public abstract class UniformProcessor extends Processor
 	 * @param outputs An array where the outputs are produced
 	 * @return A queue of vectors of output events, or null
 	 *   if no event could be produced
-	 * @throws ProcessorException Any exception thrown during the evaluation
-	 *   of the processor
 	 */
-	protected abstract boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException;
+	protected abstract boolean compute(Object[] inputs, Object[] outputs);
 
 	/**
 	 * Implementation of a {@link Pushable} for a single processor.
@@ -386,13 +384,9 @@ public abstract class UniformProcessor extends Processor
 			// We are here only if every input pullable has answered YES
 			// Pull an event from each
 			Object[] inputs = new Object[m_inputArity];
+			for (int i = 0; i < m_inputPullables.length; i++)
 			{
-				int i = 0;
-				for (Pullable p : m_inputPullables)
-				{
-					inputs[i] = p.pullSoft();
-					i++;
-				}
+				inputs[i] = m_inputPullables[i].pullSoft();
 			}
 			// Compute output event(s)
 			boolean computed;

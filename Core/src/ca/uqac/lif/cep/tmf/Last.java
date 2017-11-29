@@ -116,7 +116,7 @@ public class Last extends Passthrough
 			{
 				return null;
 			}
-			for (int tries = 0; tries < Pullable.s_maxRetries; tries++)
+			for (int tries = 0; tries < Processor.MAX_PULL_RETRIES; tries++)
 			{
 				Object o = m_inputPullables[0].pull();
 				if (o != null)

@@ -17,13 +17,11 @@
  */
 package ca.uqac.lif.cep.util;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,52 +46,6 @@ public class FileHelper
 	private FileHelper()
 	{
 		throw new IllegalAccessError("Utility class");
-	}
-
-	/**
-	 * Reads the contents of a file and puts it into a string.
-	 * @param f The file to read
-	 * @return The string with the file's contents, or the empty string if
-	 *   an error occurred.
-	 */
-	public static String readToString(File f)
-	{
-		BufferedReader br = null;
-		StringBuilder sb = new StringBuilder();
-		FileReader fr = null;
-		try
-		{
-			String sCurrentLine;
-			fr = new FileReader(f);
-			br = new BufferedReader(fr);
-			while ((sCurrentLine = br.readLine()) != null)
-			{
-				sb.append(sCurrentLine).append("\n");
-			}
-		}
-		catch (IOException e)
-		{
-			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
-		}
-		finally
-		{
-			try
-			{
-				if (br != null)
-				{
-					br.close();
-				}
-				if (fr != null)
-				{
-					fr.close();
-				}
-			}
-			catch (IOException ex)
-			{
-				Logger.getAnonymousLogger().log(Level.WARNING, "", ex);
-			}
-		}
-		return sb.toString();
 	}
 
 	/**

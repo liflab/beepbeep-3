@@ -21,7 +21,6 @@ import java.io.PrintStream;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.tmf.Sink;
-import ca.uqac.lif.cep.util.AnsiPrinter;
 
 /**
  * Sends its input to an PrintStream.
@@ -77,7 +76,7 @@ public class Print extends Sink
 	@SuppressWarnings("squid:S106")
 	public Print()
 	{
-		this(1, new AnsiPrinter(System.out));
+		this(1, System.out);
 	}
 	
 	public Print(String separator)
@@ -149,11 +148,11 @@ public class Print extends Sink
 	}
 	
 	/**
-	 * Sets the ANSI printer to which the character string will be sent.
-	 * @param printer The ANSI printer
+	 * Sets the print stream to which the character string will be sent.
+	 * @param printer The print stream
 	 * @return This Print processor
 	 */
-	public Print setAnsiPrinter(/*@NotNull*/ AnsiPrinter printer)
+	public Print setPrintStream(/*@NotNull*/ PrintStream printer)
 	{
 		m_out = printer;
 		return this;

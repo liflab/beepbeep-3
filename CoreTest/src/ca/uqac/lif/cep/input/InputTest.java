@@ -17,12 +17,6 @@ import ca.uqac.lif.cep.util.FileHelper;
 
 public class InputTest extends BeepBeepUnitTest
 {
-
-	@Before
-	public void setUp() throws Exception
-	{
-	}
-
 	@Test
 	public void testCsvFeeder() throws IOException
 	{
