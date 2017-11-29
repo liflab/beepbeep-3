@@ -122,7 +122,7 @@ public class TimeDecimate extends SingleProcessor
 	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
 	{
 		if(!m_shouldOutputLastInputsAnyway || m_lastInputs == null)
-			return super.onEndOfTrace(outputs);
+			return false;
 
 		outputs.add(m_lastInputs);
 		m_lastInputs = null;
