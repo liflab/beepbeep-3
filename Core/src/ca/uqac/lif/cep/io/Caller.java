@@ -27,6 +27,7 @@ import ca.uqac.lif.cep.util.CommandRunner;
  * @author Sylvain Hallé
  *
  */
+@SuppressWarnings("squid:S2160")
 public class Caller extends UniformProcessor
 {
 	/**

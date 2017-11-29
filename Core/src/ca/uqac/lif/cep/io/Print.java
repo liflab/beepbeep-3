@@ -43,6 +43,7 @@ import ca.uqac.lif.cep.tmf.Sink;
  * 
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class Print extends Sink
 {
 	/**

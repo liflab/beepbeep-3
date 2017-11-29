@@ -25,6 +25,7 @@ import ca.uqac.lif.cep.ProcessorException;
  * A special type of {@link Sink} that discards everything it receives.
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class BlackHole extends Sink 
 {
 	/**

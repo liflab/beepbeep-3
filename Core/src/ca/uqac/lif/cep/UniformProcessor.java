@@ -46,6 +46,7 @@ import java.util.Queue;
  * @author Sylvain Hallé
  *
  */
+@SuppressWarnings("squid:S2160")
 public abstract class UniformProcessor extends Processor
 {	
 	/**

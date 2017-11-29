@@ -47,6 +47,7 @@ import ca.uqac.lif.cep.Pushable;
  * @author Sylvain Hallé
  *
  */
+@SuppressWarnings("squid:S2160")
 public class Multiplexer extends Processor
 {
 	/**

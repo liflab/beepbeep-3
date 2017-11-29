@@ -20,6 +20,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * @see Filter
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class SimpleFilter extends SingleProcessor 
 {
 	/**

@@ -31,6 +31,7 @@ import ca.uqac.lif.cep.tmf.Source;
  * Source that reads text lines from a Java {@link InputStream}.
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class LineReader extends Source
 {
 	/**

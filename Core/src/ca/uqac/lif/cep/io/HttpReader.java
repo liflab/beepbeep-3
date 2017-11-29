@@ -31,6 +31,7 @@ import ca.uqac.lif.cep.ProcessorException;
  * 
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class HttpReader extends StreamReader
 {
 	/**

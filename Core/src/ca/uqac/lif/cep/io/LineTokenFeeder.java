@@ -4,6 +4,7 @@ import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
+@SuppressWarnings("squid:S2160")
 public class LineTokenFeeder extends SingleProcessor
 {
 	/**

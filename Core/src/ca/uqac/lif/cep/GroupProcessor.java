@@ -29,6 +29,7 @@ import java.util.Map;
  * 
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class GroupProcessor extends Processor
 {
 	/**

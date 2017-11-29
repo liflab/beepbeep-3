@@ -35,6 +35,7 @@ import ca.uqac.lif.cep.Pullable;
  * @author Sylvain Hallé
  *
  */
+@SuppressWarnings("squid:S2160")
 public class Splicer extends Source
 {
 	/**

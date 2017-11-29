@@ -24,6 +24,7 @@ package ca.uqac.lif.cep.input;
  * @author sylvain
  *
  */
+@SuppressWarnings("squid:S2160")
 public class CsvFeeder extends TokenFeeder
 {
 	/**

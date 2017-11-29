@@ -32,6 +32,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  * @author Sylvain Hallé
  *
  */
+@SuppressWarnings("squid:S2160")
 public class FunctionProcessor extends UniformProcessor
 {
 	/**

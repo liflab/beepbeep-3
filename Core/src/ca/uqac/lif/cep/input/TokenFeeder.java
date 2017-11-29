@@ -21,6 +21,7 @@ import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
+@SuppressWarnings("squid:S2160")
 public abstract class TokenFeeder extends SingleProcessor
 {
 	/**

@@ -24,6 +24,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  * arrays of <i>n</i> elements
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class NaryToArray extends UniformProcessor
 {
 	/**

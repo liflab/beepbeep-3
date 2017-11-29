@@ -28,6 +28,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  *
  */
+@SuppressWarnings("squid:S2160")
 public class Trim extends SingleProcessor
 {
 	/**

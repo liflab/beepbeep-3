@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
 
+@SuppressWarnings("squid:S2160")
 public class TokenScanner extends UniformProcessor
 {
 	/**

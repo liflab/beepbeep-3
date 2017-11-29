@@ -34,6 +34,7 @@ import ca.uqac.lif.cep.tmf.Source;
  * 
  * @author Sylvain Hallé
  */
+@SuppressWarnings("squid:S2160")
 public class StreamReader extends Source
 {
 	/**

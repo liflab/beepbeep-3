@@ -254,13 +254,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	@Override
-	public int hashCode()
+	public final int hashCode()
 	{
 		return m_uniqueId;
 	}
 
 	@Override
-	public boolean equals(Object o)
+	public final boolean equals(Object o)
 	{
 		if (o == null || !(o instanceof Processor))
 		{
