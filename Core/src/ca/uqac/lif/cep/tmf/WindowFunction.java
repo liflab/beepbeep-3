@@ -78,7 +78,7 @@ public class WindowFunction extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_window.add(inputs[0]);
 		int size = m_window.size();

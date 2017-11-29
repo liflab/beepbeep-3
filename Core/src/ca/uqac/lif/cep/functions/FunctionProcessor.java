@@ -36,9 +36,10 @@ import ca.uqac.lif.cep.UniformProcessor;
 public class FunctionProcessor extends UniformProcessor
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 1308814238970584958L;
+	
 	/**
 	 * The object responsible for the computation
 	 */
@@ -61,7 +62,7 @@ public class FunctionProcessor extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		try
 		{

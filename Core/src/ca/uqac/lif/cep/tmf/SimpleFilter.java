@@ -59,7 +59,7 @@ public class SimpleFilter extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		try
 		{

@@ -62,7 +62,7 @@ public class ConstantProcessor extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		outputs.add(new Object[]{m_constant});
 		return true;

@@ -92,7 +92,7 @@ public class Slicer extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		int output_arity = getOutputArity();
 		Object[] f_value = new Object[1];

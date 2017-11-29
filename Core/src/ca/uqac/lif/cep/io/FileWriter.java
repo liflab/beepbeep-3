@@ -70,7 +70,7 @@ public class FileWriter extends Sink
 
 	@Override
 	@SuppressWarnings({"squid:S1168", "squid:S3516"})
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		// We return false everywhere, since anyway the FileWriter is
 		// a sink, so we'll never call pull on it

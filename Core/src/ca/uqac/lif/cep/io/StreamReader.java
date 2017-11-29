@@ -171,7 +171,7 @@ public class StreamReader extends Source
 
 	@Override
 	@SuppressWarnings({"squid:S1168", "squid:S1166"})
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		String s_read = readString();
 		if (m_returnCode == ERR_EOF || m_returnCode == ERR_EOT)
@@ -233,7 +233,7 @@ public class StreamReader extends Source
 	}
 
 	@Override
-	public void start() throws ProcessorException
+	public void start()
 	{
 		m_listener = new StreamListener();
 		Thread t = new Thread(m_listener);
@@ -241,7 +241,7 @@ public class StreamReader extends Source
 	}
 
 	@Override
-	public void stop() throws ProcessorException
+	public void stop()
 	{
 		if (m_listener != null)
 		{

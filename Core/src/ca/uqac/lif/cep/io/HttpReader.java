@@ -62,7 +62,7 @@ public class HttpReader extends StreamReader
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		if (m_fis == null)
 		{

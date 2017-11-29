@@ -72,7 +72,7 @@ public class Tank extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException 
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
 		m_lock.lock();
 		if (!m_queue.isEmpty())
