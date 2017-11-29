@@ -48,7 +48,7 @@ public class FileHelper
 	 */
 	public FileHelper()
 	{
-		throw new IllegalAccessError("Utility class");
+		// Nothing to do
 	}
 	
 	@Test
