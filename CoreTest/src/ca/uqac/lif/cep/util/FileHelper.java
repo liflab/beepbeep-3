@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.Test;
+
 /**
  * A number of helpful utilities to read, write and manage files
  *
@@ -46,6 +48,13 @@ public class FileHelper
 	private FileHelper()
 	{
 		throw new IllegalAccessError("Utility class");
+	}
+	
+	@Test
+	public void dummyTest()
+	{
+		// This is a dummy test to avoid jUnit complaining about
+		// "no runnable methods" for this file
 	}
 
 	/**
