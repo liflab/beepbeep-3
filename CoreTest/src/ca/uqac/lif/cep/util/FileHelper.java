@@ -43,9 +43,10 @@ public class FileHelper
 	public static final String CRLF = System.getProperty("line.separator");
 
 	/**
-	 * Utility classes should not have public constructors
+	 * Utility classes should not have public constructors. We make an
+	 * exception as this class is part of a jUnit folder.
 	 */
-	private FileHelper()
+	public FileHelper()
 	{
 		throw new IllegalAccessError("Utility class");
 	}
