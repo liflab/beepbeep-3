@@ -66,6 +66,11 @@ public abstract class SingleProcessor extends Processor
 	protected final transient Pullable[] m_outputPullables;
 
 	/**
+	 * Indicates whether the processor has been notified of the end of trace or not
+	 */
+	protected boolean m_hasBeenNotifiedOfEndOfTrace;
+
+	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
@@ -76,6 +81,7 @@ public abstract class SingleProcessor extends Processor
 		m_tempQueue = new ArrayDeque<Object[]>(1);
 		m_inputPushables = new Pushable[in_arity];
 		m_outputPullables = new Pullable[out_arity];
+		m_hasBeenNotifiedOfEndOfTrace = false;
 	}
 
 	@Override
@@ -220,6 +226,11 @@ public abstract class SingleProcessor extends Processor
 		
 		@Override
 		public void notifyEndOfTrace() throws PushableException {
+			if(m_hasBeenNotifiedOfEndOfTrace)
+				return;
+
+			m_hasBeenNotifiedOfEndOfTrace = true;
+
 			boolean outs;
 			try 
 			{

@@ -72,6 +72,11 @@ public abstract class UniformProcessor extends Processor
 	protected transient Pullable[] m_outputPullables;
 
 	/**
+	 * Indicates whether the processor has been notified of the end of trace or not
+	 */
+	protected boolean m_hasBeenNotifiedOfEndOfTrace;
+
+	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
@@ -82,6 +87,7 @@ public abstract class UniformProcessor extends Processor
 		m_outputArray = new Object[out_arity];
 		m_inputPushables = new Pushable[in_arity];
 		m_outputPullables = new Pullable[out_arity];
+		m_hasBeenNotifiedOfEndOfTrace = false;
 	}
 
 	@Override
@@ -211,6 +217,11 @@ public abstract class UniformProcessor extends Processor
 		
 		@Override
 		public void notifyEndOfTrace() throws PushableException {
+			if(m_hasBeenNotifiedOfEndOfTrace)
+				return;
+
+			m_hasBeenNotifiedOfEndOfTrace = true;
+
 			boolean outs;
 			try 
 			{
