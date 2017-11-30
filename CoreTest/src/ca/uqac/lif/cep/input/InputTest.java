@@ -10,18 +10,15 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.io.StreamReader;
+import ca.uqac.lif.cep.io.StringStreamReader;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.util.FileHelper;
 
 public class InputTest extends BeepBeepUnitTest
 {
 	@Test
 	public void testCsvFeeder() throws IOException
 	{
-		String file_contents = FileHelper.internalFileToString(this.getClass(), "resource/test1.csv");
-		InputStream stream = toInputStream(file_contents);
-		StreamReader sr = new StreamReader(stream);
+		StringStreamReader sr = new StringStreamReader(InputTest.class.getResourceAsStream("resource/test1.csv"));
 		CsvFeeder csv = new CsvFeeder();
 		Connector.connect(sr, csv);
 		QueueSink sink = new QueueSink(1);

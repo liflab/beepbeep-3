@@ -17,22 +17,17 @@
  */
 package ca.uqac.lif.cep.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.Queue;
 import java.util.Scanner;
-
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.tmf.Source;
 
 /**
  * Source that reads text lines from a Java {@link InputStream}.
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class LineReader extends Source
+public class LineReader extends InputStreamProcessor
 {
 	/**
 	 * Dummy UID
@@ -43,31 +38,26 @@ public class LineReader extends Source
 	 * The scanner to read from
 	 */
 	protected transient Scanner m_scanner;
-
+	
 	/**
-	 * The input stream to read from
+	 * The buffered input stream to wrap
 	 */
-	protected transient InputStream m_inStream;
+	protected transient BufferedInputStream m_bufferedInputStream;
 
 	/**
 	 * Whether to add a carriage return at the end of each line
 	 */
-	protected boolean m_addCrlf = true;
+	protected boolean m_addCrlf = false;
+	
+	/**
+	 * Whether to trim each text line from leading and trailing spaces
+	 */
+	protected boolean m_trim = false;
 	
 	/**
 	 * The character used as the CRLF on this system
 	 */
-	protected static final transient String CRLF = System.getProperty("line.separator");
-
-	/**
-	 * Creates a new LineReader from a File
-	 * @param f The file to read from
-	 * @throws FileNotFoundException If file is not found
-	 */
-	public LineReader(File f) throws FileNotFoundException
-	{
-		this(new FileInputStream(f));
-	}
+	public static final transient String CRLF = System.getProperty("line.separator");
 
 	/**
 	 * Creates a new file reader from an input stream
@@ -75,9 +65,9 @@ public class LineReader extends Source
 	 */
 	public LineReader(InputStream is)
 	{
-		super(1);
-		m_inStream = is;
-		m_scanner = new Scanner(is);
+		super(is);
+		m_bufferedInputStream = new BufferedInputStream(is);
+		m_scanner = new Scanner(m_bufferedInputStream);
 	}
 
 	/**
@@ -91,6 +81,17 @@ public class LineReader extends Source
 		m_addCrlf = b;
 		return this;
 	}
+	
+	/**
+	 * Tells the reader to trim each text line
+	 * @param b true to trim, false otherwise
+	 * @return This reader
+	 */
+	public LineReader trim(boolean b)
+	{
+		m_trim = b;
+		return this;
+	}
 
 	@Override
 	@SuppressWarnings("squid:S1168")
@@ -99,6 +100,10 @@ public class LineReader extends Source
 		if (m_scanner.hasNextLine())
 		{
 			String line = m_scanner.nextLine();
+			if (m_trim)
+			{
+				line = line.trim();
+			}
 			if (m_addCrlf)
 			{
 				line += CRLF;
@@ -107,11 +112,5 @@ public class LineReader extends Source
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public Processor duplicate()
-	{
-		return new LineReader(m_inStream);
 	}
 }

@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.util;
+package ca.uqac.lif.cep.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -168,17 +168,15 @@ public class CommandRunner extends Thread
 		return f.delete();
 	}
 
-	public static byte[] runAndGet(String command, String inputs)
+	public static byte[] runAndGet(String[] command, String inputs) throws IOException
 	{
 		return runAndGet(command, inputs.getBytes());
 	}
 
-	public static byte[] runAndGet(String command, byte[] inputs)
+	public static byte[] runAndGet(String[] command, byte[] inputs) throws IOException
 	{
-		String[] s_command = new String[1];
-		s_command[0] = command;
-		CommandRunner runner = new CommandRunner(s_command, inputs);
-		runner.run();
+		CommandRunner runner = new CommandRunner(command, inputs);
+		runner.execute();
 		// Wait until the command is done
 		while (runner.isAlive())
 		{
@@ -201,10 +199,22 @@ public class CommandRunner extends Thread
 	@Override
 	public void run()
 	{
-		ProcessBuilder builder = new ProcessBuilder(m_command);
+		try
+		{
+			execute();
+		}
+		catch (IOException e)
+		{
+			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
+		}
+	}
+
+	protected void execute() throws IOException
+	{
 		Process process = null;
 		try
 		{
+			ProcessBuilder builder = new ProcessBuilder(m_command);
 			process = builder.start();
 			m_stderrGobbler = new StreamGobbler(process.getErrorStream(), "ERR");
 			m_stdoutGobbler = new StreamGobbler(process.getInputStream(), "IN");
@@ -224,10 +234,6 @@ public class CommandRunner extends Thread
 			{
 				// Wait for both gobblers to finish
 			} while (!m_stop && (m_stderrGobbler.isAlive() || m_stdoutGobbler.isAlive()));
-		}
-		catch (IOException e)
-		{
-			Logger.getAnonymousLogger().log(Level.WARNING, "", e);
 		}
 		catch (InterruptedException e)
 		{

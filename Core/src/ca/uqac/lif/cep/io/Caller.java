@@ -17,8 +17,10 @@
  */
 package ca.uqac.lif.cep.io;
 
+import java.io.IOException;
+
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
-import ca.uqac.lif.cep.util.CommandRunner;
 
 /**
  * Processor calling an external command upon receiving an event,
@@ -31,15 +33,16 @@ import ca.uqac.lif.cep.util.CommandRunner;
 public class Caller extends UniformProcessor
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 150932735172216286L;
+
 	/**
 	 * The command to call
 	 */
-	protected final String m_command;
+	protected final String[] m_command;
 
-	public Caller(String command)
+	public Caller(String ... command)
 	{
 		super(1, 1);
 		m_command = command;
@@ -54,9 +57,16 @@ public class Caller extends UniformProcessor
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		// Pass the event (as is) to the standard input of the command
-		byte[] contents = CommandRunner.runAndGet(m_command, (byte[]) inputs[0]);
-		outputs[0] = contents;
-		return true;
+		try
+		{
+			byte[] contents = CommandRunner.runAndGet(m_command, (byte[]) inputs[0]);
+			outputs[0] = contents;
+			return true;
+		}
+		catch (IOException e)
+		{
+			throw new ProcessorException(e);
+		}
 	}
 
 	@Override

@@ -22,8 +22,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Queue;
+import java.util.Scanner;
 
 import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.tmf.Source;
 
 /**
  * Reads chunks of data from an URL, using an HTTP request.
@@ -32,10 +34,10 @@ import ca.uqac.lif.cep.ProcessorException;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class HttpReader extends StreamReader
+public class HttpReader extends Source
 {
 	/**
-	 * 
+	 * Dummy UID
 	 */
 	private static final long serialVersionUID = -4529083150218166174L;
 
@@ -43,7 +45,7 @@ public class HttpReader extends StreamReader
 	 * The User-Agent string that the reader will send in its HTTP
 	 * requests
 	 */
-	public static final String s_userAgent = "BeepBeep3";
+	public static final String s_userAgent = "BeepBeep3/0.8/HttpReader";
 
 	/**
 	 * The URL to read from
@@ -57,28 +59,35 @@ public class HttpReader extends StreamReader
 	 */
 	public HttpReader(String url)
 	{
-		super();
+		super(1);
 		m_url = url;
 	}
 
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		if (m_fis == null)
+		try
 		{
-			// No input stream; send HTTP request to get it
-			try
+			InputStream is = sendGet(m_url);
+			if (is == null)
 			{
-				InputStream is = sendGet(m_url);
-				setInputStream(is);
+				throw new ProcessorException("No response");
 			}
-			catch (IOException e)
+			String response = null;
+			Scanner s = new Scanner(is);
+			s.useDelimiter("\\A");
+			if (s.hasNext())
 			{
-				throw new ProcessorException(e);
+				response = s.next();
 			}
-			
+			s.close();
+			outputs.add(new Object[]{response});
 		}
-		return super.compute(inputs, outputs);
+		catch (IOException e)
+		{
+			throw new ProcessorException(e);
+		}
+		return true;
 	}
 
 	/**
@@ -100,4 +109,9 @@ public class HttpReader extends StreamReader
 		return is;
 	}
 
+	@Override
+	public HttpReader duplicate() 
+	{
+		return new HttpReader(m_url);
+	}
 }
