@@ -79,6 +79,6 @@ public class CallerTest
 		byte[] bytes = (byte[]) p.pull();
 		assertNotNull(bytes);
 		String s = new String(bytes);
-		assertEquals("foo", s);
+		assertEquals("foo", s.trim());
 	}
 }
