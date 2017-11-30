@@ -36,12 +36,12 @@ public class StringStreamReader extends InputStreamProcessor
 	 * A reader to wrap around this input stream
 	 */
 	protected transient InputStreamReader m_inputStreamReader;
-	
+
 	/**
 	 * A buffered reader to wrap around the input stream
 	 */
 	protected transient BufferedReader m_br;
-	
+
 	/**
 	 * Creates a new stream reader
 	 * @param is The input stream to read from
@@ -73,16 +73,13 @@ public class StringStreamReader extends InputStreamProcessor
 				{
 					char[] new_array = Arrays.copyOf(char_array, chars_read);
 					String st = new String(new_array);
-					if (!m_isFile)
+					if (!m_isFile && st.endsWith(END_CHARACTER))
 					{
-						if (st.endsWith(END_CHARACTER))
-						{
-							// We don't read a file, but the input stream
-							// has the EOT character: trim this EOT form the output
-							st = st.substring(0,  st.length() - 1);
-							// And remember this stream is over
-							m_hasReadEot = true;
-						}
+						// We don't read a file, but the input stream
+						// has the EOT character: trim this EOT form the output
+						st = st.substring(0,  st.length() - 1);
+						// And remember this stream is over
+						m_hasReadEot = true;
 					}
 					outputs.add(new Object[]{st});
 					return true;

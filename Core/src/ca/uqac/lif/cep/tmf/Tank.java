@@ -101,7 +101,7 @@ public class Tank extends SingleProcessor
 		}
 
 		@Override
-		public Pushable push(Object o) throws PushableException 
+		public Pushable push(Object o) 
 		{
 			m_lock.lock();
 			if (m_singleObject)
@@ -114,7 +114,7 @@ public class Tank extends SingleProcessor
 		}
 
 		@Override
-		public Pushable pushFast(Object o) throws PushableException 
+		public Pushable pushFast(Object o) 
 		{
 			return push(o);
 		}
