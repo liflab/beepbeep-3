@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.functions;
 
 import java.util.Set;
 
-import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
 
@@ -103,18 +102,6 @@ public class FunctionProcessor extends UniformProcessor
 	{
 		// The type is determined by that of the underlying function
 		return m_function.getOutputTypeFor(index);
-	}
-
-	@Override
-	public synchronized void setContext(Context context)
-	{
-		super.setContext(context);
-	}
-
-	@Override
-	public synchronized void setContext(String key, Object value)
-	{
-		super.setContext(key, value);
 	}
 
 	@Override
