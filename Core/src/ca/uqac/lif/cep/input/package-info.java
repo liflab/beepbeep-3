@@ -17,8 +17,7 @@
  */
 
 /**
- * Processors to handle conversions to and from various data
- * formats. For example: CSV, XML, etc.
+ * Processors to perform basic processing of text input
  * 
  * @author Sylvain Hallé
  */

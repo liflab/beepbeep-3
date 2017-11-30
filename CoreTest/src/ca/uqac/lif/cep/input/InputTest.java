@@ -1,10 +1,25 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep.input;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.junit.Test;
 
@@ -16,45 +31,110 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 public class InputTest extends BeepBeepUnitTest
 {
 	@Test
-	public void testCsvFeeder() throws IOException
+	public void testCsvFeederNoTrim1() throws IOException
 	{
 		StringStreamReader sr = new StringStreamReader(InputTest.class.getResourceAsStream("resource/test1.csv"));
-		CsvFeeder csv = new CsvFeeder();
+		PatternScanner csv = new PatternScanner("(.*?),");
+		Connector.connect(sr, csv);
+		csv.trim(false);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(csv, sink);
+		String recv;
+		sink.pullHard();
+		recv = (String) sink.getQueue(0).remove();
+		assertEquals("0", recv);
+		sink.pullHard();
+		recv = (String) sink.getQueue(0).remove();
+		assertEquals("1", recv);
+		sink.pullHard();
+		recv = (String) sink.getQueue(0).remove();
+		assertEquals("2", recv);
+	}
+	
+	@Test
+	public void testCsvFeederNoTrim2() throws IOException
+	{
+		StringStreamReader sr = new StringStreamReader(InputTest.class.getResourceAsStream("resource/test1.csv"));
+		PatternScanner csv = new PatternScanner(".*?,");
+		Connector.connect(sr, csv);
+		csv.trim(false);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(csv, sink);
+		String recv;
+		sink.pullHard();
+		recv = (String) sink.getQueue(0).remove();
+		assertEquals("0,", recv);
+		sink.pullHard();
+		recv = (String) sink.getQueue(0).remove();
+		assertEquals("1,", recv);
+		sink.pullHard();
+		recv = (String) sink.getQueue(0).remove();
+		assertEquals("2,", recv);
+	}
+	
+	@Test
+	public void testCsvFeederTrim() throws IOException
+	{
+		StringStreamReader sr = new StringStreamReader(InputTest.class.getResourceAsStream("resource/test2.csv"));
+		PatternScanner csv = new PatternScanner("(.*?),");
+		csv.trim(true);
 		Connector.connect(sr, csv);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(csv, sink);
-		String recv, expected;
+		String recv;
 		sink.pullHard();
 		recv = (String) sink.getQueue(0).remove();
-		expected = "0";
-		if (recv == null || recv.compareTo(expected) != 0)
-		{
-			assertEquals(expected, recv);
-		}
+		assertEquals("0", recv);
 		sink.pullHard();
 		recv = (String) sink.getQueue(0).remove();
-		expected = "1";
-		if (recv == null || recv.compareTo(expected) != 0)
-		{
-			assertEquals(expected, recv);
-		}
+		assertEquals("1", recv);
 		sink.pullHard();
 		recv = (String) sink.getQueue(0).remove();
-		expected = "2";
-		if (recv == null || recv.compareTo(expected) != 0)
-		{
-			assertEquals(expected, recv);
-		}
+		assertEquals("2", recv);
 	}
 	
-	/**
-	 * Converts a string into an input stream
-	 * @param s The string to read from
-	 * @return The input stream with the contents of the string
-	 */
-	public static InputStream toInputStream(String s)
+	@Test
+	public void testCsvToArrayTrim()
 	{
-		return new ByteArrayInputStream(s.getBytes());
+		String line = "a, b, c";
+		SplitString cta = new SplitString(",");
+		cta.trim(true);
+		Object[] out = new Object[1];
+		cta.evaluate(new Object[]{line}, out);
+		Object[] vals = (Object[]) out[0];
+		assertEquals(3, vals.length);
+		assertEquals("a", vals[0]);
+		assertEquals("b", vals[1]);
+		assertEquals("c", vals[2]);		
 	}
-
+	
+	@Test
+	public void testCsvToArrayNoTrim()
+	{
+		String line = "a, b, c";
+		SplitString cta = new SplitString(",");
+		cta.trim(false);
+		Object[] out = new Object[1];
+		cta.evaluate(new Object[]{line}, out);
+		Object[] vals = (Object[]) out[0];
+		assertEquals(3, vals.length);
+		assertEquals("a", vals[0]);
+		assertEquals(" b", vals[1]);
+		assertEquals(" c", vals[2]);		
+	}
+	
+	@Test
+	public void testCsvToArrayNumber()
+	{
+		String line = "a, 32, 2.5";
+		SplitString cta = new SplitString(",");
+		cta.trim(true);
+		Object[] out = new Object[1];
+		cta.evaluate(new Object[]{line}, out);
+		Object[] vals = (Object[]) out[0];
+		assertEquals(3, vals.length);
+		assertEquals("a", vals[0]);
+		assertEquals(32, vals[1]);
+		assertEquals(2.5f, vals[2]);		
+	}
 }
