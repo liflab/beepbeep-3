@@ -26,11 +26,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class SplitString extends UnaryFunction<String,Object>
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -1496355704602761974L;
-
-	/**
 	 * An instance of this function with default values 
 	 */
 	public static final transient SplitString instance = new SplitString(":");

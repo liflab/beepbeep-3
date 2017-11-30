@@ -32,11 +32,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class Trim extends SingleProcessor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3203748738494500265L;
-
-	/**
 	 * How many events to ignore at the beginning of the trace
 	 */
 	private final int m_delay;

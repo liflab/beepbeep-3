@@ -29,11 +29,6 @@ import java.util.Queue;
 @SuppressWarnings("squid:S2160")
 public class QueueSink extends Sink
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 6014894732222917779L;
-	
 	protected Queue<Object>[] m_queues;
 
 	public QueueSink(int in_arity)

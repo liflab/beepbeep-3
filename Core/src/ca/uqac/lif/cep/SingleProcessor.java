@@ -46,11 +46,6 @@ import java.util.Queue;
 public abstract class SingleProcessor extends Processor
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -1296312555379963210L;
-
-	/**
 	 * A queue object that will be passed to the {@link #compute(Object[], Queue)}
 	 * method
 	 */

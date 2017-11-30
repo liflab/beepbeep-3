@@ -50,11 +50,6 @@ import java.util.Queue;
 public abstract class UniformProcessor extends Processor
 {	
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -4956827142858091212L;
-	
-	/**
 	 * An array that will be used by the processor to compute
 	 * its output
 	 */

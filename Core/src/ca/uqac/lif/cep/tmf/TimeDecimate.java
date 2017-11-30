@@ -34,11 +34,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class TimeDecimate extends SingleProcessor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7825576479352779012L;
-
-	/**
 	 * Interval of time
 	 */
 	protected final long m_interval;

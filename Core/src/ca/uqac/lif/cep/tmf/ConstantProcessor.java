@@ -32,11 +32,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class ConstantProcessor extends SingleProcessor
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 8219535000885119220L;
-	
-	/**
 	 * The constant to return
 	 */
 	protected Object m_constant;

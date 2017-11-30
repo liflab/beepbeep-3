@@ -26,10 +26,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class SquareRoot extends UnaryFunction<Number,Number>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -858548415149836732L;
-	/**
 	 * A static instance of absolute value
 	 */
 	public static final transient SquareRoot instance = new SquareRoot();

@@ -257,11 +257,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Incrementer extends FunctionProcessor
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = -3181129919928028488L;
-
 		public Incrementer(int i)
 		{
 			super(new Plus(i));
@@ -270,10 +265,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Plus extends UnaryFunction<Integer,Integer>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -7827169077553183667L;
 		int m_plus = 0;
 		
 		public Plus(int i)
@@ -292,11 +283,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Apples extends SingleProcessor
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = 7512600454804881369L;
-
 		public Apples()
 		{
 			super(1, 1);
@@ -332,11 +318,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Oranges extends SingleProcessor
 	{
-		/**
-		 * Dummy UID 
-		 */
-		private static final long serialVersionUID = -3498569238430262588L;
-		
 		public boolean started = false;
 		
 		boolean reset = false;
@@ -394,11 +375,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Variants extends SingleProcessor
 	{
-		/**
-		 * Dummy UID 
-		 */
-		private static final long serialVersionUID = -3498569238430262585L;
-
 		public Variants()
 		{
 			super(1, 1);

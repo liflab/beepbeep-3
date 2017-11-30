@@ -24,10 +24,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  */
 public class StringStartsWith extends BinaryFunction<String,String,Boolean>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7490680052498256554L;
 	public static final StringStartsWith instance = new StringStartsWith();
 	
 	StringStartsWith()

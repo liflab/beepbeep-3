@@ -24,10 +24,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  */
 public class StringEndsWith extends BinaryFunction<String,String,Boolean>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6151938424850298768L;
 	public static final StringEndsWith instance = new StringEndsWith();
 	
 	StringEndsWith()

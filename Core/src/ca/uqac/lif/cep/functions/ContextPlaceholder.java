@@ -30,10 +30,6 @@ import ca.uqac.lif.cep.Context;
 public class ContextPlaceholder extends Function
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4062306641182843064L;
-	/**
 	 * The name of this placeholder
 	 */
 	protected final String m_name;

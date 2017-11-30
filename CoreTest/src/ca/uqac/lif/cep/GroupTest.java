@@ -547,11 +547,6 @@ public class GroupTest extends BeepBeepUnitTest
 	
 	public static class Incrementer extends FunctionProcessor
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = 1503097815282943066L;
-
 		public Incrementer(int increment)
 		{
 			super(new IncrementFunction(increment));
@@ -560,10 +555,6 @@ public class GroupTest extends BeepBeepUnitTest
 	
 	public static class IncrementFunction extends UnaryFunction<Number,Number>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4907523652245702908L;
 		int m_increment;
 		
 		public IncrementFunction(int increment)
@@ -582,11 +573,6 @@ public class GroupTest extends BeepBeepUnitTest
 	public static class PassthroughIn extends Passthrough
 	{
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 3684767348745275848L;
-
 		public PassthroughIn(int arity) 
 		{
 			super(arity);
@@ -601,11 +587,6 @@ public class GroupTest extends BeepBeepUnitTest
 	
 	public static class GroupIn extends GroupProcessor
 	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 3020653608268940867L;
 
 		public GroupIn(int in_arity, int out_arity) {
 			super(in_arity, out_arity);

@@ -26,11 +26,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Addition extends BinaryFunction<Number,Number,Number>
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -7410938141238455733L;
-	
-	/**
 	 * A static instance of addition
 	 */
 	public static final transient Addition instance = new Addition();

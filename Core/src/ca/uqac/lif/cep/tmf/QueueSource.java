@@ -40,11 +40,6 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
 public class QueueSource extends Source
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1353902689658016032L;
-
-	/**
 	 * The events to repeat endlessly
 	 */
 	protected List<Object> m_events;

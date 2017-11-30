@@ -24,10 +24,6 @@ package ca.uqac.lif.cep.functions;
  */
 public class And extends BinaryFunction<Boolean,Boolean,Boolean>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6348739111534556390L;
 	public static final transient And instance = new And();
 
 	protected And()

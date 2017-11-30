@@ -26,10 +26,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Power extends BinaryFunction<Number,Number,Number>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -9105651144223675623L;
-	/**
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Power instance = new Power();

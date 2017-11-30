@@ -28,11 +28,6 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  */
 public class CumulativeProcessor extends FunctionProcessor
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -545875701095390745L;
-
 	public CumulativeProcessor(CumulativeFunction<?> f)
 	{
 		super(f);

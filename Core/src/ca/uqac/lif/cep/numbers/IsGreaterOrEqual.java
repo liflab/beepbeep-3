@@ -22,10 +22,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class IsGreaterOrEqual extends BinaryFunction<Number,Number,Boolean>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 493149791775824643L;
-	/**
 	 * A static instance of the function
 	 */
 	public static final transient IsGreaterOrEqual instance = new IsGreaterOrEqual();

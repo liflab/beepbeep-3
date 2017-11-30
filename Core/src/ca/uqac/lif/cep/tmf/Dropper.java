@@ -31,11 +31,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public class Dropper extends SingleProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 677509797829781434L;
-
 	public Dropper()
 	{
 		super(1, 1);

@@ -136,11 +136,6 @@ public class ThroughputTest extends BeepBeepUnitTest
 	
 	public static class Sum extends CumulativeProcessor
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 5258504145462992014L;
-
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{

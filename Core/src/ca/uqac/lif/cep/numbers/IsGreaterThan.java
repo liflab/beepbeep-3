@@ -22,10 +22,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 482699527122329385L;
-	/**
 	 * A static instance of the function
 	 */
 	public static final transient IsGreaterThan instance = new IsGreaterThan();

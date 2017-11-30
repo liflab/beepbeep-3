@@ -37,11 +37,6 @@ import ca.uqac.lif.cep.tmf.Source;
 public class HttpReader extends Source
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -4529083150218166174L;
-
-	/**
 	 * The User-Agent string that the reader will send in its HTTP
 	 * requests
 	 */

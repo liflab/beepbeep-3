@@ -30,11 +30,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class PatternScanner extends SingleProcessor
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -1832228208742643560L;
-
-	/**
 	 * The buffered contents of the string received so far
 	 */
 	protected String m_contents;

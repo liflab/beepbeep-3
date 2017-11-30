@@ -28,11 +28,6 @@ import java.util.Queue;
 @SuppressWarnings("squid:S2160")
 public class QueueSourceBatch extends QueueSource
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 566108093554996863L;
-
 	public QueueSourceBatch(int arity)
 	{
 		super(arity);

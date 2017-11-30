@@ -24,10 +24,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  */
 public class StringConcat extends BinaryFunction<String,String,String>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4103220043628956237L;
 	public static final StringConcat instance = new StringConcat();
 	
 	StringConcat()

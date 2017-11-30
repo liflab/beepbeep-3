@@ -24,11 +24,6 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class SimpleFilter extends SingleProcessor 
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 8775875821165936641L;
-
-	/**
 	 * The condition to evaluate
 	 */
 	protected Function m_condition;

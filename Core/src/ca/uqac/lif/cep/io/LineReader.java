@@ -30,11 +30,6 @@ import java.util.Scanner;
 public class LineReader extends InputStreamProcessor
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 3187087342912223147L;
-
-	/**
 	 * The scanner to read from
 	 */
 	protected transient Scanner m_scanner;

@@ -11,11 +11,6 @@ import java.util.Set;
 public abstract class BinaryFunction<T,V,U> extends Function
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 240799859480547743L;
-
-	/**
 	 * The class of the first input
 	 */
 	private Class<T> m_inputTypeLeft;

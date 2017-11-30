@@ -22,10 +22,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class IsLessOrEqual extends BinaryFunction<Number,Number,Boolean>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6908912872189051473L;
-	/**
 	 * A static instance of the function
 	 */
 	public static final transient IsLessOrEqual instance = new IsLessOrEqual();

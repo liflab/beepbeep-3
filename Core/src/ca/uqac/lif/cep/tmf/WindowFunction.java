@@ -36,11 +36,6 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class WindowFunction extends SingleProcessor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5751397491795610794L;
-
-	/**
 	 * The window's width
 	 */
 	protected int m_width;

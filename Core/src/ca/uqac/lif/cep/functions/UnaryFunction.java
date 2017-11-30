@@ -27,11 +27,6 @@ import java.util.Set;
 public abstract class UnaryFunction<T,U> extends Function
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5463369159504250881L;
-
-	/**
 	 * The class of the input
 	 */
 	private Class<T> m_inputType;

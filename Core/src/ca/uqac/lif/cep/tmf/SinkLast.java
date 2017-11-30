@@ -30,11 +30,6 @@ import java.util.Queue;
 public class SinkLast extends Sink
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8285821223160841586L;
-
-	/**
 	 * The last event (or array of events) received
 	 */
 	protected Object[] m_last;

@@ -78,11 +78,6 @@ public class SlicerTest extends BeepBeepUnitTest
 	
 	public static class Sum extends CumulativeProcessor
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 531602687333501751L;
-
 		public Sum()
 		{
 			super(new CumulativeFunction<Number>(Addition.instance));
@@ -91,11 +86,6 @@ public class SlicerTest extends BeepBeepUnitTest
 
 	public static class IsEven extends UnaryFunction<Number,Boolean>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 5985158957738807137L;
-
 		public IsEven()
 		{
 			super(Number.class, Boolean.class);

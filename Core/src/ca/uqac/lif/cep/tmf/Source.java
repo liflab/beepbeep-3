@@ -41,11 +41,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public abstract class Source extends SingleProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 482894656711217843L;
-
 	public Source(int out_arity)
 	{
 		super(0, out_arity);

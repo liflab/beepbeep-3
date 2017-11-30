@@ -29,10 +29,6 @@ import ca.uqac.lif.cep.Context;
 public class ArgumentPlaceholder extends Function
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8288263714674625388L;
-	/**
 	 * The index of this placeholder
 	 */
 	private final int m_index;

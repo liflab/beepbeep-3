@@ -26,11 +26,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class NumberCast extends UnaryFunction<Object,Number>
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -7200217647590938462L;
-	
 	public static final transient NumberCast instance = new NumberCast();
 
 	protected NumberCast()

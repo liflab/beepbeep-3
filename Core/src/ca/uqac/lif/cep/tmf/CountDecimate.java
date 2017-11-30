@@ -31,11 +31,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class CountDecimate extends SingleProcessor
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -1528026169905098741L;
-
-	/**
 	 * The decimation interval
 	 */
 	private final int m_interval;

@@ -26,10 +26,6 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 public class Multiplication extends BinaryFunction<Number,Number,Number>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -844796828531386011L;
-	/**
 	 * Static reference to a single instance of the function
 	 */
 	public static final transient Multiplication instance = new Multiplication();

@@ -28,11 +28,6 @@ import ca.uqac.lif.cep.tmf.Source;
 public abstract class InputStreamProcessor extends Source
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 5211919739712461319L;
-	
-	/**
 	 * The input stream this processor is reading from
 	 */
 	protected InputStream m_inputStream;

@@ -33,11 +33,6 @@ import ca.uqac.lif.cep.ProcessorException;
 public class StringStreamReader extends InputStreamProcessor 
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 7816069750491813770L;
-
-	/**
 	 * A reader to wrap around this input stream
 	 */
 	protected transient InputStreamReader m_inputStreamReader;

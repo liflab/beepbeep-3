@@ -26,10 +26,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class AbsoluteValue extends UnaryFunction<Number,Number>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7725796754734364813L;
-	/**
 	 * A static instance of absolute value
 	 */
 	public static final transient AbsoluteValue instance = new AbsoluteValue();

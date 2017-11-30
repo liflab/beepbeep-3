@@ -31,11 +31,6 @@ import ca.uqac.lif.cep.tmf.Sink;
 public class OutputStreamProcessor extends Sink 
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -2866187614570064687L;
-
-	/**
 	 * The output stream to send data to
 	 */
 	protected transient OutputStream m_outputStream;
