@@ -22,10 +22,10 @@ import java.util.Queue;
  *
  * In case the processor is notified of the end of the trace (EOT, i.e. there
  * is no more event to compute), by default the processor does not output anything,
- * meaning that the last input event will never be processed nor output. Nevertheless,
- * it is possible to specify that you do want to process and output the last input
- * even if it does not correspond to the decimation rate by specifying the mode in
- * {@link #Decimate(boolean)}.
+ * meaning that the last input event will never be processed nor output (except
+ * if it corresponded to the decimation rate). Nevertheless,it is possible to specify
+ * that you do want to process and output the last inputeven if it does not
+ * correspond to the decimation rate by specifying the mode in {@link #Decimate(boolean)}.
  *
  * @author Quentin Betti
  */
