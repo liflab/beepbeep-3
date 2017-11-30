@@ -87,7 +87,7 @@ public abstract class Decimate extends SingleProcessor {
         if(!m_shouldProcessLastInputs || m_lastInputs == null)
             return false;
 
-        outputs.add(m_lastInputs);
+        outputs.add(processInputs(m_lastInputs));
         m_lastInputs = null;
 
         return true;
