@@ -42,9 +42,9 @@ public abstract class Decimate extends SingleProcessor {
     protected final boolean m_shouldProcessLastInputs;
 
     /**
-     * The last inputs stored (in case of EOT processing mode)
+     * The last inputs processed by {@link #processInputs(Object[])} stored (in case of EOT processing mode)
      */
-    protected Object[] m_lastInputs;
+    protected Object[] m_lastProcessedInputs;
 
 
     /**
@@ -55,7 +55,7 @@ public abstract class Decimate extends SingleProcessor {
     public Decimate(boolean shouldProcessLastInputs) {
         super(1, 1);
         m_shouldProcessLastInputs = shouldProcessLastInputs;
-        m_lastInputs = null;
+        m_lastProcessedInputs = null;
     }
 
     public Decimate() {
@@ -68,13 +68,14 @@ public abstract class Decimate extends SingleProcessor {
 
         if(shouldOutput())
         {
-            outputs.add(processInputs(inputs));
+            Object[] outs = processInputs(inputs);
+            outputs.add(outs);
             postOutput();
-            m_lastInputs = null;
+            m_lastProcessedInputs = null;
         }
         else if(m_shouldProcessLastInputs)
         {
-            m_lastInputs = inputs;
+            m_lastProcessedInputs = processInputs(inputs);
         }
 
         post();
@@ -84,11 +85,11 @@ public abstract class Decimate extends SingleProcessor {
 
     @Override
     protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException {
-        if(!m_shouldProcessLastInputs || m_lastInputs == null)
+        if(!m_shouldProcessLastInputs || m_lastProcessedInputs == null)
             return false;
 
-        outputs.add(processInputs(m_lastInputs));
-        m_lastInputs = null;
+        outputs.add(m_lastProcessedInputs);
+        m_lastProcessedInputs = null;
 
         return true;
 
