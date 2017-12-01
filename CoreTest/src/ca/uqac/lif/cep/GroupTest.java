@@ -482,6 +482,73 @@ public class GroupTest extends BeepBeepUnitTest
 	}
 	
 	@Test
+	public void testGroupPush1() 
+	{
+		// Create the group
+		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
+		add_plus_10.addProcessor(add);
+		add_plus_10.associateInput(0, add, 0);
+		add_plus_10.associateInput(1, add, 1);
+		add_plus_10.associateOutput(0, add, 0);
+		
+		// Connect the group to two sources and one sink
+		Vector<Object> l_input1 = new Vector<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(4);
+		l_input1.add(6);
+		QueueSource input1 = new QueueSource();
+		input1.setEvents(l_input1);
+		Vector<Object> l_input2 = new Vector<Object>();
+		l_input2.add(1);
+		l_input2.add(2);
+		l_input2.add(3);
+		l_input2.add(4);
+		QueueSource input2 = new QueueSource(1);
+		input2.setEvents(l_input2);
+		Connector.connect(input1, 0, add_plus_10, 0);
+		Connector.connect(input2, 0, add_plus_10, 1);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(add_plus_10, sink);
+		Number recv, expected;
+		
+		// Run
+		input1.push();
+		input2.push();
+		expected = 3;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 5;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 7;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 10;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+	}
+	
+	@Test
 	public void testReset() throws ProcessorException
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);

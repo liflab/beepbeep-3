@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.*;
 
-import java.util.Queue;
 import java.util.Vector;
 
 import org.junit.Test;
@@ -27,12 +26,8 @@ import org.junit.Test;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.numbers.Addition;
 import ca.uqac.lif.cep.tmf.CountDecimate;
-import ca.uqac.lif.cep.tmf.Filter;
-import ca.uqac.lif.cep.tmf.Fork;
-import ca.uqac.lif.cep.tmf.Multiplexer;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -339,155 +334,6 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testFilter1() 
-	{
-		QueueSource input1 = new QueueSource();
-		input1.setEvents(new Integer[]{1, 2, 3, 4});
-		QueueSource input2 = new QueueSource();
-		input2.setEvents(new Boolean[]{true, false, true, false});
-		Filter f = new Filter();
-		Connector.connect(input1, 0, f, 0);
-		Connector.connect(input2, 0, f, 1);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(f, sink);
-		Number recv;
-		input1.push();
-		input2.push();
-		recv = (Number) sink.remove()[0]; // 1
-		if (recv == null || recv.intValue() != 1)
-		{
-			fail("Expected 1, got " + recv);
-		}
-		input1.push();
-		input2.push();
-		recv = (Number) sink.remove()[0]; // null
-		if (recv != null)
-		{
-			fail("Expected null, got " + recv);
-		}
-		input1.push();
-		input1.push();
-		input2.push();
-		recv = (Number) sink.remove()[0]; // 1
-		if (recv == null || recv.intValue() != 3)
-		{
-			fail("Expected 3, got " + recv);
-		}
-		input1.push();
-		input2.push();
-		recv = (Number) sink.remove()[0]; // null
-		if (recv != null)
-		{
-			fail("Expected null, got " + recv);
-		}	
-	}
-	
-	@Test
-	public void testFilter2() 
-	{
-		QueueSource input1 = new QueueSource();
-		input1.setEvents(new Integer[]{2, 3, 4, 6});
-		Fork fork = new Fork(2);
-		Connector.connect(input1, fork);
-		Filter filter = new Filter();
-		Connector.connect(fork, 0, filter, 0);
-		FunctionProcessor even = new FunctionProcessor(new IsEven());
-		Connector.connect(fork, 1, even, 0);
-		Connector.connect(even, 0, filter, 1);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(filter, sink);
-		Number recv;
-		input1.push();
-		recv = (Number) sink.remove()[0]; // 2
-		assertEquals(2, recv);
-		input1.push();
-		recv = (Number) sink.remove()[0]; // null
-		if (recv != null)
-		{
-			fail("Expected null, got " + recv);
-		}
-		input1.push();
-		input1.push();
-		recv = (Number) sink.remove()[0]; // 4
-		if (recv == null || recv.intValue() != 4)
-		{
-			fail("Expected 4, got " + recv);
-		}
-		recv = (Number) sink.remove()[0]; // 6
-		if (recv == null || recv.intValue() != 6)
-		{
-			fail("Expected 6, got " + recv);
-		}
-	}
-	
-	@Test
-	public void testGroupPush1() 
-	{
-		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
-		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
-		add_plus_10.addProcessor(add);
-		add_plus_10.associateInput(0, add, 0);
-		add_plus_10.associateInput(1, add, 1);
-		add_plus_10.associateOutput(0, add, 0);
-		
-		// Connect the group to two sources and one sink
-		Vector<Object> l_input1 = new Vector<Object>();
-		l_input1.add(2);
-		l_input1.add(3);
-		l_input1.add(4);
-		l_input1.add(6);
-		QueueSource input1 = new QueueSource();
-		input1.setEvents(l_input1);
-		Vector<Object> l_input2 = new Vector<Object>();
-		l_input2.add(1);
-		l_input2.add(2);
-		l_input2.add(3);
-		l_input2.add(4);
-		QueueSource input2 = new QueueSource(1);
-		input2.setEvents(l_input2);
-		Connector.connect(input1, 0, add_plus_10, 0);
-		Connector.connect(input2, 0, add_plus_10, 1);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(add_plus_10, sink);
-		Number recv, expected;
-		
-		// Run
-		input1.push();
-		input2.push();
-		expected = 3;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		input1.push();
-		input2.push();
-		expected = 5;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		input1.push();
-		input2.push();
-		expected = 7;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-		input1.push();
-		input2.push();
-		expected = 10;
-		recv = (Number) sink.getQueue(0).remove();
-		if (recv == null || recv.intValue() != expected.intValue())
-		{
-			fail("Expected " + expected + ", got " + recv);
-		}
-	}
-	
-	@Test
 	public void testBinaryPull() 
 	{
 		QueueSource src_left = new QueueSource();
@@ -514,9 +360,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 		assertNull(n);
 		n = (Number) p.pullSoft();
 		assertEquals(11, n.intValue());
-
 	}
-	
 	
 	/**
 	 * This test does not assert anything. It is used for step-by-step debugging
@@ -544,28 +388,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 		}
 		assertTrue(true);
 	}
-	
-	@Test
-	public void testMuxerPush1() 
-	{
-		Integer i;
-		Multiplexer mux = new Multiplexer(2);
-		QueueSink qs = new QueueSink(1);
-		Connector.connect(mux, qs);
-		Queue<Object> q = qs.getQueue(0);
-		Pushable push1 = mux.getPushableInput(0);
-		Pushable push2 = mux.getPushableInput(1);
-		push1.push(0);
-		assertTrue(!q.isEmpty());
-		i = (Integer) q.remove();
-		assertEquals(0, i.intValue());
-		push2.push(1);
-		push1.push(2);
-		assertTrue(!q.isEmpty());
-		i = (Integer) q.remove();
-		assertEquals(1, i.intValue());
-	}
-	
+
 	@Test
 	@SuppressWarnings("unused")
 	public void testProcessorException2()
@@ -588,20 +411,6 @@ public class ProcessorTest extends BeepBeepUnitTest
 		catch (Exception e)
 		{
 			ProcessorException pe = new ProcessorException(e);
-		}
-	}
-	
-	public static class IsEven extends UnaryFunction<Number,Boolean>
-	{
-		public IsEven()
-		{
-			super(Number.class, Boolean.class);
-		}
-		
-		@Override
-		public Boolean getValue(Number x) 
-		{
-			return x.floatValue() % 2 == 0;
 		}
 	}
 	

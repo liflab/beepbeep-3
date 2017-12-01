@@ -36,6 +36,27 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class MultiplexerTest extends BeepBeepUnitTest 
 {
 	@Test
+	public void testMuxerPush1() 
+	{
+		Integer i;
+		Multiplexer mux = new Multiplexer(2);
+		QueueSink qs = new QueueSink(1);
+		Connector.connect(mux, qs);
+		Queue<Object> q = qs.getQueue(0);
+		Pushable push1 = mux.getPushableInput(0);
+		Pushable push2 = mux.getPushableInput(1);
+		push1.push(0);
+		assertTrue(!q.isEmpty());
+		i = (Integer) q.remove();
+		assertEquals(0, i.intValue());
+		push2.push(1);
+		push1.push(2);
+		assertTrue(!q.isEmpty());
+		i = (Integer) q.remove();
+		assertEquals(1, i.intValue());
+	}
+	
+	@Test
 	public void testMultiplexerPush() 
 	{
 		Multiplexer mux = new Multiplexer(2);

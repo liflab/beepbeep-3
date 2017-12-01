@@ -59,7 +59,7 @@ public abstract class SingleProcessor extends Processor
 	/**
 	 * An array of output pullables
 	 */
-	protected final transient Pullable[] m_outputPullables;
+	protected transient Pullable[] m_outputPullables;
 
 	/**
 	 * Initializes a processor

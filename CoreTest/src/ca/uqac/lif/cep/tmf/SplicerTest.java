@@ -19,14 +19,15 @@ package ca.uqac.lif.cep.tmf;
 
 import static org.junit.Assert.*;
 
-import java.util.Vector;
-
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Splicer;
 
+/**
+ * Unit tests for the {@link Splicer} processor.
+ */
 public class SplicerTest 
 {
 	@Test
@@ -35,22 +36,10 @@ public class SplicerTest
 		Object o;
 		QueueSource source1 = new QueueSource(1);
 		source1.loop(false);
-		{
-			Vector<Object> events = new Vector<Object>();
-			events.add(0);
-			events.add(1);
-			events.add(2);
-			source1.setEvents(events);
-		}
+		source1.setEvents(0, 1, 2);
 		QueueSource source2 = new QueueSource(1);
 		source2.loop(false);
-		{
-			Vector<Object> events = new Vector<Object>();
-			events.add(3);
-			events.add(4);
-			events.add(5);
-			source2.setEvents(events);
-		}
+		source2.setEvents(3, 4, 5);
 		Splicer s = new Splicer(source1, source2);
 		Pullable p = s.getPullableOutput(0);
 		o = p.pull();

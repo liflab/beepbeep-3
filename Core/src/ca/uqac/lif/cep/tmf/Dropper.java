@@ -17,8 +17,8 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.Collection;
 import java.util.Queue;
-import java.util.Set;
 
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -41,20 +41,22 @@ public class Dropper extends SingleProcessor
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object o = inputs[0];
-		if (o instanceof Set)
+		if (o instanceof Collection)
 		{
-			Set<?> s_o = (Set<?>) o;
+			Collection<?> s_o = (Collection<?>) o;
 			for (Object obj : s_o)
 			{
-				Object[] obj_array = new Object[1];
-				obj_array[0] = obj;
-				outputs.add(obj_array);
+				outputs.add(new Object[]{obj});
 			}
 			return true;
 		}
 		else
 		{
-			outputs.add(wrapObject(o));
+			Object[] obs = (Object[]) o;
+			for (Object obj : obs)
+			{
+				outputs.add(new Object[]{obj});
+			}
 			return true;
 		}
 	}
@@ -64,6 +66,4 @@ public class Dropper extends SingleProcessor
 	{
 		return new Dropper();
 	}
-
-
 }
