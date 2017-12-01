@@ -39,16 +39,16 @@ public class DropperTest
 		Dropper d = new Dropper();
 		Connector.connect(qs, d);
 		Pullable p = d.getPullableOutput();
-		assertEquals(1, (int) p.pull());
-		assertEquals(2, (int) p.pull());
-		assertEquals(3, (int) p.pull());
-		assertEquals(4, (int) p.pull());
+		assertEquals(1, ((Integer) p.pull()).intValue());
+		assertEquals(2, ((Integer) p.pull()).intValue());
+		assertEquals(3, ((Integer) p.pull()).intValue());
+		assertEquals(4, ((Integer) p.pull()).intValue());
 		Dropper d2 = d.duplicate();
 		qs = new QueueSource().setEvents(new Object[]{new Object[]{1, 2, 3, 4}});
 		Connector.connect(qs, d2);
 		p = d2.getPullableOutput();
-		assertEquals(1, (int) p.pull());
-		assertEquals(2, (int) p.pull());
+		assertEquals(1, ((Integer) p.pull()).intValue());
+		assertEquals(2, ((Integer) p.pull()).intValue());
 		
 	}
 	
@@ -64,9 +64,9 @@ public class DropperTest
 		Dropper d = new Dropper();
 		Connector.connect(qs, d);
 		Pullable p = d.getPullableOutput();
-		assertEquals(1, (int) p.pull());
-		assertEquals(2, (int) p.pull());
-		assertEquals(3, (int) p.pull());
-		assertEquals(4, (int) p.pull());
+		assertEquals(1, ((Integer) p.pull()).intValue());
+		assertEquals(2, ((Integer) p.pull()).intValue());
+		assertEquals(3, ((Integer) p.pull()).intValue());
+		assertEquals(4, ((Integer) p.pull()).intValue());
 	}
 }
