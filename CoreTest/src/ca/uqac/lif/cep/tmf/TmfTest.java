@@ -17,9 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -374,5 +372,23 @@ public class TmfTest
 			ins.reset();
 			sink.reset();
 		}
+	}
+	
+	@Test
+	public void testTank()
+	{
+		Tank t = new Tank();
+		Pushable ps = t.getPushableInput();
+		Pullable pl = t.getPullableOutput();
+		ps.push("foo");
+		ps.push("bar");
+		assertTrue(pl.hasNext());
+		assertEquals("foo", pl.pull());
+		assertTrue(pl.hasNext());
+		assertEquals("bar", pl.pull());
+		assertFalse(pl.hasNext());
+		ps.push("baz");
+		assertTrue(pl.hasNext());
+		assertEquals("baz", pl.pull());
 	}
 }

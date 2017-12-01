@@ -271,7 +271,7 @@ public class UtilTest
 	@Test
 	public void testStrings()
 	{
-		assertEquals("foobar", FunctionsTest.evaluate(Strings.Concat.instance, "foo", "bar"));
+		assertEquals("foobar", FunctionsTest.evaluate(Strings.concat, "foo", "bar"));
 		assertEquals(false, FunctionsTest.evaluate(Strings.StartsWith.instance, "foobar", "bar"));
 		assertEquals(true, FunctionsTest.evaluate(Strings.StartsWith.instance, "foobar", "foo"));
 		assertEquals(true, FunctionsTest.evaluate(Strings.EndsWith.instance, "foobar", "bar"));
@@ -384,9 +384,9 @@ public class UtilTest
 		s2.add(0);
 		s2.add(1);
 		s2.add(2);
-		assertTrue((Boolean) FunctionsTest.evaluate(Sets.IsSubsetOrEqual.instance, s1, s2));
+		assertTrue((Boolean) FunctionsTest.evaluate(Sets.isSubsetOrEqual, s1, s2));
 		s1.add(3);
-		assertFalse((Boolean) FunctionsTest.evaluate(Sets.IsSubsetOrEqual.instance, s1, s2));
+		assertFalse((Boolean) FunctionsTest.evaluate(Sets.isSubsetOrEqual, s1, s2));
 	}
 	
 	@SuppressWarnings("unchecked")

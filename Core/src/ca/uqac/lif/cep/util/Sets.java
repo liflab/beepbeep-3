@@ -41,6 +41,8 @@ public class Sets
 		// Utility class
 	}
 	
+	public static final IsSubsetOrEqual isSubsetOrEqual = new IsSubsetOrEqual(); 
+	
 	/**
 	 * Processor that updates a set
 	 */
@@ -138,11 +140,6 @@ public class Sets
 	@SuppressWarnings("rawtypes")
 	public static class IsSubsetOrEqual extends BinaryFunction<Set,Set,Boolean>
 	{
-		/**
-		 * A single instance of the function
-		 */
-		public static final transient IsSubsetOrEqual instance = new IsSubsetOrEqual();
-
 		protected IsSubsetOrEqual()
 		{
 			super(Set.class, Set.class, Boolean.class);

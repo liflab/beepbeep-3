@@ -31,13 +31,21 @@ public class Strings
 		// Utility class
 	}
 	
+	public static final Concat concat = new Concat();
+	
+	public static final Contains contains = new Contains();
+	
+	public static final EndsWith endsWith = new EndsWith();
+
+	public static final Matches matches = new Matches();
+	
+	public static final StartsWith startsWith = new StartsWith();
+	
 	/**
 	 * Concatenates two strings
 	 */
 	public static class Concat extends BinaryFunction<String,String,String>
 	{
-		public static final Concat instance = new Concat();
-		
 		protected Concat()
 		{
 			super(String.class, String.class, String.class);

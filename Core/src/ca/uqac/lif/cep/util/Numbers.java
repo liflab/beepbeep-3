@@ -36,49 +36,49 @@ public class Numbers
 	/**
 	 * Computes the absolute value of its argument
 	 */
-	public static AbsoluteValue absoluteValue = new AbsoluteValue();
+	public static final AbsoluteValue absoluteValue = new AbsoluteValue();
 	
 	/**
 	 * Adds two numbers
 	 */
-	public static Addition addition = new Addition();
+	public static final Addition addition = new Addition();
 	
 	/**
 	 * Computes the quotient of two numbers
 	 */
-	public static Division division = new Division();
+	public static final Division division = new Division();
 	
-	public static IsEven isEven = new IsEven();
+	public static final IsEven isEven = new IsEven();
 	
-	public static IsGreaterOrEqual isGreaterOrEqual = new IsGreaterOrEqual();
+	public static final IsGreaterOrEqual isGreaterOrEqual = new IsGreaterOrEqual();
 	
-	public static IsGreaterThan isGreaterThan = new IsGreaterThan();
+	public static final IsGreaterThan isGreaterThan = new IsGreaterThan();
 	
-	public static IsLessOrEqual isLessOrEqual = new IsLessOrEqual();
+	public static final IsLessOrEqual isLessOrEqual = new IsLessOrEqual();
 	
-	public static IsLessThan isLessThan = new IsLessThan();
+	public static final IsLessThan isLessThan = new IsLessThan();
 	
-	public static Maximum maximum = new Maximum();
+	public static final Maximum maximum = new Maximum();
 	
-	public static Minimum minimum = new Minimum();
+	public static final Minimum minimum = new Minimum();
 	
-	public static Multiplication multiplication = new Multiplication();
+	public static final Multiplication multiplication = new Multiplication();
 	
-	public static NumberCast numberCast = new NumberCast();
+	public static final NumberCast numberCast = new NumberCast();
 	
-	public static Power power = new Power();
+	public static final Power power = new Power();
 	
-	public static Signum signum = new Signum();
+	public static final Signum signum = new Signum();
 	
-	public static SquareRoot squareRoot = new SquareRoot();
+	public static final SquareRoot squareRoot = new SquareRoot();
 	
-	public static Subtraction subtraction = new Subtraction();
+	public static final Subtraction subtraction = new Subtraction();
 	
 	/**
 	 * Computes the absolute value of its argument
 	 * @author Sylvain Hallé
 	 */
-	public static class AbsoluteValue extends UnaryFunction<Number,Number>
+	public static final class AbsoluteValue extends UnaryFunction<Number,Number>
 	{
 		protected AbsoluteValue()
 		{
@@ -102,7 +102,7 @@ public class Numbers
 	 * Computes the sum of its arguments
 	 * @author Sylvain Hallé
 	 */
-	public static class Addition extends BinaryFunction<Number,Number,Number>
+	public static final class Addition extends BinaryFunction<Number,Number,Number>
 	{
 		/**
 		 * Make constructor private, to force users to refer to the static
@@ -136,7 +136,7 @@ public class Numbers
 	 * Computes the quotient of its arguments
 	 * @author Sylvain Hallé
 	 */
-	public static class Division extends BinaryFunction<Number,Number,Number>
+	public static final class Division extends BinaryFunction<Number,Number,Number>
 	{
 		protected  Division()
 		{
@@ -166,7 +166,7 @@ public class Numbers
 	 * Computes if a number is even
 	 * @author Sylvain Hallé
 	 */
-	public static class IsEven extends UnaryFunction<Number,Boolean>
+	public static final class IsEven extends UnaryFunction<Number,Boolean>
 	{
 		protected  IsEven()
 		{
@@ -191,7 +191,7 @@ public class Numbers
 		}
 	}
 
-	public static class IsGreaterOrEqual extends BinaryFunction<Number,Number,Boolean>
+	public static final class IsGreaterOrEqual extends BinaryFunction<Number,Number,Boolean>
 	{
 		protected  IsGreaterOrEqual()
 		{
@@ -218,7 +218,7 @@ public class Numbers
 
 	}
 
-	public static class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
+	public static final class IsGreaterThan extends BinaryFunction<Number,Number,Boolean>
 	{
 		protected  IsGreaterThan()
 		{
@@ -245,7 +245,7 @@ public class Numbers
 
 	}
 	
-	public static class IsLessOrEqual extends BinaryFunction<Number,Number,Boolean>
+	public static final class IsLessOrEqual extends BinaryFunction<Number,Number,Boolean>
 	{
 		private IsLessOrEqual()
 		{
@@ -272,7 +272,7 @@ public class Numbers
 
 	}
 	
-	public static class IsLessThan extends BinaryFunction<Number,Number,Boolean>
+	public static final class IsLessThan extends BinaryFunction<Number,Number,Boolean>
 	{
 		protected IsLessThan()
 		{
@@ -303,7 +303,7 @@ public class Numbers
 	 * Returns the maximum of two numbers.
 	 * @author Sylvain Hallé
 	 */
-	public static class Maximum extends BinaryFunction<Number,Number,Number>
+	public static final class Maximum extends BinaryFunction<Number,Number,Number>
 	{
 		protected Maximum()
 		{
@@ -328,7 +328,7 @@ public class Numbers
 	 * Returns the minimum of two numbers.
 	 * @author Sylvain Hallé
 	 */
-	public static class Minimum extends BinaryFunction<Number,Number,Number>
+	public static final class Minimum extends BinaryFunction<Number,Number,Number>
 	{
 		protected Minimum()
 		{
@@ -353,7 +353,7 @@ public class Numbers
 	 * Computes the product of its arguments
 	 * @author Sylvain Hallé
 	 */
-	public static class Multiplication extends BinaryFunction<Number,Number,Number>
+	public static final class Multiplication extends BinaryFunction<Number,Number,Number>
 	{
 		protected Multiplication()
 		{
@@ -384,7 +384,7 @@ public class Numbers
 	 * Converts an object into a number
 	 * @author Sylvain Hallé
 	 */
-	public static class NumberCast extends UnaryFunction<Object,Number>
+	public static final class NumberCast extends UnaryFunction<Object,Number>
 	{
 		protected NumberCast()
 		{
@@ -408,7 +408,7 @@ public class Numbers
 		 * @param x The object
 		 * @return A number
 		 */
-		public static Number getNumber(Object x)
+		public static final Number getNumber(Object x)
 		{
 			if (x instanceof Number)
 			{
@@ -440,7 +440,7 @@ public class Numbers
 	 * Computes the power of its arguments
 	 * @author Sylvain Hallé
 	 */
-	public static class Power extends BinaryFunction<Number,Number,Number>
+	public static final class Power extends BinaryFunction<Number,Number,Number>
 	{
 		protected Power()
 		{
@@ -464,7 +464,7 @@ public class Numbers
 	 * Computes the signum of its argument
 	 * @author Sylvain Hallé
 	 */
-	public static class Signum extends UnaryFunction<Number,Number>
+	public static final class Signum extends UnaryFunction<Number,Number>
 	{
 		protected Signum()
 		{
@@ -496,7 +496,7 @@ public class Numbers
 	 * Computes the square root of its argument
 	 * @author Sylvain Hallé
 	 */
-	public static class SquareRoot extends UnaryFunction<Number,Number>
+	public static final class SquareRoot extends UnaryFunction<Number,Number>
 	{
 		protected SquareRoot()
 		{
@@ -521,7 +521,7 @@ public class Numbers
 	 * Computes the difference of its arguments
 	 * @author Sylvain Hallé
 	 */
-	public static class Subtraction extends BinaryFunction<Number,Number,Number>
+	public static final class Subtraction extends BinaryFunction<Number,Number,Number>
 	{
 		private Subtraction()
 		{
