@@ -17,18 +17,29 @@
  */
 package ca.uqac.lif.cep.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
 
 import static ca.uqac.lif.cep.functions.FunctionsTest.evaluate;
 import static org.junit.Assert.*;
-
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.functions.FunctionsTest;
 import ca.uqac.lif.cep.functions.InvalidArgumentException;
 import ca.uqac.lif.cep.numbers.AbsoluteValue;
+import ca.uqac.lif.cep.numbers.IsEven;
+import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.util.ToCollection.ToArray;
+import ca.uqac.lif.cep.util.ToCollection.ToList;
+import ca.uqac.lif.cep.util.ToCollection.ToSet;
 
 /**
  * Unit tests for functions and processors of the <tt>util</tt> package.
@@ -133,5 +144,284 @@ public class UtilTest
 	{
 		NthElement ata = new NthElement(0);
 		evaluate(ata, new Object());
+	}
+	
+	@Test
+	public void testToArray()
+	{
+		ToArray f = new ToArray(Number.class, String.class);
+		Object[] out = (Object[]) FunctionsTest.evaluate(f, 0, "foo");
+		assertEquals(2, out.length);
+		assertEquals(0, out[0]);
+		assertEquals("foo", out[1]);
+		assertEquals(new Object[]{}.getClass(), f.getOutputTypeFor(0));
+		Set<Class<?>> in_types = new HashSet<Class<?>>();
+		f.getInputTypesFor(in_types, 0);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(Number.class));
+		in_types.clear();
+		f.getInputTypesFor(in_types, 1);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(String.class));
+		ToArray f2 = f.duplicate();
+		out = (Object[]) FunctionsTest.evaluate(f2, 0, "foo");
+		assertEquals(2, out.length);
+		assertEquals(0, out[0]);
+		assertEquals("foo", out[1]);
+		assertEquals(new Object[]{}.getClass(), f2.getOutputTypeFor(0));
+		in_types.clear();
+		f2.getInputTypesFor(in_types, 0);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(Number.class));
+		in_types.clear();
+		f2.getInputTypesFor(in_types, 1);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(String.class));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testToList()
+	{
+		ToList f = new ToList(Number.class, String.class);
+		List<Object> out = (List<Object>) FunctionsTest.evaluate(f, 0, "foo");
+		assertEquals(2, out.size());
+		assertEquals(0, out.get(0));
+		assertEquals("foo", out.get(1));
+		assertEquals(List.class, f.getOutputTypeFor(0));
+		Set<Class<?>> in_types = new HashSet<Class<?>>();
+		f.getInputTypesFor(in_types, 0);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(Number.class));
+		in_types.clear();
+		f.getInputTypesFor(in_types, 1);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(String.class));
+		ToList f2 = f.duplicate();
+		out = (List<Object>) FunctionsTest.evaluate(f2, 0, "foo");
+		assertEquals(2, out.size());
+		assertEquals(0, out.get(0));
+		assertEquals("foo", out.get(1));
+		assertEquals(List.class, f2.getOutputTypeFor(0));
+		in_types.clear();
+		f2.getInputTypesFor(in_types, 0);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(Number.class));
+		in_types.clear();
+		f2.getInputTypesFor(in_types, 1);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(String.class));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testToSet()
+	{
+		ToSet f = new ToSet(Number.class, String.class);
+		Set<Object> out = (Set<Object>) FunctionsTest.evaluate(f, 0, "foo");
+		assertEquals(2, out.size());
+		assertTrue(out.contains(0));
+		assertTrue(out.contains("foo"));
+		assertEquals(Set.class, f.getOutputTypeFor(0));
+		Set<Class<?>> in_types = new HashSet<Class<?>>();
+		f.getInputTypesFor(in_types, 0);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(Number.class));
+		in_types.clear();
+		f.getInputTypesFor(in_types, 1);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(String.class));
+		ToSet f2 = f.duplicate();
+		out = (Set<Object>) FunctionsTest.evaluate(f2, 0, "foo");
+		assertEquals(2, out.size());
+		assertTrue(out.contains(0));
+		assertTrue(out.contains("foo"));
+		assertEquals(Set.class, f2.getOutputTypeFor(0));
+		in_types.clear();
+		f2.getInputTypesFor(in_types, 0);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(Number.class));
+		in_types.clear();
+		f2.getInputTypesFor(in_types, 1);
+		assertEquals(1, in_types.size());
+		assertTrue(in_types.contains(String.class));
+	}
+	
+	@Test
+	public void testSize()
+	{
+		assertEquals(0, FunctionsTest.evaluate(Size.instance, new Object[]{null}));
+		assertEquals(3, FunctionsTest.evaluate(Size.instance, new Object[]{new Object[]{0, 1, 2}}));
+		assertEquals(2, FunctionsTest.evaluate(Size.instance, new Object[]{new String[]{"foo", "bar"}}));
+		assertEquals(6, FunctionsTest.evaluate(Size.instance, "foobar"));
+		assertEquals(4, FunctionsTest.evaluate(Size.instance, 4.5));
+		List<Object> list = new ArrayList<Object>(2);
+		list.add(new Object());
+		list.add(new Object());
+		assertEquals(2, FunctionsTest.evaluate(Size.instance, list));
+		Set<Object> set = new HashSet<Object>(2);
+		set.add(new Object());
+		set.add(new Object());
+		assertEquals(2, FunctionsTest.evaluate(Size.instance, set));
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		map.put(0, 0);
+		map.put(1, 1);
+		assertEquals(2, FunctionsTest.evaluate(Size.instance, map));
+	}
+	
+	@Test
+	public void testStrings()
+	{
+		assertEquals("foobar", FunctionsTest.evaluate(Strings.Concat.instance, "foo", "bar"));
+		assertEquals(false, FunctionsTest.evaluate(Strings.StartsWith.instance, "foobar", "bar"));
+		assertEquals(true, FunctionsTest.evaluate(Strings.StartsWith.instance, "foobar", "foo"));
+		assertEquals(true, FunctionsTest.evaluate(Strings.EndsWith.instance, "foobar", "bar"));
+		assertEquals(false, FunctionsTest.evaluate(Strings.EndsWith.instance, "foobar", "foo"));
+		assertEquals(true, FunctionsTest.evaluate(Strings.Contains.instance, "foobar", "oba"));
+		assertEquals(false, FunctionsTest.evaluate(Strings.Contains.instance, "foobar", "obo"));
+		assertEquals(true, FunctionsTest.evaluate(Strings.Matches.instance, "foobar", "f.*bar"));
+		assertEquals(false, FunctionsTest.evaluate(Strings.Matches.instance, "foobar", "f.*baz"));
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testMaps1()
+	{
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("a", 2);
+		map.put("b", 3);
+		map.put("c", 3);		
+		Collection<Object> values = (Collection<Object>) FunctionsTest.evaluate(Maps.Values.instance, map);
+		assertEquals(3, values.size());
+		assertTrue(values.contains(2));
+		assertTrue(values.contains(3));
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testMapsPut1()
+	{
+		Map<Object,Object> m1, m2;
+		QueueSource s1 = new QueueSource().setEvents(0, 1);
+		QueueSource s2 = new QueueSource().setEvents(0, 1);
+		Maps.PutInto pi = new Maps.PutInto();
+		assertEquals(Map.class, pi.getOutputType(0));
+		Connector.connect(s1, 0, pi, 0);
+		Connector.connect(s2, 0, pi, 1);
+		Pullable p = pi.getPullableOutput();
+		m1 = (Map<Object,Object>) p.pull();
+		assertEquals(1, m1.size());
+		m2 = (Map<Object,Object>) p.pull();
+		assertTrue(m1 == m2);
+		assertEquals(2, m1.size());
+		pi.reset();
+		assertEquals(0, m1.size());
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testMapsPut2()
+	{
+		Map<Object,Object> m1, m2;
+		QueueSource s1 = new QueueSource().setEvents(new Object[]{0, 0}, new Object[]{1, 1});
+		Maps.ArrayPutInto pi = new Maps.ArrayPutInto();
+		assertEquals(Map.class, pi.getOutputType(0));
+		Connector.connect(s1, pi);
+		Pullable p = pi.getPullableOutput();
+		m1 = (Map<Object,Object>) p.pull();
+		assertEquals(1, m1.size());
+		m2 = (Map<Object,Object>) p.pull();
+		assertTrue(m1 == m2);
+		assertEquals(2, m1.size());
+		pi.reset();
+		assertEquals(0, m1.size());
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testSetsPut1()
+	{
+		Set<Object> m1, m2;
+		QueueSource s1 = new QueueSource().setEvents(0, 1, 2);
+		Sets.PutInto pi = new Sets.PutInto();
+		assertEquals(Set.class, pi.getOutputType(0));
+		Connector.connect(s1, pi);
+		Pullable p = pi.getPullableOutput();
+		m1 = (Set<Object>) p.pull();
+		assertEquals(1, m1.size());
+		m2 = (Set<Object>) p.pull();
+		assertTrue(m1 == m2);
+		assertEquals(2, m1.size());
+		pi.reset();
+		assertEquals(0, m1.size());
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testSetsPut2()
+	{
+		Set<Object> m1, m2;
+		QueueSource s1 = new QueueSource().setEvents(0, 1, 2);
+		Sets.PutIntoNew pi = new Sets.PutIntoNew();
+		assertEquals(Set.class, pi.getOutputType(0));
+		Connector.connect(s1, 0, pi, 0);
+		Pullable p = pi.getPullableOutput();
+		m1 = (Set<Object>) p.pull();
+		assertEquals(1, m1.size());
+		m2 = (Set<Object>) p.pull();
+		assertFalse(m1 == m2);
+		assertEquals(2, m2.size());
+		pi.reset();
+		assertEquals(1, m1.size());
+	}
+	
+	@Test
+	public void testSubset()
+	{
+		Set<Integer> s1 = new HashSet<Integer>();
+		s1.add(0);
+		s1.add(1);
+		Set<Integer> s2 = new HashSet<Integer>();
+		s2.add(0);
+		s2.add(1);
+		s2.add(2);
+		assertTrue((Boolean) FunctionsTest.evaluate(Sets.IsSubsetOrEqual.instance, s1, s2));
+		s1.add(3);
+		assertFalse((Boolean) FunctionsTest.evaluate(Sets.IsSubsetOrEqual.instance, s1, s2));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testGetElementsSet()
+	{
+		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(IsEven.instance);
+		Set<Integer> s1 = new HashSet<Integer>();
+		s1.add(0);
+		s1.add(1);
+		s1.add(2);
+		Set<Object> value = (Set<Object>) FunctionsTest.evaluate(gi, s1);
+		assertEquals(2, value.size());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testGetElementsList()
+	{
+		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(IsEven.instance);
+		List<Integer> s1 = new ArrayList<Integer>();
+		s1.add(0);
+		s1.add(1);
+		s1.add(2);
+		List<Object> value = (List<Object>) FunctionsTest.evaluate(gi, s1);
+		assertEquals(2, value.size());
+		assertEquals(0, value.get(0));
+		assertEquals(2, value.get(1));
+	}
+	
+	@Test(expected=InvalidArgumentException.class)
+	public void testGetElementsException()
+	{
+		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(IsEven.instance);
+		FunctionsTest.evaluate(gi, new Object());
 	}
 }

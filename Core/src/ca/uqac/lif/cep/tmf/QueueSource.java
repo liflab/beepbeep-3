@@ -95,13 +95,15 @@ public class QueueSource extends Source
 	 * @param queue An array of events that the queue source
 	 * will output. The events will be output in the order they
 	 * appear in the collection.
+	 * @return This queue source
 	 */
-	public void setEvents(Object[] queue)
+	public QueueSource setEvents(Object ... queue)
 	{
 		for (Object o : queue)
 		{
 			m_events.add(o);
 		}
+		return this;
 	}
 
 	/**
