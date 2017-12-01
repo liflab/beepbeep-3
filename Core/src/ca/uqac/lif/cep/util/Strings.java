@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
  * A container object for string functions
@@ -122,6 +123,92 @@ public class Strings
 		public Boolean getValue(String s1, String s2)
 		{
 			return s1.startsWith(s2);
+		}
+	}
+	
+	/**
+	 * Transforms a comma-separated line of text into an array
+	 * @author Sylvain Hallé
+	 */
+	public static class SplitString extends UnaryFunction<String,Object>
+	{
+		/**
+		 * An instance of this function with default values 
+		 */
+		public static final transient SplitString instance = new SplitString(":");
+		
+		/**
+		 * The symbol used to separate data fields
+		 */
+		protected String m_separator = ":";
+		
+		/**
+		 * Whether to trim each part of the string before processing
+		 */
+		protected boolean m_trim = true;
+		
+		public SplitString(String separator)
+		{
+			super(String.class, Object.class);
+			m_separator = separator;
+		}
+		
+		/**
+		 * Sets whether to apply <tt>trim()</tt> to each substring
+		 * @param b Set to {@code true} to trim, {@code false} otherwise
+		 * @return This function
+		 */
+		public SplitString trim(boolean b)
+		{
+			m_trim = b;
+			return this;
+		}
+
+		@Override
+		public Object getValue(String s) 
+		{
+			String[] parts = s.split(m_separator);
+			Object[] typed_parts = new Object[parts.length];
+			for (int i = 0; i < parts.length; i++)
+			{
+				if (m_trim)
+				{
+					typed_parts[i] = createConstantFromString(parts[i].trim());
+				}
+				else
+				{
+					typed_parts[i] = createConstantFromString(parts[i]);
+				}
+			}
+			return typed_parts;
+		}
+		
+		/**
+		 * Attempts to create a constant based on the contents of a string.
+		 * That is, if the string contains only digits, it will create an
+		 * number instead of a string.
+		 * @param s The string to read from
+		 * @return The constant
+		 */
+		public static Object createConstantFromString(String s)
+		{
+			try
+			{
+				return Integer.parseInt(s); 
+			}
+			catch (NumberFormatException nfe1)
+			{
+				try
+				{
+					return Float.parseFloat(s);
+				}
+				catch (NumberFormatException nfe2)
+				{
+					// Do nothing
+				}
+			}
+			// This is a string
+			return s;
 		}
 	}
 }

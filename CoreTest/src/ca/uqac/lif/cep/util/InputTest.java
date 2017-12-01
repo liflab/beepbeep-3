@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.input;
+package ca.uqac.lif.cep.util;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,6 +27,8 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.io.StringStreamReader;
 import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.util.PatternScanner;
+import ca.uqac.lif.cep.util.Strings;
 
 public class InputTest extends BeepBeepUnitTest
 {
@@ -97,7 +99,7 @@ public class InputTest extends BeepBeepUnitTest
 	public void testCsvToArrayTrim()
 	{
 		String line = "a, b, c";
-		SplitString cta = new SplitString(",");
+		Strings.SplitString cta = new Strings.SplitString(",");
 		cta.trim(true);
 		Object[] out = new Object[1];
 		cta.evaluate(new Object[]{line}, out);
@@ -112,7 +114,7 @@ public class InputTest extends BeepBeepUnitTest
 	public void testCsvToArrayNoTrim()
 	{
 		String line = "a, b, c";
-		SplitString cta = new SplitString(",");
+		Strings.SplitString cta = new Strings.SplitString(",");
 		cta.trim(false);
 		Object[] out = new Object[1];
 		cta.evaluate(new Object[]{line}, out);
@@ -127,7 +129,7 @@ public class InputTest extends BeepBeepUnitTest
 	public void testCsvToArrayNumber()
 	{
 		String line = "a, 32, 2.5";
-		SplitString cta = new SplitString(",");
+		Strings.SplitString cta = new Strings.SplitString(",");
 		cta.trim(true);
 		Object[] out = new Object[1];
 		cta.evaluate(new Object[]{line}, out);

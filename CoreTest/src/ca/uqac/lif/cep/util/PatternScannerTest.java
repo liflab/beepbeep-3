@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.input;
+package ca.uqac.lif.cep.util;
 
 import static org.junit.Assert.*;
 
@@ -30,6 +30,7 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.util.PatternScanner;
 
 /**
  * Unit tests for the {@link PatternScanner} class 
