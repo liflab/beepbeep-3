@@ -25,7 +25,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.InetAddress;
 
+import org.junit.Assume;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.NextStatus;
@@ -40,7 +42,15 @@ import ca.uqac.lif.cep.util.FileHelper;
  * @author Sylvain Hallé
  */
 public class IoTest
-{	
+{
+	/**
+	 * A variable that checks if the computer has an internet connection.
+	 * There is no point in running (and failing) some of the tests on a
+	 * computer that is offline. Set this to false to run tests in such a
+	 * situation.
+	 */
+	protected static boolean s_hasConnection = true;
+	
 	@Test
 	public void testStreamReaderFile()
 	{
@@ -115,6 +125,7 @@ public class IoTest
 	@Test
 	public void testUrlFeeder1() 
 	{
+		Assume.assumeTrue(s_hasConnection);
 		HttpReader hr = new HttpReader("https://raw.githubusercontent.com/liflab/beepbeep-3/master/CoreTest/tuples1.csv");
 		Pullable p = hr.getPullableOutput(0);
 		assertNotNull(p);

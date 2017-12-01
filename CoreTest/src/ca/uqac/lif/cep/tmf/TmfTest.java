@@ -25,6 +25,7 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
@@ -374,6 +375,56 @@ public class TmfTest
 		}
 	}
 	
+	@Test(timeout=1000)
+	public void testPump()
+	{
+		QueueSource qs = new QueueSource().setEvents(1, 2, 3, 4);
+		qs.loop(false);
+		Pump pump = new Pump();
+		Connector.connect(qs, pump);
+		QueueSink sink = new QueueSink();
+		Connector.connect(pump, sink);
+		pump.run();
+		Queue<Object> q = sink.getQueue();
+		assertEquals(4, q.size());
+	}
+	
+	@Test(timeout=2000)
+	public void testPumpStop1() throws InterruptedException
+	{
+		QueueSource qs = new QueueSource().setEvents(1, 2, 3, 4);
+		qs.loop(true);
+		Pump pump = new Pump(50);
+		Connector.connect(qs, pump);
+		QueueSink sink = new QueueSink();
+		Connector.connect(pump, sink);
+		Thread th = new Thread(pump);
+		th.start();
+		Thread.sleep(300);
+		pump.stop();
+		Thread.sleep(100);
+		assertFalse(th.isAlive());
+		Queue<Object> q = sink.getQueue();
+		assertTrue(q.size() > 4);
+	}
+	
+	@Test(timeout=2000)
+	public void testPumpStop2() throws InterruptedException
+	{
+		QueueSource qs = new QueueSource().setEvents(1, 2, 3, 4);
+		qs.loop(true);
+		Pump pump = new Pump(50);
+		Connector.connect(qs, pump);
+		QueueSink sink = new QueueSink();
+		Connector.connect(pump, sink);
+		pump.start();
+		Thread.sleep(300);
+		pump.stop();
+		Thread.sleep(100);
+		Queue<Object> q = sink.getQueue();
+		assertTrue(q.size() > 4);
+	}
+	
 	@Test
 	public void testTank()
 	{
@@ -387,8 +438,47 @@ public class TmfTest
 		assertTrue(pl.hasNext());
 		assertEquals("bar", pl.pull());
 		assertFalse(pl.hasNext());
+		assertEquals(NextStatus.MAYBE, pl.hasNextSoft());
+		ps.push("baz");
+		assertEquals(NextStatus.YES, pl.hasNextSoft());
+		assertTrue(pl.hasNext());
+		assertEquals("baz", pl.pull());
+		assertTrue(pl == pl.iterator());
+		assertEquals(0, pl.getPosition());
+		assertEquals(0, ps.getPosition());
+		assertEquals(t, pl.getProcessor());
+		assertEquals(t, ps.getProcessor());
+		// These methods should all do nothing
+		ps.dispose();
+		pl.dispose();
+		pl.start();
+		pl.stop();
+	}
+	
+	@Test
+	public void testTankLast()
+	{
+		TankLast t = new TankLast();
+		Pushable ps = t.getPushableInput();
+		Pullable pl = t.getPullableOutput();
+		ps.push("foo");
+		ps.push("bar");
+		assertTrue(pl.hasNext());
+		assertEquals("bar", pl.pull());
+		assertFalse(pl.hasNext());
+		assertEquals(NextStatus.MAYBE, pl.hasNextSoft());
 		ps.push("baz");
 		assertTrue(pl.hasNext());
 		assertEquals("baz", pl.pull());
+		assertTrue(pl == pl.iterator());
+		assertEquals(0, pl.getPosition());
+		assertEquals(0, ps.getPosition());
+		assertEquals(t, pl.getProcessor());
+		assertEquals(t, ps.getProcessor());
+		// These methods should all do nothing
+		ps.dispose();
+		pl.dispose();
+		pl.start();
+		pl.stop();
 	}
 }

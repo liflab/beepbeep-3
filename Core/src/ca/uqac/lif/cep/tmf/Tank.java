@@ -17,9 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
 import java.util.Iterator;
-import java.util.Queue;
 
 import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
@@ -44,12 +42,7 @@ import ca.uqac.lif.cep.Pushable;
  */
 @SuppressWarnings("squid:S2160")
 public class Tank extends Processor 
-{
-	/**
-	 * A queue to hold incoming events
-	 */
-	protected Queue<Object> m_queue;
-	
+{	
 	/**
 	 * A pushable
 	 */
@@ -66,7 +59,6 @@ public class Tank extends Processor
 	public Tank()
 	{
 		super(1, 1);
-		m_queue = new ArrayDeque<Object>();
 	}
 
 	@Override
@@ -90,7 +82,7 @@ public class Tank extends Processor
 	{
 		if (m_pullable == null)
 		{
-			m_pullable = new QueuePullable(false);
+			m_pullable = new QueuePullable();
 		}
 		return m_pullable;
 	}
@@ -98,36 +90,41 @@ public class Tank extends Processor
 	protected class QueuePullable implements Pullable
 	{
 		@Override
-		public Iterator<Object> iterator() {
-			// TODO Auto-generated method stub
-			return null;
+		public Iterator<Object> iterator() 
+		{
+			return this;
 		}
 
 		@Override
 		public Object pullSoft()
 		{
-			// TODO Auto-generated method stub
-			return null;
+			synchronized (m_inputQueues[0])
+			{
+				return m_inputQueues[0].poll();
+			}
 		}
 
 		@Override
-		public Object pull() {
-			// TODO Auto-generated method stub
-			return null;
+		public Object pull() 
+		{
+			synchronized (m_inputQueues[0])
+			{
+				return m_inputQueues[0].poll();
+			}
 		}
 
 		@Override
-		public Object next() {
-			// TODO Auto-generated method stub
-			return null;
+		public Object next()
+		{
+			return pull();
 		}
 
 		@Override
 		public NextStatus hasNextSoft()
 		{
-			synchronized (m_queue)
+			synchronized (m_inputQueues[0])
 			{
-				if (!m_queue.isEmpty())
+				if (m_inputQueues[0].isEmpty())
 				{
 					return NextStatus.MAYBE;
 				}
@@ -138,7 +135,10 @@ public class Tank extends Processor
 		@Override
 		public boolean hasNext() 
 		{
-			return true;
+			synchronized (m_inputQueues)
+			{
+				return !m_inputQueues[0].isEmpty();
+			}
 		}
 
 		@Override
@@ -160,14 +160,15 @@ public class Tank extends Processor
 		}
 
 		@Override
-		public void stop() {
-			// TODO Auto-generated method stub
-			
+		public void stop() 
+		{
+			// Nothing to do
 		}
 
 		@Override
-		public void dispose() {
-			// TODO Auto-generated method stub
+		public void dispose()
+		{
+			// Nothing to do
 			
 		}
 		
@@ -186,13 +187,13 @@ public class Tank extends Processor
 		@Override
 		public Pushable push(Object o) 
 		{
-			synchronized (m_queue)
+			synchronized (m_inputQueues[0])
 			{
 				if (m_singleObject)
 				{
-					m_queue.clear();
+					m_inputQueues[0].clear();
 				}
-				m_queue.add(o);
+				m_inputQueues[0].add(o);
 			}
 			return this;
 		}
@@ -231,15 +232,9 @@ public class Tank extends Processor
 	@Override
 	public void reset()
 	{
-		synchronized (m_queue)
+		synchronized (m_inputQueues[0])
 		{
-			m_queue.clear();
+			m_inputQueues[0].clear();
 		}
-	}
-
-	@Override
-	public Pullable getPullableOutput(int index) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
