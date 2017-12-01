@@ -15,9 +15,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.functions;
+package ca.uqac.lif.cep.util;
 
 import java.util.Collection;
+
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
  * Checks for the equality of various data types

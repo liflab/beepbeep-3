@@ -30,6 +30,8 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.ProvenanceTest.DummyTracker;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Pushable.PushableException;
+import ca.uqac.lif.cep.util.Booleans;
+import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.BlackHole;
 import ca.uqac.lif.cep.tmf.Passthrough;
@@ -42,15 +44,15 @@ public class FunctionsTest
 	@Test
 	public void testNegation() 
 	{
-		assertEquals(false, evaluate(Negation.instance, true));
-		assertEquals(true, evaluate(Negation.instance, false));
+		assertEquals(false, evaluate(Booleans.not, true));
+		assertEquals(true, evaluate(Booleans.not, false));
 	}
 	
 	@Test
 	public void testOr() 
 	{
-		assertEquals(true, evaluate(Or.instance, true, false));
-		assertEquals(false, evaluate(Or.instance, false, false));
+		assertEquals(true, evaluate(Booleans.or, true, false));
+		assertEquals(false, evaluate(Booleans.or, false, false));
 	}
 	
 	@Test
@@ -91,8 +93,8 @@ public class FunctionsTest
 	@Test
 	public void testAnd() 
 	{
-		assertEquals(false, evaluate(And.instance, true, false));
-		assertEquals(true, evaluate(And.instance, true, true));
+		assertEquals(false, evaluate(Booleans.and, true, false));
+		assertEquals(true, evaluate(Booleans.and, true, true));
 	}
 	
 	@Test
@@ -296,7 +298,7 @@ public class FunctionsTest
 	@Test
 	public void testEvaluateFast() 
 	{
-		assertEquals(evaluateFast(And.instance, true, false), evaluate(And.instance, true, false));
+		assertEquals(evaluateFast(Booleans.and, true, false), evaluate(Booleans.and, true, false));
 	}
 	
 	@Test
@@ -318,18 +320,16 @@ public class FunctionsTest
 	@Test
 	public void testEmlBoolean1() 
 	{
-		EmlBoolean eb = new EmlBoolean(true);
-		assertEquals(true, evaluate(eb));
-		assertEquals(true, EmlBoolean.parseBoolValue(1));
-		assertEquals(false, EmlBoolean.parseBoolValue(0));
-		assertEquals(true, EmlBoolean.parseBoolValue(true));
-		assertEquals(false, EmlBoolean.parseBoolValue(false));
-		assertEquals(true, EmlBoolean.parseBoolValue("T"));
-		assertEquals(false, EmlBoolean.parseBoolValue("F"));
-		assertEquals(true, EmlBoolean.parseBoolValue("true"));
-		assertEquals(false, EmlBoolean.parseBoolValue("false"));
-		assertEquals(true, EmlBoolean.parseBoolValue("1"));
-		assertEquals(false, EmlBoolean.parseBoolValue("0"));
+		assertEquals(true, Booleans.parseBoolValue(1));
+		assertEquals(false, Booleans.parseBoolValue(0));
+		assertEquals(true, Booleans.parseBoolValue(true));
+		assertEquals(false, Booleans.parseBoolValue(false));
+		assertEquals(true, Booleans.parseBoolValue("T"));
+		assertEquals(false, Booleans.parseBoolValue("F"));
+		assertEquals(true, Booleans.parseBoolValue("true"));
+		assertEquals(false, Booleans.parseBoolValue("false"));
+		assertEquals(true, Booleans.parseBoolValue("1"));
+		assertEquals(false, Booleans.parseBoolValue("0"));
 	}
 	
 	@Test
