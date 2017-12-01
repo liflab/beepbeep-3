@@ -114,6 +114,7 @@ public class Tank extends Processor
 		}
 
 		@Override
+		@SuppressWarnings("squid:S2272")
 		public Object next()
 		{
 			return pull();
