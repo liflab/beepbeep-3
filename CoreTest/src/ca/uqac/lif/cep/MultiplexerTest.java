@@ -33,7 +33,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * Unit tests for the {@link Multiplexer} class
  * @author Sylvain Hallé
  */
-public class MultiplexerTest extends BeepBeepUnitTest 
+public class MultiplexerTest 
 {
 	@Test
 	public void testMuxerPush1() 

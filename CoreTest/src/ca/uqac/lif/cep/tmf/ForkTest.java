@@ -24,7 +24,6 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -39,7 +38,7 @@ import ca.uqac.lif.cep.tmf.QueueSourceBatch;
  * Unit tests for {@link Fork}
  * @author Sylvain Hallé
  */
-public class ForkTest extends BeepBeepUnitTest
+public class ForkTest
 {
 	@SuppressWarnings("unchecked")
 	@Test

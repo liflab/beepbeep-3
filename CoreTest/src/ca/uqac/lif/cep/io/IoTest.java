@@ -28,7 +28,6 @@ import java.io.PrintStream;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pullable.PullableException;
@@ -40,7 +39,7 @@ import ca.uqac.lif.cep.util.FileHelper;
  * Unit tests for input-output processors
  * @author Sylvain Hallé
  */
-public class IoTest extends BeepBeepUnitTest
+public class IoTest
 {	
 	@Test
 	public void testStreamReaderFile()

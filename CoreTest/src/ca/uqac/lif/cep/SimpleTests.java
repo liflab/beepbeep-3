@@ -32,7 +32,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * {@link Passthrough}
  * @author Sylvain Hallé
  */
-public class SimpleTests extends BeepBeepUnitTest
+public class SimpleTests
 {
 	@Test
 	public void testConstant() 

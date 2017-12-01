@@ -25,7 +25,6 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -36,7 +35,7 @@ import ca.uqac.lif.cep.util.PatternScanner;
  * Unit tests for the {@link PatternScanner} class 
  * @author Sylvain Hallé
  */
-public class PatternScannerTest extends BeepBeepUnitTest 
+public class PatternScannerTest 
 {
 	@Test
 	public void testPatternScanner1()

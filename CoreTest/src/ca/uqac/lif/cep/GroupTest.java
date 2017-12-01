@@ -35,7 +35,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * Unit tests for the {@link GroupProcessor}.
  * @author Sylvain Hallé
  */
-public class GroupTest extends BeepBeepUnitTest 
+public class GroupTest 
 {
 	@Test
 	public void testGroup1() 

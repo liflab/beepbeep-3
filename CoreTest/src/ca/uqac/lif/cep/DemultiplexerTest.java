@@ -32,7 +32,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
  * @author Sylvain Hallé
  *
  */
-public class DemultiplexerTest extends BeepBeepUnitTest
+public class DemultiplexerTest
 {
 	@SuppressWarnings("unchecked")
 	@Test

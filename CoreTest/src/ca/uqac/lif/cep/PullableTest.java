@@ -34,7 +34,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 /**
  * Unit tests for the {@link Pullable} interface.
  */
-public class PullableTest extends BeepBeepUnitTest
+public class PullableTest
 {
 	@Test(expected=PullableException.class)
 	public void testPullableException1()

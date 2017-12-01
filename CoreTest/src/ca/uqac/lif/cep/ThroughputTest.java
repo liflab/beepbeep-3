@@ -34,7 +34,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;
 
 @Ignore
-public class ThroughputTest extends BeepBeepUnitTest
+public class ThroughputTest
 {
 	/**
 	 * Tests the throughput of 10 passthrough processors connected to a source

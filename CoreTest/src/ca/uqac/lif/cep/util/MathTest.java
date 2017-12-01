@@ -25,7 +25,6 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
@@ -45,7 +44,7 @@ import ca.uqac.lif.cep.util.Numbers.NumberCast;
  * Unit tests for basic arithmetic functions
  * @author Sylvain Hallé
  */
-public class MathTest extends BeepBeepUnitTest
+public class MathTest
 {
 	@Test
 	public void testAddition()

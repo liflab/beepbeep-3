@@ -23,14 +23,13 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.io.StringStreamReader;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.util.PatternScanner;
 import ca.uqac.lif.cep.util.Strings;
 
-public class InputTest extends BeepBeepUnitTest
+public class InputTest
 {
 	@Test
 	public void testCsvFeederNoTrim1() throws IOException

@@ -35,7 +35,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
  * Unit tests for the {@link Connector} class
  * @author Sylvain Hallé
  */
-public class ConnectorTest extends BeepBeepUnitTest
+public class ConnectorTest
 {
 	@Test
 	public void testOutOfBounds1()

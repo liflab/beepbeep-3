@@ -34,7 +34,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 /**
  * Unit tests for the basic {@link Processor} functionalities.
  */
-public class ProcessorTest extends BeepBeepUnitTest
+public class ProcessorTest
 {
 
 	@Test

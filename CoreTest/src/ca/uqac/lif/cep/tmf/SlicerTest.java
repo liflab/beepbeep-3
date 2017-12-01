@@ -26,7 +26,6 @@ import java.util.Stack;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
@@ -39,7 +38,7 @@ import ca.uqac.lif.cep.tmf.Slicer;
  * Unit tests for the {@link Slicer} processor.
  * @author Sylvain Hallé
  */
-public class SlicerTest extends BeepBeepUnitTest
+public class SlicerTest
 {
 	@SuppressWarnings("unchecked")
 	@Test

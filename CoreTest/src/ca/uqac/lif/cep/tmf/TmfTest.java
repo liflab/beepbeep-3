@@ -27,7 +27,6 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
@@ -47,7 +46,7 @@ import ca.uqac.lif.cep.tmf.Window;
  * Unit tests for classes of the TMF package.
  * @author Sylvain Hallé
  */
-public class TmfTest extends BeepBeepUnitTest 
+public class TmfTest 
 {
 	@Test
 	public void testTrim() 
