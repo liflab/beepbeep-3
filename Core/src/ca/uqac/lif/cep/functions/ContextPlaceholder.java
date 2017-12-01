@@ -17,9 +17,6 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Set;
-
-import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
 
 /**
@@ -27,7 +24,7 @@ import ca.uqac.lif.cep.Context;
  * 
  * @author Sylvain Hallé
  */
-public class ContextPlaceholder extends Function
+public class ContextPlaceholder extends Placeholder
 {
 	/**
 	 * The name of this placeholder
@@ -82,47 +79,11 @@ public class ContextPlaceholder extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs)
-	{
-		evaluate(inputs, outputs, null);
-	}
-
-	@Override
-	public int getInputArity()
-	{
-		return 0;
-	}
-
-	@Override
-	public int getOutputArity()
-	{
-		return 1;
-	}
-
-	@Override
-	public void reset()
-	{
-		// Nothing to do
-	}
-
-	@Override
 	public ContextPlaceholder duplicate()
 	{
 		return new ContextPlaceholder(m_name);
 	}
-
-	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index)
-	{
-		classes.add(Variant.class);
-	}
-
-	@Override
-	public Class<?> getOutputTypeFor(int index)
-	{
-		return Variant.class;
-	}
-
+	
 	@Override
 	public String toString()
 	{

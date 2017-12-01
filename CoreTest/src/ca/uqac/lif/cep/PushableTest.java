@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.numbers.Division;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.ConstantProcessor;
 import ca.uqac.lif.cep.tmf.Pump;
 
@@ -36,7 +36,7 @@ public class PushableTest
 	@Test(expected=PushableException.class)
 	public void testPushableException1()
 	{
-		FunctionProcessor div = new FunctionProcessor(new FunctionTree(Division.instance, new Constant(1), new ArgumentPlaceholder(0)));
+		FunctionProcessor div = new FunctionProcessor(new FunctionTree(Numbers.division, new Constant(1), new ArgumentPlaceholder(0)));
 		Pushable p = div.getPushableInput();
 		p.push(0);
 	}

@@ -26,7 +26,7 @@ import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.numbers.Division;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.ConstantProcessor;
 import ca.uqac.lif.cep.tmf.Pump;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -39,7 +39,7 @@ public class PullableTest extends BeepBeepUnitTest
 	@Test(expected=PullableException.class)
 	public void testPullableException1()
 	{
-		FunctionProcessor div = new FunctionProcessor(new FunctionTree(Division.instance, new Constant(1), new ArgumentPlaceholder(0)));
+		FunctionProcessor div = new FunctionProcessor(new FunctionTree(Numbers.division, new Constant(1), new ArgumentPlaceholder(0)));
 		Pullable p = div.getPullableOutput();
 		p.pull();
 	}

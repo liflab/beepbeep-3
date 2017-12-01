@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.Slicer;
 
@@ -80,7 +80,7 @@ public class SlicerTest extends BeepBeepUnitTest
 	{
 		public Sum()
 		{
-			super(new CumulativeFunction<Number>(Addition.instance));
+			super(new CumulativeFunction<Number>(Numbers.addition));
 		}
 	}
 

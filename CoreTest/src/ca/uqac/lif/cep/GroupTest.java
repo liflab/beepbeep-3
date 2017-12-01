@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -369,7 +369,7 @@ public class GroupTest extends BeepBeepUnitTest
 	public void testGroupPull1() 
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -432,7 +432,7 @@ public class GroupTest extends BeepBeepUnitTest
 	public void testGroupPush2() 
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
 		Incrementer inc = new Incrementer(10);
 		Connector.connect(inc, add);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
@@ -485,7 +485,7 @@ public class GroupTest extends BeepBeepUnitTest
 	public void testGroupPush1() 
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);

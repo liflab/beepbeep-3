@@ -40,11 +40,19 @@ public class CountDecimate extends SingleProcessor
 	 */
 	protected int m_current;
 
+	/**
+	 * Creates a new count decimate processor with a decimation
+	 * interval of 1
+	 */
 	public CountDecimate()
 	{
 		this(1);
 	}
 
+	/**
+	 * Creates a new count decimate processor
+	 * @param interval The decimation interval
+	 */
 	public CountDecimate(int interval)
 	{
 		super(1, 1);
@@ -77,10 +85,6 @@ public class CountDecimate extends SingleProcessor
 		m_outputCount++;
 		if (m_eventTracker != null)
 		{
-			if (m_inputCount < 0)
-			{
-				m_inputCount += m_interval;
-			}
 			for (int i = 0; i < inputs.length; i++)
 			{
 				associateToInput(i, m_inputCount - 1, i, m_outputCount - 1);
@@ -96,7 +100,12 @@ public class CountDecimate extends SingleProcessor
 		return new CountDecimate(m_interval);
 	}
 
-	public int getInterval() {
+	/**
+	 * Gets the decimation interval
+	 * @return The interval
+	 */
+	public int getInterval()
+	{
 		return m_interval;
 	}
 }

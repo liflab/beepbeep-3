@@ -15,35 +15,55 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.numbers;
+package ca.uqac.lif.cep.functions;
 
-import ca.uqac.lif.cep.functions.BinaryFunction;
+import java.util.Set;
 
-/**
- * Computes the power of its arguments
- * @author Sylvain Hallé
- */
-public class Power extends BinaryFunction<Number,Number,Number>
-{
+import ca.uqac.lif.cep.Connector.Variant;
+
+public abstract class Placeholder extends Function 
+{	
 	/**
-	 * Static reference to a single instance of the function
+	 * Creates a new placeholder
 	 */
-	public static final transient Power instance = new Power();
-
-	protected Power()
+	public Placeholder()
 	{
-		super(Number.class, Number.class, Number.class);
+		super();
+	}
+	
+	@Override
+	public void evaluate(Object[] inputs, Object[] outputs)
+	{
+		evaluate(inputs, outputs, null);
 	}
 
 	@Override
-	public Number getValue(Number x, Number y)
+	public int getInputArity()
 	{
-		return Math.pow(x.floatValue(), y.floatValue());
+		return 0;
 	}
 
 	@Override
-	public Number getStartValue()
+	public int getOutputArity()
 	{
-		return 1f;
+		return 1;
+	}
+
+	@Override
+	public void reset()
+	{
+		// Nothing to do
+	}
+	
+	@Override
+	public void getInputTypesFor(Set<Class<?>> classes, int index)
+	{
+		classes.add(Variant.class);
+	}
+
+	@Override
+	public Class<?> getOutputTypeFor(int index)
+	{
+		return Variant.class;
 	}
 }

@@ -17,22 +17,19 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Set;
-
-import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
 
 /**
  * Symbol standing for the <i>i</i>-th trace given as input
  * @author Sylvain Hallé
  */
-public class ArgumentPlaceholder extends Function
+public class ArgumentPlaceholder extends Placeholder
 {
 	/**
 	 * The index of this placeholder
 	 */
-	private final int m_index;
-
+	protected final int m_index;
+	
 	/**
 	 * Creates a new trace placeholder
 	 * @param index The index of the trace this placeholder represents
@@ -51,7 +48,7 @@ public class ArgumentPlaceholder extends Function
 	{
 		this(0);
 	}
-
+	
 	/**
 	 * Gets the name of this placeholder
 	 * @return The name
@@ -84,51 +81,14 @@ public class ArgumentPlaceholder extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs)
-	{
-		evaluate(inputs, outputs, null);
-	}
-
-	@Override
-	public int getInputArity()
-	{
-		return 0;
-	}
-
-	@Override
-	public int getOutputArity()
-	{
-		return 0;
-	}
-
-	@Override
-	public void reset()
-	{
-		// Nothing to do
-	}
-
-	@Override
 	public ArgumentPlaceholder duplicate()
 	{
 		return this;
 	}
-
-	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index)
-	{
-		classes.add(Variant.class);
-	}
-
-	@Override
-	public Class<?> getOutputTypeFor(int index)
-	{
-		return Variant.class;
-	}
-
+	
 	@Override
 	public String toString()
 	{
 		return "$" + m_index;
 	}
-
 }

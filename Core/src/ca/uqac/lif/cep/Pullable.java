@@ -312,5 +312,11 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 			// Do nothing
 		}
 		
+		@Override
+		public void remove() 
+		{
+			throw new UnsupportedOperationException();
+		}
+		
 	}
 }

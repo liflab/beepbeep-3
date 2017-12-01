@@ -40,21 +40,21 @@ public class Sets
 	{
 		// Utility class
 	}
-		
+	
 	/**
-	 * Updates a set.
+	 * Processor that updates a set
 	 */
-	public static class PutInto extends UniformProcessor
+	protected static abstract class SetUpdateProcessor extends UniformProcessor
 	{
 		/**
-		 * The underlying map
+		 * The underlying set
 		 */
 		protected Set<Object> m_set;
 		
 		/**
 		 * Create a new instance of the processor
 		 */
-		public PutInto()
+		public SetUpdateProcessor()
 		{
 			super(1, 1);
 			m_set = new HashSet<Object>();
@@ -64,6 +64,26 @@ public class Sets
 		public void reset()
 		{
 			m_set.clear();
+		}
+		
+		@Override
+		public Class<?> getOutputType(int index)
+		{
+			return Set.class;
+		}
+	}
+		
+	/**
+	 * Updates a set.
+	 */
+	public static class PutInto extends SetUpdateProcessor
+	{	
+		/**
+		 * Create a new instance of the processor
+		 */
+		public PutInto()
+		{
+			super();
 		}
 
 		@Override
@@ -79,43 +99,25 @@ public class Sets
 			outputs[0] = m_set;
 			return true;
 		}
-		
-		@Override
-		public Class<?> getOutputType(int index)
-		{
-			return Set.class;
-		}
 	}
 	
 	/**
 	 * Updates a set.
 	 */
-	public static class PutIntoNew extends UniformProcessor
-	{
-		/**
-		 * The underlying map
-		 */
-		protected Set<Object> m_set;
-		
+	public static class PutIntoNew extends SetUpdateProcessor
+	{	
 		/**
 		 * Create a new instance of the processor
 		 */
 		public PutIntoNew()
 		{
-			super(1, 1);
-			m_set = new HashSet<Object>();
-		}
-		
-		@Override
-		public void reset()
-		{
-			m_set.clear();
+			super();
 		}
 
 		@Override
-		public PutInto duplicate()
+		public PutIntoNew duplicate()
 		{
-			return new PutInto();
+			return new PutIntoNew();
 		}
 
 		@Override
@@ -126,12 +128,6 @@ public class Sets
 			new_set.addAll(m_set);
 			outputs[0] = new_set;
 			return true;
-		}
-		
-		@Override
-		public Class<?> getOutputType(int index)
-		{
-			return Set.class;
 		}
 	}
 	

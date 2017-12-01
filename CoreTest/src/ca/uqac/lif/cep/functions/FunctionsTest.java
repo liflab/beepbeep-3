@@ -30,8 +30,7 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.ProvenanceTest.DummyTracker;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Pushable.PushableException;
-import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.numbers.Multiplication;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.BlackHole;
 import ca.uqac.lif.cep.tmf.Passthrough;
 
@@ -141,7 +140,7 @@ public class FunctionsTest
 	{
 		Context c = new Context();
 		c.put("a", 6);
-		FunctionTree f = new FunctionTree(Addition.instance, new Constant(3), new ContextPlaceholder("a"));
+		FunctionTree f = new FunctionTree(Numbers.addition, new Constant(3), new ContextPlaceholder("a"));
 		assertEquals(9f, evaluate(f, c, 4));
 	}
 	
@@ -167,7 +166,7 @@ public class FunctionsTest
 	@Test
 	public void testFunctionTree1() 
 	{
-		FunctionTree ft = new FunctionTree(Addition.instance, new Constant(1), new ArgumentPlaceholder(0));
+		FunctionTree ft = new FunctionTree(Numbers.addition, new Constant(1), new ArgumentPlaceholder(0));
 		assertEquals(6f, evaluate(ft, 5));
 		FunctionTree ft2 = ft.duplicate();
 		assertFalse(ft == ft2);
@@ -201,7 +200,7 @@ public class FunctionsTest
 	@Test
 	public void testFunctionTree2() 
 	{
-		FunctionTree ft = new FunctionTree(Addition.instance, new Constant(1), new ArgumentPlaceholder(0));
+		FunctionTree ft = new FunctionTree(Numbers.addition, new Constant(1), new ArgumentPlaceholder(0));
 		assertEquals(6f, evaluate(ft, 5));
 	}
 	
@@ -303,7 +302,7 @@ public class FunctionsTest
 	@Test
 	public void testCumulative1() 
 	{
-		CumulativeProcessor sum = new CumulativeProcessor(new CumulativeFunction<Number>(Multiplication.instance));
+		CumulativeProcessor sum = new CumulativeProcessor(new CumulativeFunction<Number>(Numbers.multiplication));
 		DummyTracker tracker = new DummyTracker();
 		sum.setEventTracker(tracker);
 		Connector.connect(sum, new BlackHole());

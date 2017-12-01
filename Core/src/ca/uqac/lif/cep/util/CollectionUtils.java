@@ -26,7 +26,6 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
@@ -41,6 +40,11 @@ import ca.uqac.lif.cep.tmf.SinkLast;
  */
 public class CollectionUtils 
 {
+	protected CollectionUtils()
+	{
+		// Utility class
+	}
+	
 	/**
 	 * Gets all the elements of the collection that satisfy some condition.
 	 * This condition is specified as an unary function that is successively
@@ -163,7 +167,7 @@ public class CollectionUtils
 		}
 
 		@Override
-		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException 
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 		{
 			m_processor.reset();
 			for (Object o : (Collection<?>) inputs[0])

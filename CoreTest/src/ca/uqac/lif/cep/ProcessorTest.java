@@ -26,8 +26,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.tmf.CountDecimate;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -111,7 +110,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	@Test
 	public void testDuplicate()
 	{
-		FunctionProcessor pt1 = new FunctionProcessor(Addition.instance);
+		FunctionProcessor pt1 = new FunctionProcessor(Numbers.addition);
 		pt1.setContext("a", 0);
 		FunctionProcessor pt2 = pt1.duplicate();
 		assertNotEquals(pt1.getId(), pt2.getId());
@@ -123,11 +122,11 @@ public class ProcessorTest extends BeepBeepUnitTest
 	@Test
 	public void testEquals()
 	{
-		FunctionProcessor pt1 = new FunctionProcessor(Addition.instance);
-		FunctionProcessor pt2 = new FunctionProcessor(Addition.instance);
+		FunctionProcessor pt1 = new FunctionProcessor(Numbers.addition);
+		FunctionProcessor pt2 = new FunctionProcessor(Numbers.addition);
 		assertTrue(pt1.equals(pt1));
 		assertFalse(pt1.equals(pt2));
-		assertFalse(pt1.equals(Addition.instance));
+		assertFalse(pt1.equals(Numbers.addition));
 		assertFalse(pt1.equals(null));
 		
 	}
@@ -182,105 +181,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 	}
 	
 	
-	@Test
-	public void testDecimatePull1() 
-	{
-		int op_num = 0;
-		QueueSource ones = new QueueSource(1);
-		ones.addEvent(1);
-		Sum count = new Sum();
-		Connector.connect(ones, count);
-		CountDecimate decim = new CountDecimate(2);
-		Connector.connect(count, decim);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(decim, sink);
-		Number recv;
-		sink.pull();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv == null || recv.intValue() != 1)
-		{
-			fail("Expected 1 on pull " + op_num + ", got " + recv);
-		}
-		sink.pull();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv != null)
-		{
-			fail("Expected null on pull " + op_num + ", got " + recv);
-		}
-		sink.pull();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv == null || recv.intValue() != 3)
-		{
-			fail("Expected 3 on pull " + op_num + ", got " + recv);
-		}
-		sink.pull();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv != null)
-		{
-			fail("Expected null on pull " + op_num + ", got " + recv);
-		}
-		sink.pull();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv == null || recv.intValue() != 5)
-		{
-			fail("Expected 5 on pull " + op_num + ", got " + recv);
-		}
-	}
 	
-	@Test
-	public void testDecimatePush1() 
-	{
-		int op_num = 0;
-		QueueSource ones = new QueueSource(1);
-		ones.addEvent(1);
-		Sum count = new Sum();
-		Connector.connect(ones, count);
-		CountDecimate decim = new CountDecimate(2);
-		Connector.connect(count, decim);
-		QueueSink sink = new QueueSink(1);
-		Connector.connect(decim, sink);
-		Number recv;
-		ones.push();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv == null || recv.intValue() != 1)
-		{
-			fail("Expected 1 on push " + op_num + ", got " + recv);
-		}
-		ones.push();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv != null)
-		{
-			fail("Expected null on push " + op_num + ", got " + recv);
-		}
-		ones.push();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv == null || recv.intValue() != 3)
-		{
-			fail("Expected 3 on push " + op_num + ", got " + recv);
-		}
-		ones.push();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv != null)
-		{
-			fail("Expected null on push " + op_num + ", got " + recv);
-		}
-		ones.push();
-		op_num++;
-		recv = (Number) sink.remove()[0];
-		if (recv == null || recv.intValue() != 5)
-		{
-			fail("Expected 5 on push " + op_num + ", got " + recv);
-		}
-	}
 	
 	@Test
 	public void testAdditionPush1() 
@@ -297,7 +198,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 		input1.setEvents(l_input1);
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
 		Connector.connect(input1, 0, add, 0);
 		Connector.connect(input2, 0, add, 1);
 		QueueSink sink = new QueueSink(1);
@@ -351,7 +252,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 			input_events.add(new Integer(11));
 			src_right.setEvents(input_events);
 		}
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
 		Connector.connect(src_left, 0, add, 0);
 		Connector.connect(src_right, 0, add, 1);
 		Pullable p = add.getPullableOutput(0);
@@ -419,7 +320,7 @@ public class ProcessorTest extends BeepBeepUnitTest
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{
-			super(new CumulativeFunction(Addition.instance));
+			super(new CumulativeFunction(Numbers.addition));
 		}
 	}	
 }

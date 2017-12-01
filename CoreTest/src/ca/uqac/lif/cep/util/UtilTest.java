@@ -34,8 +34,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.FunctionsTest;
 import ca.uqac.lif.cep.functions.InvalidArgumentException;
-import ca.uqac.lif.cep.numbers.AbsoluteValue;
-import ca.uqac.lif.cep.numbers.IsEven;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.ToCollection.ToArray;
 import ca.uqac.lif.cep.util.ToCollection.ToList;
@@ -54,7 +53,7 @@ public class UtilTest
 		set.add(0f);
 		set.add(-3f);
 		set.add(5f);
-		ApplyToAll ata = new ApplyToAll(AbsoluteValue.instance);
+		ApplyToAll ata = new ApplyToAll(Numbers.absoluteValue);
 		Set<Object> out = (Set<Object>) evaluate(ata, set);
 		assertEquals(3, out.size());
 		assertTrue(out.contains(0f));
@@ -70,7 +69,7 @@ public class UtilTest
 		set.add(0f);
 		set.add(-3f);
 		set.add(5f);
-		ApplyToAll ata = new ApplyToAll(AbsoluteValue.instance);
+		ApplyToAll ata = new ApplyToAll(Numbers.absoluteValue);
 		List<Object> out = (List<Object>) evaluate(ata, set);
 		assertEquals(3, out.size());
 		assertEquals(0f, out.get(0));
@@ -82,7 +81,7 @@ public class UtilTest
 	public void testApplyToAll3()
 	{
 		Float[] set = new Float[]{0f, -3f, 5f};
-		ApplyToAll ata = new ApplyToAll(AbsoluteValue.instance);
+		ApplyToAll ata = new ApplyToAll(Numbers.absoluteValue);
 		Object[] out = (Object[]) evaluate(ata, new Object[]{set});
 		assertEquals(3, out.length);
 		assertEquals(0f, out[0]);
@@ -93,7 +92,7 @@ public class UtilTest
 	@Test(expected=InvalidArgumentException.class)
 	public void testApplyToAll4()
 	{
-		ApplyToAll ata = new ApplyToAll(AbsoluteValue.instance);
+		ApplyToAll ata = new ApplyToAll(Numbers.absoluteValue);
 		evaluate(ata, new Object());
 	}
 	
@@ -394,7 +393,7 @@ public class UtilTest
 	@Test
 	public void testGetElementsSet()
 	{
-		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(IsEven.instance);
+		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(Numbers.isEven);
 		Set<Integer> s1 = new HashSet<Integer>();
 		s1.add(0);
 		s1.add(1);
@@ -407,7 +406,7 @@ public class UtilTest
 	@Test
 	public void testGetElementsList()
 	{
-		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(IsEven.instance);
+		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(Numbers.isEven);
 		List<Integer> s1 = new ArrayList<Integer>();
 		s1.add(0);
 		s1.add(1);
@@ -421,7 +420,7 @@ public class UtilTest
 	@Test(expected=InvalidArgumentException.class)
 	public void testGetElementsException()
 	{
-		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(IsEven.instance);
+		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(Numbers.isEven);
 		FunctionsTest.evaluate(gi, new Object());
 	}
 }
