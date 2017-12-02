@@ -29,6 +29,10 @@ import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
+import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.Constant;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Freeze;
@@ -40,6 +44,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.cep.tmf.Trim;
 import ca.uqac.lif.cep.tmf.Window;
+import ca.uqac.lif.cep.util.Numbers;
 
 /**
  * Unit tests for classes of the TMF package.
@@ -480,5 +485,73 @@ public class TmfTest
 		pl.dispose();
 		pl.start();
 		pl.stop();
+	}
+	
+	@Test(timeout=1000)
+	public void testTimeDecimate() throws InterruptedException
+	{
+		QueueSource source = new QueueSource().setEvents(0);
+		TimeDecimate td = new TimeDecimate(200);
+		Connector.connect(source, td);
+		Pullable p = td.getPullableOutput();
+		long before = System.currentTimeMillis();
+		assertTrue(p.hasNext());
+		p.pull();
+		while (p.hasNextSoft() != NextStatus.YES)
+		{
+			Thread.sleep(10);
+		}
+		long after = System.currentTimeMillis();
+		assertTrue(after - before > 200);
+		td = td.duplicate();
+		assertEquals(200, td.getInterval());
+	}
+	
+	@Test(timeout=1000)
+	public void testTimeDecimateReset() throws InterruptedException
+	{
+		QueueSource source = new QueueSource().setEvents(0);
+		TimeDecimate td = new TimeDecimate(20000);
+		Connector.connect(source, td);
+		Pullable p = td.getPullableOutput();
+		assertTrue(p.hasNext());
+		p.pull();
+		for (int i = 0; i < 10; i++)
+		{
+			assertEquals(NextStatus.MAYBE, p.hasNextSoft());
+			Thread.sleep(10);
+		}
+		td.reset();
+		assertEquals(NextStatus.YES, p.hasNextSoft());
+	}
+	
+	@Test
+	public void testSimpleFilter()
+	{
+		QueueSource source = new QueueSource().setEvents(2, 3, 5, 6, 8);
+		SimpleFilter filter = new SimpleFilter(Numbers.isEven);
+		Connector.connect(source, filter);
+		Pullable p = filter.getPullableOutput();
+		assertEquals(2, p.pull());
+		assertEquals(6, p.pull());
+		assertEquals(8, p.pull());
+		SimpleFilter filter2 = filter.duplicate();
+		assertEquals(Numbers.isEven, filter2.getCondition());
+	}
+	
+	@Test
+	public void testSimpleFilterClone()
+	{
+		FunctionTree ft = new FunctionTree(Numbers.isGreaterThan, new ArgumentPlaceholder(0), new Constant(4));
+		SimpleFilter filter = new SimpleFilter(ft);
+		SimpleFilter filter2 = filter.duplicate();
+		Function f = filter2.getCondition();
+		assertFalse(f == ft);
+		assertTrue(f instanceof FunctionTree);
+		Object[] out = new Object[1];
+		f.evaluate(new Object[]{6}, out);
+		assertEquals(true, out[0]);
+		f.evaluate(new Object[]{3}, out);
+		assertEquals(false, out[0]);
 	}
 }

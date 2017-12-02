@@ -36,9 +36,10 @@ import ca.uqac.lif.cep.functions.FunctionsTest;
 import ca.uqac.lif.cep.functions.InvalidArgumentException;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.util.ToCollection.ToArray;
-import ca.uqac.lif.cep.util.ToCollection.ToList;
-import ca.uqac.lif.cep.util.ToCollection.ToSet;
+import ca.uqac.lif.cep.util.Bags.ApplyToAll;
+import ca.uqac.lif.cep.util.Bags.ToArray;
+import ca.uqac.lif.cep.util.Bags.ToList;
+import ca.uqac.lif.cep.util.Bags.ToSet;
 
 /**
  * Unit tests for functions and processors of the <tt>util</tt> package.
@@ -393,7 +394,7 @@ public class UtilTest
 	@Test
 	public void testGetElementsSet()
 	{
-		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(Numbers.isEven);
+		Bags.FilterElements gi = new Bags.FilterElements(Numbers.isEven);
 		Set<Integer> s1 = new HashSet<Integer>();
 		s1.add(0);
 		s1.add(1);
@@ -406,7 +407,7 @@ public class UtilTest
 	@Test
 	public void testGetElementsList()
 	{
-		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(Numbers.isEven);
+		Bags.FilterElements gi = new Bags.FilterElements(Numbers.isEven);
 		List<Integer> s1 = new ArrayList<Integer>();
 		s1.add(0);
 		s1.add(1);
@@ -420,7 +421,7 @@ public class UtilTest
 	@Test(expected=InvalidArgumentException.class)
 	public void testGetElementsException()
 	{
-		CollectionUtils.GetElements gi = new CollectionUtils.GetElements(Numbers.isEven);
+		Bags.FilterElements gi = new Bags.FilterElements(Numbers.isEven);
 		FunctionsTest.evaluate(gi, new Object());
 	}
 }
