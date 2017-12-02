@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Connector.IncompatibleTypesException;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -255,7 +255,7 @@ public class ConnectorTest
 		assertTrue(Connector.isCompatible(new Oranges(), 0, new Variants(), 0));
 	}
 	
-	public static class Incrementer extends FunctionProcessor
+	public static class Incrementer extends ApplyFunction
 	{
 		public Incrementer(int i)
 		{

@@ -28,6 +28,16 @@ import ca.uqac.lif.cep.Context;
 public class Constant extends Function
 {
 	/**
+	 * A constant representing the number zero
+	 */
+	public static final Constant ZERO = new Constant(0);
+	
+	/**
+	 * A constant representing the number one
+	 */
+	public static final Constant ONE = new Constant(1);
+	
+	/**
 	 * The value to return by this constant
 	 */
 	private final Object m_value;

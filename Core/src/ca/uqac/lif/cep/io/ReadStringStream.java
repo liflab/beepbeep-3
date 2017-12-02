@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.ProcessorException;
  * Extracts character strings from a Java {@link InputStream}.
  * @author Sylvain Hallé
  */
-public class StringStreamReader extends InputStreamProcessor 
+public class ReadStringStream extends ReadInputStream 
 {
 	/**
 	 * A reader to wrap around this input stream
@@ -46,7 +46,7 @@ public class StringStreamReader extends InputStreamProcessor
 	 * Creates a new stream reader
 	 * @param is The input stream to read from
 	 */
-	public StringStreamReader(/*@NotNull*/ InputStream is)
+	public ReadStringStream(/*@NotNull*/ InputStream is)
 	{
 		super(is);
 		m_inputStreamReader = new InputStreamReader(is);

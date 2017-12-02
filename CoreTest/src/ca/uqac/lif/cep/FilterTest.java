@@ -22,7 +22,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Fork;
@@ -87,7 +87,7 @@ public class FilterTest
 		Connector.connect(input1, fork);
 		Filter filter = new Filter();
 		Connector.connect(fork, 0, filter, 0);
-		FunctionProcessor even = new FunctionProcessor(Numbers.isEven);
+		ApplyFunction even = new ApplyFunction(Numbers.isEven);
 		Connector.connect(fork, 1, even, 0);
 		Connector.connect(even, 0, filter, 1);
 		QueueSink sink = new QueueSink(1);

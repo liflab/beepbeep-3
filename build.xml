@@ -117,6 +117,8 @@
     <echo level="info">Your extension folder is ${build.extdir}</echo>
     <!-- Create depdir -->
     <mkdir dir="${build.depdir}"/>
+    <!-- Create docdir -->
+    <mkdir dir="${build.docdir}"/>
   </target>
 
   <!-- Check if a local rt.jar is present. If so, it will override the
@@ -233,7 +235,7 @@
   <!-- Target: jar
        Generates a JAR file with the compiled files and javadoc
   -->
-  <target name="jar" depends="compile,javadoc" description="Create the runnable JAR">
+  <target name="jar" depends="compile" description="Create the runnable JAR">
       <tstamp>
          <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
       </tstamp>

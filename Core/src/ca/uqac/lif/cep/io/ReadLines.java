@@ -27,7 +27,7 @@ import java.util.Scanner;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class LineReader extends InputStreamProcessor
+public class ReadLines extends ReadInputStream
 {
 	/**
 	 * The scanner to read from
@@ -58,7 +58,7 @@ public class LineReader extends InputStreamProcessor
 	 * Creates a new file reader from an input stream
 	 * @param is The input stream to read from
 	 */
-	public LineReader(InputStream is)
+	public ReadLines(InputStream is)
 	{
 		super(is);
 		m_bufferedInputStream = new BufferedInputStream(is);
@@ -71,7 +71,7 @@ public class LineReader extends InputStreamProcessor
 	 * @param b true to add a CRLF, false otherwise
 	 * @return This reader
 	 */
-	public LineReader addCrlf(boolean b)
+	public ReadLines addCrlf(boolean b)
 	{
 		m_addCrlf = b;
 		return this;
@@ -82,7 +82,7 @@ public class LineReader extends InputStreamProcessor
 	 * @param b true to trim, false otherwise
 	 * @return This reader
 	 */
-	public LineReader trim(boolean b)
+	public ReadLines trim(boolean b)
 	{
 		m_trim = b;
 		return this;

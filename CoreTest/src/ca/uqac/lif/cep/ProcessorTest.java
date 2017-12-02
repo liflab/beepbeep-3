@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -110,9 +110,9 @@ public class ProcessorTest
 	@Test
 	public void testDuplicate()
 	{
-		FunctionProcessor pt1 = new FunctionProcessor(Numbers.addition);
+		ApplyFunction pt1 = new ApplyFunction(Numbers.addition);
 		pt1.setContext("a", 0);
-		FunctionProcessor pt2 = pt1.duplicate();
+		ApplyFunction pt2 = pt1.duplicate();
 		assertNotEquals(pt1.getId(), pt2.getId());
 		assertEquals(0, pt2.getContext("a"));
 		pt1.setContext("a", 1);
@@ -122,8 +122,8 @@ public class ProcessorTest
 	@Test
 	public void testEquals()
 	{
-		FunctionProcessor pt1 = new FunctionProcessor(Numbers.addition);
-		FunctionProcessor pt2 = new FunctionProcessor(Numbers.addition);
+		ApplyFunction pt1 = new ApplyFunction(Numbers.addition);
+		ApplyFunction pt2 = new ApplyFunction(Numbers.addition);
 		assertTrue(pt1.equals(pt1));
 		assertFalse(pt1.equals(pt2));
 		assertFalse(pt1.equals(Numbers.addition));
@@ -198,7 +198,7 @@ public class ProcessorTest
 		input1.setEvents(l_input1);
 		QueueSource input2 = new QueueSource(1);
 		input2.setEvents(l_input2);
-		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		Connector.connect(input1, 0, add, 0);
 		Connector.connect(input2, 0, add, 1);
 		QueueSink sink = new QueueSink(1);
@@ -252,7 +252,7 @@ public class ProcessorTest
 			input_events.add(new Integer(11));
 			src_right.setEvents(input_events);
 		}
-		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		Connector.connect(src_left, 0, add, 0);
 		Connector.connect(src_right, 0, add, 1);
 		Pullable p = add.getPullableOutput(0);

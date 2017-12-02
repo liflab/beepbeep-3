@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 
 import java.util.Map;
 import java.util.Queue;
-import java.util.Stack;
 
 import org.junit.Test;
 
@@ -32,10 +31,10 @@ import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tmf.Slicer;
+import ca.uqac.lif.cep.tmf.Slice;
 
 /**
- * Unit tests for the {@link Slicer} processor.
+ * Unit tests for the {@link Slice} processor.
  * @author Sylvain Hallé
  */
 public class SlicerTest
@@ -44,7 +43,7 @@ public class SlicerTest
 	@Test
 	public void testSlicer1() 
 	{
-		Slicer sli = new Slicer(new IsEven(), new Sum());
+		Slice sli = new Slice(Numbers.isEven, new Sum());
 		QueueSink qsink = new QueueSink(1);
 		Connector.connect(sli,  qsink);
 		Pushable in = sli.getPushableInput(0);
@@ -74,7 +73,33 @@ public class SlicerTest
 			qsink.reset();
 		}
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testSlicerAll()
+	{
+		Slice sli = new Slice(EvenAll.instance, new Sum());
+		QueueSink qsink = new QueueSink(1);
+		Connector.connect(sli,  qsink);
+		Pushable in = sli.getPushableInput(0);
+		Map<Object,Object> map;
+		Queue<Object> queue = qsink.getQueue(0);
+		in.push(1);
+		map = (Map<Object,Object>) queue.poll();
+		assertEquals(1.0f, map.get(false));
+		in.push(1);
+		map = (Map<Object,Object>) queue.poll();
+		assertEquals(2.0f, map.get(false));
+		in.push(6);
+		map = (Map<Object,Object>) queue.poll();
+		assertEquals(2.0f, map.get(false));
+		assertEquals(6.0f, map.get(true));
+		in.push(2);
+		map = (Map<Object,Object>) queue.poll();
+		assertEquals(4.0f, map.get(false));
+		assertEquals(8.0f, map.get(true));
+	}
+
 	public static class Sum extends CumulativeProcessor
 	{
 		public Sum()
@@ -83,23 +108,23 @@ public class SlicerTest
 		}
 	}
 
-	public static class IsEven extends UnaryFunction<Number,Boolean>
+	public static class EvenAll extends UnaryFunction<Number,Object>
 	{
-		public IsEven()
+		public static final EvenAll instance = new EvenAll();
+
+		protected EvenAll()
 		{
-			super(Number.class, Boolean.class);
+			super(Number.class, Object.class);
 		}
-		
+
 		@Override
-		public Boolean getValue(Number x) 
+		public Object getValue(Number x) 
 		{
+			if (x.intValue() == 2)
+			{
+				return Slice.ToAllSlices.instance;
+			}
 			return x.intValue() % 2 == 0;
-		}
-		
-		public static void build(Stack<Object> stack) 
-		{
-			stack.pop(); // ISEVEN
-			stack.push(new IsEven());
 		}
 	}
 }

@@ -24,10 +24,10 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tmf.Splicer;
+import ca.uqac.lif.cep.tmf.Splice;
 
 /**
- * Unit tests for the {@link Splicer} processor.
+ * Unit tests for the {@link Splice} processor.
  */
 public class SplicerTest 
 {
@@ -41,7 +41,7 @@ public class SplicerTest
 		QueueSource source2 = new QueueSource(1);
 		source2.loop(false);
 		source2.setEvents(3, 4, 5);
-		Splicer s = new Splicer(source1, source2);
+		Splice s = new Splice(source1, source2);
 		Context c = new Context();
 		c.put("b", 10);
 		s.setContext(c);

@@ -24,11 +24,11 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.tmf.Demultiplexer;
+import ca.uqac.lif.cep.tmf.Demultiplex;
 import ca.uqac.lif.cep.tmf.QueueSink;
 
 /**
- * Unit tests for the {@link Demultiplexer} class.
+ * Unit tests for the {@link Demultiplex} class.
  * @author Sylvain Hallé
  *
  */
@@ -38,7 +38,7 @@ public class DemultiplexerTest
 	@Test
 	public void testDemultiplexer() 
 	{
-		Demultiplexer demux = new Demultiplexer(3);
+		Demultiplex demux = new Demultiplex(3);
 		QueueSink qsink = new QueueSink(1);
 		Connector.connect(demux, qsink);
 		Pushable push1 = demux.getPushableInput(0);

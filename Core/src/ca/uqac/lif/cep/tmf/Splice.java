@@ -36,7 +36,7 @@ import ca.uqac.lif.cep.Pullable;
  *
  */
 @SuppressWarnings("squid:S2160")
-public class Splicer extends Source
+public class Splice extends Source
 {
 	/**
 	 * The list of processors to splice together
@@ -57,7 +57,7 @@ public class Splicer extends Source
 	 * 
 	 * @param processors
 	 */
-	public Splicer(Processor ... processors)
+	public Splice(Processor ... processors)
 	{
 		super(processors[0].getOutputArity());
 		m_processors = processors;
@@ -150,8 +150,8 @@ public class Splicer extends Source
 	}
 
 	@Override
-	public Splicer duplicate()
+	public Splice duplicate()
 	{
-		return new Splicer(m_processors);
+		return new Splice(m_processors);
 	}
 }

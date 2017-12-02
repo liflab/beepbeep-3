@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.tmf.Sink;
  * Processor that writes events to a Java {@link OutputStream}.
  * @author Sylvain Hallé
  */
-public class OutputStreamProcessor extends Sink 
+public class WriteOutputStream extends Sink 
 {
 	/**
 	 * The output stream to send data to
@@ -39,7 +39,7 @@ public class OutputStreamProcessor extends Sink
 	 * Creates a new output stream processor
 	 * @param os The output stream to send data to
 	 */
-	public OutputStreamProcessor(OutputStream os)
+	public WriteOutputStream(OutputStream os)
 	{
 		super(1);
 		m_outputStream = os;
@@ -88,7 +88,7 @@ public class OutputStreamProcessor extends Sink
 	}
 
 	@Override
-	public OutputStreamProcessor duplicate()
+	public WriteOutputStream duplicate()
 	{
 		// By default, it does not make sense to duplicate such a processor
 		throw new UnsupportedOperationException();

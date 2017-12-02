@@ -24,7 +24,7 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Passthrough;
@@ -369,7 +369,7 @@ public class GroupTest
 	public void testGroupPull1() 
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -432,7 +432,7 @@ public class GroupTest
 	public void testGroupPush2() 
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		Incrementer inc = new Incrementer(10);
 		Connector.connect(inc, add);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
@@ -485,7 +485,7 @@ public class GroupTest
 	public void testGroupPush1() 
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Numbers.addition);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -612,7 +612,7 @@ public class GroupTest
 		assertEquals(0, p.getPosition());
 	}
 	
-	public static class Incrementer extends FunctionProcessor
+	public static class Incrementer extends ApplyFunction
 	{
 		public Incrementer(int increment)
 		{

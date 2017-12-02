@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.Pullable.PullableException;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * Unit tests for the {@link Caller} processor. 
+ * Unit tests for the {@link Call} processor. 
  * @author Sylvain Hallé
  *
  */
@@ -44,7 +44,7 @@ public class CallerTest
 	{
 		QueueSource source = new QueueSource();
 		source.setEvents(new Object[]{new byte[0]});
-		Caller caller = new Caller("foo"); // let's hope this command does not exist!
+		Call caller = new Call("foo"); // let's hope this command does not exist!
 		Connector.connect(source, caller);
 		Pullable p = caller.getPullableOutput();
 		p.pull();
@@ -57,7 +57,7 @@ public class CallerTest
 		QueueSource source = new QueueSource();
 		source.setEvents(new Object[]{new byte[0]});
 		// echo is a command that exists in both Windows and Linux
-		Caller caller = new Caller("cmd.exe", "/c", "echo foo");
+		Call caller = new Call("cmd.exe", "/c", "echo foo");
 		Connector.connect(source, caller);
 		Pullable p = caller.getPullableOutput();
 		byte[] bytes = (byte[]) p.pull();
@@ -73,7 +73,7 @@ public class CallerTest
 		QueueSource source = new QueueSource();
 		source.setEvents(new Object[]{new byte[0]});
 		// echo is a command that exists in both Windows and Linux
-		Caller caller = new Caller("echo", "foo");
+		Call caller = new Call("echo", "foo");
 		Connector.connect(source, caller);
 		Pullable p = caller.getPullableOutput();
 		byte[] bytes = (byte[]) p.pull();

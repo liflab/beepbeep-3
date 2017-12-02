@@ -48,14 +48,14 @@ import ca.uqac.lif.cep.Pushable;
  *
  */
 @SuppressWarnings("squid:S2160")
-public class Multiplexer extends Processor
+public class Multiplex extends Processor
 {
 	/**
 	 * Instantiates a multiplexer
 	 * @param in_arity The input arity of the multiplexer. This is the
 	 *   number of input traces that should be merged together in the output
 	 */
-	public Multiplexer(int in_arity)
+	public Multiplex(int in_arity)
 	{
 		super(in_arity, 1);
 	}
@@ -76,9 +76,9 @@ public class Multiplexer extends Processor
 	}
 
 	@Override
-	public Multiplexer duplicate()
+	public Multiplex duplicate()
 	{
-		return new Multiplexer(getInputArity());
+		return new Multiplex(getInputArity());
 	}
 
 	protected final class MuxPullable implements Pullable
@@ -231,7 +231,7 @@ public class Multiplexer extends Processor
 		@Override
 		public Processor getProcessor()
 		{
-			return Multiplexer.this;
+			return Multiplex.this;
 		}
 
 		@Override
@@ -284,7 +284,7 @@ public class Multiplexer extends Processor
 		@Override
 		public Processor getProcessor()
 		{
-			return Multiplexer.this;
+			return Multiplex.this;
 		}
 
 		@Override

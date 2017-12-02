@@ -21,12 +21,12 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.Connector.Variant;
 
-public abstract class Placeholder extends Function 
+public abstract class Variable extends Function 
 {	
 	/**
 	 * Creates a new placeholder
 	 */
-	public Placeholder()
+	public Variable()
 	{
 		super();
 	}

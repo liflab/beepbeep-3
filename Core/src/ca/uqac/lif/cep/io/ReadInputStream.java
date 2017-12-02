@@ -25,7 +25,7 @@ import ca.uqac.lif.cep.tmf.Source;
  * Read contents from a Java {@link InputStream}.
  * @author Sylvain Hallé
  */
-public abstract class InputStreamProcessor extends Source
+public abstract class ReadInputStream extends Source
 {
 	/**
 	 * The input stream this processor is reading from
@@ -36,7 +36,7 @@ public abstract class InputStreamProcessor extends Source
 	 * Creates a new input stream processor
 	 * @param is The input stream to read from
 	 */
-	public InputStreamProcessor(InputStream is)
+	public ReadInputStream(InputStream is)
 	{
 		super(1);
 		m_inputStream = is;
@@ -80,7 +80,7 @@ public abstract class InputStreamProcessor extends Source
 	 * @param size The size, in bytes. Must be greater than 0.
 	 * @return This stream reader
 	 */
-	public InputStreamProcessor setChunkSize(int size)
+	public ReadInputStream setChunkSize(int size)
 	{
 		m_chunkSize = size;
 		return this;
@@ -93,14 +93,14 @@ public abstract class InputStreamProcessor extends Source
 	 *   file, {@code false} otherwise
 	 * @return This stream reader
 	 */
-	public InputStreamProcessor setIsFile(boolean b)
+	public ReadInputStream setIsFile(boolean b)
 	{
 		m_isFile = b;
 		return this;
 	}
 	
 	@Override
-	public InputStreamProcessor duplicate()
+	public ReadInputStream duplicate()
 	{
 		// By default, it does not make sense to duplicate such a processor
 		throw new UnsupportedOperationException();

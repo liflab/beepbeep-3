@@ -55,7 +55,7 @@ public class IoTest
 	{
 		String s;
 		InputStream is = IoTest.class.getResourceAsStream("resource/test1.txt");
-		StringStreamReader bsr = new StringStreamReader(is);
+		ReadStringStream bsr = new ReadStringStream(is);
 		// Set tiny chunk sizes to simulate reading large files
 		bsr.setChunkSize(10);
 		bsr.setIsFile(true);
@@ -80,7 +80,7 @@ public class IoTest
 	{
 		String s;
 		InputStream is = IoTest.class.getResourceAsStream("resource/test1.txt");
-		StringStreamReader bsr = new StringStreamReader(is);
+		ReadStringStream bsr = new ReadStringStream(is);
 		// Set tiny chunk sizes to simulate reading large files
 		bsr.setChunkSize(10);
 		bsr.setIsFile(false);
@@ -105,9 +105,9 @@ public class IoTest
 	{
 		String s;
 		StringBuilder content = new StringBuilder();
-		content.append("01234567890123").append(InputStreamProcessor.END_CHARACTER);
+		content.append("01234567890123").append(ReadInputStream.END_CHARACTER);
 		ByteArrayInputStream bais = new ByteArrayInputStream(content.toString().getBytes());
-		StringStreamReader bsr = new StringStreamReader(bais);
+		ReadStringStream bsr = new ReadStringStream(bais);
 		// Set tiny chunk sizes to simulate reading large files
 		bsr.setChunkSize(10);
 		bsr.setIsFile(false);
@@ -125,7 +125,7 @@ public class IoTest
 	public void testUrlFeeder1() 
 	{
 		Assume.assumeTrue(s_hasConnection);
-		HttpReader hr = new HttpReader("https://raw.githubusercontent.com/liflab/beepbeep-3/master/CoreTest/tuples1.csv");
+		HttpGet hr = new HttpGet("https://raw.githubusercontent.com/liflab/beepbeep-3/master/CoreTest/tuples1.csv");
 		Pullable p = hr.getPullableOutput(0);
 		assertNotNull(p);
 		Object o = p.pullSoft();
@@ -136,7 +136,7 @@ public class IoTest
 	public void testUrlFeeder2() 
 	{
 		// Malformed URL
-		HttpReader hr = new HttpReader("https://0.0.0.0.0.0");
+		HttpGet hr = new HttpGet("https://0.0.0.0.0.0");
 		Pullable p = hr.getPullableOutput(0);
 		assertNotNull(p);
 		p.pullSoft();
@@ -194,7 +194,7 @@ public class IoTest
 	public void testLineReader()
 	{
 		InputStream is = FileHelper.internalFileToStream(IoTest.class, "resource/test2.txt");
-		LineReader lr = new LineReader(is);
+		ReadLines lr = new ReadLines(is);
 		lr.trim(true);
 		Pullable p = lr.getPullableOutput();
 		assertEquals("foo", (String) p.pull());
@@ -207,12 +207,12 @@ public class IoTest
 	public void testLineReaderCrlf()
 	{
 		InputStream is = FileHelper.internalFileToStream(IoTest.class, "resource/test2.txt");
-		LineReader lr = new LineReader(is);
+		ReadLines lr = new ReadLines(is);
 		lr.addCrlf(true);
 		Pullable p = lr.getPullableOutput();
-		assertEquals("foo" + LineReader.CRLF, (String) p.pull());
-		assertEquals("bar" + LineReader.CRLF, (String) p.pull());
-		assertEquals("baz" + LineReader.CRLF, (String) p.pull());
+		assertEquals("foo" + ReadLines.CRLF, (String) p.pull());
+		assertEquals("bar" + ReadLines.CRLF, (String) p.pull());
+		assertEquals("baz" + ReadLines.CRLF, (String) p.pull());
 		assertFalse(p.hasNext());
 	}
 	
@@ -221,7 +221,7 @@ public class IoTest
 	{
 		String s;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		OutputStreamProcessor osp = new OutputStreamProcessor(baos);
+		WriteOutputStream osp = new WriteOutputStream(baos);
 		Pushable p = osp.getPushableInput();
 		p.push("foo");
 		s = new String(baos.toByteArray());
@@ -237,7 +237,7 @@ public class IoTest
 	{
 		byte[] s;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		OutputStreamProcessor osp = new OutputStreamProcessor(baos);
+		WriteOutputStream osp = new WriteOutputStream(baos);
 		Pushable p = osp.getPushableInput();
 		p.push(new byte[]{60, 51, 60});
 		s = baos.toByteArray();
@@ -256,7 +256,7 @@ public class IoTest
 	public void testOutputStreamProcessorException1() throws IOException
 	{
 		ExceptionOutputStream baos = new ExceptionOutputStream();
-		OutputStreamProcessor osp = new OutputStreamProcessor(baos);
+		WriteOutputStream osp = new WriteOutputStream(baos);
 		Pushable p = osp.getPushableInput();
 		p.push("bar");
 	}
@@ -265,7 +265,7 @@ public class IoTest
 	public void testOutputStreamProcessorException2() throws IOException
 	{
 		ExceptionOutputStream baos = new ExceptionOutputStream();
-		OutputStreamProcessor osp = new OutputStreamProcessor(baos);
+		WriteOutputStream osp = new WriteOutputStream(baos);
 		Pushable p = osp.getPushableInput();
 		p.push(new Object());
 	}

@@ -116,7 +116,7 @@ public class FunctionsTest
 	@Test
 	public void testContext1() 
 	{
-		ContextPlaceholder cph = new ContextPlaceholder("a");
+		ContextVariable cph = new ContextVariable("a");
 		Context c = new Context();
 		assertEquals(null, evaluate(cph, c, true, true));
 		assertEquals(null, evaluate(cph, true, true));
@@ -130,7 +130,7 @@ public class FunctionsTest
 		assertTrue(types.contains(Variant.class));
 		assertEquals(Variant.class, cph.getOutputTypeFor(0));
 		assertTrue(cph.equals(cph.duplicate()));
-		assertFalse(cph.equals(new ContextPlaceholder("b")));
+		assertFalse(cph.equals(new ContextVariable("b")));
 		assertFalse(cph.equals("b"));
 		assertFalse(cph.equals(null));
 		assertEquals(0, cph.getInputArity());
@@ -142,18 +142,18 @@ public class FunctionsTest
 	{
 		Context c = new Context();
 		c.put("a", 6);
-		FunctionTree f = new FunctionTree(Numbers.addition, new Constant(3), new ContextPlaceholder("a"));
+		FunctionTree f = new FunctionTree(Numbers.addition, new Constant(3), new ContextVariable("a"));
 		assertEquals(9f, evaluate(f, c, 4));
 	}
 	
 	@Test
 	public void testArgumentPlaceholder1() 
 	{
-		ArgumentPlaceholder aph = new ArgumentPlaceholder(0);
+		StreamVariable aph = new StreamVariable(0);
 		assertEquals("foo", evaluate(aph, "foo", "bar", "baz"));
-		ArgumentPlaceholder aph2 = new ArgumentPlaceholder(0);
+		StreamVariable aph2 = new StreamVariable(0);
 		assertTrue(aph.equals(aph2));
-		assertFalse(aph.equals(new ArgumentPlaceholder(1)));
+		assertFalse(aph.equals(new StreamVariable(1)));
 		assertFalse(aph.equals(1));
 		assertFalse(aph.equals(null));
 		assertEquals(0, aph.getIndex());
@@ -168,7 +168,7 @@ public class FunctionsTest
 	@Test
 	public void testFunctionTree1() 
 	{
-		FunctionTree ft = new FunctionTree(Numbers.addition, new Constant(1), new ArgumentPlaceholder(0));
+		FunctionTree ft = new FunctionTree(Numbers.addition, new Constant(1), new StreamVariable(0));
 		assertEquals(6f, evaluate(ft, 5));
 		FunctionTree ft2 = ft.duplicate();
 		assertFalse(ft == ft2);
@@ -185,7 +185,7 @@ public class FunctionsTest
 	@Test
 	public void testFunctionTree3() 
 	{
-		FunctionTree ft = new FunctionTree(IfThenElse.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(1), new ArgumentPlaceholder(2));
+		FunctionTree ft = new FunctionTree(IfThenElse.instance, new StreamVariable(0), new StreamVariable(1), new StreamVariable(2));
 		assertEquals(6, evaluate(ft, false, 5, 6));
 		String msg = ft.toString();
 		assertNotNull(msg);
@@ -202,7 +202,7 @@ public class FunctionsTest
 	@Test
 	public void testFunctionTree2() 
 	{
-		FunctionTree ft = new FunctionTree(Numbers.addition, new Constant(1), new ArgumentPlaceholder(0));
+		FunctionTree ft = new FunctionTree(Numbers.addition, new Constant(1), new StreamVariable(0));
 		assertEquals(6f, evaluate(ft, 5));
 	}
 	
@@ -252,7 +252,7 @@ public class FunctionsTest
 	public void testProvenance() 
 	{
 		IdentityFunction id = new IdentityFunction(1);
-		FunctionProcessor fp = new FunctionProcessor(id);
+		ApplyFunction fp = new ApplyFunction(id);
 		DummyTracker tracker = new DummyTracker();
 		fp.setEventTracker(tracker);
 		Connector.connect(fp, new BlackHole());
@@ -267,7 +267,7 @@ public class FunctionsTest
 	public void testFunctionProcessorException() 
 	{
 		ExceptionFunction ef = new ExceptionFunction();
-		FunctionProcessor fp = new FunctionProcessor(ef);
+		ApplyFunction fp = new ApplyFunction(ef);
 		assertEquals(ef, fp.getFunction());
 		Connector.connect(fp, new BlackHole());
 		Pushable p = fp.getPushableInput();

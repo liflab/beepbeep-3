@@ -24,9 +24,9 @@ import java.io.IOException;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.io.StringStreamReader;
+import ca.uqac.lif.cep.io.ReadStringStream;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.util.PatternScanner;
+import ca.uqac.lif.cep.util.FindPattern;
 import ca.uqac.lif.cep.util.Strings;
 
 public class InputTest
@@ -34,8 +34,8 @@ public class InputTest
 	@Test
 	public void testCsvFeederNoTrim1() throws IOException
 	{
-		StringStreamReader sr = new StringStreamReader(InputTest.class.getResourceAsStream("resource/test1.csv"));
-		PatternScanner csv = new PatternScanner("(.*?),");
+		ReadStringStream sr = new ReadStringStream(InputTest.class.getResourceAsStream("resource/test1.csv"));
+		FindPattern csv = new FindPattern("(.*?),");
 		Connector.connect(sr, csv);
 		csv.trim(false);
 		QueueSink sink = new QueueSink(1);
@@ -55,8 +55,8 @@ public class InputTest
 	@Test
 	public void testCsvFeederNoTrim2() throws IOException
 	{
-		StringStreamReader sr = new StringStreamReader(InputTest.class.getResourceAsStream("resource/test1.csv"));
-		PatternScanner csv = new PatternScanner(".*?,");
+		ReadStringStream sr = new ReadStringStream(InputTest.class.getResourceAsStream("resource/test1.csv"));
+		FindPattern csv = new FindPattern(".*?,");
 		Connector.connect(sr, csv);
 		csv.trim(false);
 		QueueSink sink = new QueueSink(1);
@@ -76,8 +76,8 @@ public class InputTest
 	@Test
 	public void testCsvFeederTrim() throws IOException
 	{
-		StringStreamReader sr = new StringStreamReader(InputTest.class.getResourceAsStream("resource/test2.csv"));
-		PatternScanner csv = new PatternScanner("(.*?),");
+		ReadStringStream sr = new ReadStringStream(InputTest.class.getResourceAsStream("resource/test2.csv"));
+		FindPattern csv = new FindPattern("(.*?),");
 		csv.trim(true);
 		Connector.connect(sr, csv);
 		QueueSink sink = new QueueSink(1);

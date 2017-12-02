@@ -29,7 +29,7 @@ import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
-import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
@@ -542,7 +542,7 @@ public class TmfTest
 	@Test
 	public void testSimpleFilterClone()
 	{
-		FunctionTree ft = new FunctionTree(Numbers.isGreaterThan, new ArgumentPlaceholder(0), new Constant(4));
+		FunctionTree ft = new FunctionTree(Numbers.isGreaterThan, new StreamVariable(0), new Constant(4));
 		SimpleFilter filter = new SimpleFilter(ft);
 		SimpleFilter filter2 = filter.duplicate();
 		Function f = filter2.getCondition();

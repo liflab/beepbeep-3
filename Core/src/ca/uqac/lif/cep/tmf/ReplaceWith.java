@@ -29,20 +29,20 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class ConstantProcessor extends SingleProcessor
+public class ReplaceWith extends SingleProcessor
 {
 	/**
 	 * The constant to return
 	 */
 	protected Object m_constant;
 
-	public ConstantProcessor(int in_arity, Object comp)
+	public ReplaceWith(int in_arity, Object comp)
 	{
 		super(in_arity, 1);
 		m_constant = comp;
 	}
 	
-	public ConstantProcessor(Object comp)
+	public ReplaceWith(Object comp)
 	{
 		this(1, comp);
 	}
@@ -50,7 +50,7 @@ public class ConstantProcessor extends SingleProcessor
 	@Override
 	public Processor duplicate()
 	{
-		ConstantProcessor cp = new ConstantProcessor(m_constant);
+		ReplaceWith cp = new ReplaceWith(m_constant);
 		cp.setContext(m_context);
 		return cp;
 	}

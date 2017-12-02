@@ -32,7 +32,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  *
  */
 @SuppressWarnings("squid:S2160")
-public class FunctionProcessor extends UniformProcessor
+public class ApplyFunction extends UniformProcessor
 {
 	/**
 	 * The object responsible for the computation
@@ -43,7 +43,7 @@ public class FunctionProcessor extends UniformProcessor
 	 * Instantiates a new function processor
 	 * @param comp The computable object responsible for the computation
 	 */
-	public FunctionProcessor(Function comp)
+	public ApplyFunction(Function comp)
 	{
 		super(comp.getInputArity(), comp.getOutputArity());
 		m_function = comp;
@@ -83,9 +83,9 @@ public class FunctionProcessor extends UniformProcessor
 	}
 
 	@Override
-	public synchronized FunctionProcessor duplicate()
+	public synchronized ApplyFunction duplicate()
 	{
-		FunctionProcessor out = new FunctionProcessor(m_function.duplicate());
+		ApplyFunction out = new ApplyFunction(m_function.duplicate());
 		cloneInto(out);
 		return out;
 	}

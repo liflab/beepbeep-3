@@ -54,7 +54,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class Slicer extends UniformProcessor
+public class Slice extends UniformProcessor
 {
 	/**
 	 * The slicing function
@@ -80,12 +80,12 @@ public class Slicer extends UniformProcessor
 	 */
 	protected HashMap<Object,Object> m_lastValues;
 
-	protected Slicer()
+	protected Slice()
 	{
 		super(1, 1);
 	}
 
-	public Slicer(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc, /*@Null*/ Function clean_func)
+	public Slice(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc, /*@Null*/ Function clean_func)
 	{
 		super(proc.getInputArity(), proc.getOutputArity());
 		m_processor = proc;
@@ -96,7 +96,7 @@ public class Slicer extends UniformProcessor
 		m_lastValues = new HashMap<Object,Object>();
 	}
 
-	public Slicer(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc)
+	public Slice(/*@NonNull*/ Function func, /*@NonNull*/ Processor proc)
 	{
 		this(func, proc, null);
 	}
@@ -233,9 +233,9 @@ public class Slicer extends UniformProcessor
 	}
 
 	@Override
-	public Slicer duplicate()
+	public Slice duplicate()
 	{
-		return new Slicer(m_slicingFunction.duplicate(), m_processor.duplicate(), m_cleaningFunction.duplicate());
+		return new Slice(m_slicingFunction.duplicate(), m_processor.duplicate(), m_cleaningFunction.duplicate());
 	}
 
 	/**

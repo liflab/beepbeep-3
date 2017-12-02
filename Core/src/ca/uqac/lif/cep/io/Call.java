@@ -30,14 +30,14 @@ import ca.uqac.lif.cep.UniformProcessor;
  *
  */
 @SuppressWarnings("squid:S2160")
-public class Caller extends UniformProcessor
+public class Call extends UniformProcessor
 {
 	/**
 	 * The command to call
 	 */
 	protected final String[] m_command;
 
-	public Caller(String ... command)
+	public Call(String ... command)
 	{
 		super(1, 1);
 		m_command = command;
@@ -65,8 +65,8 @@ public class Caller extends UniformProcessor
 	}
 
 	@Override
-	public Caller duplicate()
+	public Call duplicate()
 	{
-		return new Caller(m_command);
+		return new Call(m_command);
 	}
 }

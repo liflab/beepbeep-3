@@ -94,6 +94,12 @@ public class Tank extends Processor
 		{
 			return this;
 		}
+		
+		@Override
+		public void remove()
+		{
+			// Nothing to do
+		}
 
 		@Override
 		public Object pullSoft()

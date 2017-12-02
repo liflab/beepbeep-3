@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * Extracts chunks of an input stream based on a regular expression.
  * @author Sylvain Hallé
  */
-public class PatternScanner extends SingleProcessor
+public class FindPattern extends SingleProcessor
 {
 	/**
 	 * The buffered contents of the string received so far
@@ -48,7 +48,7 @@ public class PatternScanner extends SingleProcessor
 	 * Creates a new pattern scanner
 	 * @param regex The regular expression defining the pattern to extract
 	 */
-	public PatternScanner(String regex)
+	public FindPattern(String regex)
 	{
 		this(Pattern.compile(regex));
 	}
@@ -57,7 +57,7 @@ public class PatternScanner extends SingleProcessor
 	 * Creates a new pattern scanner
 	 * @param pattern The pattern to extract
 	 */
-	public PatternScanner(Pattern pattern)
+	public FindPattern(Pattern pattern)
 	{
 		super(1, 1);
 		m_contents = "";
@@ -65,9 +65,9 @@ public class PatternScanner extends SingleProcessor
 	}
 
 	@Override
-	public PatternScanner duplicate() 
+	public FindPattern duplicate() 
 	{
-		return new PatternScanner(m_pattern);
+		return new FindPattern(m_pattern);
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class PatternScanner extends SingleProcessor
 	 * @param b Set to {@code true} to trim (default), {@code false} otherwise
 	 * @return This scanner
 	 */
-	public PatternScanner trim(boolean b)
+	public FindPattern trim(boolean b)
 	{
 		m_trim = b;
 		return this;

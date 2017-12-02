@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.Context;
  * 
  * @author Sylvain Hallé
  */
-public class ContextPlaceholder extends Placeholder
+public class ContextVariable extends Variable
 {
 	/**
 	 * The name of this placeholder
@@ -35,7 +35,7 @@ public class ContextPlaceholder extends Placeholder
 	 * Creates a new argument placeholder
 	 * @param name The name of this placeholder
 	 */
-	public ContextPlaceholder(String name)
+	public ContextVariable(String name)
 	{
 		super();
 		m_name = name;
@@ -59,11 +59,11 @@ public class ContextPlaceholder extends Placeholder
 	@Override
 	public boolean equals(Object o)
 	{
-		if (o == null || !(o instanceof ContextPlaceholder))
+		if (o == null || !(o instanceof ContextVariable))
 		{
 			return false;
 		}
-		return m_name.compareTo(((ContextPlaceholder) o).m_name) == 0;
+		return m_name.compareTo(((ContextVariable) o).m_name) == 0;
 	}
 
 	@Override
@@ -79,9 +79,9 @@ public class ContextPlaceholder extends Placeholder
 	}
 
 	@Override
-	public ContextPlaceholder duplicate()
+	public ContextVariable duplicate()
 	{
-		return new ContextPlaceholder(m_name);
+		return new ContextVariable(m_name);
 	}
 	
 	@Override

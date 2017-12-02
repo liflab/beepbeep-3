@@ -29,10 +29,11 @@ import ca.uqac.lif.cep.SingleProcessor;
  * that is a vector of size <i>n</i>. This effectively
  * works as a time demultiplexer.
  * 
+ * @see Multiplex
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class Demultiplexer extends SingleProcessor
+public class Demultiplex extends SingleProcessor
 {
 	/**
 	 * The window of objects to be stored
@@ -45,7 +46,7 @@ public class Demultiplexer extends SingleProcessor
 	 */
 	private int m_width;
 
-	Demultiplexer()
+	Demultiplex()
 	{
 		super(1, 1);
 	}
@@ -54,7 +55,7 @@ public class Demultiplexer extends SingleProcessor
 	 * Creates a new demuxer
 	 * @param width The width of the window
 	 */
-	public Demultiplexer(int width)
+	public Demultiplex(int width)
 	{
 		super(1, 1);
 		m_width = width;
@@ -90,8 +91,8 @@ public class Demultiplexer extends SingleProcessor
 	}
 
 	@Override
-	public Demultiplexer duplicate()
+	public Demultiplex duplicate()
 	{
-		return new Demultiplexer(m_width);
+		return new Demultiplex(m_width);
 	}
 }

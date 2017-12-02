@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.Queue;
 import java.util.Scanner;
 
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.tmf.Source;
 
@@ -34,13 +35,13 @@ import ca.uqac.lif.cep.tmf.Source;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class HttpReader extends Source
+public class HttpGet extends Source
 {
 	/**
 	 * The User-Agent string that the reader will send in its HTTP
 	 * requests
 	 */
-	public static final String s_userAgent = "BeepBeep3/0.8/HttpReader";
+	public static final String s_userAgent = "BeepBeep3/" + Processor.s_versionString + "/HttpGet";
 
 	/**
 	 * The URL to read from
@@ -52,7 +53,7 @@ public class HttpReader extends Source
 	 * sent over the network until the first call to {@link #compute(Object[], Queue)}.
 	 * @param url The URL to read from
 	 */
-	public HttpReader(String url)
+	public HttpGet(String url)
 	{
 		super(1);
 		m_url = url;
@@ -105,8 +106,8 @@ public class HttpReader extends Source
 	}
 
 	@Override
-	public HttpReader duplicate() 
+	public HttpGet duplicate() 
 	{
-		return new HttpReader(m_url);
+		return new HttpGet(m_url);
 	}
 }

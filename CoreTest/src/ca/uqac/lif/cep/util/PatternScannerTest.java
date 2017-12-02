@@ -29,10 +29,10 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.util.PatternScanner;
+import ca.uqac.lif.cep.util.FindPattern;
 
 /**
- * Unit tests for the {@link PatternScanner} class 
+ * Unit tests for the {@link FindPattern} class 
  * @author Sylvain Hallé
  */
 public class PatternScannerTest 
@@ -43,7 +43,7 @@ public class PatternScannerTest
 		QueueSource qs = new QueueSource();
 		qs.setEvents(new Object[]{"123", "45", "67"});
 		qs.loop(false);
-		PatternScanner ps  = new PatternScanner("\\d");
+		FindPattern ps  = new FindPattern("\\d");
 		Connector.connect(qs, ps);
 		Pullable p = ps.getPullableOutput();
 		assertTrue(p.hasNext());
@@ -60,7 +60,7 @@ public class PatternScannerTest
 		QueueSource qs = new QueueSource();
 		qs.setEvents(new Object[]{"A0B", "A1", "BA2B"});
 		qs.loop(false);
-		PatternScanner ps  = new PatternScanner("A.*?B");
+		FindPattern ps  = new FindPattern("A.*?B");
 		Connector.connect(qs, ps);
 		Pullable p = ps.getPullableOutput();
 		assertTrue(p.hasNext());
@@ -75,7 +75,7 @@ public class PatternScannerTest
 	public void testPatternScannerPush1() 
 	{
 		String s;
-		PatternScanner mf = new PatternScanner("\\|.*?\\.");
+		FindPattern mf = new FindPattern("\\|.*?\\.");
 		QueueSink qsink = new QueueSink(1);
 		Queue<Object> queue = qsink.getQueue(0);
 		Connector.connect(mf, qsink);
@@ -92,7 +92,7 @@ public class PatternScannerTest
 	public void testPatternScannerPush2() 
 	{
 		String s;
-		PatternScanner mf = new PatternScanner("\\|.*?\\.");
+		FindPattern mf = new FindPattern("\\|.*?\\.");
 		QueueSink qsink = new QueueSink(1);
 		Queue<Object> queue = qsink.getQueue(0);
 		Connector.connect(mf, qsink);
@@ -109,7 +109,7 @@ public class PatternScannerTest
 	public void testTokenFeederPush3() 
 	{
 		String s;
-		PatternScanner mf = new PatternScanner(".*?\n");
+		FindPattern mf = new FindPattern(".*?\n");
 		QueueSink qsink = new QueueSink(1);
 		Queue<Object> queue = qsink.getQueue(0);
 		Connector.connect(mf, qsink);
@@ -130,7 +130,7 @@ public class PatternScannerTest
 		Vector<Object> events = new Vector<Object>();
 		events.add("|hello.|hi.");
 		qsource.setEvents(events);
-		PatternScanner mf = new PatternScanner("\\|.*?\\.");
+		FindPattern mf = new FindPattern("\\|.*?\\.");
 		Connector.connect(qsource, mf);
 		Pullable p = mf.getPullableOutput(0);
 		o = p.pullSoft();
@@ -145,7 +145,7 @@ public class PatternScannerTest
 		QueueSource qs = new QueueSource();
 		qs.setEvents(new Object[]{"abc,d", "e,fgh,"});
 		qs.loop(false);
-		PatternScanner ps  = new PatternScanner("(.*?),");
+		FindPattern ps  = new FindPattern("(.*?),");
 		Connector.connect(qs, ps);
 		Pullable p = ps.getPullableOutput();
 		assertTrue(p.hasNext());

@@ -23,18 +23,42 @@ import ca.uqac.lif.cep.Context;
  * Symbol standing for the <i>i</i>-th trace given as input
  * @author Sylvain Hallé
  */
-public class ArgumentPlaceholder extends Placeholder
+public class StreamVariable extends Variable
 {
 	/**
-	 * The index of this placeholder
+	 * A variable standing for the first input stream
+	 * (i.e. argument number 0). It is recommended to reuse this
+	 * instance everywhere the first argument is referred to in
+	 * a function.
 	 */
-	protected final int m_index;
+	public static final StreamVariable X = new StreamVariable(0);
+	
+	/**
+	 * A variable standing for the second input stream
+	 * (i.e. argument number 1). It is recommended to reuse this
+	 * instance everywhere the first argument is referred to in
+	 * a function.
+	 */
+	public static final StreamVariable Y = new StreamVariable(1);
+	
+	/**
+	 * A variable standing for the third input stream
+	 * (i.e. argument number 2). It is recommended to reuse this
+	 * instance everywhere the first argument is referred to in
+	 * a function.
+	 */
+	public static final StreamVariable Z = new StreamVariable(2);
+			
+	/**
+	 * The index of this variable
+	 */
+	protected int m_index;
 	
 	/**
 	 * Creates a new trace placeholder
 	 * @param index The index of the trace this placeholder represents
 	 */
-	public ArgumentPlaceholder(int index)
+	public StreamVariable(int index)
 	{
 		super();
 		m_index = index;
@@ -44,7 +68,7 @@ public class ArgumentPlaceholder extends Placeholder
 	 * Creates a new trace placeholder, standing for the first
 	 * input trace (i.e. index 0)
 	 */
-	public ArgumentPlaceholder()
+	public StreamVariable()
 	{
 		this(0);
 	}
@@ -67,11 +91,11 @@ public class ArgumentPlaceholder extends Placeholder
 	@Override
 	public boolean equals(Object o)
 	{
-		if (o == null || !(o instanceof ArgumentPlaceholder))
+		if (o == null || !(o instanceof StreamVariable))
 		{
 			return false;
 		}
-		return m_index == ((ArgumentPlaceholder) o).m_index;
+		return m_index == ((StreamVariable) o).m_index;
 	}
 
 	@Override
@@ -81,7 +105,7 @@ public class ArgumentPlaceholder extends Placeholder
 	}
 
 	@Override
-	public ArgumentPlaceholder duplicate()
+	public StreamVariable duplicate()
 	{
 		return this;
 	}

@@ -22,12 +22,12 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Pullable.PullableException;
-import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.functions.Constant;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.util.Numbers;
-import ca.uqac.lif.cep.tmf.ConstantProcessor;
+import ca.uqac.lif.cep.tmf.ReplaceWith;
 import ca.uqac.lif.cep.tmf.Pump;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
@@ -39,7 +39,7 @@ public class PullableTest
 	@Test(expected=PullableException.class)
 	public void testPullableException1()
 	{
-		FunctionProcessor div = new FunctionProcessor(new FunctionTree(Numbers.division, new Constant(1), new ArgumentPlaceholder(0)));
+		ApplyFunction div = new ApplyFunction(new FunctionTree(Numbers.division, new Constant(1), new StreamVariable(0)));
 		Pullable p = div.getPullableOutput();
 		p.pull();
 	}
@@ -149,7 +149,7 @@ public class PullableTest
 	public void testPullableException4()
 	{
 		// Constructor test; we just check that it runs
-		Processor p = new ConstantProcessor(new Constant(0));
+		Processor p = new ReplaceWith(Constant.ZERO);
 		try
 		{
 			// Create an exception

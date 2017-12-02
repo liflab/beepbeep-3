@@ -21,12 +21,12 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
 
 /**
  * Creates a cumulative processor out of a cumulative function.
- * This is simply a {@link FunctionProcessor} whose function is of
+ * This is simply a {@link ApplyFunction} whose function is of
  * a specific type (a {@link CumulativeFunction}). However, it has a
  * special grammar that allows any binary function to be turned into
  * a cumulative processor.
  */
-public class CumulativeProcessor extends FunctionProcessor
+public class CumulativeProcessor extends ApplyFunction
 {
 	public CumulativeProcessor(CumulativeFunction<?> f)
 	{
