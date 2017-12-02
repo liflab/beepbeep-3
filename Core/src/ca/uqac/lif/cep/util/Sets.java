@@ -46,7 +46,7 @@ public class Sets
 	/**
 	 * Processor that updates a set
 	 */
-	protected static abstract class SetUpdateProcessor extends UniformProcessor
+	protected abstract static class SetUpdateProcessor extends UniformProcessor
 	{
 		/**
 		 * The underlying set

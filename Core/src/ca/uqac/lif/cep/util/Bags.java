@@ -200,7 +200,7 @@ public class Bags
 	 * <i>n</i> objects. 
 	 * @author Sylvain Hallé
 	 */
-	public static abstract class ToCollection extends Function
+	public abstract static class ToCollection extends Function
 	{
 		/**
 		 * An array that keeps the types of each input stream

@@ -1,3 +1,20 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2016 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep.util;
 
 import java.util.LinkedList;
@@ -6,7 +23,6 @@ import java.util.Queue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -17,6 +33,11 @@ import ca.uqac.lif.cep.SingleProcessor;
  */
 public class Lists
 {
+	private Lists()
+	{
+		// Utility class
+	}
+	
 	/**
 	 * Accumulates events that are being pushed, and sends them in a burst
 	 * into a list at predefined time intervals.
@@ -91,7 +112,7 @@ public class Lists
 		}
 		
 		@Override
-		public void start() throws ProcessorException
+		public void start()
 		{
 			m_timer = new Timer();
 			m_timerThread = new Thread(m_timer);
@@ -99,13 +120,13 @@ public class Lists
 		}
 		
 		@Override
-		public void stop() throws ProcessorException
+		public void stop()
 		{
 			m_timer.stop();
 		}
 
 		@Override
-		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException 
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 		{
 			m_lock.lock();
 			m_packedEvents.add(inputs[0]);
@@ -138,9 +159,9 @@ public class Lists
 					}
 					catch (InterruptedException e) 
 					{
-						// Do nothing
+						// Restore interrupted state
+						Thread.currentThread().interrupt();
 					}
-					
 					Pushable p = getPushableOutput(0);
 					m_lock.lock();
 					p.push(m_packedEvents);
@@ -183,7 +204,7 @@ public class Lists
 		}
 
 		@Override
-		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException 
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 		{
 			@SuppressWarnings("unchecked")
 			List<Object> list = (List<Object>) inputs[0];
