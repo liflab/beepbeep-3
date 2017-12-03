@@ -17,12 +17,10 @@
  */
 package ca.uqac.lif.cep.io;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,24 +43,6 @@ public class CommandRunner extends Thread
 	protected StreamGobbler m_stderrGobbler;
 
 	protected int m_errorCode = 0;
-
-	/**
-	 * Creates a CommandRunner to run a command.
-	 * @param command The command to run
-	 * @param stdin If not set to null, this string will be sent to the stdin
-	 *   of the command being run
-	 */
-	public CommandRunner(List<String> command, byte[] stdin)
-	{
-		super();
-		m_command = new String[command.size()];
-		int i = 0;
-		for (String part : command)
-		{
-			m_command[i++] = part;
-		}
-		m_stdin = stdin;
-	}
 
 	/**
 	 * Creates a CommandRunner to run a command.
@@ -155,17 +135,6 @@ public class CommandRunner extends Thread
 			}
 			return out;
 		}
-	}
-
-	/**
-	 * Deletes a file
-	 * @param filename The filename
-	 * @return true if the file could be deleted, false otherwise
-	 */
-	public static boolean deleteFile(String filename)
-	{
-		File f = new File(filename);
-		return f.delete();
 	}
 
 	public static byte[] runAndGet(String[] command, String inputs) throws IOException
