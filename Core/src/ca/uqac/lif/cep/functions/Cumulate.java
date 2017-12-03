@@ -26,9 +26,9 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * special grammar that allows any binary function to be turned into
  * a cumulative processor.
  */
-public class CumulativeProcessor extends ApplyFunction
+public class Cumulate extends ApplyFunction
 {
-	public CumulativeProcessor(CumulativeFunction<?> f)
+	public Cumulate(CumulativeFunction<?> f)
 	{
 		super(f);
 	}

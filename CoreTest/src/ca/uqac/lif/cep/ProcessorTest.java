@@ -24,7 +24,7 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Passthrough;
@@ -315,7 +315,7 @@ public class ProcessorTest
 		}
 	}
 	
-	public static class Sum extends CumulativeProcessor
+	public static class Sum extends Cumulate
 	{
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()

@@ -47,6 +47,11 @@ public class Bags
 	}
 	
 	/**
+	 * Checks if a set is contains another
+	 */
+	public static final Contains contains = new Contains();
+	
+	/**
 	 * Gets all the elements of the collection that satisfy some condition.
 	 * This condition is specified as an unary function that is successively
 	 * applied to each element of the collection; if the function returns
@@ -124,12 +129,7 @@ public class Bags
 	@SuppressWarnings("rawtypes")
 	public static class Contains extends BinaryFunction<Collection,Object,Boolean>
 	{
-		/**
-		 * A single instance of this function
-		 */
-		public static final transient Contains instance = new Contains();
-
-		private Contains()
+		protected Contains()
 		{
 			super(Collection.class, Object.class, Boolean.class);
 		}

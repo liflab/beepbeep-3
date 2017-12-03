@@ -27,7 +27,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionsTest;
@@ -445,7 +445,7 @@ public class MathTest
 		assertEquals(6, recv.intValue());
 	}
 	
-	public static class Sum extends CumulativeProcessor
+	public static class Sum extends Cumulate
 	{
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()

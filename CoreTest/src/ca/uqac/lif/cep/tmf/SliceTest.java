@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.Pullable.PullableException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.StreamVariable;
@@ -270,7 +270,7 @@ public class SliceTest
 		p.pull();
 	}
 
-	public static class Sum extends CumulativeProcessor
+	public static class Sum extends Cumulate
 	{
 		public Sum()
 		{

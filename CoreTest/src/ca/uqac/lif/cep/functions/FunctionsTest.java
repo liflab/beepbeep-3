@@ -304,7 +304,7 @@ public class FunctionsTest
 	@Test
 	public void testCumulative1() 
 	{
-		CumulativeProcessor sum = new CumulativeProcessor(new CumulativeFunction<Number>(Numbers.multiplication));
+		Cumulate sum = new Cumulate(new CumulativeFunction<Number>(Numbers.multiplication));
 		DummyTracker tracker = new DummyTracker();
 		sum.setEventTracker(tracker);
 		Connector.connect(sum, new BlackHole());

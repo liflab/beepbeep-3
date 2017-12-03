@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.tmf;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**

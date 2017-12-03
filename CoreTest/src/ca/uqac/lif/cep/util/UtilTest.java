@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import org.junit.Test;
@@ -32,9 +33,13 @@ import static ca.uqac.lif.cep.functions.FunctionsTest.evaluate;
 import static org.junit.Assert.*;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.FunctionsTest;
 import ca.uqac.lif.cep.functions.InvalidArgumentException;
 import ca.uqac.lif.cep.util.Numbers;
+import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Bags.ApplyToAll;
 import ca.uqac.lif.cep.util.Bags.ToArray;
@@ -46,6 +51,58 @@ import ca.uqac.lif.cep.util.Bags.ToSet;
  */
 public class UtilTest 
 {
+	@Test
+	public void testContains()
+	{
+		Set<String> set = new HashSet<String>();
+		set.add("foo");
+		set.add("bar");
+		set.add("baz");
+		assertTrue((Boolean) evaluate(Bags.contains, set, "foo"));
+		assertFalse((Boolean) evaluate(Bags.contains, set, "arf"));
+	}
+	
+	@Test
+	public void testRunOn()
+	{
+		Set<Integer> s = new HashSet<Integer>();
+		Cumulate max = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum));
+		Bags.RunOn ro = new Bags.RunOn(max);
+		QueueSink sink = new QueueSink();
+		Queue<Object> q = sink.getQueue();
+		Connector.connect(ro, sink);
+		Pushable p = ro.getPushableInput();
+		s.add(0);
+		s.add(6);
+		s.add(0);
+		p.push(s);
+		assertEquals(6, ((Number) q.poll()).intValue());
+		s.clear();
+		s.add(100);
+		s.add(-1);
+		s.add(3);
+		s.add(72);
+		p.push(s);
+		assertEquals(100, ((Number) q.poll()).intValue());
+		Bags.RunOn ro2 = ro.duplicate();
+		assertFalse(ro == ro2);
+		Connector.connect(ro2, sink);
+		p = ro2.getPushableInput();
+		s.clear();
+		s.add(0);
+		s.add(6);
+		s.add(0);
+		p.push(s);
+		assertEquals(6, ((Number) q.poll()).intValue());
+		s.clear();
+		s.add(100);
+		s.add(-1);
+		s.add(3);
+		s.add(72);
+		p.push(s);
+		assertEquals(100, ((Number) q.poll()).intValue());
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testApplyToAll1()
