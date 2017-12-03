@@ -48,7 +48,7 @@ public class ReplaceWith extends SingleProcessor
 	}
 
 	@Override
-	public Processor duplicate()
+	public ReplaceWith duplicate()
 	{
 		ReplaceWith cp = new ReplaceWith(m_constant);
 		cp.setContext(m_context);

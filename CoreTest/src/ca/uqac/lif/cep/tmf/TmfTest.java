@@ -53,6 +53,25 @@ import ca.uqac.lif.cep.util.Numbers;
 public class TmfTest 
 {
 	@Test
+	public void testReplace()
+	{
+		ReplaceWith rw = new ReplaceWith(10);
+		QueueSink sink = new QueueSink();
+		Queue<Object> q = sink.getQueue();
+		Connector.connect(rw, sink);
+		Pushable p = rw.getPushableInput();
+		p.push("foo");
+		assertEquals(10, ((Integer) q.poll()).intValue());
+		p.push("bar");
+		assertEquals(10, ((Integer) q.poll()).intValue());
+		rw = rw.duplicate();
+		p.push("foo");
+		assertEquals(10, ((Integer) q.poll()).intValue());
+		p.push("bar");
+		assertEquals(10, ((Integer) q.poll()).intValue());
+	}
+	
+	@Test
 	public void testTrim() 
 	{
 		Trim d = new Trim(3);

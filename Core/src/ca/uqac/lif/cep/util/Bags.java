@@ -189,7 +189,7 @@ public class Bags
 		}
 
 		@Override
-		public Processor duplicate()
+		public RunOn duplicate()
 		{
 			return new RunOn(m_processor.duplicate());
 		}

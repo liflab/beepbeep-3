@@ -296,7 +296,7 @@ public class ConnectorTest
 		}
 
 		@Override
-		public Processor duplicate() 
+		public Apples duplicate() 
 		{
 			return new Apples();
 		}

@@ -164,7 +164,7 @@ public class SingleProcessorTest
 		}
 
 		@Override
-		public Processor duplicate()
+		public ThrowException duplicate()
 		{
 			return null;
 		}
