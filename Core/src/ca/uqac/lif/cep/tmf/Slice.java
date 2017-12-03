@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -115,6 +113,12 @@ public class Slice extends UniformProcessor
 			throw new ProcessorException(e);
 		}
 		Object slice_id = f_value[0];
+		if (slice_id == null)
+		{
+			// This event applies to no slice; don't bother processing it
+			outputs[0] = m_lastValues;
+			return true;
+		}
 		Set<Object> slices_to_process = new HashSet<Object>();
 		if (slice_id instanceof ToAllSlices || slice_id == null)
 		{
@@ -174,28 +178,15 @@ public class Slice extends UniformProcessor
 				}
 				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]))
 				{
-					// Yes: set the processor for that slice to null so it
-					// can be garbage collected
-					m_slices.put(s_id, null);
-					m_sinks.put(s_id, null);
+					// Yes: remove the processor for that slice
+					m_slices.remove(s_id);
+					m_sinks.remove(s_id);
 				}
 				m_lastValues.put(s_id, out[0]);
 			}
 		}
 		outputs[0] = m_lastValues;
 		return true;
-	}
-
-	/**
-	 * Gets a new empty instance of the collection used to contain the
-	 * last returned value in each slice. By default, this collection
-	 * is a set, but descendants of this class may override this method
-	 * to provide a more appropriate type of collection.
-	 * @return The collection
-	 */
-	public Collection<Object> newCollection()
-	{
-		return new ArrayList<Object>(m_lastValues.size());
 	}
 
 	/**
@@ -235,6 +226,10 @@ public class Slice extends UniformProcessor
 	@Override
 	public Slice duplicate()
 	{
+		if (m_cleaningFunction == null)
+		{
+			return new Slice(m_slicingFunction.duplicate(), m_processor.duplicate());
+		}
 		return new Slice(m_slicingFunction.duplicate(), m_processor.duplicate(), m_cleaningFunction.duplicate());
 	}
 

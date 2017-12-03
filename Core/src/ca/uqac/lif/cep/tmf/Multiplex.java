@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
@@ -144,11 +143,9 @@ public class Multiplex extends Processor
 					m_outputQueues[0].add(o);
 				}
 			}
-			if (!m_outputQueues[0].isEmpty())
-			{
-				return m_outputQueues[0].remove();
-			}
-			throw new NoSuchElementException();
+			// The next instruction may throw a NoSuchElementException.
+			// That's OK
+			return m_outputQueues[0].remove();
 		}
 
 		@Override
