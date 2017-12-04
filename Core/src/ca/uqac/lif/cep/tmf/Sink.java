@@ -37,11 +37,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public abstract class Sink extends SingleProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -595334820089223308L;
-
 	public Sink()
 	{
 		this(1);

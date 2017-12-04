@@ -17,14 +17,12 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Iterator;
 
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Accumulates pushed events into a queue until they are pulled.
@@ -43,44 +41,24 @@ import ca.uqac.lif.cep.SingleProcessor;
  *
  */
 @SuppressWarnings("squid:S2160")
-public class Tank extends SingleProcessor 
-{
+public class Tank extends Processor 
+{	
 	/**
-	 * Dummy UID
+	 * A pushable
 	 */
-	private static final long serialVersionUID = 1780400006191856512L;
+	protected QueuePushable m_pushable = null;
+	
+	/**
+	 * A pullable
+	 */
+	protected QueuePullable m_pullable = null;
 
-	/**
-	 * A queue to hold incoming events
-	 */
-	protected Queue<Object> m_queue;
-	
-	/**
-	 * A lock for accessing the queue in a thread-safe manner
-	 */
-	protected transient Lock m_lock;
-	
 	/**
 	 * Creates a new empty tank
 	 */
 	public Tank()
 	{
 		super(1, 1);
-		m_queue = new ArrayDeque<Object>();
-		m_lock = new ReentrantLock();
-	}
-
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
-	{
-		m_lock.lock();
-		if (!m_queue.isEmpty())
-		{
-			Object o = m_queue.remove();
-			outputs.add(new Object[]{o});
-		}
-		m_lock.unlock();
-		return true;
 	}
 
 	@Override
@@ -88,17 +66,125 @@ public class Tank extends SingleProcessor
 	{
 		return new Tank();
 	}
-	
+
 	@Override
 	public Pushable getPushableInput(int index)
 	{
-		return new QueuePushable(false);
+		if (m_pushable == null)
+		{
+			m_pushable = new QueuePushable(false);
+		}
+		return m_pushable;
 	}
 	
+	@Override
+	public Pullable getPullableOutput(int index)
+	{
+		if (m_pullable == null)
+		{
+			m_pullable = new QueuePullable();
+		}
+		return m_pullable;
+	}
+	
+	protected class QueuePullable implements Pullable
+	{
+		@Override
+		public Iterator<Object> iterator() 
+		{
+			return this;
+		}
+		
+		@Override
+		public void remove()
+		{
+			// Nothing to do
+		}
+
+		@Override
+		public Object pullSoft()
+		{
+			synchronized (m_inputQueues[0])
+			{
+				return m_inputQueues[0].poll();
+			}
+		}
+
+		@Override
+		public Object pull() 
+		{
+			synchronized (m_inputQueues[0])
+			{
+				return m_inputQueues[0].poll();
+			}
+		}
+
+		@Override
+		@SuppressWarnings("squid:S2272")
+		public Object next()
+		{
+			return pull();
+		}
+
+		@Override
+		public NextStatus hasNextSoft()
+		{
+			synchronized (m_inputQueues[0])
+			{
+				if (m_inputQueues[0].isEmpty())
+				{
+					return NextStatus.MAYBE;
+				}
+				return NextStatus.YES;
+			}
+		}
+
+		@Override
+		public boolean hasNext() 
+		{
+			synchronized (m_inputQueues)
+			{
+				return !m_inputQueues[0].isEmpty();
+			}
+		}
+
+		@Override
+		public Processor getProcessor() 
+		{
+			return Tank.this;
+		}
+
+		@Override
+		public int getPosition()
+		{
+			return 0;
+		}
+
+		@Override
+		public void start()
+		{
+			// Nothing to do
+		}
+
+		@Override
+		public void stop() 
+		{
+			// Nothing to do
+		}
+
+		@Override
+		public void dispose()
+		{
+			// Nothing to do
+			
+		}
+		
+	}
+
 	protected class QueuePushable implements Pushable
 	{
 		private final boolean m_singleObject;
-		
+
 		public QueuePushable(boolean single_object)
 		{
 			super();
@@ -106,20 +192,21 @@ public class Tank extends SingleProcessor
 		}
 
 		@Override
-		public Pushable push(Object o) throws PushableException 
+		public Pushable push(Object o) 
 		{
-			m_lock.lock();
-			if (m_singleObject)
+			synchronized (m_inputQueues[0])
 			{
-				m_queue.clear();
+				if (m_singleObject)
+				{
+					m_inputQueues[0].clear();
+				}
+				m_inputQueues[0].add(o);
 			}
-			m_queue.add(o);
-			m_lock.unlock();
 			return this;
 		}
 
 		@Override
-		public Pushable pushFast(Object o) throws PushableException 
+		public Pushable pushFast(Object o) 
 		{
 			return push(o);
 		}
@@ -154,12 +241,13 @@ public class Tank extends SingleProcessor
 			// Nothing to do
 		}
 	}
-	
+
 	@Override
 	public void reset()
 	{
-		m_lock.lock();
-		m_queue.clear();
-		m_lock.unlock();
+		synchronized (m_inputQueues[0])
+		{
+			m_inputQueues[0].clear();
+		}
 	}
 }

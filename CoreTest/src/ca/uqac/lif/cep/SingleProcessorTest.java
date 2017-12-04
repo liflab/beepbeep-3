@@ -158,18 +158,13 @@ public class SingleProcessorTest
 	
 	public static class ThrowException extends SingleProcessor
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = 1L;
-
 		public ThrowException()
 		{
 			super(1, 1);
 		}
 
 		@Override
-		public Processor duplicate()
+		public ThrowException duplicate()
 		{
 			return null;
 		}

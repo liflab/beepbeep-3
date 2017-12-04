@@ -17,9 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.Queue;
 import java.util.Vector;
@@ -27,17 +25,52 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.BeepBeepUnitTest;
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
+import ca.uqac.lif.cep.functions.StreamVariable;
+import ca.uqac.lif.cep.functions.Constant;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionTree;
+import ca.uqac.lif.cep.tmf.CountDecimate;
+import ca.uqac.lif.cep.tmf.Filter;
+import ca.uqac.lif.cep.tmf.Freeze;
+import ca.uqac.lif.cep.tmf.Insert;
+import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.cep.tmf.Prefix;
+import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.tmf.SinkLast;
+import ca.uqac.lif.cep.tmf.Trim;
+import ca.uqac.lif.cep.tmf.Window;
+import ca.uqac.lif.cep.util.Numbers;
 
 /**
  * Unit tests for classes of the TMF package.
  * @author Sylvain Hallé
  */
-public class TmfTest extends BeepBeepUnitTest 
+public class TmfTest
 {
+	@Test
+	public void testReplace()
+	{
+		ReplaceWith rw = new ReplaceWith(10);
+		QueueSink sink = new QueueSink();
+		Queue<Object> q = sink.getQueue();
+		Connector.connect(rw, sink);
+		Pushable p = rw.getPushableInput();
+		p.push("foo");
+		assertEquals(10, ((Integer) q.poll()).intValue());
+		p.push("bar");
+		assertEquals(10, ((Integer) q.poll()).intValue());
+		rw = rw.duplicate();
+		p.push("foo");
+		assertEquals(10, ((Integer) q.poll()).intValue());
+		p.push("bar");
+		assertEquals(10, ((Integer) q.poll()).intValue());
+	}
+
 	@Test
 	public void testTrim() 
 	{
@@ -364,5 +397,180 @@ public class TmfTest extends BeepBeepUnitTest
 			ins.reset();
 			sink.reset();
 		}
+	}
+
+	@Test(timeout=1000)
+	public void testPump()
+	{
+		QueueSource qs = new QueueSource().setEvents(1, 2, 3, 4);
+		qs.loop(false);
+		Pump pump = new Pump();
+		Connector.connect(qs, pump);
+		QueueSink sink = new QueueSink();
+		Connector.connect(pump, sink);
+		pump.run();
+		Queue<Object> q = sink.getQueue();
+		assertEquals(4, q.size());
+	}
+
+	@Test(timeout=2000)
+	public void testPumpStop1() throws InterruptedException
+	{
+		QueueSource qs = new QueueSource().setEvents(1, 2, 3, 4);
+		qs.loop(true);
+		Pump pump = new Pump(50);
+		Connector.connect(qs, pump);
+		QueueSink sink = new QueueSink();
+		Connector.connect(pump, sink);
+		Thread th = new Thread(pump);
+		th.start();
+		Thread.sleep(300);
+		pump.stop();
+		Thread.sleep(100);
+		assertFalse(th.isAlive());
+		Queue<Object> q = sink.getQueue();
+		assertTrue(q.size() > 4);
+	}
+
+	@Test(timeout=2000)
+	public void testPumpStop2() throws InterruptedException
+	{
+		QueueSource qs = new QueueSource().setEvents(1, 2, 3, 4);
+		qs.loop(true);
+		Pump pump = new Pump(50);
+		Connector.connect(qs, pump);
+		QueueSink sink = new QueueSink();
+		Connector.connect(pump, sink);
+		pump.start();
+		Thread.sleep(300);
+		pump.stop();
+		Thread.sleep(100);
+		Queue<Object> q = sink.getQueue();
+		assertTrue(q.size() > 4);
+	}
+
+	@Test
+	public void testTank()
+	{
+		Tank t = new Tank();
+		Pushable ps = t.getPushableInput();
+		Pullable pl = t.getPullableOutput();
+		ps.push("foo");
+		ps.push("bar");
+		assertTrue(pl.hasNext());
+		assertEquals("foo", pl.pull());
+		assertTrue(pl.hasNext());
+		assertEquals("bar", pl.pull());
+		assertFalse(pl.hasNext());
+		assertEquals(NextStatus.MAYBE, pl.hasNextSoft());
+		ps.push("baz");
+		assertEquals(NextStatus.YES, pl.hasNextSoft());
+		assertTrue(pl.hasNext());
+		assertEquals("baz", pl.pull());
+		assertTrue(pl == pl.iterator());
+		assertEquals(0, pl.getPosition());
+		assertEquals(0, ps.getPosition());
+		assertEquals(t, pl.getProcessor());
+		assertEquals(t, ps.getProcessor());
+		// These methods should all do nothing
+		ps.dispose();
+		pl.dispose();
+		pl.start();
+		pl.stop();
+	}
+
+	@Test
+	public void testTankLast()
+	{
+		TankLast t = new TankLast();
+		Pushable ps = t.getPushableInput();
+		Pullable pl = t.getPullableOutput();
+		ps.push("foo");
+		ps.push("bar");
+		assertTrue(pl.hasNext());
+		assertEquals("bar", pl.pull());
+		assertFalse(pl.hasNext());
+		assertEquals(NextStatus.MAYBE, pl.hasNextSoft());
+		ps.push("baz");
+		assertTrue(pl.hasNext());
+		assertEquals("baz", pl.pull());
+		assertTrue(pl == pl.iterator());
+		assertEquals(0, pl.getPosition());
+		assertEquals(0, ps.getPosition());
+		assertEquals(t, pl.getProcessor());
+		assertEquals(t, ps.getProcessor());
+		// These methods should all do nothing
+		ps.dispose();
+		pl.dispose();
+		pl.start();
+		pl.stop();
+	}
+
+	@Test(timeout=1000)
+	public void testTimeDecimate() throws InterruptedException
+	{
+		QueueSource source = new QueueSource().setEvents(0);
+		TimeDecimate td = new TimeDecimate(200);
+		Connector.connect(source, td);
+		Pullable p = td.getPullableOutput();
+		long before = System.currentTimeMillis();
+		assertTrue(p.hasNext());
+		p.pull();
+		while (p.hasNextSoft() != NextStatus.YES)
+		{
+			Thread.sleep(10);
+		}
+		long after = System.currentTimeMillis();
+		assertTrue(after - before > 200);
+		td = td.duplicate();
+		assertEquals(200, td.getInterval());
+	}
+
+	@Test(timeout=1000)
+	public void testTimeDecimateReset() throws InterruptedException
+	{
+		QueueSource source = new QueueSource().setEvents(0);
+		TimeDecimate td = new TimeDecimate(20000);
+		Connector.connect(source, td);
+		Pullable p = td.getPullableOutput();
+		assertTrue(p.hasNext());
+		p.pull();
+		for (int i = 0; i < 10; i++)
+		{
+			assertEquals(NextStatus.MAYBE, p.hasNextSoft());
+			Thread.sleep(10);
+		}
+		td.reset();
+		assertEquals(NextStatus.YES, p.hasNextSoft());
+	}
+
+	@Test
+	public void testSimpleFilter()
+	{
+		QueueSource source = new QueueSource().setEvents(2, 3, 5, 6, 8);
+		SimpleFilter filter = new SimpleFilter(Numbers.isEven);
+		Connector.connect(source, filter);
+		Pullable p = filter.getPullableOutput();
+		assertEquals(2, p.pull());
+		assertEquals(6, p.pull());
+		assertEquals(8, p.pull());
+		SimpleFilter filter2 = filter.duplicate();
+		assertEquals(Numbers.isEven, filter2.getCondition());
+	}
+
+	@Test
+	public void testSimpleFilterClone()
+	{
+		FunctionTree ft = new FunctionTree(Numbers.isGreaterThan, new StreamVariable(0), new Constant(4));
+		SimpleFilter filter = new SimpleFilter(ft);
+		SimpleFilter filter2 = filter.duplicate();
+		Function f = filter2.getCondition();
+		assertFalse(f == ft);
+		assertTrue(f instanceof FunctionTree);
+		Object[] out = new Object[1];
+		f.evaluate(new Object[]{6}, out);
+		assertEquals(true, out[0]);
+		f.evaluate(new Object[]{3}, out);
+		assertEquals(false, out[0]);
 	}
 }

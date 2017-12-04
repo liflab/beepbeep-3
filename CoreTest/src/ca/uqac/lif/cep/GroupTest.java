@@ -24,9 +24,9 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -35,7 +35,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * Unit tests for the {@link GroupProcessor}.
  * @author Sylvain Hallé
  */
-public class GroupTest extends BeepBeepUnitTest 
+public class GroupTest 
 {
 	@Test
 	public void testGroup1() 
@@ -369,7 +369,7 @@ public class GroupTest extends BeepBeepUnitTest
 	public void testGroupPull1() 
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
 		add_plus_10.addProcessor(add);
 		add_plus_10.associateInput(0, add, 0);
@@ -432,7 +432,7 @@ public class GroupTest extends BeepBeepUnitTest
 	public void testGroupPush2() 
 	{
 		// Create the group
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		Incrementer inc = new Incrementer(10);
 		Connector.connect(inc, add);
 		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
@@ -479,6 +479,73 @@ public class GroupTest extends BeepBeepUnitTest
 		input2.push();
 		recv = (Number) sink.getQueue(0).remove();
 		assertEquals(20, recv.intValue());
+	}
+	
+	@Test
+	public void testGroupPush1() 
+	{
+		// Create the group
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
+		GroupProcessor add_plus_10 = new GroupProcessor(2, 1);
+		add_plus_10.addProcessor(add);
+		add_plus_10.associateInput(0, add, 0);
+		add_plus_10.associateInput(1, add, 1);
+		add_plus_10.associateOutput(0, add, 0);
+		
+		// Connect the group to two sources and one sink
+		Vector<Object> l_input1 = new Vector<Object>();
+		l_input1.add(2);
+		l_input1.add(3);
+		l_input1.add(4);
+		l_input1.add(6);
+		QueueSource input1 = new QueueSource();
+		input1.setEvents(l_input1);
+		Vector<Object> l_input2 = new Vector<Object>();
+		l_input2.add(1);
+		l_input2.add(2);
+		l_input2.add(3);
+		l_input2.add(4);
+		QueueSource input2 = new QueueSource(1);
+		input2.setEvents(l_input2);
+		Connector.connect(input1, 0, add_plus_10, 0);
+		Connector.connect(input2, 0, add_plus_10, 1);
+		QueueSink sink = new QueueSink(1);
+		Connector.connect(add_plus_10, sink);
+		Number recv, expected;
+		
+		// Run
+		input1.push();
+		input2.push();
+		expected = 3;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 5;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 7;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
+		input1.push();
+		input2.push();
+		expected = 10;
+		recv = (Number) sink.getQueue(0).remove();
+		if (recv == null || recv.intValue() != expected.intValue())
+		{
+			fail("Expected " + expected + ", got " + recv);
+		}
 	}
 	
 	@Test
@@ -545,13 +612,8 @@ public class GroupTest extends BeepBeepUnitTest
 		assertEquals(0, p.getPosition());
 	}
 	
-	public static class Incrementer extends FunctionProcessor
+	public static class Incrementer extends ApplyFunction
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = 1503097815282943066L;
-
 		public Incrementer(int increment)
 		{
 			super(new IncrementFunction(increment));
@@ -560,10 +622,6 @@ public class GroupTest extends BeepBeepUnitTest
 	
 	public static class IncrementFunction extends UnaryFunction<Number,Number>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4907523652245702908L;
 		int m_increment;
 		
 		public IncrementFunction(int increment)
@@ -582,11 +640,6 @@ public class GroupTest extends BeepBeepUnitTest
 	public static class PassthroughIn extends Passthrough
 	{
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 3684767348745275848L;
-
 		public PassthroughIn(int arity) 
 		{
 			super(arity);
@@ -601,11 +654,6 @@ public class GroupTest extends BeepBeepUnitTest
 	
 	public static class GroupIn extends GroupProcessor
 	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 3020653608268940867L;
 
 		public GroupIn(int in_arity, int out_arity) {
 			super(in_arity, out_arity);

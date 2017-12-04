@@ -30,10 +30,6 @@ import ca.uqac.lif.cep.Connector.Variant;
 public class IfThenElse extends Function
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8956885763514327274L;
-	/**
 	 * The unique visible instance of this function
 	 */
 	public static final IfThenElse instance = new IfThenElse();

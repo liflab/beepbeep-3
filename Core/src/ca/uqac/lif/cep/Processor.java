@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep;
 
-import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Queue;
@@ -54,13 +53,8 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * @dictentry
  *
  */
-public abstract class Processor implements DuplicableProcessor, Contextualizable, Serializable
+public abstract class Processor implements DuplicableProcessor, Contextualizable
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -1686796980363286206L;
-
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires
 	 * to produce an output

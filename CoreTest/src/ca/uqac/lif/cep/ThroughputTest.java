@@ -26,15 +26,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.CumulativeProcessor;
-import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.functions.Cumulate;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;
 
 @Ignore
-public class ThroughputTest extends BeepBeepUnitTest
+public class ThroughputTest
 {
 	/**
 	 * Tests the throughput of 10 passthrough processors connected to a source
@@ -134,17 +134,12 @@ public class ThroughputTest extends BeepBeepUnitTest
 		assertTrue(true);
 	}
 	
-	public static class Sum extends CumulativeProcessor
+	public static class Sum extends Cumulate
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 5258504145462992014L;
-
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Sum()
 		{
-			super(new CumulativeFunction(Addition.instance));
+			super(new CumulativeFunction(Numbers.addition));
 		}
 	}
 

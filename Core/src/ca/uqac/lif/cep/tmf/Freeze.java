@@ -32,11 +32,6 @@ import ca.uqac.lif.cep.UniformProcessor;
 public class Freeze extends UniformProcessor
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 5741791487727533735L;
-	
-	/**
 	 * The event front to freeze
 	 */
 	protected transient Object[] m_output;

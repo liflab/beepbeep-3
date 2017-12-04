@@ -20,8 +20,9 @@ public class EndOfTraceTest {
 			super(i);
 		}
 
+
 		@Override
-		protected boolean onEndOfTrace(Object[] outputs) throws ProcessorException {
+		protected boolean onEndOfTrace(Object[] outputs) {
 			Arrays.fill(outputs, END_OF_TRACE);
 			return true;
 		}
@@ -51,7 +52,7 @@ public class EndOfTraceTest {
 	@Test
 	public void testMultiplexer() throws ConnectorException
 	{
-		Multiplexer multiplexer = new Multiplexer(2);
+		Multiplex multiplexer = new Multiplex(2);
 		EndOfTracePassthrough endOfTracePassthrough = new EndOfTracePassthrough(1);
 		QueueSink sink = new QueueSink(1);
 		
@@ -181,7 +182,7 @@ public class EndOfTraceTest {
 
 	@Test
 	public void testTimeDecimate() throws ConnectorException, InterruptedException {
-		int interval = 100000000;
+		int interval = 100;
 		TimeDecimate timeDecimate0 = new TimeDecimate(interval);
 		TimeDecimate timeDecimate1 = new TimeDecimate(interval, true);
 
@@ -212,7 +213,7 @@ public class EndOfTraceTest {
 			assertTrue(queueSink0.isEmpty());
 			assertTrue(queueSink1.isEmpty());
 
-			Thread.sleep(interval/1000000);
+			Thread.sleep(interval);
 			lastInput = i;
 		}
 

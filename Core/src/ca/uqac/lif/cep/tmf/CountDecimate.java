@@ -18,8 +18,6 @@
 package ca.uqac.lif.cep.tmf;
 
 
-import ca.uqac.lif.cep.Processor;
-
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
  * is called the <em>decimation interval</em>.
@@ -41,32 +39,59 @@ public class CountDecimate extends Decimate {
      */
     private final int m_interval;
 
-    /**
-     * Index of last event received
-     */
-    private int m_current;
+	/**
+	 * Index of last event received
+	 */
+	protected int m_current;
 
+	/**
+	 * Creates a new count decimate processor with a decimation
+	 * interval of 1
+	 */
+	public CountDecimate()
+	{
+		this(1);
+	}
+
+	/**
+	 * Creates a new count decimate processor
+	 * @param interval The decimation interval
+	 */
+	public CountDecimate(int interval)
+	{
+		this(interval, false);
+	}
+
+    /**
+     * Creates a new count decimate processor
+     *
+     * @param interval The decimation interval
+     * @param shouldProcessLastInputs Default to false. Indicates if the processor should
+     *                                output the last input events of the trace even if it
+     *                                does not correspond to the decimation interval.
+     */
     public CountDecimate(int interval, boolean shouldProcessLastInputs) {
         super(shouldProcessLastInputs);
         m_interval = interval;
         m_current = 0;
     }
 
-    public CountDecimate(int interval) {
-        this(interval, false);
-    }
+	/**
+	 * Gets the decimation interval
+	 * @return The interval
+	 */
+	public int getInterval()
+	{
+		return m_interval;
+	}
 
-    public CountDecimate() {
-        this(1);
-    }
+	@Override
+	protected boolean shouldOutput() {
+		return m_current == 0;
+	}
 
-    @Override
-    protected boolean shouldOutput() {
-        return m_current == 0;
-    }
-
-    @Override
-    protected void post() {
+	@Override
+    protected void postCompute() {
         m_current = (m_current + 1) % m_interval;
     }
 
@@ -77,7 +102,8 @@ public class CountDecimate extends Decimate {
     }
 
     @Override
-    public Processor duplicate() {
+    public CountDecimate duplicate() {
         return new CountDecimate(m_interval, m_shouldProcessLastInputs);
     }
+
 }

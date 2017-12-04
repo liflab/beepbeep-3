@@ -34,11 +34,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class Insert extends SingleProcessor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8980237421417285332L;
-
-	/**
 	 * The event to be added at the beginning of the input trace
 	 */
 	private final Object[] m_pad;

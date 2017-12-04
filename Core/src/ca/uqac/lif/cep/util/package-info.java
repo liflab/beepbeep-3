@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,7 +17,8 @@
  */
 
 /**
- * Utility classes to manipulate strings, files, command-line calls, etc.
+ * Utility processors and functions to manipulate strings, arrays, and a
+ * few other data structures.
  * 
  * @author Sylvain Hallé
  */

@@ -31,11 +31,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public class Filter extends SingleProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7780260847522359589L;
-
 	public Filter()
 	{
 		super(2, 1);

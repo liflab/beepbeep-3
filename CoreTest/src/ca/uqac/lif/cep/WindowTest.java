@@ -33,7 +33,7 @@ import ca.uqac.lif.cep.tmf.Window;
  * Unit tests for the {@link Window}.
  * @author Sylvain Hallé
  */
-public class WindowTest extends BeepBeepUnitTest 
+public class WindowTest 
 {
 	@Test
 	public void testWindowPull1() 

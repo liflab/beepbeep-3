@@ -23,11 +23,11 @@ import java.util.Queue;
 import ca.uqac.lif.cep.tmf.Sink;
 
 /**
- * Sends its input to an PrintStream.
+ * Sends its input to a PrintStream
  * (such as the standard output). This processor takes whatever event it
  * receives (i.e. any Java <tt>Object</tt>), calls its {@link Object#toString()
- * toString()} method, and pushes the resulting output to the computer's
- * standard output. Graphically, it is represented as:
+ * toString()} method, and pushes the resulting output to a print stream.
+ * Graphically, it is represented as:
  * <p>
  * <a href="{@docRoot}/doc-files/cli/Print.png"><img
  *   src="{@docRoot}/doc-files/cli/Print.png"
@@ -47,56 +47,55 @@ import ca.uqac.lif.cep.tmf.Sink;
 public class Print extends Sink
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 3630027954542507950L;
-
-	/**
 	 * The stream to print to
 	 */
 	protected transient PrintStream m_out;
-	
+
 	/**
 	 * The separator between each event
 	 */
 	protected String m_separator = ",";
-	
+
 	/**
 	 * The prefix to display before each event
 	 */
 	protected String m_prefix = "";
-	
+
 	/**
 	 * The suffix to display after each event
 	 */
 	protected String m_suffix = "";
 
 	/**
-	 * Creates a new printer
+	 * Creates a new printer with an input arity of 1 and sending its output
+	 * to the standard output.
 	 */
 	@SuppressWarnings("squid:S106")
 	public Print()
 	{
 		this(1, System.out);
 	}
-	
-	public Print(String separator)
-	{
-		this();
-		m_separator = separator;
-	}
 
 	/**
-	 * Creates a new ANSI printer of given input arity
+	 * Creates a new print processor
 	 * @param in_arity The input arity
-	 * @param out The ANSI printer to use
+	 * @param out The print stream to use
 	 */
 	public Print(int in_arity, PrintStream out)
 	{
 		super(in_arity);
 		m_out = out;
 	}
-	
+
+	/**
+	 * Creates a new print processor with input arity 1
+	 * @param out The print stream to use
+	 */
+	public Print(PrintStream out)
+	{
+		this(1, out);
+	}
+
 	/**
 	 * Sets a prefix to display before each event
 	 * @param prefix The prefix; can be any string and include ANSI
@@ -108,7 +107,7 @@ public class Print extends Sink
 		m_prefix = prefix;
 		return this;
 	}
-	
+
 	/**
 	 * Sets a suffix to display before each event. This is not the same
 	 * thing as the separator that can be set with {@link #setSeparator(String)
@@ -120,10 +119,10 @@ public class Print extends Sink
 	 */
 	public /*@NotNull*/ Print setSuffix(/*@NotNull*/ String suffix)
 	{
-		m_prefix = suffix;
+		m_suffix = suffix;
 		return this;
 	}
-	
+
 	/**
 	 * Sets a separator to display after each event. This is not the same
 	 * thing as the separator that can be set with {@link #setSeparator(String)
@@ -137,7 +136,7 @@ public class Print extends Sink
 		m_separator = separator;
 		return this;
 	}
-	
+
 	/**
 	 * Gets a reference to the print stream to which the
 	 * character strings will be sent.
@@ -147,7 +146,7 @@ public class Print extends Sink
 	{
 		return m_out;
 	}
-	
+
 	/**
 	 * Sets the print stream to which the character string will be sent.
 	 * @param printer The print stream
@@ -158,29 +157,22 @@ public class Print extends Sink
 		m_out = printer;
 		return this;
 	}
-	
+
 	@Override
 	@SuppressWarnings("squid:S1168")
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		if (inputs == null || allNull(inputs))
-		{
-			return false;
-		}
-		Object o = inputs[0];
-		if (o != null)
-		{
-			beforeEvent(m_out);
-			m_out.print(m_prefix); 
-			prettyPrint(m_out, o);
-			afterEvent(m_out);
-			beforeSeparator(m_out);
-			m_out.print(m_separator);
-			afterSeparator(m_out);
-		}
+		beforeEvent(m_out);
+		m_out.print(m_prefix); 
+		prettyPrint(m_out, inputs[0]);
+		m_out.print(m_suffix);
+		afterEvent(m_out);
+		beforeSeparator(m_out);
+		m_out.print(m_separator);
+		afterSeparator(m_out);
 		return true;
 	}
-	
+
 	/**
 	 * Method that is called before an event is to be printed.
 	 * Descendants of this call can be used to make special calls to the
@@ -191,7 +183,7 @@ public class Print extends Sink
 	{
 		// Do nothing
 	}
-	
+
 	/**
 	 * Method that is called after an event is be printed.
 	 * Descendants of this call can be used to make special calls to the
@@ -202,7 +194,7 @@ public class Print extends Sink
 	{
 		// Do nothing
 	}
-	
+
 	/**
 	 * Method that is called before an separator is to be printed.
 	 * Descendants of this call can be used to make special calls to the
@@ -213,7 +205,7 @@ public class Print extends Sink
 	{
 		// Do nothing
 	}
-	
+
 	/**
 	 * Method that is called after a separator is be printed.
 	 * Descendants of this call can be used to make special calls to the

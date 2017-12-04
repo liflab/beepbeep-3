@@ -33,11 +33,6 @@ import java.util.Map;
 public class GroupProcessor extends Processor
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The set of processors included in the group
 	 */
 	private HashSet<Processor> m_processors = null;

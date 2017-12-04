@@ -42,11 +42,6 @@ public class WindowFunctionTest
 	
 	public static class DummyPlus extends BinaryFunction<Integer,Integer,Integer> 
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 7388043168279304474L;
-
 		public DummyPlus()
 		{
 			super(Integer.class, Integer.class, Integer.class);

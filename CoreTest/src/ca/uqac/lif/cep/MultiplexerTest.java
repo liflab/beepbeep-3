@@ -25,20 +25,41 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.tmf.Multiplexer;
+import ca.uqac.lif.cep.tmf.Multiplex;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
- * Unit tests for the {@link Multiplexer} class
+ * Unit tests for the {@link Multiplex} class
  * @author Sylvain Hallé
  */
-public class MultiplexerTest extends BeepBeepUnitTest 
+public class MultiplexerTest 
 {
+	@Test
+	public void testMuxerPush1() 
+	{
+		Integer i;
+		Multiplex mux = new Multiplex(2);
+		QueueSink qs = new QueueSink(1);
+		Connector.connect(mux, qs);
+		Queue<Object> q = qs.getQueue(0);
+		Pushable push1 = mux.getPushableInput(0);
+		Pushable push2 = mux.getPushableInput(1);
+		push1.push(0);
+		assertTrue(!q.isEmpty());
+		i = (Integer) q.remove();
+		assertEquals(0, i.intValue());
+		push2.push(1);
+		push1.push(2);
+		assertTrue(!q.isEmpty());
+		i = (Integer) q.remove();
+		assertEquals(1, i.intValue());
+	}
+	
 	@Test
 	public void testMultiplexerPush() 
 	{
-		Multiplexer mux = new Multiplexer(2);
+		Multiplex mux = new Multiplex(2);
 		Pushable push1 = mux.getPushableInput(0);
 		Pushable push2 = mux.getPushableInput(1);
 		QueueSink qsink = new QueueSink(1);
@@ -81,7 +102,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 			contents.add(101);
 			qsource2.setEvents(contents);
 		}
-		Multiplexer mux = new Multiplexer(2);
+		Multiplex mux = new Multiplex(2);
 		Connector.connect(qsource1, 0, mux, 0);
 		Connector.connect(qsource2, 0, mux, 1);
 		QueueSink qsink = new QueueSink(1);
@@ -127,7 +148,7 @@ public class MultiplexerTest extends BeepBeepUnitTest
 			contents.add(101);
 			qsource2.setEvents(contents);
 		}
-		Multiplexer mux = new Multiplexer(2);
+		Multiplex mux = new Multiplex(2);
 		Connector.connect(qsource1, 0, mux, 0);
 		Connector.connect(qsource2, 0, mux, 1);
 		QueueSink qsink = new QueueSink(1);

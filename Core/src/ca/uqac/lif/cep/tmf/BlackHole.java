@@ -26,11 +26,6 @@ import java.util.Queue;
 @SuppressWarnings("squid:S2160")
 public class BlackHole extends Sink 
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 4930838132907988617L;
-
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{

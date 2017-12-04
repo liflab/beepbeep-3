@@ -27,11 +27,6 @@ import ca.uqac.lif.cep.Pushable;
 @SuppressWarnings("squid:S2160")
 public class TankLast extends Tank
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3202123723996047407L;
-
 	@Override
 	public Pushable getPushableInput(int index)
 	{

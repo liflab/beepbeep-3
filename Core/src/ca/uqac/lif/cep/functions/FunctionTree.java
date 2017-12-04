@@ -28,11 +28,6 @@ import ca.uqac.lif.cep.Context;
 public class FunctionTree extends Function
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6959874694062810304L;
-
-	/**
 	 * The function to evaluate
 	 */
 	protected Function m_function;
@@ -111,9 +106,9 @@ public class FunctionTree extends Function
 		int max_arity = 0;
 		for (Function child : m_children)
 		{
-			if (child instanceof ArgumentPlaceholder)
+			if (child instanceof StreamVariable)
 			{
-				max_arity = Math.max(max_arity, ((ArgumentPlaceholder) child).getIndex() + 1);
+				max_arity = Math.max(max_arity, ((StreamVariable) child).getIndex() + 1);
 			}
 			else
 			{
@@ -156,9 +151,9 @@ public class FunctionTree extends Function
 	{
 		for (Function f : m_children)
 		{
-			if (f instanceof ArgumentPlaceholder)
+			if (f instanceof StreamVariable)
 			{
-				ArgumentPlaceholder ap = (ArgumentPlaceholder) f;
+				StreamVariable ap = (StreamVariable) f;
 				if (ap.getIndex() == index)
 				{
 					m_function.getInputTypesFor(classes, index);

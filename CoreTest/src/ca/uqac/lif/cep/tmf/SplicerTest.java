@@ -19,14 +19,16 @@ package ca.uqac.lif.cep.tmf;
 
 import static org.junit.Assert.*;
 
-import java.util.Vector;
-
 import org.junit.Test;
 
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tmf.Splicer;
+import ca.uqac.lif.cep.tmf.Splice;
 
+/**
+ * Unit tests for the {@link Splice} processor.
+ */
 public class SplicerTest 
 {
 	@Test
@@ -35,24 +37,38 @@ public class SplicerTest
 		Object o;
 		QueueSource source1 = new QueueSource(1);
 		source1.loop(false);
-		{
-			Vector<Object> events = new Vector<Object>();
-			events.add(0);
-			events.add(1);
-			events.add(2);
-			source1.setEvents(events);
-		}
+		source1.setEvents(0, 1, 2);
 		QueueSource source2 = new QueueSource(1);
 		source2.loop(false);
-		{
-			Vector<Object> events = new Vector<Object>();
-			events.add(3);
-			events.add(4);
-			events.add(5);
-			source2.setEvents(events);
-		}
-		Splicer s = new Splicer(source1, source2);
+		source2.setEvents(3, 4, 5);
+		Splice s = new Splice(source1, source2);
+		Context c = new Context();
+		c.put("b", 10);
+		s.setContext(c);
+		assertEquals(10, source1.getContext("b"));
+		assertEquals(10, source2.getContext("b"));
+		s.setContext("a", 3);
+		assertEquals(3, source1.getContext("a"));
+		assertEquals(3, source2.getContext("a"));
 		Pullable p = s.getPullableOutput(0);
+		o = p.pull();
+		assertNotNull(o);
+		assertEquals(0, ((Integer) o).intValue());
+		o = p.pull();
+		assertEquals(1, ((Integer) o).intValue());
+		o = p.pull();
+		assertEquals(2, ((Integer) o).intValue());
+		o = p.pull();
+		assertEquals(3, ((Integer) o).intValue());
+		o = p.pull();
+		assertEquals(4, ((Integer) o).intValue());
+		o = p.pull();
+		assertEquals(5, ((Integer) o).intValue());
+		o = p.pull();
+		assertNull(o);
+		o = p.pull();
+		assertNull(o);
+		s.reset();
 		o = p.pull();
 		assertNotNull(o);
 		assertEquals(0, ((Integer) o).intValue());

@@ -67,7 +67,11 @@ public interface Pushable
 	 */
 	public Pushable pushFast(Object o);
 
-	
+	/**
+	 * Notifies the pushable that there is no more event to be pushed,
+	 * i.e. the trace of events has ended at this point.
+	 * @throws PushableException
+	 */
 	public void notifyEndOfTrace() throws PushableException;
 	
 	/**

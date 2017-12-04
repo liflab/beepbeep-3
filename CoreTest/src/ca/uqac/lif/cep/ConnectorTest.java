@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Connector.IncompatibleTypesException;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -35,7 +35,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
  * Unit tests for the {@link Connector} class
  * @author Sylvain Hallé
  */
-public class ConnectorTest extends BeepBeepUnitTest
+public class ConnectorTest
 {
 	@Test
 	public void testOutOfBounds1()
@@ -255,13 +255,8 @@ public class ConnectorTest extends BeepBeepUnitTest
 		assertTrue(Connector.isCompatible(new Oranges(), 0, new Variants(), 0));
 	}
 	
-	public static class Incrementer extends FunctionProcessor
+	public static class Incrementer extends ApplyFunction
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = -3181129919928028488L;
-
 		public Incrementer(int i)
 		{
 			super(new Plus(i));
@@ -270,10 +265,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Plus extends UnaryFunction<Integer,Integer>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -7827169077553183667L;
 		int m_plus = 0;
 		
 		public Plus(int i)
@@ -292,11 +283,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Apples extends SingleProcessor
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = 7512600454804881369L;
-
 		public Apples()
 		{
 			super(1, 1);
@@ -310,7 +296,7 @@ public class ConnectorTest extends BeepBeepUnitTest
 		}
 
 		@Override
-		public Processor duplicate() 
+		public Apples duplicate() 
 		{
 			return new Apples();
 		}
@@ -332,11 +318,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Oranges extends SingleProcessor
 	{
-		/**
-		 * Dummy UID 
-		 */
-		private static final long serialVersionUID = -3498569238430262588L;
-		
 		public boolean started = false;
 		
 		boolean reset = false;
@@ -394,11 +375,6 @@ public class ConnectorTest extends BeepBeepUnitTest
 	
 	public static class Variants extends SingleProcessor
 	{
-		/**
-		 * Dummy UID 
-		 */
-		private static final long serialVersionUID = -3498569238430262585L;
-
 		public Variants()
 		{
 			super(1, 1);

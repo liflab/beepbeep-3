@@ -44,11 +44,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class Window extends SingleProcessor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1732221465093229578L;
-
-	/**
 	 * The window's width
 	 */
 	private int m_width;

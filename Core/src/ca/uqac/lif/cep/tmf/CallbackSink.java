@@ -31,11 +31,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public class CallbackSink extends SingleProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8266964511066507880L;
-
 	public CallbackSink(int in_arity)
 	{
 		super(in_arity, 0);

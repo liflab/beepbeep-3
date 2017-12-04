@@ -23,12 +23,12 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Pushable.PushableException;
-import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.functions.Constant;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.numbers.Division;
-import ca.uqac.lif.cep.tmf.ConstantProcessor;
+import ca.uqac.lif.cep.util.Numbers;
+import ca.uqac.lif.cep.tmf.ReplaceWith;
 import ca.uqac.lif.cep.tmf.Pump;
 
 public class PushableTest
@@ -36,7 +36,7 @@ public class PushableTest
 	@Test(expected=PushableException.class)
 	public void testPushableException1()
 	{
-		FunctionProcessor div = new FunctionProcessor(new FunctionTree(Division.instance, new Constant(1), new ArgumentPlaceholder(0)));
+		ApplyFunction div = new ApplyFunction(new FunctionTree(Numbers.division, new Constant(1), new StreamVariable(0)));
 		Pushable p = div.getPushableInput();
 		p.push(0);
 	}
@@ -102,7 +102,7 @@ public class PushableTest
 	public void testPushableException4()
 	{
 		// Constructor test; we just check that it runs
-		Processor p = new ConstantProcessor(new Constant(0));
+		Processor p = new ReplaceWith(Constant.ZERO);
 		try
 		{
 			// Create an exception
