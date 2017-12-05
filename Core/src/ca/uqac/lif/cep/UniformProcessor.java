@@ -28,7 +28,7 @@ import java.util.Queue;
  */
 @SuppressWarnings("squid:S2160")
 public abstract class UniformProcessor extends SingleProcessor
-{	
+{
 	/**
 	 * An array that will be used by the processor to compute
 	 * its output
@@ -45,7 +45,7 @@ public abstract class UniformProcessor extends SingleProcessor
 		super(in_arity, out_arity);
 		m_outputArray = new Object[out_arity];
 	}
-	
+
 	@Override
 	protected final boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
@@ -54,8 +54,17 @@ public abstract class UniformProcessor extends SingleProcessor
 		return b;
 	}
 
+	@Override
+	protected final boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException {
+		Object[] outs = new Object[getOutputArity()];
+		boolean b = onEndOfTrace(outs);
+		if(b)
+			outputs.add(outs);
+		return b;
+	}
+
 	/**
-	 * Computes one or more output events from its input events
+	 * Computes one output events from its input events
 	 * @param inputs An array of input events; its length corresponds to the
 	 *   processor's input arity
 	 * @param outputs An array where the outputs are produced
@@ -63,5 +72,19 @@ public abstract class UniformProcessor extends SingleProcessor
 	 *   if no event could be produced
 	 */
 	protected abstract boolean compute(Object[] inputs, Object[] outputs);
+
+	/**
+	 * Allows to describe a specific behavior when the trace of input fronts has reached its end.
+	 * Called in "push mode" only. In "pull mode", implementing such a behavior can be done by using
+	 * {@link Pullable#hasNext()} or {@link Pullable#hasNextSoft()}.
+	 *
+	 * @param outputs An array where the outputs are produced
+	 * @return true if the processor should output one or several output fronts, false otherwise
+	 *   and by default.
+	 * @throws ProcessorException
+	 */
+	protected boolean onEndOfTrace(Object[] outputs) {
+		return false;
+	}
 
 }

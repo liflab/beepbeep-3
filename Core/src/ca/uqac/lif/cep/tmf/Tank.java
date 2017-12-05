@@ -210,6 +210,12 @@ public class Tank extends Processor
 		{
 			return push(o);
 		}
+		
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			// TODO: to be verified
+			m_outputPushables[0].notifyEndOfTrace();
+		}
 
 		@Override
 		public Processor getProcessor() 

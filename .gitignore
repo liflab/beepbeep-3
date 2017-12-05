@@ -60,3 +60,8 @@ jacoco.exec
 
 # SonarQube
 .sonar/
+
+# IDEA-specific
+.idea/
+*.iml
+out/

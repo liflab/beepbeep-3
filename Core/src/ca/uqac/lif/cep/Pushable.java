@@ -68,6 +68,13 @@ public interface Pushable
 	public Pushable pushFast(Object o);
 
 	/**
+	 * Notifies the pushable that there is no more event to be pushed,
+	 * i.e. the trace of events has ended at this point.
+	 * @throws PushableException
+	 */
+	public void notifyEndOfTrace() throws PushableException;
+	
+	/**
 	 * Gets the processor instance this Pushable is linked to
 	 * @return The processor
 	 */
@@ -178,6 +185,11 @@ public interface Pushable
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			throw new UnsupportedOperationException();
+		}
+		
 		@Override
 		public Processor getProcessor() 
 		{

@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 import ca.uqac.lif.cep.NextStatus;
@@ -49,6 +50,14 @@ import ca.uqac.lif.cep.Pushable;
 @SuppressWarnings("squid:S2160")
 public class Multiplex extends Processor
 {
+	/** 
+	 * Array containing for each PushableInput of the processor 
+	 * if it has been notified of the end of trace or not.
+	 * Used to determine if the Multiplexer should notify its 
+	 * PushableOutput of the end of trace or not
+	 */
+	private boolean[] m_havePushableInputsReachedEnd;
+
 	/**
 	 * Instantiates a multiplexer
 	 * @param in_arity The input arity of the multiplexer. This is the
@@ -57,6 +66,8 @@ public class Multiplex extends Processor
 	public Multiplex(int in_arity)
 	{
 		super(in_arity, 1);
+		m_havePushableInputsReachedEnd = new boolean[in_arity];
+		Arrays.fill(m_havePushableInputsReachedEnd, false);
 	}
 
 	@Override
@@ -278,6 +289,19 @@ public class Multiplex extends Processor
 			return this;
 		}
 
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			m_havePushableInputsReachedEnd[m_index] = true;
+						
+			for(boolean hasReachedEnd : m_havePushableInputsReachedEnd)
+			{
+				if(!hasReachedEnd)
+					return;
+			}
+			
+			m_outputPushables[0].notifyEndOfTrace();
+		}
+		
 		@Override
 		public Processor getProcessor()
 		{

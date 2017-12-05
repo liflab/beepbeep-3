@@ -480,6 +480,11 @@ public class GroupProcessor extends Processor
 		{
 			return push(o);
 		}
+		
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			m_pushable.notifyEndOfTrace();
+		}
 
 		@Override
 		public synchronized Processor getProcessor()

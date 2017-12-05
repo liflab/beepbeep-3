@@ -19,6 +19,7 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.*;
 
+import ca.uqac.lif.cep.tmf.TimeDecimate;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.ProcessorTest.Sum;

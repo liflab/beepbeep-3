@@ -62,6 +62,11 @@ public abstract class SingleProcessor extends Processor
 	protected transient Pullable[] m_outputPullables;
 
 	/**
+	 * Indicates whether the processor has been notified of the end of trace or not
+	 */
+	protected boolean m_hasBeenNotifiedOfEndOfTrace;
+
+	/**
 	 * Initializes a processor
 	 * @param in_arity The input arity
 	 * @param out_arity The output arity
@@ -72,6 +77,7 @@ public abstract class SingleProcessor extends Processor
 		m_tempQueue = new ArrayDeque<Object[]>(1);
 		m_inputPushables = new Pushable[in_arity];
 		m_outputPullables = new Pullable[out_arity];
+		m_hasBeenNotifiedOfEndOfTrace = false;
 	}
 
 	@Override
@@ -99,14 +105,31 @@ public abstract class SingleProcessor extends Processor
 	 * @param inputs An array of input events; its length corresponds to the
 	 *   processor's input arity
 	 * @param outputs A queue of arrays of objects. The processor should push
-	 * arrays into this queue for every output front it produces. The size
-	 * of each array should be equal to the processor's output arity, although
-	 * this is not enforced.
+	 *   arrays into this queue for every output front it produces. The size
+	 *   of each array should be equal to the processor's output arity, although
+	 *   this is not enforced.
 	 * @return A queue of vectors of output events, or null
 	 *   if no event could be produced
 	 */
 	protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs);
 
+	/**
+	 * Allows to describe a specific behavior when the trace of input fronts has reached its end.
+	 * Called in "push mode" only. In "pull mode", implementing such a behavior can be done by using
+	 * {@link Pullable#hasNext()} or {@link Pullable#hasNextSoft()}.
+	 *
+	 * @param outputs A queue of arrays of objects. The processor should push
+	 *   arrays into this queue for every output front it produces. The size
+	 *   of each array should be equal to the processor's output arity, although
+	 *   this is not enforced.
+	 * @return true if the processor should output one or several output fronts, false otherwise
+	 *   and by default.
+	 * @throws ProcessorException
+	 */
+	protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException {
+		return false;
+	}
+	
 	/**
 	 * Implementation of a {@link Pushable} for a single processor.
 	 * 
@@ -185,6 +208,49 @@ public abstract class SingleProcessor extends Processor
 			{
 				throw new PushableException(e);
 			}
+			// put everything in outputEvent, because of duplicated code in notifyEndOfTrace
+			outputEvent(outs);
+
+			return this;
+		}
+		
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
+			// nothing to do if the pushable has already been notified
+			if(m_hasBeenNotifiedOfEndOfTrace)
+				return;
+			m_hasBeenNotifiedOfEndOfTrace = true;
+
+			m_tempQueue.clear();
+			boolean outs;
+			try 
+			{
+				outs = onEndOfTrace(m_tempQueue);
+			} 
+			catch (ProcessorException e) 
+			{
+				throw new PushableException(e);
+			}
+			outputEvent(outs);
+
+			// Notifies the output pushables of the end of the trace
+			for(int i = 0; i < m_outputPushables.length; i++) 
+			{
+				Pushable p = m_outputPushables[i];
+				if(p == null)
+				{
+					throw new PushableException("Output " + i + " of this processor is connected to nothing", getProcessor());
+				}
+				p.notifyEndOfTrace();
+			}
+		}
+
+		/**
+		 * Pushes output event (if any) to the corresponding output {@link Pushable}s.
+		 *
+		 * @param outs
+		 */
+		private final void outputEvent(boolean outs) {
 			if (outs && !m_tempQueue.isEmpty())
 			{
 				for (Object[] evt : m_tempQueue)
@@ -204,7 +270,6 @@ public abstract class SingleProcessor extends Processor
 					}
 				}
 			}
-			return this;
 		}
 
 		@Override

@@ -17,23 +17,27 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
-
-import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
  * is called the <em>decimation interval</em>.
- * 
+ * However, a mode can be specified in order to output the <i>n</i>-<i>i</i>th input
+ * event if it is the last event of the trace and it has not been output already.
+ *
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class CountDecimate extends SingleProcessor
-{
-	/**
-	 * The decimation interval
-	 */
-	private final int m_interval;
+public class CountDecimate extends Decimate {
+
+    /**
+     * Dummy UID
+     */
+    private static final long serialVersionUID = -1528026169905098741L;
+
+    /**
+     * The decimation interval
+     */
+    private final int m_interval;
 
 	/**
 	 * Index of last event received
@@ -55,50 +59,22 @@ public class CountDecimate extends SingleProcessor
 	 */
 	public CountDecimate(int interval)
 	{
-		super(1, 1);
-		m_interval = interval;
-		m_current = 0;
+		this(interval, false);
 	}
 
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_current = 0;
-	}
-
-	@Override
-	@SuppressWarnings("squid:S3516")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		Object[] out = null;
-		m_inputCount++;
-		if (m_current == 0)
-		{
-			out = inputs;
-		}
-		m_current = (m_current + 1) % m_interval;
-		if (out == null)
-		{
-			return true;
-		}
-		m_outputCount++;
-		if (m_eventTracker != null)
-		{
-			for (int i = 0; i < inputs.length; i++)
-			{
-				associateToInput(i, m_inputCount - 1, i, m_outputCount - 1);
-			}
-		}
-		outputs.add(out);
-		return true;
-	}
-
-	@Override
-	public CountDecimate duplicate()
-	{
-		return new CountDecimate(m_interval);
-	}
+    /**
+     * Creates a new count decimate processor
+     *
+     * @param interval The decimation interval
+     * @param shouldProcessLastInputs Default to false. Indicates if the processor should
+     *                                output the last input events of the trace even if it
+     *                                does not correspond to the decimation interval.
+     */
+    public CountDecimate(int interval, boolean shouldProcessLastInputs) {
+        super(shouldProcessLastInputs);
+        m_interval = interval;
+        m_current = 0;
+    }
 
 	/**
 	 * Gets the decimation interval
@@ -108,4 +84,26 @@ public class CountDecimate extends SingleProcessor
 	{
 		return m_interval;
 	}
+
+	@Override
+	protected boolean shouldOutput() {
+		return m_current == 0;
+	}
+
+	@Override
+    protected void postCompute() {
+        m_current = (m_current + 1) % m_interval;
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        m_current = 0;
+    }
+
+    @Override
+    public CountDecimate duplicate() {
+        return new CountDecimate(m_interval, m_shouldProcessLastInputs);
+    }
+
 }

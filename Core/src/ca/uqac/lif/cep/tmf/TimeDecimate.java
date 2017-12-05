@@ -17,92 +17,86 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
-
-import ca.uqac.lif.cep.SingleProcessor;
-
 /**
  * After returning an input event, discards all others for the next
  * <i>n</i> seconds. This processor therefore acts as a rate limiter.
  * <p>
  * Note that this processor uses <code>System.currentTimeMillis()</code>
  * as its clock.
- * 
+ * Moreover, a mode can be specified in order to output the last input
+ * event of the trace if it has not been output already.
+ *
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class TimeDecimate extends SingleProcessor
-{
-	/**
-	 * Interval of time
-	 */
-	protected final long m_interval;
+public class TimeDecimate extends Decimate {
 
-	/**
-	 * The system time when the last event was output
-	 */
-	protected long m_timeLastSent;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7825576479352779012L;
 
-	/**
-	 * Instantiates a time decimator
-	 * @param interval The interval (in milliseconds) during which
-	 *   events should be discarded after an output event is produced
-	 */
-	public TimeDecimate(long interval)
-	{
-		super(1, 1);
-		m_interval = interval;
-		m_timeLastSent = -1;
-	}
-	
-	/**
-	 * Gets the time decimation interval
-	 * @return The interval (in milliseconds) during which
-	 *   events should be discarded after an output event is produced
-	 */
-	public long getInterval()
-	{
-		return m_interval;
-	}
+    /**
+     * Interval of time
+     */
+    protected final long m_interval;
 
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_timeLastSent = -1;
-	}
+    /**
+     * The system time when the last event was output
+     */
+    protected long m_timeLastSent;
 
-	@Override
-	@SuppressWarnings("squid:S3516")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		Object[] out = null;
-		if (m_timeLastSent < 0)
-		{
-			out = inputs;
-			m_timeLastSent = System.currentTimeMillis();
-		}
-		else
-		{
-			long current_time = System.currentTimeMillis();
-			long time_dif = current_time - m_timeLastSent;
-			if (time_dif >= m_interval)
-			{
-				out = inputs;
-				m_timeLastSent = current_time;
-			}
-		}
-		if (out != null)
-		{
-			outputs.add(out);
-			return true;
-		}
-		return true;
-	}
+    /**
+     * Instantiates a time decimator
+     * @param interval The interval (in milliseconds) during which
+     *   events should be discarded after an output event is produced
+     * @param shouldProcessLastInputs Default to false. Indicates if
+     *   the last input event of the trace should be output in case it
+     *   does not match the decimation interval
+     */
+    public TimeDecimate(long interval, boolean shouldProcessLastInputs) {
+        super(shouldProcessLastInputs);
+        m_interval = interval;
+        m_timeLastSent = -1;
+    }
 
-	@Override
-	public TimeDecimate duplicate()
-	{
-		return new TimeDecimate(m_interval);
-	}
+    /**
+     * Instantiates a time decimator
+     * @param interval The interval (in milliseconds) during which
+     *   events should be discarded after an output event is produced
+     */
+    public TimeDecimate(long interval) {
+        this(interval, false);
+    }
+
+    /**
+     * Gets the time decimation interval
+     * @return The interval (in milliseconds) during which
+     *   events should be discarded after an output event is produced
+     */
+    public long getInterval()
+    {
+        return m_interval;
+    }
+
+    @Override
+    protected boolean shouldOutput() {
+        return m_timeLastSent < 0 || (System.currentTimeMillis() - m_timeLastSent) >= m_interval;
+    }
+
+    @Override
+    protected void postOutput() {
+        m_timeLastSent = System.currentTimeMillis();
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        m_timeLastSent = -1;
+    }
+
+    @Override
+    public TimeDecimate duplicate() {
+        return new TimeDecimate(m_interval, m_shouldProcessLastInputs);
+    }
 }

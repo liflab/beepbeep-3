@@ -181,7 +181,7 @@ public class ProcessorTest
 	}
 	
 	
-	
+
 	
 	@Test
 	public void testAdditionPush1() 
@@ -233,7 +233,7 @@ public class ProcessorTest
 			fail("Expected 3, got " + recv);
 		}
 	}
-	
+
 	@Test
 	public void testBinaryPull() 
 	{

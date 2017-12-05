@@ -50,7 +50,7 @@ import ca.uqac.lif.cep.util.Numbers;
  * Unit tests for classes of the TMF package.
  * @author Sylvain Hallé
  */
-public class TmfTest 
+public class TmfTest
 {
 	@Test
 	public void testReplace()
@@ -70,7 +70,7 @@ public class TmfTest
 		p.push("bar");
 		assertEquals(10, ((Integer) q.poll()).intValue());
 	}
-	
+
 	@Test
 	public void testTrim() 
 	{
@@ -398,7 +398,7 @@ public class TmfTest
 			sink.reset();
 		}
 	}
-	
+
 	@Test(timeout=1000)
 	public void testPump()
 	{
@@ -412,7 +412,7 @@ public class TmfTest
 		Queue<Object> q = sink.getQueue();
 		assertEquals(4, q.size());
 	}
-	
+
 	@Test(timeout=2000)
 	public void testPumpStop1() throws InterruptedException
 	{
@@ -431,7 +431,7 @@ public class TmfTest
 		Queue<Object> q = sink.getQueue();
 		assertTrue(q.size() > 4);
 	}
-	
+
 	@Test(timeout=2000)
 	public void testPumpStop2() throws InterruptedException
 	{
@@ -448,7 +448,7 @@ public class TmfTest
 		Queue<Object> q = sink.getQueue();
 		assertTrue(q.size() > 4);
 	}
-	
+
 	@Test
 	public void testTank()
 	{
@@ -478,7 +478,7 @@ public class TmfTest
 		pl.start();
 		pl.stop();
 	}
-	
+
 	@Test
 	public void testTankLast()
 	{
@@ -505,7 +505,7 @@ public class TmfTest
 		pl.start();
 		pl.stop();
 	}
-	
+
 	@Test(timeout=1000)
 	public void testTimeDecimate() throws InterruptedException
 	{
@@ -525,7 +525,7 @@ public class TmfTest
 		td = td.duplicate();
 		assertEquals(200, td.getInterval());
 	}
-	
+
 	@Test(timeout=1000)
 	public void testTimeDecimateReset() throws InterruptedException
 	{
@@ -543,7 +543,7 @@ public class TmfTest
 		td.reset();
 		assertEquals(NextStatus.YES, p.hasNextSoft());
 	}
-	
+
 	@Test
 	public void testSimpleFilter()
 	{
@@ -557,7 +557,7 @@ public class TmfTest
 		SimpleFilter filter2 = filter.duplicate();
 		assertEquals(Numbers.isEven, filter2.getCondition());
 	}
-	
+
 	@Test
 	public void testSimpleFilterClone()
 	{
