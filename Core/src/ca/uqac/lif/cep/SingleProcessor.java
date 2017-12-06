@@ -215,10 +215,13 @@ public abstract class SingleProcessor extends Processor
 		}
 		
 		@Override
-		public void notifyEndOfTrace() throws PushableException {
+		public void notifyEndOfTrace() 
+		{
 			// nothing to do if the pushable has already been notified
 			if(m_hasBeenNotifiedOfEndOfTrace)
+			{
 				return;
+			}
 			m_hasBeenNotifiedOfEndOfTrace = true;
 
 			m_tempQueue.clear();
@@ -250,7 +253,8 @@ public abstract class SingleProcessor extends Processor
 		 *
 		 * @param outs
 		 */
-		private final void outputEvent(boolean outs) {
+		private final void outputEvent(boolean outs) 
+		{
 			if (outs && !m_tempQueue.isEmpty())
 			{
 				for (Object[] evt : m_tempQueue)

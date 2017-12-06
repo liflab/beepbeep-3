@@ -27,13 +27,8 @@ package ca.uqac.lif.cep.tmf;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class CountDecimate extends Decimate {
-
-    /**
-     * Dummy UID
-     */
-    private static final long serialVersionUID = -1528026169905098741L;
-
+public class CountDecimate extends Decimate
+{
     /**
      * The decimation interval
      */

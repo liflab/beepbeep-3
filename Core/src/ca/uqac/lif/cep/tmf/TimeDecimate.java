@@ -29,13 +29,8 @@ package ca.uqac.lif.cep.tmf;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class TimeDecimate extends Decimate {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7825576479352779012L;
-
+public class TimeDecimate extends Decimate 
+{
     /**
      * Interval of time
      */

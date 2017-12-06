@@ -34,11 +34,21 @@ import ca.uqac.lif.cep.tmf.Pump;
 public class PushableTest
 {
 	@Test(expected=PushableException.class)
-	public void testPushableException1()
+	public void testUnaryPushableException1()
 	{
 		ApplyFunction div = new ApplyFunction(new FunctionTree(Numbers.division, new Constant(1), new StreamVariable(0)));
 		Pushable p = div.getPushableInput();
 		p.push(0);
+	}
+	
+	@Test(expected=PushableException.class)
+	public void testPushableException1()
+	{
+		ApplyFunction div = new ApplyFunction(new FunctionTree(Numbers.division, new StreamVariable(1), new StreamVariable(0)));
+		Pushable p1 = div.getPushableInput(0);
+		Pushable p2 = div.getPushableInput(1);
+		p1.push(0);
+		p2.push(0);
 	}
 	
 	@Test
