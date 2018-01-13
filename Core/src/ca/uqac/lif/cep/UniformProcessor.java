@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
@@ -259,7 +260,7 @@ public abstract class UniformProcessor extends SingleProcessor
 			{
 				if (o == null || !compute(new Object[]{o}, m_outputArray))
 				{
-					return null;
+					throw new NoSuchElementException();
 				}
 			}
 			catch (ProcessorException e)
@@ -270,6 +271,7 @@ public abstract class UniformProcessor extends SingleProcessor
 		}
 
 		@Override
+		@SuppressWarnings("squid:S2272") // since() pull throws the exception
 		public Object next() 
 		{
 			return pull();
