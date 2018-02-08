@@ -221,6 +221,12 @@ public abstract class UniformProcessor extends SingleProcessor
 		{
 			return this;
 		}
+		
+		@Override
+		public void remove() 
+		{
+			throw new UnsupportedOperationException();
+		}
 
 		@Override
 		public Object pullSoft() 

@@ -44,17 +44,17 @@ public class Strings
 	/**
 	 * Concatenates two strings
 	 */
-	public static class Concat extends BinaryFunction<String,String,String>
+	public static class Concat extends BinaryFunction<Object,Object,String>
 	{
 		protected Concat()
 		{
-			super(String.class, String.class, String.class);
+			super(Object.class, Object.class, String.class);
 		}
 
 		@Override
-		public String getValue(String s1, String s2)
+		public String getValue(Object s1, Object s2)
 		{
-			return s1 + s2;
+			return s1.toString() + s2.toString();
 		}
 	}
 	

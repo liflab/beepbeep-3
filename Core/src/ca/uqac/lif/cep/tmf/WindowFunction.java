@@ -116,4 +116,13 @@ public class WindowFunction extends SingleProcessor
 		wf.m_window.addAll(m_window);
 		return wf;
 	}
+	
+	/**
+	 * Gets the width of the window for this processor
+	 * @return The width of the window
+	 */
+	public int getWidth()
+	{
+		return m_width;
+	}
 }

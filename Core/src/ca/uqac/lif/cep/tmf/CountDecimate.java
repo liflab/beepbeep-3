@@ -65,7 +65,8 @@ public class CountDecimate extends Decimate
      *                                output the last input events of the trace even if it
      *                                does not correspond to the decimation interval.
      */
-    public CountDecimate(int interval, boolean shouldProcessLastInputs) {
+    public CountDecimate(int interval, boolean shouldProcessLastInputs)
+    {
         super(shouldProcessLastInputs);
         m_interval = interval;
         m_current = 0;
