@@ -1,8 +1,9 @@
 BeepBeep 3: an expressive query processor for event streams
 ===========================================================
 
-[![Travis](https://img.shields.io/travis/liflab/beepbeep-3.svg?style=flat-square)]()
-[![SonarCloud Coverage](https://sonarcloud.io/api/badges/measure?key=liflab%3Abeepbeep-3&metric=coverage)]()
+[![Travis](https://img.shields.io/travis/liflab/beepbeep-3.svg?style=flat-square)](https://travis-ci.org/liflab/beepbeep-3)
+[![Coverity Scan Build Status](https://img.shields.io/coverity/scan/15149.svg?style=flat-square)](https://scan.coverity.com/projects/liflab-beepbeep-3)
+[![SonarCloud Coverage](https://sonarcloud.io/api/badges/measure?key=liflab%3Abeepbeep-3&metric=coverage)](https://sonarcloud.io/dashboard?id=liflab%3Abeepbeep-3)
 
 BeepBeep is an event stream query engine. It can take as input various
 sources of *events*, pipe them through various *processors*, and produce
@@ -63,17 +64,7 @@ system by typing:
     ant download-deps
 
 This will put the missing JAR files in the `deps` folder in the project's
-root. These libraries should then be put somewhere in the classpath, such as
-in Java's extension folder (don't leave them there, it won't work). You can
-do that by typing (**with administrator rights**):
-
-    ant install-deps
-
-or by putting them manually in the extension folder. Type `ant init` and it
-will print out what that folder is for your system.
-
-Do **not** create subfolders there (i.e. put the archive directly in that
-folder).
+root.
 
 ### Compiling
 
@@ -101,6 +92,18 @@ these tests in HTML format is availble in the folder `tests/junit`, which
 is automatically created. Code coverage is also computed with
 [JaCoCo](http://www.eclemma.org/jacoco/); a detailed report is available
 in the folder `tests/coverage`.
+
+### Coverity Scan
+
+BeepBeep uses [Coverity Scan](https://scan.coverity.com) for static analysis
+of its source code and defect detection. Instructions for using Coverity Scan
+locally are detailed [here](https://scan.coverity.com/download?tab=java). In
+a nutshell, if Coverity Scan is installed, type the following:
+
+    cov-build --dir cov-int ant build
+
+(Make sure to clean up the directory first by launching `ant clean`, followed
+by `ant download-deps`.)
 
 Developing BeepBeep using Eclipse                                {#eclipse}
 ---------------------------------
