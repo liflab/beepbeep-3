@@ -1,289 +1,707 @@
-<!DOCTYPE HTML>
-<!--
-	Verti by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
---><html>
-<head>
-		<title>Home - BeepBeep 3</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css">
-		<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
-		<link rel="stylesheet" href="assets/css/custom.css">
-		<meta name="author" content="Laboratoire d'informatique formelle">
-		<link rel="stylesheet" href="assets/js/styles/default.css">
-		<script src="assets/js/highlight.pack.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-	</head>
-	<body class="homepage">
-		<div id="page-wrapper">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="Bootstrap, Parallax, Template, Registration, Landing">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Grayrids">
+    <title>BeepBeep 3</title>
 
-			<!-- Header -->
-				<div id="header-wrapper">
-					<header id="header" class="container">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/line-icons.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.css">
+    <link rel="stylesheet" href="css/nivo-lightbox.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <link rel="stylesheet" href="css/responsive.css">
 
-						<!-- Logo -->
-							<div id="logo">
-								<h1><a href="index.html">BeepBeep 3</a></h1>
-								<!--<span>by HTML5 UP</span>-->
-							</div>
+  </head>
+  <body>
 
-						<!-- Nav -->
-						<nav id="nav">
-	<ul>
-		<li><a href="index.html">Home</a></li>
-		<li><a href="quickintro.html">In 5 minutes</a></li>
-		<li>
-<a href="features.html">Features</a>
-			<ul>
-			  <li><a href="use-cases.html">Examples of uses</a></li>
-				<li><a href="palettes.html">Available extensions</a></li>
-			</ul>
-		</li>
-		<li><a href="get.html">Get BeepBeep</a></li>
-		<li>
-<a href="documentation.html">Documentation</a>
-		  <ul>
-		    <li><a href="guide/index.html">User Guide</a></li>
-		    <li><a href="javadoc/index.html">API Reference</a></li>
-		  </ul>
-		</li>
-	</ul>
-</nav>
-<!-- :indentSize=2:tabSize=2: -->
+    <!-- Header Section Start -->
+    <header id="hero-area" data-stellar-background-ratio="0.5">    
+      <!-- Navbar Start -->
+      <nav class="navbar navbar-expand-lg fixed-top scrolling-navbar indigo">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <a href="index.html" class="navbar-brand"><img class="img-fulid" src="img/logo.png" alt=""></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="lnr lnr-menu"></i>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="main-navbar">
+            <ul class="navbar-nav mr-auto w-100 justify-content-end">
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#hero-area">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#use-cases">Cases</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#features">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#download">Download</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#documentation">Documentation</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#team">Team</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-					</header>
-				</div>
-<!-- :indentSize=2:tabSize=2: -->
-<!--<h2>Home</h2>
+        <!-- Mobile Menu Start -->
+        <ul class="mobile-menu">
+           <li>
+              <a class="page-scroll" href="#hero-area">Home</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#use-cases">Cases</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#features">Features</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#download">Download</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#documentation">Documentation</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#team">Team</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#contact">Contact</a>
+            </li>
+        </ul>
+        <!-- Mobile Menu End -->
 
-<!-- Banner -->
-
-<div id="banner-wrapper">
-    <div id="banner" class="box container">
-        <div class="row">
-            <div class="7u 12u(medium)">
-                <h3 style="font-size: 300%">Event processing made easy.</h3>
-                <p style="font-size:150%">Search, pipe and crunch event streams of all kinds with an event stream engine anyone can use.</p>
+      </nav>
+      <!-- Navbar End -->   
+      <div class="container">      
+        <div class="row justify-content-md-center">
+          <div class="col-md-10">
+            <div class="contents text-center">
+              <h1 class="wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="0.3s">Event stream processing made easy</h1>
+              <p class="lead  wow fadeIn" data-wow-duration="1000ms" data-wow-delay="400ms">BeepBeep 3 is a free and open source stream processing engine that allows you to quickly and easily process log data and live event feeds. With BeepBeep, you can get up and running in five minutes and just a few lines of code.</p>
+              <a href="#download" class="btn btn-common wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">Download</a>
             </div>
-            <div class="5u 12u(medium)">
+          </div>
+        </div> 
+      </div>           
+    </header>
+    <!-- Header Section End --> 
+
+    <!-- Services Section Start -->
+    <section id="use-cases" class="section">
+      <div class="container">
+        <div class="section-header">          
+          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Use Cases</h2>
+          <hr class="lines wow zoomIn" data-wow-delay="0.3s">
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">You can use BeepBeep on anything that produces a sequence of events: analyze a web server log, find patterns in a stream of network packets, look for policy violations in the execution of a system, etc. BeepBeep can read data from a pre-recorded file (offline analysis), or even be connected directly to the event source and compute its result as the input events come in (online analysis).</p>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.2s">
+              <div class="icon">
+                <i class="lnr lnr-pencil"></i>
+              </div>
+              <h4>Log analysis</h4>
+              <p>Crunch system logs produced a web server, an operating system or any other application.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.8s">
+              <div class="icon">
+                <i class="lnr lnr-code"></i>
+              </div>
+              <h4>Real-time monitoring</h4>
+              <p>Receive data feeds from sensors, an application under test or a network capture.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="1.2s">
+              <div class="icon">
+                <i class="lnr lnr-mustache"></i>
+              </div>
+              <h4>Business Consultancy</h4>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Services Section End -->
+
+    <!-- Features Section Start -->
+    <section id="features" class="section" data-stellar-background-ratio="0.2">
+      <div class="container">
+        <div class="section-header">          
+          <h2 class="section-title">Some Features</h2>
+          <hr class="lines">
+          <p class="section-subtitle">BeepBeep 3 is an event stream engine: it receives a stream of events produced by some application or process, and produces in realtime a new stream of events. Internally, BeepBeep analyzes and transforms the event stream by passing it through a chain of basic event processors, with the output of one (or more) processor being piped to the input of the next one. Here are some of the features that make using BeepBeep a fun and easy way to process data streams.</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="container">
+              <div class="row">
+                 <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
+                    <span class="icon">
+                      <i class="lnr lnr-rocket"></i>
+                    </span>
+                    <div class="text">
+                      <h4>Lightweight</h4>
+                      <p>BeepBeep's core is a Java library of less than 200 kilobytes. No dependencies, just download and use.</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
+                    <span class="icon">
+                      <i class="lnr lnr-laptop-phone"></i>
+                    </span>
+                    <div class="text">
+                      <h4>Open source</h4>
+                      <p>BeepBeep is free software distributed under the GNU LGPL.</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
+                    <span class="icon">
+                      <i class="lnr lnr-layers"></i>
+                    </span>
+                    <div class="text">
+                      <h4>Simple</h4>
+                      <p>You can start crunching data streams in just a few lines of code. No need to learn a query language!</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
+                    <span class="icon">
+                      <i class="lnr lnr-cog"></i>
+                    </span>
+                    <div class="text">
+                      <h4>Versatile</h4>
+                      <p>Dozens of extensions exist for BeepBeep, from network packet analysis to data mining.</p>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <!--
+          <div class="col-lg-4 col-xs-12">
+            <div class="show-box">
+              <img class="img-fulid" src="img/features/feature.png" alt="">
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </section>
+    <!-- Features Section End -->    
+
+    <!-- Start Video promo Section -->
+    <!--
+    <section class="video-promo section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+              <div class="video-promo-content text-center">
+                <h2 class="wow zoomIn" data-wow-duration="1000ms" data-wow-delay="100ms">Watch Our Intro video</h2>
+                <p class="wow zoomIn" data-wow-duration="1000ms" data-wow-delay="100ms">Aliquam vestibulum cursus felis. In iaculis iaculis sapien ac condimentum. Vestibulum congue posuere lacus, id tincidunt nisi porta sit amet. Suspendisse et sapien varius, pellentesque dui non, semper orci.</p>
+                <a href="https://www.youtube.com/watch?v=IXoMDwh4Cq8" class="video-popup wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.3s"><i class="lnr lnr-film-play"></i></a>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+    <!-- End Video Promo Section -->
+
+    <!-- Start Pricing Table Section -->
+    <div id="download" class="section pricing-section">
+      <div class="container">
+        <div class="section-header">          
+          <h2 class="section-title">Download</h2>
+          <hr class="lines">
+          <p class="section-subtitle">BeepBeep is free and open source software.</p>
+        </div>
+
+        <div class="row pricing-tables">
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="pricing-table">
+              <div class="pricing-details">
+                <h2>Core</h2>
+                <!--<span>$00</span>-->
                 <ul>
-                    <li><a href="get.html" class="button big icon fa-arrow-circle-right">Download it</a></li>
-                    
+                  <li>BeepBeep's standard library</li>
+                  <li>Pre-compiled binaries available</li>
+                  <li>200 kb stand-alone JAR</li>
                 </ul>
+              </div>
+              <div class="plan-button">
+                <a href="https://github.com/liflab/beepbeep-3/releases" class="btn btn-common">Download from GitHub</a>
+              </div>
             </div>
+          </div>
+
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="pricing-table">
+              <div class="pricing-details">
+                <h2>Palettes</h2>
+                <!--<span>$3.99</span>-->
+                <ul>
+                  <li>Bundle of frequently used extensions</li>
+                  <li>Manipulate tuples, sets, XML</li>
+                  <li>Basic data mining functions</li>
+                </ul>
+              </div>
+              <div class="plan-button">
+                <a href="https://github.com/liflab/beepbeep-3-palettes/releases" class="btn btn-common">Download from GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <!--
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="pricing-table">
+              <div class="pricing-details">
+                <h2>Premium</h2>
+                <span>$9.50</span>
+                <ul>
+                  <li>Consectetur adipiscing</li>
+                  <li>Nunc luctus nulla et tellus</li>
+                  <li>Suspendisse quis metus</li>
+                  <li>Vestibul varius fermentum erat</li>
+                </ul>
+              </div>
+              <div class="plan-button">
+                <a href="#" class="btn btn-common">Buy Now</a>
+              </div>
+            </div>
+          </div>
+          -->
+
         </div>
+      </div>
     </div>
-</div>
+    <!-- End Pricing Table Section -->
 
-<p><!-- Features -->
-<!--
-<div id="features-wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="4u 12u(medium)">
-
-                    <section class="box feature">
-                        <a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-                        <div class="inner">
-                            <header>
-                                <h3>Easy to extend</h3>
-                                <p>The processor with a can-do attitude</p>
-                            </header>
-                            <p>Know how to program in Java? Use BeepBeep as a library and pipe its event processors by yourself. Or, create your own processors in a few lines of code, and even extend ESQL to use them in your queries.</p>
-                        </div>
-                    </section>
-
+    <!-- Counter Section Start -->
+    <!--
+    <div class="counters section" data-stellar-background-ratio="0.5">
+      <div class="container">
+        <div class="row"> 
+          <div class="col-sm-6 col-md-3 col-lg-3">
+            <div class="facts-item">   
+              <div class="icon">
+                <i class="lnr lnr-clock"></i>
+              </div>             
+              <div class="fact-count">
+                <h3><span class="counter">1589</span></h3>
+                <h4>Working Hours</h4>
+              </div>
             </div>
-            <div class="4u 12u(medium)">
-
-                    <section class="box feature">
-                        <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-                        <div class="inner">
-                            <header>
-                                <h3>JDBC compatible</h3>
-                                <p>Want to do some stream processing in your Java program?</p>
-                            </header>
-                            <p>You can use BeepBeep as a drop-in replacement anywhere you access a database with JDBC.</p>
-                        </div>
-                    </section>
-
+          </div>
+          <div class="col-sm-6 col-md-3 col-lg-3">
+            <div class="facts-item">   
+              <div class="icon">
+                <i class="lnr lnr-briefcase"></i>
+              </div>            
+              <div class="fact-count">
+                <h3><span class="counter">699</span></h3>
+                <h4>Completed Projects</h4>
+              </div>
             </div>
-            <div class="4u 12u(medium)">
-
-                    <section class="box feature">
-                        <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-                        <div class="inner">
-                            <header>
-                                <h3>Performant and versatile</h3>
-                                <p>A small engine that can play with the big boys</p>
-                            </header>
-                            <p>BeepBeep compares favorably with larger event stream engines on various kinds of queries. It also has a small footprint (less than 300 kb) and does not rely on any library, meaning it can sneak in where other engines can't go.</p>
-                        </div>
-                    </section>
-
+          </div>
+          <div class="col-sm-6 col-md-3 col-lg-3">
+            <div class="facts-item"> 
+              <div class="icon">
+                <i class="lnr lnr-user"></i>
+              </div>              
+              <div class="fact-count">
+                <h3><span class="counter">203</span></h3>
+                <h4>No. of Clients</h4>
+              </div>
             </div>
+          </div>
+          <div class="col-sm-6 col-md-3 col-lg-3">
+            <div class="facts-item"> 
+              <div class="icon">
+                <i class="lnr lnr-heart"></i>
+              </div>              
+              <div class="fact-count">
+                <h3><span class="counter">1689</span></h3>
+                <h4>Peoples Love</h4>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
---></p>
+    -->
+    <!-- Counter Section End -->
 
-<!-- Main -->
-
-<div id="main-wrapper">
-    <div class="container">
-        <div class="row 200%">
-            <div class="4u 12u(medium)">
-
-                <!-- Sidebar -->
-                    <div id="sidebar">
-                        <section>
-                        <div class="image fit">
-                            <img src="images/Pipes-800px.png" alt="Pipes">
-                        </div>
-                        </section>
-                    </div>
-
+    <!-- testimonial Section Start -->
+    <!--
+    <div id="testimonial" class="section" data-stellar-background-ratio="0.1">
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col-md-12">
+            <div class="touch-slider owl-carousel owl-theme">
+              <div class="testimonial-item">
+                <img src="img/testimonial/customer1.jpg" alt="Client Testimonoal" />
+                <div class="testimonial-text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. send do <br> adipisicing ciusmod tempor incididunt ut labore et</p>
+                  <h3>Jone Deam</h3>
+                  <span>Fondor of Jalmori</span>
+                </div>
+              </div>
+              <div class="testimonial-item">
+                <img src="img/testimonial/customer2.jpg" alt="Client Testimonoal" />
+                <div class="testimonial-text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. send do <br> adipisicing ciusmod tempor incididunt ut labore et</p>
+                  <h3>Oidila Matik</h3>
+                  <span>President Lexo Inc</span>
+                </div>
+              </div>
+              <div class="testimonial-item">
+                <img src="img/testimonial/customer3.jpg" alt="Client Testimonoal" />
+                <div class="testimonial-text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. send do <br> adipisicing ciusmod tempor incididunt ut labore et</p>
+                  <h3>Alex Dattilo</h3>
+                  <span>CEO Optima Inc</span>
+                </div>
+              </div>
+              <div class="testimonial-item">
+                <img src="img/testimonial/customer4.jpg" alt="Client Testimonoal" />
+                <div class="testimonial-text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. send do <br> adipisicing ciusmod tempor incididunt ut labore et</p>
+                  <h3>Paul Kowalsy</h3>
+                  <span>CEO & Founder</span>
+                </div>
+              </div>
             </div>
-            <div class="8u 12u(medium) important(medium)">
-
-                <!-- Content -->
-                    <div id="content">
-                        <section class="last">
-                            <h3>What is BeepBeep?</h3>
-                            
-                            <p>BeepBeep 3 is an <em>event stream engine</em>: it receives a stream of events produced by some application or process, and produces in realtime a new stream of events. Internally, BeepBeep analyzes and transforms the event stream by passing it through a chain of basic event processors, with the output of one (or more) processor being piped to the input of the next one. The exact configuration of these processors is completely left to the user and can be specified through various means, including ESQL, a query language based on SQL, or programmatically using Java.</p>
-                            
-                            
-                            <a href="quickintro.html" class="button icon fa-arrow-circle-right">Learn more</a>
-                        </section>
-                    </div>
-
-            </div>
-        </div>
+          </div>
+        </div>        
+      </div>
     </div>
+    -->
+    <!-- testimonial Section Start -->
     
-    <div class="container">
-        <div class="row 200%">
-            <div class="4u 12u(medium)">
-
-                <!-- Sidebar -->
-                    <div id="sidebar">
-                        <section>
-                        <div class="image fit">
-                            <img src="log.png" alt="Log">
-                        </div>
-                        </section>
-                    </div>
-
-            </div>
-            <div class="8u 12u(medium) important(medium)">
-
-                <!-- Content -->
-                    <div id="content">
-                        <section class="last">
-                            <h3>What can I do with it?</h3>
-                            
-                            <p>You can use BeepBeep on anything that produces
-                            a sequence of events: analyze a web server log, 
-                            find patterns in a stream of network packets, look for 
-                            policy violations in the execution of a system, etc.
-                            BeepBeep can read data from a pre-recorded file (<em>offline</em>
-                            analysis), or even be connected directly to the event
-                            source and compute its result as the input events
-                            come in (<em>online</em> analysis).</p>
-                            
-                            
-                            <a href="use-cases.html" class="button icon fa-arrow-circle-right">Look at some use cases</a>
-                        </section>
-                    </div>
-
-            </div>
+        <!-- Blog Section -->
+    <section id="documentation" class="section">
+      <!-- Container Starts -->
+      <div class="container">
+        <div class="section-header">          
+          <h2 class="section-title">Documentation</h2>
+          <hr class="lines">
+          <p class="section-subtitle">There exist many resources to help you learn how to use BeepBeep quickly and easily.</p>
         </div>
-    </div>
-</div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-item">
+            <!-- Blog Item Starts -->
+            <div class="blog-item-wrapper">
+              <div class="blog-item-img">
+                <a href="https://liflab.gitbooks.io/event-stream-processing-with-beepbeep-3/">
+                  <img src="img/blog/img1.png" alt="Book">
+                </a>                
+              </div>
+              <div class="blog-item-text"> 
+                <!--<div class="meta-tags">
+                  <span class="date"><i class="lnr  lnr-clock"></i>2 Days Ago</span>
+                  <span class="comments"><a href="#"><i class="lnr lnr-bubble"></i> 24 Comments</a></span>
+                </div> -->
+                <h3>
+                  <a href="https://liflab.gitbooks.io/event-stream-processing-with-beepbeep-3/">User manual</a>
+                </h3>
+                <p>
+                A complete, step-by-step manual explaining everything, from basic concepts to complex examples.
+                </p>
+                <a href="https://liflab.gitbooks.io/event-stream-processing-with-beepbeep-3/" class="btn-rm">Read More <i class="lnr lnr-arrow-right"></i></a>
+              </div>
+            </div>
+            <!-- Blog Item Wrapper Ends-->
+          </div>
 
-<!-- :mode=markdown:wrap=none: -->
---&gt;
-			<!-- Footer -->
-				<div id="footer-wrapper">
-					<footer id="footer" class="container">
-						<div class="row">
-							<div class="3u 6u(medium) 12u$(small)">
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-item">
+            <!-- Blog Item Starts -->
+            <div class="blog-item-wrapper">
+              <div class="blog-item-img">
+                <a href="https://liflab.github.io/beepbeep-3-examples/">
+                  <img src="img/blog/code.png" alt="">
+                </a>                
+              </div>
+              <div class="blog-item-text"> 
+                <!--
+                <div class="meta-tags">
+                  <span class="date"><i class="lnr  lnr-clock"></i>2 Days Ago</span>
+                  <span class="comments"><a href="#"><i class="lnr lnr-bubble"></i> 24 Comments</a></span>
+                </div>
+                -->
+                <h3>
+                  <a href="https://liflab.github.io/beepbeep-3-examples/">Code examples</a>
+                </h3>
+                <p>
+                A large repository of code examples using BeepBeep, showcasing a wide spectrum of capabilities.
+                </p>
+                <a href="https://liflab.github.io/beepbeep-3-examples/" class="btn-rm">Read More <i class="lnr lnr-arrow-right"></i></a>
+              </div>
+            </div>
+            <!-- Blog Item Wrapper Ends-->
+          </div>
 
-								<!-- Links -->
-									<section class="widget links">
-										<h3>Made at LIF</h3>
-										<img src="http://liflab.github.io/beepbeep-3/images/logo-shadow.png" alt="LIF"><br>
-										BeepBeep was developed through the research done at <a href="http://liflab.ca">LIF</a>, the Formal Computer Science Laboratory in <a href="http://www.uqac.ca/">Universit&eacute; du Qu&eacute;bec &agrave; Chicoutimi</a>, Canada.
-									</section>
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-item">
+            <!-- Blog Item Starts -->
+            <div class="blog-item-wrapper">
+              <div class="blog-item-img">
+                <a href="https://www.researchgate.net/project/BeepBeep-3-Event-Stream-Query-Engine">
+                  <img src="img/blog/img2.png" alt="">
+                </a>                
+              </div>
+              <div class="blog-item-text"> 
+                <!--
+                <div class="meta-tags">
+                  <span class="date"><i class="lnr  lnr-clock"></i>2 Days Ago</span>
+                  <span class="comments"><a href="#"><i class="lnr lnr-bubble"></i> 24 Comments</a></span>
+                </div> 
+                -->
+                <h3>
+                  <a href="https://www.researchgate.net/project/BeepBeep-3-Event-Stream-Query-Engine">Research papers</a>
+                </h3>
+                <p>
+                  In-depth scientific publications describing various technical aspects of the BeepBeep stream engine.
+                </p>
+                <a href="https://www.researchgate.net/project/BeepBeep-3-Event-Stream-Query-Engine" class="btn-rm">Read More <i class="lnr lnr-arrow-right"></i></a>
+              </div>
+            </div>
+            <!-- Blog Item Wrapper Ends-->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- blog Section End -->
+    
+    <!-- Team section Start -->
+    <section id="team" class="section">
+      <div class="container">
+        <div class="section-header">          
+          <h2 class="section-title">Our Team</h2>
+          <hr class="lines">
+          <p class="section-subtitle">BeepBeep was developed through the research done at <a href="https://liflab.ca/">LIF</a>, the Formal Computer Science Laboratory in <a href="http://www.uqac.ca/">Université du Québec à Chicoutimi</a>, Canada. BeepBeep's development is part of the activities of the <strong>Canada Research Chair on Software Specification, Testing and Verification</strong>.</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-xs-12">
+            <div class="single-team">
+              <img src="img/team/team1.jpg" alt="">
+              <div class="team-details">
+                <div class="team-inner">
+                  <h4 class="team-title">Pr. Sylvain Hallé</h4>
+                  <p>Associate professor, UQAC<br/>Canada Research Chair</p>
+                  <ul class="social-list">
+                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-xs-12">
+            <div class="single-team">
+              <img src="img/team/team2.jpg" alt="">
+              <div class="team-details">
+                <div class="team-inner">
+                  <h4 class="team-title">Pr. Raphaël Khoury</h4>
+                  <p>Assistant professor, UQAC</p>
+                  <ul class="social-list">
+                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-xs-12">
+            <div class="single-team">
+              <img src="img/team/team3.jpg" alt="">
+              <div class="team-details">
+                <div class="team-inner">                  
+                  <h4 class="team-title">Quentin Betti</h4>
+                  <p>PhD Student, UQAC</p>
+                  <ul class="social-list">
+                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--
+          <div class="col-lg-3 col-md-6 col-xs-12">
+            <div class="single-team">
+              <img class="img-fulid" src="img/team/team4.jpg" alt="">
+              <div class="team-details">
+                <div class="team-inner">
+                  <h4 class="team-title">Patricia Green</h4>
+                  <p>Graphic Designer</p>
+                  <ul class="social-list">
+                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </section>
+    <!-- Team section End -->
 
-							</div>
-							<div class="3u 6u$(medium) 12u$(small)">
+    <!-- Contact Section Start -->
+    <section id="contact" class="section" data-stellar-background-ratio="-0.2">      
+      <div class="contact-form">
+        <div class="container">
+          <div class="row">     
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+              <div class="contact-us">
+                <h3>Contact Us</h3>
+                <div class="contact-address">
+                  <p>Laboratoire d'informatique formelle<br/>Université du Québec à Chicoutimi<br/>Chicoutimi, Québec, Canada</p>
+                  <p class="phone">Phone: <span>(+1 418 545 5011 x5280)</span></p>
+                  <p class="email">E-mail: <span>(shalle@acm.org)</span></p>
+                </div>
+                <div class="social-icons">
+                  <ul>
+                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li class="dribbble"><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>     
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+              <div class="contact-block">
+                <form id="contactForm">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required data-error="Please enter your name">
+                        <div class="help-block with-errors"></div>
+                      </div>                                 
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="text" placeholder="Your Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
+                        <div class="help-block with-errors"></div>
+                      </div> 
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group"> 
+                        <textarea class="form-control" id="message" placeholder="Your Message" rows="8" data-error="Write your message" required></textarea>
+                        <div class="help-block with-errors"></div>
+                      </div>
+                      <div class="submit-button text-center">
+                        <button class="btn btn-common" id="submit" type="submit">Send Message</button>
+                        <div id="msgSubmit" class="h3 text-center hidden"></div> 
+                        <div class="clearfix"></div> 
+                      </div>
+                    </div>
+                  </div>            
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>           
+    </section>
+    <!-- Contact Section End -->
 
-								<!-- Links -->
-									<section class="widget links">
-										<h3>Interested?</h3>
-										<p>BeepBeep is free software, released under the
-										<a href="https://www.gnu.org/copyleft/lesser.html">GNU LGPL</a>.
-										This means you can include it as a library in any project,
-										including closed-source commercial software.</p>
-									</section>
+    <!-- Footer Section Start -->
+    <footer>          
+      <div class="container">
+        <div class="row">
+          <!-- Footer Links -->
+          <div class="col-lg-6 col-sm-6 col-xs-12">
+            <ul class="footer-links">
+              <li>
+                <a href="#">Homepage</a>
+              </li>
+              <li>
+                <a href="#download">Download</a>
+              </li>
+              <li>
+                <a href="#team">About Us</a>
+              </li>
+              <li>
+                <a href="#contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-xs-12">
+            <div class="copyright">
+              <p>All copyrights reserved &copy; 2018 - Designed & Developed by <a rel="nofollow" href="https://uideck.com">UIdeck</a></p>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </footer>
+    <!-- Footer Section End --> 
 
-							</div>
+    <!-- Go To Top Link -->
+    <a href="#" class="back-to-top">
+      <i class="lnr lnr-arrow-up"></i>
+    </a>
+    
+    <div id="loader">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>     
 
-							<div class="3u 6u$(medium) 12u$(small)">
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="js/jquery-min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.mixitup.js"></script>
+    <script src="js/nivo-lightbox.js"></script>
+    <script src="js/owl.carousel.js"></script>    
+    <script src="js/jquery.stellar.min.js"></script>    
+    <script src="js/jquery.nav.js"></script>    
+    <script src="js/scrolling-nav.js"></script>    
+    <script src="js/jquery.easing.min.js"></script>    
+    <script src="js/smoothscroll.js"></script>    
+    <script src="js/jquery.slicknav.js"></script>     
+    <script src="js/wow.js"></script>   
+    <script src="js/jquery.vide.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>    
+    <script src="js/jquery.magnific-popup.min.js"></script>    
+    <script src="js/waypoints.min.js"></script>    
+    <script src="js/form-validator.min.js"></script>
+    <script src="js/contact-form-script.js"></script>   
+    <script src="js/main.js"></script>
 
-								<!-- Contact -->
-									<section class="widget contact last">
-										<h3>Contact Us</h3>
-										<ul>
-											<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>-->
-											<li><a href="https://www.facebook.com/liflab" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-											<!--<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-											<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-											<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>-->
-										</ul>
-										<p>Universit&eacute; du Qu&eacute;bec &agrave; Chicoutimi<br>
-										Chicoutimi, QC G7H 2B1<br>
-										Canada</p>
-									</section>
-
-							</div>
-						</div>
-						<div class="row">
-							<div class="12u">
-								<div id="copyright">
-									<ul class="menu">
-										<li>&copy; 2015-2016 Laboratoire d'informatique formelle. All rights reserved</li>
-<li>Design: <a href="http://html5up.net">HTML5 UP</a>
-</li>
-<li>This site is generated by <a href="http://github.com/sylvainhalle/FantasticWindmill">Fantastic Windmill</a>
-</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</footer>
-				</div>
-
-			</div>
-
-		<!-- Scripts -->
-
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-			<!--
-You are viewing a page using the REMOTE version of the site.
-Insert here whatever HTML/PHP code you'd like to have in the pages on
-your server only.
--->
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
@@ -299,9 +717,5 @@ your server only.
 </script>
 <noscript><p><img src="//leduotang.ca/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
-
-	
-
-
-</body>
-</html><!-- :indentSize=2:tabSize=2: -->
+  </body>
+</html>
