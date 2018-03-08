@@ -17,6 +17,7 @@ doxygen/
 /dep/
 /tests/
 /html/
+/cov-int/
 
 # Top-level jar, but not jars in subfolders (if any)
 *.jar
@@ -65,3 +66,5 @@ jacoco.exec
 .idea/
 *.iml
 out/
+
+beepbeep*.zip
