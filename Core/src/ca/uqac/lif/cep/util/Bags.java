@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -43,13 +43,18 @@ public class Bags
 {
 	protected Bags()
 	{
-		// Utility class
+		// Utility class 
 	}
 	
 	/**
-	 * Checks if a set is contains another
+	 * Checks if a collectioncontains another
 	 */
 	public static final Contains contains = new Contains();
+	
+	/**
+	 * Gets the size of a collection
+	 */
+	public static final GetSize getSize = new GetSize();
 	
 	/**
 	 * Gets all the elements of the collection that satisfy some condition.
@@ -348,6 +353,27 @@ public class Bags
 		public Class<?> getOutputTypeFor(int index) 
 		{
 			return Set.class;
+		}
+	}
+	
+	/**
+	 * Gets the size of a collection
+	 */
+	public static class GetSize extends UnaryFunction<Object,Integer>
+	{
+		protected GetSize()
+		{
+			super(Object.class, Integer.class);
+		}
+
+		@Override
+		public Integer getValue(Object o)
+		{
+			if (o instanceof Collection)
+			{
+				return ((Collection<?>) o).size();
+			}
+			return 0;
 		}
 	}
 	
