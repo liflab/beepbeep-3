@@ -61,7 +61,7 @@ public abstract class Function implements DuplicableFunction
 	 * @ Any exception that may occur during the
 	 *   evaluation of a function
 	 */
-	public abstract void evaluate(Object[] inputs, Object[] outputs) ;
+	public abstract void evaluate(Object[] inputs, Object[] outputs);
 
 	/**
 	 * Gets the function's input arity, i.e. the number of arguments
@@ -82,7 +82,10 @@ public abstract class Function implements DuplicableFunction
 	 * Resets the function to its initial state. In the case of a
 	 * stateless function, nothing requires to be done.
 	 */
-	public abstract void reset();
+	public void reset()
+	{
+		// Do nothing
+	}
 
 	/**
 	 * Populates the set of classes accepted by the function for its
