@@ -32,21 +32,21 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * events. The processor is the fundamental class where all computation
  * occurs. All of BeepBeep's processors (including yours)
  * are descendants of this class.
- * <p>
+ * 
  * A processor is depicted graphically as a "box", with "pipes" representing
  * its input and output streams.
- * <p>
- * <img src="{@docRoot}/doc-files/Processor-generic.png" alt="Processor">
- * <p>
+ * 
+ * ![Processor]({@docRoot}/doc-files/Processor-generic.png)
+ * 
  * This class itself is abstract; nevertheless, it provides important
  * methods for handling input/output event queues, connecting processors
  * together, etc. However, if you write your own processor, you will
  * most likely want to inherit from its child, {@link SingleProcessor}, which
  * does some more work for you.
- * <p>
+ * 
  * The {@link Processor} class does not assume anything about the type of
  * events being input or output. All its input and output queues are
- * therefore declared as containing instances of <code>Object</code>, Java's
+ * therefore declared as containing instances of `Object`, Java's
  * most generic type.
  * 
  * @author Sylvain Hallé

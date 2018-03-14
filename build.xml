@@ -229,6 +229,7 @@
         <pathelement location="${build.libdir}/${junit.jarname}"/>
         <pathelement location="${build.libdir}/${junit.hamcrest}"/>
       </classpath>
+      <doclet name="com.visural.doclets.markdown.standard.Standard" path="lib/MarkdownDoclet-3.0.jar"></doclet>
     </javadoc>
   </target>
   
