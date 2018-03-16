@@ -17,15 +17,20 @@
  */
 package ca.uqac.lif.cep.util;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.functions.Function;
 
 /**
  * A container object for functions and processors applying to lists.
@@ -36,6 +41,81 @@ public class Lists
 	private Lists()
 	{
 		// Utility class
+	}
+	
+	/**
+	 * Common ancestor to {@link TimePack} and {@link Pack}.
+	 */
+	protected static abstract class AbstractPack extends SingleProcessor
+	{
+		/**
+		 * The list of events accumulated since the last output
+		 */
+		protected List<Object> m_packedEvents;
+		
+		/**
+		 * A lock to access the list of objects
+		 */
+		protected Lock m_lock;
+
+		public AbstractPack(int in_arity, int out_arity)
+		{
+			super(in_arity, out_arity);
+			m_lock = new ReentrantLock();
+			m_packedEvents = newList();
+		}
+		
+		/**
+		 * Gets a new empty list of objects
+		 * @return The list
+		 */
+		protected List<Object> newList()
+		{
+			return new LinkedList<Object>();
+		}
+	}
+	
+	/**
+	 * Accumulates events from a first input pipe, and sends them in a burst
+	 * into a list based on the Boolean value received on its second input
+	 * pipe. A value of {@code true} triggers the output of a list, while a
+	 * value of {@code false} accumulates the event into the existingn list.
+	 * <p>
+	 * This processor is represented graphically as follows:
+	 * <p>
+	 * <a href="{@docRoot}/doc-files/ListPacker.png"><img
+	 *   src="{@docRoot}/doc-files/ListPacker.png"
+	 *   alt="Processor graph"></a>
+	 * 
+	 * @author Sylvain Hallé
+	 */
+	public static class Pack extends AbstractPack
+	{
+		/**
+		 * Creates a new Pack processor
+		 */
+		public Pack()
+		{
+			super(2, 1);
+		}
+
+		@Override
+		public Processor duplicate()
+		{
+			return new Pack();
+		}
+
+		@Override
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
+		{
+			if ((Boolean) inputs[1])
+			{
+				outputs.add(new Object[]{m_packedEvents});
+				m_packedEvents = newList();
+			}
+			m_packedEvents.add(inputs[0]);
+			return true;
+		}
 	}
 	
 	/**
@@ -51,18 +131,8 @@ public class Lists
 	 * 
 	 * @author Sylvain Hallé
 	 */
-	public static class Pack extends SingleProcessor 
+	public static class TimePack extends AbstractPack 
 	{	
-		/**
-		 * The list of events accumulated since the last output
-		 */
-		protected List<Object> m_packedEvents;
-		
-		/**
-		 * A lock to access the list of objects
-		 */
-		protected Lock m_lock;
-		
 		/**
 		 * The interval, in milliseconds, at which events will be pushed to
 		 * the output 
@@ -84,18 +154,16 @@ public class Lists
 		 * @param interval The interval, in milliseconds, at which events will
 		 *   be pushed to the output
 		 */
-		public Pack(long interval)
+		public TimePack(long interval)
 		{
 			super(1, 1);
 			setInterval(interval);
-			m_lock = new ReentrantLock();
-			m_packedEvents = new LinkedList<Object>();
 		}
 		
 		/**
 		 * Creates a new list packer with a default interval of 1 second. 
 		 */
-		public Pack()
+		public TimePack()
 		{
 			this(1000);
 		}
@@ -105,7 +173,7 @@ public class Lists
 		 * @param interval The interval, in milliseconds
 		 * @return This processor
 		 */
-		public Pack setInterval(long interval)
+		public TimePack setInterval(long interval)
 		{
 			m_outputInterval = interval;
 			return this;
@@ -178,9 +246,9 @@ public class Lists
 		}
 
 		@Override
-		public Pack duplicate() 
+		public TimePack duplicate() 
 		{
-			return new Pack();
+			return new TimePack();
 		}
 	}
 	/**
@@ -207,7 +275,7 @@ public class Lists
 		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 		{
 			@SuppressWarnings("unchecked")
-			List<Object> list = (List<Object>) inputs[0];
+			Collection<Object> list = (Collection<Object>) inputs[0];
 			for (Object o : list)
 			{
 				outputs.add(new Object[]{o});
@@ -219,6 +287,57 @@ public class Lists
 		public Unpack duplicate() 
 		{
 			return new Unpack();
+		}
+	}
+	
+	public static class Explode extends Function
+	{
+		public Class<?>[] m_classes;
+		
+		public Explode(Class<?> ... classes)
+		{
+			super();
+			m_classes = classes;
+		}
+
+		@Override
+		public Explode duplicate() 
+		{
+			return new Explode(m_classes);
+		}
+
+		@Override
+		public void evaluate(Object[] inputs, Object[] outputs) 
+		{
+			Object[] ins = (Object[]) inputs[0];
+			for (int i = 0; i < ins.length; i++)
+			{
+				outputs[i] = ins[i];
+			}
+		}
+
+		@Override
+		public int getInputArity() 
+		{
+			return 1;
+		}
+
+		@Override
+		public int getOutputArity() 
+		{
+			return m_classes.length;
+		}
+
+		@Override
+		public void getInputTypesFor(Set<Class<?>> classes, int index) 
+		{
+			classes.add(Variant.class);
+		}
+
+		@Override
+		public Class<?> getOutputTypeFor(int index) 
+		{
+			return m_classes[index];
 		}
 	}
 }

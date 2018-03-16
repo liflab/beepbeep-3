@@ -22,9 +22,10 @@ import java.util.Map;
 
 /**
  * Associative map used by processors to store persistent data. In addition,
- * all operations on a Context object are synchronized.
+ * all operations on a `Context` object are synchronized.
+ * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 public class Context extends HashMap<String,Object>
 {

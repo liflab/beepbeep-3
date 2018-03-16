@@ -3,10 +3,14 @@ package ca.uqac.lif.cep.functions;
 import java.util.Set;
 
 /**
- * Function of two inputs and one output
+ * Function of two inputs and one output.
+ * 
  * @param <T> The type of the first input
  * @param <V> The type of the second input
  * @param <U> The type of the output
+ * 
+ * @author Sylvain Hallé
+ * @dictentry
  */
 public abstract class BinaryFunction<T,V,U> extends Function
 {

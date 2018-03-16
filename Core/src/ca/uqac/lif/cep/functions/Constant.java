@@ -22,8 +22,10 @@ import java.util.Set;
 import ca.uqac.lif.cep.Context;
 
 /**
- * Representation of a unary constant
+ * Representation of a unary constant.
+ * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class Constant extends Function
 {

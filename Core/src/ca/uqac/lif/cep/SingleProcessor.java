@@ -24,7 +24,7 @@ import java.util.Queue;
 
 /**
  * Performs a computation on input events to produce output events.
- * <p>
+ * 
  * This is the direct descendant of {@link Processor}, and probably the one
  * you'll want to inherit from when creating your own processors. While
  * {@link Processor} takes care of input and output queues,
@@ -33,13 +33,14 @@ import java.util.Queue;
  * until one new event is received from all input traces before triggering
  * the computation, pulling and buffering events from all outputs when
  * either of the {@link Pullable}s is being called, etc.
- * <p>
+ * 
  * The only thing that is left undefined is what to do
  * when new input events have been received from all input traces. This
  * is the task of abstract method {@link #compute(Object[], Queue)}, which descendants
  * of this class must implement.
  * 
  * @author Sylvain Hallé
+ * @dictentry
  *
  */
 @SuppressWarnings("squid:S2160")

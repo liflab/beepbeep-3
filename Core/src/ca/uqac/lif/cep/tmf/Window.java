@@ -28,17 +28,17 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Simulates the application of a "sliding window" to a trace.
- * <ul>
- * <li>The processor takes as arguments another processor &phi; and a
- *  window width <i>n</i></li>
- * <li>It returns the result of &phi; after processing events 0 to
- *   <i>n</i>-1...</li>
- * <li>Then the result of (a new instance of &phi;) that processes
- *   events 1 to <i>n</i>-1...</li>
- * <li>...and so on</li>
- * </ul>
- * @author sylvain
- *
+ * 
+ * -The processor takes as arguments another processor &phi; and a
+ *  window width *n*
+ * - It returns the result of &phi; after processing events 0 to
+ *   <i>n</i>-1...
+ * - Then the result of (a new instance of &phi;) that processes
+ *   events 1 to <i>n</i>-1...
+ * - ...and so on
+ * 
+ * @author Sylvain Hallé
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Window extends SingleProcessor

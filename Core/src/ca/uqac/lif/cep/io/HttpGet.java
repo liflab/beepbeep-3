@@ -33,6 +33,7 @@ import ca.uqac.lif.cep.tmf.Source;
  * These chunks are returned as events in the form of strings.
  * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class HttpGet extends Source

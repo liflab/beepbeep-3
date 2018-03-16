@@ -21,8 +21,10 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * A container object for Boolean functions
+ * A container object for Boolean functions.
+ * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class Booleans
 {

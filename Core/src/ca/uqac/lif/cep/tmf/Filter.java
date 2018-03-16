@@ -27,6 +27,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * the first if the second is true.
  * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Filter extends SingleProcessor

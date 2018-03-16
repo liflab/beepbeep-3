@@ -20,9 +20,11 @@ package ca.uqac.lif.cep.functions;
 import ca.uqac.lif.cep.Context;
 
 /**
- * Placeholder for the value of a context element
+ * Placeholder for the value of a context element. A `ContextVariable`
+ * can be given as an argument to a `FunctionTree`.
  * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class ContextVariable extends Variable
 {

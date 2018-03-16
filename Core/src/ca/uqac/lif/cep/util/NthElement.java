@@ -23,8 +23,11 @@ import ca.uqac.lif.cep.functions.InvalidArgumentException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * Returns the n-th element of an ordered collection (array or list).
+ * Function that returns the n-th element of an ordered collection
+ * (array or list).
+ * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class NthElement extends UnaryFunction<Object,Object>
 {

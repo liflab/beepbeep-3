@@ -22,9 +22,10 @@ import java.util.Set;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
- * Turns any event into a predefined object.
+ * Processor that turns any event into a predefined object.
  * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class TurnInto extends UniformProcessor

@@ -25,6 +25,7 @@ package ca.uqac.lif.cep.tmf;
  * event if it is the last event of the trace and it has not been output already.
  *
  * @author Sylvain Hallé
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class CountDecimate extends Decimate

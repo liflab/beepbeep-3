@@ -22,36 +22,37 @@ import java.util.Set;
 /**
  * Provides a number of convenient methods for connecting the outputs of
  * processors to the inputs of other processors.
- * <p>
- * Methods provided by the <code>Connector</code> class are called
- * <code>connect()</code> and have various signatures. Their return value
+ * 
+ * Methods provided by the `Connector` class are called
+ * `connect()` and have various signatures. Their return value
  * typically consists of the <em>last</em> processor of the chain given
- * as an argument. This means that nested calls to <code>connect()</code>
+ * as an argument. This means that nested calls to `connect()`
  * are possible to form a complex chain of processors in one pass, e.g.
- * <pre>
+ * ``` java
  * Processor p = Connector.connect(
  *   new QueueSource(2, 1),
  *   Connector.connect(new QueueSource(1, 1), new Addition(), 0, 0),
  *   0, 1);
- * </pre>
- * <p>
+ * ```
+ * 
  * In the previous example, the inner call to <code>connect()</code>
  * links output 0 of a <code>QueueSource</code> to input 0 of an
- * <code>Addition</code> processor; this partially-connected
- * <code>Addition</code> is the return value of this method. It is then used
- * in the outer call, where another <code>QueueSource</code> is linked
- * to its input 1. This fully-connected <code>Addition</code> is what is
- * put into variable <code>p</code>.
- * <p>
- * If you use lots of calls to <code>Connector.connect</code>, you may
+ * `Addition` processor; this partially-connected
+ * `Addition` is the return value of this method. It is then used
+ * in the outer call, where another `QueueSource` is linked
+ * to its input 1. This fully-connected `Addition` is what is
+ * put into variable `p`.
+ * 
+ * If you use lots of calls to `Connector.connect`, you may
  * consider writing:
- * <pre>
+ * ``` java
  * static import Connector.connect;
- * </pre>
- * in the beginning of your file, so you can simply write <code>connect</code>
- * instead of <code>Connector.connect</code> every time.
- * @author sylvain
- *
+ * ```
+ * in the beginning of your file, so you can simply write `connect`
+ * instead of `Connector.connect` every time.
+ * 
+ * @author Sylvain Hallé
+ * @dictentry
  */
 public class Connector
 {

@@ -22,8 +22,10 @@ import java.util.Collection;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
- * Checks for the equality of various data types
+ * A function that checks for the equality of various data types.
+ * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class Equals extends BinaryFunction<Object,Object,Boolean>
 {

@@ -66,6 +66,34 @@ public class Maps
 	}
 	
 	/**
+	 * Gets a value in the map, based on the name of a key.
+	 */
+	@SuppressWarnings("rawtypes")
+	public static class Get extends UnaryFunction<Map,Object>
+	{
+		/**
+		 * The key to get from the map
+		 */
+		protected String m_key;
+		
+		/**
+		 * Creates a new get function
+		 * @param key The key to get from the map
+		 */
+		protected Get(String key)
+		{
+			super(Map.class, Object.class);
+			m_key = key;
+		}
+		
+		@Override
+		public Object getValue(Map x) 
+		{
+			return x.get(m_key);
+		}
+	}
+	
+	/**
 	 * Updates a map by putting key-value pairs into it. The processor
 	 * takes two input streams; the first contains the key, and the second
 	 * contains the value.

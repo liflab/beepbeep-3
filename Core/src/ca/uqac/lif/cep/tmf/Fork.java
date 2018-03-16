@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  * Duplicates an input trace into two or more output traces.
  * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Fork extends UniformProcessor

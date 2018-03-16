@@ -25,6 +25,9 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * a specific type (a {@link CumulativeFunction}). However, it has a
  * special grammar that allows any binary function to be turned into
  * a cumulative processor.
+ * 
+ * @author Sylvain Hallé
+ * @dictentry
  */
 public class Cumulate extends ApplyFunction
 {

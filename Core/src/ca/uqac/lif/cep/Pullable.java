@@ -21,16 +21,15 @@ import java.util.Iterator;
 
 /**
  * Queries events on one of a processor's outputs. For a processor with
- * an output arity <i>n</i>, there exists <i>n</i> distinct pullables,
+ * an output arity <i>n</i>, there exists *n* distinct pullables,
  * namely one for each output trace. Every pullable works roughly like a
- * classical <code>Iterator</code>: it is possible to check whether new
+ * classical `Iterator`: it is possible to check whether new
  * output events are available, and get one new output event.
- * <p>
- * However,
- * contrarily to iterators, <code>Pullable</code>s have two versions of
- * each method: a <em>soft</em> and a <em>hard</em> version.
- * <ul>
- * <li><strong>Soft</strong> methods make a single attempt at producing an
+ * 
+ * However, contrarily to iterators, `Pullable`s have two versions of
+ * each method: a *soft* and a *hard* version.
+ * 
+ * - **Soft** methods make a single attempt at producing an
  *   output event. Since processors are connected in a chain, this generally
  *   means pulling events from the input in order to produce the output.
  *   However, if pulling the input produces no event, no output event can
@@ -38,8 +37,8 @@ import java.util.Iterator;
  *   value (<code>MAYBE</code>), and {@link #pullSoft()} will return
  *   <code>null</code>. Soft methods can be seen a doing "one turn of the
  *   crank" on the whole chain of processors --whether or not this outputs
- *   something.</li>
- * <li><strong>Hard</strong> methods are actually calls to soft methods until
+ *   something.
+ * - **Hard** methods are actually calls to soft methods until
  *   an output event is produced: the "crank" is turned as long as necessary
  *   to produce something. This means that one call to, e.g.
  *   {@link #pull()} may consume more than one event from a processor's
@@ -47,38 +46,37 @@ import java.util.Iterator;
  *   <code>MAYBE</code> (only <code>YES</code> or <code>NO</code>), and
  *   {@link #pull()} returns <code>null</code> only if no event will
  *   ever be output in the future (this occurs, for example, when pulling
- *   events from a file, and the end of the file has been reached).</li>
- * </ul>
- * <p>
- * The lifecycle of a <code>Pullable</code> object is as follows:
- * <ul>
- * <li>One obtains a reference to one of a processor's pullables. This
+ *   events from a file, and the end of the file has been reached).
+ * 
+ * The lifecycle of a `Pullable` object is as follows:
+ * 
+ * - One obtains a reference to one of a processor's pullables. This
  *   can be done explicitly, e.g. by calling
  *   {@link Processor#getPullableOutput(int)}, or implicitly, for example
- *   through every call to {@link Connector#connect(Processor...)}.</li>
- * <li>At various moments, one calls {@link #hasNextSoft()} (or
- *   {@link #hasNext()} to check if events are available</li>
- * <li>One calls {@link #pullSoft()} (or {@link #pull()} to produce the next
- *   available output event.</li>
- * </ul>
- * <p>The Pullable interface extends the <code>Iterator</code> and
- * <code>Iterable</code> interfaces. This means that an instance of Pullable
+ *   through every call to {@link Connector#connect(Processor...)}.
+ * - At various moments, one calls {@link #hasNextSoft()} (or
+ *   {@link #hasNext()} to check if events are available
+ * - One calls {@link #pullSoft()} (or {@link #pull()} to produce the next
+ *   available output event.
+ * 
+ * The Pullable interface extends the `Iterator` and
+ * `Iterable` interfaces. This means that an instance of Pullable
  * can also be iterated over like this:
- * <pre>
+ * ```
  * Pullable p = ...;
  * for (Object o : p) {
  *   // Do something
  * }
- * </pre>
+ * ```
  * Note however that if <code>p</code> refers to a processor producing an
  * infinite number of events, this loop will never terminate by itself.
- * <p>
+ * 
  * For the same processor, mixing calls to soft and hard methods is discouraged.
  * As a matter of fact, the Pullable's behaviour in such a situation is
  * left undefined.
  * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 public interface Pullable extends Iterator<Object>, Iterable<Object>
 {

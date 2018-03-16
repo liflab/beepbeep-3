@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * element.
  * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Insert extends SingleProcessor

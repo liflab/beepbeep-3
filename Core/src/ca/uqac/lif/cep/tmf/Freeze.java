@@ -26,7 +26,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  * outputs it, and then outputs that event whenever some new input comes in.
  * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Freeze extends UniformProcessor

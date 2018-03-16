@@ -37,7 +37,9 @@ import ca.uqac.lif.cep.tmf.SinkLast;
 /**
  * A container object for functions and processors applying to generic
  * collections, i.e. "bags" of objects.
+ * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class Bags 
 {
@@ -55,6 +57,11 @@ public class Bags
 	 * Gets the size of a collection
 	 */
 	public static final GetSize getSize = new GetSize();
+	
+	/**
+	 * Computes the Cartesian product of two collections
+	 */
+	public static final Product product = new Product();
 	
 	/**
 	 * Gets all the elements of the collection that satisfy some condition.
@@ -454,6 +461,29 @@ public class Bags
 				return out;
 			}
 			throw new InvalidArgumentException(this, 0);
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static class Product extends BinaryFunction<Collection,Collection,Collection>
+	{
+		private Product()
+		{
+			super(Collection.class, Collection.class, Collection.class);
+		}
+
+		@Override
+		public Collection getValue(Collection x, Collection y) 
+		{
+			Set<Object[]> out = new HashSet<Object[]>();
+			for (Object o_x : x)
+			{
+				for (Object o_y : y)
+				{
+					out.add(new Object[]{o_x, o_y});
+				}
+			}
+			return out;
 		}
 	}
 

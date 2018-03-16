@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 /**
  * Utility class to run commands on the command line and fetch their
  * output.
+ * 
  * @author Sylvain Hallé
  *
  */

@@ -24,7 +24,9 @@ import ca.uqac.lif.cep.Connector.Variant;
 
 /**
  * Function that returns its input for its output.
+ * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public final class IdentityFunction extends Function 
 {

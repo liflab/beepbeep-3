@@ -29,7 +29,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.util.Lists.Pack;
+import ca.uqac.lif.cep.util.Lists.TimePack;
 import ca.uqac.lif.cep.util.Lists.Unpack;
 
 public class PackerTest 
@@ -38,7 +38,7 @@ public class PackerTest
 	@Test
 	public void listPackerTest1() throws ProcessorException, InterruptedException
 	{
-		Pack lpp = new Pack(1000);
+		TimePack lpp = new TimePack(1000);
 		QueueSink sink = new QueueSink();
 		Connector.connect(lpp, sink);
 		Queue<Object> q = sink.getQueue();

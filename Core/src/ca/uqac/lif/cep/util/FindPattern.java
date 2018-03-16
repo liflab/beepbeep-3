@@ -25,7 +25,9 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Extracts chunks of an input stream based on a regular expression.
+ * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class FindPattern extends SingleProcessor
 {

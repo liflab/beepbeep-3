@@ -22,11 +22,11 @@ import java.util.Queue;
 import ca.uqac.lif.cep.SingleProcessor;
 
 /**
- * Discards the first <i>n</i> events of the input, and outputs
+ * Discards the first *n* events of the input, and outputs
  * the remaining ones.
  * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Trim extends SingleProcessor

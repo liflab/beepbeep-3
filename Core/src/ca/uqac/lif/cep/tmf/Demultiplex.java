@@ -31,6 +31,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * 
  * @see Multiplex
  * @author Sylvain Hallé
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Demultiplex extends SingleProcessor

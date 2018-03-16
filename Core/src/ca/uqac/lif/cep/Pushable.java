@@ -23,12 +23,12 @@ package ca.uqac.lif.cep;
  * a processor's output (i.e. "pulling"), it gives events to a processor's
  * input. This has for effect of triggering the processor's computation
  * and "pushing" results (if any) to the processor's output.
- * <p>
- * If a processor is of input arity <i>n</i>, there exist <i>n</i> distinct
+ * 
+ * If a processor is of input arity *n*, there exist *n* distinct
  * {@link Pullable}s: one for each input trace.
  * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 public interface Pushable
 {

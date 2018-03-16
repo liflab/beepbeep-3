@@ -26,6 +26,7 @@ import ca.uqac.lif.cep.Connector.Variant;
  * it returns its second input; otherwise it returns its third input.
  * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class IfThenElse extends Function
 {

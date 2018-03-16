@@ -17,6 +17,11 @@
  */
 package ca.uqac.lif.cep.util;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
@@ -217,6 +222,33 @@ public class Strings
 			}
 			// This is a string
 			return s;
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static class FindRegex extends UnaryFunction<String,Set>
+	{
+		protected String m_regex;
+		
+		protected transient Pattern m_pattern;
+		
+		public FindRegex(String regex)
+		{
+			super(String.class, Set.class);
+			m_regex = regex;
+			m_pattern = Pattern.compile(regex);
+		}
+
+		@Override
+		public Set getValue(String s)
+		{
+			Matcher mat = m_pattern.matcher(s);
+			Set<String> set = new HashSet<String>();
+			while (mat.find())
+			{
+				set.add(mat.group(1));
+			}
+			return set;
 		}
 	}
 }

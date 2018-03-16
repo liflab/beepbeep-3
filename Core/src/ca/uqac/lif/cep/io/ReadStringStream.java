@@ -28,7 +28,9 @@ import ca.uqac.lif.cep.ProcessorException;
 
 /**
  * Extracts character strings from a Java {@link InputStream}.
+ * 
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class ReadStringStream extends ReadInputStream 
 {

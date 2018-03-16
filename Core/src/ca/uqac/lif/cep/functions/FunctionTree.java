@@ -22,8 +22,9 @@ import java.util.Set;
 import ca.uqac.lif.cep.Context;
 
 /**
- * A tree of n-ary functions composed together
+ * A tree of n-ary functions composed together.
  * @author Sylvain Hallé
+ * @dictentry
  */
 public class FunctionTree extends Function
 {

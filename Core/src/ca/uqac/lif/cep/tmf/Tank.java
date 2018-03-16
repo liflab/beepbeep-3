@@ -29,16 +29,15 @@ import ca.uqac.lif.cep.Pushable;
  * The Tank is a way to bridge an upstream part of a
  * processor chain that works in <em>push</em> mode, to a downstream part
  * that operates in <em>pull</em> mode.
- * <p>
+ * 
  * Graphically, this processor is represented as:
- * <p>
- * <a href="{@docRoot}/doc-files/tmf/Tank.png"><img
- *   src="{@docRoot}/doc-files/tmf/Tank.png"
- *   alt="Processor graph"></a>
- * <p>
+ * 
+ * ![Tank]({@docRoot}/doc-files/tmf/Tank.png)
+ * 
  * The opposite of the tank is the {@link ca.uqac.lif.tmf.Pump Pump}.
+ * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Tank extends Processor 

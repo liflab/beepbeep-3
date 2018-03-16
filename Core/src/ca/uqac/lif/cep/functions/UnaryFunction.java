@@ -20,9 +20,12 @@ package ca.uqac.lif.cep.functions;
 import java.util.Set;
 
 /**
- * Function of one input and one output
+ * Function of one input and one output.
+ * 
  * @param <T> The type of the input
  * @param <U> The type of the output
+ * 
+ * @dictentry
  */
 public abstract class UnaryFunction<T,U> extends Function
 {

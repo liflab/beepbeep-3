@@ -24,7 +24,7 @@ import java.util.Queue;
  * Sink that accumulates events into queues.
  * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class QueueSink extends Sink

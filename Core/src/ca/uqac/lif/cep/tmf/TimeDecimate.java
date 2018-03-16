@@ -19,14 +19,15 @@ package ca.uqac.lif.cep.tmf;
 
 /**
  * After returning an input event, discards all others for the next
- * <i>n</i> seconds. This processor therefore acts as a rate limiter.
- * <p>
+ * *n* seconds. This processor therefore acts as a rate limiter.
+ * 
  * Note that this processor uses <code>System.currentTimeMillis()</code>
  * as its clock.
  * Moreover, a mode can be specified in order to output the last input
  * event of the trace if it has not been output already.
  *
  * @author Sylvain Hallé
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class TimeDecimate extends Decimate 
