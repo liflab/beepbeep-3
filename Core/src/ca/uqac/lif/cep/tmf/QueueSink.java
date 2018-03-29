@@ -21,7 +21,10 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 /**
- * Sink that accumulates events into queues.
+ * Sink that accumulates events into queues. It is represented graphically
+ * as:
+ * 
+ * ![QueueSink]({@docRoot}/doc-files/tmf/QueueSink.png)
  * 
  * @author Sylvain Hallé
  * @dictentry

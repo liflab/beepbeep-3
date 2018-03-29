@@ -26,6 +26,10 @@ import ca.uqac.lif.cep.SingleProcessor;
  * The processor takes as input two events simultaneously; it outputs
  * the first if the second is true.
  * 
+ * Graphically, this processor is represented as:
+ * 
+ * ![Filter]({@docRoot}/doc-files/tmf/Filter.png)
+ * 
  * @author Sylvain Hallé
  * @dictentry
  */

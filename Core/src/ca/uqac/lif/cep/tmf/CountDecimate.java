@@ -19,10 +19,14 @@ package ca.uqac.lif.cep.tmf;
 
 
 /**
- * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i>
- * is called the <em>decimation interval</em>.
- * However, a mode can be specified in order to output the <i>n</i>-<i>i</i>th input
+ * Returns one input event and discards the next *n*-1. The value *n*
+ * is called the **decimation interval**.
+ * However, a mode can be specified in order to output the *n*-th input
  * event if it is the last event of the trace and it has not been output already.
+ * 
+ * It is represented graphically as:
+ * 
+ * ![QueueSink]({@docRoot}/doc-files/tmf/CountDecimate.png)
  *
  * @author Sylvain Hallé
  * @dictentry

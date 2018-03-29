@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -33,12 +33,13 @@ public class Booleans
 		// Utility class
 	}
 	
-	public static final transient And and = new And();
+	public static final transient And and = And.instance;
 	
-	public static final transient Or or = new Or();
+	public static final transient Or or = Or.instance;
 	
-	public static final transient Negation not = new Negation();
+	public static final transient Implies implies = Implies.instance;
 	
+	public static final transient Negation not = Negation.instance;	
 	
 	/**
 	 * Implementation of the logical conjunction
@@ -49,7 +50,7 @@ public class Booleans
 	{
 		public static final transient And instance = new And();
 
-		protected And()
+		private And()
 		{
 			super(Boolean.class, Boolean.class, Boolean.class);
 		}
@@ -68,13 +69,42 @@ public class Booleans
 	}
 	
 	/**
+	 * Implementation of the logical implication
+	 * 
+	 * @author Sylvain Hallé
+	 */
+	public static class Implies extends BinaryFunction<Boolean,Boolean,Boolean>
+	{
+		public static final transient Implies instance = new Implies();
+
+		private Implies()
+		{
+			super(Boolean.class, Boolean.class, Boolean.class);
+		}
+
+		@Override
+		public Boolean getValue(Boolean x, Boolean y)
+		{
+			return !x.booleanValue() || y.booleanValue();
+		}
+
+		@Override
+		public String toString()
+		{
+			return "∧";
+		}
+	}
+	
+	/**
 	 * Implementation of the logical disjunction
 	 * 
 	 * @author Sylvain Hallé
 	 */
 	public static class Or extends BinaryFunction<Boolean,Boolean,Boolean>
 	{
-		protected Or()
+		public static final transient Or instance = new Or();
+		
+		private Or()
 		{
 			super(Boolean.class, Boolean.class, Boolean.class);
 		}
@@ -99,7 +129,9 @@ public class Booleans
 	 */
 	public static class Negation extends UnaryFunction<Boolean,Boolean>
 	{
-		protected Negation()
+		public static final transient Negation instance = new Negation();
+		
+		private Negation()
 		{
 			super(Boolean.class, Boolean.class);
 		}

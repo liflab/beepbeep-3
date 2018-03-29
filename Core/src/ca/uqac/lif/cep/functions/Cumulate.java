@@ -22,9 +22,11 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
 /**
  * Creates a cumulative processor out of a cumulative function.
  * This is simply a {@link ApplyFunction} whose function is of
- * a specific type (a {@link CumulativeFunction}). However, it has a
- * special grammar that allows any binary function to be turned into
- * a cumulative processor.
+ * a specific type (a {@link CumulativeFunction}).
+ * 
+ * It is represented graphically as:
+ * 
+ * ![Cumulate]({@docRoot}/doc-files/functions/Cumulate.png)
  * 
  * @author Sylvain Hallé
  * @dictentry

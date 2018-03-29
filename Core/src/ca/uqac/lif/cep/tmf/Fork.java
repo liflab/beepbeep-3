@@ -27,6 +27,10 @@ import ca.uqac.lif.cep.UniformProcessor;
 /**
  * Duplicates an input trace into two or more output traces.
  * 
+ * It is represented graphically as:
+ * 
+ * ![Fork]({@docRoot}/doc-files/tmf/Fork.png)
+ * 
  * @author Sylvain Hallé
  * @dictentry
  */

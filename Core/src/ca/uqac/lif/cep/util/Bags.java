@@ -64,6 +64,11 @@ public class Bags
 	public static final Product product = new Product();
 	
 	/**
+	 * Gets any element of a bag
+	 */
+	public static final AnyElement anyElement = new AnyElement();
+	
+	/**
 	 * Gets all the elements of the collection that satisfy some condition.
 	 * This condition is specified as an unary function that is successively
 	 * applied to each element of the collection; if the function returns
@@ -464,6 +469,10 @@ public class Bags
 		}
 	}
 	
+	/**
+	 * Computes the Cartesian product of two collections.
+	 * @author Sylvain Hallé
+	 */
 	@SuppressWarnings("rawtypes")
 	public static class Product extends BinaryFunction<Collection,Collection,Collection>
 	{
@@ -484,6 +493,31 @@ public class Bags
 				}
 			}
 			return out;
+		}
+	}
+	
+	/**
+	 * Returns any element of a collection. If the collection is empty, returns
+	 * {@code null}.
+	 */
+	@SuppressWarnings("rawtypes")
+	public static class AnyElement extends UnaryFunction<Collection,Object>
+	{
+		private AnyElement()
+		{
+			super(Collection.class, Object.class);
+		}
+
+		@Override
+		public Object getValue(Collection x)
+		{
+			Object o = null;
+			for (Object o2 : x)
+			{
+				o = o2;
+				break;
+			}
+			return o;
 		}
 	}
 

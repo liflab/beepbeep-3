@@ -23,6 +23,9 @@ import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Processor that turns any event into a predefined object.
+ * It is represented graphically as:
+ * 
+ * ![TurnInto]({@docRoot}/doc-files/functions/TurnInto.png)
  * 
  * @author Sylvain Hallé
  * @dictentry

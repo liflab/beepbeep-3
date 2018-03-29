@@ -28,6 +28,9 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Simulates the application of a "sliding window" to a trace.
+ * It is represented graphically as:
+ * 
+ * ![Window]({@docRoot}/doc-files/tmf/Window.png)
  * 
  * -The processor takes as arguments another processor &phi; and a
  *  window width *n*

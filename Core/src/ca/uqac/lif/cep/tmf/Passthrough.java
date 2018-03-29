@@ -21,11 +21,15 @@ import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Returns its input as its output. Although it seems useless,
- * <code>Passthrough</code> is used internally by the ESQL interpreter as
+ * `Passthrough` is used internally by the ESQL interpreter as
  * a placeholder when building processor chains from an expression.
  * 
+ * Graphically, this processor is represented as:
+ * 
+ * ![Passthrough]({@docRoot}/doc-files/tmf/Passthrough.png)
+ * 
  * @author Sylvain Hallé
- *
+ * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Passthrough extends UniformProcessor

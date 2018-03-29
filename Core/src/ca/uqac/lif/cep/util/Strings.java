@@ -46,6 +46,8 @@ public class Strings
 	
 	public static final StartsWith startsWith = new StartsWith();
 	
+	public static final ToString toString = ToString.instance;
+	
 	/**
 	 * Concatenates two strings
 	 */
@@ -222,6 +224,25 @@ public class Strings
 			}
 			// This is a string
 			return s;
+		}
+	}
+	
+	/**
+	 * Transforms any object into a string using the "toString" method.
+	 */
+	public static class ToString extends UnaryFunction<Object,String>
+	{
+		public static transient final ToString instance = new ToString();
+		
+		private ToString()
+		{
+			super(Object.class, String.class);
+		}
+
+		@Override
+		public String getValue(Object x) 
+		{
+			return x.toString();
 		}
 	}
 	
