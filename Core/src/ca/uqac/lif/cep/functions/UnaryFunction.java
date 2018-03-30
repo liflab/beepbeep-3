@@ -56,7 +56,8 @@ public abstract class UnaryFunction<T,U> extends Function
 	/*@ requires inputs.length == 1 */
 	public void evaluate(/*@NonNull*/ Object[] inputs, Object[] outputs) 
 	{
-		outputs[0] = getValue((T) inputs[0]);
+		T in = (T) inputs[0];
+		outputs[0] = getValue(in);
 	}
 
 	/**
