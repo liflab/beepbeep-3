@@ -261,7 +261,7 @@ public abstract class UniformProcessor extends SingleProcessor
 			{
 				throw new PullableException("Input 0 of this processor is connected to nothing", getProcessor());
 			}
-			Object o = m_inputPullables[0].pullSoft();
+			Object o = m_inputPullables[0].pull();
 			try
 			{
 				if (o == null || !compute(new Object[]{o}, m_outputArray))
