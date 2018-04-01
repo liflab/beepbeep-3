@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -24,6 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import ca.uqac.lif.cep.tmf.Source;
+
 /**
  * Encapsulates a chain of processors as if it were a single one.
  * 
@@ -36,6 +38,11 @@ public class GroupProcessor extends Processor
 	 * The set of processors included in the group
 	 */
 	private HashSet<Processor> m_processors = null;
+	
+	/**
+	 * The set of sources included in the group
+	 */
+	private HashSet<Source> m_sources = null;
 
 	/**
 	 * The {@link Pushable}s associated to each of the processor's
@@ -48,6 +55,12 @@ public class GroupProcessor extends Processor
 	 * output traces
 	 */
 	private transient List<Pullable> m_outputPullables = null;
+	
+	/**
+	 * Whether to notify the QueueSource objects in the group to
+	 * push an event when a call to push is made on the group
+	 */
+	private boolean m_notifySources = false;
 
 	/**
 	 * A map between numbers and processor associations. An element
@@ -74,10 +87,23 @@ public class GroupProcessor extends Processor
 	{
 		super(in_arity, out_arity);
 		m_processors = new HashSet<Processor>();
+		m_sources = new HashSet<Source>();
 		m_inputPushables = new ArrayList<Pushable>();
 		m_outputPullables = new ArrayList<Pullable>();
 		m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
 		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
+	}
+	
+	/**
+	 * Sets the processor to notify the QueueSource objects in the group to
+	 * push an event when a call to push is made on the group.
+	 * @param b Set to {@code true} to notify the sources
+	 * @return This group processor
+	 */
+	public GroupProcessor notifySources(boolean b)
+	{
+		m_notifySources = b;
+		return this;
 	}
 
 	/**
@@ -128,6 +154,10 @@ public class GroupProcessor extends Processor
 	public synchronized GroupProcessor addProcessor(Processor p)
 	{
 		m_processors.add(p);
+		if (p instanceof Source)
+		{
+			m_sources.add((Source) p);
+		}
 		return this;
 	}
 
@@ -141,6 +171,10 @@ public class GroupProcessor extends Processor
 		for (Processor p : procs)
 		{
 			m_processors.add(p);
+			if (p instanceof Source)
+			{
+				m_sources.add((Source) p);
+			}
 		}
 		return this;
 	}
@@ -252,6 +286,7 @@ public class GroupProcessor extends Processor
 	public synchronized Map<Integer,Processor> cloneInto(GroupProcessor group)
 	{
 		super.cloneInto(group);
+		group.m_notifySources = m_notifySources;
 		Map<Integer,Processor> new_procs = new HashMap<Integer,Processor>();
 		Processor start = null;
 		// Clone every processor of the original group
@@ -471,6 +506,7 @@ public class GroupProcessor extends Processor
 		public synchronized Pushable push(Object o)
 		{
 			m_pushable.push(o);
+			notifySources();
 			m_pushable.waitFor();
 			return m_pushable;
 		}
@@ -481,8 +517,23 @@ public class GroupProcessor extends Processor
 			return push(o);
 		}
 		
+		/**
+		 * Notifies each source in the group to push an event
+		 */
+		protected void notifySources()
+		{
+			if (m_notifySources)
+			{
+				for (Source s : m_sources)
+				{
+					s.push();
+				}
+			}
+		}
+		
 		@Override
-		public void notifyEndOfTrace() throws PushableException {
+		public void notifyEndOfTrace() throws PushableException
+		{
 			m_pushable.notifyEndOfTrace();
 		}
 

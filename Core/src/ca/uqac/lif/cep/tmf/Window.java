@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -24,7 +24,6 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Simulates the application of a "sliding window" to a trace.
@@ -44,17 +43,8 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @dictentry
  */
 @SuppressWarnings("squid:S2160")
-public class Window extends SingleProcessor
+public class Window extends AbstractWindow
 {
-	/**
-	 * The window's width
-	 */
-	private int m_width;
-
-	/**
-	 * The internal processor
-	 */
-	protected Processor m_processor = null;
 
 	/**
 	 * The internal processor's input pushables
@@ -66,16 +56,9 @@ public class Window extends SingleProcessor
 	 */
 	protected SinkLast m_sink = null;
 
-	/**
-	 * The event windows
-	 */
-	protected LinkedList<Object>[] m_window;
-
 	public Window(Processor in_processor, int width)
 	{
-		super(in_processor.getInputArity(), in_processor.getOutputArity());
-		m_width = width;
-		m_processor = in_processor;
+		super(in_processor, width);
 		m_sink = new SinkLast(in_processor.getOutputArity());
 		reset();
 	}
