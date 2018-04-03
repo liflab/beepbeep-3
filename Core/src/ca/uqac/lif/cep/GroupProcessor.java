@@ -210,13 +210,13 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public synchronized Pushable getPushableInput(int index)
+	public synchronized ProxyPushable getPushableInput(int index)
 	{
 		return new ProxyPushable(m_inputPushables.get(index), index);
 	}
 
 	@Override
-	public synchronized Pullable getPullableOutput(int index)
+	public synchronized ProxyPullable getPullableOutput(int index)
 	{
 		return new ProxyPullable(m_outputPullables.get(index), index);
 	}
@@ -580,5 +580,18 @@ public class GroupProcessor extends Processor
 		{
 			p.stop();
 		}
+	}
+	
+	/**
+	 * Gets the processor associated to the i-th input of the group
+	 * @param index The index
+	 * @return The processor, or {@code null} if no processor is associated
+	 * to this index
+	 */
+	public Processor getAssociatedInput(int index)
+	{
+		if (!m_inputPullableAssociations.containsKey(index))
+			return null;
+		return m_inputPullableAssociations.get(index).m_processor;
 	}
 }
