@@ -98,6 +98,17 @@ public class Slice extends UniformProcessor
 	{
 		this(func, proc, null);
 	}
+	
+	/**
+	 * Sets the processor that will be executed on each slice
+	 * @param p The processor
+	 * @return This slicer
+	 */
+	public Slice setProcessor(Processor p)
+	{
+		m_processor = p;
+		return this;
+	}
 
 	@Override
 	protected boolean compute(Object[] inputs, Object[] outputs)

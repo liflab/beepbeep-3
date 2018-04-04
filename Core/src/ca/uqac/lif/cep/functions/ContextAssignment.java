@@ -22,6 +22,24 @@ public class ContextAssignment
 		m_lvalue = left;
 		m_value = right;
 	}
+	
+	/**
+	 * Gets the name of the context element to modify
+	 * @return The variable
+	 */
+	public String getVariable()
+	{
+		return m_lvalue;
+	}
+	
+	/**
+	 * Gets the function computing the value to assign to the context element.
+	 * @return The function
+	 */
+	public Function getAssignment()
+	{
+		return m_value;
+	}
 
 	/**
 	 * Assigns a value to a context element
