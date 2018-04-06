@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -77,6 +78,12 @@ public class Slice extends UniformProcessor
 	 * The last value output by the processor for each slice
 	 */
 	protected HashMap<Object,Object> m_lastValues;
+	
+	/**
+	 * If the slicing function returns a collection, treat each element
+	 * of the collection as a slice id
+	 */
+	protected boolean m_explodeArrays = false;
 
 	protected Slice()
 	{
@@ -123,81 +130,124 @@ public class Slice extends UniformProcessor
 		{
 			throw new ProcessorException(e);
 		}
-		Object slice_id = f_value[0];
-		if (slice_id == null)
+		Object slice_ids = f_value[0];
+		if (slice_ids == null)
 		{
 			// This event applies to no slice; don't bother processing it
 			outputs[0] = m_lastValues;
 			return true;
 		}
-		Set<Object> slices_to_process = new HashSet<Object>();
-		if (slice_id instanceof ToAllSlices || slice_id == null)
+		Object[] slice_vals;
+		if (m_explodeArrays)
 		{
-			slices_to_process.addAll(m_slices.keySet());
+			if (slice_ids.getClass().isArray())
+			{
+				slice_vals = (Object[]) slice_ids;
+			}
+			if (slice_ids instanceof Collection)
+			{
+				Collection<?> col = (Collection<?>) slice_ids;
+				slice_vals = new Object[col.size()];
+				int i = 0;
+				for (Object o : col)
+				{
+					slice_vals[i] = o;
+					i++;
+				}
+			}
+			else
+			{
+				slice_vals = new Object[]{slice_ids};
+			}
 		}
 		else
 		{
-			if (!m_slices.containsKey(slice_id))
-			{
-				// First time we see this value: create new slice
-				Processor p = m_processor.duplicate();
-				m_slices.put(slice_id, p);
-				addContextFromSlice(p, slice_id);
-				QueueSink sink = new QueueSink(output_arity);
-				Connector.connect(p, sink);
-				m_sinks.put(slice_id, sink);
-				// Put dummy value temporarily
-				m_lastValues.put(slice_id, null);
-			}
-			slices_to_process.add(slice_id);
+			slice_vals = new Object[]{slice_ids};
 		}
-		for (Object s_id : slices_to_process)
+		for (Object slice_id : slice_vals)
 		{
-			// Find processor corresponding to that slice
-			Processor slice_p = m_slices.get(s_id);
-			// If this slice hasn't been cleaned up...
-			if (slice_p != null)
+			Set<Object> slices_to_process = new HashSet<Object>();
+			if (slice_id instanceof ToAllSlices || slice_id == null)
 			{
-				QueueSink sink_p = m_sinks.get(s_id);
-				// Push the input into the processor
-				Pushable[] p_array = new Pushable[inputs.length];
-				for (int i = 0; i < inputs.length; i++)
-				{
-					Object o_i = inputs[i];
-					Pushable p = slice_p.getPushableInput(i);
-					p.push(o_i);
-					p_array[i] = p;
-				}
-				for (int i = 0; i < inputs.length; i++)
-				{
-					p_array[i].waitFor();
-				}
-				// Collect the output from that processor
-				Object[] out = sink_p.remove();
-				// Can we clean that slice?
-				Object[] can_clean = new Object[1];
-				if (m_cleaningFunction != null)
-				{
-					try
-					{
-						m_cleaningFunction.evaluate(out, can_clean);
-					}
-					catch (FunctionException e)
-					{
-						throw new ProcessorException(e);
-					}
-				}
-				if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]))
-				{
-					// Yes: remove the processor for that slice
-					m_slices.remove(s_id);
-					m_sinks.remove(s_id);
-				}
-				m_lastValues.put(s_id, out[0]);
+				slices_to_process.addAll(m_slices.keySet());
 			}
+			else
+			{
+				if (!m_slices.containsKey(slice_id))
+				{
+					// First time we see this value: create new slice
+					Processor p = m_processor.duplicate();
+					m_slices.put(slice_id, p);
+					addContextFromSlice(p, slice_id);
+					QueueSink sink = new QueueSink(output_arity);
+					Connector.connect(p, sink);
+					m_sinks.put(slice_id, sink);
+					// Put dummy value temporarily
+					m_lastValues.put(slice_id, null);
+				}
+				slices_to_process.add(slice_id);
+			}
+			for (Object s_id : slices_to_process)
+			{
+				// Find processor corresponding to that slice
+				Processor slice_p = m_slices.get(s_id);
+				// If this slice hasn't been cleaned up...
+				if (slice_p != null)
+				{
+					QueueSink sink_p = m_sinks.get(s_id);
+					// Push the input into the processor
+					Pushable[] p_array = new Pushable[inputs.length];
+					for (int i = 0; i < inputs.length; i++)
+					{
+						Object o_i = inputs[i];
+						Pushable p = slice_p.getPushableInput(i);
+						p.push(o_i);
+						p_array[i] = p;
+					}
+					for (int i = 0; i < inputs.length; i++)
+					{
+						p_array[i].waitFor();
+					}
+					// Collect the output from that processor
+					Object[] out = sink_p.remove();
+					// Can we clean that slice?
+					Object[] can_clean = new Object[1];
+					if (m_cleaningFunction != null)
+					{
+						try
+						{
+							m_cleaningFunction.evaluate(out, can_clean);
+						}
+						catch (FunctionException e)
+						{
+							throw new ProcessorException(e);
+						}
+					}
+					if (can_clean != null && can_clean.length > 0 && can_clean[0] instanceof Boolean && (Boolean) (can_clean[0]))
+					{
+						// Yes: remove the processor for that slice
+						m_slices.remove(s_id);
+						m_sinks.remove(s_id);
+					}
+					m_lastValues.put(s_id, out[0]);
+				}
+			}
+			outputs[0] = m_lastValues;
 		}
-		outputs[0] = m_lastValues;
 		return true;
+	}
+	
+	/**
+	 * Sets whether a slice function that returns a collection of values
+	 * must be handled as individual slice IDs.
+	 * @param b Set to {@code true} to handle collections as multiple IDs.
+	 * The default is {@code false}
+	 * @return This slicer
+	 */
+	public Slice explodeCollections(boolean b)
+	{
+		m_explodeArrays = b;
+		return this;
 	}
 
 	/**
