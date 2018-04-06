@@ -35,7 +35,7 @@ public class BlackHole extends Sink
 	}
 
 	@Override
-	public BlackHole duplicate() 
+	public BlackHole duplicate(boolean with_state) 
 	{
 		return new BlackHole();
 	}

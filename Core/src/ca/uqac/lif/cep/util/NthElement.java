@@ -77,7 +77,7 @@ public class NthElement extends UnaryFunction<Object,Object>
 	}
 
 	@Override
-	public NthElement duplicate()
+	public NthElement duplicate(boolean with_state)
 	{
 		return new NthElement(m_n);
 	}

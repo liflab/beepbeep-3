@@ -34,9 +34,15 @@ public class TankLast extends Tank
 	}
 	
 	@Override
-	public TankLast duplicate()
+	public TankLast duplicate(boolean with_state)
 	{
-		return new TankLast();
+		TankLast t = new TankLast();
+		if (with_state)
+		{
+			// Put in the tank what is in the current tank
+			t.m_inputQueues[0].addAll(m_inputQueues[0]);
+		}
+		return t;
 	}
 
 }

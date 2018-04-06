@@ -86,7 +86,7 @@ public class SimpleFilter extends SingleProcessor
 	}
 
 	@Override
-	public SimpleFilter duplicate() 
+	public SimpleFilter duplicate(boolean with_state) 
 	{
 		return new SimpleFilter(getInputArity(), m_condition.duplicate());
 	}

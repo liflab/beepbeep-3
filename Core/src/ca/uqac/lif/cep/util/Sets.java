@@ -89,9 +89,14 @@ public class Sets
 		}
 
 		@Override
-		public PutInto duplicate()
+		public PutInto duplicate(boolean with_state)
 		{
-			return new PutInto();
+			PutInto pi = new PutInto();
+			if (with_state)
+			{
+				pi.m_set.addAll(m_set);
+			}
+			return pi;
 		}
 
 		@Override
@@ -117,9 +122,14 @@ public class Sets
 		}
 
 		@Override
-		public PutIntoNew duplicate()
+		public PutIntoNew duplicate(boolean with_state)
 		{
-			return new PutIntoNew();
+			PutIntoNew pi = new PutIntoNew();
+			if (with_state)
+			{
+				pi.m_set.addAll(m_set);
+			}
+			return pi;
 		}
 
 		@Override

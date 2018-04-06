@@ -85,7 +85,7 @@ public class Constant extends Function
 	}
 
 	@Override
-	public Constant duplicate()
+	public Constant duplicate(boolean with_state)
 	{
 		return new Constant(m_value);
 	}

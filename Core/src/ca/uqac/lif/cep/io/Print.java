@@ -251,7 +251,7 @@ public class Print extends Sink
 	}
 
 	@Override
-	public /*@NotNull*/ Print duplicate()
+	public /*@NotNull*/ Print duplicate(boolean with_state)
 	{
 		return new Print(getInputArity(), m_out);
 	}

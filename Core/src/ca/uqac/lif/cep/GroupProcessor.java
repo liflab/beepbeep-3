@@ -216,7 +216,7 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public synchronized ProxyPullable getPullableOutput(int index)
+	public synchronized Pullable getPullableOutput(int index)
 	{
 		return new ProxyPullable(m_outputPullables.get(index), index);
 	}
@@ -283,7 +283,7 @@ public class GroupProcessor extends Processor
 		return a.m_processor.getPullableInput(a.m_ioNumber);
 	}
 
-	public synchronized Map<Integer,Processor> cloneInto(GroupProcessor group)
+	public synchronized Map<Integer,Processor> cloneInto(GroupProcessor group, boolean with_state)
 	{
 		super.cloneInto(group);
 		group.m_notifySources = m_notifySources;
@@ -296,7 +296,7 @@ public class GroupProcessor extends Processor
 			{
 				start = p;
 			}
-			Processor clone_p = p.duplicate();
+			Processor clone_p = p.duplicate(with_state);
 			clone_p.setContext(p.m_context);
 			new_procs.put(p.getId(), clone_p);
 			group.addProcessor(clone_p);
@@ -324,10 +324,10 @@ public class GroupProcessor extends Processor
 	}
 
 	@Override
-	public synchronized GroupProcessor duplicate()
+	public synchronized GroupProcessor duplicate(boolean with_state)
 	{
 		GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
-		cloneInto(group);
+		cloneInto(group, with_state);
 		return group;
 	}
 

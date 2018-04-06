@@ -20,7 +20,7 @@ public class KeepLast extends SingleProcessor
 	}
 
 	@Override
-	public KeepLast duplicate()
+	public KeepLast duplicate(boolean with_state)
 	{
 		return new KeepLast(m_inputArity);
 	}

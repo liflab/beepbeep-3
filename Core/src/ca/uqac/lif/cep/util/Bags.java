@@ -206,9 +206,9 @@ public class Bags
 		}
 
 		@Override
-		public RunOn duplicate()
+		public RunOn duplicate(boolean with_state)
 		{
-			return new RunOn(m_processor.duplicate());
+			return new RunOn(m_processor.duplicate(with_state));
 		}
 	}
 	
@@ -279,7 +279,7 @@ public class Bags
 		}
 
 		@Override
-		public ToArray duplicate() 
+		public ToArray duplicate(boolean with_state) 
 		{
 			return new ToArray(m_types);
 		}
@@ -310,7 +310,7 @@ public class Bags
 		}
 
 		@Override
-		public ToList duplicate() 
+		public ToList duplicate(boolean with_state) 
 		{
 			return new ToList(m_types);
 		}
@@ -345,7 +345,7 @@ public class Bags
 		}
 
 		@Override
-		public ToSet duplicate() 
+		public ToSet duplicate(boolean with_state) 
 		{
 			return new ToSet(m_types);
 		}

@@ -215,7 +215,7 @@ public class MathTest
 	@Test
 	public void testNumberCastDuplicate()
 	{
-		NumberCast nc = Numbers.numberCast.duplicate();
+		NumberCast nc = (NumberCast) Numbers.numberCast.duplicate();
 		assertTrue(nc == Numbers.numberCast);
 	}
 	

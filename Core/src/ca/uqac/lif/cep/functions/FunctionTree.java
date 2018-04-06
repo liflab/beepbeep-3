@@ -137,12 +137,12 @@ public class FunctionTree extends Function
 	}
 
 	@Override
-	public synchronized FunctionTree duplicate()
+	public synchronized FunctionTree duplicate(boolean with_state)
 	{
-		FunctionTree out = new FunctionTree(m_function.duplicate());
+		FunctionTree out = new FunctionTree(m_function.duplicate(with_state));
 		for (int i = 0; i < m_children.length; i++)
 		{
-			out.m_children[i] = m_children[i].duplicate();
+			out.m_children[i] = m_children[i].duplicate(with_state);
 		}
 		return out;
 	}

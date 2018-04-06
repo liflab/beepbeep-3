@@ -100,7 +100,7 @@ public class Lists
 		}
 
 		@Override
-		public Processor duplicate()
+		public Processor duplicate(boolean with_state)
 		{
 			return new Pack();
 		}
@@ -246,9 +246,14 @@ public class Lists
 		}
 
 		@Override
-		public TimePack duplicate() 
+		public TimePack duplicate(boolean with_state) 
 		{
-			return new TimePack();
+			TimePack tp = new TimePack();
+			if (with_state)
+			{
+				tp.m_packedEvents.addAll(m_packedEvents);
+			}
+			return tp;
 		}
 	}
 	/**
@@ -284,9 +289,14 @@ public class Lists
 		}
 
 		@Override
-		public Unpack duplicate() 
+		public Unpack duplicate(boolean with_state) 
 		{
-			return new Unpack();
+			Unpack up = new Unpack();
+			if (with_state)
+			{
+				up.m_outputQueues[0].addAll(m_outputQueues[0]);
+			}
+			return up;
 		}
 	}
 	
@@ -301,7 +311,7 @@ public class Lists
 		}
 
 		@Override
-		public Explode duplicate() 
+		public Explode duplicate(boolean with_state) 
 		{
 			return new Explode(m_classes);
 		}

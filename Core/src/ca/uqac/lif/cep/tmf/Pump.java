@@ -132,7 +132,7 @@ public class Pump extends Processor implements Runnable
 	}
 
 	@Override
-	public Pump duplicate()
+	public Pump duplicate(boolean with_state)
 	{
 		return new Pump();
 	}

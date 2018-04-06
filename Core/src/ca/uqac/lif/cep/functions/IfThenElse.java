@@ -79,7 +79,7 @@ public class IfThenElse extends Function
 	}
 
 	@Override
-	public IfThenElse duplicate() 
+	public IfThenElse duplicate(boolean with_state) 
 	{
 		return instance;
 	}

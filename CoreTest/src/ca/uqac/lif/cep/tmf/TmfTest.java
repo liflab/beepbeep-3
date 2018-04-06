@@ -64,7 +64,7 @@ public class TmfTest
 		assertEquals(10, ((Integer) q.poll()).intValue());
 		p.push("bar");
 		assertEquals(10, ((Integer) q.poll()).intValue());
-		rw = rw.duplicate();
+		rw = (ReplaceWith) rw.duplicate();
 		p.push("foo");
 		assertEquals(10, ((Integer) q.poll()).intValue());
 		p.push("bar");
@@ -522,7 +522,7 @@ public class TmfTest
 		}
 		long after = System.currentTimeMillis();
 		assertTrue(after - before > 200);
-		td = td.duplicate();
+		td = (TimeDecimate) td.duplicate();
 		assertEquals(200, td.getInterval());
 	}
 
@@ -554,7 +554,7 @@ public class TmfTest
 		assertEquals(2, p.pull());
 		assertEquals(6, p.pull());
 		assertEquals(8, p.pull());
-		SimpleFilter filter2 = filter.duplicate();
+		SimpleFilter filter2 = (SimpleFilter) filter.duplicate();
 		assertEquals(Numbers.isEven, filter2.getCondition());
 	}
 
@@ -563,7 +563,7 @@ public class TmfTest
 	{
 		FunctionTree ft = new FunctionTree(Numbers.isGreaterThan, new StreamVariable(0), new Constant(4));
 		SimpleFilter filter = new SimpleFilter(ft);
-		SimpleFilter filter2 = filter.duplicate();
+		SimpleFilter filter2 = (SimpleFilter) filter.duplicate();
 		Function f = filter2.getCondition();
 		assertFalse(f == ft);
 		assertTrue(f instanceof FunctionTree);

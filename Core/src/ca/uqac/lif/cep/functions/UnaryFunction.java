@@ -88,7 +88,7 @@ public abstract class UnaryFunction<T,U> extends Function
 	}
 
 	@Override
-	public UnaryFunction<T,U> duplicate()
+	public UnaryFunction<T,U> duplicate(boolean with_state)
 	{
 		return this;
 	}

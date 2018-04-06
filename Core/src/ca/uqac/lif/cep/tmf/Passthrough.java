@@ -61,7 +61,7 @@ public class Passthrough extends UniformProcessor
 	}
 
 	@Override
-	public Passthrough duplicate()
+	public Passthrough duplicate(boolean with_state)
 	{
 		return new Passthrough(getInputArity());
 	}

@@ -79,7 +79,7 @@ public class FunctionsTest
 		assertEquals(0, evaluate(f, 0));
 		assertEquals(1, f.getInputArity());
 		assertEquals(1, f.getOutputArity());
-		IdentityFunction f2 = f.duplicate();
+		IdentityFunction f2 = (IdentityFunction) f.duplicate();
 		assertEquals(6, evaluate(f2, 6));
 		assertEquals(1, f2.getInputArity());
 		assertEquals(1, f2.getOutputArity());
@@ -170,7 +170,7 @@ public class FunctionsTest
 	{
 		FunctionTree ft = new FunctionTree(Numbers.addition, new Constant(1), new StreamVariable(0));
 		assertEquals(6f, evaluate(ft, 5));
-		FunctionTree ft2 = ft.duplicate();
+		FunctionTree ft2 = (FunctionTree) ft.duplicate();
 		assertFalse(ft == ft2);
 		assertEquals(6f, evaluate(ft2, 5));
 		String msg = ft.toString();
@@ -228,7 +228,7 @@ public class FunctionsTest
 		assertEquals(6, ct.getValue());
 		assertEquals(1, ct.getOutputArity());
 		assertEquals(0, ct.getInputArity());
-		Constant ct2 = ct.duplicate();
+		Constant ct2 = (Constant) ct.duplicate();
 		assertFalse(ct == ct2);
 		assertEquals(6, ct2.getValue());
 		assertEquals(6, evaluate(ct2));
@@ -241,7 +241,7 @@ public class FunctionsTest
 		assertEquals(null, ct.getValue());
 		assertEquals(1, ct.getOutputArity());
 		assertEquals(0, ct.getInputArity());
-		Constant ct2 = ct.duplicate();
+		Constant ct2 = (Constant) ct.duplicate();
 		assertFalse(ct == ct2);
 		assertEquals(null, ct2.getValue());
 		assertEquals(null, evaluate(ct2));

@@ -92,7 +92,7 @@ public class TimeDecimate extends Decimate
     }
 
     @Override
-    public TimeDecimate duplicate() {
+    public TimeDecimate duplicate(boolean with_state) {
         return new TimeDecimate(m_interval, m_shouldProcessLastInputs);
     }
 }

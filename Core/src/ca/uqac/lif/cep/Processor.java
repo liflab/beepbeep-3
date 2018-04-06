@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -598,4 +598,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 			m_eventTracker.associateToOutput(m_uniqueId, in_stream_index, in_stream_pos, out_stream_index, out_stream_pos);
 		}
 	}
+	
+	@Override
+	public final Processor duplicate()
+	{
+		return duplicate(false);
+	}
+	
+	@Override
+	public abstract Processor duplicate(boolean with_state);
 }

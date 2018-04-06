@@ -285,13 +285,24 @@ public class Slice extends UniformProcessor
 	}
 
 	@Override
-	public Slice duplicate()
+	public Slice duplicate(boolean with_state)
 	{
+		Slice s = null;
 		if (m_cleaningFunction == null)
 		{
-			return new Slice(m_slicingFunction.duplicate(), m_processor.duplicate());
+			s = new Slice(m_slicingFunction.duplicate(with_state), m_processor.duplicate(with_state));
 		}
-		return new Slice(m_slicingFunction.duplicate(), m_processor.duplicate(), m_cleaningFunction.duplicate());
+		else
+		{
+			s = new Slice(m_slicingFunction.duplicate(with_state), m_processor.duplicate(with_state), m_cleaningFunction.duplicate(with_state));
+		}
+		s.setContext(m_context);
+		s.m_explodeArrays = m_explodeArrays;
+		if (with_state)
+		{
+			throw new UnsupportedOperationException("Duplication with state not supported yet on this processor");
+		}
+		return s;
 	}
 
 	/**

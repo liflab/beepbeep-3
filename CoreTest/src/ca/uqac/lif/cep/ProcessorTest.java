@@ -112,7 +112,7 @@ public class ProcessorTest
 	{
 		ApplyFunction pt1 = new ApplyFunction(Numbers.addition);
 		pt1.setContext("a", 0);
-		ApplyFunction pt2 = pt1.duplicate();
+		ApplyFunction pt2 = (ApplyFunction) pt1.duplicate();
 		assertNotEquals(pt1.getId(), pt2.getId());
 		assertEquals(0, pt2.getContext("a"));
 		pt1.setContext("a", 1);

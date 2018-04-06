@@ -108,7 +108,7 @@ public class StreamVariable extends Variable
 	}
 
 	@Override
-	public StreamVariable duplicate()
+	public StreamVariable duplicate(boolean with_state)
 	{
 		return this;
 	}

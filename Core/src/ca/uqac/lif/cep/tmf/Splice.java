@@ -150,7 +150,7 @@ public class Splice extends Source
 	}
 
 	@Override
-	public Splice duplicate()
+	public Splice duplicate(boolean with_state)
 	{
 		return new Splice(m_processors);
 	}

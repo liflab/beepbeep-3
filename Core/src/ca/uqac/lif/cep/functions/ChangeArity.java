@@ -13,9 +13,9 @@ public class ChangeArity extends UniformProcessor
 	}
 
 	@Override
-	public ChangeArity duplicate() 
+	public ChangeArity duplicate(boolean with_state) 
 	{
-		return new ChangeArity(getInputArity(), m_function);
+		return new ChangeArity(getInputArity(), m_function.duplicate(with_state));
 	}
 
 	@Override

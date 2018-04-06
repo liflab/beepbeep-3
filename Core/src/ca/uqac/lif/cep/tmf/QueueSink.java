@@ -119,8 +119,16 @@ public class QueueSink extends Sink
 	}
 
 	@Override
-	public QueueSink duplicate()
+	public QueueSink duplicate(boolean with_state)
 	{
-		return new QueueSink(getInputArity());
+		QueueSink qs = new QueueSink(getInputArity());
+		if (with_state)
+		{
+			for (int i = 0; i < m_queues.length; i++)
+			{
+				qs.m_queues[i].addAll(m_queues[i]);
+			}
+		}
+		return qs;
 	}
 }

@@ -81,7 +81,7 @@ public class ContextVariable extends Variable
 	}
 
 	@Override
-	public ContextVariable duplicate()
+	public ContextVariable duplicate(boolean with_state)
 	{
 		return new ContextVariable(m_name);
 	}

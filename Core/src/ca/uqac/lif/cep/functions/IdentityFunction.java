@@ -79,7 +79,7 @@ public final class IdentityFunction extends Function
 	}
 
 	@Override
-	public IdentityFunction duplicate()
+	public IdentityFunction duplicate(boolean with_state)
 	{
 		return new IdentityFunction(m_inArity);
 	}

@@ -398,7 +398,7 @@ public class Numbers
 		}
 
 		@Override
-		public NumberCast duplicate()
+		public NumberCast duplicate(boolean with_state)
 		{
 			return this;
 		}

@@ -79,12 +79,20 @@ public class Trim extends SingleProcessor
 	}
 
 	@Override
-	public Trim duplicate()
+	public Trim duplicate(boolean with_state)
 	{
-		return new Trim(getDelay());
+		Trim t = new Trim(getDelay());
+		if (with_state)
+		{
+			t.m_eventsReceived = m_eventsReceived;
+			t.m_inputCount = m_inputCount;
+			t.m_outputCount = m_outputCount;
+		}
+		return t;
 	}
 
-	public int getDelay() {
+	public int getDelay() 
+	{
 		return m_delay;
 	}
 }

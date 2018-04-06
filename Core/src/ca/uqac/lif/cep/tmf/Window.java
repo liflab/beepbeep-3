@@ -157,16 +157,31 @@ public class Window extends AbstractWindow
 	}
 
 	@Override
-	public Window duplicate()
+	public Window duplicate(boolean with_state)
 	{
-		return new Window(m_processor.duplicate(), m_width);
+		Window w = new Window(m_processor.duplicate(), m_width);
+		if (with_state)
+		{
+			throw new UnsupportedOperationException("Duplication with state not supported yet on this processor");
+		}
+		return w;
 	}
 
-	public int getWidth() {
+	/**
+	 * Gets the width of the window
+	 * @return The width
+	 */
+	public int getWidth() 
+	{
 		return m_width;
 	}
 
-	public void setWidth(int m_width) {
+	/**
+	 * Sets the width of the window
+	 * @param m_width The width
+	 */
+	public void setWidth(int m_width)
+	{
 		this.m_width = m_width;
 	}
 }

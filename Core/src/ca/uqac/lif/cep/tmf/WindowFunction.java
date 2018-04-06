@@ -110,10 +110,13 @@ public class WindowFunction extends SingleProcessor
 	}
 
 	@Override
-	public WindowFunction duplicate()
+	public WindowFunction duplicate(boolean with_state)
 	{
 		WindowFunction wf = new WindowFunction(m_function.duplicate());
-		wf.m_window.addAll(m_window);
+		if (with_state)
+		{
+			wf.m_window.addAll(m_window);
+		}
 		return wf;
 	}
 	

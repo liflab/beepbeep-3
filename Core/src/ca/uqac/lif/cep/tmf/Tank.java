@@ -61,9 +61,15 @@ public class Tank extends Processor
 	}
 
 	@Override
-	public Tank duplicate() 
+	public Tank duplicate(boolean with_state) 
 	{
-		return new Tank();
+		Tank t = new Tank();
+		if (with_state)
+		{
+			// Put in the tank what is in the current tank
+			t.m_inputQueues[0].addAll(m_inputQueues[0]);
+		}
+		return t;
 	}
 
 	@Override

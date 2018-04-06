@@ -121,7 +121,7 @@ public class Maps
 		}
 
 		@Override
-		public PutInto duplicate()
+		public PutInto duplicate(boolean with_state)
 		{
 			return new PutInto();
 		}
@@ -170,7 +170,7 @@ public class Maps
 		}
 
 		@Override
-		public ArrayPutInto duplicate()
+		public ArrayPutInto duplicate(boolean with_state)
 		{
 			return new ArrayPutInto();
 		}

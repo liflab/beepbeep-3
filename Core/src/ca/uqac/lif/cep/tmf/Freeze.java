@@ -63,7 +63,7 @@ public class Freeze extends UniformProcessor
 	}
 
 	@Override
-	public Freeze duplicate()
+	public Freeze duplicate(boolean with_state)
 	{
 		return new Freeze();
 	}

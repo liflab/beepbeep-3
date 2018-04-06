@@ -67,9 +67,15 @@ public class FindPattern extends SingleProcessor
 	}
 
 	@Override
-	public FindPattern duplicate() 
+	public FindPattern duplicate(boolean with_state) 
 	{
-		return new FindPattern(m_pattern);
+		FindPattern fp = new FindPattern(m_pattern);
+		fp.m_trim = m_trim;
+		if (with_state)
+		{
+			fp.m_contents = new String(m_contents);
+		}
+		return fp;
 	}
 	
 	/**

@@ -86,7 +86,7 @@ public class Multiplex extends Processor
 	}
 
 	@Override
-	public Multiplex duplicate()
+	public Multiplex duplicate(boolean with_state)
 	{
 		return new Multiplex(getInputArity());
 	}

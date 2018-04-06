@@ -74,7 +74,7 @@ public class SinkLast extends Sink
 	}
 
 	@Override
-	public SinkLast duplicate()
+	public SinkLast duplicate(boolean with_state)
 	{
 		return new SinkLast(getInputArity());
 	}

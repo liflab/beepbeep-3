@@ -190,10 +190,15 @@ public class QueueSource extends Source
 	}
 
 	@Override
-	public QueueSource duplicate()
+	public QueueSource duplicate(boolean with_state)
 	{
 		QueueSource out = new QueueSource(getOutputArity());
+		out.m_loop = m_loop;
 		out.setEvents(m_events);
+		if (with_state)
+		{
+			out.m_index = m_index;
+		}
 		return out;
 	}
 

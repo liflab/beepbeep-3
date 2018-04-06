@@ -138,7 +138,7 @@ public class SliceTest
 	public void testSlicerDuplicate() 
 	{
 		Slice sli1 = new Slice(Numbers.isEven, new Sum());
-		Slice sli = sli1.duplicate();
+		Slice sli = (Slice) sli1.duplicate();
 		QueueSource source = new QueueSource().setEvents(1, 1, 6, 2, 3);
 		Connector.connect(source, sli);
 		Pullable p = sli.getPullableOutput();

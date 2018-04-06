@@ -87,7 +87,7 @@ public abstract class PassthroughFunction extends Function
 	}
 
 	@Override
-	public final Function duplicate()
+	public final Function duplicate(boolean with_state)
 	{
 		return this;
 	}

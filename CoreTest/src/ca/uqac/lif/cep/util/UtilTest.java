@@ -42,6 +42,7 @@ import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Bags.ApplyToAll;
+import ca.uqac.lif.cep.util.Bags.RunOn;
 import ca.uqac.lif.cep.util.Bags.ToArray;
 import ca.uqac.lif.cep.util.Bags.ToList;
 import ca.uqac.lif.cep.util.Bags.ToSet;
@@ -84,7 +85,7 @@ public class UtilTest
 		s.add(72);
 		p.push(s);
 		assertEquals(100, ((Number) q.poll()).intValue());
-		Bags.RunOn ro2 = ro.duplicate();
+		Bags.RunOn ro2 = (RunOn) ro.duplicate();
 		assertFalse(ro == ro2);
 		Connector.connect(ro2, sink);
 		p = ro2.getPushableInput();
@@ -220,7 +221,7 @@ public class UtilTest
 		f.getInputTypesFor(in_types, 1);
 		assertEquals(1, in_types.size());
 		assertTrue(in_types.contains(String.class));
-		ToArray f2 = f.duplicate();
+		ToArray f2 = (ToArray) f.duplicate();
 		out = (Object[]) FunctionsTest.evaluate(f2, 0, "foo");
 		assertEquals(2, out.length);
 		assertEquals(0, out[0]);
@@ -254,7 +255,7 @@ public class UtilTest
 		f.getInputTypesFor(in_types, 1);
 		assertEquals(1, in_types.size());
 		assertTrue(in_types.contains(String.class));
-		ToList f2 = f.duplicate();
+		ToList f2 = (ToList) f.duplicate();
 		out = (List<Object>) FunctionsTest.evaluate(f2, 0, "foo");
 		assertEquals(2, out.size());
 		assertEquals(0, out.get(0));
@@ -288,7 +289,7 @@ public class UtilTest
 		f.getInputTypesFor(in_types, 1);
 		assertEquals(1, in_types.size());
 		assertTrue(in_types.contains(String.class));
-		ToSet f2 = f.duplicate();
+		ToSet f2 = (ToSet) f.duplicate();
 		out = (Set<Object>) FunctionsTest.evaluate(f2, 0, "foo");
 		assertEquals(2, out.size());
 		assertTrue(out.contains(0));

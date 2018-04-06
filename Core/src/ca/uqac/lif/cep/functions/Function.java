@@ -123,4 +123,13 @@ public abstract class Function implements DuplicableFunction
 	{
 		return;
 	}
+	
+	@Override
+	public final Function duplicate()
+	{
+		return duplicate(false);
+	}
+	
+	@Override
+	public abstract Function duplicate(boolean with_state);
 }

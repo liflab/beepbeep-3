@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -33,9 +33,19 @@ package ca.uqac.lif.cep;
 public interface Duplicable
 {
 	/**
-	 * Duplicates an object
+	 * Duplicates an object and sets it to its initial state. This should
+	 * be the same thing as calling {@code duplicate(false)}.
 	 * @return Another object
 	 */
 	public Object duplicate();
+	
+	/**
+	 * Duplicates an object. Optionally, set the object into the same
+	 * state as the source object.
+	 * @param with_state Set to {@code true} to replicate the object's
+	 * state, {@code false} to create a new copy in the initial state.
+	 * @return Another object
+	 */
+	public Object duplicate(boolean with_state);
 	
 }

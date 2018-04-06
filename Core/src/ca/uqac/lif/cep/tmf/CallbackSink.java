@@ -44,7 +44,7 @@ public class CallbackSink extends SingleProcessor
 	}
 
 	@Override
-	public CallbackSink duplicate() 
+	public CallbackSink duplicate(boolean with_state) 
 	{
 		return new CallbackSink(getInputArity());
 	}

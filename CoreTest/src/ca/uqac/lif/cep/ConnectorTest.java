@@ -296,7 +296,7 @@ public class ConnectorTest
 		}
 
 		@Override
-		public Apples duplicate() 
+		public Apples duplicate(boolean with_state) 
 		{
 			return new Apples();
 		}
@@ -341,7 +341,7 @@ public class ConnectorTest
 		}
 
 		@Override
-		public Oranges duplicate() 
+		public Oranges duplicate(boolean with_state) 
 		{
 			return new Oranges();
 		}
@@ -388,7 +388,7 @@ public class ConnectorTest
 		}
 
 		@Override
-		public Variants duplicate() 
+		public Variants duplicate(boolean with_state) 
 		{
 			return new Variants();
 		}

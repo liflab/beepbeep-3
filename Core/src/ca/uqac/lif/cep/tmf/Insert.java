@@ -87,7 +87,7 @@ public class Insert extends SingleProcessor
 	}
 
 	@Override
-	public Insert duplicate()
+	public Insert duplicate(boolean with_state)
 	{
 		return new Insert(m_pad, m_times);
 	}

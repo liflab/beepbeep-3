@@ -56,7 +56,7 @@ public class TurnInto extends UniformProcessor
 	}
 
 	@Override
-	public synchronized TurnInto duplicate()
+	public synchronized TurnInto duplicate(boolean with_state)
 	{
 		TurnInto out = new TurnInto(m_event);
 		cloneInto(out);

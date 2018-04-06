@@ -107,7 +107,7 @@ public class HttpGet extends Source
 	}
 
 	@Override
-	public HttpGet duplicate() 
+	public HttpGet duplicate(boolean with_state) 
 	{
 		return new HttpGet(m_url);
 	}

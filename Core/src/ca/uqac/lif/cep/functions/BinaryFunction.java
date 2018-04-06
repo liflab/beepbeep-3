@@ -90,7 +90,7 @@ public abstract class BinaryFunction<T,V,U> extends Function
 	}
 
 	@Override
-	public BinaryFunction<T,V,U> duplicate()
+	public BinaryFunction<T,V,U> duplicate(boolean with_state)
 	{
 		return this;
 	}

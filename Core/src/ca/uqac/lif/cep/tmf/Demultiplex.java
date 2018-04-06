@@ -92,7 +92,7 @@ public class Demultiplex extends SingleProcessor
 	}
 
 	@Override
-	public Demultiplex duplicate()
+	public Demultiplex duplicate(boolean with_state)
 	{
 		return new Demultiplex(m_width);
 	}

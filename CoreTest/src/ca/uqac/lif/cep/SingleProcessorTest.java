@@ -164,7 +164,7 @@ public class SingleProcessorTest
 		}
 
 		@Override
-		public ThrowException duplicate()
+		public ThrowException duplicate(boolean with_state)
 		{
 			return null;
 		}

@@ -83,9 +83,9 @@ public class ApplyFunction extends UniformProcessor
 	}
 
 	@Override
-	public synchronized ApplyFunction duplicate()
+	public synchronized ApplyFunction duplicate(boolean with_state)
 	{
-		ApplyFunction out = new ApplyFunction(m_function.duplicate());
+		ApplyFunction out = new ApplyFunction(m_function.duplicate(with_state));
 		cloneInto(out);
 		return out;
 	}

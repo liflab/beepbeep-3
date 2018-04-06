@@ -61,7 +61,7 @@ public class Filter extends SingleProcessor
 	}
 
 	@Override
-	public Filter duplicate()
+	public Filter duplicate(boolean with_state)
 	{
 		return new Filter();
 	}

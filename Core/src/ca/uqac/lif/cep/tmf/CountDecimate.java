@@ -103,7 +103,7 @@ public class CountDecimate extends Decimate
     }
 
     @Override
-    public CountDecimate duplicate() {
+    public CountDecimate duplicate(boolean with_state) {
         return new CountDecimate(m_interval, m_shouldProcessLastInputs);
     }
 

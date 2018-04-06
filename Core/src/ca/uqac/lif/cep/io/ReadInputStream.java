@@ -100,7 +100,7 @@ public abstract class ReadInputStream extends Source
 	}
 	
 	@Override
-	public ReadInputStream duplicate()
+	public ReadInputStream duplicate(boolean with_state)
 	{
 		// By default, it does not make sense to duplicate such a processor
 		throw new UnsupportedOperationException();

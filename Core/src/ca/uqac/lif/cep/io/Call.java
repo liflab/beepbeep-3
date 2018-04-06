@@ -65,7 +65,7 @@ public class Call extends UniformProcessor
 	}
 
 	@Override
-	public Call duplicate()
+	public Call duplicate(boolean with_state)
 	{
 		return new Call(m_command);
 	}

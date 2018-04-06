@@ -88,7 +88,7 @@ public class WriteOutputStream extends Sink
 	}
 
 	@Override
-	public WriteOutputStream duplicate()
+	public WriteOutputStream duplicate(boolean with_state)
 	{
 		// By default, it does not make sense to duplicate such a processor
 		throw new UnsupportedOperationException();
