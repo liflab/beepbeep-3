@@ -37,7 +37,7 @@ public class ApplyFunction extends UniformProcessor
 	/**
 	 * The object responsible for the computation
 	 */
-	protected final Function m_function;
+	protected Function m_function;
 
 	/**
 	 * Instantiates a new function processor
@@ -117,5 +117,11 @@ public class ApplyFunction extends UniformProcessor
 	public Function getFunction()
 	{
 		return m_function;
+	}
+	
+	public void cloneInto(ApplyFunction af, boolean with_state)
+	{
+		super.cloneInto(af);
+		af.m_function = m_function.duplicate(with_state);
 	}
 }

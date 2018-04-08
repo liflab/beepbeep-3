@@ -152,4 +152,9 @@ public class Cumulate extends ApplyFunction
 			return null;
 		}
 	}
+	
+	public void cloneInto(Cumulate c, boolean with_state)
+	{
+		super.cloneInto(c, with_state);
+	}
 }
