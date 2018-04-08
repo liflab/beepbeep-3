@@ -27,6 +27,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
+import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -583,6 +584,24 @@ public class GroupTest
 		gp.setContext("a", 0);
 		assertEquals(0, v.getContext().get("a"));
 		assertEquals(0, gp.getContext().get("a"));
+	}
+	
+	@Test
+	public void testForkDuplicate() throws ProcessorException
+	{
+		GroupProcessor gp = new GroupProcessor(1, 1);
+		Fork f = new Fork(2);
+		gp.associateInput(0, f, 0);
+		ApplyFunction af = new ApplyFunction(Numbers.addition);
+		Connector.connect(f, 0, af, 0);
+		Connector.connect(f, 1, af, 1);
+		gp.associateOutput(0, af, 0);
+		gp.addProcessors(f, af);
+		GroupProcessor new_gp = (GroupProcessor) gp.duplicate();
+		QueueSource src = new QueueSource().setEvents(1);
+		Connector.connect(src, new_gp);
+		Pullable p = new_gp.getPullableOutput();
+		assertEquals(2f, p.pull());
 	}
 	
 	@Test
