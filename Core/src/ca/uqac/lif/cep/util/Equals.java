@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.util;
 import java.util.Collection;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.Constant;
 
 /**
  * A function that checks for the equality of various data types.
@@ -42,6 +43,14 @@ public class Equals extends BinaryFunction<Object,Object,Boolean>
 		if (x == null || y == null)
 		{
 			return false;
+		}
+		if (x instanceof Constant)
+		{
+			x = ((Constant) x).getValue();
+		}
+		if (y instanceof Constant)
+		{
+			y = ((Constant) y).getValue();
 		}
 		if (x instanceof Collection && y instanceof Collection)
 		{

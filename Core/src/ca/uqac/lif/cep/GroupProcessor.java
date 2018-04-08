@@ -38,7 +38,7 @@ public class GroupProcessor extends Processor
 	 * The set of processors included in the group
 	 */
 	private HashSet<Processor> m_processors = null;
-	
+
 	/**
 	 * The set of sources included in the group
 	 */
@@ -55,7 +55,7 @@ public class GroupProcessor extends Processor
 	 * output traces
 	 */
 	private transient List<Pullable> m_outputPullables = null;
-	
+
 	/**
 	 * Whether to notify the QueueSource objects in the group to
 	 * push an event when a call to push is made on the group
@@ -93,7 +93,7 @@ public class GroupProcessor extends Processor
 		m_inputPullableAssociations = new HashMap<Integer,ProcessorAssociation>();
 		m_outputPushableAssociations = new HashMap<Integer,ProcessorAssociation>();
 	}
-	
+
 	/**
 	 * Sets the processor to notify the QueueSource objects in the group to
 	 * push an event when a call to push is made on the group.
@@ -283,6 +283,17 @@ public class GroupProcessor extends Processor
 		return a.m_processor.getPullableInput(a.m_ioNumber);
 	}
 
+	/**
+	 * Clones the contents of the current {@link GroupProcessor} into a new
+	 * group
+	 * @param group The {@link GroupProcessor} to clone into. When the method
+	 * is called, it is expected to be empty.
+	 * @param with_state It set to {@code true}, each processor in the new
+	 * group has the same events in its input/output buffers as in the
+	 * original. Otherwise, the queues are empty.
+	 * @return An association between IDs and the new processors that have
+	 * been put into the group
+	 */
 	public synchronized Map<Integer,Processor> cloneInto(GroupProcessor group, boolean with_state)
 	{
 		super.cloneInto(group);
@@ -292,15 +303,30 @@ public class GroupProcessor extends Processor
 		// Clone every processor of the original group
 		for (Processor p : m_processors)
 		{
-			if (start == null)
+			if (start == null) // TODO: is this really useful?
 			{
 				start = p;
 			}
-			Processor clone_p = p.duplicate(with_state);
-			clone_p.setContext(p.m_context);
+			Processor clone_p = copyProcessor(p, with_state);
 			new_procs.put(p.getId(), clone_p);
 			group.addProcessor(clone_p);
 		}
+		// Re-pipe the inputs and outputs like in the original group
+		associateEndpoints(group, new_procs);
+		// Re-pipe the internal processors like in the original group
+		CopyCrawler cc = new CopyCrawler(new_procs);
+		cc.crawl(start);
+		return new_procs;
+	}
+
+	/**
+	 * Associates the endpoints of a new {@link GroupProcessor} like the ones in
+	 * the current group
+	 * @param group The new group
+	 * @param new_procs An association between processor IDs and processors 
+	 */
+	protected synchronized void associateEndpoints(GroupProcessor group, Map<Integer,Processor> new_procs)
+	{
 		// Re-pipe the inputs like in the original group
 		for (Map.Entry<Integer,ProcessorAssociation> entry : m_inputPullableAssociations.entrySet())
 		{
@@ -317,10 +343,33 @@ public class GroupProcessor extends Processor
 			Processor clone_p = new_procs.get(pa.m_processor.getId());
 			group.associateOutput(output_number, clone_p, pa.m_ioNumber);			
 		}
-		// Re-pipe the internal processors like in the original group
-		CopyCrawler cc = new CopyCrawler(new_procs);
-		cc.crawl(start);
-		return new_procs;
+	}
+
+	/**
+	 * Creates a copy of a processor.
+	 * @param p The processor to copy. Nothing is changed on this processor.
+	 * @param with_state If set to {@code true}, the new copy has the
+	 * same events in its input/output buffers as the original. Otherwise,
+	 * the queues are empty.
+	 * @return The new processor
+	 */
+	protected static synchronized Processor copyProcessor(Processor p, boolean with_state)
+	{
+		Processor clone_p = p.duplicate(with_state);
+		clone_p.setContext(p.m_context);
+		if (with_state)
+		{
+			// Put same content in input and output queues
+			for (int i = 0; i < p.m_inputQueues.length; i++)
+			{
+				clone_p.m_inputQueues[i].addAll(p.m_inputQueues[i]);
+			}
+			for (int i = 0; i < p.m_outputQueues.length; i++)
+			{
+				clone_p.m_outputQueues[i].addAll(p.m_outputQueues[i]);
+			}
+		}
+		return clone_p;
 	}
 
 	@Override
@@ -516,7 +565,7 @@ public class GroupProcessor extends Processor
 		{
 			return push(o);
 		}
-		
+
 		/**
 		 * Notifies each source in the group to push an event
 		 */
@@ -530,7 +579,7 @@ public class GroupProcessor extends Processor
 				}
 			}
 		}
-		
+
 		@Override
 		public void notifyEndOfTrace() throws PushableException
 		{
@@ -581,7 +630,7 @@ public class GroupProcessor extends Processor
 			p.stop();
 		}
 	}
-	
+
 	/**
 	 * Gets the processor associated to the i-th input of the group
 	 * @param index The index
