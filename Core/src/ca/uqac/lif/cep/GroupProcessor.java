@@ -303,7 +303,7 @@ public class GroupProcessor extends Processor
 		// Clone every processor of the original group
 		for (Processor p : m_processors)
 		{
-			if (start == null) // TODO: is this really useful?
+			if (start == null && p.getOutputArity() > 0)
 			{
 				start = p;
 			}
@@ -382,18 +382,32 @@ public class GroupProcessor extends Processor
 
 	/**
 	 * Crawler that creates copies (clones) of whatever it encounters
-	 * on its way
+	 * on its way and re-pipes processors as in the original group.
+	 * <p>
+	 * <strong>Caveat emptor</strong>: the starting point of the crawl
+	 * cannot be a processor with output arity of 0. Otherwise, none of the
+	 * processors in the new group will be piped together.
 	 * @author Sylvain Hallé
 	 */
 	protected static class CopyCrawler extends PipeCrawler
 	{
 		private final Map<Integer,Processor> m_correspondences;
-
+		
 		public CopyCrawler(Map<Integer,Processor> correspondences)
 		{
 			super();
 			m_correspondences = new HashMap<Integer,Processor>();
 			m_correspondences.putAll(correspondences);
+		}
+		
+		@Override
+		public synchronized void crawl(Processor start)
+		{
+			if (start.getOutputArity() == 0)
+			{
+				throw new UnsupportedOperationException("A copy crawl cannot start from a processor of output arity 0.");
+			}
+			super.crawl(start);
 		}
 
 		@Override

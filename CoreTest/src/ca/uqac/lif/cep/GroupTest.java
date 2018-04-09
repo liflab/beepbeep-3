@@ -19,7 +19,9 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Vector;
 
 import org.junit.Test;
@@ -27,7 +29,11 @@ import org.junit.Test;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
+<<<<<<< HEAD
 import ca.uqac.lif.cep.tmf.Fork;
+=======
+import ca.uqac.lif.cep.tmf.BlackHole;
+>>>>>>> a6d17d2d97cf42ff9cecbd1d34f05ac96c51d72a
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -587,6 +593,7 @@ public class GroupTest
 	}
 	
 	@Test
+<<<<<<< HEAD
 	public void testForkDuplicate() throws ProcessorException
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);
@@ -602,6 +609,27 @@ public class GroupTest
 		Connector.connect(src, new_gp);
 		Pullable p = new_gp.getPullableOutput();
 		assertEquals(2f, p.pull());
+=======
+	public void testCrawlerBlackHole()
+	{
+		Passthrough pt = new Passthrough();
+		BlackHole bh = new BlackHole();
+		Connector.connect(pt, bh);
+		CountCrawler cc = new CountCrawler();
+		cc.crawl(bh);
+		assertEquals(2, cc.m_visited.size());
+	}
+	
+	@Test
+	public void testCopyCrawlerBlackHole()
+	{
+		Passthrough pt = new Passthrough();
+		BlackHole bh = new BlackHole();
+		Connector.connect(pt, bh);
+		CountCrawler cc = new CountCrawler();
+		cc.crawl(bh);
+		assertEquals(2, cc.m_visited.size());
+>>>>>>> a6d17d2d97cf42ff9cecbd1d34f05ac96c51d72a
 	}
 	
 	@Test
@@ -664,6 +692,7 @@ public class GroupTest
 			super(arity);
 		}
 		
+		@Override
 		public PassthroughIn duplicate(boolean with_state)
 		{
 			return new PassthroughIn(getInputArity());
@@ -679,11 +708,24 @@ public class GroupTest
 			// TODO Auto-generated constructor stub
 		}
 		
+		@Override
 		public GroupIn duplicate(boolean with_state)
 		{
 			GroupIn in = new GroupIn(getInputArity(), getOutputArity());
 			super.cloneInto(in, with_state);
 			return in;
+		}
+	}
+	
+	public static class CountCrawler extends PipeCrawler
+	{
+		Set<Processor> m_visited = new HashSet<Processor>();
+		
+		@Override
+		public void visit(Processor p)
+		{
+			m_visited.add(p);
+			
 		}
 	}
 }
