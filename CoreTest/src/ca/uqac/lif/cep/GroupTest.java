@@ -19,7 +19,9 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Vector;
 
 import org.junit.Test;
@@ -27,6 +29,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
+import ca.uqac.lif.cep.tmf.BlackHole;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -586,6 +589,28 @@ public class GroupTest
 	}
 	
 	@Test
+	public void testCrawlerBlackHole()
+	{
+		Passthrough pt = new Passthrough();
+		BlackHole bh = new BlackHole();
+		Connector.connect(pt, bh);
+		CountCrawler cc = new CountCrawler();
+		cc.crawl(bh);
+		assertEquals(2, cc.m_visited.size());
+	}
+	
+	@Test
+	public void testCopyCrawlerBlackHole()
+	{
+		Passthrough pt = new Passthrough();
+		BlackHole bh = new BlackHole();
+		Connector.connect(pt, bh);
+		CountCrawler cc = new CountCrawler();
+		cc.crawl(bh);
+		assertEquals(2, cc.m_visited.size());
+	}
+	
+	@Test
 	public void testPullable1() throws ProcessorException
 	{
 		QueueSource source = new QueueSource();
@@ -645,6 +670,7 @@ public class GroupTest
 			super(arity);
 		}
 		
+		@Override
 		public PassthroughIn duplicate(boolean with_state)
 		{
 			return new PassthroughIn(getInputArity());
@@ -660,11 +686,24 @@ public class GroupTest
 			// TODO Auto-generated constructor stub
 		}
 		
+		@Override
 		public GroupIn duplicate(boolean with_state)
 		{
 			GroupIn in = new GroupIn(getInputArity(), getOutputArity());
 			super.cloneInto(in, with_state);
 			return in;
+		}
+	}
+	
+	public static class CountCrawler extends PipeCrawler
+	{
+		Set<Processor> m_visited = new HashSet<Processor>();
+		
+		@Override
+		public void visit(Processor p)
+		{
+			m_visited.add(p);
+			
 		}
 	}
 }
