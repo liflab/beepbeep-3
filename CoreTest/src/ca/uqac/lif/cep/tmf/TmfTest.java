@@ -473,7 +473,6 @@ public class TmfTest
 		assertEquals(t, pl.getProcessor());
 		assertEquals(t, ps.getProcessor());
 		// These methods should all do nothing
-		ps.dispose();
 		pl.dispose();
 		pl.start();
 		pl.stop();
@@ -500,7 +499,6 @@ public class TmfTest
 		assertEquals(t, pl.getProcessor());
 		assertEquals(t, ps.getProcessor());
 		// These methods should all do nothing
-		ps.dispose();
 		pl.dispose();
 		pl.start();
 		pl.stop();

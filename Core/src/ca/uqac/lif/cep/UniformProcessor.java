@@ -20,6 +20,7 @@ package ca.uqac.lif.cep;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.concurrent.Future;
 
 /**
  * Processor that produces exactly one output front for each input
@@ -140,7 +141,7 @@ public abstract class UniformProcessor extends SingleProcessor
 	public class UnaryPushable implements Pushable
 	{
 		@Override
-		public Pushable push(Object o) 
+		public synchronized Pushable push(Object o) 
 		{
 			try
 			{
@@ -159,13 +160,14 @@ public abstract class UniformProcessor extends SingleProcessor
 		}
 
 		@Override
-		public Pushable pushFast(Object o)
+		public synchronized Future<Pushable> pushFast(Object o)
 		{
-			return push(o);
+			push(o);
+			return Pushable.NULL_FUTURE;
 		}
 
 		@Override
-		public void notifyEndOfTrace() throws PushableException 
+		public synchronized void notifyEndOfTrace() throws PushableException 
 		{
 			try
 			{
@@ -188,18 +190,6 @@ public abstract class UniformProcessor extends SingleProcessor
 		public int getPosition() 
 		{
 			return 0;
-		}
-
-		@Override
-		public void waitFor() 
-		{
-			// Nothing to do
-		}
-
-		@Override
-		public void dispose()
-		{
-			// Nothing to do
 		}
 	}
 

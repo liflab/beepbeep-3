@@ -58,8 +58,6 @@ public class MuxTest
 		assertEquals("baz", out);
 		out = contents.poll();
 		assertEquals(5, ((Integer) out).intValue());
-		// These methods should not do anything
-		p2.dispose();
 		assertEquals(1, p2.getPosition());
 		assertEquals(mux, p2.getProcessor());
 	}

@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Iterator;
+import java.util.concurrent.Future;
 
 import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
@@ -211,13 +212,15 @@ public class Tank extends Processor
 		}
 
 		@Override
-		public Pushable pushFast(Object o) 
+		public Future<Pushable> pushFast(Object o) 
 		{
-			return push(o);
+			push(o);
+			return Pushable.NULL_FUTURE;
 		}
 		
 		@Override
-		public void notifyEndOfTrace() throws PushableException {
+		public void notifyEndOfTrace() throws PushableException
+		{
 			// TODO: to be verified
 			m_outputPushables[0].notifyEndOfTrace();
 		}
@@ -232,18 +235,6 @@ public class Tank extends Processor
 		public int getPosition()
 		{
 			return 0;
-		}
-
-		@Override
-		public void waitFor() 
-		{
-			// Nothing to do
-		}
-
-		@Override
-		public void dispose() 
-		{
-			// Nothing to do
 		}
 	}
 

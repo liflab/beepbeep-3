@@ -78,8 +78,6 @@ public class SliceTest
 			sli.reset();
 			qsink.reset();
 		}
-		// These methods should not do anything
-		in.dispose();
 		assertEquals(0, in.getPosition());
 		assertEquals(sli, in.getProcessor());
 	}
@@ -299,6 +297,12 @@ public class SliceTest
 				return null;
 			}
 			return x.intValue() % 2 == 0;
+		}
+		
+		@Override
+		public EvenAll duplicate(boolean with_state)
+		{
+			return instance;
 		}
 	}
 	

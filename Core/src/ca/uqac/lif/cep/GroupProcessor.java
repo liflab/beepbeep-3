@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import ca.uqac.lif.cep.tmf.Source;
 
@@ -570,14 +571,14 @@ public class GroupProcessor extends Processor
 		{
 			m_pushable.push(o);
 			notifySources();
-			m_pushable.waitFor();
 			return m_pushable;
 		}
 
 		@Override
-		public synchronized Pushable pushFast(Object o)
+		public synchronized Future<Pushable> pushFast(Object o)
 		{
-			return push(o);
+			push(o);
+			return Pushable.NULL_FUTURE;
 		}
 
 		/**
@@ -610,18 +611,6 @@ public class GroupProcessor extends Processor
 		public synchronized int getPosition()
 		{
 			return m_position;
-		}
-
-		@Override
-		public synchronized void waitFor()
-		{
-			return;
-		}
-
-		@Override
-		public synchronized void dispose()
-		{
-			m_pushable.dispose();
 		}
 	}
 

@@ -75,9 +75,6 @@ public class PushableTest
 			cnt++;
 		}
 		assertEquals(2, cnt);
-		// These methods should do nothing
-		p.dispose();
-		p.waitFor();
 		assertEquals(0, p.getPosition());
 		assertEquals(pump.getId(), p.getProcessor().getId());
 	}

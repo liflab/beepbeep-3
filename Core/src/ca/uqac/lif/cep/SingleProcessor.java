@@ -21,6 +21,7 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.concurrent.Future;
 
 /**
  * Performs a computation on input events to produce output events.
@@ -157,9 +158,10 @@ public abstract class SingleProcessor extends Processor
 		}
 
 		@Override
-		public synchronized Pushable pushFast(Object o)
+		public final synchronized Future<Pushable> pushFast(Object o)
 		{
-			return push(o);
+			push(o);
+			return Pushable.NULL_FUTURE;
 		}
 
 		@Override
@@ -270,7 +272,6 @@ public abstract class SingleProcessor extends Processor
 								throw new PushableException("Output " + i + " of this processor is connected to nothing", getProcessor());
 							}
 							p.push(evt[i]);
-							p.waitFor();
 						}
 					}
 				}
@@ -281,19 +282,6 @@ public abstract class SingleProcessor extends Processor
 		public synchronized Processor getProcessor()
 		{
 			return SingleProcessor.this;
-		}
-
-		@Override
-		public synchronized void waitFor()
-		{
-			// Since this pushable is blocking
-			return;
-		}
-
-		@Override
-		public synchronized void dispose()
-		{
-			// Do nothing
 		}
 	}
 
@@ -583,5 +571,5 @@ public abstract class SingleProcessor extends Processor
 		Object[] v = new Object[1];
 		v[0] = o;
 		return v;
-	}
+	}	
 }

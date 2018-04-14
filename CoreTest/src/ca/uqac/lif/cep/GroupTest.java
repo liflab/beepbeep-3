@@ -29,11 +29,8 @@ import org.junit.Test;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
-<<<<<<< HEAD
 import ca.uqac.lif.cep.tmf.Fork;
-=======
 import ca.uqac.lif.cep.tmf.BlackHole;
->>>>>>> a6d17d2d97cf42ff9cecbd1d34f05ac96c51d72a
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -593,7 +590,6 @@ public class GroupTest
 	}
 	
 	@Test
-<<<<<<< HEAD
 	public void testForkDuplicate() throws ProcessorException
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);
@@ -609,7 +605,8 @@ public class GroupTest
 		Connector.connect(src, new_gp);
 		Pullable p = new_gp.getPullableOutput();
 		assertEquals(2f, p.pull());
-=======
+	}
+	
 	public void testCrawlerBlackHole()
 	{
 		Passthrough pt = new Passthrough();
@@ -629,7 +626,6 @@ public class GroupTest
 		CountCrawler cc = new CountCrawler();
 		cc.crawl(bh);
 		assertEquals(2, cc.m_visited.size());
->>>>>>> a6d17d2d97cf42ff9cecbd1d34f05ac96c51d72a
 	}
 	
 	@Test

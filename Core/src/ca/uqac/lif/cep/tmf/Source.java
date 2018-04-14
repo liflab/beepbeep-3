@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tmf;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
@@ -66,16 +68,29 @@ public abstract class Source extends SingleProcessor
 		}
 		for (Object[] evt : output)
 		{
+			@SuppressWarnings("unchecked")
+			Future<Pushable>[] futures = new Future[output.size()];
 			if (evt != null && !allNull(evt))
 			{
 				for (int i = 0; i < output.size(); i++)
 				{
 					Pushable p = m_outputPushables[i];
-					p.push(evt[i]);
+					futures[i] = p.pushFast(evt[i]);
 				}
 				for (int i = 0; i < output.size(); i++)
 				{
-					m_outputPushables[i].waitFor();
+					try 
+					{
+						futures[i].get();
+					}
+					catch (InterruptedException e) 
+					{
+						throw new ProcessorException(e);
+					}
+					catch (ExecutionException e) 
+					{
+						throw new ProcessorException(e);
+					}
 				}
 			}
 		}

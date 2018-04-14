@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -78,7 +80,7 @@ public class Slice extends UniformProcessor
 	 * The last value output by the processor for each slice
 	 */
 	protected HashMap<Object,Object> m_lastValues;
-	
+
 	/**
 	 * If the slicing function returns a collection, treat each element
 	 * of the collection as a slice id
@@ -105,7 +107,7 @@ public class Slice extends UniformProcessor
 	{
 		this(func, proc, null);
 	}
-	
+
 	/**
 	 * Sets the processor that will be executed on each slice
 	 * @param p The processor
@@ -187,6 +189,8 @@ public class Slice extends UniformProcessor
 				}
 				slices_to_process.add(slice_id);
 			}
+			@SuppressWarnings("unchecked")
+			Future<Pushable>[] futures = new Future[slices_to_process.size()];
 			for (Object s_id : slices_to_process)
 			{
 				// Find processor corresponding to that slice
@@ -196,17 +200,37 @@ public class Slice extends UniformProcessor
 				{
 					QueueSink sink_p = m_sinks.get(s_id);
 					// Push the input into the processor
-					Pushable[] p_array = new Pushable[inputs.length];
+					//Pushable[] p_array = new Pushable[inputs.length];
 					for (int i = 0; i < inputs.length; i++)
 					{
 						Object o_i = inputs[i];
 						Pushable p = slice_p.getPushableInput(i);
-						p.push(o_i);
-						p_array[i] = p;
+						Future<Pushable> f = p.pushFast(o_i);
+						if (f == null)
+						{
+							System.out.println("NULL");
+						}
+						futures[i] = f;
+						//p_array[i] = p;
 					}
-					for (int i = 0; i < inputs.length; i++)
+					// Wait for all slices to be done
+					for (Future<Pushable> f : futures)
 					{
-						p_array[i].waitFor();
+						if (f != null)
+						{
+							try
+							{
+								f.get();
+							} 
+							catch (InterruptedException e) 
+							{
+								throw new ProcessorException(e);
+							}
+							catch (ExecutionException e) 
+							{
+								throw new ProcessorException(e);
+							}
+						}
 					}
 					// Collect the output from that processor
 					Object[] out = sink_p.remove();
@@ -236,7 +260,7 @@ public class Slice extends UniformProcessor
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Sets whether a slice function that returns a collection of values
 	 * must be handled as individual slice IDs.

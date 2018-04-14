@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.concurrent.Future;
+
 /**
  * Gives events to some of a processor's input. Interface {@link Pushable}
  * is the opposite of {@link Pullable}: rather than querying events form
@@ -61,11 +63,10 @@ public interface Pushable
 	 * @param o The event. Although you can technically push <code>null</code>,
 	 *   the behaviour in this case is undefined. It <code>may</code> be
 	 *   interpreted as if you are passing no event.
-	 * @return The same instance of pushable. This is done to allow chain
-	 *   calls to {@link Pushable} objects, e.g.
-	 *   <code>p.push(o1).push(o2)</code>.
+	 * @return A {@link Future} object that can be used to wait until the
+	 *   call to {@code pushFast} is finished.
 	 */
-	public Pushable pushFast(Object o);
+	public Future<Pushable> pushFast(Object o);
 
 	/**
 	 * Notifies the pushable that there is no more event to be pushed,
@@ -86,30 +87,6 @@ public interface Pushable
 	 * @return The position
 	 */
 	public int getPosition();
-
-	/**
-	 * Waits until the pushable is done pushing. In the case of a
-	 * blocking pushable, the call to {@link #push(Object) push()}
-	 * waits for the operation to be completed; so calling this method
-	 * afterwards should return immediately (as a matter of fact,
-	 * calling it is even optional). For a non-blocking
-	 * call (with {@link #pushFast(Object) pushFast()}), this is the opposite:
-	 * the call to {@link #push(Object) push()} should return more or less
-	 * immediately, but the call to this method will not return until
-	 * the push operation is finished.
-	 */
-	public void waitFor();
-
-	/**
-	 * Tells this pushable that methods {@link #push(Object) push()} or
-	 * {@link #pushFast(Object) pushFast()} will not be called anymore.
-	 * For some types of pushables, this can be used as a cue to free
-	 * some resources (such as threads). The behaviour of these two methods
-	 * after <code>dispose()</code> has been called is undefined.
-	 * In future versions, it is possible that an exception will
-	 * be thrown in such a case.
-	 */
-	public void dispose();
 	
 	/**
 	 * A runtime exception indicating that something
@@ -180,13 +157,14 @@ public interface Pushable
 		}
 
 		@Override
-		public Pushable pushFast(Object o) 
+		public Future<Pushable> pushFast(Object o) 
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public void notifyEndOfTrace() throws PushableException {
+		public void notifyEndOfTrace() throws PushableException
+		{
 			throw new UnsupportedOperationException();
 		}
 		
@@ -201,18 +179,11 @@ public interface Pushable
 		{
 			return m_position;
 		}
-
-		@Override
-		public void waitFor() 
-		{
-			// Do nothing
-		}
-
-		@Override
-		public void dispose() 
-		{
-			// Do nothing
-		}
-		
 	}
+	
+	/**
+	 * A dummy {@link Future} object that will be returned on all calls to
+	 * {@link Pushable#pushFast(Object)}.
+	 */
+	public static final FutureDone<Pushable> NULL_FUTURE = new FutureDone<Pushable>(new PushNotSupported(null, 0));
 }

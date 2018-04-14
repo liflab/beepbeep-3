@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.tmf;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.concurrent.Future;
 
 import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
@@ -278,15 +279,13 @@ public class Multiplex extends Processor
 		public Pushable push(Object o)
 		{
 			m_outputPushables[0].push(o);
-			m_outputPushables[0].waitFor();
 			return this;
 		}
 
 		@Override
-		public Pushable pushFast(Object o)
+		public Future<Pushable> pushFast(Object o)
 		{
-			m_outputPushables[0].pushFast(o);
-			return this;
+			return m_outputPushables[0].pushFast(o);
 		}
 
 		@Override
@@ -312,18 +311,6 @@ public class Multiplex extends Processor
 		public int getPosition()
 		{
 			return m_index;
-		}
-
-		@Override
-		public void waitFor()
-		{
-			m_outputPushables[0].waitFor();
-		}
-
-		@Override
-		public void dispose()
-		{
-			m_outputPushables[0].dispose();
 		}
 	}
 }

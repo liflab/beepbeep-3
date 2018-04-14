@@ -20,9 +20,12 @@ package ca.uqac.lif.cep.tmf;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 
 /**
@@ -105,19 +108,36 @@ public class Window extends AbstractWindow
 		{
 			m_processor.reset();
 			m_sink.reset();
+			int input_arity = getInputArity();
+			@SuppressWarnings("unchecked")
+			Future<Pushable>[] futures = new Future[m_width * input_arity];
 			for (int i = 0; i < m_width; i++)
 			{
-				for (int j = 0; j < getInputArity(); j++)
+				for (int j = 0; j < input_arity; j++)
 				{
 					// Feed
 					LinkedList<Object> q = m_window[j];
 					Object o = q.get(i);
 					Pushable p = m_innerInputs[j];
-					p.push(o);
+					futures[i * input_arity + j] = p.pushFast(o);
 				}
-				for (int j = 0; j < getInputArity(); j++)
+				for (Future<?> f : futures)
 				{
-					m_innerInputs[j].waitFor();
+					if (f != null)
+					{
+						try
+						{
+							f.get();
+						}
+						catch (InterruptedException e) 
+						{
+							throw new ProcessorException(e);
+						}
+						catch (ExecutionException e) 
+						{
+							throw new ProcessorException(e);
+						}
+					}
 				}
 				out = m_sink.getLast();
 			}
