@@ -520,5 +520,31 @@ public class Bags
 			return o;
 		}
 	}
+	
+	/**
+	 * Converts an object into an array
+	 * @param o The object
+	 * @return An array, or {@code null} if the object could not be
+	 * converted into an array.
+	 */
+	public static Object[] toObjectArray(Object o)
+	{
+		if (o.getClass().isArray())
+		{
+			return (Object[]) o;
+		}
+		if (o instanceof Collection<?>)
+		{
+			Collection<?> c = (Collection<?>) o;
+			Object[] a = new Object[c.size()];
+			int i = 0;
+			for (Object obj : c)
+			{
+				a[i++] = obj;
+			}
+			return a;
+		}
+		return null;
+	}
 
 }
