@@ -26,14 +26,14 @@
   <name>BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.7-alpha</version>
+  <version>0.8-alpha</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
   <author>Sylvain Hall&#233;</author>
   
   <!-- The project's main class -->
-  <mainclass>ca.uqac.lif.cep.cli.CommandLine</mainclass>
+  <mainclass>ca.uqac.lif.cep.Main</mainclass>
   
   <!-- Installation folders -->
   <srcdir>Core/src</srcdir>
