@@ -22,86 +22,92 @@ import java.util.Set;
 /**
  * Function of one input and one output.
  * 
- * @param <T> The type of the input
- * @param <U> The type of the output
+ * @param <T>
+ *          The type of the input
+ * @param <U>
+ *          The type of the output
  * 
  * @dictentry
  */
-public abstract class UnaryFunction<T,U> extends Function
+public abstract class UnaryFunction<T, U> extends Function
 {
-	/**
-	 * The class of the input
-	 */
-	private Class<T> m_inputType;
+  /**
+   * The class of the input
+   */
+  private Class<T> m_inputType;
 
-	/**
-	 * The class of the output
-	 */
-	private Class<U> m_outputType;
+  /**
+   * The class of the output
+   */
+  private Class<U> m_outputType;
 
-	/**
-	 * Creates a new instance of an unary function
-	 * @param t The class of the input
-	 * @param u The class of the output
-	 */
-	public UnaryFunction(Class<T> t, Class<U> u)
-	{
-		super();
-		m_inputType = t;
-		m_outputType = u;
-	}
+  /**
+   * Creates a new instance of an unary function
+   * 
+   * @param t
+   *          The class of the input
+   * @param u
+   *          The class of the output
+   */
+  public UnaryFunction(Class<T> t, Class<U> u)
+  {
+    super();
+    m_inputType = t;
+    m_outputType = u;
+  }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	/*@ requires inputs.length == 1 */
-	public void evaluate(/*@NonNull*/ Object[] inputs, Object[] outputs) 
-	{
-		T in = (T) inputs[0];
-		outputs[0] = getValue(in);
-	}
+  @SuppressWarnings("unchecked")
+  @Override
+  /* @ requires inputs.length == 1 */
+  public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs)
+  {
+    T in = (T) inputs[0];
+    outputs[0] = getValue(in);
+  }
 
-	/**
-	 * Evaluates the function
-	 * @param x The argument
-	 * @return The return value of the function
-	 * @ Any exception occurring during the
-	 *   evaluation of the underlying function  
-	 */
-	public abstract U getValue(T x) ;
+  /**
+   * Evaluates the function
+   * 
+   * @param x
+   *          The argument
+   * @return The return value of the function @ Any exception occurring during the
+   *         evaluation of the underlying function
+   */
+  public abstract U getValue(T x);
 
-	@Override
-	public final int getInputArity()
-	{
-		return 1;
-	}
+  @Override
+  public final int getInputArity()
+  {
+    return 1;
+  }
 
-	@Override
-	public final int getOutputArity()
-	{
-		return 1;
-	}
+  @Override
+  public final int getOutputArity()
+  {
+    return 1;
+  }
 
-	@Override
-	public void reset()
-	{
-		// Do nothing
-	}
+  @Override
+  public void reset()
+  {
+    // Do nothing
+  }
 
-	@Override
-	public UnaryFunction<T,U> duplicate(boolean with_state)
-	{
-		return this;
-	}
+  @Override
+  public UnaryFunction<T, U> duplicate(boolean with_state)
+  {
+    return this;
+  }
 
-	@Override
-	public final void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
-	{
-		classes.add(m_inputType);
-	}
+  @Override
+  public final void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, int index)
+  {
+    classes.add(m_inputType);
+  }
 
-	@Override
-	public Class<?> getOutputTypeFor(int index)
-	{
-		return m_outputType;
-	}
+  @Override
+  public Class<?> getOutputTypeFor(int index)
+  {
+    return m_outputType;
+  }
 }

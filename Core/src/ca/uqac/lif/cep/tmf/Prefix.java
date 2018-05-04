@@ -28,28 +28,28 @@ import java.util.Queue;
 @SuppressWarnings("squid:S2160")
 public class Prefix extends Trim
 {
-	public Prefix(int k)
-	{
-		super(k);
-	}
+  public Prefix(int k)
+  {
+    super(k);
+  }
 
-	@Override
-	@SuppressWarnings("squid:S1168")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		m_eventsReceived++;
-		if (m_eventsReceived <= getDelay())
-		{
-			outputs.add(inputs);
-			return true;
-		}
-		return false;
-	}
+  @Override
+  @SuppressWarnings("squid:S1168")
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    m_eventsReceived++;
+    if (m_eventsReceived <= getDelay())
+    {
+      outputs.add(inputs);
+      return true;
+    }
+    return false;
+  }
 
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_eventsReceived = 0;
-	}
+  @Override
+  public void reset()
+  {
+    super.reset();
+    m_eventsReceived = 0;
+  }
 }

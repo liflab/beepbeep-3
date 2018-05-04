@@ -17,11 +17,10 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.SingleProcessor;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Extracts chunks of an input stream based on a regular expression.
@@ -31,97 +30,103 @@ import ca.uqac.lif.cep.SingleProcessor;
  */
 public class FindPattern extends SingleProcessor
 {
-	/**
-	 * The buffered contents of the string received so far
-	 */
-	protected String m_contents;
+  /**
+   * The buffered contents of the string received so far
+   */
+  protected String m_contents;
 
-	/**
-	 * The pattern to extract from the input stream
-	 */
-	protected Pattern m_pattern;
-	
-	/**
-	 * Trims the pattern from leading and trailing spaces
-	 */
-	protected boolean m_trim = true;
+  /**
+   * The pattern to extract from the input stream
+   */
+  protected Pattern m_pattern;
 
-	/**
-	 * Creates a new pattern scanner
-	 * @param regex The regular expression defining the pattern to extract
-	 */
-	public FindPattern(String regex)
-	{
-		this(Pattern.compile(regex));
-	}
-	
-	/**
-	 * Creates a new pattern scanner
-	 * @param pattern The pattern to extract
-	 */
-	public FindPattern(Pattern pattern)
-	{
-		super(1, 1);
-		m_contents = "";
-		m_pattern = pattern;
-	}
+  /**
+   * Trims the pattern from leading and trailing spaces
+   */
+  protected boolean m_trim = true;
 
-	@Override
-	public FindPattern duplicate(boolean with_state) 
-	{
-		FindPattern fp = new FindPattern(m_pattern);
-		fp.m_trim = m_trim;
-		if (with_state)
-		{
-			fp.m_contents = new String(m_contents);
-		}
-		return fp;
-	}
-	
-	/**
-	 * Sets whether to apply <tt>trim()</tt> to each output event 
-	 * @param b Set to {@code true} to trim (default), {@code false} otherwise
-	 * @return This scanner
-	 */
-	public FindPattern trim(boolean b)
-	{
-		m_trim = b;
-		return this;
-	}
+  /**
+   * Creates a new pattern scanner
+   * 
+   * @param regex
+   *          The regular expression defining the pattern to extract
+   */
+  public FindPattern(String regex)
+  {
+    this(Pattern.compile(regex));
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
-	{
-		m_contents += (String) inputs[0];
-		Matcher mat = m_pattern.matcher(m_contents);
-		int last_end = 0;
-		while (mat.find())
-		{
-			if (mat.groupCount() > 0)
-			{
-				if (m_trim)
-				{
-					outputs.add(new Object[]{mat.group(1).trim()});
-				}
-				else
-				{
-					outputs.add(new Object[]{mat.group(1)});
-				}
-			}
-			else
-			{
-				if (m_trim)
-				{
-					outputs.add(new Object[]{mat.group(0).trim()});
-				}
-				else
-				{
-					outputs.add(new Object[]{mat.group(0)});
-				}
-			}
-			last_end = mat.end();
-		}
-		m_contents = m_contents.substring(last_end);
-		return true;
-	} 
+  /**
+   * Creates a new pattern scanner
+   * 
+   * @param pattern
+   *          The pattern to extract
+   */
+  public FindPattern(Pattern pattern)
+  {
+    super(1, 1);
+    m_contents = "";
+    m_pattern = pattern;
+  }
+
+  @Override
+  public FindPattern duplicate(boolean with_state)
+  {
+    FindPattern fp = new FindPattern(m_pattern);
+    fp.m_trim = m_trim;
+    if (with_state)
+    {
+      fp.m_contents = new String(m_contents);
+    }
+    return fp;
+  }
+
+  /**
+   * Sets whether to apply <tt>trim()</tt> to each output event
+   * 
+   * @param b
+   *          Set to {@code true} to trim (default), {@code false} otherwise
+   * @return This scanner
+   */
+  public FindPattern trim(boolean b)
+  {
+    m_trim = b;
+    return this;
+  }
+
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    m_contents += (String) inputs[0];
+    Matcher mat = m_pattern.matcher(m_contents);
+    int last_end = 0;
+    while (mat.find())
+    {
+      if (mat.groupCount() > 0)
+      {
+        if (m_trim)
+        {
+          outputs.add(new Object[] { mat.group(1).trim() });
+        }
+        else
+        {
+          outputs.add(new Object[] { mat.group(1) });
+        }
+      }
+      else
+      {
+        if (m_trim)
+        {
+          outputs.add(new Object[] { mat.group(0).trim() });
+        }
+        else
+        {
+          outputs.add(new Object[] { mat.group(0) });
+        }
+      }
+      last_end = mat.end();
+    }
+    m_contents = m_contents.substring(last_end);
+    return true;
+  }
 }

@@ -22,27 +22,28 @@ import ca.uqac.lif.cep.Pushable;
 /**
  * Tank that, when pulled, creates an output event based on the last event
  * received
+ * 
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
 public class TankLast extends Tank
 {
-	@Override
-	public Pushable getPushableInput(int index)
-	{
-		return new QueuePushable(true);
-	}
-	
-	@Override
-	public TankLast duplicate(boolean with_state)
-	{
-		TankLast t = new TankLast();
-		if (with_state)
-		{
-			// Put in the tank what is in the current tank
-			t.m_inputQueues[0].addAll(m_inputQueues[0]);
-		}
-		return t;
-	}
+  @Override
+  public Pushable getPushableInput(int index)
+  {
+    return new QueuePushable(true);
+  }
+
+  @Override
+  public TankLast duplicate(boolean with_state)
+  {
+    TankLast t = new TankLast();
+    if (with_state)
+    {
+      // Put in the tank what is in the current tank
+      t.m_inputQueues[0].addAll(m_inputQueues[0]);
+    }
+    return t;
+  }
 
 }

@@ -17,25 +17,24 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.Pushable.PushableException;
+import ca.uqac.lif.cep.SingleProcessor;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.Pushable.PushableException;
-import ca.uqac.lif.cep.SingleProcessor;
-
 /**
- * Produces output events from no input. In other words, a source is a
- * processor with input arity 0. It is the opposite of the {@link Sink}.
+ * Produces output events from no input. In other words, a source is a processor
+ * with input arity 0. It is the opposite of the {@link Sink}.
  * <p>
- * While a source has no input <em>trace</em>, this does not mean it has
- * not input at all. For example, a processor reading from a file and creating
+ * While a source has no input <em>trace</em>, this does not mean it has not
+ * input at all. For example, a processor reading from a file and creating
  * events out of the file's content is an example of a source. It does not
- * receive events as input, yet creates output events from something external
- * to it.
+ * receive events as input, yet creates output events from something external to
+ * it.
  * 
  * @author Sylvain Hallé
  *
@@ -43,56 +42,56 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public abstract class Source extends SingleProcessor
 {
-	public Source(int out_arity)
-	{
-		super(0, out_arity);
-	}
+  public Source(int out_arity)
+  {
+    super(0, out_arity);
+  }
 
-	/**
-	 * Tells the source to push events into the pipeline
-	 */
-	public final void push()
-	{
-		Queue<Object[]> output = new ArrayDeque<Object[]>(1);
-		try
-		{
-			compute(null, output);
-		}
-		catch (ProcessorException e)
-		{
-			throw new PushableException(e);
-		}
-		if (output.isEmpty())
-		{
-			return;
-		}
-		for (Object[] evt : output)
-		{
-			@SuppressWarnings("unchecked")
-			Future<Pushable>[] futures = new Future[output.size()];
-			if (evt != null && !allNull(evt))
-			{
-				for (int i = 0; i < output.size(); i++)
-				{
-					Pushable p = m_outputPushables[i];
-					futures[i] = p.pushFast(evt[i]);
-				}
-				for (int i = 0; i < output.size(); i++)
-				{
-					try 
-					{
-						futures[i].get();
-					}
-					catch (InterruptedException e) 
-					{
-						throw new ProcessorException(e);
-					}
-					catch (ExecutionException e) 
-					{
-						throw new ProcessorException(e);
-					}
-				}
-			}
-		}
-	}
+  /**
+   * Tells the source to push events into the pipeline
+   */
+  public final void push()
+  {
+    Queue<Object[]> output = new ArrayDeque<Object[]>(1);
+    try
+    {
+      compute(null, output);
+    }
+    catch (ProcessorException e)
+    {
+      throw new PushableException(e);
+    }
+    if (output.isEmpty())
+    {
+      return;
+    }
+    for (Object[] evt : output)
+    {
+      @SuppressWarnings("unchecked")
+      Future<Pushable>[] futures = new Future[output.size()];
+      if (evt != null && !allNull(evt))
+      {
+        for (int i = 0; i < output.size(); i++)
+        {
+          Pushable p = m_outputPushables[i];
+          futures[i] = p.pushFast(evt[i]);
+        }
+        for (int i = 0; i < output.size(); i++)
+        {
+          try
+          {
+            futures[i].get();
+          }
+          catch (InterruptedException e)
+          {
+            throw new ProcessorException(e);
+          }
+          catch (ExecutionException e)
+          {
+            throw new ProcessorException(e);
+          }
+        }
+      }
+    }
+  }
 }

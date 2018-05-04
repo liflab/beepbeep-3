@@ -17,15 +17,13 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.SingleProcessor;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
-
 /**
- * Inserts an event a certain number of times before letting the input
- * events through. This processor can be used to shift events of an input
- * trace forward, padding the beginning of the trace with some dummy
- * element.
+ * Inserts an event a certain number of times before letting the input events
+ * through. This processor can be used to shift events of an input trace
+ * forward, padding the beginning of the trace with some dummy element.
  * 
  * @author Sylvain Hallé
  * @dictentry
@@ -33,62 +31,65 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public class Insert extends SingleProcessor
 {
-	/**
-	 * The event to be added at the beginning of the input trace
-	 */
-	private final Object[] m_pad;
+  /**
+   * The event to be added at the beginning of the input trace
+   */
+  private final Object[] m_pad;
 
-	/**
-	 * The number of times the pad should be inserted before the beginning
-	 * of the input trace
-	 */
-	private final int m_times;
+  /**
+   * The number of times the pad should be inserted before the beginning of the
+   * input trace
+   */
+  private final int m_times;
 
-	/**
-	 * Whether or not the padding has already been sent
-	 */
-	private boolean m_sentPad;
+  /**
+   * Whether or not the padding has already been sent
+   */
+  private boolean m_sentPad;
 
-	/**
-	 * Instantiates a new Insert processor
-	 * @param o The event(s) to use as padding
-	 * @param times The number of times these events should be repeated
-	 *   before the beginning of the input trace
-	 */
-	public Insert(Object[] o, int times)
-	{
-		super(o.length, o.length);
-		m_pad = o;
-		m_times = times;
-		m_sentPad = false;
-	}
+  /**
+   * Instantiates a new Insert processor
+   * 
+   * @param o
+   *          The event(s) to use as padding
+   * @param times
+   *          The number of times these events should be repeated before the
+   *          beginning of the input trace
+   */
+  public Insert(Object[] o, int times)
+  {
+    super(o.length, o.length);
+    m_pad = o;
+    m_times = times;
+    m_sentPad = false;
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		if (!m_sentPad)
-		{
-			// Send the padding before the first input event
-			for (int i = 0; i < m_times; i++)
-			{
-				outputs.add(m_pad);
-			}
-			m_sentPad = true;
-		}
-		outputs.add(inputs);
-		return true;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    if (!m_sentPad)
+    {
+      // Send the padding before the first input event
+      for (int i = 0; i < m_times; i++)
+      {
+        outputs.add(m_pad);
+      }
+      m_sentPad = true;
+    }
+    outputs.add(inputs);
+    return true;
+  }
 
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_sentPad = false;
-	}
+  @Override
+  public void reset()
+  {
+    super.reset();
+    m_sentPad = false;
+  }
 
-	@Override
-	public Insert duplicate(boolean with_state)
-	{
-		return new Insert(m_pad, m_times);
-	}
+  @Override
+  public Insert duplicate(boolean with_state)
+  {
+    return new Insert(m_pad, m_times);
+  }
 }

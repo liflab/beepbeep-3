@@ -19,30 +19,35 @@ package ca.uqac.lif.cep.functions;
 
 /**
  * Generic class for any exception thrown during the evaluation of a function
+ * 
  * @author Sylvain Hallé
  */
 public class FunctionException extends RuntimeException
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 1L;
+  /**
+   * Dummy UID
+   */
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates an exception from a throwable object
-	 * @param t The throwable object
-	 */
-	public FunctionException(Throwable t)
-	{
-		super(t);
-	}
-	
-	/**
-	 * Creates an exception from a string message
-	 * @param message The message
-	 */
-	public FunctionException(String message)
-	{
-		super(message);
-	}
+  /**
+   * Creates an exception from a throwable object
+   * 
+   * @param t
+   *          The throwable object
+   */
+  public FunctionException(Throwable t)
+  {
+    super(t);
+  }
+
+  /**
+   * Creates an exception from a string message
+   * 
+   * @param message
+   *          The message
+   */
+  public FunctionException(String message)
+  {
+    super(message);
+  }
 }

@@ -18,17 +18,15 @@
 
 /**
  * Elementary classes defining all the basic concepts of event stream
- * processing. Here are some of the important objects defined in this
- * package.
+ * processing. Here are some of the important objects defined in this package.
  * 
- * - A {@link ca.uqac.lif.cep.Processor Processor} is an object that takes zero or
- *   more event *streams*, and produces zero or more event
- *   *streams* as its output.
- * - {@link ca.uqac.lif.cep.Pullable Pullable} and
- *   {@link ca.uqac.lif.cep.Pushable Pushable} are two interfaces for
- *   receiving and giving events from/to a processor, respectively.
- * - {@link ca.uqac.lif.cep.Connector Connector} provides static
- *   methods for easily linking one processor's output to another's input
+ * - A {@link ca.uqac.lif.cep.Processor Processor} is an object that takes zero
+ * or more event *streams*, and produces zero or more event *streams* as its
+ * output. - {@link ca.uqac.lif.cep.Pullable Pullable} and
+ * {@link ca.uqac.lif.cep.Pushable Pushable} are two interfaces for receiving
+ * and giving events from/to a processor, respectively. -
+ * {@link ca.uqac.lif.cep.Connector Connector} provides static methods for
+ * easily linking one processor's output to another's input
  * 
  * @author Sylvain Hallé
  */

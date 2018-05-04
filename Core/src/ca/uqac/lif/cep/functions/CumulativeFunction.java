@@ -23,57 +23,57 @@ package ca.uqac.lif.cep.functions;
  * @author Sylvain Hallé
  * @dictentry
  */
-public class CumulativeFunction<T> extends UnaryFunction<T,T>
+public class CumulativeFunction<T> extends UnaryFunction<T, T>
 {
-	/**
-	 * The last value returned by the function
-	 */
-	private T m_lastValue;
+  /**
+   * The last value returned by the function
+   */
+  private T m_lastValue;
 
-	/**
-	 * The stateless binary function to apply on each call
-	 */
-	private BinaryFunction<T,T,T> m_function;
+  /**
+   * The stateless binary function to apply on each call
+   */
+  private BinaryFunction<T, T, T> m_function;
 
-	/**
-	 * Instantiates a new cumulative function
-	 */
-	public CumulativeFunction(BinaryFunction<T,T,T> function)
-	{
-		super(function.getInputTypeLeft(), function.getOutputType());
-		m_function = function;
-		m_lastValue = m_function.getStartValue();
-	}
+  /**
+   * Instantiates a new cumulative function
+   */
+  public CumulativeFunction(BinaryFunction<T, T, T> function)
+  {
+    super(function.getInputTypeLeft(), function.getOutputType());
+    m_function = function;
+    m_lastValue = m_function.getStartValue();
+  }
 
-	@Override
-	public T getValue(T x)
-	{
-		if (m_lastValue == null)
-		{
-			// If the function did not provide a start value, use the
-			// first given argument as the start value
-			m_lastValue = x;
-			return x;
-		}
-		T value = m_function.getValue(m_lastValue, x);
-		m_lastValue = value;
-		return value;
-	}
-	
-	@Override
-	public void reset()
-	{
-		m_lastValue = m_function.getStartValue();
-	}
+  @Override
+  public T getValue(T x)
+  {
+    if (m_lastValue == null)
+    {
+      // If the function did not provide a start value, use the
+      // first given argument as the start value
+      m_lastValue = x;
+      return x;
+    }
+    T value = m_function.getValue(m_lastValue, x);
+    m_lastValue = value;
+    return value;
+  }
 
-	@Override
-	public CumulativeFunction<T> duplicate(boolean with_state)
-	{
-		CumulativeFunction<T> cf = new CumulativeFunction<T>(m_function.duplicate(with_state));
-		if (with_state)
-		{
-			cf.m_lastValue = m_lastValue;
-		}
-		return cf;
-	}
+  @Override
+  public void reset()
+  {
+    m_lastValue = m_function.getStartValue();
+  }
+
+  @Override
+  public CumulativeFunction<T> duplicate(boolean with_state)
+  {
+    CumulativeFunction<T> cf = new CumulativeFunction<T>(m_function.duplicate(with_state));
+    if (with_state)
+    {
+      cf.m_lastValue = m_lastValue;
+    }
+    return cf;
+  }
 }

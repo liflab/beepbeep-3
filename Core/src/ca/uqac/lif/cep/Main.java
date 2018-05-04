@@ -17,49 +17,50 @@
  */
 package ca.uqac.lif.cep;
 
-public class Main 
+public class Main
 {
-	/**
-	 * Major version number
-	 */
-	public static final int s_majorVersion = 0;
-	
-	/**
-	 * Minor version number
-	 */
-	public static final int s_minorVersion = 8;
-	
-	/**
-	 * Revision version number
-	 */
-	public static final int s_revisionVersion = 0;
-	
-	private Main()
-	{
-		super();
-	}
-	
-	/**
-	 * A "dummy" main method that only displays a simple message and
-	 * terminates.
-	 * @param args Command-line arguments (all ignored)
-	 */
-	public static void main(String[] args)
-	{
-		System.out.println("BeepBeep 3 v" + formatVersion() + " - An event stream processing engine");
-		System.out.println("(C) 2008-2018 Laboratoire d'informatique formelle");
-		System.out.println("Université du Québec à Chicoutimi, Canada");
-		System.exit(0);
-	}
-	
-	@SuppressWarnings("unused")
-	private static String formatVersion()
-	{
-		String out = "" + s_majorVersion + "." + s_minorVersion;
-		if (s_revisionVersion > 0)
-		{
-			out += "." + s_revisionVersion;
-		}
-		return out;
-	}
+  /**
+   * Major version number
+   */
+  public static final int s_majorVersion = 0;
+
+  /**
+   * Minor version number
+   */
+  public static final int s_minorVersion = 8;
+
+  /**
+   * Revision version number
+   */
+  public static final int s_revisionVersion = 0;
+
+  private Main()
+  {
+    super();
+  }
+
+  /**
+   * A "dummy" main method that only displays a simple message and terminates.
+   * 
+   * @param args
+   *          Command-line arguments (all ignored)
+   */
+  public static void main(String[] args)
+  {
+    System.out.println("BeepBeep 3 v" + formatVersion() + " - An event stream processing engine");
+    System.out.println("(C) 2008-2018 Laboratoire d'informatique formelle");
+    System.out.println("Université du Québec à Chicoutimi, Canada");
+    System.exit(0);
+  }
+
+  @SuppressWarnings("unused")
+  private static String formatVersion()
+  {
+    String out = "" + s_majorVersion + "." + s_minorVersion;
+    if (s_revisionVersion > 0)
+    {
+      out += "." + s_revisionVersion;
+    }
+    return out;
+  }
 }

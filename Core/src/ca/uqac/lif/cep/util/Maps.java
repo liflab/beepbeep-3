@@ -17,176 +17,176 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.uqac.lif.cep.UniformProcessor;
-import ca.uqac.lif.cep.functions.UnaryFunction;
-
 /**
- * A container object for map functions and processors.
- * Some functions come in two flavors:
+ * A container object for map functions and processors. Some functions come in
+ * two flavors:
  * <ul>
  * <li>The "plain" function takes as input a map object and returns the
  * <em>same</em> object</li>, to which a modification has been applied
- * <li>The "new" function takes as input a map object, and returns a
- * <em>new copy</em> of the object with the modification made to it</li>
+ * <li>The "new" function takes as input a map object, and returns a <em>new
+ * copy</em> of the object with the modification made to it</li>
  * </ul>
+ * 
  * @author Sylvain Hallé
  */
 public class Maps
 {
-	private Maps()
-	{
-		// Utility class
-	}
-	
-	/**
-	 * Gets the set of values in a map
-	 */
-	@SuppressWarnings("rawtypes")
-	public static class Values extends UnaryFunction<Map,Collection>
-	{
-		/**
-		 * A single instance of the function
-		 */
-		public static final transient Values instance = new Values();
-		
-		protected Values()
-		{
-			super(Map.class, Collection.class);
-		}
+  private Maps()
+  {
+    // Utility class
+  }
 
-		@Override
-		public Collection<?> getValue(Map x) 
-		{
-			return x.values();
-		}
-	}
-	
-	/**
-	 * Gets a value in the map, based on the name of a key.
-	 */
-	@SuppressWarnings("rawtypes")
-	public static class Get extends UnaryFunction<Map,Object>
-	{
-		/**
-		 * The key to get from the map
-		 */
-		protected String m_key;
-		
-		/**
-		 * Creates a new get function
-		 * @param key The key to get from the map
-		 */
-		protected Get(String key)
-		{
-			super(Map.class, Object.class);
-			m_key = key;
-		}
-		
-		@Override
-		public Object getValue(Map x) 
-		{
-			return x.get(m_key);
-		}
-	}
-	
-	/**
-	 * Updates a map by putting key-value pairs into it. The processor
-	 * takes two input streams; the first contains the key, and the second
-	 * contains the value.
-	 */
-	public static class PutInto extends UniformProcessor
-	{
-		/**
-		 * The underlying map
-		 */
-		protected Map<Object,Object> m_map;
-		
-		/**
-		 * Create a new instance of the processor
-		 */
-		public PutInto()
-		{
-			super(2, 1);
-			m_map = new HashMap<Object,Object>();
-		}
-		
-		@Override
-		public void reset()
-		{
-			m_map.clear();
-		}
+  /**
+   * Gets the set of values in a map
+   */
+  @SuppressWarnings("rawtypes")
+  public static class Values extends UnaryFunction<Map, Collection>
+  {
+    /**
+     * A single instance of the function
+     */
+    public static final transient Values instance = new Values();
 
-		@Override
-		public PutInto duplicate(boolean with_state)
-		{
-			return new PutInto();
-		}
+    protected Values()
+    {
+      super(Map.class, Collection.class);
+    }
 
-		@Override
-		protected boolean compute(Object[] inputs, Object[] outputs) 
-		{
-			m_map.put(inputs[0], inputs[1]);
-			outputs[0] = m_map;
-			return true;
-		}
-		
-		@Override
-		public Class<?> getOutputType(int index)
-		{
-			return Map.class;
-		}
-	}
-	
-	/**
-	 * Updates a map by putting key-value pairs into it. The processor
-	 * takes a single input stream, whose events are <em>arrays</em>. The first
-	 * element of the array contains the key, and the second
-	 * contains the value.
-	 */
-	public static class ArrayPutInto extends UniformProcessor
-	{
-		/**
-		 * The underlying map
-		 */
-		protected Map<Object,Object> m_map;
-		
-		/**
-		 * Create a new instance of the processor
-		 */
-		public ArrayPutInto()
-		{
-			super(1, 1);
-			m_map = new HashMap<Object,Object>();
-		}
-		
-		@Override
-		public void reset()
-		{
-			m_map.clear();
-		}
+    @Override
+    public Collection<?> getValue(Map x)
+    {
+      return x.values();
+    }
+  }
 
-		@Override
-		public ArrayPutInto duplicate(boolean with_state)
-		{
-			return new ArrayPutInto();
-		}
+  /**
+   * Gets a value in the map, based on the name of a key.
+   */
+  @SuppressWarnings("rawtypes")
+  public static class Get extends UnaryFunction<Map, Object>
+  {
+    /**
+     * The key to get from the map
+     */
+    protected String m_key;
 
-		@Override
-		protected boolean compute(Object[] inputs, Object[] outputs) 
-		{
-			m_map.put(((Object[]) inputs[0])[0], ((Object[]) inputs[0])[1]);
-			outputs[0] = m_map;
-			return true;
-		}
-		
-		@Override
-		public Class<?> getOutputType(int index)
-		{
-			return Map.class;
-		}
-	}
+    /**
+     * Creates a new get function
+     * 
+     * @param key
+     *          The key to get from the map
+     */
+    protected Get(String key)
+    {
+      super(Map.class, Object.class);
+      m_key = key;
+    }
+
+    @Override
+    public Object getValue(Map x)
+    {
+      return x.get(m_key);
+    }
+  }
+
+  /**
+   * Updates a map by putting key-value pairs into it. The processor takes two
+   * input streams; the first contains the key, and the second contains the value.
+   */
+  public static class PutInto extends UniformProcessor
+  {
+    /**
+     * The underlying map
+     */
+    protected Map<Object, Object> m_map;
+
+    /**
+     * Create a new instance of the processor
+     */
+    public PutInto()
+    {
+      super(2, 1);
+      m_map = new HashMap<Object, Object>();
+    }
+
+    @Override
+    public void reset()
+    {
+      m_map.clear();
+    }
+
+    @Override
+    public PutInto duplicate(boolean with_state)
+    {
+      return new PutInto();
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Object[] outputs)
+    {
+      m_map.put(inputs[0], inputs[1]);
+      outputs[0] = m_map;
+      return true;
+    }
+
+    @Override
+    public Class<?> getOutputType(int index)
+    {
+      return Map.class;
+    }
+  }
+
+  /**
+   * Updates a map by putting key-value pairs into it. The processor takes a
+   * single input stream, whose events are <em>arrays</em>. The first element of
+   * the array contains the key, and the second contains the value.
+   */
+  public static class ArrayPutInto extends UniformProcessor
+  {
+    /**
+     * The underlying map
+     */
+    protected Map<Object, Object> m_map;
+
+    /**
+     * Create a new instance of the processor
+     */
+    public ArrayPutInto()
+    {
+      super(1, 1);
+      m_map = new HashMap<Object, Object>();
+    }
+
+    @Override
+    public void reset()
+    {
+      m_map.clear();
+    }
+
+    @Override
+    public ArrayPutInto duplicate(boolean with_state)
+    {
+      return new ArrayPutInto();
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Object[] outputs)
+    {
+      m_map.put(((Object[]) inputs[0])[0], ((Object[]) inputs[0])[1]);
+      outputs[0] = m_map;
+      return true;
+    }
+
+    @Override
+    public Class<?> getOutputType(int index)
+    {
+      return Map.class;
+    }
+  }
 }

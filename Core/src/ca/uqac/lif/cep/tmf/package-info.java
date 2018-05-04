@@ -17,9 +17,9 @@
  */
 
 /**
- * Processors to manipulate traces of generic events. This includes
- * delaying, discarding, filtering, freezing, multiplexing and
- * demultiplexing, and applying a sliding window, among other things.
+ * Processors to manipulate traces of generic events. This includes delaying,
+ * discarding, filtering, freezing, multiplexing and demultiplexing, and
+ * applying a sliding window, among other things.
  * 
  * @author Sylvain Hallé
  */

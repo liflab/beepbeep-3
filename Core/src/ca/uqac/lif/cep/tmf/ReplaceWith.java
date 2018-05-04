@@ -17,47 +17,45 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.SingleProcessor;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
-
 /**
- * Function processor that turns input events into the same
- * constant.
+ * Function processor that turns input events into the same constant.
  * 
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
 public class ReplaceWith extends SingleProcessor
 {
-	/**
-	 * The constant to return
-	 */
-	protected Object m_constant;
+  /**
+   * The constant to return
+   */
+  protected Object m_constant;
 
-	public ReplaceWith(int in_arity, Object comp)
-	{
-		super(in_arity, 1);
-		m_constant = comp;
-	}
-	
-	public ReplaceWith(Object comp)
-	{
-		this(1, comp);
-	}
+  public ReplaceWith(int in_arity, Object comp)
+  {
+    super(in_arity, 1);
+    m_constant = comp;
+  }
 
-	@Override
-	public ReplaceWith duplicate(boolean with_state)
-	{
-		ReplaceWith cp = new ReplaceWith(m_constant);
-		cp.setContext(m_context);
-		return cp;
-	}
+  public ReplaceWith(Object comp)
+  {
+    this(1, comp);
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		outputs.add(new Object[]{m_constant});
-		return true;
-	}
+  @Override
+  public ReplaceWith duplicate(boolean with_state)
+  {
+    ReplaceWith cp = new ReplaceWith(m_constant);
+    cp.setContext(m_context);
+    return cp;
+  }
+
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    outputs.add(new Object[] { m_constant });
+    return true;
+  }
 }

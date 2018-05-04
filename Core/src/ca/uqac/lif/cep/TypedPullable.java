@@ -20,110 +20,111 @@ package ca.uqac.lif.cep;
 import java.util.Iterator;
 
 /**
- * A Pullable object that casts all its output to a given type.
- * The TypedPullable is used by wrapping it around an existing
- * pullable:
+ * A Pullable object that casts all its output to a given type. The
+ * TypedPullable is used by wrapping it around an existing pullable:
+ * 
  * <pre>
  * ...
  * Pullable p = my_processor.getPullableOutput(0);
  * TypedPullable&lt;Integer&gt; tp = new TypedPullable&lt;Integer&gt;(p);
  * int event = tp.pull();
  * </pre>
- * <strong>Caveat emptor:</strong> This pullable simply <em>casts</em>
- * what it receives from its underlying pullable to the type it was
- * created with. It is up to the user to make sure that this cast
- * makes sense; otherwise, a <tt>ClassCastException</tt> will be thrown
- * at runtime.
+ * 
+ * <strong>Caveat emptor:</strong> This pullable simply <em>casts</em> what it
+ * receives from its underlying pullable to the type it was created with. It is
+ * up to the user to make sure that this cast makes sense; otherwise, a
+ * <tt>ClassCastException</tt> will be thrown at runtime.
  * 
  * @author Sylvain Hallé
  *
- * @param <T> The type of the output objects
+ * @param <T>
+ *          The type of the output objects
  */
 @SuppressWarnings("unchecked")
 public class TypedPullable<T> implements Pullable
 {
-	/**
-	 * The actual pullable this class is wrapping
-	 */
-	protected final Pullable m_pullable;
+  /**
+   * The actual pullable this class is wrapping
+   */
+  protected final Pullable m_pullable;
 
-	public TypedPullable(Pullable p)
-	{
-		super();
-		m_pullable = p;
-	}
+  public TypedPullable(Pullable p)
+  {
+    super();
+    m_pullable = p;
+  }
 
-	@Override
-	public final void remove()
-	{
-		// Cannot remove an event on a pullable
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public final void remove()
+  {
+    // Cannot remove an event on a pullable
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public T pullSoft()
-	{
-		return (T) m_pullable.pullSoft();
-	}
+  @Override
+  public T pullSoft()
+  {
+    return (T) m_pullable.pullSoft();
+  }
 
-	@Override
-	public T pull()
-	{
-		return (T) m_pullable.pull();
-	}
+  @Override
+  public T pull()
+  {
+    return (T) m_pullable.pull();
+  }
 
-	@Override
-	@SuppressWarnings("squid:S2272") // since() pull throws the exception
-	public final T next()
-	{
-		return pull();
-	}
+  @Override
+  @SuppressWarnings("squid:S2272") // since() pull throws the exception
+  public final T next()
+  {
+    return pull();
+  }
 
-	@Override
-	public NextStatus hasNextSoft()
-	{
-		return m_pullable.hasNextSoft();
-	}
+  @Override
+  public NextStatus hasNextSoft()
+  {
+    return m_pullable.hasNextSoft();
+  }
 
-	@Override
-	public boolean hasNext()
-	{
-		return m_pullable.hasNext();
-	}
+  @Override
+  public boolean hasNext()
+  {
+    return m_pullable.hasNext();
+  }
 
-	@Override
-	public Processor getProcessor()
-	{
-		return m_pullable.getProcessor();
-	}
+  @Override
+  public Processor getProcessor()
+  {
+    return m_pullable.getProcessor();
+  }
 
-	@Override
-	public int getPosition()
-	{
-		return m_pullable.getPosition();
-	}
+  @Override
+  public int getPosition()
+  {
+    return m_pullable.getPosition();
+  }
 
-	@Override
-	public Iterator<Object> iterator()
-	{
-		return this;
-	}
+  @Override
+  public Iterator<Object> iterator()
+  {
+    return this;
+  }
 
-	@Override
-	public void start()
-	{
-		m_pullable.start();
-	}
+  @Override
+  public void start()
+  {
+    m_pullable.start();
+  }
 
-	@Override
-	public void stop()
-	{
-		m_pullable.stop();
-	}
+  @Override
+  public void stop()
+  {
+    m_pullable.stop();
+  }
 
-	@Override
-	public void dispose()
-	{
-		// Do nothing
-	}
+  @Override
+  public void dispose()
+  {
+    // Do nothing
+  }
 }

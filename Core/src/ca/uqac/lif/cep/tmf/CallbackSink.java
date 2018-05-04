@@ -17,40 +17,39 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.SingleProcessor;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
-
 /**
- * A sink that calls a method when a new front of events is pushed
- * to it. Override that method to do some processing on these events.
+ * A sink that calls a method when a new front of events is pushed to it.
+ * Override that method to do some processing on these events.
  * 
  * @author Sylvain Hallé
  *
  */
 @SuppressWarnings("squid:S2160")
-public class CallbackSink extends SingleProcessor 
+public class CallbackSink extends SingleProcessor
 {
-	public CallbackSink(int in_arity)
-	{
-		super(in_arity, 0);
-	}
+  public CallbackSink(int in_arity)
+  {
+    super(in_arity, 0);
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		processEvents(inputs);
-		return true;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    processEvents(inputs);
+    return true;
+  }
 
-	@Override
-	public CallbackSink duplicate(boolean with_state) 
-	{
-		return new CallbackSink(getInputArity());
-	}
-	
-	public void processEvents(Object[] inputs)
-	{
-		// Do nothing
-	}
+  @Override
+  public CallbackSink duplicate(boolean with_state)
+  {
+    return new CallbackSink(getInputArity());
+  }
+
+  public void processEvents(Object[] inputs)
+  {
+    // Do nothing
+  }
 }

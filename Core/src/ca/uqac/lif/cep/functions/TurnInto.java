@@ -17,13 +17,12 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.cep.UniformProcessor;
 import java.util.Set;
 
-import ca.uqac.lif.cep.UniformProcessor;
-
 /**
- * Processor that turns any event into a predefined object.
- * It is represented graphically as:
+ * Processor that turns any event into a predefined object. It is represented
+ * graphically as:
  * 
  * ![TurnInto]({@docRoot}/doc-files/functions/TurnInto.png)
  * 
@@ -33,51 +32,53 @@ import ca.uqac.lif.cep.UniformProcessor;
 @SuppressWarnings("squid:S2160")
 public class TurnInto extends UniformProcessor
 {
-	/**
-	 * The event to turn everything into
-	 */
-	protected final Object m_event;
+  /**
+   * The event to turn everything into
+   */
+  protected final Object m_event;
 
-	/**
-	 * Instantiates a new function processor
-	 * @param comp The computable object responsible for the computation
-	 */
-	public TurnInto(Object o)
-	{
-		super(1, 1);
-		m_event = o;
-	}
+  /**
+   * Instantiates a new function processor
+   * 
+   * @param o
+   *          The computable object responsible for the computation
+   */
+  public TurnInto(Object o)
+  {
+    super(1, 1);
+    m_event = o;
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs)
-	{
-		outputs[0] = m_event;
-		return true;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Object[] outputs)
+  {
+    outputs[0] = m_event;
+    return true;
+  }
 
-	@Override
-	public synchronized TurnInto duplicate(boolean with_state)
-	{
-		TurnInto out = new TurnInto(m_event);
-		cloneInto(out);
-		return out;
-	}
+  @Override
+  public synchronized TurnInto duplicate(boolean with_state)
+  {
+    TurnInto out = new TurnInto(m_event);
+    cloneInto(out);
+    return out;
+  }
 
-	@Override
-	public final void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
-	{
-		classes.add(Object.class);
-	}
+  @Override
+  public final void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, int index)
+  {
+    classes.add(Object.class);
+  }
 
-	@Override
-	public final synchronized Class<?> getOutputType(int index)
-	{
-		return m_event.getClass();
-	}
+  @Override
+  public final synchronized Class<?> getOutputType(int index)
+  {
+    return m_event.getClass();
+  }
 
-	@Override
-	public String toString()
-	{
-		return "Turn into " + m_event;
-	}
+  @Override
+  public String toString()
+  {
+    return "Turn into " + m_event;
+  }
 }

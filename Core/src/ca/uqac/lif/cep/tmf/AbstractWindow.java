@@ -17,52 +17,49 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.LinkedList;
-
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
+import java.util.LinkedList;
 
 /**
- * Simulates the application of a "sliding window" to a trace.
- * It is represented graphically as:
+ * Simulates the application of a "sliding window" to a trace. It is represented
+ * graphically as:
  * 
  * ![Window]({@docRoot}/doc-files/tmf/Window.png)
  * 
- * -The processor takes as arguments another processor &phi; and a
- *  window width *n*
- * - It returns the result of &phi; after processing events 0 to
- *   <i>n</i>-1...
- * - Then the result of (a new instance of &phi;) that processes
- *   events 1 to <i>n</i>-1...
- * - ...and so on
+ * -The processor takes as arguments another processor &phi; and a window width
+ * *n* - It returns the result of &phi; after processing events 0 to
+ * <i>n</i>-1... - Then the result of (a new instance of &phi;) that processes
+ * events 1 to <i>n</i>-1... - ...and so on
  * 
- * There are two "flavors" of Window: one that pushes events to the
- * internal processor {@link Window} and one that pull events from
- * the internal processor {@link WindowPull}.
+ * There are two "flavors" of Window: one that pushes events to the internal
+ * processor {@link Window} and one that pull events from the internal processor
+ * {@link WindowPull}.
+ * 
  * @author Sylvain Hallé
  * 
  */
 public abstract class AbstractWindow extends SingleProcessor
 {
-	/**
-	 * The event windows
-	 */
-	protected LinkedList<Object>[] m_window;
-	
-	/**
-	 * The window's width
-	 */
-	protected int m_width;
+  /**
+   * The event windows
+   */
+  protected LinkedList<Object>[] m_window;
 
-	/**
-	 * The internal processor
-	 */
-	protected Processor m_processor = null;
-	
-	public AbstractWindow(Processor in_processor, int width)
-	{
-		super(in_processor.getInputArity(), in_processor.getOutputArity());
-		m_width = width;
-		m_processor = in_processor;
-	}
+  /**
+   * The window's width
+   */
+  protected int m_width;
+
+  /**
+   * The internal processor
+   */
+  protected Processor m_processor = null;
+
+  public AbstractWindow(Processor in_processor, int width)
+  {
+    super(in_processor.getInputArity(), in_processor.getOutputArity());
+    m_width = width;
+    m_processor = in_processor;
+  }
 }

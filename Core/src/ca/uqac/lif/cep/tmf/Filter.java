@@ -17,14 +17,13 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.SingleProcessor;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
-
 /**
- * Discards events from an input trace based on a selection criterion.
- * The processor takes as input two events simultaneously; it outputs
- * the first if the second is true.
+ * Discards events from an input trace based on a selection criterion. The
+ * processor takes as input two events simultaneously; it outputs the first if
+ * the second is true.
  * 
  * Graphically, this processor is represented as:
  * 
@@ -36,33 +35,33 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public class Filter extends SingleProcessor
 {
-	public Filter()
-	{
-		super(2, 1);
-	}
+  public Filter()
+  {
+    super(2, 1);
+  }
 
-	@Override
-	@SuppressWarnings("squid:S3516")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		Object o = inputs[0];
-		Object[] out = new Object[1];
-		boolean b = (Boolean) inputs[inputs.length - 1];
-		if (b)
-		{
-			out[0] = o;
-		}
-		else
-		{
-			return true;
-		}
-		outputs.add(out);
-		return true;
-	}
+  @Override
+  @SuppressWarnings("squid:S3516")
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    Object o = inputs[0];
+    Object[] out = new Object[1];
+    boolean b = (Boolean) inputs[inputs.length - 1];
+    if (b)
+    {
+      out[0] = o;
+    }
+    else
+    {
+      return true;
+    }
+    outputs.add(out);
+    return true;
+  }
 
-	@Override
-	public Filter duplicate(boolean with_state)
-	{
-		return new Filter();
-	}
+  @Override
+  public Filter duplicate(boolean with_state)
+  {
+    return new Filter();
+  }
 }

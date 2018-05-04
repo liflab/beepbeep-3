@@ -24,68 +24,69 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Receives input events and stores them. As its name implies, the
- * <code>Sink</code> is just that: the end of a pipe of processors where
- * events are input, but which has no output. In other words, a sink
- * is a processor with an output arity of 0.
+ * <code>Sink</code> is just that: the end of a pipe of processors where events
+ * are input, but which has no output. In other words, a sink is a processor
+ * with an output arity of 0.
  * <p>
- * When operating in "pull" mode, it is nevertheless possible to ask the
- * sink to pull on its inputs; this is why, like a {@link Pullable}, it
- * implements methods {@link #pull()} and {@link #pullHard()}.
+ * When operating in "pull" mode, it is nevertheless possible to ask the sink to
+ * pull on its inputs; this is why, like a {@link Pullable}, it implements
+ * methods {@link #pull()} and {@link #pullHard()}.
+ * 
  * @author Sylvain Hallé
  *
  */
 @SuppressWarnings("squid:S2160")
 public abstract class Sink extends SingleProcessor
 {
-	public Sink()
-	{
-		this(1);
-	}
+  public Sink()
+  {
+    this(1);
+  }
 
-	public Sink(int in_arity)
-	{
-		super(in_arity, 0);
-	}
+  public Sink(int in_arity)
+  {
+    super(in_arity, 0);
+  }
 
-	/**
-	 * Tells the sink to pull events from the pipeline
-	 */
-	public final void pull()
-	{
-		Object[] inputs = new Object[getInputArity()];
-		for (int i = 0; i < getInputArity(); i++)
-		{
-			Pullable p = m_inputPullables[i];
-			inputs[i] = p.pullSoft();
-		}
-		try
-		{
-			compute(inputs, null);
-		}
-		catch (ProcessorException e)
-		{
-			throw new PullableException(e);
-		}
-	}
+  /**
+   * Tells the sink to pull events from the pipeline
+   */
+  public final void pull()
+  {
+    Object[] inputs = new Object[getInputArity()];
+    for (int i = 0; i < getInputArity(); i++)
+    {
+      Pullable p = m_inputPullables[i];
+      inputs[i] = p.pullSoft();
+    }
+    try
+    {
+      compute(inputs, null);
+    }
+    catch (ProcessorException e)
+    {
+      throw new PullableException(e);
+    }
+  }
 
-	/**
-	 * Tells the sink to pull events from the pipeline
-	 */
-	public final void pullHard()
-	{
-		Object[] inputs = new Object[getInputArity()];
-		for (int i = 0; i < getInputArity(); i++)
-		{
-			Pullable p = m_inputPullables[i];
-			inputs[i] = p.pull();
-		}
-		try
-		{
-			compute(inputs, null);
-		}
-		catch (ProcessorException e)
-		{
-			throw new PullableException(e);
-		}
-	}	
+  /**
+   * Tells the sink to pull events from the pipeline
+   */
+  public final void pullHard()
+  {
+    Object[] inputs = new Object[getInputArity()];
+    for (int i = 0; i < getInputArity(); i++)
+    {
+      Pullable p = m_inputPullables[i];
+      inputs[i] = p.pull();
+    }
+    try
+    {
+      compute(inputs, null);
+    }
+    catch (ProcessorException e)
+    {
+      throw new PullableException(e);
+    }
+  }
 }

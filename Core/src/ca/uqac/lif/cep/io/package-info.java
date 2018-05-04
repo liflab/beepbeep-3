@@ -17,8 +17,8 @@
  */
 
 /**
- * Processors to handle input and output of data from external
- * sources, such as files and pipes.
+ * Processors to handle input and output of data from external sources, such as
+ * files and pipes.
  * 
  * @author Sylvain Hallé
  */

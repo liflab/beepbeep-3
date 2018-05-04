@@ -17,80 +17,84 @@
  */
 package ca.uqac.lif.cep.io;
 
+import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.tmf.Sink;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.tmf.Sink;
-
 /**
  * Processor that writes events to a Java {@link OutputStream}.
+ * 
  * @author Sylvain Hallé
  */
-public class WriteOutputStream extends Sink 
+public class WriteOutputStream extends Sink
 {
-	/**
-	 * The output stream to send data to
-	 */
-	protected transient OutputStream m_outputStream;
+  /**
+   * The output stream to send data to
+   */
+  protected transient OutputStream m_outputStream;
 
-	/**
-	 * Creates a new output stream processor
-	 * @param os The output stream to send data to
-	 */
-	public WriteOutputStream(OutputStream os)
-	{
-		super(1);
-		m_outputStream = os;
-	}
+  /**
+   * Creates a new output stream processor
+   * 
+   * @param os
+   *          The output stream to send data to
+   */
+  public WriteOutputStream(OutputStream os)
+  {
+    super(1);
+    m_outputStream = os;
+  }
 
-	@Override
-	@SuppressWarnings({"squid:S1168", "squid:S3516"})
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		try
-		{
-			append(inputs[0]);
-			return false;
-		}
-		catch (IOException e)
-		{
-			throw new ProcessorException(e);
-		}
-		catch (UnsupportedOperationException e)
-		{
-			throw new ProcessorException(e);
-		}
-	}
+  @Override
+  @SuppressWarnings({ "squid:S1168", "squid:S3516" })
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    try
+    {
+      append(inputs[0]);
+      return false;
+    }
+    catch (IOException e)
+    {
+      throw new ProcessorException(e);
+    }
+    catch (UnsupportedOperationException e)
+    {
+      throw new ProcessorException(e);
+    }
+  }
 
-	/**
-	 * Writes a new object to the output stream.
-	 * @param o The object to write to the output stream. Can either be
-	 * a byte array or a string. Any other kind of object will throw an
-	 * exception.
-	 * @throws IOException If writing to the output stream cannot be done
-	 */
-	protected void append(Object o) throws IOException
-	{
-		if (o instanceof byte[])
-		{
-			m_outputStream.write((byte[]) o);
-		}
-		else if (o instanceof String)
-		{
-			m_outputStream.write(((String) o).getBytes());
-		}
-		else
-		{
-			throw new UnsupportedOperationException("Cannot write this object to an output stream");
-		}
-	}
+  /**
+   * Writes a new object to the output stream.
+   * 
+   * @param o
+   *          The object to write to the output stream. Can either be a byte array
+   *          or a string. Any other kind of object will throw an exception.
+   * @throws IOException
+   *           If writing to the output stream cannot be done
+   */
+  protected void append(Object o) throws IOException
+  {
+    if (o instanceof byte[])
+    {
+      m_outputStream.write((byte[]) o);
+    }
+    else if (o instanceof String)
+    {
+      m_outputStream.write(((String) o).getBytes());
+    }
+    else
+    {
+      throw new UnsupportedOperationException("Cannot write this object to an output stream");
+    }
+  }
 
-	@Override
-	public WriteOutputStream duplicate(boolean with_state)
-	{
-		// By default, it does not make sense to duplicate such a processor
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public WriteOutputStream duplicate(boolean with_state)
+  {
+    // By default, it does not make sense to duplicate such a processor
+    throw new UnsupportedOperationException();
+  }
 }

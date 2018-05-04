@@ -28,151 +28,152 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class Booleans
 {
-	private Booleans()
-	{
-		// Utility class
-	}
-	
-	public static final transient And and = And.instance;
-	
-	public static final transient Or or = Or.instance;
-	
-	public static final transient Implies implies = Implies.instance;
-	
-	public static final transient Negation not = Negation.instance;	
-	
-	/**
-	 * Implementation of the logical conjunction
-	 * 
-	 * @author Sylvain Hallé
-	 */
-	public static class And extends BinaryFunction<Boolean,Boolean,Boolean>
-	{
-		public static final transient And instance = new And();
+  private Booleans()
+  {
+    // Utility class
+  }
 
-		private And()
-		{
-			super(Boolean.class, Boolean.class, Boolean.class);
-		}
+  public static final transient And and = And.instance;
 
-		@Override
-		public Boolean getValue(Boolean x, Boolean y)
-		{
-			return x.booleanValue() && y.booleanValue();
-		}
+  public static final transient Or or = Or.instance;
 
-		@Override
-		public String toString()
-		{
-			return "∧";
-		}
-	}
-	
-	/**
-	 * Implementation of the logical implication
-	 * 
-	 * @author Sylvain Hallé
-	 */
-	public static class Implies extends BinaryFunction<Boolean,Boolean,Boolean>
-	{
-		public static final transient Implies instance = new Implies();
+  public static final transient Implies implies = Implies.instance;
 
-		private Implies()
-		{
-			super(Boolean.class, Boolean.class, Boolean.class);
-		}
+  public static final transient Negation not = Negation.instance;
 
-		@Override
-		public Boolean getValue(Boolean x, Boolean y)
-		{
-			return !x.booleanValue() || y.booleanValue();
-		}
+  /**
+   * Implementation of the logical conjunction
+   * 
+   * @author Sylvain Hallé
+   */
+  public static class And extends BinaryFunction<Boolean, Boolean, Boolean>
+  {
+    public static final transient And instance = new And();
 
-		@Override
-		public String toString()
-		{
-			return "∧";
-		}
-	}
-	
-	/**
-	 * Implementation of the logical disjunction
-	 * 
-	 * @author Sylvain Hallé
-	 */
-	public static class Or extends BinaryFunction<Boolean,Boolean,Boolean>
-	{
-		public static final transient Or instance = new Or();
-		
-		private Or()
-		{
-			super(Boolean.class, Boolean.class, Boolean.class);
-		}
+    private And()
+    {
+      super(Boolean.class, Boolean.class, Boolean.class);
+    }
 
-		@Override
-		public Boolean getValue(Boolean x, Boolean y)
-		{
-			return x.booleanValue() || y.booleanValue();
-		}
+    @Override
+    public Boolean getValue(Boolean x, Boolean y)
+    {
+      return x.booleanValue() && y.booleanValue();
+    }
 
-		@Override
-		public String toString()
-		{
-			return "∨";
-		}
-	}
-	
-	/**
-	 * Implementation of the logical negation
-	 * 
-	 * @author Sylvain Hallé
-	 */
-	public static class Negation extends UnaryFunction<Boolean,Boolean>
-	{
-		public static final transient Negation instance = new Negation();
-		
-		private Negation()
-		{
-			super(Boolean.class, Boolean.class);
-		}
+    @Override
+    public String toString()
+    {
+      return "∧";
+    }
+  }
 
-		@Override
-		public Boolean getValue(Boolean x)
-		{
-			return !x.booleanValue();
-		}
+  /**
+   * Implementation of the logical implication
+   * 
+   * @author Sylvain Hallé
+   */
+  public static class Implies extends BinaryFunction<Boolean, Boolean, Boolean>
+  {
+    public static final transient Implies instance = new Implies();
 
-		@Override
-		public String toString()
-		{
-			return "¬";
-		}
-	}
-	
-	/**
-	 * Attempts to convert an object into a Boolean
-	 * @param o The object
-	 * @return The Boolean value
-	 */
-	public static boolean parseBoolValue(Object o)
-	{
-		if (o instanceof Boolean)
-		{
-			return (Boolean) o;
-		}
-		else if (o instanceof String)
-		{
-			String s = (String) o;
-			return s.compareToIgnoreCase("true") == 0
-					|| s.compareToIgnoreCase("T") == 0
-					|| s.compareToIgnoreCase("1") == 0;
-		}
-		if (o instanceof Number)
-		{
-			Number n = (Number) o;
-			return Math.abs(n.doubleValue()) >= 0.00001;
-		}
-		// When in doubt, return false
-		return false;
-	}
+    private Implies()
+    {
+      super(Boolean.class, Boolean.class, Boolean.class);
+    }
+
+    @Override
+    public Boolean getValue(Boolean x, Boolean y)
+    {
+      return !x.booleanValue() || y.booleanValue();
+    }
+
+    @Override
+    public String toString()
+    {
+      return "∧";
+    }
+  }
+
+  /**
+   * Implementation of the logical disjunction
+   * 
+   * @author Sylvain Hallé
+   */
+  public static class Or extends BinaryFunction<Boolean, Boolean, Boolean>
+  {
+    public static final transient Or instance = new Or();
+
+    private Or()
+    {
+      super(Boolean.class, Boolean.class, Boolean.class);
+    }
+
+    @Override
+    public Boolean getValue(Boolean x, Boolean y)
+    {
+      return x.booleanValue() || y.booleanValue();
+    }
+
+    @Override
+    public String toString()
+    {
+      return "∨";
+    }
+  }
+
+  /**
+   * Implementation of the logical negation
+   * 
+   * @author Sylvain Hallé
+   */
+  public static class Negation extends UnaryFunction<Boolean, Boolean>
+  {
+    public static final transient Negation instance = new Negation();
+
+    private Negation()
+    {
+      super(Boolean.class, Boolean.class);
+    }
+
+    @Override
+    public Boolean getValue(Boolean x)
+    {
+      return !x.booleanValue();
+    }
+
+    @Override
+    public String toString()
+    {
+      return "¬";
+    }
+  }
+
+  /**
+   * Attempts to convert an object into a Boolean
+   * 
+   * @param o
+   *          The object
+   * @return The Boolean value
+   */
+  public static boolean parseBoolValue(Object o)
+  {
+    if (o instanceof Boolean)
+    {
+      return (Boolean) o;
+    }
+    else if (o instanceof String)
+    {
+      String s = (String) o;
+      return s.compareToIgnoreCase("true") == 0 || s.compareToIgnoreCase("T") == 0
+          || s.compareToIgnoreCase("1") == 0;
+    }
+    if (o instanceof Number)
+    {
+      Number n = (Number) o;
+      return Math.abs(n.doubleValue()) >= 0.00001;
+    }
+    // When in doubt, return false
+    return false;
+  }
 }

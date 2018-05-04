@@ -18,34 +18,36 @@
 package ca.uqac.lif.cep;
 
 /**
- * Interface indicating that an object can be duplicated. Note that
- * while duplication looks very similar to cloning, it is actually
- * different. A duplicated object may not have the exact same state as
- * the original. This is particularly true of {@link Processor} objects,
- * which <em>always</em> have a different numerical ID. Moreover,
- * duplication may be dependent on a {@link Context} object, which cannot
- * be the case with Java's meaning of cloning. Hence the need for a
- * different interface.
+ * Interface indicating that an object can be duplicated. Note that while
+ * duplication looks very similar to cloning, it is actually different. A
+ * duplicated object may not have the exact same state as the original. This is
+ * particularly true of {@link Processor} objects, which <em>always</em> have a
+ * different numerical ID. Moreover, duplication may be dependent on a
+ * {@link Context} object, which cannot be the case with Java's meaning of
+ * cloning. Hence the need for a different interface.
  * 
  * @author Sylvain Hallé
  *
  */
 public interface Duplicable
 {
-	/**
-	 * Duplicates an object and sets it to its initial state. This should
-	 * be the same thing as calling {@code duplicate(false)}.
-	 * @return Another object
-	 */
-	public Object duplicate();
-	
-	/**
-	 * Duplicates an object. Optionally, set the object into the same
-	 * state as the source object.
-	 * @param with_state Set to {@code true} to replicate the object's
-	 * state, {@code false} to create a new copy in the initial state.
-	 * @return Another object
-	 */
-	public Object duplicate(boolean with_state);
-	
+  /**
+   * Duplicates an object and sets it to its initial state. This should be the
+   * same thing as calling {@code duplicate(false)}.
+   * 
+   * @return Another object
+   */
+  public Object duplicate();
+
+  /**
+   * Duplicates an object. Optionally, set the object into the same state as the
+   * source object.
+   * 
+   * @param with_state
+   *          Set to {@code true} to replicate the object's state, {@code false}
+   *          to create a new copy in the initial state.
+   * @return Another object
+   */
+  public Object duplicate(boolean with_state);
+
 }

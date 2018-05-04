@@ -17,10 +17,9 @@
  */
 
 /**
- * Definition of the {@link ca.uqac.lif.cep.functions.Function Function}
- * object and basic concepts around
- * functions. This package also defines a few commonly used functions,
- * such as equality and Boolean connectives.
+ * Definition of the {@link ca.uqac.lif.cep.functions.Function Function} object
+ * and basic concepts around functions. This package also defines a few commonly
+ * used functions, such as equality and Boolean connectives.
  * 
  * @author Sylvain Hallé
  */

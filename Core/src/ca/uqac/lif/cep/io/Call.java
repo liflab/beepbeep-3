@@ -17,14 +17,13 @@
  */
 package ca.uqac.lif.cep.io;
 
-import java.io.IOException;
-
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
+import java.io.IOException;
 
 /**
- * Processor calling an external command upon receiving an event,
- * and returning the output of that command as its output stream.
+ * Processor calling an external command upon receiving an event, and returning
+ * the output of that command as its output stream.
  * 
  * @author Sylvain Hallé
  * @dictentry
@@ -32,41 +31,41 @@ import ca.uqac.lif.cep.UniformProcessor;
 @SuppressWarnings("squid:S2160")
 public class Call extends UniformProcessor
 {
-	/**
-	 * The command to call
-	 */
-	protected final String[] m_command;
+  /**
+   * The command to call
+   */
+  protected final String[] m_command;
 
-	public Call(String ... command)
-	{
-		super(1, 1);
-		m_command = command;
-	}
+  public Call(String ... command)
+  {
+    super(1, 1);
+    m_command = command;
+  }
 
-	/**
-	 * The time to wait (in milliseconds) before polling the command's result
-	 */
-	protected static long s_waitInterval = 100;
+  /**
+   * The time to wait (in milliseconds) before polling the command's result
+   */
+  protected static long s_waitInterval = 100;
 
-	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs)
-	{
-		// Pass the event (as is) to the standard input of the command
-		try
-		{
-			byte[] contents = CommandRunner.runAndGet(m_command, (byte[]) inputs[0]);
-			outputs[0] = contents;
-			return true;
-		}
-		catch (IOException e)
-		{
-			throw new ProcessorException(e);
-		}
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Object[] outputs)
+  {
+    // Pass the event (as is) to the standard input of the command
+    try
+    {
+      byte[] contents = CommandRunner.runAndGet(m_command, (byte[]) inputs[0]);
+      outputs[0] = contents;
+      return true;
+    }
+    catch (IOException e)
+    {
+      throw new ProcessorException(e);
+    }
+  }
 
-	@Override
-	public Call duplicate(boolean with_state)
-	{
-		return new Call(m_command);
-	}
+  @Override
+  public Call duplicate(boolean with_state)
+  {
+    return new Call(m_command);
+  }
 }

@@ -20,9 +20,9 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
- * Returns its input as its output. Although it seems useless,
- * `Passthrough` is used internally by the ESQL interpreter as
- * a placeholder when building processor chains from an expression.
+ * Returns its input as its output. Although it seems useless, `Passthrough` is
+ * used internally by the ESQL interpreter as a placeholder when building
+ * processor chains from an expression.
  * 
  * Graphically, this processor is represented as:
  * 
@@ -34,35 +34,35 @@ import ca.uqac.lif.cep.UniformProcessor;
 @SuppressWarnings("squid:S2160")
 public class Passthrough extends UniformProcessor
 {
-	public Passthrough(int arity)
-	{
-		super(arity, arity);
-	}
-	
-	public Passthrough()
-	{
-		this(1);
-	}
+  public Passthrough(int arity)
+  {
+    super(arity, arity);
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs)
-	{
-		for (int i = 0; i < inputs.length; i++)
-		{
-			outputs[i] = inputs[i];
-			if (m_eventTracker != null)
-			{
-				m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
-			}
-		}
-		m_inputCount++;
-		m_outputCount++;
-		return true;
-	}
+  public Passthrough()
+  {
+    this(1);
+  }
 
-	@Override
-	public Passthrough duplicate(boolean with_state)
-	{
-		return new Passthrough(getInputArity());
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Object[] outputs)
+  {
+    for (int i = 0; i < inputs.length; i++)
+    {
+      outputs[i] = inputs[i];
+      if (m_eventTracker != null)
+      {
+        m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
+      }
+    }
+    m_inputCount++;
+    m_outputCount++;
+    return true;
+  }
+
+  @Override
+  public Passthrough duplicate(boolean with_state)
+  {
+    return new Passthrough(getInputArity());
+  }
 }

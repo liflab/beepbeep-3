@@ -17,10 +17,9 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
 import java.util.Map;
-
-import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
  * Evaluates the size of an object. The "size" is defined as follows:
@@ -34,42 +33,42 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("rawtypes")
-public class Size extends UnaryFunction<Object,Integer>
+public class Size extends UnaryFunction<Object, Integer>
 {
-	public static final transient Size instance = new Size();
+  public static final transient Size instance = new Size();
 
-	protected Size()
-	{
-		super(Object.class, Integer.class);
-	}
+  protected Size()
+  {
+    super(Object.class, Integer.class);
+  }
 
-	@Override
-	public Integer getValue(Object x)
-	{
-		if (x == null)
-		{
-			return 0;
-		}
-		if (x instanceof String)
-		{
-			return ((String) x).length();
-		}
-		if (x instanceof Number)
-		{
-			return ((Number) x).intValue();
-		}
-		if (x instanceof Map)
-		{
-			return ((Map) x).size();
-		}
-		if (x instanceof Collection)
-		{
-			return ((Collection) x).size();
-		}
-		if (x.getClass().isArray())
-		{
-			return ((Object[]) x).length;
-		}
-		return 0;
-	}
+  @Override
+  public Integer getValue(Object x)
+  {
+    if (x == null)
+    {
+      return 0;
+    }
+    if (x instanceof String)
+    {
+      return ((String) x).length();
+    }
+    if (x instanceof Number)
+    {
+      return ((Number) x).intValue();
+    }
+    if (x instanceof Map)
+    {
+      return ((Map) x).size();
+    }
+    if (x instanceof Collection)
+    {
+      return ((Collection) x).size();
+    }
+    if (x.getClass().isArray())
+    {
+      return ((Object[]) x).length;
+    }
+    return 0;
+  }
 }

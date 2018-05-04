@@ -31,83 +31,88 @@ import java.util.Scanner;
 @SuppressWarnings("squid:S2160")
 public class ReadLines extends ReadInputStream
 {
-	/**
-	 * The scanner to read from
-	 */
-	protected transient Scanner m_scanner;
-	
-	/**
-	 * The buffered input stream to wrap
-	 */
-	protected transient BufferedInputStream m_bufferedInputStream;
+  /**
+   * The scanner to read from
+   */
+  protected transient Scanner m_scanner;
 
-	/**
-	 * Whether to add a carriage return at the end of each line
-	 */
-	protected boolean m_addCrlf = false;
-	
-	/**
-	 * Whether to trim each text line from leading and trailing spaces
-	 */
-	protected boolean m_trim = false;
-	
-	/**
-	 * The character used as the CRLF on this system
-	 */
-	public static final transient String CRLF = System.getProperty("line.separator");
+  /**
+   * The buffered input stream to wrap
+   */
+  protected transient BufferedInputStream m_bufferedInputStream;
 
-	/**
-	 * Creates a new file reader from an input stream
-	 * @param is The input stream to read from
-	 */
-	public ReadLines(InputStream is)
-	{
-		super(is);
-		m_bufferedInputStream = new BufferedInputStream(is);
-		m_scanner = new Scanner(m_bufferedInputStream);
-	}
+  /**
+   * Whether to add a carriage return at the end of each line
+   */
+  protected boolean m_addCrlf = false;
 
-	/**
-	 * Tells the reader to add a carriage return at the end of each
-	 * output event
-	 * @param b true to add a CRLF, false otherwise
-	 * @return This reader
-	 */
-	public ReadLines addCrlf(boolean b)
-	{
-		m_addCrlf = b;
-		return this;
-	}
-	
-	/**
-	 * Tells the reader to trim each text line
-	 * @param b true to trim, false otherwise
-	 * @return This reader
-	 */
-	public ReadLines trim(boolean b)
-	{
-		m_trim = b;
-		return this;
-	}
+  /**
+   * Whether to trim each text line from leading and trailing spaces
+   */
+  protected boolean m_trim = false;
 
-	@Override
-	@SuppressWarnings("squid:S1168")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		if (m_scanner.hasNextLine())
-		{
-			String line = m_scanner.nextLine();
-			if (m_trim)
-			{
-				line = line.trim();
-			}
-			if (m_addCrlf)
-			{
-				line += CRLF;
-			}
-			outputs.add(new Object[]{line});
-			return true;
-		}
-		return false;
-	}
+  /**
+   * The character used as the CRLF on this system
+   */
+  public static final transient String CRLF = System.getProperty("line.separator");
+
+  /**
+   * Creates a new file reader from an input stream
+   * 
+   * @param is
+   *          The input stream to read from
+   */
+  public ReadLines(InputStream is)
+  {
+    super(is);
+    m_bufferedInputStream = new BufferedInputStream(is);
+    m_scanner = new Scanner(m_bufferedInputStream);
+  }
+
+  /**
+   * Tells the reader to add a carriage return at the end of each output event
+   * 
+   * @param b
+   *          true to add a CRLF, false otherwise
+   * @return This reader
+   */
+  public ReadLines addCrlf(boolean b)
+  {
+    m_addCrlf = b;
+    return this;
+  }
+
+  /**
+   * Tells the reader to trim each text line
+   * 
+   * @param b
+   *          true to trim, false otherwise
+   * @return This reader
+   */
+  public ReadLines trim(boolean b)
+  {
+    m_trim = b;
+    return this;
+  }
+
+  @Override
+  @SuppressWarnings("squid:S1168")
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    if (m_scanner.hasNextLine())
+    {
+      String line = m_scanner.nextLine();
+      if (m_trim)
+      {
+        line = line.trim();
+      }
+      if (m_addCrlf)
+      {
+        line += CRLF;
+      }
+      outputs.add(new Object[] { line });
+      return true;
+    }
+    return false;
+  }
 }

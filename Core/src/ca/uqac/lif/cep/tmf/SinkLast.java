@@ -20,8 +20,8 @@ package ca.uqac.lif.cep.tmf;
 import java.util.Queue;
 
 /**
- * Sink that remembers only the last event sent to it. This event can
- * be queried with {@link #getLast()}.
+ * Sink that remembers only the last event sent to it. This event can be queried
+ * with {@link #getLast()}.
  * 
  * @author Sylvain Hallé
  *
@@ -29,53 +29,53 @@ import java.util.Queue;
 @SuppressWarnings("squid:S2160")
 public class SinkLast extends Sink
 {
-	/**
-	 * The last event (or array of events) received
-	 */
-	protected Object[] m_last;
+  /**
+   * The last event (or array of events) received
+   */
+  protected Object[] m_last;
 
-	/**
-	 * The number of events received so far
-	 */
-	protected int m_eventCounter;
+  /**
+   * The number of events received so far
+   */
+  protected int m_eventCounter;
 
-	public SinkLast()
-	{
-		super();
-		m_last = null;
-		m_eventCounter = 0;
-	}
+  public SinkLast()
+  {
+    super();
+    m_last = null;
+    m_eventCounter = 0;
+  }
 
-	public SinkLast(int in_arity)
-	{
-		super(in_arity);
-		m_last = null;
-		m_eventCounter = 0;
-	}
+  public SinkLast(int in_arity)
+  {
+    super(in_arity);
+    m_last = null;
+    m_eventCounter = 0;
+  }
 
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_last = null;
-		m_eventCounter = 0;
-	}
+  @Override
+  public void reset()
+  {
+    super.reset();
+    m_last = null;
+    m_eventCounter = 0;
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		m_last = inputs;
-		return true;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    m_last = inputs;
+    return true;
+  }
 
-	public Object[] getLast()
-	{
-		return m_last;
-	}
+  public Object[] getLast()
+  {
+    return m_last;
+  }
 
-	@Override
-	public SinkLast duplicate(boolean with_state)
-	{
-		return new SinkLast(getInputArity());
-	}
+  @Override
+  public SinkLast duplicate(boolean with_state)
+  {
+    return new SinkLast(getInputArity());
+  }
 }

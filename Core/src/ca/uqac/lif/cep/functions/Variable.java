@@ -17,53 +17,52 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.cep.Connector.Variant;
 import java.util.Set;
 
-import ca.uqac.lif.cep.Connector.Variant;
+public abstract class Variable extends Function
+{
+  /**
+   * Creates a new placeholder
+   */
+  public Variable()
+  {
+    super();
+  }
 
-public abstract class Variable extends Function 
-{	
-	/**
-	 * Creates a new placeholder
-	 */
-	public Variable()
-	{
-		super();
-	}
-	
-	@Override
-	public void evaluate(Object[] inputs, Object[] outputs)
-	{
-		evaluate(inputs, outputs, null);
-	}
+  @Override
+  public void evaluate(Object[] inputs, Object[] outputs)
+  {
+    evaluate(inputs, outputs, null);
+  }
 
-	@Override
-	public int getInputArity()
-	{
-		return 0;
-	}
+  @Override
+  public int getInputArity()
+  {
+    return 0;
+  }
 
-	@Override
-	public int getOutputArity()
-	{
-		return 1;
-	}
+  @Override
+  public int getOutputArity()
+  {
+    return 1;
+  }
 
-	@Override
-	public void reset()
-	{
-		// Nothing to do
-	}
-	
-	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index)
-	{
-		classes.add(Variant.class);
-	}
+  @Override
+  public void reset()
+  {
+    // Nothing to do
+  }
 
-	@Override
-	public Class<?> getOutputTypeFor(int index)
-	{
-		return Variant.class;
-	}
+  @Override
+  public void getInputTypesFor(Set<Class<?>> classes, int index)
+  {
+    classes.add(Variant.class);
+  }
+
+  @Override
+  public Class<?> getOutputTypeFor(int index)
+  {
+    return Variant.class;
+  }
 }

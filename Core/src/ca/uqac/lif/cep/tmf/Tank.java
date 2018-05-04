@@ -17,19 +17,17 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Iterator;
-import java.util.concurrent.Future;
-
 import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import java.util.Iterator;
+import java.util.concurrent.Future;
 
 /**
- * Accumulates pushed events into a queue until they are pulled.
- * The Tank is a way to bridge an upstream part of a
- * processor chain that works in <em>push</em> mode, to a downstream part
- * that operates in <em>pull</em> mode.
+ * Accumulates pushed events into a queue until they are pulled. The Tank is a
+ * way to bridge an upstream part of a processor chain that works in
+ * <em>push</em> mode, to a downstream part that operates in <em>pull</em> mode.
  * 
  * Graphically, this processor is represented as:
  * 
@@ -41,209 +39,209 @@ import ca.uqac.lif.cep.Pushable;
  * @dictentry
  */
 @SuppressWarnings("squid:S2160")
-public class Tank extends Processor 
-{	
-	/**
-	 * A pushable
-	 */
-	protected QueuePushable m_pushable = null;
-	
-	/**
-	 * A pullable
-	 */
-	protected QueuePullable m_pullable = null;
+public class Tank extends Processor
+{
+  /**
+   * A pushable
+   */
+  protected QueuePushable m_pushable = null;
 
-	/**
-	 * Creates a new empty tank
-	 */
-	public Tank()
-	{
-		super(1, 1);
-	}
+  /**
+   * A pullable
+   */
+  protected QueuePullable m_pullable = null;
 
-	@Override
-	public Tank duplicate(boolean with_state) 
-	{
-		Tank t = new Tank();
-		if (with_state)
-		{
-			// Put in the tank what is in the current tank
-			t.m_inputQueues[0].addAll(m_inputQueues[0]);
-		}
-		return t;
-	}
+  /**
+   * Creates a new empty tank
+   */
+  public Tank()
+  {
+    super(1, 1);
+  }
 
-	@Override
-	public Pushable getPushableInput(int index)
-	{
-		if (m_pushable == null)
-		{
-			m_pushable = new QueuePushable(false);
-		}
-		return m_pushable;
-	}
-	
-	@Override
-	public Pullable getPullableOutput(int index)
-	{
-		if (m_pullable == null)
-		{
-			m_pullable = new QueuePullable();
-		}
-		return m_pullable;
-	}
-	
-	protected class QueuePullable implements Pullable
-	{
-		@Override
-		public Iterator<Object> iterator() 
-		{
-			return this;
-		}
-		
-		@Override
-		public void remove()
-		{
-			// Nothing to do
-		}
+  @Override
+  public Tank duplicate(boolean with_state)
+  {
+    Tank t = new Tank();
+    if (with_state)
+    {
+      // Put in the tank what is in the current tank
+      t.m_inputQueues[0].addAll(m_inputQueues[0]);
+    }
+    return t;
+  }
 
-		@Override
-		public Object pullSoft()
-		{
-			synchronized (m_inputQueues[0])
-			{
-				return m_inputQueues[0].poll();
-			}
-		}
+  @Override
+  public Pushable getPushableInput(int index)
+  {
+    if (m_pushable == null)
+    {
+      m_pushable = new QueuePushable(false);
+    }
+    return m_pushable;
+  }
 
-		@Override
-		public Object pull() 
-		{
-			synchronized (m_inputQueues[0])
-			{
-				return m_inputQueues[0].poll();
-			}
-		}
+  @Override
+  public Pullable getPullableOutput(int index)
+  {
+    if (m_pullable == null)
+    {
+      m_pullable = new QueuePullable();
+    }
+    return m_pullable;
+  }
 
-		@Override
-		@SuppressWarnings("squid:S2272")
-		public Object next()
-		{
-			return pull();
-		}
+  protected class QueuePullable implements Pullable
+  {
+    @Override
+    public Iterator<Object> iterator()
+    {
+      return this;
+    }
 
-		@Override
-		public NextStatus hasNextSoft()
-		{
-			synchronized (m_inputQueues[0])
-			{
-				if (m_inputQueues[0].isEmpty())
-				{
-					return NextStatus.MAYBE;
-				}
-				return NextStatus.YES;
-			}
-		}
+    @Override
+    public void remove()
+    {
+      // Nothing to do
+    }
 
-		@Override
-		public boolean hasNext() 
-		{
-			synchronized (m_inputQueues)
-			{
-				return !m_inputQueues[0].isEmpty();
-			}
-		}
+    @Override
+    public Object pullSoft()
+    {
+      synchronized (m_inputQueues[0])
+      {
+        return m_inputQueues[0].poll();
+      }
+    }
 
-		@Override
-		public Processor getProcessor() 
-		{
-			return Tank.this;
-		}
+    @Override
+    public Object pull()
+    {
+      synchronized (m_inputQueues[0])
+      {
+        return m_inputQueues[0].poll();
+      }
+    }
 
-		@Override
-		public int getPosition()
-		{
-			return 0;
-		}
+    @Override
+    @SuppressWarnings("squid:S2272")
+    public Object next()
+    {
+      return pull();
+    }
 
-		@Override
-		public void start()
-		{
-			// Nothing to do
-		}
+    @Override
+    public NextStatus hasNextSoft()
+    {
+      synchronized (m_inputQueues[0])
+      {
+        if (m_inputQueues[0].isEmpty())
+        {
+          return NextStatus.MAYBE;
+        }
+        return NextStatus.YES;
+      }
+    }
 
-		@Override
-		public void stop() 
-		{
-			// Nothing to do
-		}
+    @Override
+    public boolean hasNext()
+    {
+      synchronized (m_inputQueues)
+      {
+        return !m_inputQueues[0].isEmpty();
+      }
+    }
 
-		@Override
-		public void dispose()
-		{
-			// Nothing to do
-			
-		}
-		
-	}
+    @Override
+    public Processor getProcessor()
+    {
+      return Tank.this;
+    }
 
-	protected class QueuePushable implements Pushable
-	{
-		private final boolean m_singleObject;
+    @Override
+    public int getPosition()
+    {
+      return 0;
+    }
 
-		public QueuePushable(boolean single_object)
-		{
-			super();
-			m_singleObject = single_object;
-		}
+    @Override
+    public void start()
+    {
+      // Nothing to do
+    }
 
-		@Override
-		public Pushable push(Object o) 
-		{
-			synchronized (m_inputQueues[0])
-			{
-				if (m_singleObject)
-				{
-					m_inputQueues[0].clear();
-				}
-				m_inputQueues[0].add(o);
-			}
-			return this;
-		}
+    @Override
+    public void stop()
+    {
+      // Nothing to do
+    }
 
-		@Override
-		public Future<Pushable> pushFast(Object o) 
-		{
-			push(o);
-			return Pushable.NULL_FUTURE;
-		}
-		
-		@Override
-		public void notifyEndOfTrace() throws PushableException
-		{
-			// TODO: to be verified
-			m_outputPushables[0].notifyEndOfTrace();
-		}
+    @Override
+    public void dispose()
+    {
+      // Nothing to do
 
-		@Override
-		public Processor getProcessor() 
-		{
-			return Tank.this;
-		}
+    }
 
-		@Override
-		public int getPosition()
-		{
-			return 0;
-		}
-	}
+  }
 
-	@Override
-	public void reset()
-	{
-		synchronized (m_inputQueues[0])
-		{
-			m_inputQueues[0].clear();
-		}
-	}
+  protected class QueuePushable implements Pushable
+  {
+    private final boolean m_singleObject;
+
+    public QueuePushable(boolean single_object)
+    {
+      super();
+      m_singleObject = single_object;
+    }
+
+    @Override
+    public Pushable push(Object o)
+    {
+      synchronized (m_inputQueues[0])
+      {
+        if (m_singleObject)
+        {
+          m_inputQueues[0].clear();
+        }
+        m_inputQueues[0].add(o);
+      }
+      return this;
+    }
+
+    @Override
+    public Future<Pushable> pushFast(Object o)
+    {
+      push(o);
+      return Pushable.NULL_FUTURE;
+    }
+
+    @Override
+    public void notifyEndOfTrace() throws PushableException
+    {
+      // TODO: to be verified
+      m_outputPushables[0].notifyEndOfTrace();
+    }
+
+    @Override
+    public Processor getProcessor()
+    {
+      return Tank.this;
+    }
+
+    @Override
+    public int getPosition()
+    {
+      return 0;
+    }
+  }
+
+  @Override
+  public void reset()
+  {
+    synchronized (m_inputQueues[0])
+    {
+      m_inputQueues[0].clear();
+    }
+  }
 }

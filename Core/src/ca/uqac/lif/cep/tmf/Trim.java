@@ -17,13 +17,11 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.SingleProcessor;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
-
 /**
- * Discards the first *n* events of the input, and outputs
- * the remaining ones.
+ * Discards the first *n* events of the input, and outputs the remaining ones.
  * 
  * @author Sylvain Hallé
  * @dictentry
@@ -31,68 +29,70 @@ import ca.uqac.lif.cep.SingleProcessor;
 @SuppressWarnings("squid:S2160")
 public class Trim extends SingleProcessor
 {
-	/**
-	 * How many events to ignore at the beginning of the trace
-	 */
-	private final int m_delay;
+  /**
+   * How many events to ignore at the beginning of the trace
+   */
+  private final int m_delay;
 
-	/**
-	 * The number of events received so far
-	 */
-	protected int m_eventsReceived;
+  /**
+   * The number of events received so far
+   */
+  protected int m_eventsReceived;
 
-	/**
-	 * Creates a new delay processor.
-	 * @param delay The number of events from the input trace to discard
-	 */
-	public Trim(int delay)
-	{
-		super(1, 1);
-		m_delay = delay;
-	}
+  /**
+   * Creates a new delay processor.
+   * 
+   * @param delay
+   *          The number of events from the input trace to discard
+   */
+  public Trim(int delay)
+  {
+    super(1, 1);
+    m_delay = delay;
+  }
 
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_eventsReceived = 0;
-	}
+  @Override
+  public void reset()
+  {
+    super.reset();
+    m_eventsReceived = 0;
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		m_eventsReceived++;
-		if (m_eventsReceived > getDelay())
-		{
-			outputs.add(inputs);
-			if (m_eventTracker != null)
-			{
-				for (int i = 0; i < inputs.length; i++)
-				{
-					m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
-				}
-			}
-			m_outputCount++;
-		}
-		m_inputCount++;
-		return true;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    m_eventsReceived++;
+    if (m_eventsReceived > getDelay())
+    {
+      outputs.add(inputs);
+      if (m_eventTracker != null)
+      {
+        for (int i = 0; i < inputs.length; i++)
+        {
+          m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
+        }
+      }
+      m_outputCount++;
+    }
+    m_inputCount++;
+    return true;
+  }
 
-	@Override
-	public Trim duplicate(boolean with_state)
-	{
-		Trim t = new Trim(getDelay());
-		if (with_state)
-		{
-			t.m_eventsReceived = m_eventsReceived;
-			t.m_inputCount = m_inputCount;
-			t.m_outputCount = m_outputCount;
-		}
-		return t;
-	}
+  @Override
+  public Trim duplicate(boolean with_state)
+  {
+    Trim t = new Trim(getDelay());
+    if (with_state)
+    {
+      t.m_eventsReceived = m_eventsReceived;
+      t.m_inputCount = m_inputCount;
+      t.m_outputCount = m_outputCount;
+    }
+    return t;
+  }
 
-	public int getDelay() 
-	{
-		return m_delay;
-	}
+  public int getDelay()
+  {
+    return m_delay;
+  }
 }

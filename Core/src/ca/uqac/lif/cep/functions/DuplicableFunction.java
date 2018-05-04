@@ -4,6 +4,6 @@ import ca.uqac.lif.cep.Duplicable;
 
 public interface DuplicableFunction extends Duplicable
 {
-	@Override
-	public Function duplicate();
+  @Override
+  public Function duplicate();
 }

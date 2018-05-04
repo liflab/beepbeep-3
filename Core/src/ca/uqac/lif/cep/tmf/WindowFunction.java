@@ -17,115 +17,118 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
- * Takes a sliding window of <i>n</i> successive input events,
- * passes them to an <i>n</i>-ary function and outputs the result.
- * This currently only works for functions with an output arity of 1.
+ * Takes a sliding window of <i>n</i> successive input events, passes them to an
+ * <i>n</i>-ary function and outputs the result. This currently only works for
+ * functions with an output arity of 1.
+ * 
  * @see Window
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
 public class WindowFunction extends SingleProcessor
 {
-	/**
-	 * The window's width
-	 */
-	protected int m_width;
+  /**
+   * The window's width
+   */
+  protected int m_width;
 
-	/**
-	 * The internal function
-	 */
-	protected Function m_function;
+  /**
+   * The internal function
+   */
+  protected Function m_function;
 
-	/**
-	 * The event window
-	 */
-	protected LinkedList<Object> m_window;
+  /**
+   * The event window
+   */
+  protected LinkedList<Object> m_window;
 
-	WindowFunction()
-	{
-		this(1);
-	}
+  WindowFunction()
+  {
+    this(1);
+  }
 
-	WindowFunction(int width)
-	{
-		super(1, 1);
-		m_window = new LinkedList<Object>();
-		m_width = width;
-	}
+  WindowFunction(int width)
+  {
+    super(1, 1);
+    m_window = new LinkedList<Object>();
+    m_width = width;
+  }
 
-	/**
-	 * Creates a new Window from a given function
-	 * @param f The function. Its output arity must be exactly 1.
-	 */
-	public WindowFunction(/*@NonNull*/ Function f)
-	{
-		this(f.getInputArity());
-		m_function = f;
-	}
+  /**
+   * Creates a new Window from a given function
+   * 
+   * @param f
+   *          The function. Its output arity must be exactly 1.
+   */
+  public WindowFunction(/* @NonNull */ Function f)
+  {
+    this(f.getInputArity());
+    m_function = f;
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		m_window.add(inputs[0]);
-		int size = m_window.size();
-		if (size == m_width + 1)
-		{
-			m_window.remove(0);
-			Object[] val = new Object[1];
-			try
-			{
-				m_function.evaluate(m_window.toArray(), val);
-			}
-			catch (FunctionException e)
-			{
-				throw new ProcessorException(e);
-			}
-			outputs.add(wrapObject(val[0]));
-			return true;
-		}
-		if (size == m_width)
-		{
-			Object[] val = new Object[1];
-			try
-			{
-				m_function.evaluate(m_window.toArray(), val);
-			}
-			catch (FunctionException e)
-			{
-				throw new ProcessorException(e);
-			}
-			outputs.add(wrapObject(val[0]));
-			return true;
-		}
-		return true;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    m_window.add(inputs[0]);
+    int size = m_window.size();
+    if (size == m_width + 1)
+    {
+      m_window.remove(0);
+      Object[] val = new Object[1];
+      try
+      {
+        m_function.evaluate(m_window.toArray(), val);
+      }
+      catch (FunctionException e)
+      {
+        throw new ProcessorException(e);
+      }
+      outputs.add(wrapObject(val[0]));
+      return true;
+    }
+    if (size == m_width)
+    {
+      Object[] val = new Object[1];
+      try
+      {
+        m_function.evaluate(m_window.toArray(), val);
+      }
+      catch (FunctionException e)
+      {
+        throw new ProcessorException(e);
+      }
+      outputs.add(wrapObject(val[0]));
+      return true;
+    }
+    return true;
+  }
 
-	@Override
-	public WindowFunction duplicate(boolean with_state)
-	{
-		WindowFunction wf = new WindowFunction(m_function.duplicate());
-		if (with_state)
-		{
-			wf.m_window.addAll(m_window);
-		}
-		return wf;
-	}
-	
-	/**
-	 * Gets the width of the window for this processor
-	 * @return The width of the window
-	 */
-	public int getWidth()
-	{
-		return m_width;
-	}
+  @Override
+  public WindowFunction duplicate(boolean with_state)
+  {
+    WindowFunction wf = new WindowFunction(m_function.duplicate());
+    if (with_state)
+    {
+      wf.m_window.addAll(m_window);
+    }
+    return wf;
+  }
+
+  /**
+   * Gets the width of the window for this processor
+   * 
+   * @return The width of the window
+   */
+  public int getWidth()
+  {
+    return m_width;
+  }
 }

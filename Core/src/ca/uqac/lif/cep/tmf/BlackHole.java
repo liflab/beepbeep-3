@@ -26,17 +26,17 @@ import java.util.Queue;
  * @dictentry
  */
 @SuppressWarnings("squid:S2160")
-public class BlackHole extends Sink 
+public class BlackHole extends Sink
 {
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
-	{
-		return false;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    return false;
+  }
 
-	@Override
-	public BlackHole duplicate(boolean with_state) 
-	{
-		return new BlackHole();
-	}
+  @Override
+  public BlackHole duplicate(boolean with_state)
+  {
+    return new BlackHole();
+  }
 }

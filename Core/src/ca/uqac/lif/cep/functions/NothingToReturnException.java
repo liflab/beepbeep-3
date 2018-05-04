@@ -18,22 +18,23 @@
 package ca.uqac.lif.cep.functions;
 
 /**
- * Exception thrown when a function cannot produce a return value.
- * This is a "generic" type of exception; for example, if the function
- * cannot return a value because one of its arguments is of the wrong
- * type, it should rather throw a {@link InvalidArgumentException}.  
+ * Exception thrown when a function cannot produce a return value. This is a
+ * "generic" type of exception; for example, if the function cannot return a
+ * value because one of its arguments is of the wrong type, it should rather
+ * throw a {@link InvalidArgumentException}.
+ * 
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2166")
 public class NothingToReturnException extends FunctionException
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 1L;
+  /**
+   * Dummy UID
+   */
+  private static final long serialVersionUID = 1L;
 
-	public NothingToReturnException(Function f)
-	{
-		super("Function " + f.toString() + " has nothing to return for its arguments");
-	}
+  public NothingToReturnException(Function f)
+  {
+    super("Function " + f.toString() + " has nothing to return for its arguments");
+  }
 }

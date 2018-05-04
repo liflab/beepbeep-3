@@ -17,12 +17,11 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-
 /**
- * Returns one input event and discards the next *n*-1. The value *n*
- * is called the **decimation interval**.
- * However, a mode can be specified in order to output the *n*-th input
- * event if it is the last event of the trace and it has not been output already.
+ * Returns one input event and discards the next *n*-1. The value *n* is called
+ * the **decimation interval**. However, a mode can be specified in order to
+ * output the *n*-th input event if it is the last event of the trace and it has
+ * not been output already.
  * 
  * It is represented graphically as:
  * 
@@ -34,77 +33,85 @@ package ca.uqac.lif.cep.tmf;
 @SuppressWarnings("squid:S2160")
 public class CountDecimate extends Decimate
 {
-    /**
-     * The decimation interval
-     */
-    private final int m_interval;
+  /**
+   * The decimation interval
+   */
+  private final int m_interval;
 
-	/**
-	 * Index of last event received
-	 */
-	protected int m_current;
+  /**
+   * Index of last event received
+   */
+  protected int m_current;
 
-	/**
-	 * Creates a new count decimate processor with a decimation
-	 * interval of 1
-	 */
-	public CountDecimate()
-	{
-		this(1);
-	}
+  /**
+   * Creates a new count decimate processor with a decimation interval of 1
+   */
+  public CountDecimate()
+  {
+    this(1);
+  }
 
-	/**
-	 * Creates a new count decimate processor
-	 * @param interval The decimation interval
-	 */
-	public CountDecimate(int interval)
-	{
-		this(interval, false);
-	}
+  /**
+   * Creates a new count decimate processor
+   * 
+   * @param interval
+   *          The decimation interval
+   */
+  public CountDecimate(int interval)
+  {
+    this(interval, false);
+  }
 
-    /**
-     * Creates a new count decimate processor
-     *
-     * @param interval The decimation interval
-     * @param shouldProcessLastInputs Default to false. Indicates if the processor should
-     *                                output the last input events of the trace even if it
-     *                                does not correspond to the decimation interval.
-     */
-    public CountDecimate(int interval, boolean shouldProcessLastInputs)
-    {
-        super(shouldProcessLastInputs);
-        m_interval = interval;
-        m_current = 0;
-    }
+  /**
+   * Creates a new count decimate processor
+   *
+   * @param interval
+   *          The decimation interval
+   * @param should_process_last_inputs
+   *          Default to false. Indicates if the processor should output the last
+   *          input events of the trace even if it does not correspond to the
+   *          decimation interval.
+   */
+  public CountDecimate(int interval, boolean should_process_last_inputs)
+  {
+    super(should_process_last_inputs);
+    m_interval = interval;
+    m_current = 0;
+  }
 
-	/**
-	 * Gets the decimation interval
-	 * @return The interval
-	 */
-	public int getInterval()
-	{
-		return m_interval;
-	}
+  /**
+   * Gets the decimation interval
+   * 
+   * @return The interval
+   */
+  public int getInterval()
+  {
+    return m_interval;
+  }
 
-	@Override
-	protected boolean shouldOutput() {
-		return m_current == 0;
-	}
+  @Override
+  protected boolean shouldOutput()
+  {
+    return m_current == 0;
+  }
 
-	@Override
-    protected void postCompute() {
-        m_current = (m_current + 1) % m_interval;
-    }
+  @Override
+  protected void postCompute()
+  {
+    m_current = (m_current + 1) % m_interval;
+  }
 
-    @Override
-    public void reset() {
-        super.reset();
-        m_current = 0;
-    }
+  @Override
+  public void reset()
+  {
+    super.reset();
+    m_current = 0;
+  }
 
-    @Override
-    public CountDecimate duplicate(boolean with_state) {
-        return new CountDecimate(m_interval, m_shouldProcessLastInputs);
-    }
+  @Override
+  public CountDecimate duplicate(boolean with_state)
+  {
+    return new CountDecimate(m_interval, m_shouldProcessLastInputs);
+  }
 
 }

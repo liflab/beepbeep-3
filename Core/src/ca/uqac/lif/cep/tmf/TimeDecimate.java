@@ -18,81 +18,91 @@
 package ca.uqac.lif.cep.tmf;
 
 /**
- * After returning an input event, discards all others for the next
- * *n* seconds. This processor therefore acts as a rate limiter.
+ * After returning an input event, discards all others for the next *n* seconds.
+ * This processor therefore acts as a rate limiter.
  * 
- * Note that this processor uses <code>System.currentTimeMillis()</code>
- * as its clock.
- * Moreover, a mode can be specified in order to output the last input
+ * Note that this processor uses <code>System.currentTimeMillis()</code> as its
+ * clock. Moreover, a mode can be specified in order to output the last input
  * event of the trace if it has not been output already.
  *
  * @author Sylvain Hallé
  * @dictentry
  */
 @SuppressWarnings("squid:S2160")
-public class TimeDecimate extends Decimate 
+public class TimeDecimate extends Decimate
 {
-    /**
-     * Interval of time
-     */
-    protected final long m_interval;
+  /**
+   * Interval of time
+   */
+  protected final long m_interval;
 
-    /**
-     * The system time when the last event was output
-     */
-    protected long m_timeLastSent;
+  /**
+   * The system time when the last event was output
+   */
+  protected long m_timeLastSent;
 
-    /**
-     * Instantiates a time decimator
-     * @param interval The interval (in milliseconds) during which
-     *   events should be discarded after an output event is produced
-     * @param shouldProcessLastInputs Default to false. Indicates if
-     *   the last input event of the trace should be output in case it
-     *   does not match the decimation interval
-     */
-    public TimeDecimate(long interval, boolean shouldProcessLastInputs) {
-        super(shouldProcessLastInputs);
-        m_interval = interval;
-        m_timeLastSent = -1;
-    }
+  /**
+   * Instantiates a time decimator
+   * 
+   * @param interval
+   *          The interval (in milliseconds) during which events should be
+   *          discarded after an output event is produced
+   * @param should_process_last_inputs
+   *          Default to false. Indicates if the last input event of the trace
+   *          should be output in case it does not match the decimation interval
+   */
+  public TimeDecimate(long interval, boolean should_process_last_inputs)
+  {
+    super(should_process_last_inputs);
+    m_interval = interval;
+    m_timeLastSent = -1;
+  }
 
-    /**
-     * Instantiates a time decimator
-     * @param interval The interval (in milliseconds) during which
-     *   events should be discarded after an output event is produced
-     */
-    public TimeDecimate(long interval) {
-        this(interval, false);
-    }
+  /**
+   * Instantiates a time decimator
+   * 
+   * @param interval
+   *          The interval (in milliseconds) during which events should be
+   *          discarded after an output event is produced
+   */
+  public TimeDecimate(long interval)
+  {
+    this(interval, false);
+  }
 
-    /**
-     * Gets the time decimation interval
-     * @return The interval (in milliseconds) during which
-     *   events should be discarded after an output event is produced
-     */
-    public long getInterval()
-    {
-        return m_interval;
-    }
+  /**
+   * Gets the time decimation interval
+   * 
+   * @return The interval (in milliseconds) during which events should be
+   *         discarded after an output event is produced
+   */
+  public long getInterval()
+  {
+    return m_interval;
+  }
 
-    @Override
-    protected boolean shouldOutput() {
-        return m_timeLastSent < 0 || (System.currentTimeMillis() - m_timeLastSent) >= m_interval;
-    }
+  @Override
+  protected boolean shouldOutput()
+  {
+    return m_timeLastSent < 0 || (System.currentTimeMillis() - m_timeLastSent) >= m_interval;
+  }
 
-    @Override
-    protected void postOutput() {
-        m_timeLastSent = System.currentTimeMillis();
-    }
+  @Override
+  protected void postOutput()
+  {
+    m_timeLastSent = System.currentTimeMillis();
+  }
 
-    @Override
-    public void reset() {
-        super.reset();
-        m_timeLastSent = -1;
-    }
+  @Override
+  public void reset()
+  {
+    super.reset();
+    m_timeLastSent = -1;
+  }
 
-    @Override
-    public TimeDecimate duplicate(boolean with_state) {
-        return new TimeDecimate(m_interval, m_shouldProcessLastInputs);
-    }
+  @Override
+  public TimeDecimate duplicate(boolean with_state)
+  {
+    return new TimeDecimate(m_interval, m_shouldProcessLastInputs);
+  }
 }

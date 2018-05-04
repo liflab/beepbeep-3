@@ -19,30 +19,35 @@ package ca.uqac.lif.cep;
 
 /**
  * Generic class for any exception thrown in the lifecycle of a processor
+ * 
  * @author Sylvain Hallé
  */
 public class ProcessorException extends RuntimeException
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 1L;
+  /**
+   * Dummy UID
+   */
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates an exception from a throwable object
-	 * @param t The throwable object
-	 */
-	public ProcessorException(Throwable t)
-	{
-		super(t);
-	}
-	
-	/**
-	 * Creates an exception from a string message
-	 * @param message The message
-	 */
-	public ProcessorException(String message)
-	{
-		super(message);
-	}
+  /**
+   * Creates an exception from a throwable object
+   * 
+   * @param t
+   *          The throwable object
+   */
+  public ProcessorException(Throwable t)
+  {
+    super(t);
+  }
+
+  /**
+   * Creates an exception from a string message
+   * 
+   * @param message
+   *          The message
+   */
+  public ProcessorException(String message)
+  {
+    super(message);
+  }
 }

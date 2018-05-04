@@ -17,9 +17,8 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Set;
-
 import ca.uqac.lif.cep.Context;
+import java.util.Set;
 
 /**
  * Representation of a unary constant.
@@ -29,96 +28,99 @@ import ca.uqac.lif.cep.Context;
  */
 public class Constant extends Function
 {
-	/**
-	 * A constant representing the number zero
-	 */
-	public static final Constant ZERO = new Constant(0);
-	
-	/**
-	 * A constant representing the number one
-	 */
-	public static final Constant ONE = new Constant(1);
-	
-	/**
-	 * The value to return by this constant
-	 */
-	private final Object m_value;
+  /**
+   * A constant representing the number zero
+   */
+  public static final Constant ZERO = new Constant(0);
 
-	/**
-	 * Creates a new constant
-	 * @param value The value associated to this constant
-	 */
-	public Constant(Object value)
-	{
-		super();
-		m_value = value;
-	}
+  /**
+   * A constant representing the number one
+   */
+  public static final Constant ONE = new Constant(1);
 
-	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)
-	{
-		outputs[0] = m_value;
-	}
+  /**
+   * The value to return by this constant
+   */
+  private final Object m_value;
 
-	@Override
-	public void evaluate(Object[] inputs, Object[] outputs)
-	{
-		evaluate(inputs, outputs, null);
-	}
+  /**
+   * Creates a new constant
+   * 
+   * @param value
+   *          The value associated to this constant
+   */
+  public Constant(Object value)
+  {
+    super();
+    m_value = value;
+  }
 
-	@Override
-	public int getInputArity()
-	{
-		return 0;
-	}
+  @Override
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  {
+    outputs[0] = m_value;
+  }
 
-	@Override
-	public int getOutputArity()
-	{
-		return 1;
-	}
+  @Override
+  public void evaluate(Object[] inputs, Object[] outputs)
+  {
+    evaluate(inputs, outputs, null);
+  }
 
-	@Override
-	public void reset()
-	{
-		// Nothing to do
-	}
+  @Override
+  public int getInputArity()
+  {
+    return 0;
+  }
 
-	@Override
-	public Constant duplicate(boolean with_state)
-	{
-		return new Constant(m_value);
-	}
+  @Override
+  public int getOutputArity()
+  {
+    return 1;
+  }
 
-	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index)
-	{
-		// Nothing to do
-		return;
-	}
+  @Override
+  public void reset()
+  {
+    // Nothing to do
+  }
 
-	@Override
-	public Class<?> getOutputTypeFor(int index)
-	{
-		return m_value.getClass();
-	}
+  @Override
+  public Constant duplicate(boolean with_state)
+  {
+    return new Constant(m_value);
+  }
 
-	@Override
-	public String toString()
-	{
-		if (m_value == null)
-		{
-			return "null";
-		}
-		return m_value.toString();
-	}
+  @Override
+  public void getInputTypesFor(Set<Class<?>> classes, int index)
+  {
+    // Nothing to do
+    return;
+  }
 
-	/**
-	 * Gets the actual object that this constant processor returns
-	 * @return The value
-	 */
-	public Object getValue()
-	{
-		return m_value;
-	}
+  @Override
+  public Class<?> getOutputTypeFor(int index)
+  {
+    return m_value.getClass();
+  }
+
+  @Override
+  public String toString()
+  {
+    if (m_value == null)
+    {
+      return "null";
+    }
+    return m_value.toString();
+  }
+
+  /**
+   * Gets the actual object that this constant processor returns
+   * 
+   * @return The value
+   */
+  public Object getValue()
+  {
+    return m_value;
+  }
 }

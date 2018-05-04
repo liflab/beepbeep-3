@@ -20,32 +20,33 @@ package ca.uqac.lif.cep.tmf;
 import java.util.Queue;
 
 /**
- * Operates like {@link QueueSource}, except that it dumps all its
- * queue at once, instead of releasing the events one by one.
+ * Operates like {@link QueueSource}, except that it dumps all its queue at
+ * once, instead of releasing the events one by one.
+ * 
  * @author Sylvain Hallé
  *
  */
 @SuppressWarnings("squid:S2160")
 public class QueueSourceBatch extends QueueSource
 {
-	public QueueSourceBatch(int arity)
-	{
-		super(arity);
-	}
+  public QueueSourceBatch(int arity)
+  {
+    super(arity);
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		int output_arity = getOutputArity();
-		for (Object event : m_events)
-		{
-			Object[] out = new Object[output_arity];
-			for (int i = 0; i < output_arity; i++)
-			{
-				out[i] = event;
-			}
-			outputs.add(out);
-		}
-		return true;
-	}
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    int output_arity = getOutputArity();
+    for (Object event : m_events)
+    {
+      Object[] out = new Object[output_arity];
+      for (int i = 0; i < output_arity; i++)
+      {
+        out[i] = event;
+      }
+      outputs.add(out);
+    }
+    return true;
+  }
 }

@@ -18,20 +18,20 @@
 package ca.uqac.lif.cep.functions;
 
 /**
- * Exception thrown when a function is given an argument that is
- * invalid.  
+ * Exception thrown when a function is given an argument that is invalid.
+ * 
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2166")
 public class InvalidArgumentException extends FunctionException
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 1L;
+  /**
+   * Dummy UID
+   */
+  private static final long serialVersionUID = 1L;
 
-	public InvalidArgumentException(Function f, int index)
-	{
-		super("Argument #" + index + " passed to function " + f.toString() + " is invalid");
-	}
+  public InvalidArgumentException(Function f, int index)
+  {
+    super("Argument #" + index + " passed to function " + f.toString() + " is invalid");
+  }
 }

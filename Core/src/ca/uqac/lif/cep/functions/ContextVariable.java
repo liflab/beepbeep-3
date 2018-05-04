@@ -20,76 +20,79 @@ package ca.uqac.lif.cep.functions;
 import ca.uqac.lif.cep.Context;
 
 /**
- * Placeholder for the value of a context element. A `ContextVariable`
- * can be given as an argument to a `FunctionTree`.
+ * Placeholder for the value of a context element. A `ContextVariable` can be
+ * given as an argument to a `FunctionTree`.
  * 
  * @author Sylvain Hallé
  * @dictentry
  */
 public class ContextVariable extends Variable
 {
-	/**
-	 * The name of this placeholder
-	 */
-	protected final String m_name;
+  /**
+   * The name of this placeholder
+   */
+  protected final String m_name;
 
-	/**
-	 * Creates a new argument placeholder
-	 * @param name The name of this placeholder
-	 */
-	public ContextVariable(String name)
-	{
-		super();
-		m_name = name;
-	}
+  /**
+   * Creates a new argument placeholder
+   * 
+   * @param name
+   *          The name of this placeholder
+   */
+  public ContextVariable(String name)
+  {
+    super();
+    m_name = name;
+  }
 
-	/**
-	 * Gets the name of this placeholder
-	 * @return The name
-	 */
-	public String getName()
-	{
-		return m_name;
-	}
+  /**
+   * Gets the name of this placeholder
+   * 
+   * @return The name
+   */
+  public String getName()
+  {
+    return m_name;
+  }
 
-	@Override
-	public int hashCode()
-	{
-		return m_name.hashCode();
-	}
+  @Override
+  public int hashCode()
+  {
+    return m_name.hashCode();
+  }
 
-	@Override
-	public boolean equals(Object o)
-	{
-		if (o == null || !(o instanceof ContextVariable))
-		{
-			return false;
-		}
-		return m_name.compareTo(((ContextVariable) o).m_name) == 0;
-	}
+  @Override
+  public boolean equals(Object o)
+  {
+    if (o == null || !(o instanceof ContextVariable))
+    {
+      return false;
+    }
+    return m_name.compareTo(((ContextVariable) o).m_name) == 0;
+  }
 
-	@Override
-	@SuppressWarnings("squid:S1168")
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)
-	{
-		if (context == null || !context.containsKey(m_name))
-		{
-			outputs[0] = null;
-			return;
-		}
-		outputs[0] = context.get(m_name);
-	}
+  @Override
+  @SuppressWarnings("squid:S1168")
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  {
+    if (context == null || !context.containsKey(m_name))
+    {
+      outputs[0] = null;
+      return;
+    }
+    outputs[0] = context.get(m_name);
+  }
 
-	@Override
-	public ContextVariable duplicate(boolean with_state)
-	{
-		return new ContextVariable(m_name);
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "$" + m_name;
-	}
+  @Override
+  public ContextVariable duplicate(boolean with_state)
+  {
+    return new ContextVariable(m_name);
+  }
+
+  @Override
+  public String toString()
+  {
+    return "$" + m_name;
+  }
 
 }

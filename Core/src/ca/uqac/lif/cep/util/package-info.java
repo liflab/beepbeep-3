@@ -17,8 +17,8 @@
  */
 
 /**
- * Utility processors and functions to manipulate strings, arrays, and a
- * few other data structures.
+ * Utility processors and functions to manipulate strings, arrays, and a few
+ * other data structures.
  * 
  * @author Sylvain Hallé
  */

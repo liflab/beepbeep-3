@@ -17,10 +17,9 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import java.util.Set;
-
-import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.cep.Context;
+import java.util.Set;
 
 /**
  * Function that returns its input for its output.
@@ -28,73 +27,75 @@ import ca.uqac.lif.cep.Connector.Variant;
  * @author Sylvain Hallé
  * @dictentry
  */
-public final class IdentityFunction extends Function 
+public final class IdentityFunction extends Function
 {
-	/**
-	 * The input arity of the function (which is also its output arity)
-	 */
-	protected int m_inArity = 1;
-	
-	/**
-	 * Creates a new identity function
-	 * @param arity The arity of the function
-	 */
-	public IdentityFunction(int arity)
-	{
-		super();
-		m_inArity = arity;
-	}
+  /**
+   * The input arity of the function (which is also its output arity)
+   */
+  protected int m_inArity = 1;
 
-	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)  
-	{
-		for (int i = 0; i < inputs.length; i++)
-		{
-			outputs[i] = inputs[i];
-		}
-	}
+  /**
+   * Creates a new identity function
+   * 
+   * @param arity
+   *          The arity of the function
+   */
+  public IdentityFunction(int arity)
+  {
+    super();
+    m_inArity = arity;
+  }
 
-	@Override
-	public void evaluate(Object[] inputs, Object[] outputs)  
-	{
-		evaluate(inputs, outputs, null);
-	}
+  @Override
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  {
+    for (int i = 0; i < inputs.length; i++)
+    {
+      outputs[i] = inputs[i];
+    }
+  }
 
-	@Override
-	public int getInputArity() 
-	{
-		return m_inArity;
-	}
+  @Override
+  public void evaluate(Object[] inputs, Object[] outputs)
+  {
+    evaluate(inputs, outputs, null);
+  }
 
-	@Override
-	public int getOutputArity() 
-	{
-		return m_inArity;
-	}
+  @Override
+  public int getInputArity()
+  {
+    return m_inArity;
+  }
 
-	@Override
-	public void reset()
-	{
-		// Nothing to do
-	}
+  @Override
+  public int getOutputArity()
+  {
+    return m_inArity;
+  }
 
-	@Override
-	public IdentityFunction duplicate(boolean with_state)
-	{
-		return new IdentityFunction(m_inArity);
-	}
+  @Override
+  public void reset()
+  {
+    // Nothing to do
+  }
 
-	@Override
-	public void getInputTypesFor(Set<Class<?>> classes, int index) 
-	{
-		classes.add(Variant.class);
-		
-	}
+  @Override
+  public IdentityFunction duplicate(boolean with_state)
+  {
+    return new IdentityFunction(m_inArity);
+  }
 
-	@Override
-	public Class<?> getOutputTypeFor(int index)
-	{
-		return Variant.class;
-	}
+  @Override
+  public void getInputTypesFor(Set<Class<?>> classes, int index)
+  {
+    classes.add(Variant.class);
+
+  }
+
+  @Override
+  public Class<?> getOutputTypeFor(int index)
+  {
+    return Variant.class;
+  }
 
 }

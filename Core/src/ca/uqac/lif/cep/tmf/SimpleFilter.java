@@ -17,86 +17,93 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
-
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
+import java.util.Queue;
 
 /**
- * A simple filter that lets input events out by evaluating a
- * condition on them; if the condition evaluates to true, the event
- * is output, otherwise it is discarded.
+ * A simple filter that lets input events out by evaluating a condition on them;
+ * if the condition evaluates to true, the event is output, otherwise it is
+ * discarded.
  * <p>
- * There also exists a more generic type of filter: {@link Filter},
- * whose filtering decision is based on a trace of Booleans instead of
- * a stateless condition.
- *  
+ * There also exists a more generic type of filter: {@link Filter}, whose
+ * filtering decision is based on a trace of Booleans instead of a stateless
+ * condition.
+ * 
  * @see Filter
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class SimpleFilter extends SingleProcessor 
+public class SimpleFilter extends SingleProcessor
 {
-	/**
-	 * The condition to evaluate
-	 */
-	protected Function m_condition;
-	
-	/**
-	 * An array to store the value of the condition
-	 */
-	protected transient Object[] m_conditionValue = new Object[1];
+  /**
+   * The condition to evaluate
+   */
+  protected Function m_condition;
 
-	/**
-	 * Creates a new simple filter
-	 * @param in_arity The input arity
-	 * @param condition A function to evaluate on each input front
-	 */
-	public SimpleFilter(int in_arity, Function condition)
-	{
-		super(in_arity, in_arity);
-		m_condition = condition;
-	}
-	
-	/**
-	 * Creates a new simple filter or arity 1
-	 * @param condition A function to evaluate on each input front
-	 */
-	public SimpleFilter(Function condition)
-	{
-		this(1, condition);
-	}
+  /**
+   * An array to store the value of the condition
+   */
+  protected transient Object[] m_conditionValue = new Object[1];
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-	{
-		try
-		{
-			m_condition.evaluate(inputs, m_conditionValue);
-		}
-		catch (FunctionException e)
-		{
-			throw new ProcessorException(e);
-		}
-		if ((Boolean) m_conditionValue[0])
-			outputs.add(inputs);
-		return true;
-	}
+  /**
+   * Creates a new simple filter
+   * 
+   * @param in_arity
+   *          The input arity
+   * @param condition
+   *          A function to evaluate on each input front
+   */
+  public SimpleFilter(int in_arity, Function condition)
+  {
+    super(in_arity, in_arity);
+    m_condition = condition;
+  }
 
-	@Override
-	public SimpleFilter duplicate(boolean with_state) 
-	{
-		return new SimpleFilter(getInputArity(), m_condition.duplicate());
-	}
-	
-	/**
-	 * Gets the condition that this filter evaluates
-	 * @return The condition
-	 */
-	public Function getCondition()
-	{
-		return m_condition;
-	}
+  /**
+   * Creates a new simple filter or arity 1
+   * 
+   * @param condition
+   *          A function to evaluate on each input front
+   */
+  public SimpleFilter(Function condition)
+  {
+    this(1, condition);
+  }
+
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  {
+    try
+    {
+      m_condition.evaluate(inputs, m_conditionValue);
+    }
+    catch (FunctionException e)
+    {
+      throw new ProcessorException(e);
+    }
+    if ((Boolean) m_conditionValue[0])
+    {
+      outputs.add(inputs);
+    }
+    return true;
+  }
+
+  @Override
+  public SimpleFilter duplicate(boolean with_state)
+  {
+    return new SimpleFilter(getInputArity(), m_condition.duplicate());
+  }
+
+  /**
+   * Gets the condition that this filter evaluates
+   * 
+   * @return The condition
+   */
+  public Function getCondition()
+  {
+    return m_condition;
+  }
 }

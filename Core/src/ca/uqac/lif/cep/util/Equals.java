@@ -17,10 +17,9 @@
  */
 package ca.uqac.lif.cep.util;
 
-import java.util.Collection;
-
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Constant;
+import java.util.Collection;
 
 /**
  * A function that checks for the equality of various data types.
@@ -28,46 +27,46 @@ import ca.uqac.lif.cep.functions.Constant;
  * @author Sylvain Hallé
  * @dictentry
  */
-public class Equals extends BinaryFunction<Object,Object,Boolean>
+public class Equals extends BinaryFunction<Object, Object, Boolean>
 {
-	public static final transient Equals instance = new Equals();
+  public static final transient Equals instance = new Equals();
 
-	private Equals()
-	{
-		super(Object.class, Object.class, Boolean.class);
-	}
+  private Equals()
+  {
+    super(Object.class, Object.class, Boolean.class);
+  }
 
-	@Override
-	public Boolean getValue(Object x, Object y)
-	{
-		if (x == null || y == null)
-		{
-			return false;
-		}
-		if (x instanceof Constant)
-		{
-			x = ((Constant) x).getValue();
-		}
-		if (y instanceof Constant)
-		{
-			y = ((Constant) y).getValue();
-		}
-		if (x instanceof Collection && y instanceof Collection)
-		{
-			Collection<?> set_x = (Collection<?>) x;
-			Collection<?> set_y = (Collection<?>) y;
-			return set_x.size() == set_y.size() && set_x.containsAll(set_y);
-		}
-		if (x instanceof String && y instanceof String)
-		{
-			return ((String) x).compareTo((String) y) == 0;
-		}
-		return x.equals(y);
-	}
+  @Override
+  public Boolean getValue(Object x, Object y)
+  {
+    if (x == null || y == null)
+    {
+      return false;
+    }
+    if (x instanceof Constant)
+    {
+      x = ((Constant) x).getValue();
+    }
+    if (y instanceof Constant)
+    {
+      y = ((Constant) y).getValue();
+    }
+    if (x instanceof Collection && y instanceof Collection)
+    {
+      Collection<?> set_x = (Collection<?>) x;
+      Collection<?> set_y = (Collection<?>) y;
+      return set_x.size() == set_y.size() && set_x.containsAll(set_y);
+    }
+    if (x instanceof String && y instanceof String)
+    {
+      return ((String) x).compareTo((String) y) == 0;
+    }
+    return x.equals(y);
+  }
 
-	@Override
-	public String toString()
-	{
-		return "=";
-	}
+  @Override
+  public String toString()
+  {
+    return "=";
+  }
 }

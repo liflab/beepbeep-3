@@ -20,102 +20,102 @@ package ca.uqac.lif.cep.functions;
 import ca.uqac.lif.cep.Context;
 
 /**
- * Symbol standing for the <i>i</i>-th trace given as input. A
- * `StreamVariable` can be given as an argument to a `FunctionTree`.
+ * Symbol standing for the <i>i</i>-th trace given as input. A `StreamVariable`
+ * can be given as an argument to a `FunctionTree`.
  * 
  * @author Sylvain Hallé
  * @dictentry
  */
 public class StreamVariable extends Variable
 {
-	/**
-	 * A variable standing for the first input stream
-	 * (i.e. argument number 0). It is recommended to reuse this
-	 * instance everywhere the first argument is referred to in
-	 * a function.
-	 */
-	public static final StreamVariable X = new StreamVariable(0);
-	
-	/**
-	 * A variable standing for the second input stream
-	 * (i.e. argument number 1). It is recommended to reuse this
-	 * instance everywhere the first argument is referred to in
-	 * a function.
-	 */
-	public static final StreamVariable Y = new StreamVariable(1);
-	
-	/**
-	 * A variable standing for the third input stream
-	 * (i.e. argument number 2). It is recommended to reuse this
-	 * instance everywhere the first argument is referred to in
-	 * a function.
-	 */
-	public static final StreamVariable Z = new StreamVariable(2);
-			
-	/**
-	 * The index of this variable
-	 */
-	protected int m_index;
-	
-	/**
-	 * Creates a new trace placeholder
-	 * @param index The index of the trace this placeholder represents
-	 */
-	public StreamVariable(int index)
-	{
-		super();
-		m_index = index;
-	}
+  /**
+   * A variable standing for the first input stream (i.e. argument number 0). It
+   * is recommended to reuse this instance everywhere the first argument is
+   * referred to in a function.
+   */
+  public static final StreamVariable X = new StreamVariable(0);
 
-	/**
-	 * Creates a new trace placeholder, standing for the first
-	 * input trace (i.e. index 0)
-	 */
-	public StreamVariable()
-	{
-		this(0);
-	}
-	
-	/**
-	 * Gets the name of this placeholder
-	 * @return The name
-	 */
-	public int getIndex()
-	{
-		return m_index;
-	}
+  /**
+   * A variable standing for the second input stream (i.e. argument number 1). It
+   * is recommended to reuse this instance everywhere the first argument is
+   * referred to in a function.
+   */
+  public static final StreamVariable Y = new StreamVariable(1);
 
-	@Override
-	public int hashCode()
-	{
-		return m_index;
-	}
+  /**
+   * A variable standing for the third input stream (i.e. argument number 2). It
+   * is recommended to reuse this instance everywhere the first argument is
+   * referred to in a function.
+   */
+  public static final StreamVariable Z = new StreamVariable(2);
 
-	@Override
-	public boolean equals(Object o)
-	{
-		if (o == null || !(o instanceof StreamVariable))
-		{
-			return false;
-		}
-		return m_index == ((StreamVariable) o).m_index;
-	}
+  /**
+   * The index of this variable
+   */
+  protected int m_index;
 
-	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)
-	{
-		outputs[0] = inputs[m_index];
-	}
+  /**
+   * Creates a new trace placeholder
+   * 
+   * @param index
+   *          The index of the trace this placeholder represents
+   */
+  public StreamVariable(int index)
+  {
+    super();
+    m_index = index;
+  }
 
-	@Override
-	public StreamVariable duplicate(boolean with_state)
-	{
-		return this;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "$" + m_index;
-	}
+  /**
+   * Creates a new trace placeholder, standing for the first input trace (i.e.
+   * index 0)
+   */
+  public StreamVariable()
+  {
+    this(0);
+  }
+
+  /**
+   * Gets the name of this placeholder
+   * 
+   * @return The name
+   */
+  public int getIndex()
+  {
+    return m_index;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return m_index;
+  }
+
+  @Override
+  public boolean equals(Object o)
+  {
+    if (o == null || !(o instanceof StreamVariable))
+    {
+      return false;
+    }
+    return m_index == ((StreamVariable) o).m_index;
+  }
+
+  @Override
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  {
+    outputs[0] = inputs[m_index];
+  }
+
+  @Override
+  public StreamVariable duplicate(boolean with_state)
+  {
+    return this;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "$" + m_index;
+  }
 }
