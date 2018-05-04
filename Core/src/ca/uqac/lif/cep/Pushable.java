@@ -74,7 +74,8 @@ public interface Pushable
    * Notifies the pushable that there is no more event to be pushed, i.e. the
    * trace of events has ended at this point.
    * 
-   * @throws PushableException
+   * @throws PushableException Exception thrown when the push operation fails
+   * for some reason
    */
   public void notifyEndOfTrace() throws PushableException;
 
@@ -146,6 +147,12 @@ public interface Pushable
 
     protected int m_position;
 
+    /**
+     * Creates a new exception
+     * @param p The processor that throws the exception
+     * @param position The index of the input stream for which the push
+     * operation is not supported
+     */
     public PushNotSupported(Processor p, int position)
     {
       super();

@@ -610,6 +610,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
     return this;
   }
 
+  /**
+   * Associates an input event to an output event.
+   * @param in_stream_index The index of the processor's input stream 
+   * @param in_stream_pos The position of the event in the input stream
+   * @param out_stream_index The index of the processor's output stream 
+   * @param out_stream_pos The position of the event in the output stream
+   */
   public void associateToInput(int in_stream_index, int in_stream_pos, int out_stream_index,
       int out_stream_pos)
   {
@@ -620,6 +627,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
     }
   }
 
+  /**
+   * Associates a node function to a particular event of processor's
+   * output stream. 
+   * @param f The node function
+   * @param out_stream_index The index of the processor's output stream 
+   * @param out_stream_pos The position of the event in the output stream
+   */
   public void associateTo(NodeFunction f, int out_stream_index, int out_stream_pos)
   {
     if (m_eventTracker != null)
@@ -628,6 +642,13 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
     }
   }
 
+  /**
+   * Associates an input event to an output event.
+   * @param in_stream_index The index of the processor's input stream 
+   * @param in_stream_pos The position of the event in the input stream
+   * @param out_stream_index The index of the processor's output stream 
+   * @param out_stream_pos The position of the event in the output stream
+   */
   public void associateToOutput(int in_stream_index, int in_stream_pos, int out_stream_index,
       int out_stream_pos)
   {

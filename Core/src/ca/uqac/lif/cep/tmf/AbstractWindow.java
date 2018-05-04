@@ -56,6 +56,11 @@ public abstract class AbstractWindow extends SingleProcessor
    */
   protected Processor m_processor = null;
 
+  /**
+   * Creates a new abstract window processor
+   * @param in_processor The processor to run on each window
+   * @param width The width of the window
+   */
   public AbstractWindow(Processor in_processor, int width)
   {
     super(in_processor.getInputArity(), in_processor.getOutputArity());

@@ -153,6 +153,14 @@ public class CommandRunner extends Thread
     return runAndGet(command, inputs.getBytes());
   }
 
+  /**
+   * Runs a command and gets the contents of its standard output
+   * @param command The command to launch
+   * @param inputs An array of bytes that is passed to the command's standard
+   * input. 
+   * @return What the command has sent to its standard output
+   * @throws IOException Thrown when the execution of the command fails
+   */
   public static byte[] runAndGet(String[] command, byte[] inputs) throws IOException
   {
     CommandRunner runner = new CommandRunner(command, inputs);

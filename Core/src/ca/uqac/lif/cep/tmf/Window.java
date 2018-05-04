@@ -55,6 +55,11 @@ public class Window extends AbstractWindow
    */
   protected SinkLast m_sink = null;
 
+  /**
+   * Creates a new window processor
+   * @param in_processor The processor to run on each window
+   * @param width The width of the window
+   */
   public Window(Processor in_processor, int width)
   {
     super(in_processor, width);

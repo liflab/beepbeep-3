@@ -265,7 +265,8 @@ public abstract class SingleProcessor extends Processor
     /**
      * Pushes output event (if any) to the corresponding output {@link Pushable}s.
      *
-     * @param outs
+     * @param outs Set to {@code true} to enable the output of an event,
+     * {@code false} otherwise.
      */
     private final void outputEvent(boolean outs)
     {

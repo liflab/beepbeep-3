@@ -226,6 +226,12 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 
     protected int m_position;
 
+    /**
+     * Creates a new exception
+     * @param p The processor that throws the exception
+     * @param position The index of the output stream for which the pull
+     * operation is not supported
+     */
     public PullNotSupported(Processor p, int position)
     {
       super();

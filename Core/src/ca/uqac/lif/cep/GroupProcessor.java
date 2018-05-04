@@ -261,6 +261,11 @@ public class GroupProcessor extends Processor
     m_inputPullableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
   }
 
+  /**
+   * Sets an input pushable for this processor
+   * @param i The position
+   * @param p The pushable
+   */
   public final synchronized void setPushableInput(int i, Pushable p)
   {
     if (i == m_inputPushables.size())
@@ -273,6 +278,11 @@ public class GroupProcessor extends Processor
     }
   }
 
+  /**
+   * Sets an output pullable for this processor
+   * @param i The index of the pullable
+   * @param p The pullable
+   */
   public final synchronized void setPullableOutput(int i, Pullable p)
   {
     if (i == m_outputPullables.size())
@@ -541,6 +551,11 @@ public class GroupProcessor extends Processor
 
     protected int m_position = 0;
 
+    /**
+     * Creates a new proxy pullable
+     * @param p The pullable to create the proxy from
+     * @param position The position
+     */
     public ProxyPullable(Pullable p, int position)
     {
       super();
@@ -582,6 +597,11 @@ public class GroupProcessor extends Processor
 
     private int m_position = 0;
 
+    /**
+     * Creates a new proxy pushable
+     * @param p The pushable to create the proxy from
+     * @param position The position
+     */
     public ProxyPushable(Pushable p, int position)
     {
       super();

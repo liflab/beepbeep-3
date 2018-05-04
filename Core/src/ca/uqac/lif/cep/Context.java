@@ -42,6 +42,11 @@ public class Context extends HashMap<String, Object>
     super();
   }
 
+  /**
+   * Creates a new context object from an existing one. This effectively
+   * creates a copy of the context passed as parameter.
+   * @param c The context object to copy from
+   */
   public Context(Context c)
   {
     super();

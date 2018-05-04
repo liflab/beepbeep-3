@@ -39,6 +39,9 @@ public class SinkLast extends Sink
    */
   protected int m_eventCounter;
 
+  /**
+   * Creates a new sink last processor
+   */
   public SinkLast()
   {
     super();
@@ -46,6 +49,10 @@ public class SinkLast extends Sink
     m_eventCounter = 0;
   }
 
+  /**
+   * Creates a new sink last processor of given input arity
+   * @param in_arity The input arity
+   */
   public SinkLast(int in_arity)
   {
     super(in_arity);

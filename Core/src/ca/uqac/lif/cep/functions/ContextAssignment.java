@@ -16,6 +16,11 @@ public class ContextAssignment
    */
   protected Function m_value;
 
+  /**
+   * Creates a new context assignment
+   * @param left The context key
+   * @param right The value to assign to this key
+   */
   public ContextAssignment(String left, Function right)
   {
     super();

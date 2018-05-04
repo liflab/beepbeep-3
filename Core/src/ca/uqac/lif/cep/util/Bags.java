@@ -174,6 +174,11 @@ public class Bags
 
     protected transient Pushable m_pushable;
 
+    /**
+     * Creates a new RunOn processor
+     * @param processor The processor on which to run the elements
+     * of each collection
+     */
     public RunOn(Processor processor)
     {
       super(1, processor.getOutputArity());
