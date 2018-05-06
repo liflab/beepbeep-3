@@ -270,6 +270,14 @@ public class Print extends Sink
       m_out.print(n);
     }
   }
+  
+  /**
+   * Closes the underlying PrintStream
+   */
+  public void close()
+  {
+    m_out.close();
+  }
 
   @Override
   public /* @NotNull */ Print duplicate(boolean with_state)
