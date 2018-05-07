@@ -32,7 +32,7 @@ public class Main
   /**
    * Revision version number
    */
-  public static final int s_revisionVersion = 0;
+  public static final int s_revisionVersion = 1;
 
   private Main()
   {
