@@ -1,0 +1,4 @@
+<map id="ca.uqac.lif.cep.Processor.reset" name="ca.uqac.lif.cep.Processor.reset">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a533190cc988e228939f27341fa758d8b" title="Returns the Pushable corresponding to the processor&#39;s first input trace. " alt="" coords="256,5,448,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad9721b8cdf49ae23157b82ab2df46d63" title="Returns the Pullable corresponding to the processor&#39;s first output trace. " alt="" coords="496,5,688,47"/>
+</map>

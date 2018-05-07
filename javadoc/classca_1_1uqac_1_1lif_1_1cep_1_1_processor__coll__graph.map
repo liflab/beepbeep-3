@@ -1,0 +1,10 @@
+<map id="ca.uqac.lif.cep.Processor" name="ca.uqac.lif.cep.Processor">
+<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="ca.uqac.lif.cep.Duplicable\lProcessor" alt="" coords="362,5,534,47"/>
+<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="14,13,186,39"/>
+<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="ca.uqac.lif.cep.Contextualizable" alt="" coords="344,71,552,98"/>
+<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html" title="Queries events on one of a processor&#39;s outputs. " alt="" coords="369,122,527,149"/>
+<area shape="rect" id="node9" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html" title="Gives events to some of a processor&#39;s input. " alt="" coords="365,223,531,250"/>
+<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html" title="ca.uqac.lif.cep.FutureDone\l\&lt; ca.uqac.lif.cep.Pushable \&gt;" alt="" coords="5,208,195,249"/>
+<area shape="rect" id="node11" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_context.html" title="Associative map used by processors to store persistent data. " alt="" coords="369,274,527,301"/>
+<area shape="rect" id="node13" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html" title="Tracks the relationship between output events produced by processors, and the input events that were ..." alt="" coords="353,325,543,351"/>
+</map>

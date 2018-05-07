@@ -1,0 +1,9 @@
+<map id="ca.uqac.lif.cep.tmf.Slice.compute" name="ca.uqac.lif.cep.tmf.Slice.compute">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a76eae0aee66b2cf1520f5913c3ccd20f" title="Evaluates the outputs of the function, given some inputs. " alt="" coords="300,37,468,79"/>
+<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad49e29bdc1432481cb8d01fd579ed918" title="Duplicates an object and sets it to its initial state. " alt="" coords="271,103,497,130"/>
+<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a7ed1947748497a7ca345e1bc8c7c81bf" title="Returns the Pushable corresponding to the processor&#39;s i&#45;th input trace. " alt="" coords="288,155,480,196"/>
+<area shape="rect" id="node7" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a92f728151fe1562f6e91a9774ba159b9" title="Pushes an event into one of the processor&#39;s input trace, but does not wait for the push operation to ..." alt="" coords="273,221,495,247"/>
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#ae81559c56b96e13ffb5891f54b808f65" title="Removes the first event of all queues. " alt="" coords="298,272,470,313"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a0d6707d6d2fd0ee5a17c47b479425543" title="Gets the function&#39;s input arity, i.e. " alt="" coords="545,5,713,47"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#ae9ad9ceabbd4af9a6b8e07b7b56190c1" title="Gets the function&#39;s output arity, i.e. " alt="" coords="545,71,713,112"/>
+</map>

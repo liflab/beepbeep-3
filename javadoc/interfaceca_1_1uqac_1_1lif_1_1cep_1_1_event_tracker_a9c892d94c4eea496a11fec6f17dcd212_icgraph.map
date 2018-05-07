@@ -1,0 +1,4 @@
+<map id="ca.uqac.lif.cep.EventTracker.associateToOutput" name="ca.uqac.lif.cep.EventTracker.associateToOutput">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad31287709e80476d4e27c6991af1fd24" title="Associates an input event to an output event. " alt="" coords="303,5,533,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html#a5afc2967da795224850a89d128d1957c" title="ca.uqac.lif.cep.functions.\lCumulate.compute" alt="" coords="581,5,749,47"/>
+</map>

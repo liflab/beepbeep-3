@@ -1,0 +1,4 @@
+<map id="ca.uqac.lif.cep.EventTracker.associateToInput" name="ca.uqac.lif.cep.EventTracker.associateToInput">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ab649cae2ce57c716ef9b578bf1465949" title="Associates an input event to an output event. " alt="" coords="303,5,533,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#a342bff91f82ab0c3ffeaf1f6d3b78e2e" title="ca.uqac.lif.cep.tmf.Decimate.on\lEndOfTrace" alt="" coords="581,5,789,47"/>
+</map>

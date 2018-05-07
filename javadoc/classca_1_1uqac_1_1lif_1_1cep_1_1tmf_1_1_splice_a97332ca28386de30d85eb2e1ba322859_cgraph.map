@@ -1,0 +1,4 @@
+<map id="ca.uqac.lif.cep.tmf.Splice.compute" name="ca.uqac.lif.cep.tmf.Splice.compute">
+<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#adb823454d39e60741566069b84b48097" title="Determines if an event can be pulled from the output, by trying &quot;harder&quot; than hasNextSoft(). " alt="" coords="277,5,488,32"/>
+<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#abf6e4fd3d233b6d16f3bb5ba837ecf37" title="Attempts to pull an event from the source. " alt="" coords="292,56,473,83"/>
+</map>

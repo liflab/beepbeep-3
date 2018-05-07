@@ -1,0 +1,6 @@
+<map id="ca.uqac.lif.cep.Processor.setContext" name="ca.uqac.lif.cep.Processor.setContext">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a276f2d7ad8f3b497a09351b69f9566d6" title="Creates a copy of a processor. " alt="" coords="245,5,483,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a8a7172efc619406ddae3ed86d141d5cd" title="Copies the contents and state of the current processor into another. " alt="" coords="251,71,477,98"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_replace_with.html#acd8f39e1b0c6f36f15597bcd527cbbc7" title="Duplicates an object. " alt="" coords="273,123,455,164"/>
+<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a53fb3e85b6e029d25fe535b48b108187" title="Duplicates an object. " alt="" coords="255,189,473,215"/>
+</map>

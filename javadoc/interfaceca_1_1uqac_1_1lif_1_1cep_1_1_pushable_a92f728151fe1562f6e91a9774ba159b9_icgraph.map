@@ -1,0 +1,5 @@
+<map id="ca.uqac.lif.cep.Pushable.pushFast" name="ca.uqac.lif.cep.Pushable.pushFast">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a10d172acec9fcf0af81a550503e945fa" title="ca.uqac.lif.cep.tmf.Slice.compute" alt="" coords="285,5,502,32"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html#ae86e5c23b8d07de29df8c7035be98074" title="Tells the source to push events into the pipeline. " alt="" coords="290,56,497,83"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#a84c4baab18d4e4b50e890839f635d38d" title="ca.uqac.lif.cep.tmf.Window.compute" alt="" coords="276,107,511,133"/>
+</map>

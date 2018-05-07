@@ -1,0 +1,4 @@
+<map id="ca.uqac.lif.cep.Processor.getPullableOutput" name="ca.uqac.lif.cep.Processor.getPullableOutput">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a533190cc988e228939f27341fa758d8b" title="Returns the Pushable corresponding to the processor&#39;s first input trace. " alt="" coords="245,5,437,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a45dbe127671b759fbb626984415233d3" title="Resets the processor. " alt="" coords="485,13,688,39"/>
+</map>

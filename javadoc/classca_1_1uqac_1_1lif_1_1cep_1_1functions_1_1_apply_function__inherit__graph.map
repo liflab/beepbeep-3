@@ -1,0 +1,9 @@
+<map id="ca.uqac.lif.cep.functions.ApplyFunction" name="ca.uqac.lif.cep.functions.ApplyFunction">
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html" title="Creates a cumulative processor out of a cumulative function. " alt="" coords="114,483,282,524"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html" title="Processor that produces exactly one output front for each input front received. " alt="" coords="90,319,306,345"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="95,244,301,271"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="113,169,283,196"/>
+<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="ca.uqac.lif.cep.Duplicable\lProcessor" alt="" coords="5,80,177,121"/>
+<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="5,5,177,32"/>
+<area shape="rect" id="node7" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="ca.uqac.lif.cep.Contextualizable" alt="" coords="202,87,410,114"/>
+</map>

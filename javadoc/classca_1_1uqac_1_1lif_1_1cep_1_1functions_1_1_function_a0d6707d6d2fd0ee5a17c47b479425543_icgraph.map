@@ -1,0 +1,19 @@
+<map id="ca.uqac.lif.cep.functions.Function.getInputArity" name="ca.uqac.lif.cep.functions.Function.getInputArity">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a3059a2d60193b83dfe8ac894d47aa715" title="Instantiates a new function processor. " alt="" coords="237,235,429,276"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a76eae0aee66b2cf1520f5913c3ccd20f" title="Evaluates the outputs of the function, given some inputs. " alt="" coords="249,300,417,341"/>
+<area shape="rect" id="node15" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a4a432db9ac135d0bba4b439b241bfee5" title="Creates a new function tree. " alt="" coords="243,365,422,407"/>
+<area shape="rect" id="node17" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_passthrough_function.html#a93720bfc6b5a6f743e947a5f454fcb63" title="ca.uqac.lif.cep.functions.\lPassthroughFunction.getInputArity" alt="" coords="221,431,444,472"/>
+<area shape="rect" id="node18" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html#a581312a355fb51243bc0979f0afe497b" title="Creates a new Window from a given function. " alt="" coords="242,496,423,537"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#ad67d4d21502442abb4f4755c1c2233d3" title="ca.uqac.lif.cep.functions.\lApplyFunction.compute" alt="" coords="517,5,685,47"/>
+<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_change_arity.html#a41395baa9298d6582854eda24c3e651c" title="ca.uqac.lif.cep.functions.\lChangeArity.compute" alt="" coords="517,71,685,112"/>
+<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_context_assignment.html#a0242fa5cbfe1b49cdac4a8e7e2643e48" title="Assigns a value to a context element. " alt="" coords="511,136,690,177"/>
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#ae58efb8b8ec0e210a64524b873d32d0f" title="Utility method that delegates the call to evaluate() " alt="" coords="517,201,685,243"/>
+<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#aa414382b0f9fadfabe806f5e4c1d86f0" title="ca.uqac.lif.cep.functions.\lFunctionTree.evaluate" alt="" coords="517,267,685,308"/>
+<area shape="rect" id="node11" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_passthrough_function.html#a279167dc80b1707eb1591e6a94b161a9" title="ca.uqac.lif.cep.functions.\lPassthroughFunction.evaluate" alt="" coords="501,332,700,373"/>
+<area shape="rect" id="node12" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html#a03e0bdcf0ae055bd9a1e90db2c9eb8fa" title="ca.uqac.lif.cep.tmf.Simple\lFilter.compute" alt="" coords="513,397,688,439"/>
+<area shape="rect" id="node13" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a10d172acec9fcf0af81a550503e945fa" title="ca.uqac.lif.cep.tmf.Slice.compute" alt="" coords="492,463,709,490"/>
+<area shape="rect" id="node14" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html#a63ee328209d6498f2a566e15337a31c8" title="ca.uqac.lif.cep.tmf.Window\lFunction.compute" alt="" coords="510,515,691,556"/>
+<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_context_assignment.html#a9f3f7e7c4b46f9a87e48f888cbd463c9" title="Updates the context of an object. " alt="" coords="757,136,936,177"/>
+<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a45bb47126ff2531a411c4fba48d8c469" title="ca.uqac.lif.cep.functions.\lFunctionTree.evaluate" alt="" coords="763,267,931,308"/>
+<area shape="rect" id="node16" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#ace8511752b780e2344e66134eac4448c" title="Duplicates an object. " alt="" coords="517,580,685,621"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="ca.uqac.lif.cep.Processor.getPushableInput" name="ca.uqac.lif.cep.Processor.getPushableInput">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a921996cb11818619475ceafe99398975" title="Declares that the i&#45;th input of the group is linked to the j&#45;th input of processor p ..." alt="" coords="245,5,511,47"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a10d172acec9fcf0af81a550503e945fa" title="ca.uqac.lif.cep.tmf.Slice.compute" alt="" coords="269,71,487,98"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a655eb769895d8b7841b37e923deff88e" title="Associates the endpoints of a new GroupProcessor like the ones in the current group. " alt="" coords="559,5,824,47"/>
+</map>

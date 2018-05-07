@@ -1,0 +1,3 @@
+<map id="ca.uqac.lif.cep.GroupProcessor.ProxyPullable.hasNext" name="ca.uqac.lif.cep.GroupProcessor.ProxyPullable.hasNext">
+<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#adb823454d39e60741566069b84b48097" title="Determines if an event can be pulled from the output, by trying &quot;harder&quot; than hasNextSoft(). " alt="" coords="263,13,473,39"/>
+</map>

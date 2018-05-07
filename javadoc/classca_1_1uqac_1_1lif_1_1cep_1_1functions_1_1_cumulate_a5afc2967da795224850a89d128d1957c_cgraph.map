@@ -1,0 +1,8 @@
+<map id="ca.uqac.lif.cep.functions.Cumulate.compute" name="ca.uqac.lif.cep.functions.Cumulate.compute">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad31287709e80476d4e27c6991af1fd24" title="Associates an input event to an output event. " alt="" coords="229,5,459,47"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a2d494a26012fe6eedc689fe07f47c96d" title="Associates a node function to a particular event of processor&#39;s output stream. " alt="" coords="221,71,467,98"/>
+<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a991d8fc57df1cc3dcdfd69c9754a84d3" title="Fetches the processor instance&#39;s unique ID. " alt="" coords="243,122,445,149"/>
+<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a34d743399c719964c0f438b8e8c00341" title="ca.uqac.lif.cep.functions.\lApplyFunction.toString" alt="" coords="260,173,428,215"/>
+<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#a9c892d94c4eea496a11fec6f17dcd212" title="Associates an output event from a processor to another output event from that same processor..." alt="" coords="522,5,771,47"/>
+<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#ad6ddffa9340b77ddb206ef2afd753abf" title="Associates an output event from a processor to an arbitrary node function. " alt="" coords="515,71,779,98"/>
+</map>

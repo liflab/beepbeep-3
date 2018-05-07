@@ -1,0 +1,5 @@
+<map id="ca.uqac.lif.cep.tmf.Window.compute" name="ca.uqac.lif.cep.tmf.Window.compute">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html#aee310c82840e74da2aac849cd386441e" title="ca.uqac.lif.cep.tmf.Sink\lLast.reset" alt="" coords="319,5,479,47"/>
+<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a92f728151fe1562f6e91a9774ba159b9" title="Pushes an event into one of the processor&#39;s input trace, but does not wait for the push operation to ..." alt="" coords="288,71,511,98"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html#a03e41646460354d20db9a0d6c233af72" title="ca.uqac.lif.cep.tmf.Sink\lLast.getLast" alt="" coords="319,123,479,164"/>
+</map>

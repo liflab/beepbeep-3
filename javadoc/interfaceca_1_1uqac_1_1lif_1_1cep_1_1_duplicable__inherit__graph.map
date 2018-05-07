@@ -1,0 +1,46 @@
+<map id="ca.uqac.lif.cep.Duplicable" name="ca.uqac.lif.cep.Duplicable">
+<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="ca.uqac.lif.cep.Duplicable\lProcessor" alt="" coords="225,931,397,972"/>
+<area shape="rect" id="node28" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function.html" title="ca.uqac.lif.cep.functions.\lDuplicableFunction" alt="" coords="227,1327,395,1368"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="445,690,616,717"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html" title="Encapsulates a chain of processors as if it were a single one. " alt="" coords="665,467,870,494"/>
+<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="664,518,871,545"/>
+<area shape="rect" id="node24" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex.html" title="Merges the contents of multiple traces into a single trace. " alt="" coords="674,665,861,691"/>
+<area shape="rect" id="node25" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html" title="Processor that repeatedly pulls its input, and pushes the resulting events to its output..." alt="" coords="683,715,851,742"/>
+<area shape="rect" id="node26" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank.html" title="Accumulates pushed events into a queue until they are pulled. " alt="" coords="686,930,849,957"/>
+<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html" title="Simulates the application of a &quot;sliding window&quot; to a trace. " alt="" coords="943,5,1125,47"/>
+<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_callback_sink.html" title="A sink that calls a method when a new front of events is pushed to it. " alt="" coords="929,71,1139,98"/>
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html" title="By default, a Decimate acts like a Passthrough for which only certain inputs are allowed to be output..." alt="" coords="939,122,1129,149"/>
+<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_demultiplex.html" title="Converts a sequence of n consecutive events into an event that is a vector of size n..." alt="" coords="933,173,1135,199"/>
+<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter.html" title="Discards events from an input trace based on a selection criterion. " alt="" coords="953,223,1115,250"/>
+<area shape="rect" id="node11" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html" title="Inserts an event a certain number of times before letting the input events through. " alt="" coords="951,274,1117,301"/>
+<area shape="rect" id="node12" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last.html" title="Outputs only the last event received. " alt="" coords="939,325,1129,351"/>
+<area shape="rect" id="node13" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_replace_with.html" title="Function processor that turns input events into the same constant. " alt="" coords="929,375,1139,402"/>
+<area shape="rect" id="node14" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html" title="A simple filter that lets input events out by evaluating a condition on them; if the condition evalua..." alt="" coords="947,427,1121,468"/>
+<area shape="rect" id="node15" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html" title="Receives input events and stores them. " alt="" coords="954,493,1114,519"/>
+<area shape="rect" id="node16" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html" title="Produces output events from no input. " alt="" coords="947,543,1121,570"/>
+<area shape="rect" id="node17" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html" title="Discards the first n events of the input, and outputs the remaining ones. " alt="" coords="954,594,1114,621"/>
+<area shape="rect" id="node18" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html" title="Takes a sliding window of n successive input events, passes them to an n&#45;ary function and outputs the..." alt="" coords="943,645,1125,687"/>
+<area shape="rect" id="node19" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html" title="Processor that produces exactly one output front for each input front received. " alt="" coords="926,711,1142,738"/>
+<area shape="rect" id="node20" title="Runs each element of a collection into a processor, and collect its output. " alt="" coords="951,763,1117,804"/>
+<area shape="rect" id="node21" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html" title="Extracts chunks of an input stream based on a regular expression. " alt="" coords="955,828,1113,869"/>
+<area shape="rect" id="node22" title="Common ancestor to TimePack and Pack. " alt="" coords="952,893,1116,935"/>
+<area shape="rect" id="node23" title="Unpacks a list of objects by outputting its contents as separate events. " alt="" coords="952,959,1116,1000"/>
+<area shape="rect" id="node27" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_last.html" title="Tank that, when pulled, creates an output event based on the last event received. ..." alt="" coords="940,1025,1128,1051"/>
+<area shape="rect" id="node29" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html" title="Represents a stateless m&#45;to&#45;n function. " alt="" coords="447,1695,615,1736"/>
+<area shape="rect" id="node30" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html" title="Function of two inputs and one output. " alt="" coords="679,1433,855,1475"/>
+<area shape="rect" id="node41" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html" title="Representation of a unary constant. " alt="" coords="683,1499,851,1540"/>
+<area shape="rect" id="node42" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html" title="A tree of n&#45;ary functions composed together. " alt="" coords="683,1564,851,1605"/>
+<area shape="rect" id="node43" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_identity_function.html" title="Function that returns its input for its output. " alt="" coords="683,1629,851,1671"/>
+<area shape="rect" id="node44" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_if_then_else.html" title="Function that acts as an if&#45;then&#45;else. " alt="" coords="683,1695,851,1736"/>
+<area shape="rect" id="node45" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_passthrough_function.html" title="Delegates all calls of the Function class to an internal object instantiated by a method..." alt="" coords="683,1760,851,1801"/>
+<area shape="rect" id="node46" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html" title="Function of one input and one output. " alt="" coords="683,1825,851,1867"/>
+<area shape="rect" id="node47" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_variable.html" title="ca.uqac.lif.cep.functions.\lVariable" alt="" coords="683,1891,851,1932"/>
+<area shape="rect" id="node48" title="Converts a front of n input events into a collection of n objects. " alt="" coords="684,1956,851,1997"/>
+<area shape="rect" id="node32" title="Computes the Cartesian product of two collections. " alt="" coords="953,1171,1115,1241"/>
+<area shape="rect" id="node33" title="Implementation of the logical conjunction. " alt="" coords="933,1266,1135,1322"/>
+<area shape="rect" id="node34" title="Implementation of the logical implication. " alt="" coords="933,1346,1135,1402"/>
+<area shape="rect" id="node35" title="Implementation of the logical disjunction. " alt="" coords="933,1426,1135,1482"/>
+<area shape="rect" id="node36" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals.html" title="A function that checks for the equality of various data types. " alt="" coords="959,1506,1109,1562"/>
+<area shape="rect" id="node37" title="Computes the sum of its arguments. " alt="" coords="934,1586,1134,1642"/>
+<area shape="rect" id="node38" title="Computes the quotient of its arguments. " alt="" coords="934,1666,1134,1722"/>
+</map>
