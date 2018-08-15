@@ -39,7 +39,7 @@ public class Booleans
 
   public static final transient Implies implies = Implies.instance;
 
-  public static final transient Negation not = Negation.instance;
+  public static final transient Not not = Not.instance;
 
   /**
    * Implementation of the logical conjunction
@@ -127,11 +127,11 @@ public class Booleans
    * 
    * @author Sylvain Hallé
    */
-  public static class Negation extends UnaryFunction<Boolean, Boolean>
+  public static class Not extends UnaryFunction<Boolean, Boolean>
   {
-    public static final transient Negation instance = new Negation();
+    public static final transient Not instance = new Not();
 
-    private Negation()
+    private Not()
     {
       super(Boolean.class, Boolean.class);
     }

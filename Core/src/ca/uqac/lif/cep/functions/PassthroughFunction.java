@@ -41,7 +41,7 @@ public abstract class PassthroughFunction extends Function
   private Function m_function;
 
   /**
-   * Createa a new instance of PassthroughFunction
+   * Creates a new instance of PassthroughFunction
    */
   public PassthroughFunction()
   {

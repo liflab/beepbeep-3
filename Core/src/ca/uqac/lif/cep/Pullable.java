@@ -311,6 +311,27 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
     {
       throw new UnsupportedOperationException();
     }
-
+  }
+  
+  /**
+   * The "next" status of a {@link Pullable} object. Indicates whether a new
+   * output event is available (i.e. can be "pulled").
+   * <ul>
+   * <li><code>YES</code> indicates that a new event can be pulled right now,
+   * using either {@link #pullSoft()} or {@link #pull()}</li>
+   * <li><code>NO</code> indicates that no event is available, and will ever be.
+   * Receiving <code>NO</code> generally indicates that the end of the (output)
+   * trace has been reached</li>
+   * <li><code>MAYBE</code> indicates that no event is available, but that keeping
+   * on pulling <em>may </em>produce an event in the future. This value is only
+   * returned by {@link #hasNextSoft()}.</li>
+   * </ul>
+   * 
+   * @author Sylvain Hallé
+   *
+   */
+  public enum NextStatus
+  {
+    YES, NO, MAYBE;
   }
 }

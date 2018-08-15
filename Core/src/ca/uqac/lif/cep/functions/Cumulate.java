@@ -33,6 +33,11 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  */
 public class Cumulate extends ApplyFunction
 {
+  private Cumulate()
+  {
+    super(null);
+  }
+  
   public Cumulate(CumulativeFunction<?> f)
   {
     super(f);
@@ -157,5 +162,13 @@ public class Cumulate extends ApplyFunction
   public void cloneInto(Cumulate c, boolean with_state)
   {
     super.cloneInto(c, with_state);
+  }
+  
+  @Override
+  public Cumulate duplicate(boolean with_state)
+  {
+    Cumulate c = new Cumulate((CumulativeFunction<?>) m_function.duplicate(with_state));
+    cloneInto(c, with_state);
+    return c;
   }
 }

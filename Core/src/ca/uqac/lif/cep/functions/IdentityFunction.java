@@ -22,7 +22,10 @@ import ca.uqac.lif.cep.Context;
 import java.util.Set;
 
 /**
- * Function that returns its input for its output.
+ * Function that returns its input for its output. It is illustrated
+ * graphically as follows:
+ * 
+ * ![IdentityFunction]({@docRoot}/doc-files/functions/IdentityFunction.png)
  * 
  * @author Sylvain Hallé
  * @dictentry

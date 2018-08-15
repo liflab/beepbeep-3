@@ -22,10 +22,12 @@ import java.util.Set;
 
 /**
  * Function that acts as an if-then-else. If its first input is true, it returns
- * its second input; otherwise it returns its third input.
+ * its second input; otherwise it returns its third input. It is represented
+ * graphically as:
+ * 
+ * ![IfThenElse]({@docRoot}/doc-files/functions/IfThenElse.png)
  * 
  * @author Sylvain Hallé
- * @dictentry
  */
 public class IfThenElse extends Function
 {

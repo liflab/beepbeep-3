@@ -21,7 +21,14 @@ import ca.uqac.lif.cep.Context;
 import java.util.Set;
 
 /**
- * A tree of n-ary functions composed together.
+ * A `Function` object representing the composition of multiple functions 
+ * together to form a "compound" function. A function tree has a *root*, 
+ * which consists of an *m*:*n* function. This function is connected to *n* 
+ * children, which can be functions or function trees themselves. The 
+ * drawing below depicts a function tree that composes multiplication 
+ * and addition to form a more complex function of two arguments.
+ * 
+ * ![FunctionTree]({@docRoot}/doc-files/functions/FunctionTree.png)
  * 
  * @author Sylvain Hallé
  * @dictentry
