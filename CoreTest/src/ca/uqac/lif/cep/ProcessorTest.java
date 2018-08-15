@@ -282,7 +282,7 @@ public class ProcessorTest
 		Pullable p = pt.getPullableOutput(0);
 		for (int i = 0; i < 10; i++)
 		{
-			if (p.hasNextSoft() == NextStatus.YES)
+			if (p.hasNextSoft() == Pullable.NextStatus.YES)
 			{
 				p.pullSoft();
 			}

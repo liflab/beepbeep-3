@@ -149,11 +149,11 @@ public class SingleProcessorTest
 		Passthrough pt = new Passthrough();
 		Connector.connect(qsb, pt);
 		Pullable p = pt.getPullableOutput();
-		assertEquals(NextStatus.YES, p.hasNextSoft());
+		assertEquals(Pullable.NextStatus.YES, p.hasNextSoft());
 		p.next();
-		assertEquals(NextStatus.YES, p.hasNextSoft());
+		assertEquals(Pullable.NextStatus.YES, p.hasNextSoft());
 		p.next();
-		assertEquals(NextStatus.NO, p.hasNextSoft());
+		assertEquals(Pullable.NextStatus.NO, p.hasNextSoft());
 	}
 	
 	public static class ThrowException extends SingleProcessor

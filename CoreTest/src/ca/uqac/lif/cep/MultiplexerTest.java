@@ -109,7 +109,7 @@ public class MultiplexerTest
 		Connector.connect(mux, qsink);
 		Queue<Object> queue = qsink.getQueue(0);
 		Pullable pull1 = mux.getPullableOutput(0);
-		assertEquals(NextStatus.YES, pull1.hasNextSoft());
+		assertEquals(Pullable.NextStatus.YES, pull1.hasNextSoft());
 		qsink.pull();
 		assertEquals(1, queue.size());
 		i = ((Number) queue.remove()).intValue();

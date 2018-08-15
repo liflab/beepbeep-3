@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -29,7 +29,6 @@ import java.io.PrintStream;
 import org.junit.Assume;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pullable.PullableException;
 import ca.uqac.lif.cep.Pushable;
@@ -97,7 +96,7 @@ public class IoTest
 		assertTrue(p.hasNext());
 		s = (String) p.next();
 		assertEquals("text.", s);
-		assertEquals(NextStatus.MAYBE, p.hasNextSoft());
+		assertEquals(Pullable.NextStatus.MAYBE, p.hasNextSoft());
 	}
 	
 	@Test

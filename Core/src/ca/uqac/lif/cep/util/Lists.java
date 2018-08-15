@@ -17,17 +17,14 @@
  */
 package ca.uqac.lif.cep.util;
 
-import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.functions.Function;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -85,7 +82,7 @@ public class Lists
    * This processor is represented graphically as follows:
    * <p>
    * <a href="{@docRoot}/doc-files/util/Pack.png"><img src="
-   * {@docRoot}/doc-files/util/Pak.png" alt="Processor graph"></a>
+   * {@docRoot}/doc-files/util/Pack.png" alt="Processor graph"></a>
    * 
    * @author Sylvain Hallé
    */
@@ -260,7 +257,7 @@ public class Lists
   }
 
   /**
-   * Unpacks a list of objects by outputting its contents as separate events. This
+   * Unpacks a collection of objects by outputting its contents as separate events. This
    * processor is represented graphically as follows:
    * <p>
    * <a href="{@docRoot}/doc-files/ListUnpacker.png"><img src="
@@ -299,57 +296,6 @@ public class Lists
         up.m_outputQueues[0].addAll(m_outputQueues[0]);
       }
       return up;
-    }
-  }
-
-  public static class Explode extends Function
-  {
-    public Class<?>[] m_classes;
-
-    public Explode(Class<?> ... classes)
-    {
-      super();
-      m_classes = classes;
-    }
-
-    @Override
-    public Explode duplicate(boolean with_state)
-    {
-      return new Explode(m_classes);
-    }
-
-    @Override
-    public void evaluate(Object[] inputs, Object[] outputs)
-    {
-      Object[] ins = (Object[]) inputs[0];
-      for (int i = 0; i < ins.length; i++)
-      {
-        outputs[i] = ins[i];
-      }
-    }
-
-    @Override
-    public int getInputArity()
-    {
-      return 1;
-    }
-
-    @Override
-    public int getOutputArity()
-    {
-      return m_classes.length;
-    }
-
-    @Override
-    public void getInputTypesFor(Set<Class<?>> classes, int index)
-    {
-      classes.add(Variant.class);
-    }
-
-    @Override
-    public Class<?> getOutputTypeFor(int index)
-    {
-      return m_classes[index];
     }
   }
 }

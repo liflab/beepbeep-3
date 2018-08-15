@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -526,6 +527,64 @@ public class Bags
         break;
       }
       return o;
+    }
+  }
+
+  /**
+   * A 1:*m* `Function`provided by the `Bags` utility class. 
+   * Given a collection of size *m*, it returns as its *m* outputs 
+   * the elements of the collection. It can be seen as the oppsite of 
+   * `ToArray`, `ToList` and `ToSet`. The ordering of the arguments is 
+   * ensured when the input collection is itself ordered. 
+   */
+  public static class Explode extends Function
+  {
+    public Class<?>[] m_classes;
+  
+    public Explode(Class<?> ... classes)
+    {
+      super();
+      m_classes = classes;
+    }
+  
+    @Override
+    public Explode duplicate(boolean with_state)
+    {
+      return new Explode(m_classes);
+    }
+  
+    @Override
+    public void evaluate(Object[] inputs, Object[] outputs)
+    {
+      Object[] ins = (Object[]) inputs[0];
+      for (int i = 0; i < ins.length; i++)
+      {
+        outputs[i] = ins[i];
+      }
+    }
+  
+    @Override
+    public int getInputArity()
+    {
+      return 1;
+    }
+  
+    @Override
+    public int getOutputArity()
+    {
+      return m_classes.length;
+    }
+  
+    @Override
+    public void getInputTypesFor(Set<Class<?>> classes, int index)
+    {
+      classes.add(Variant.class);
+    }
+  
+    @Override
+    public Class<?> getOutputTypeFor(int index)
+    {
+      return m_classes[index];
     }
   }
 

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,7 +25,6 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
@@ -462,9 +461,9 @@ public class TmfTest
 		assertTrue(pl.hasNext());
 		assertEquals("bar", pl.pull());
 		assertFalse(pl.hasNext());
-		assertEquals(NextStatus.MAYBE, pl.hasNextSoft());
+		assertEquals(Pullable.NextStatus.MAYBE, pl.hasNextSoft());
 		ps.push("baz");
-		assertEquals(NextStatus.YES, pl.hasNextSoft());
+		assertEquals(Pullable.NextStatus.YES, pl.hasNextSoft());
 		assertTrue(pl.hasNext());
 		assertEquals("baz", pl.pull());
 		assertTrue(pl == pl.iterator());
@@ -489,7 +488,7 @@ public class TmfTest
 		assertTrue(pl.hasNext());
 		assertEquals("bar", pl.pull());
 		assertFalse(pl.hasNext());
-		assertEquals(NextStatus.MAYBE, pl.hasNextSoft());
+		assertEquals(Pullable.NextStatus.MAYBE, pl.hasNextSoft());
 		ps.push("baz");
 		assertTrue(pl.hasNext());
 		assertEquals("baz", pl.pull());
@@ -514,7 +513,7 @@ public class TmfTest
 		long before = System.currentTimeMillis();
 		assertTrue(p.hasNext());
 		p.pull();
-		while (p.hasNextSoft() != NextStatus.YES)
+		while (p.hasNextSoft() != Pullable.NextStatus.YES)
 		{
 			Thread.sleep(10);
 		}
@@ -535,11 +534,11 @@ public class TmfTest
 		p.pull();
 		for (int i = 0; i < 10; i++)
 		{
-			assertEquals(NextStatus.MAYBE, p.hasNextSoft());
+			assertEquals(Pullable.NextStatus.MAYBE, p.hasNextSoft());
 			Thread.sleep(10);
 		}
 		td.reset();
-		assertEquals(NextStatus.YES, p.hasNextSoft());
+		assertEquals(Pullable.NextStatus.YES, p.hasNextSoft());
 	}
 
 	@Test
