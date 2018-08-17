@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -46,10 +46,10 @@ public abstract class Function implements DuplicableFunction
    *          The context in which the evaluation is done. If the function's
    *          arguments contains placeholders, they will be replaced by the
    *          corresponding object fetched from this map before evaluating the
-   *          function @ Any exception that may occur during the evaluation of a
    *          function
    */
-  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  /*@ pure @*/ public void evaluate(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
   {
     evaluate(inputs, outputs);
   }
@@ -65,14 +65,16 @@ public abstract class Function implements DuplicableFunction
    *          be equal to the function's declared output arity. @ Any exception
    *          that may occur during the evaluation of a function
    */
-  public abstract void evaluate(Object[] inputs, Object[] outputs);
+  /*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs);
 
   /**
    * Gets the function's input arity, i.e. the number of arguments it takes.
    * 
    * @return The input arity
    */
-  public abstract int getInputArity();
+  /*@ ensures \result >= 0 @*/
+  /*@ pure @*/ public abstract int getInputArity();
 
   /**
    * Gets the function's output arity, i.e. the number of elements it outputs. (We
@@ -80,13 +82,14 @@ public abstract class Function implements DuplicableFunction
    * 
    * @return The output arity
    */
-  public abstract int getOutputArity();
+  /*@ ensures \result >= 0 @*/
+  /*@ pure @*/ public abstract int getOutputArity();
 
   /**
    * Resets the function to its initial state. In the case of a stateless
    * function, nothing requires to be done.
    */
-  public void reset()
+  /*@ pure @*/ public void reset()
   {
     // Do nothing
   }
@@ -100,7 +103,8 @@ public abstract class Function implements DuplicableFunction
    * @param index
    *          The index of the input to query
    */
-  public abstract void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, int index);
+  /*@ pure @*/ public abstract void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, 
+      int index);
 
   /**
    * Returns the type of the events produced by the function for its <i>i</i>-th
@@ -110,7 +114,7 @@ public abstract class Function implements DuplicableFunction
    *          The index of the output to query
    * @return The type of the output
    */
-  public abstract Class<?> getOutputTypeFor(int index);
+  /*@ pure @*/ public abstract Class<?> getOutputTypeFor(int index);
 
   /**
    * Utility method that delegates the call to evaluate()
@@ -122,7 +126,7 @@ public abstract class Function implements DuplicableFunction
    * @param context
    *          Context object @ Thrown when evaluating the function
    */
-  public void evaluateFast(Object[] inputs, Object[] outputs, Context context)
+  /*@ pure @*/ public void evaluateFast(Object[] inputs, Object[] outputs, Context context)
   {
     evaluate(inputs, outputs, context);
   }
@@ -131,17 +135,17 @@ public abstract class Function implements DuplicableFunction
    * Wait for the function to be finished computing. By default, this method
    * returns immediately.
    */
-  public void waitFor()
+  /*@ pure @*/ public void waitFor()
   {
     return;
   }
 
   @Override
-  public final Function duplicate()
+  /*@ pure non_null @*/ public final Function duplicate()
   {
     return duplicate(false);
   }
 
   @Override
-  public abstract Function duplicate(boolean with_state);
+  /*@ pure non_null @*/ public abstract Function duplicate(boolean with_state);
 }

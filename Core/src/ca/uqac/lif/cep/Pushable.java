@@ -54,7 +54,7 @@ public interface Pushable
    * for the push operation to terminate. In other words, this is a non-blocking
    * call to <code>push()</code> that returns control to the caller immediately.
    * In order to resynchronize the caller with the result of the push operation,
-   * one must call {@link #waitFor()}.
+   * one must use the <tt>Future</tt> object that the method returns.
    * <p>
    * Some implementations of this interface do not implement non-blocking calls;
    * in such a case, a call to {@link #pushFast(Object) pushFast()} will be
