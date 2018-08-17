@@ -29,6 +29,7 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
 import ca.uqac.lif.cep.functions.StreamVariable;
+import ca.uqac.lif.cep.functions.TurnInto;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
@@ -54,7 +55,7 @@ public class TmfTest
 	@Test
 	public void testReplace()
 	{
-		ReplaceWith rw = new ReplaceWith(10);
+		TurnInto rw = new TurnInto(10);
 		QueueSink sink = new QueueSink();
 		Queue<Object> q = sink.getQueue();
 		Connector.connect(rw, sink);
@@ -63,7 +64,7 @@ public class TmfTest
 		assertEquals(10, ((Integer) q.poll()).intValue());
 		p.push("bar");
 		assertEquals(10, ((Integer) q.poll()).intValue());
-		rw = (ReplaceWith) rw.duplicate();
+		rw = (TurnInto) rw.duplicate();
 		p.push("foo");
 		assertEquals(10, ((Integer) q.poll()).intValue());
 		p.push("bar");

@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionsTest;
-import ca.uqac.lif.cep.tmf.ReplaceWith;
+import ca.uqac.lif.cep.functions.TurnInto;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -345,7 +345,7 @@ public class MathTest
 			// Left part: sum of x^n
 			Fork fork2 = new Fork(2);
 			Connector.connect(fork, 0 ,fork2, 0);
-			ReplaceWith exponent = new ReplaceWith(1);
+			TurnInto exponent = new TurnInto(1);
 			Connector.connect(fork2, 0, exponent, 0);
 			ApplyFunction pow = new ApplyFunction(Numbers.power);
 			Connector.connect(fork2, 1, pow, 0);
@@ -355,7 +355,7 @@ public class MathTest
 		Sum sum_right = new Sum();
 		{
 			// Right part: sum of 1
-			ReplaceWith one = new ReplaceWith(1);
+			TurnInto one = new TurnInto(1);
 			Connector.connect(fork, 1, one, 0);
 			Connector.connect(one, sum_right);
 		}
@@ -372,7 +372,7 @@ public class MathTest
 		Fork fork = new Fork(3);
 		Connector.connect(win, fork);
 		ApplyFunction greater = new ApplyFunction(Numbers.isGreaterThan);
-		ReplaceWith five = new ReplaceWith(5);
+		TurnInto five = new TurnInto(5);
 		Connector.connect(fork, 0, five, 0);
 		Connector.connect(fork, 1, greater, 0);
 		Connector.connect(five, 0, greater, 1);

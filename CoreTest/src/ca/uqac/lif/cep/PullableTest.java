@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.util.Numbers;
-import ca.uqac.lif.cep.tmf.ReplaceWith;
+import ca.uqac.lif.cep.functions.TurnInto;
 import ca.uqac.lif.cep.tmf.Pump;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
@@ -149,7 +149,7 @@ public class PullableTest
 	public void testPullableException4()
 	{
 		// Constructor test; we just check that it runs
-		Processor p = new ReplaceWith(Constant.ZERO);
+		Processor p = new TurnInto(Constant.ZERO);
 		try
 		{
 			// Create an exception
