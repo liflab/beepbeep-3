@@ -23,7 +23,7 @@ import ca.uqac.lif.cep.Pullable;
 import java.util.Queue;
 
 /**
- * Joins multiple traces as a single one. The splicer is given multiple input
+ * Joins multiple sources as a single one. The splice processor is given multiple input
  * traces. It feeds the events of the first one until it does not yield any new
  * event. Then it starts feeding events of the second one, and so on.
  * <p>
