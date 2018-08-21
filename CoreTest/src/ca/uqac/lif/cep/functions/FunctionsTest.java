@@ -374,7 +374,7 @@ public class FunctionsTest
 	{
 		Object[] ins = inputs;
 		Object[] out = new Object[1];
-		f.evaluateFast(ins, out, null);
+		f.evaluateFast(ins, out, null, null);
 		return out[0];
 	}
 	
