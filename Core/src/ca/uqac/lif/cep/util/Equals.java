@@ -61,6 +61,10 @@ public class Equals extends BinaryFunction<Object, Object, Boolean>
     {
       return ((String) x).compareTo((String) y) == 0;
     }
+    if (x instanceof Number && y instanceof Number)
+    {
+      return ((Number) x).floatValue() == ((Number) y).floatValue();
+    }
     return x.equals(y);
   }
 
