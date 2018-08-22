@@ -32,159 +32,160 @@ import java.util.concurrent.Future;
  */
 public abstract class Function implements DuplicableFunction
 {
-	/**
-	 * The maximum input arity that a function can have
-	 */
-	public static final int s_maxInputArity = 10;
+  /**
+   * The maximum input arity that a function can have
+   */
+  public static final int s_maxInputArity = 10;
 
-	/**
-	 * Evaluates the outputs of the function, given some inputs
-	 * 
-	 * @param inputs
-	 *          The arguments of the function. The size of the array should be equal
-	 *          to the function's declared input arity.
-	 * @param outputs
-	 *          The outputs of the function. The size of the array returned should
-	 *          be equal to the function's declared output arity.
-	 * @param context
-	 *          The context in which the evaluation is done. If the function's
-	 *          arguments contains placeholders, they will be replaced by the
-	 *          corresponding object fetched from this map before evaluating the
-	 *          function
-	 */
-	/*@ pure @*/ public void evaluate(/*@ non_null @*/ Object[] inputs, 
-			/*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
-	{
-		evaluate(inputs, outputs);
-	}
-	
-	/**
-	 * Evaluates the outputs of the function, given some inputs
-	 * 
-	 * @param inputs
-	 *          The arguments of the function. The size of the array should be equal
-	 *          to the function's declared input arity.
-	 * @param outputs
-	 *          The outputs of the function. The size of the array returned should
-	 *          be equal to the function's declared output arity.
-	 * @param context
-	 *          The context in which the evaluation is done. If the function's
-	 *          arguments contains placeholders, they will be replaced by the
-	 *          corresponding object fetched from this map before evaluating the
-	 *          function
-	 * @return {@code true} if the function succeeded in producing an output
-	 *          value, {@code false} otherwise
-	 */
-	/*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
-			/*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
-	{
-		evaluate(inputs, outputs, context);
-		return true;
-	}
+  /**
+   * Evaluates the outputs of the function, given some inputs
+   * 
+   * @param inputs
+   *          The arguments of the function. The size of the array should be equal
+   *          to the function's declared input arity.
+   * @param outputs
+   *          The outputs of the function. The size of the array returned should
+   *          be equal to the function's declared output arity.
+   * @param context
+   *          The context in which the evaluation is done. If the function's
+   *          arguments contains placeholders, they will be replaced by the
+   *          corresponding object fetched from this map before evaluating the
+   *          function
+   */
+  /*@ pure @*/ public void evaluate(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
+  {
+    evaluate(inputs, outputs);
+  }
+  
+  /**
+   * Evaluates the outputs of the function, given some inputs
+   * 
+   * @param inputs
+   *          The arguments of the function. The size of the array should be equal
+   *          to the function's declared input arity.
+   * @param outputs
+   *          The outputs of the function. The size of the array returned should
+   *          be equal to the function's declared output arity. @ Any exception
+   *          that may occur during the evaluation of a function
+   */
+  /*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs);
 
-	/**
-	 * Attempts a lazy evaluation of the function, given some inputs
-	 * 
-	 * @param inputs
-	 *          The arguments of the function. The size of the array should be equal
-	 *          to the function's declared input arity.
-	 * @param outputs
-	 *          The outputs of the function. The size of the array returned should
-	 *          be equal to the function's declared output arity. @ Any exception
-	 *          that may occur during the evaluation of a function
-	 * @return {@code true} if the function succeeded in producing an output
-	 *          value, {@code false} otherwise 
-	 */
-	/*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
-			/*@ non_null @*/ Object[] outputs)
-	{
-		return evaluateLazy(inputs, outputs, null);
-	}
-	
-	/**
-	 * Evaluates the outputs of the function, given some inputs
-	 * 
-	 * @param inputs
-	 *          The arguments of the function. The size of the array should be equal
-	 *          to the function's declared input arity.
-	 * @param outputs
-	 *          The outputs of the function. The size of the array returned should
-	 *          be equal to the function's declared output arity. @ Any exception
-	 *          that may occur during the evaluation of a function
-	 */
-	/*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
-			/*@ non_null @*/ Object[] outputs);
+  /**
+   * Evaluates the outputs of the function, given some inputs
+   * 
+   * @param inputs
+   *          The arguments of the function. The size of the array should be equal
+   *          to the function's declared input arity.
+   * @param outputs
+   *          The outputs of the function. The size of the array returned should
+   *          be equal to the function's declared output arity.
+   * @param context
+   *          The context in which the evaluation is done. If the function's
+   *          arguments contains placeholders, they will be replaced by the
+   *          corresponding object fetched from this map before evaluating the
+   *          function
+   * @return {@code true} if the function succeeded in producing an output
+   *          value, {@code false} otherwise
+   */
+  /*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
+  {
+    evaluate(inputs, outputs, context);
+    return true;
+  }
 
-	/**
-	 * Gets the function's input arity, i.e. the number of arguments it takes.
-	 * 
-	 * @return The input arity
-	 */
-	/*@ ensures \result >= 0 @*/
-	/*@ pure @*/ public abstract int getInputArity();
+  /**
+   * Attempts a lazy evaluation of the function, given some inputs
+   * 
+   * @param inputs
+   *          The arguments of the function. The size of the array should be equal
+   *          to the function's declared input arity.
+   * @param outputs
+   *          The outputs of the function. The size of the array returned should
+   *          be equal to the function's declared output arity. @ Any exception
+   *          that may occur during the evaluation of a function
+   * @return {@code true} if the function succeeded in producing an output
+   *          value, {@code false} otherwise 
+   */
+  /*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs)
+  {
+    return evaluateLazy(inputs, outputs, null);
+  }
 
-	/**
-	 * Gets the function's output arity, i.e. the number of elements it outputs. (We
-	 * expect that most functions will have an output arity of 1.)
-	 * 
-	 * @return The output arity
-	 */
-	/*@ ensures \result >= 0 @*/
-	/*@ pure @*/ public abstract int getOutputArity();
+  /**
+   * Gets the function's input arity, i.e. the number of arguments it takes.
+   * 
+   * @return The input arity
+   */
+  /*@ ensures \result >= 0 @*/
+  /*@ pure @*/ public abstract int getInputArity();
 
-	/**
-	 * Resets the function to its initial state. In the case of a stateless
-	 * function, nothing requires to be done.
-	 */
-	/*@ pure @*/ public void reset()
-	{
-		// Do nothing
-	}
+  /**
+   * Gets the function's output arity, i.e. the number of elements it outputs. (We
+   * expect that most functions will have an output arity of 1.)
+   * 
+   * @return The output arity
+   */
+  /*@ ensures \result >= 0 @*/
+  /*@ pure @*/ public abstract int getOutputArity();
 
-	/**
-	 * Populates the set of classes accepted by the function for its <i>i</i>-th
-	 * input
-	 * 
-	 * @param classes
-	 *          The set of to fill with classes
-	 * @param index
-	 *          The index of the input to query
-	 */
-	/*@ pure @*/ public abstract void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, 
-			int index);
+  /**
+   * Resets the function to its initial state. In the case of a stateless
+   * function, nothing requires to be done.
+   */
+  /*@ pure @*/ public void reset()
+  {
+    // Do nothing
+  }
 
-	/**
-	 * Returns the type of the events produced by the function for its <i>i</i>-th
-	 * output
-	 * 
-	 * @param index
-	 *          The index of the output to query
-	 * @return The type of the output
-	 */
-	/*@ pure @*/ public abstract Class<?> getOutputTypeFor(int index);
+  /**
+   * Populates the set of classes accepted by the function for its <i>i</i>-th
+   * input
+   * 
+   * @param classes
+   *          The set of to fill with classes
+   * @param index
+   *          The index of the input to query
+   */
+  /*@ pure @*/ public abstract void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, 
+      int index);
 
-	/**
-	 * Utility method that delegates the call to evaluate()
-	 * 
-	 * @param inputs
-	 *          Input arguments
-	 * @param outputs
-	 *          Output values
-	 * @param context
-	 *          Context object @ Thrown when evaluating the function
-	 */
-	/*@ pure @*/ public Future<Object[]> evaluateFast(Object[] inputs, Object[] outputs, Context context, ExecutorService service)
-	{
-		evaluate(inputs, outputs, context);
-		return new FutureDone<Object[]>(outputs);
-	}
+  /**
+   * Returns the type of the events produced by the function for its <i>i</i>-th
+   * output
+   * 
+   * @param index
+   *          The index of the output to query
+   * @return The type of the output
+   */
+  /*@ pure @*/ public abstract Class<?> getOutputTypeFor(int index);
 
-	@Override
-	/*@ pure non_null @*/ public final Function duplicate()
-	{
-		return duplicate(false);
-	}
+  /**
+   * Utility method that delegates the call to evaluate()
+   * 
+   * @param inputs
+   *          Input arguments
+   * @param outputs
+   *          Output values
+   * @param context
+   *          Context object @ Thrown when evaluating the function
+   */
+  /*@ pure @*/ public Future<Object[]> evaluateFast(Object[] inputs, Object[] outputs, 
+      Context context, ExecutorService service)
+  {
+    evaluate(inputs, outputs, context);
+    return new FutureDone<Object[]>(outputs);
+  }
 
-	@Override
-	/*@ pure non_null @*/ public abstract Function duplicate(boolean with_state);
+  @Override
+  /*@ pure non_null @*/ public final Function duplicate()
+  {
+    return duplicate(false);
+  }
+
+  @Override
+  /*@ pure non_null @*/ public abstract Function duplicate(boolean with_state);
 }

@@ -33,93 +33,94 @@ import java.util.concurrent.TimeoutException;
  */
 public abstract class CompoundFuture<T,U> implements Future<T> 
 {
-	/**
-	 * The array of "sub-futures" this Future depends on
-	 */
-	protected Future<U>[] m_futures;
-	
-	@SafeVarargs
-	public CompoundFuture(/*@ non_null @*/ Future<U> ... futures)
-	{
-		super();
-		m_futures = futures;
-	}
+  /**
+   * The array of "sub-futures" this Future depends on
+   */
+  protected Future<U>[] m_futures;
 
-	@Override
-	public boolean cancel(boolean mayInterruptIfRunning)
-	{
-		boolean b = false;
-		for (Future<?> f : m_futures)
-		{
-			b = b | f.cancel(mayInterruptIfRunning);
-		}
-		return b;
-	}
+  @SafeVarargs
+  public CompoundFuture(/*@ non_null @*/ Future<U> ... futures)
+  {
+    super();
+    m_futures = futures;
+  }
 
-	@Override
-	public boolean isCancelled()
-	{
-		for (Future<?> f : m_futures)
-		{
-			if (f.isCancelled())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+  @Override
+  public boolean cancel(boolean may_interrupt_if_running)
+  {
+    boolean b = false;
+    for (Future<?> f : m_futures)
+    {
+      b = b | f.cancel(may_interrupt_if_running);
+    }
+    return b;
+  }
 
-	@Override
-	public boolean isDone()
-	{
-		for (Future<?> f : m_futures)
-		{
-			if (!f.isDone())
-			{
-				return false;
-			}
-		}
-		return true;
-	}
+  @Override
+  public boolean isCancelled()
+  {
+    for (Future<?> f : m_futures)
+    {
+      if (f.isCancelled())
+      {
+        return true;
+      }
+    }
+    return false;
+  }
 
-	@Override
-	public T get() throws InterruptedException, ExecutionException
-	{
-		@SuppressWarnings("unchecked")
-		U[] values = (U[]) new Object[m_futures.length];
-		return compute(values);
-	}
+  @Override
+  public boolean isDone()
+  {
+    for (Future<?> f : m_futures)
+    {
+      if (!f.isDone())
+      {
+        return false;
+      }
+    }
+    return true;
+  }
 
-	@Override
-	public T get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException 
-	{
-		@SuppressWarnings("unchecked")
-		U[] values = (U[]) new Object[m_futures.length];
-		long max_ns = TimeUnit.NANOSECONDS.convert(timeout, unit);
-		long start_time = System.nanoTime();
-		long elapsed = 0;
-		int i = 0;
-		while (elapsed < max_ns && i < m_futures.length)
-		{
-			long time_budget = max_ns - elapsed;
-			values[i] = m_futures[i].get(time_budget, TimeUnit.NANOSECONDS);
-			elapsed = System.nanoTime() - start_time;
-			i++;
-		}
-		if (i < m_futures.length)
-		{
-			// We have not succeeded in completing all sub-futures in time
-			throw new TimeoutException();
-		}
-		return compute(values);
-	}
-	
-	/**
-	 * Computes the return value of this Future, based on the return values
-	 * of each sub-future.
-	 * @param values The values returned by each sub-future
-	 * @return The output value to compute
-	 */
-	public abstract T compute(U[] values);
+  @Override
+  public T get() throws InterruptedException, ExecutionException
+  {
+    @SuppressWarnings("unchecked")
+    U[] values = (U[]) new Object[m_futures.length];
+    return compute(values);
+  }
+
+  @Override
+  public T get(long timeout, TimeUnit unit) 
+      throws InterruptedException, ExecutionException, TimeoutException 
+  {
+    @SuppressWarnings("unchecked")
+    U[] values = (U[]) new Object[m_futures.length];
+    long max_ns = TimeUnit.NANOSECONDS.convert(timeout, unit);
+    long start_time = System.nanoTime();
+    long elapsed = 0;
+    int i = 0;
+    while (elapsed < max_ns && i < m_futures.length)
+    {
+      long time_budget = max_ns - elapsed;
+      values[i] = m_futures[i].get(time_budget, TimeUnit.NANOSECONDS);
+      elapsed = System.nanoTime() - start_time;
+      i++;
+    }
+    if (i < m_futures.length)
+    {
+      // We have not succeeded in completing all sub-futures in time
+      throw new TimeoutException();
+    }
+    return compute(values);
+  }
+
+  /**
+   * Computes the return value of this Future, based on the return values
+   * of each sub-future.
+   * @param values The values returned by each sub-future
+   * @return The output value to compute
+   */
+  public abstract T compute(U[] values);
 
 }
