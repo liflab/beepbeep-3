@@ -400,4 +400,18 @@ public class FunctionsTest
 			return new IdentityFunction(1);
 		}
 	}
+	
+	@Test
+	public void testAndLazy()
+	{
+		Object[] outs = new Object[1];
+		Booleans.And f = Booleans.and;
+		assertTrue(f.evaluateLazy(new Object[] {false,  null}, outs));
+		assertEquals(false, outs[0]);
+		assertTrue(f.evaluateLazy(new Object[] {null,  false}, outs));
+		assertEquals(false, outs[0]);
+		assertTrue(f.evaluateLazy(new Object[] {false,  true}, outs));
+		assertEquals(false, outs[0]);
+		assertFalse(f.evaluateLazy(new Object[] {null,  null}, outs));
+	}
 }

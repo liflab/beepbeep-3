@@ -57,7 +57,50 @@ public abstract class Function implements DuplicableFunction
 	{
 		evaluate(inputs, outputs);
 	}
+	
+	/**
+	 * Evaluates the outputs of the function, given some inputs
+	 * 
+	 * @param inputs
+	 *          The arguments of the function. The size of the array should be equal
+	 *          to the function's declared input arity.
+	 * @param outputs
+	 *          The outputs of the function. The size of the array returned should
+	 *          be equal to the function's declared output arity.
+	 * @param context
+	 *          The context in which the evaluation is done. If the function's
+	 *          arguments contains placeholders, they will be replaced by the
+	 *          corresponding object fetched from this map before evaluating the
+	 *          function
+	 * @return {@code true} if the function succeeded in producing an output
+	 *          value, {@code false} otherwise
+	 */
+	/*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
+			/*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
+	{
+		evaluate(inputs, outputs, context);
+		return true;
+	}
 
+	/**
+	 * Attempts a lazy evaluation of the function, given some inputs
+	 * 
+	 * @param inputs
+	 *          The arguments of the function. The size of the array should be equal
+	 *          to the function's declared input arity.
+	 * @param outputs
+	 *          The outputs of the function. The size of the array returned should
+	 *          be equal to the function's declared output arity. @ Any exception
+	 *          that may occur during the evaluation of a function
+	 * @return {@code true} if the function succeeded in producing an output
+	 *          value, {@code false} otherwise 
+	 */
+	/*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
+			/*@ non_null @*/ Object[] outputs)
+	{
+		return evaluateLazy(inputs, outputs, null);
+	}
+	
 	/**
 	 * Evaluates the outputs of the function, given some inputs
 	 * 

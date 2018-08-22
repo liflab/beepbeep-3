@@ -107,11 +107,36 @@ public class FunctionTree extends Function
     }
     m_function.evaluate(values, outputs, context);
   }
+  
+  @Override
+  public boolean evaluateLazy(Object[] inputs, Object[] outputs, Context context)
+  {
+    Object[] values = new Object[m_children.length];
+    for (int i = 0; i < values.length; i++)
+    {
+      Object[] val = new Object[1];
+      if (m_children[i].evaluateLazy(inputs, val, context))
+      {
+    	  values[i] = val[0];
+      }
+      else
+      {
+    	  values[i] = null;
+      }
+    }
+    return m_function.evaluateLazy(values, outputs, context);
+  }
 
   @Override
   public void evaluate(Object[] inputs, Object[] outputs)
   {
     evaluate(inputs, outputs, null);
+  }
+  
+  @Override
+  public boolean evaluateLazy(Object[] inputs, Object[] outputs)
+  {
+    return evaluateLazy(inputs, outputs, null);
   }
 
   @Override
