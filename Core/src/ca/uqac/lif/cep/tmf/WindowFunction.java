@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 import java.util.LinkedList;
@@ -33,7 +33,7 @@ import java.util.Queue;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class WindowFunction extends SingleProcessor
+public class WindowFunction extends SynchronousProcessor
 {
   /**
    * The window's width
@@ -91,7 +91,7 @@ public class WindowFunction extends SingleProcessor
       {
         throw new ProcessorException(e);
       }
-      outputs.add(wrapObject(val[0]));
+      outputs.add(new Object[] {val[0]});
       return true;
     }
     if (size == m_width)
@@ -105,7 +105,7 @@ public class WindowFunction extends SingleProcessor
       {
         throw new ProcessorException(e);
       }
-      outputs.add(wrapObject(val[0]));
+      outputs.add(new Object[] {val[0]});
       return true;
     }
     return true;

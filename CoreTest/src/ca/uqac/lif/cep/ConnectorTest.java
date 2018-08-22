@@ -281,7 +281,7 @@ public class ConnectorTest
 		
 	}
 	
-	public static class Apples extends SingleProcessor
+	public static class Apples extends SynchronousProcessor
 	{
 		public Apples()
 		{
@@ -316,7 +316,7 @@ public class ConnectorTest
 		}
 	}
 	
-	public static class Oranges extends SingleProcessor
+	public static class Oranges extends SynchronousProcessor
 	{
 		public boolean started = false;
 		
@@ -373,7 +373,7 @@ public class ConnectorTest
 		}
 	}
 	
-	public static class Variants extends SingleProcessor
+	public static class Variants extends SynchronousProcessor
 	{
 		public Variants()
 		{

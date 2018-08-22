@@ -31,7 +31,7 @@ import java.util.concurrent.Future;
  *
  */
 @SuppressWarnings("squid:S2160")
-public abstract class UniformProcessor extends SingleProcessor
+public abstract class UniformProcessor extends SynchronousProcessor
 {
   /**
    * An array that will be used by the processor to compute its output
@@ -140,7 +140,7 @@ public abstract class UniformProcessor extends SingleProcessor
    * A special type of Pushable for uniform processors with an input and output
    * arity of exactly 1. In such a case, the pushable object can operate in a much
    * simpler way than the generic {@link InputPushable} defined by
-   * {@link SingleProcessor}, by foregoing the use of input and output queues
+   * {@link SynchronousProcessor}, by foregoing the use of input and output queues
    * completely.
    * <p>
    * Simple experiments with a {@link Passthrough} processor have shown a speed
@@ -206,7 +206,7 @@ public abstract class UniformProcessor extends SingleProcessor
    * A special type of Pushable for uniform processors with an input and output
    * arity of exactly 1. In such a case, the pullable object can operate in a much
    * simpler way than the generic {@link OutputPullable} defined by
-   * {@link SingleProcessor}, by foregoing the use of input and output queues
+   * {@link SynchronousProcessor}, by foregoing the use of input and output queues
    * (almost) completely.
    * <p>
    * Simple experiments with a {@link Passthrough} processor have shown a speed

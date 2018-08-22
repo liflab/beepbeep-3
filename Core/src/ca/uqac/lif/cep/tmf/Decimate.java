@@ -19,7 +19,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
 /**
@@ -49,7 +49,7 @@ import java.util.Queue;
  *
  * @author Quentin Betti
  */
-public abstract class Decimate extends SingleProcessor
+public abstract class Decimate extends SynchronousProcessor
 {
   /**
    * Indicates whether or not the last input event of the trace should be

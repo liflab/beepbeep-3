@@ -39,7 +39,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * This class itself is abstract; nevertheless, it provides important methods
  * for handling input/output event queues, connecting processors together, etc.
  * However, if you write your own processor, you will most likely want to
- * inherit from its child, {@link SingleProcessor}, which does some more work
+ * inherit from its child, {@link SynchronousProcessor}, which does some more work
  * for you.
  * 
  * The {@link Processor} class does not assume anything about the type of events
@@ -426,7 +426,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 
   /**
    * Checks if all objects in the array are null. This is a convenience method
-   * used by other processor classes (e.g. {@link SingleProcessor} to make sure
+   * used by other processor classes (e.g. {@link SynchronousProcessor} to make sure
    * that some output was generated from a given input
    * 
    * @param v
@@ -657,6 +657,27 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
       m_eventTracker.associateToOutput(m_uniqueId, in_stream_index, in_stream_pos, out_stream_index,
           out_stream_pos);
     }
+  }
+  
+  /**
+   * Allows to describe a specific behavior when the trace of input fronts has
+   * reached its end. Called in "push mode" only. In "pull mode", implementing
+   * such a behavior can be done by using {@link Pullable#hasNext()} or
+   * {@link Pullable#hasNextSoft()}.
+   *
+   * @param outputs
+   *          A queue of arrays of objects. The processor should push arrays into
+   *          this queue for every output front it produces. The size of each
+   *          array should be equal to the processor's output arity, although this
+   *          is not enforced.
+   * @return true if the processor should output one or several output fronts,
+   *         false otherwise and by default.
+   * @throws ProcessorException
+   *           An exception thrown when a problem occurs with the operation
+   */
+  protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
+  {
+    return false;
   }
 
   @Override

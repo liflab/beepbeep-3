@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.LinkedList;
 
 /**
@@ -39,7 +39,7 @@ import java.util.LinkedList;
  * @author Sylvain Hallé
  * 
  */
-public abstract class AbstractWindow extends SingleProcessor
+public abstract class AbstractWindow extends SynchronousProcessor
 {
   /**
    * The event windows

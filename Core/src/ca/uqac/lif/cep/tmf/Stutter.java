@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
 /**
@@ -26,7 +26,7 @@ import java.util.Queue;
  * 
  * @author Sylvain Hallé
  */
-public class Stutter extends SingleProcessor
+public class Stutter extends SynchronousProcessor
 {
   /**
    * The number of times each input event is repeated

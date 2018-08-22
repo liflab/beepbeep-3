@@ -1,6 +1,6 @@
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
 /**
@@ -9,7 +9,7 @@ import java.util.Queue;
  * @author Sylvain Hallé
  *
  */
-public class KeepLast extends SingleProcessor
+public class KeepLast extends SynchronousProcessor
 {
   protected Object[] m_lasts;
 

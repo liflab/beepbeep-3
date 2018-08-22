@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Pushable.PushableException;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.ExecutionException;
@@ -40,7 +40,7 @@ import java.util.concurrent.Future;
  *
  */
 @SuppressWarnings("squid:S2160")
-public abstract class Source extends SingleProcessor
+public abstract class Source extends SynchronousProcessor
 {
   public Source(int out_arity)
   {

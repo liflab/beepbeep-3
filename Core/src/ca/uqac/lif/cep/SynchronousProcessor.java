@@ -29,7 +29,7 @@ import java.util.concurrent.Future;
  * This is the direct descendant of {@link Processor}, and probably the one
  * you'll want to inherit from when creating your own processors. While
  * {@link Processor} takes care of input and output queues,
- * {@link SingleProcessor} also implements {@link Pullable}s and
+ * {@link SynchronousProcessor} also implements {@link Pullable}s and
  * {@link Pushable}s. These take care of collecting input events, waiting until
  * one new event is received from all input traces before triggering the
  * computation, pulling and buffering events from all outputs when either of the
@@ -45,7 +45,7 @@ import java.util.concurrent.Future;
  *
  */
 @SuppressWarnings("squid:S2160")
-public abstract class SingleProcessor extends Processor
+public abstract class SynchronousProcessor extends Processor
 {
   /**
    * A queue object that will be passed to the {@link #compute(Object[], Queue)}
@@ -76,7 +76,7 @@ public abstract class SingleProcessor extends Processor
    * @param out_arity
    *          The output arity
    */
-  public SingleProcessor(int in_arity, int out_arity)
+  public SynchronousProcessor(int in_arity, int out_arity)
   {
     super(in_arity, out_arity);
     m_tempQueue = new ArrayDeque<Object[]>(1);
@@ -116,31 +116,10 @@ public abstract class SingleProcessor extends Processor
    *          this queue for every output front it produces. The size of each
    *          array should be equal to the processor's output arity, although this
    *          is not enforced.
-   * @return A queue of vectors of output events, or null if no event could be
-   *         produced
+   * @return {@code true} if this processor may output other events in the
+   * future, {@code false} otherwise
    */
   protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs);
-
-  /**
-   * Allows to describe a specific behavior when the trace of input fronts has
-   * reached its end. Called in "push mode" only. In "pull mode", implementing
-   * such a behavior can be done by using {@link Pullable#hasNext()} or
-   * {@link Pullable#hasNextSoft()}.
-   *
-   * @param outputs
-   *          A queue of arrays of objects. The processor should push arrays into
-   *          this queue for every output front it produces. The size of each
-   *          array should be equal to the processor's output arity, although this
-   *          is not enforced.
-   * @return true if the processor should output one or several output fronts,
-   *         false otherwise and by default.
-   * @throws ProcessorException
-   *           An exception thrown when a problem occurs with the operation
-   */
-  protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
-  {
-    return false;
-  }
 
   /**
    * Implementation of a {@link Pushable} for a single processor.
@@ -294,7 +273,7 @@ public abstract class SingleProcessor extends Processor
     @Override
     public synchronized Processor getProcessor()
     {
-      return SingleProcessor.this;
+      return SynchronousProcessor.this;
     }
   }
 
@@ -537,7 +516,7 @@ public abstract class SingleProcessor extends Processor
     @Override
     public synchronized Processor getProcessor()
     {
-      return SingleProcessor.this;
+      return SynchronousProcessor.this;
     }
 
     @Override
@@ -569,22 +548,5 @@ public abstract class SingleProcessor extends Processor
     {
       // Do nothing
     }
-  }
-
-  /**
-   * Puts a object (given as an argument) into an array of objects. This is a
-   * convenience method that descendants of {@link SingleProcessor} (which
-   * implement {@link #compute(Object[], Queue)}) can use to avoid a few lines of
-   * code when they output a single event.
-   * 
-   * @param o
-   *          The object
-   * @return The queue
-   */
-  protected static final Object[] wrapObject(Object o)
-  {
-    Object[] v = new Object[1];
-    v[0] = o;
-    return v;
   }
 }

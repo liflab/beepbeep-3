@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 import java.util.Queue;
@@ -36,7 +36,7 @@ import java.util.Queue;
  * @author Sylvain Hallé
  */
 @SuppressWarnings("squid:S2160")
-public class SimpleFilter extends SingleProcessor
+public class SimpleFilter extends SynchronousProcessor
 {
   /**
    * The condition to evaluate

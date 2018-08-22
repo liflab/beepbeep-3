@@ -21,7 +21,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.InvalidArgumentException;
@@ -167,7 +167,7 @@ public class Bags
   /**
    * Runs each element of a collection into a processor, and collect its output.
    */
-  public static class RunOn extends SingleProcessor
+  public static class RunOn extends SynchronousProcessor
   {
     protected Processor m_processor;
 

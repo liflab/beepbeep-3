@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
 /**
@@ -33,7 +33,7 @@ import java.util.Queue;
  * @dictentry
  */
 @SuppressWarnings("squid:S2160")
-public class Filter extends SingleProcessor
+public class Filter extends SynchronousProcessor
 {
   public Filter()
   {

@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
 /**
@@ -29,7 +29,7 @@ import java.util.Queue;
  * @dictentry
  */
 @SuppressWarnings("squid:S2160")
-public class Insert extends SingleProcessor
+public class Insert extends SynchronousProcessor
 {
   /**
    * The event to be added at the beginning of the input trace

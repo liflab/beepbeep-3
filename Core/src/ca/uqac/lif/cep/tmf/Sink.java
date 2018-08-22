@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pullable.PullableException;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
 /**
  * Receives input events and stores them. As its name implies, the
@@ -36,7 +36,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  *
  */
 @SuppressWarnings("squid:S2160")
-public abstract class Sink extends SingleProcessor
+public abstract class Sink extends SynchronousProcessor
 {
   public Sink()
   {

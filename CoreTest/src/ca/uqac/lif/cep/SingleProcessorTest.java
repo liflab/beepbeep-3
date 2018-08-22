@@ -156,7 +156,7 @@ public class SingleProcessorTest
 		assertEquals(Pullable.NextStatus.NO, p.hasNextSoft());
 	}
 	
-	public static class ThrowException extends SingleProcessor
+	public static class ThrowException extends SynchronousProcessor
 	{
 		public ThrowException()
 		{

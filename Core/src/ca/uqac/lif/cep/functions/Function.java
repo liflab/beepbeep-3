@@ -130,7 +130,7 @@ public abstract class Function implements DuplicableFunction
 	 * @param context
 	 *          Context object @ Thrown when evaluating the function
 	 */
-	/*@ pure @*/ public Future<? extends Object[]> evaluateFast(Object[] inputs, Object[] outputs, Context context, ExecutorService service)
+	/*@ pure @*/ public Future<Object[]> evaluateFast(Object[] inputs, Object[] outputs, Context context, ExecutorService service)
 	{
 		evaluate(inputs, outputs, context);
 		return new FutureDone<Object[]>(outputs);

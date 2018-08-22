@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.util;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class Lists
   /**
    * Common ancestor to {@link TimePack} and {@link Pack}.
    */
-  protected abstract static class AbstractPack extends SingleProcessor
+  protected abstract static class AbstractPack extends SynchronousProcessor
   {
     /**
      * The list of events accumulated since the last output
@@ -265,7 +265,7 @@ public class Lists
    * 
    * @author Sylvain Hallé
    */
-  public static class Unpack extends SingleProcessor
+  public static class Unpack extends SynchronousProcessor
   {
     /**
      * Creates a new list unpacker

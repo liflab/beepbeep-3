@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
 /**
@@ -28,7 +28,7 @@ import java.util.Queue;
  *
  */
 @SuppressWarnings("squid:S2160")
-public class CallbackSink extends SingleProcessor
+public class CallbackSink extends SynchronousProcessor
 {
   public CallbackSink(int in_arity)
   {

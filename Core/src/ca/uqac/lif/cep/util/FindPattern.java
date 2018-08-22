@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.util;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * @author Sylvain Hallé
  * @dictentry
  */
-public class FindPattern extends SingleProcessor
+public class FindPattern extends SynchronousProcessor
 {
   /**
    * The buffered contents of the string received so far
