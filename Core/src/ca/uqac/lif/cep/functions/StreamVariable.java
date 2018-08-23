@@ -106,6 +106,17 @@ public class StreamVariable extends Variable
   {
     outputs[0] = inputs[m_index];
   }
+  
+  @Override
+  public boolean evaluateLazy(Object[] inputs, Object[] outputs, Context context)
+  {
+    if (inputs[m_index] != null)
+    {
+      outputs[0] = inputs[m_index];
+      return true;
+    }
+    return false;
+  }
 
   @Override
   public StreamVariable duplicate(boolean with_state)

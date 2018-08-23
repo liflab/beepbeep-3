@@ -92,6 +92,14 @@ public abstract class Function implements DuplicableFunction
   /*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
   {
+    // Defer the call to evaluate if all the inputs are non-null
+    for (int i = 0; i < inputs.length; i++)
+    {
+      if (inputs[i] == null)
+      {
+        return false;
+      }
+    }
     evaluate(inputs, outputs, context);
     return true;
   }

@@ -66,6 +66,13 @@ public class Constant extends Function
   {
     evaluate(inputs, outputs, null);
   }
+  
+  @Override
+  public boolean evaluateLazy(Object[] inputs, Object[] outputs, Context context)
+  {
+    outputs[0] = m_value;
+    return true;
+  }
 
   @Override
   public int getInputArity()
