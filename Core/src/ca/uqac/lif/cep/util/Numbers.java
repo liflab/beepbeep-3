@@ -425,6 +425,11 @@ public class Numbers
       {
         return (Number) x;
       }
+      if (!(x instanceof String))
+      {
+        // Anything but a string: work on the value of toString
+        x = x.toString();
+      }
       if (x instanceof String)
       {
         try
