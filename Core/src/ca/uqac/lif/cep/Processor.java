@@ -139,6 +139,11 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
    * a safeguard to avoid infinite loops.
    */
   public static final int MAX_PULL_RETRIES = 10000000;
+  
+  /**
+   * Indicates whether the processor has been notified of the end of trace or not
+   */
+  protected boolean m_hasBeenNotifiedOfEndOfTrace;
 
   /**
    * Initializes a processor. This has for effect of executing the basic
@@ -183,6 +188,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
     }
     m_inputPullables = new Pullable[m_inputArity];
     m_outputPushables = new Pushable[m_outputArity];
+    m_hasBeenNotifiedOfEndOfTrace = false;
   }
 
   /**
@@ -295,6 +301,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
     {
       m_outputQueues[i].clear();
     }
+    m_hasBeenNotifiedOfEndOfTrace = false;
   }
 
   /**

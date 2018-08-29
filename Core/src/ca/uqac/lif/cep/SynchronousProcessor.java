@@ -64,11 +64,6 @@ public abstract class SynchronousProcessor extends Processor
   protected transient Pullable[] m_outputPullables;
 
   /**
-   * Indicates whether the processor has been notified of the end of trace or not
-   */
-  protected boolean m_hasBeenNotifiedOfEndOfTrace;
-
-  /**
    * Initializes a processor
    * 
    * @param in_arity
@@ -82,7 +77,6 @@ public abstract class SynchronousProcessor extends Processor
     m_tempQueue = new ArrayDeque<Object[]>(1);
     m_inputPushables = new Pushable[in_arity];
     m_outputPullables = new Pullable[out_arity];
-    m_hasBeenNotifiedOfEndOfTrace = false;
   }
 
   @Override
@@ -202,7 +196,6 @@ public abstract class SynchronousProcessor extends Processor
       }
       // put everything in outputEvent, because of duplicated code in notifyEndOfTrace
       outputEvent(outs);
-
       return this;
     }
 
@@ -380,7 +373,25 @@ public abstract class SynchronousProcessor extends Processor
           boolean status = p.hasNext();
           if (!status)
           {
-            return false;
+            if (m_hasBeenNotifiedOfEndOfTrace)
+            {
+              return false;
+            }
+            Queue<Object[]> last_queue = new ArrayDeque<Object[]>();
+            boolean b = onEndOfTrace(last_queue);
+            m_hasBeenNotifiedOfEndOfTrace = true;
+            if (!b)
+            {
+              return false;
+            }
+            for (Object[] front : last_queue)
+            {
+              for (int j = 0; j < m_outputArity; j++)
+              {
+                m_outputQueues[j].add(front[j]);
+              }
+            }
+            return true;
           }
         }
         // We are here only if every input pullable has answered YES
@@ -458,7 +469,25 @@ public abstract class SynchronousProcessor extends Processor
         NextStatus status = p.hasNextSoft();
         if (status == NextStatus.NO)
         {
-          return NextStatus.NO;
+          if (m_hasBeenNotifiedOfEndOfTrace)
+          {
+            return NextStatus.NO;
+          }
+          Queue<Object[]> last_queue = new ArrayDeque<Object[]>();
+          boolean b = onEndOfTrace(last_queue);
+          m_hasBeenNotifiedOfEndOfTrace = true;
+          if (!b)
+          {
+            return NextStatus.NO;
+          }
+          for (Object[] front : last_queue)
+          {
+            for (int j = 0; j < m_outputArity; j++)
+            {
+              m_outputQueues[j].add(front[j]);
+            }
+          }
+          return NextStatus.YES;
         }
         if (status == NextStatus.MAYBE)
         {
