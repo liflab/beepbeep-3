@@ -1,3 +1,20 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2018 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Processor;
@@ -7,6 +24,11 @@ import ca.uqac.lif.cep.Pushable;
 import java.util.Iterator;
 import java.util.concurrent.Future;
 
+/**
+ * Evaluates a function on each event front in a <em>lazy</em> manner.
+ * 
+ * @author Sylvain Hallé
+ */
 public class ApplyFunctionLazy extends Processor 
 {
   /**
@@ -42,6 +64,10 @@ public class ApplyFunctionLazy extends Processor
    */
   protected Object[] m_inputFront;
 
+  /**
+   * Creates a new lazy application processor.
+   * @param f The function to apply on each input event
+   */
   public ApplyFunctionLazy(/*@ non_null @*/ Function f)
   {
     super(f.getInputArity(), f.getOutputArity());
@@ -201,55 +227,64 @@ public class ApplyFunctionLazy extends Processor
     }
 
     @Override
-    public Object pull() {
+    public Object pull()
+    {
       // TODO Auto-generated method stub
       return null;
     }
 
     @Override
-    public Object next() {
+    public Object next()
+    {
       // TODO Auto-generated method stub
       return null;
     }
 
     @Override
-    public NextStatus hasNextSoft() {
+    public NextStatus hasNextSoft() 
+    {
       // TODO Auto-generated method stub
       return null;
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext() 
+    {
       // TODO Auto-generated method stub
       return false;
     }
 
     @Override
-    public Processor getProcessor() {
+    public Processor getProcessor() 
+    {
       // TODO Auto-generated method stub
       return null;
     }
 
     @Override
-    public int getPosition() {
+    public int getPosition() 
+    {
       // TODO Auto-generated method stub
       return 0;
     }
 
     @Override
-    public void start() {
+    public void start() 
+    {
       // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void stop() {
+    public void stop() 
+    {
       // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void dispose() {
+    public void dispose()
+    {
       // TODO Auto-generated method stub
 
     }

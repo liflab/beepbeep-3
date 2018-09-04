@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
 import java.util.HashMap;
@@ -187,6 +188,47 @@ public class Maps
     public Class<?> getOutputType(int index)
     {
       return Map.class;
+    }
+  }
+
+  /**
+   * Creates a new map by applying a function to all the values of
+   * a map given as input
+   */
+  @SuppressWarnings("rawtypes")
+  public static class ApplyAll extends UnaryFunction<Map,Map>
+  {
+    /**
+     * The function to apply to each value of the map
+     */
+    protected Function m_function;
+
+    /**
+     * Creates a new <tt>ApplyAll</tt> function
+     * @param f The function to apply to all the values. Must be
+     * a 1:1 function.
+     */
+    //@ requires f.getInputArity() == 1
+    //@ requires f.getOutputArity() == 1
+    public ApplyAll(/*@ non_null @*/ Function f)
+    {
+      super(Map.class, Map.class);
+      m_function = f;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Map getValue(Map x)
+    {
+      Map<Object,Object> out = new HashMap<Object,Object>();
+      Object[] a_out = new Object[1];
+      for (Object o  : x.entrySet())
+      {
+        Map.Entry<Object,Object> e = (Map.Entry<Object,Object>) o;
+        m_function.evaluate(new Object[]{e.getValue()}, a_out);
+        out.put(e.getKey(), a_out[0]);
+      }
+      return out;
     }
   }
 }
