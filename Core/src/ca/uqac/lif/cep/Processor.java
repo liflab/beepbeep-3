@@ -461,10 +461,18 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
    * @param p
    *          The processor to copy contents into
    */
-  public void cloneInto(Processor p)
+  public void duplicateInto(Processor p)
   {
     p.m_eventTracker = m_eventTracker;
     p.setContext(m_context);
+    for (int i = 0; i < m_inputQueues.length; i++)
+    {
+      p.m_inputQueues[i].addAll(m_inputQueues[i]);
+    }
+    for (int i = 0; i < m_outputQueues.length; i++)
+    {
+      p.m_outputQueues[i].addAll(m_outputQueues[i]);
+    }
   }
 
   /**

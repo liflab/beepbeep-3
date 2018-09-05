@@ -324,7 +324,7 @@ public class GroupProcessor extends Processor
    */
   public synchronized Map<Integer, Processor> cloneInto(GroupProcessor group, boolean with_state)
   {
-    super.cloneInto(group);
+    super.duplicateInto(group);
     group.m_notifySources = m_notifySources;
     Map<Integer, Processor> new_procs = new HashMap<Integer, Processor>();
     Processor start = null;

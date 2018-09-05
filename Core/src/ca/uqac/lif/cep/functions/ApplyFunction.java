@@ -87,7 +87,7 @@ public class ApplyFunction extends UniformProcessor
   public synchronized ApplyFunction duplicate(boolean with_state)
   {
     ApplyFunction out = new ApplyFunction(m_function.duplicate(with_state));
-    cloneInto(out);
+    duplicateInto(out);
     return out;
   }
 
@@ -123,7 +123,7 @@ public class ApplyFunction extends UniformProcessor
 
   public void cloneInto(ApplyFunction af, boolean with_state)
   {
-    super.cloneInto(af);
+    super.duplicateInto(af);
     af.m_function = m_function.duplicate(with_state);
   }
 }
