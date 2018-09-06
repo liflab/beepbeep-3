@@ -18,6 +18,11 @@ public class KeepLast extends SynchronousProcessor
     super(in_arity, in_arity);
     m_lasts = new Object[in_arity];
   }
+  
+  public KeepLast()
+  {
+    this(1);
+  }
 
   @Override
   public KeepLast duplicate(boolean with_state)

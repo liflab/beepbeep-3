@@ -108,7 +108,7 @@ public class StreamVariable extends Variable
   }
   
   @Override
-  public boolean evaluateLazy(Object[] inputs, Object[] outputs, Context context)
+  public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
   {
     if (inputs[m_index] != null)
     {

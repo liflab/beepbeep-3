@@ -109,13 +109,13 @@ public class FunctionTree extends Function
   }
   
   @Override
-  public boolean evaluateLazy(Object[] inputs, Object[] outputs, Context context)
+  public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
   {
     Object[] values = new Object[m_children.length];
     for (int i = 0; i < values.length; i++)
     {
       Object[] val = new Object[1];
-      if (m_children[i].evaluateLazy(inputs, val, context))
+      if (m_children[i].evaluatePartial(inputs, val, context))
       {
     	  values[i] = val[0];
       }
@@ -124,7 +124,7 @@ public class FunctionTree extends Function
     	  values[i] = null;
       }
     }
-    return m_function.evaluateLazy(values, outputs, context);
+    return m_function.evaluatePartial(values, outputs, context);
   }
 
   @Override
@@ -136,7 +136,7 @@ public class FunctionTree extends Function
   @Override
   public boolean evaluateLazy(Object[] inputs, Object[] outputs)
   {
-    return evaluateLazy(inputs, outputs, null);
+    return evaluatePartial(inputs, outputs, null);
   }
 
   @Override

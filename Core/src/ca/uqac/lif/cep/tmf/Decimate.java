@@ -91,7 +91,7 @@ public abstract class Decimate extends SynchronousProcessor
       Object[] outs = processInputs(inputs);
       outputs.add(outs);
       postOutput();
-      m_lastProcessedInputs = null;
+      m_lastProcessedInputs = outs;
       updateEventTracker();
     }
     else if (m_shouldProcessLastInputs)

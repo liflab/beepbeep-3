@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
@@ -372,6 +373,27 @@ public class Numbers
     public Number getValue(Number x, Number y)
     {
       return x.floatValue() * y.floatValue();
+    }
+    
+    @Override
+    public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
+    {
+      if (inputs[0] != null && ((Number) inputs[0]).floatValue() == 0f)
+      {
+        outputs[0] = 0f;
+        return true;
+      }
+      if (inputs[1] != null && ((Number) inputs[1]).floatValue() == 0f)
+      {
+        outputs[0] = 0f;
+        return true;
+      }
+      if (inputs[0] != null && inputs[1] != null)
+      {
+        outputs[0] = ((Number) inputs[0]).floatValue() * ((Number) inputs[1]).floatValue();
+        return true;
+      }
+      return false;
     }
 
     @Override

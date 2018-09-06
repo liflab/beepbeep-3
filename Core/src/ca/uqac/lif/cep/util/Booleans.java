@@ -63,7 +63,7 @@ public class Booleans
     }
     
     @Override
-    public boolean evaluateLazy(Object[] inputs, Object[] outputs, Context context)
+    public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
     {
     	if (inputs[0] != null && ((Boolean) inputs[0]) == false)
     	{
@@ -111,7 +111,7 @@ public class Booleans
     }
     
     @Override
-    public boolean evaluateLazy(Object[] inputs, Object[] outputs, Context context)
+    public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
     {
     	if (inputs[0] != null && ((Boolean) inputs[0]) == false)
     	{
@@ -159,7 +159,7 @@ public class Booleans
     }
     
     @Override
-    public boolean evaluateLazy(Object[] inputs, Object[] outputs, Context context)
+    public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
     {
     	if (inputs[0] != null && ((Boolean) inputs[0]) == true)
     	{

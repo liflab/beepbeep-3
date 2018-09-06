@@ -89,7 +89,7 @@ public abstract class Function implements DuplicableFunction
    * @return {@code true} if the function succeeded in producing an output
    *          value, {@code false} otherwise
    */
-  /*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
+  /*@ pure @*/ public boolean evaluatePartial(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
   {
     // Defer the call to evaluate if all the inputs are non-null
@@ -120,7 +120,7 @@ public abstract class Function implements DuplicableFunction
   /*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs)
   {
-    return evaluateLazy(inputs, outputs, null);
+    return evaluatePartial(inputs, outputs, null);
   }
 
   /**

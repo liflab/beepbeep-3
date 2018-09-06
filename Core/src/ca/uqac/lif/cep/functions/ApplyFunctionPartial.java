@@ -29,7 +29,7 @@ import java.util.concurrent.Future;
  * 
  * @author Sylvain Hallé
  */
-public class ApplyFunctionLazy extends Processor 
+public class ApplyFunctionPartial extends Processor 
 {
   /**
    * The function to apply on input events
@@ -68,7 +68,7 @@ public class ApplyFunctionLazy extends Processor
    * Creates a new lazy application processor.
    * @param f The function to apply on each input event
    */
-  public ApplyFunctionLazy(/*@ non_null @*/ Function f)
+  public ApplyFunctionPartial(/*@ non_null @*/ Function f)
   {
     super(f.getInputArity(), f.getOutputArity());
     m_function = f;
@@ -100,9 +100,9 @@ public class ApplyFunctionLazy extends Processor
   }
 
   @Override
-  public ApplyFunctionLazy duplicate(boolean with_state)
+  public ApplyFunctionPartial duplicate(boolean with_state)
   {
-    return new ApplyFunctionLazy(m_function.duplicate(with_state));
+    return new ApplyFunctionPartial(m_function.duplicate(with_state));
   }
 
   protected class InputPushable implements Pushable
@@ -157,7 +157,7 @@ public class ApplyFunctionLazy extends Processor
             }
           }
         }
-        evaluated = m_function.evaluateLazy(m_inputFront, out_front, m_context);
+        evaluated = m_function.evaluatePartial(m_inputFront, out_front, m_context);
         if (evaluated)
         {
           for (int i = 0; i < out_front.length; i++)
@@ -190,7 +190,7 @@ public class ApplyFunctionLazy extends Processor
     @Override
     public Processor getProcessor()
     {
-      return ApplyFunctionLazy.this;
+      return ApplyFunctionPartial.this;
     }
 
     @Override

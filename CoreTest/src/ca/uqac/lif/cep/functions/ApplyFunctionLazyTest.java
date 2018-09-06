@@ -17,7 +17,7 @@ public class ApplyFunctionLazyTest
 	public void test1()
 	{
 		Function f = Booleans.and;
-		ApplyFunctionLazy afl = new ApplyFunctionLazy(f);
+		ApplyFunctionPartial afl = new ApplyFunctionPartial(f);
 		Pushable p1 = afl.getPushableInput(0);
 		Pushable p2 = afl.getPushableInput(1);
 		QueueSink qs = new QueueSink();
