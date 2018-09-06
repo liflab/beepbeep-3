@@ -109,6 +109,12 @@ public class FunctionTree extends Function
   }
   
   @Override
+  public void evaluate(Object[] inputs, Object[] outputs)
+  {
+    evaluate(inputs, outputs, null);
+  }
+
+  @Override
   public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
   {
     Object[] values = new Object[m_children.length];
@@ -117,22 +123,16 @@ public class FunctionTree extends Function
       Object[] val = new Object[1];
       if (m_children[i].evaluatePartial(inputs, val, context))
       {
-    	  values[i] = val[0];
+        values[i] = val[0];
       }
       else
       {
-    	  values[i] = null;
+        values[i] = null;
       }
     }
     return m_function.evaluatePartial(values, outputs, context);
   }
 
-  @Override
-  public void evaluate(Object[] inputs, Object[] outputs)
-  {
-    evaluate(inputs, outputs, null);
-  }
-  
   @Override
   public boolean evaluateLazy(Object[] inputs, Object[] outputs)
   {
@@ -214,7 +214,7 @@ public class FunctionTree extends Function
     if (m_children.length == 2)
     {
       out.append("[").append(m_children[0]).append("]").append(m_function).append("[")
-          .append(m_children[1]).append("]");
+      .append(m_children[1]).append("]");
     }
     else
     {

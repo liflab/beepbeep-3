@@ -61,26 +61,26 @@ public class Booleans
     {
       return x.booleanValue() && y.booleanValue();
     }
-    
+
     @Override
     public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
     {
-    	if (inputs[0] != null && ((Boolean) inputs[0]) == false)
-    	{
-    		outputs[0] = false;
-    		return true;
-    	}
-    	if (inputs[1] != null && ((Boolean) inputs[1]) == false)
-    	{
-    		outputs[0] = false;
-    		return true;
-    	}
-    	if (inputs[0] != null && inputs[1] != null)
-    	{
-    		outputs[0] = ((Boolean) inputs[0]) && ((Boolean) inputs[1]);
-    		return true;
-    	}
-    	return false;
+      if (inputs[0] != null && ((Boolean) inputs[0]) == false)
+      {
+        outputs[0] = false;
+        return true;
+      }
+      if (inputs[1] != null && ((Boolean) inputs[1]) == false)
+      {
+        outputs[0] = false;
+        return true;
+      }
+      if (inputs[0] != null && inputs[1] != null)
+      {
+        outputs[0] = ((Boolean) inputs[0]) && ((Boolean) inputs[1]);
+        return true;
+      }
+      return false;
     }
 
     @Override
@@ -109,26 +109,26 @@ public class Booleans
     {
       return !x.booleanValue() || y.booleanValue();
     }
-    
+
     @Override
     public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
     {
-    	if (inputs[0] != null && ((Boolean) inputs[0]) == false)
-    	{
-    		outputs[0] = true;
-    		return true;
-    	}
-    	if (inputs[1] != null && ((Boolean) inputs[1]) == true)
-    	{
-    		outputs[0] = true;
-    		return true;
-    	}
-    	if (inputs[0] != null && inputs[1] != null)
-    	{
-    		outputs[0] = !((Boolean) inputs[0]) || ((Boolean) inputs[1]);
-    		return true;
-    	}
-    	return false;
+      if (inputs[0] != null && ((Boolean) inputs[0]) == false)
+      {
+        outputs[0] = true;
+        return true;
+      }
+      if (inputs[1] != null && ((Boolean) inputs[1]) == true)
+      {
+        outputs[0] = true;
+        return true;
+      }
+      if (inputs[0] != null && inputs[1] != null)
+      {
+        outputs[0] = !((Boolean) inputs[0]) || ((Boolean) inputs[1]);
+        return true;
+      }
+      return false;
     }
 
     @Override
@@ -157,26 +157,26 @@ public class Booleans
     {
       return x.booleanValue() || y.booleanValue();
     }
-    
+
     @Override
     public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
     {
-    	if (inputs[0] != null && ((Boolean) inputs[0]) == true)
-    	{
-    		outputs[0] = true;
-    		return true;
-    	}
-    	if (inputs[1] != null && ((Boolean) inputs[1]) == true)
-    	{
-    		outputs[0] = true;
-    		return true;
-    	}
-    	if (inputs[0] != null && inputs[1] != null)
-    	{
-    		outputs[0] = ((Boolean) inputs[0]) || ((Boolean) inputs[1]);
-    		return true;
-    	}
-    	return false;
+      if (inputs[0] != null && ((Boolean) inputs[0]) == true)
+      {
+        outputs[0] = true;
+        return true;
+      }
+      if (inputs[1] != null && ((Boolean) inputs[1]) == true)
+      {
+        outputs[0] = true;
+        return true;
+      }
+      if (inputs[0] != null && inputs[1] != null)
+      {
+        outputs[0] = ((Boolean) inputs[0]) || ((Boolean) inputs[1]);
+        return true;
+      }
+      return false;
     }
 
     @Override
