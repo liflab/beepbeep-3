@@ -49,14 +49,13 @@ public class Insert extends SynchronousProcessor
 
   /**
    * Instantiates a new Insert processor
-   * 
-   * @param o
-   *          The event(s) to use as padding
    * @param times
    *          The number of times these events should be repeated before the
    *          beginning of the input trace
+   * @param o
+   *          The event(s) to use as padding
    */
-  public Insert(Object[] o, int times)
+  public Insert(int times, Object ... o)
   {
     super(o.length, o.length);
     m_pad = o;
@@ -90,6 +89,6 @@ public class Insert extends SynchronousProcessor
   @Override
   public Insert duplicate(boolean with_state)
   {
-    return new Insert(m_pad, m_times);
+    return new Insert(m_times, m_pad);
   }
 }

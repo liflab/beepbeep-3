@@ -369,7 +369,7 @@ public class TmfTest
 	public void testInsert() 
 	{
 		Object[] to_insert = {99};
-		Insert ins = new Insert(to_insert, 3);
+		Insert ins = new Insert(3, to_insert);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(ins, sink);
 		Pushable in = ins.getPushableInput(0);
