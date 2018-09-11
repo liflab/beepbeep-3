@@ -42,6 +42,8 @@ public class Sets
   }
 
   public static final IsSubsetOrEqual isSubsetOrEqual = new IsSubsetOrEqual();
+  
+  public static final IsSupersetOrEqual isSupersetOrEqual = new IsSupersetOrEqual();
 
   /**
    * Processor that updates a set
@@ -160,6 +162,26 @@ public class Sets
     public Boolean getValue(Set x, Set y)
     {
       return y.containsAll(x);
+    }
+  }
+  
+  /**
+   * Checks if a set is a superset of another. The first argument is the set to
+   * check, and the second argument is the reference set.
+   */
+  @SuppressWarnings("rawtypes")
+  public static class IsSupersetOrEqual extends BinaryFunction<Set, Set, Boolean>
+  {
+    protected IsSupersetOrEqual()
+    {
+      super(Set.class, Set.class, Boolean.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Boolean getValue(Set x, Set y)
+    {
+      return x.containsAll(y);
     }
   }
 }

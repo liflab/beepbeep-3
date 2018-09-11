@@ -38,6 +38,8 @@ import java.util.Map;
  */
 public class Maps
 {
+  public static final transient Values values = new Values();
+    
   private Maps()
   {
     // Utility class
@@ -62,7 +64,9 @@ public class Maps
     @Override
     public Collection<?> getValue(Map x)
     {
-      return x.values();
+      Collection<?> col = x.values();
+      col.remove(null);
+      return col;
     }
   }
 
