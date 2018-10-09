@@ -27,12 +27,12 @@ public class Main
   /**
    * Minor version number
    */
-  public static final int s_minorVersion = 8;
+  public static final int s_minorVersion = 9;
 
   /**
    * Revision version number
    */
-  public static final int s_revisionVersion = 1;
+  public static final int s_revisionVersion = 0;
 
   private Main()
   {
