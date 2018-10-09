@@ -65,6 +65,7 @@
       <files>
         <zip>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.zip</zip>
       </files>
+      <bundle>true</bundle>
     </dependency>
   </dependencies>
 </build>
