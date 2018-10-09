@@ -38,8 +38,7 @@ public abstract class CompoundFuture<T,U> implements Future<T>
    */
   protected Future<U>[] m_futures;
 
-  @SafeVarargs
-  public CompoundFuture(/*@ non_null @*/ Future<U> ... futures)
+  public CompoundFuture(/*@ non_null @*/ Future<U>[] futures)
   {
     super();
     m_futures = futures;

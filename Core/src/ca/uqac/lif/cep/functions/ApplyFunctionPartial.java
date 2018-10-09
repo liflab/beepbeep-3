@@ -255,38 +255,39 @@ public class ApplyFunctionPartial extends Processor
     }
 
     @Override
-    public Processor getProcessor() 
+    public ApplyFunctionPartial getProcessor() 
     {
-      // TODO Auto-generated method stub
-      return null;
+      return ApplyFunctionPartial.this;
     }
 
     @Override
     public int getPosition() 
     {
-      // TODO Auto-generated method stub
-      return 0;
+      return m_index;
     }
 
     @Override
     public void start() 
     {
-      // TODO Auto-generated method stub
-
+      ApplyFunctionPartial.this.start();
     }
 
     @Override
     public void stop() 
     {
-      // TODO Auto-generated method stub
-
+      ApplyFunctionPartial.this.stop();
     }
 
     @Override
     public void dispose()
     {
-      // TODO Auto-generated method stub
+      // Nothing to do
+    }
 
+    @Override
+    public void remove()
+    {
+      // Nothing to do
     }
   }
 }
