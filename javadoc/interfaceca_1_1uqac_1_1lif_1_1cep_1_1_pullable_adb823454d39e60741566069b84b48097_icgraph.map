@@ -1,6 +1,6 @@
 <map id="ca.uqac.lif.cep.Pullable.hasNext" name="ca.uqac.lif.cep.Pullable.hasNext">
 <area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html#a5ff23ab02d95ca8a84141acfd723da9b" title="Determines if an event can be pulled from the output, by trying &quot;harder&quot; than hasNextSoft(). " alt="" coords="271,5,481,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor_1_1_output_pullable.html#a8621438f1ffe2362ede337e0d8ec53ce" title="Determines if an event can be pulled from the output, by trying &quot;harder&quot; than hasNextSoft(). " alt="" coords="271,71,481,112"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html#ab43d35d63c2d7c6be5676fe2609b6747" title="Determines if an event can be pulled from the output, by trying &quot;harder&quot; than hasNextSoft(). " alt="" coords="265,71,487,112"/>
 <area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#ac295189c2b1353e2157f3566b8efe143" title="ca.uqac.lif.cep.tmf.Pump.run" alt="" coords="281,137,471,163"/>
 <area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html#a97332ca28386de30d85eb2e1ba322859" title="ca.uqac.lif.cep.tmf.Splice.compute" alt="" coords="264,187,488,214"/>
 </map>

@@ -1,21 +1,21 @@
 <map id="ca.uqac.lif.cep.UniformProcessor" name="ca.uqac.lif.cep.UniformProcessor">
-<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html" title="Applies a function to input events to produce output events. " alt="" coords="1238,5,1406,47"/>
-<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_change_arity.html" title="ca.uqac.lif.cep.functions.\lChangeArity" alt="" coords="1238,71,1406,112"/>
-<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_turn_into.html" title="Processor that turns any event into a predefined object. " alt="" coords="1238,136,1406,177"/>
-<area shape="rect" id="node11" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_call.html" title="Processor calling an external command upon receiving an event, and returning the output of that comma..." alt="" coords="1248,202,1396,229"/>
-<area shape="rect" id="node12" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_fork.html" title="Duplicates an input trace into two or more output traces. " alt="" coords="1242,253,1402,279"/>
-<area shape="rect" id="node13" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_freeze.html" title="Repeatedly outputs the first event it has received. " alt="" coords="1235,303,1409,330"/>
-<area shape="rect" id="node14" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html" title="Returns its input as its output. " alt="" coords="1219,354,1425,381"/>
-<area shape="rect" id="node15" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html" title="Separates an input trace into different &quot;slices&quot;. " alt="" coords="1241,405,1403,431"/>
-<area shape="rect" id="node16" title="Updates a map by putting key&#45;value pairs into it. " alt="" coords="1238,456,1406,497"/>
-<area shape="rect" id="node17" title="Updates a map by putting key&#45;value pairs into it. " alt="" coords="1238,521,1406,563"/>
-<area shape="rect" id="node18" title="Processor that updates a set. " alt="" coords="1241,587,1403,628"/>
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="700,303,907,330"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="481,303,652,330"/>
-<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="ca.uqac.lif.cep.Duplicable\lProcessor" alt="" coords="243,267,415,308"/>
-<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="5,274,177,301"/>
-<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="ca.uqac.lif.cep.Contextualizable" alt="" coords="225,333,433,359"/>
-<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html" title="Creates a cumulative processor out of a cumulative function. " alt="" coords="1473,5,1641,47"/>
-<area shape="rect" id="node19" title="Updates a set. " alt="" coords="1476,553,1639,595"/>
-<area shape="rect" id="node20" title="Updates a set. " alt="" coords="1476,619,1639,660"/>
+<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html" title="Applies a function to input events to produce output events. " alt="" coords="5,1321,173,1531"/>
+<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_turn_into.html" title="Processor that turns any event into a predefined object. " alt="" coords="197,1343,365,1509"/>
+<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_call.html" title="Processor calling an external command upon receiving an event, and returning the output of that comma..." alt="" coords="390,1365,538,1487"/>
+<area shape="rect" id="node11" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_fork.html" title="Duplicates an input trace into two or more output traces. " alt="" coords="563,1365,723,1487"/>
+<area shape="rect" id="node12" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_freeze.html" title="Repeatedly outputs the first event it has received. " alt="" coords="747,1365,922,1487"/>
+<area shape="rect" id="node13" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html" title="Returns its input as its output. " alt="" coords="946,1365,1153,1487"/>
+<area shape="rect" id="node14" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html" title="Separates an input trace into different &quot;slices&quot;. " alt="" coords="1177,1277,1345,1575"/>
+<area shape="rect" id="node15" title="Updates a map by putting key&#45;value pairs into it. " alt="" coords="1369,1351,1537,1501"/>
+<area shape="rect" id="node16" title="Updates a map by putting key&#45;value pairs into it. " alt="" coords="1561,1351,1729,1501"/>
+<area shape="rect" id="node17" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html" title="{ca.uqac.lif.cep.util.Randomize\n|~ m_random\l~ m_minValue\l~ m_maxValue\l|+ Randomize()\l+ Randomize()\l+ setSeed()\l+ duplicate()\l# compute()\l}" alt="" coords="1754,1343,1953,1509"/>
+<area shape="rect" id="node18" title="Processor that updates a set. " alt="" coords="1977,1365,2140,1487"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="956,851,1143,1016"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="950,300,1149,803"/>
+<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="{ca.uqac.lif.cep.Duplicable\lProcessor\n||+ duplicate()\l}" alt="" coords="857,153,1029,245"/>
+<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="857,5,1029,97"/>
+<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="{ca.uqac.lif.cep.Contextualizable\n||+ setContext()\l+ setContext()\l+ getContext()\l}" alt="" coords="1053,145,1261,252"/>
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html" title="Creates a cumulative processor out of a cumulative function. " alt="" coords="5,1623,173,1759"/>
+<area shape="rect" id="node19" title="Updates a set. " alt="" coords="1884,1630,2047,1751"/>
+<area shape="rect" id="node20" title="Updates a set. " alt="" coords="2071,1630,2233,1751"/>
 </map>

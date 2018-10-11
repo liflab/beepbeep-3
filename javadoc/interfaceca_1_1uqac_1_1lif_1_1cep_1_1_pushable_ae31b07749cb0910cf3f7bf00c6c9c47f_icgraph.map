@@ -1,5 +1,5 @@
 <map id="ca.uqac.lif.cep.Pushable.notifyEndOfTrace" name="ca.uqac.lif.cep.Pushable.notifyEndOfTrace">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html#a6a3e57bfbc4c2b80e348906c5cfbf9e0" title="Notifies the pushable that there is no more event to be pushed, i.e. " alt="" coords="255,5,471,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor_1_1_input_pushable.html#acd303d4f70d28daff90bdbb0ee22cce0" title="Notifies the pushable that there is no more event to be pushed, i.e. " alt="" coords="257,71,468,112"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#ac295189c2b1353e2157f3566b8efe143" title="ca.uqac.lif.cep.tmf.Pump.run" alt="" coords="267,137,458,163"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html#a6a3e57bfbc4c2b80e348906c5cfbf9e0" title="Notifies the pushable that there is no more event to be pushed, i.e. " alt="" coords="260,5,476,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_input_pushable.html#ac3f08bb4b527de812927e1add175a358" title="Notifies the pushable that there is no more event to be pushed, i.e. " alt="" coords="255,71,481,127"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#ac295189c2b1353e2157f3566b8efe143" title="ca.uqac.lif.cep.tmf.Pump.run" alt="" coords="273,151,463,178"/>
 </map>

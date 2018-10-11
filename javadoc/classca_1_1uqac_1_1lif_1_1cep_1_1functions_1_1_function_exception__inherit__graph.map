@@ -1,4 +1,4 @@
 <map id="ca.uqac.lif.cep.functions.FunctionException" name="ca.uqac.lif.cep.functions.FunctionException">
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_invalid_argument_exception.html" title="Exception thrown when a function is given an argument that is invalid. " alt="" coords="401,5,575,47"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_nothing_to_return_exception.html" title="Exception thrown when a function cannot produce a return value. " alt="" coords="399,71,577,112"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_invalid_argument_exception.html" title="Exception thrown when a function is given an argument that is invalid. " alt="" coords="5,285,200,377"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_nothing_to_return_exception.html" title="Exception thrown when a function cannot produce a return value. " alt="" coords="225,285,423,377"/>
 </map>

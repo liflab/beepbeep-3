@@ -1,0 +1,4 @@
+<map id="ca.uqac.lif.cep.functions.RaiseArity.duplicate" name="ca.uqac.lif.cep.functions.RaiseArity.duplicate">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_raise_arity.html#a29db76d188dc7483c736d62c7a347b8d" title="Creates a new instance of the function. " alt="" coords="221,5,389,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#aef157a8007b39531e4ad12e5502eeaee" title="Duplicates an object and sets it to its initial state. " alt="" coords="221,71,389,112"/>
+</map>

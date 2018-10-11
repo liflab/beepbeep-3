@@ -1,10 +1,10 @@
 <map id="ca.uqac.lif.cep.io.ReadInputStream" name="ca.uqac.lif.cep.io.ReadInputStream">
-<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_lines.html" title="Source that reads text lines from a Java InputStream. " alt="" coords="5,490,192,517"/>
-<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_string_stream.html" title="Extracts character strings from a Java InputStream. " alt="" coords="217,483,407,524"/>
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html" title="Produces output events from no input. " alt="" coords="118,319,293,345"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="102,244,309,271"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="120,169,291,196"/>
-<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="ca.uqac.lif.cep.Duplicable\lProcessor" alt="" coords="13,80,185,121"/>
-<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="13,5,185,32"/>
-<area shape="rect" id="node7" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="ca.uqac.lif.cep.Contextualizable" alt="" coords="209,87,417,114"/>
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_lines.html" title="Source that reads text lines from a Java InputStream. " alt="" coords="5,1447,192,1627"/>
+<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_string_stream.html" title="Extracts character strings from a Java InputStream. " alt="" coords="217,1476,407,1597"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html" title="Produces output events from no input. " alt="" coords="118,1064,293,1156"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="112,851,299,1016"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="106,300,305,803"/>
+<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="{ca.uqac.lif.cep.Duplicable\lProcessor\n||+ duplicate()\l}" alt="" coords="13,153,185,245"/>
+<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="13,5,185,97"/>
+<area shape="rect" id="node7" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="{ca.uqac.lif.cep.Contextualizable\n||+ setContext()\l+ setContext()\l+ getContext()\l}" alt="" coords="209,145,417,252"/>
 </map>

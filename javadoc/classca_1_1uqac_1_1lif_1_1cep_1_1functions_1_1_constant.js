@@ -4,6 +4,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant =
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a1a5f92e63dd4c8e50fd9e722519183b3", null ],
     [ "evaluate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a4d3883f42af3703e021de86ba602f84e", null ],
     [ "evaluate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a1557c203d20f4a23adb5b0813df13da6", null ],
+    [ "evaluatePartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a1e4d87a1d67a35cd8354cf5a64998b74", null ],
     [ "getInputArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a21aa4601063919502651dcd6027fbd80", null ],
     [ "getInputTypesFor", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#acfacead02fa642b405b1096f08795992", null ],
     [ "getOutputArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a118d270092183dad0c1c102e26cd594e", null ],

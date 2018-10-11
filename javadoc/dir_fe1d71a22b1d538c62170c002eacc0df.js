@@ -3,11 +3,13 @@ var dir_fe1d71a22b1d538c62170c002eacc0df =
     [ "ApplyFunction.java", "_apply_function_8java.html", [
       [ "ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function" ]
     ] ],
+    [ "ApplyFunctionPartial.java", "_apply_function_partial_8java.html", [
+      [ "ApplyFunctionPartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial" ],
+      [ "InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_input_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_input_pushable" ],
+      [ "OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_output_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_output_pullable" ]
+    ] ],
     [ "BinaryFunction.java", "_binary_function_8java.html", [
       [ "BinaryFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function" ]
-    ] ],
-    [ "ChangeArity.java", "_change_arity_8java.html", [
-      [ "ChangeArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_change_arity.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_change_arity" ]
     ] ],
     [ "Constant.java", "_constant_8java.html", [
       [ "Constant", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant" ]
@@ -51,6 +53,9 @@ var dir_fe1d71a22b1d538c62170c002eacc0df =
     [ "package-info.java", "ca_2uqac_2lif_2cep_2functions_2package-info_8java.html", null ],
     [ "PassthroughFunction.java", "_passthrough_function_8java.html", [
       [ "PassthroughFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_passthrough_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_passthrough_function" ]
+    ] ],
+    [ "RaiseArity.java", "_raise_arity_8java.html", [
+      [ "RaiseArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_raise_arity.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_raise_arity" ]
     ] ],
     [ "StreamVariable.java", "_stream_variable_8java.html", [
       [ "StreamVariable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable" ]

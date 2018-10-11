@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.8.1-alpha</span>
+   &#160;<span id="projectnumber">0.9-alpha</span>
    </div>
   </td>
  </tr>
@@ -73,18 +73,9 @@ Inheritance diagram for ca.uqac.lif.cep.GroupProcessor.ProxyPushable:</div>
 <div class="dyncontent">
 <div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable__inherit__graph.png" border="0" usemap="#ca_8uqac_8lif_8cep_8_group_processor_8_proxy_pushable_inherit__map" alt="Inheritance graph"/></div>
 <map name="ca_8uqac_8lif_8cep_8_group_processor_8_proxy_pushable_inherit__map" id="ca_8uqac_8lif_8cep_8_group_processor_8_proxy_pushable_inherit__map">
-<area shape="rect" id="node2" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html" title="Gives events to some of a processor&#39;s input. " alt="" coords="27,5,193,32"/>
+<area shape="rect" id="node2" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html" title="Gives events to some of a processor&#39;s input. " alt="" coords="27,5,193,141"/>
 </map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for ca.uqac.lif.cep.GroupProcessor.ProxyPushable:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable__coll__graph.png" border="0" usemap="#ca_8uqac_8lif_8cep_8_group_processor_8_proxy_pushable_coll__map" alt="Collaboration graph"/></div>
-<map name="ca_8uqac_8lif_8cep_8_group_processor_8_proxy_pushable_coll__map" id="ca_8uqac_8lif_8cep_8_group_processor_8_proxy_pushable_coll__map">
-<area shape="rect" id="node2" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html" title="Gives events to some of a processor&#39;s input. " alt="" coords="27,109,193,136"/>
-<area shape="rect" id="node3" href="classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html" title="ca.uqac.lif.cep.FutureDone\l\&lt; ca.uqac.lif.cep.Pushable \&gt;" alt="" coords="15,5,205,47"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -336,7 +327,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Pushes an event into one of the processor's input trace, but does not wait for the push operation to terminate. </p>
-<p>In other words, this is a non-blocking call to <code><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html#ae497b04c4690c59bc66257929c0d49f6" title="Pushes an event into one of the processor&#39;s input trace. ">push()</a></code> that returns control to the caller immediately. In order to resynchronize the caller with the result of the push operation, one must call <a class="el" href="">waitFor()</a>. </p>
+<p>In other words, this is a non-blocking call to <code><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html#ae497b04c4690c59bc66257929c0d49f6" title="Pushes an event into one of the processor&#39;s input trace. ">push()</a></code> that returns control to the caller immediately. In order to resynchronize the caller with the result of the push operation, one must use the <code>Future</code> object that the method returns. </p>
 <p>Some implementations of this interface do not implement non-blocking calls; in such a case, a call to <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html#ac3b9b16846a52fc9fce462135d5f9fe8">pushFast()</a> will be identical to a call to <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html#ae497b04c4690c59bc66257929c0d49f6">push()</a>, and calling <a class="el" href="">waitFor()</a> will return immediately.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -361,7 +352,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html">GroupProcessor</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html">ProxyPushable</a></li>
-    <li class="footer">Generated on Mon May 7 2018 08:32:22 for BeepBeep 3 by
+    <li class="footer">Generated on Thu Oct 11 2018 08:11:31 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

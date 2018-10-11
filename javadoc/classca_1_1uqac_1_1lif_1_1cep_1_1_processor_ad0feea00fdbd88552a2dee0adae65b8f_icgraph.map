@@ -1,8 +1,7 @@
 <map id="ca.uqac.lif.cep.Processor.newContext" name="ca.uqac.lif.cep.Processor.newContext">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a50cc092ec2d8bd7784214cd138c204fe" title="Gets the context associated to this object. " alt="" coords="252,28,444,69"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a599c26f46c3e9a9381f22c52f2949b13" title="Adds an object to the object&#39;s context. " alt="" coords="252,93,444,135"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a276f2d7ad8f3b497a09351b69f9566d6" title="Creates a copy of a processor. " alt="" coords="492,5,729,47"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a8a7172efc619406ddae3ed86d141d5cd" title="Copies the contents and state of the current processor into another. " alt="" coords="497,71,724,98"/>
-<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_replace_with.html#acd8f39e1b0c6f36f15597bcd527cbbc7" title="Duplicates an object. " alt="" coords="519,123,702,164"/>
-<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a53fb3e85b6e029d25fe535b48b108187" title="Duplicates an object. " alt="" coords="501,189,720,215"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a50cc092ec2d8bd7784214cd138c204fe" title="Gets the context associated to this object. " alt="" coords="252,5,444,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a599c26f46c3e9a9381f22c52f2949b13" title="Adds an object to the object&#39;s context. " alt="" coords="252,71,444,112"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a276f2d7ad8f3b497a09351b69f9566d6" title="Creates a copy of a processor. " alt="" coords="497,12,735,53"/>
+<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ada60988f96ae4cbaccd8c2f38e9ede5b" title="Copies the contents and state of the current processor into another. " alt="" coords="492,78,740,105"/>
+<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a53fb3e85b6e029d25fe535b48b108187" title="Duplicates an object. " alt="" coords="507,129,725,155"/>
 </map>

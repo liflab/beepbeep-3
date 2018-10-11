@@ -15,8 +15,10 @@ var hierarchy =
     [ "ca.uqac.lif.cep.functions.ContextAssignment", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_context_assignment.html", null ],
     [ "ca.uqac.lif.cep.Contextualizable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html", [
       [ "ca.uqac.lif.cep.Processor", "classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html", [
+        [ "ca.uqac.lif.cep.AsynchronousProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor.html", null ],
+        [ "ca.uqac.lif.cep.functions.ApplyFunctionPartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html", null ],
         [ "ca.uqac.lif.cep.GroupProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html", null ],
-        [ "ca.uqac.lif.cep.SingleProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html", [
+        [ "ca.uqac.lif.cep.SynchronousProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html", [
           [ "ca.uqac.lif.cep.tmf.AbstractWindow", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html", [
             [ "ca.uqac.lif.cep.tmf.Window", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html", null ]
           ] ],
@@ -25,11 +27,9 @@ var hierarchy =
             [ "ca.uqac.lif.cep.tmf.CountDecimate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html", null ],
             [ "ca.uqac.lif.cep.tmf.TimeDecimate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_time_decimate.html", null ]
           ] ],
-          [ "ca.uqac.lif.cep.tmf.Demultiplex", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_demultiplex.html", null ],
           [ "ca.uqac.lif.cep.tmf.Filter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter.html", null ],
           [ "ca.uqac.lif.cep.tmf.Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html", null ],
           [ "ca.uqac.lif.cep.tmf.KeepLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last.html", null ],
-          [ "ca.uqac.lif.cep.tmf.ReplaceWith", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_replace_with.html", null ],
           [ "ca.uqac.lif.cep.tmf.SimpleFilter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html", null ],
           [ "ca.uqac.lif.cep.tmf.Sink", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html", [
             [ "ca.uqac.lif.cep.io.Print", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_print.html", null ],
@@ -49,21 +49,23 @@ var hierarchy =
             ] ],
             [ "ca.uqac.lif.cep.tmf.Splice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html", null ]
           ] ],
+          [ "ca.uqac.lif.cep.tmf.Stutter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter.html", null ],
           [ "ca.uqac.lif.cep.tmf.Trim", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html", [
             [ "ca.uqac.lif.cep.tmf.Prefix", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_prefix.html", null ]
           ] ],
+          [ "ca.uqac.lif.cep.tmf.VariableStutter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_variable_stutter.html", null ],
           [ "ca.uqac.lif.cep.tmf.WindowFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html", null ],
           [ "ca.uqac.lif.cep.UniformProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html", [
             [ "ca.uqac.lif.cep.functions.ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", [
               [ "ca.uqac.lif.cep.functions.Cumulate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html", null ]
             ] ],
-            [ "ca.uqac.lif.cep.functions.ChangeArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_change_arity.html", null ],
             [ "ca.uqac.lif.cep.functions.TurnInto", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_turn_into.html", null ],
             [ "ca.uqac.lif.cep.io.Call", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_call.html", null ],
             [ "ca.uqac.lif.cep.tmf.Fork", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_fork.html", null ],
             [ "ca.uqac.lif.cep.tmf.Freeze", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_freeze.html", null ],
             [ "ca.uqac.lif.cep.tmf.Passthrough", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html", null ],
-            [ "ca.uqac.lif.cep.tmf.Slice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html", null ]
+            [ "ca.uqac.lif.cep.tmf.Slice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html", null ],
+            [ "ca.uqac.lif.cep.util.Randomize", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html", null ]
           ] ],
           [ "ca.uqac.lif.cep.util.FindPattern", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html", null ]
         ] ],
@@ -88,6 +90,7 @@ var hierarchy =
           [ "ca.uqac.lif.cep.functions.IdentityFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_identity_function.html", null ],
           [ "ca.uqac.lif.cep.functions.IfThenElse", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_if_then_else.html", null ],
           [ "ca.uqac.lif.cep.functions.PassthroughFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_passthrough_function.html", null ],
+          [ "ca.uqac.lif.cep.functions.RaiseArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_raise_arity.html", null ],
           [ "ca.uqac.lif.cep.functions.UnaryFunction< T, U >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", [
             [ "ca.uqac.lif.cep.util.NthElement", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_nth_element.html", null ],
             [ "ca.uqac.lif.cep.util.Size", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_size.html", null ]
@@ -105,9 +108,11 @@ var hierarchy =
     [ "ca.uqac.lif.cep.FutureDone< ca.uqac.lif.cep.Pushable >", "classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html", null ],
     [ "Iterable", null, [
       [ "ca.uqac.lif.cep.Pullable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html", [
+        [ "ca.uqac.lif.cep.AsynchronousProcessor.OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_output_pullable.html", null ],
+        [ "ca.uqac.lif.cep.functions.ApplyFunctionPartial.OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_output_pullable.html", null ],
         [ "ca.uqac.lif.cep.GroupProcessor.ProxyPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html", null ],
         [ "ca.uqac.lif.cep.Pullable.PullNotSupported", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html", null ],
-        [ "ca.uqac.lif.cep.SingleProcessor.OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor_1_1_output_pullable.html", null ],
+        [ "ca.uqac.lif.cep.SynchronousProcessor.OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html", null ],
         [ "ca.uqac.lif.cep.tmf.Multiplex.MuxPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pullable.html", null ],
         [ "ca.uqac.lif.cep.tmf.Tank.QueuePullable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pullable.html", null ],
         [ "ca.uqac.lif.cep.TypedPullable< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html", null ],
@@ -117,12 +122,14 @@ var hierarchy =
     [ "ca.uqac.lif.cep.util.Lists", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists.html", null ],
     [ "ca.uqac.lif.cep.Main", "classca_1_1uqac_1_1lif_1_1cep_1_1_main.html", null ],
     [ "ca.uqac.lif.cep.util.Maps", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps.html", null ],
-    [ "ca.uqac.lif.cep.NextStatus", "enumca_1_1uqac_1_1lif_1_1cep_1_1_next_status.html", null ],
+    [ "ca.uqac.lif.cep.Pullable.NextStatus", "enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status.html", null ],
     [ "ca.uqac.lif.cep.util.Numbers", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html", null ],
     [ "ca.uqac.lif.cep.PipeCrawler", "classca_1_1uqac_1_1lif_1_1cep_1_1_pipe_crawler.html", null ],
     [ "ca.uqac.lif.cep.Pushable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html", [
+      [ "ca.uqac.lif.cep.AsynchronousProcessor.InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_input_pushable.html", null ],
+      [ "ca.uqac.lif.cep.functions.ApplyFunctionPartial.InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_input_pushable.html", null ],
       [ "ca.uqac.lif.cep.GroupProcessor.ProxyPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html", null ],
-      [ "ca.uqac.lif.cep.SingleProcessor.InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor_1_1_input_pushable.html", null ],
+      [ "ca.uqac.lif.cep.SynchronousProcessor.InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_input_pushable.html", null ],
       [ "ca.uqac.lif.cep.tmf.Multiplex.MuxPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pushable.html", null ],
       [ "ca.uqac.lif.cep.tmf.Tank.QueuePushable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pushable.html", null ],
       [ "ca.uqac.lif.cep.UniformProcessor.UnaryPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html", null ]
@@ -147,6 +154,7 @@ var hierarchy =
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Boolean, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Collection, Object >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Map, Collection >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
+    [ "ca.uqac.lif.cep.functions.UnaryFunction< Map, Map >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Map, Object >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Number, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Number, Number >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
@@ -161,6 +169,7 @@ var hierarchy =
     ] ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction<?, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "Future", null, [
+      [ "ca.uqac.lif.cep.CompoundFuture< T, U >", "classca_1_1uqac_1_1lif_1_1cep_1_1_compound_future.html", null ],
       [ "ca.uqac.lif.cep.FutureDone< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html", null ]
     ] ],
     [ "HashMap", null, [
@@ -168,5 +177,8 @@ var hierarchy =
     ] ],
     [ "Iterator", null, [
       [ "ca.uqac.lif.cep.Pullable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html", null ]
+    ] ],
+    [ "Set", null, [
+      [ "ca.uqac.lif.cep.util.Multiset", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html", null ]
     ] ]
 ];

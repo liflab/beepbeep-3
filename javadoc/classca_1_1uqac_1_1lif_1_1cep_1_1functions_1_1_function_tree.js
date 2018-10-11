@@ -5,6 +5,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree =
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#ace8511752b780e2344e66134eac4448c", null ],
     [ "evaluate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#aa414382b0f9fadfabe806f5e4c1d86f0", null ],
     [ "evaluate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a45bb47126ff2531a411c4fba48d8c469", null ],
+    [ "evaluateLazy", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a73566599cf0ee9f9f77e35c67b4619b4", null ],
+    [ "evaluatePartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a60ac0dd76902a6cf7aa437b524620725", null ],
     [ "getInputArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a0300b14661a06adb66bdbda0d61872e7", null ],
     [ "getInputTypesFor", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a79d1c959766bff0fb7c26ba57b868036", null ],
     [ "getOutputArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a99a5a9387bca60fab81da74f091cba8b", null ],

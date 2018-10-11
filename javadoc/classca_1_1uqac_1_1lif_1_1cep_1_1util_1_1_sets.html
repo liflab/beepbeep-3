@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.8.1-alpha</span>
+   &#160;<span id="projectnumber">0.9-alpha</span>
    </div>
   </td>
  </tr>
@@ -71,23 +71,14 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1util_
 
 <p>A container object for set functions and processors.  
  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets.html#details">More...</a></p>
-<div class="dynheader">
-Collaboration diagram for ca.uqac.lif.cep.util.Sets:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets__coll__graph.png" border="0" usemap="#ca_8uqac_8lif_8cep_8util_8_sets_coll__map" alt="Collaboration graph"/></div>
-<map name="ca_8uqac_8lif_8cep_8util_8_sets_coll__map" id="ca_8uqac_8lif_8cep_8util_8_sets_coll__map">
-<area shape="rect" id="node2" title="Checks if a set is a subset of another. " alt="" coords="13,368,176,409"/>
-<area shape="rect" id="node3" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html" title="Function of two inputs and one output. " alt="" coords="5,263,184,319"/>
-<area shape="rect" id="node4" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html" title="Represents a stateless m&#45;to&#45;n function. " alt="" coords="11,172,179,213"/>
-<area shape="rect" id="node5" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function.html" title="ca.uqac.lif.cep.functions.\lDuplicableFunction" alt="" coords="11,81,179,123"/>
-<area shape="rect" id="node6" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="9,5,181,32"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>IsSubsetOrEqual</b></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a set is a subset of another. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>IsSupersetOrEqual</b></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a set is a superset of another. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>PutInto</b></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a set. <br /></td></tr>
@@ -103,6 +94,8 @@ Classes</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:aca3be9a221a05006aaa4a83a225c3fdb"><td class="memItemLeft" align="right" valign="top">static final IsSubsetOrEqual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets.html#aca3be9a221a05006aaa4a83a225c3fdb">isSubsetOrEqual</a> = new IsSubsetOrEqual()</td></tr>
 <tr class="separator:aca3be9a221a05006aaa4a83a225c3fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab29f07cdc1432743449c877a86b1fd30"><td class="memItemLeft" align="right" valign="top">static final IsSupersetOrEqual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets.html#ab29f07cdc1432743449c877a86b1fd30">isSupersetOrEqual</a> = new IsSupersetOrEqual()</td></tr>
+<tr class="separator:ab29f07cdc1432743449c877a86b1fd30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A container object for set functions and processors. </p>
@@ -140,6 +133,30 @@ The "new" function takes as input a set object, and returns a <em>new copy</em> 
 
 </div>
 </div>
+<a id="ab29f07cdc1432743449c877a86b1fd30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab29f07cdc1432743449c877a86b1fd30">&#9670;&nbsp;</a></span>isSupersetOrEqual</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">final IsSupersetOrEqual ca.uqac.lif.cep.util.Sets.isSupersetOrEqual = new IsSupersetOrEqual()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_sets_8java_source.html#l00046">46</a> of file <a class="el" href="_sets_8java_source.html">Sets.java</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/sylvain/Workspaces/beepbeep/core/Core/src/ca/uqac/lif/cep/util/<a class="el" href="_sets_8java_source.html">Sets.java</a></li>
 </ul>
@@ -149,7 +166,7 @@ The "new" function takes as input a set object, and returns a <em>new copy</em> 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1util.html">util</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets.html">Sets</a></li>
-    <li class="footer">Generated on Mon May 7 2018 08:32:23 for BeepBeep 3 by
+    <li class="footer">Generated on Thu Oct 11 2018 08:11:32 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

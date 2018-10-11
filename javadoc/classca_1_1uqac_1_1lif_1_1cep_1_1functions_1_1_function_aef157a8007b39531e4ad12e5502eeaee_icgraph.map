@@ -1,9 +1,11 @@
 <map id="ca.uqac.lif.cep.functions.Function.duplicate" name="ca.uqac.lif.cep.functions.Function.duplicate">
 <area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#adf08f007ae7651bd810a6ebdebbb5d3e" title="Duplicates an object. " alt="" coords="247,5,415,47"/>
 <area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a30f302637a754678d7495ae37163f0ba" title="ca.uqac.lif.cep.functions.\lApplyFunction.cloneInto" alt="" coords="247,71,415,112"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_change_arity.html#a3899a0ed0ca8eb6e61e52bebf8209aec" title="Duplicates an object. " alt="" coords="247,136,415,177"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#ace8511752b780e2344e66134eac4448c" title="Duplicates an object. " alt="" coords="247,201,415,243"/>
-<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html#a2d1d2d85877731bbf14d5009be8b0e41" title="Duplicates an object. " alt="" coords="243,267,418,308"/>
-<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a53fb3e85b6e029d25fe535b48b108187" title="Duplicates an object. " alt="" coords="221,333,440,359"/>
-<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html#a3f53984d17efbf6886fc6098a3c92d83" title="Duplicates an object. " alt="" coords="240,384,421,425"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#aa779fdcd4171d4790770f0e1e7f9fd7f" title="Duplicates an object. " alt="" coords="231,136,430,177"/>
+<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html#a4f1e755bbb7bd5a639d6a1d3267ddb18" title="Duplicates an object. " alt="" coords="247,201,415,243"/>
+<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#ace8511752b780e2344e66134eac4448c" title="Duplicates an object. " alt="" coords="247,267,415,308"/>
+<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_raise_arity.html#a50678471f4b62668e3e10eef6df7021b" title="Duplicates an object. " alt="" coords="247,332,415,373"/>
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html#a2d1d2d85877731bbf14d5009be8b0e41" title="Duplicates an object. " alt="" coords="243,397,418,439"/>
+<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a53fb3e85b6e029d25fe535b48b108187" title="Duplicates an object. " alt="" coords="221,463,440,490"/>
+<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html#a3f53984d17efbf6886fc6098a3c92d83" title="Duplicates an object. " alt="" coords="240,515,421,556"/>
 </map>

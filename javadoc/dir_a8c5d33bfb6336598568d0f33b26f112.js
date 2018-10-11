@@ -4,6 +4,14 @@ var dir_a8c5d33bfb6336598568d0f33b26f112 =
     [ "io", "dir_9b18e3caf872ced10af39584bf6eed18.html", "dir_9b18e3caf872ced10af39584bf6eed18" ],
     [ "tmf", "dir_60bb765f511b78b06715fd6a7ec24fc9.html", "dir_60bb765f511b78b06715fd6a7ec24fc9" ],
     [ "util", "dir_6d07caa9358766d193336e9c645c4c5e.html", "dir_6d07caa9358766d193336e9c645c4c5e" ],
+    [ "AsynchronousProcessor.java", "_asynchronous_processor_8java.html", [
+      [ "AsynchronousProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor" ],
+      [ "InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_input_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_input_pushable" ],
+      [ "OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_output_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_output_pullable" ]
+    ] ],
+    [ "CompoundFuture.java", "_compound_future_8java.html", [
+      [ "CompoundFuture", "classca_1_1uqac_1_1lif_1_1cep_1_1_compound_future.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_compound_future" ]
+    ] ],
     [ "Connector.java", "_connector_8java.html", null ],
     [ "Context.java", "_context_8java.html", [
       [ "Context", "classca_1_1uqac_1_1lif_1_1cep_1_1_context.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_context" ]
@@ -32,9 +40,6 @@ var dir_a8c5d33bfb6336598568d0f33b26f112 =
     [ "Main.java", "_main_8java.html", [
       [ "Main", "classca_1_1uqac_1_1lif_1_1cep_1_1_main.html", null ]
     ] ],
-    [ "NextStatus.java", "_next_status_8java.html", [
-      [ "NextStatus", "enumca_1_1uqac_1_1lif_1_1cep_1_1_next_status.html", "enumca_1_1uqac_1_1lif_1_1cep_1_1_next_status" ]
-    ] ],
     [ "package-info.java", "ca_2uqac_2lif_2cep_2package-info_8java.html", null ],
     [ "PipeCrawler.java", "_pipe_crawler_8java.html", [
       [ "PipeCrawler", "classca_1_1uqac_1_1lif_1_1cep_1_1_pipe_crawler.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pipe_crawler" ]
@@ -47,15 +52,16 @@ var dir_a8c5d33bfb6336598568d0f33b26f112 =
     ] ],
     [ "Pullable.java", "_pullable_8java.html", [
       [ "Pullable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable" ],
-      [ "PullNotSupported", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported" ]
+      [ "PullNotSupported", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported" ],
+      [ "NextStatus", "enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status.html", "enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status" ]
     ] ],
     [ "Pushable.java", "_pushable_8java.html", [
       [ "Pushable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable" ]
     ] ],
-    [ "SingleProcessor.java", "_single_processor_8java.html", [
-      [ "SingleProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor" ],
-      [ "InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor_1_1_input_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor_1_1_input_pushable" ],
-      [ "OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor_1_1_output_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor_1_1_output_pullable" ]
+    [ "SynchronousProcessor.java", "_synchronous_processor_8java.html", [
+      [ "SynchronousProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor" ],
+      [ "InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_input_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_input_pushable" ],
+      [ "OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable" ]
     ] ],
     [ "TypedPullable.java", "_typed_pullable_8java.html", [
       [ "TypedPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable" ]

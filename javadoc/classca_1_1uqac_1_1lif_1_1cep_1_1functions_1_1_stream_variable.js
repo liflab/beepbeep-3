@@ -5,6 +5,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable =
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a1547ab37db3106c5d503b32aa7496e1c", null ],
     [ "equals", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a607b40806e5b1ed9dc88f1266e36fdd5", null ],
     [ "evaluate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a0f4f6fe0ce8aee9b2e584e2f8621924d", null ],
+    [ "evaluatePartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a0d355687bf3e5ffb0644bb052bbb571b", null ],
     [ "getIndex", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#ac413e73e8357180508319c66112ad3dc", null ],
     [ "hashCode", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a1a7d90c912230bdbe5e70c6ce8283de7", null ],
     [ "toString", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a030b6e683d57fe6a70a628ea204dc454", null ],

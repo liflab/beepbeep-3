@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.8.1-alpha</span>
+   &#160;<span id="projectnumber">0.9-alpha</span>
    </div>
   </td>
  </tr>
@@ -72,7 +72,9 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1funct
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#aef157a8007b39531e4ad12e5502eeaee">ca::uqac::lif::cep::functions::Function.duplicate</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a4d3883f42af3703e021de86ba602f84e">evaluate</a>(Object[] inputs, Object[] outputs, Context context)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a1557c203d20f4a23adb5b0813df13da6">evaluate</a>(Object[] inputs, Object[] outputs)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#ae58efb8b8ec0e210a64524b873d32d0f">evaluateFast</a>(Object[] inputs, Object[] outputs, Context context)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#adf7d3a8319b3035db82d9bb2aaf11920">evaluateFast</a>(Object[] inputs, Object[] outputs, Context context, ExecutorService service)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a1087a6d93d5175e3bfcb825991184eab">evaluateLazy</a>(Object[] inputs, Object[] outputs)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a1e4d87a1d67a35cd8354cf5a64998b74">evaluatePartial</a>(Object[] inputs, Object[] outputs, Context context)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a21aa4601063919502651dcd6027fbd80">getInputArity</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#acfacead02fa642b405b1096f08795992">getInputTypesFor</a>(Set&lt; Class&lt;?&gt;&gt; classes, int index)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a118d270092183dad0c1c102e26cd594e">getOutputArity</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"></td></tr>
@@ -82,14 +84,13 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1funct
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#ab71c98461f1c93db5510feb3be55e8c2">reset</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a7f4155491d40545be2e44820ae30d7be">s_maxInputArity</a></td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#ab24d9bcb0f5b447047e0f744999701df">toString</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a6fbb5dca3cbd766219293f0def50822e">waitFor</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a0ccced0b4a64e2e8e4e30da0a3db3b5c">ZERO</a></td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html#a0ccced0b4a64e2e8e4e30da0a3db3b5c">ZERO</a></td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html">ca.uqac.lif.cep.functions.Constant</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon May 7 2018 08:32:22 for BeepBeep 3 by
+    <li class="footer">Generated on Thu Oct 11 2018 08:11:31 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

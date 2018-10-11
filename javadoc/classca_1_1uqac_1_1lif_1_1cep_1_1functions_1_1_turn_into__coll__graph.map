@@ -1,6 +1,6 @@
 <map id="ca.uqac.lif.cep.functions.TurnInto" name="ca.uqac.lif.cep.functions.TurnInto">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html" title="Processor that produces exactly one output front for each input front received. " alt="" coords="1284,261,1500,288"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="1028,261,1235,288"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html" title="Processor that produces exactly one output front for each input front received. " alt="" coords="1264,261,1480,288"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="1028,254,1215,295"/>
 <area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="720,205,891,232"/>
 <area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="ca.uqac.lif.cep.Duplicable\lProcessor" alt="" coords="362,181,534,222"/>
 <area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="14,188,186,215"/>

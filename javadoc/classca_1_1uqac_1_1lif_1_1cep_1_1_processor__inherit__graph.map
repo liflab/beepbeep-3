@@ -1,50 +1,49 @@
 <map id="ca.uqac.lif.cep.Processor" name="ca.uqac.lif.cep.Processor">
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html" title="Encapsulates a chain of processors as if it were a single one. " alt="" coords="701,449,906,476"/>
-<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="700,500,907,527"/>
-<area shape="rect" id="node46" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex.html" title="Merges the contents of multiple traces into a single trace. " alt="" coords="710,551,897,577"/>
-<area shape="rect" id="node47" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html" title="Processor that repeatedly pulls its input, and pushes the resulting events to its output..." alt="" coords="719,601,887,628"/>
-<area shape="rect" id="node48" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank.html" title="Accumulates pushed events into a queue until they are pulled. " alt="" coords="722,889,885,916"/>
-<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="ca.uqac.lif.cep.Duplicable\lProcessor" alt="" coords="243,514,415,555"/>
-<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="5,521,177,548"/>
-<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="ca.uqac.lif.cep.Contextualizable" alt="" coords="225,580,433,607"/>
-<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html" title="Simulates the application of a &quot;sliding window&quot; to a trace. " alt="" coords="971,6,1154,47"/>
-<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_callback_sink.html" title="A sink that calls a method when a new front of events is pushed to it. " alt="" coords="957,79,1168,105"/>
-<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html" title="By default, a Decimate acts like a Passthrough for which only certain inputs are allowed to be output..." alt="" coords="967,129,1158,156"/>
-<area shape="rect" id="node13" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_demultiplex.html" title="Converts a sequence of n consecutive events into an event that is a vector of size n..." alt="" coords="961,180,1164,207"/>
-<area shape="rect" id="node14" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter.html" title="Discards events from an input trace based on a selection criterion. " alt="" coords="981,231,1144,257"/>
-<area shape="rect" id="node15" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html" title="Inserts an event a certain number of times before letting the input events through. " alt="" coords="979,281,1146,308"/>
-<area shape="rect" id="node16" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last.html" title="Outputs only the last event received. " alt="" coords="968,332,1157,359"/>
-<area shape="rect" id="node17" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_replace_with.html" title="Function processor that turns input events into the same constant. " alt="" coords="958,383,1167,409"/>
-<area shape="rect" id="node18" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html" title="A simple filter that lets input events out by evaluating a condition on them; if the condition evalua..." alt="" coords="975,434,1150,475"/>
-<area shape="rect" id="node19" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html" title="Receives input events and stores them. " alt="" coords="983,500,1143,527"/>
-<area shape="rect" id="node25" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html" title="Produces output events from no input. " alt="" coords="975,551,1150,577"/>
-<area shape="rect" id="node30" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html" title="Discards the first n events of the input, and outputs the remaining ones. " alt="" coords="983,601,1143,628"/>
-<area shape="rect" id="node32" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html" title="Takes a sliding window of n successive input events, passes them to an n&#45;ary function and outputs the..." alt="" coords="972,653,1153,694"/>
-<area shape="rect" id="node33" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html" title="Processor that produces exactly one output front for each input front received. " alt="" coords="955,783,1171,809"/>
-<area shape="rect" id="node42" title="Runs each element of a collection into a processor, and collect its output. " alt="" coords="979,834,1146,875"/>
-<area shape="rect" id="node43" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html" title="Extracts chunks of an input stream based on a regular expression. " alt="" coords="984,899,1141,941"/>
-<area shape="rect" id="node44" title="Common ancestor to TimePack and Pack. " alt="" coords="981,965,1145,1006"/>
-<area shape="rect" id="node45" title="Unpacks a list of objects by outputting its contents as separate events. " alt="" coords="981,1030,1145,1071"/>
-<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html" title="Simulates the application of a &quot;sliding window&quot; to a trace. " alt="" coords="1231,5,1413,32"/>
-<area shape="rect" id="node11" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html" title="Returns one input event and discards the next n&#45;1. " alt="" coords="1237,57,1407,98"/>
-<area shape="rect" id="node12" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_time_decimate.html" title="After returning an input event, discards all others for the next n seconds. " alt="" coords="1241,122,1403,163"/>
-<area shape="rect" id="node20" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_print.html" title="Sends its input to a PrintStream (such as the standard output). " alt="" coords="1246,188,1398,215"/>
-<area shape="rect" id="node21" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_output_stream.html" title="Processor that writes events to a Java OutputStream. " alt="" coords="1244,239,1400,281"/>
-<area shape="rect" id="node22" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_black_hole.html" title="A special type of Sink that discards everything it receives. " alt="" coords="1225,305,1419,332"/>
-<area shape="rect" id="node23" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html" title="Sink that accumulates events into queues. " alt="" coords="1223,356,1421,383"/>
-<area shape="rect" id="node24" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html" title="Sink that remembers only the last event sent to it. " alt="" coords="1229,407,1415,433"/>
-<area shape="rect" id="node26" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_http_get.html" title="Reads chunks of data from an URL, using an HTTP request. " alt="" coords="1237,457,1407,484"/>
-<area shape="rect" id="node27" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_input_stream.html" title="Read contents from a Java InputStream. " alt="" coords="1229,509,1415,550"/>
-<area shape="rect" id="node28" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source.html" title="Source whose input is a queue of objects. " alt="" coords="1236,574,1408,615"/>
-<area shape="rect" id="node29" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html" title="Joins multiple traces as a single one. " alt="" coords="1237,640,1407,667"/>
-<area shape="rect" id="node31" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_prefix.html" title="Returns the first n input events and discards the following ones. " alt="" coords="1238,691,1406,717"/>
-<area shape="rect" id="node34" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html" title="Applies a function to input events to produce output events. " alt="" coords="1238,742,1406,783"/>
-<area shape="rect" id="node35" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_change_arity.html" title="ca.uqac.lif.cep.functions.\lChangeArity" alt="" coords="1238,807,1406,849"/>
-<area shape="rect" id="node36" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_turn_into.html" title="Processor that turns any event into a predefined object. " alt="" coords="1238,873,1406,914"/>
-<area shape="rect" id="node37" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_call.html" title="Processor calling an external command upon receiving an event, and returning the output of that comma..." alt="" coords="1248,939,1396,965"/>
-<area shape="rect" id="node38" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_fork.html" title="Duplicates an input trace into two or more output traces. " alt="" coords="1242,989,1402,1016"/>
-<area shape="rect" id="node39" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_freeze.html" title="Repeatedly outputs the first event it has received. " alt="" coords="1235,1040,1409,1067"/>
-<area shape="rect" id="node40" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html" title="Returns its input as its output. " alt="" coords="1219,1091,1425,1117"/>
-<area shape="rect" id="node41" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html" title="Separates an input trace into different &quot;slices&quot;. " alt="" coords="1241,1141,1403,1168"/>
-<area shape="rect" id="node49" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_last.html" title="Tank that, when pulled, creates an output event based on the last event received. ..." alt="" coords="969,1096,1157,1123"/>
+<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor.html" title="Processor that handles its inputs asynchronously. " alt="" coords="1289,858,1488,1097"/>
+<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html" title="Evaluates a function on each event front in a lazy manner. " alt="" coords="1513,873,1681,1082"/>
+<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html" title="Encapsulates a chain of processors as if it were a single one. " alt="" coords="1705,851,1910,1104"/>
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="1934,895,2121,1060"/>
+<area shape="rect" id="node46" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex.html" title="Merges the contents of multiple traces into a single trace. " alt="" coords="2145,917,2331,1038"/>
+<area shape="rect" id="node47" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html" title="Processor that repeatedly pulls its input, and pushes the resulting events to its output..." alt="" coords="2355,873,2523,1082"/>
+<area shape="rect" id="node48" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank.html" title="Accumulates pushed events into a queue until they are pulled. " alt="" coords="3245,902,3407,1053"/>
+<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="{ca.uqac.lif.cep.Duplicable\lProcessor\n||+ duplicate()\l}" alt="" coords="1835,153,2007,245"/>
+<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="1835,5,2007,97"/>
+<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="{ca.uqac.lif.cep.Contextualizable\n||+ setContext()\l+ setContext()\l+ getContext()\l}" alt="" coords="2031,145,2239,252"/>
+<area shape="rect" id="node9" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html" title="Simulates the application of a &quot;sliding window&quot; to a trace. " alt="" coords="5,1189,188,1310"/>
+<area shape="rect" id="node11" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_callback_sink.html" title="A sink that calls a method when a new front of events is pushed to it. " alt="" coords="213,1189,423,1310"/>
+<area shape="rect" id="node12" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html" title="By default, a Decimate acts like a Passthrough for which only certain inputs are allowed to be output..." alt="" coords="447,1152,645,1347"/>
+<area shape="rect" id="node15" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter.html" title="Discards events from an input trace based on a selection criterion. " alt="" coords="670,1196,833,1303"/>
+<area shape="rect" id="node16" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html" title="Inserts an event a certain number of times before letting the input events through. " alt="" coords="857,1189,1024,1310"/>
+<area shape="rect" id="node17" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last.html" title="Outputs only the last event received. " alt="" coords="1049,1181,1238,1317"/>
+<area shape="rect" id="node18" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html" title="A simple filter that lets input events out by evaluating a condition on them; if the condition evalua..." alt="" coords="1263,1167,1437,1332"/>
+<area shape="rect" id="node19" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html" title="Receives input events and stores them. " alt="" coords="1462,1189,1622,1310"/>
+<area shape="rect" id="node25" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html" title="Produces output events from no input. " alt="" coords="1647,1203,1821,1295"/>
+<area shape="rect" id="node30" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter.html" title="Repeats each input event a specified number of times. " alt="" coords="1846,1196,2019,1303"/>
+<area shape="rect" id="node31" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html" title="Discards the first n events of the input, and outputs the remaining ones. " alt="" coords="2043,1181,2203,1317"/>
+<area shape="rect" id="node33" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_variable_stutter.html" title="Processor that repeats input events a number of times based on a control signal. " alt="" coords="2227,1189,2409,1310"/>
+<area shape="rect" id="node34" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html" title="Takes a sliding window of n successive input events, passes them to an n&#45;ary function and outputs the..." alt="" coords="2433,1152,2614,1347"/>
+<area shape="rect" id="node35" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html" title="Processor that produces exactly one output front for each input front received. " alt="" coords="2638,1167,2854,1332"/>
+<area shape="rect" id="node41" title="Runs each element of a collection into a processor, and collect its output. " alt="" coords="2879,1174,3045,1325"/>
+<area shape="rect" id="node42" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html" title="Extracts chunks of an input stream based on a regular expression. " alt="" coords="3070,1159,3227,1339"/>
+<area shape="rect" id="node43" title="Common ancestor to TimePack and Pack. " alt="" coords="3252,1189,3416,1310"/>
+<area shape="rect" id="node44" title="Unpacks a collection of objects by outputting its contents as separate events. " alt="" coords="3440,1189,3604,1310"/>
+<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html" title="Simulates the application of a &quot;sliding window&quot; to a trace. " alt="" coords="6,1483,187,1663"/>
+<area shape="rect" id="node13" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html" title="Returns one input event and discards the next n&#45;1. " alt="" coords="259,1475,428,1670"/>
+<area shape="rect" id="node14" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_time_decimate.html" title="After returning an input event, discards all others for the next n seconds. " alt="" coords="453,1475,615,1670"/>
+<area shape="rect" id="node20" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_print.html" title="Sends its input to a PrintStream (such as the standard output). " alt="" coords="639,1395,791,1751"/>
+<area shape="rect" id="node21" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_output_stream.html" title="Processor that writes events to a Java OutputStream. " alt="" coords="816,1505,972,1641"/>
+<area shape="rect" id="node22" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_black_hole.html" title="A special type of Sink that discards everything it receives. " alt="" coords="997,1527,1191,1619"/>
+<area shape="rect" id="node23" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html" title="Sink that accumulates events into queues. " alt="" coords="1216,1483,1415,1663"/>
+<area shape="rect" id="node24" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html" title="Sink that remembers only the last event sent to it. " alt="" coords="1439,1490,1624,1655"/>
+<area shape="rect" id="node26" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_http_get.html" title="Reads chunks of data from an URL, using an HTTP request. " alt="" coords="1649,1505,1819,1641"/>
+<area shape="rect" id="node27" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_input_stream.html" title="Read contents from a Java InputStream. " alt="" coords="1844,1475,2029,1670"/>
+<area shape="rect" id="node28" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source.html" title="Source whose input is a queue of objects. " alt="" coords="2053,1446,2225,1699"/>
+<area shape="rect" id="node29" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html" title="Joins multiple sources as a single one. " alt="" coords="2250,1475,2421,1670"/>
+<area shape="rect" id="node32" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_prefix.html" title="Returns the first n input events and discards the following ones. " alt="" coords="2445,1519,2613,1626"/>
+<area shape="rect" id="node36" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html" title="Applies a function to input events to produce output events. " alt="" coords="2637,1468,2805,1677"/>
+<area shape="rect" id="node37" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_turn_into.html" title="Processor that turns any event into a predefined object. " alt="" coords="2829,1490,2997,1655"/>
+<area shape="rect" id="node38" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_call.html" title="Processor calling an external command upon receiving an event, and returning the output of that comma..." alt="" coords="3021,1512,3169,1633"/>
+<area shape="rect" id="node39" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_fork.html" title="Duplicates an input trace into two or more output traces. " alt="" coords="3194,1512,3354,1633"/>
+<area shape="rect" id="node40" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_freeze.html" title="Repeatedly outputs the first event it has received. " alt="" coords="3379,1512,3553,1633"/>
+<area shape="rect" id="node49" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_last.html" title="Tank that, when pulled, creates an output event based on the last event received. ..." alt="" coords="3835,1203,4023,1295"/>
 </map>

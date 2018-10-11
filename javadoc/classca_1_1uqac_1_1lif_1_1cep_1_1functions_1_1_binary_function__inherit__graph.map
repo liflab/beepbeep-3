@@ -1,23 +1,24 @@
 <map id="ca.uqac.lif.cep.functions.BinaryFunction&lt; T, V, U &gt;" name="ca.uqac.lif.cep.functions.BinaryFunction&lt; T, V, U &gt;">
-<area shape="rect" id="node6" title="Computes the Cartesian product of two collections. " alt="" coords="915,100,1078,171"/>
-<area shape="rect" id="node7" title="Implementation of the logical conjunction. " alt="" coords="895,195,1098,251"/>
-<area shape="rect" id="node8" title="Implementation of the logical implication. " alt="" coords="895,275,1098,331"/>
-<area shape="rect" id="node9" title="Implementation of the logical disjunction. " alt="" coords="895,355,1098,411"/>
-<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals.html" title="A function that checks for the equality of various data types. " alt="" coords="922,435,1071,491"/>
-<area shape="rect" id="node11" title="Computes the sum of its arguments. " alt="" coords="897,515,1097,571"/>
-<area shape="rect" id="node12" title="Computes the quotient of its arguments. " alt="" coords="897,595,1097,651"/>
-<area shape="rect" id="node17" title="Returns the maximum of two numbers. " alt="" coords="897,1011,1097,1067"/>
-<area shape="rect" id="node18" title="Returns the minimum of two numbers. " alt="" coords="897,1091,1097,1147"/>
-<area shape="rect" id="node19" title="Computes the product of its arguments. " alt="" coords="897,1171,1097,1227"/>
-<area shape="rect" id="node20" title="Computes the power of its arguments. " alt="" coords="897,1251,1097,1307"/>
-<area shape="rect" id="node21" title="Computes the difference of its arguments. " alt="" coords="897,1331,1097,1387"/>
-<area shape="rect" id="node22" title="Checks if a set is a subset of another. " alt="" coords="902,1411,1091,1467"/>
-<area shape="rect" id="node23" title="Concatenates two strings. " alt="" coords="911,1491,1083,1547"/>
-<area shape="rect" id="node24" title="Function that checks if a string contains another. " alt="" coords="908,1571,1085,1627"/>
-<area shape="rect" id="node25" title="Function that checks if a string ends by another. " alt="" coords="908,1651,1085,1707"/>
-<area shape="rect" id="node26" title="Checks if a string matches a regular expression. " alt="" coords="908,1731,1085,1787"/>
-<area shape="rect" id="node27" title="Checks if a string starts by another. " alt="" coords="908,1811,1085,1867"/>
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html" title="Represents a stateless m&#45;to&#45;n function. " alt="" coords="441,939,609,980"/>
-<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function.html" title="ca.uqac.lif.cep.functions.\lDuplicableFunction" alt="" coords="225,939,393,980"/>
-<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="5,946,177,973"/>
+<area shape="rect" id="node6" title="Computes the Cartesian product of two collections. " alt="" coords="175,925,338,1046"/>
+<area shape="rect" id="node7" title="Implementation of the logical conjunction. " alt="" coords="362,917,565,1053"/>
+<area shape="rect" id="node8" title="Implementation of the logical implication. " alt="" coords="589,917,791,1053"/>
+<area shape="rect" id="node9" title="Implementation of the logical disjunction. " alt="" coords="815,917,1018,1053"/>
+<area shape="rect" id="node10" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals.html" title="A function that checks for the equality of various data types. " alt="" coords="1042,925,1191,1046"/>
+<area shape="rect" id="node11" title="Computes the sum of its arguments. " alt="" coords="1215,910,1415,1061"/>
+<area shape="rect" id="node12" title="Computes the quotient of its arguments. " alt="" coords="1439,910,1639,1061"/>
+<area shape="rect" id="node17" title="Returns the maximum of two numbers. " alt="" coords="2582,917,2782,1053"/>
+<area shape="rect" id="node18" title="Returns the minimum of two numbers. " alt="" coords="2806,917,3006,1053"/>
+<area shape="rect" id="node19" title="Computes the product of its arguments. " alt="" coords="3030,903,3230,1068"/>
+<area shape="rect" id="node20" title="Computes the power of its arguments. " alt="" coords="3254,917,3454,1053"/>
+<area shape="rect" id="node21" title="Computes the difference of its arguments. " alt="" coords="3478,917,3678,1053"/>
+<area shape="rect" id="node22" title="Checks if a set is a subset of another. " alt="" coords="3702,925,3891,1046"/>
+<area shape="rect" id="node23" title="Checks if a set is a superset of another. " alt="" coords="3916,925,4099,1046"/>
+<area shape="rect" id="node24" title="Concatenates two strings. " alt="" coords="4123,925,4295,1046"/>
+<area shape="rect" id="node25" title="Function that checks if a string contains another. " alt="" coords="4319,925,4496,1046"/>
+<area shape="rect" id="node26" title="Function that checks if a string ends by another. " alt="" coords="4520,925,4697,1046"/>
+<area shape="rect" id="node27" title="Checks if a string matches a regular expression. " alt="" coords="4721,925,4899,1046"/>
+<area shape="rect" id="node28" title="Checks if a string starts by another. " alt="" coords="4923,925,5100,1046"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html" title="Represents a stateless m&#45;to&#45;n function. " alt="" coords="2485,285,2653,539"/>
+<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function.html" title="{ca.uqac.lif.cep.functions.\lDuplicableFunction\n||+ duplicate()\l}" alt="" coords="2485,145,2653,237"/>
+<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="2483,5,2655,97"/>
 </map>

@@ -15,9 +15,6 @@ var dir_60bb765f511b78b06715fd6a7ec24fc9 =
     [ "Decimate.java", "_decimate_8java.html", [
       [ "Decimate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate" ]
     ] ],
-    [ "Demultiplex.java", "_demultiplex_8java.html", [
-      [ "Demultiplex", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_demultiplex.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_demultiplex" ]
-    ] ],
     [ "Filter.java", "_filter_8java.html", [
       [ "Filter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter" ]
     ] ],
@@ -57,9 +54,6 @@ var dir_60bb765f511b78b06715fd6a7ec24fc9 =
     [ "QueueSourceBatch.java", "_queue_source_batch_8java.html", [
       [ "QueueSourceBatch", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_batch.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_batch" ]
     ] ],
-    [ "ReplaceWith.java", "_replace_with_8java.html", [
-      [ "ReplaceWith", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_replace_with.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_replace_with" ]
-    ] ],
     [ "SimpleFilter.java", "_simple_filter_8java.html", [
       [ "SimpleFilter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter" ]
     ] ],
@@ -78,6 +72,9 @@ var dir_60bb765f511b78b06715fd6a7ec24fc9 =
     [ "Splice.java", "_splice_8java.html", [
       [ "Splice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice" ]
     ] ],
+    [ "Stutter.java", "_stutter_8java.html", [
+      [ "Stutter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter" ]
+    ] ],
     [ "Tank.java", "_tank_8java.html", [
       [ "Tank", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank" ],
       [ "QueuePullable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pullable" ],
@@ -91,6 +88,9 @@ var dir_60bb765f511b78b06715fd6a7ec24fc9 =
     ] ],
     [ "Trim.java", "_trim_8java.html", [
       [ "Trim", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim" ]
+    ] ],
+    [ "VariableStutter.java", "_variable_stutter_8java.html", [
+      [ "VariableStutter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_variable_stutter.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_variable_stutter" ]
     ] ],
     [ "Window.java", "_window_8java.html", [
       [ "Window", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window" ]

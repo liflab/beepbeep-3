@@ -1,0 +1,5 @@
+<map id="ca.uqac.lif.cep.functions.ApplyFunctionPartial.InputPushable.push" name="ca.uqac.lif.cep.functions.ApplyFunctionPartial.InputPushable.push">
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a9b4d24432f4d907bfdf05384df3560b4" title="Evaluates the outputs of the function, given some inputs. " alt="" coords="329,5,497,47"/>
+<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a67a7a65c6fa9c293eeb615b6a35267bb" title="Pushes an event into one of the processor&#39;s input trace. " alt="" coords="315,71,512,98"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a76eae0aee66b2cf1520f5913c3ccd20f" title="Evaluates the outputs of the function, given some inputs. " alt="" coords="560,5,728,47"/>
+</map>

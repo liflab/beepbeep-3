@@ -1,11 +1,11 @@
 <map id="ca.uqac.lif.cep.util.Booleans" name="ca.uqac.lif.cep.util.Booleans">
 <area shape="rect" id="node2" title="Implementation of the logical implication. " alt="" coords="925,44,1115,85"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html" title="Function of two inputs and one output. " alt="" coords="661,162,864,218"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html" title="Function of two inputs and one output. " alt="" coords="661,161,864,217"/>
 <area shape="rect" id="node9" title="Implementation of the logical conjunction. " alt="" coords="913,149,1127,175"/>
 <area shape="rect" id="node10" title="Implementation of the logical disjunction. " alt="" coords="918,238,1122,265"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html" title="Represents a stateless m&#45;to&#45;n function. " alt="" coords="444,237,612,279"/>
-<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html" title="Function of one input and one output. " alt="" coords="675,269,851,325"/>
-<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function.html" title="ca.uqac.lif.cep.functions.\lDuplicableFunction" alt="" coords="227,237,395,279"/>
-<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="5,245,177,271"/>
-<area shape="rect" id="node7" title="Implementation of the logical negation. " alt="" coords="925,328,1115,369"/>
+<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html" title="Represents a stateless m&#45;to&#45;n function. " alt="" coords="444,233,612,275"/>
+<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html" title="Function of one input and one output. " alt="" coords="675,265,851,321"/>
+<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function.html" title="ca.uqac.lif.cep.functions.\lDuplicableFunction" alt="" coords="227,233,395,275"/>
+<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="5,241,177,267"/>
+<area shape="rect" id="node7" title="Implementation of the logical negation. " alt="" coords="915,327,1125,354"/>
 </map>

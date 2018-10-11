@@ -1,7 +1,7 @@
 <map id="ca.uqac.lif.cep.tmf.Window" name="ca.uqac.lif.cep.tmf.Window">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html" title="Simulates the application of a &quot;sliding window&quot; to a trace. " alt="" coords="1369,185,1552,227"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_single_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="1028,257,1235,283"/>
-<area shape="rect" id="node20" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html" title="Receives input events and stores them. " alt="" coords="1381,257,1541,283"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html" title="Simulates the application of a &quot;sliding window&quot; to a trace. " alt="" coords="1349,185,1532,227"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="1028,251,1215,292"/>
+<area shape="rect" id="node20" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html" title="Receives input events and stores them. " alt="" coords="1361,258,1521,285"/>
 <area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="720,189,891,215"/>
 <area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="ca.uqac.lif.cep.Duplicable\lProcessor" alt="" coords="362,5,534,47"/>
 <area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="14,13,186,39"/>
@@ -11,5 +11,5 @@
 <area shape="rect" id="node13" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html" title="ca.uqac.lif.cep.FutureDone\l\&lt; ca.uqac.lif.cep.Pushable \&gt;" alt="" coords="5,376,195,417"/>
 <area shape="rect" id="node14" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_context.html" title="Associative map used by processors to store persistent data. " alt="" coords="369,173,527,199"/>
 <area shape="rect" id="node16" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html" title="Tracks the relationship between output events produced by processors, and the input events that were ..." alt="" coords="353,223,543,250"/>
-<area shape="rect" id="node19" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html" title="Sink that remembers only the last event sent to it. " alt="" coords="1601,257,1787,283"/>
+<area shape="rect" id="node19" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html" title="Sink that remembers only the last event sent to it. " alt="" coords="1581,258,1767,285"/>
 </map>

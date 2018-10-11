@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.8.1-alpha</span>
+   &#160;<span id="projectnumber">0.9-alpha</span>
    </div>
   </td>
  </tr>
@@ -71,7 +71,9 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1funct
   <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#aef157a8007b39531e4ad12e5502eeaee">ca::uqac::lif::cep::functions::Function.duplicate</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#aa414382b0f9fadfabe806f5e4c1d86f0">evaluate</a>(Object[] inputs, Object[] outputs, Context context)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a45bb47126ff2531a411c4fba48d8c469">evaluate</a>(Object[] inputs, Object[] outputs)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#ae58efb8b8ec0e210a64524b873d32d0f">evaluateFast</a>(Object[] inputs, Object[] outputs, Context context)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#adf7d3a8319b3035db82d9bb2aaf11920">evaluateFast</a>(Object[] inputs, Object[] outputs, Context context, ExecutorService service)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a73566599cf0ee9f9f77e35c67b4619b4">evaluateLazy</a>(Object[] inputs, Object[] outputs)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a60ac0dd76902a6cf7aa437b524620725">evaluatePartial</a>(Object[] inputs, Object[] outputs, Context context)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a4a432db9ac135d0bba4b439b241bfee5">FunctionTree</a>(Function f)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a2caedfe715b1ed88f028bcd5e05f4cd8">FunctionTree</a>(Function ... functions)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a0300b14661a06adb66bdbda0d61872e7">getInputArity</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
@@ -84,13 +86,12 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1funct
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a7f4155491d40545be2e44820ae30d7be">s_maxInputArity</a></td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#aac6d09fda0df46599c51602b1366da9b">setChild</a>(int index, Function f)</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a8318de9a6d8df06871681ec4b00f6df5">toString</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html">ca.uqac.lif.cep.functions.FunctionTree</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a6fbb5dca3cbd766219293f0def50822e">waitFor</a>()</td><td class="entry"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html">ca.uqac.lif.cep.functions.Function</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon May 7 2018 08:32:22 for BeepBeep 3 by
+    <li class="footer">Generated on Thu Oct 11 2018 08:11:31 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
