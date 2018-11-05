@@ -25,13 +25,11 @@ import java.util.Queue;
 
 /**
  * Duplicates an input trace into two or more output traces.
- * 
  * It is represented graphically as:
- * 
- * ![Fork]({@docRoot}/doc-files/tmf/Fork.png)
+ * <p>
+ * <img src="{@docRoot}/doc-files/tmf/Fork.png" alt="Fork">
  * 
  * @author Sylvain Hallé
- * @dictentry
  */
 @SuppressWarnings("squid:S2160")
 public class Fork extends UniformProcessor
