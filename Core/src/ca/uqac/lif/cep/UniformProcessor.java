@@ -186,7 +186,10 @@ public abstract class UniformProcessor extends SynchronousProcessor
       {
         throw new PushableException(e);
       }
-      m_outputPushables[0].push(m_outputArray[0]);
+      if (m_outputArray[0] != null)
+      {
+        m_outputPushables[0].push(m_outputArray[0]);
+      }
     }
 
     @Override
