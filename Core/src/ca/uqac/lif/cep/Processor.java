@@ -314,6 +314,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
    * @return The pushable if the index is within the appropriate range. Outside of
    *         the range,
    */
+  /*@ assume index >= 0 @*/
   public abstract /*@ non_null @*/ Pushable getPushableInput(int index);
 
   /**

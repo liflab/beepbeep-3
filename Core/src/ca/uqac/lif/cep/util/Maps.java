@@ -22,7 +22,9 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A container object for map functions and processors. Some functions come in
@@ -38,6 +40,10 @@ import java.util.Map;
  */
 public class Maps
 {
+  
+  /**
+   * Extracts the set of values of a map
+   */
   public static final transient Values values = new Values();
     
   private Maps()
@@ -152,7 +158,7 @@ public class Maps
    * single input stream, whose events are <em>arrays</em>. The first element of
    * the array contains the key, and the second contains the value.
    */
-  public static class ArrayPutInto extends UniformProcessor
+  public static class MapPutInto extends UniformProcessor
   {
     /**
      * The underlying map
@@ -162,7 +168,7 @@ public class Maps
     /**
      * Create a new instance of the processor
      */
-    public ArrayPutInto()
+    public MapPutInto()
     {
       super(1, 1);
       m_map = new HashMap<Object, Object>();
@@ -175,9 +181,9 @@ public class Maps
     }
 
     @Override
-    public ArrayPutInto duplicate(boolean with_state)
+    public MapPutInto duplicate(boolean with_state)
     {
-      return new ArrayPutInto();
+      return new MapPutInto();
     }
 
     @Override
@@ -233,6 +239,90 @@ public class Maps
         out.put(e.getKey(), a_out[0]);
       }
       return out;
+    }
+  }
+  
+  /**
+   * Updates a map by merging its contents with a stream of incoming maps.
+   * The output of this processor is a map with arbitrary keys, and sets
+   * as values.
+   */
+  public static class MergeMaps extends UniformProcessor
+  {
+    /**
+     * The map that is being updated
+     */
+    protected Map<Object,Set<Object>> m_map;
+    
+    /**
+     * Creates a new merge processor.
+     */
+    public MergeMaps()
+    {
+      super(1, 1);
+      m_map = new HashMap<Object,Set<Object>>();
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Object[] outputs)
+    {
+      Map<?,?> m = (Map<?,?>) inputs[0];
+      for (Object m_o : m.entrySet())
+      {
+        if (m_o instanceof Map.Entry)
+        {
+          Map.Entry<?,?> e  = (Map.Entry<?,?>) m_o;
+          Object key = e.getKey();
+          Object value = e.getValue();
+          if (value == null)
+          {
+            outputs[0] = m_map;
+            return true;
+          }
+          Set<Object> s_value;
+          if (m_map.containsKey(key))
+          {
+            s_value = m_map.get(key);
+          }
+          else
+          {
+            s_value = new HashSet<Object>();
+          }
+          if (value instanceof Collection)
+          {
+            s_value.addAll((Collection<?>) value);
+          }
+          else
+          {
+            s_value.add(value);
+          }
+          m_map.put(key, s_value);
+        }
+      }
+      outputs[0] = m_map;
+      return true;
+    }
+    
+    @Override
+    public void reset()
+    {
+      m_map.clear();
+    }
+
+    @Override
+    public MergeMaps duplicate(boolean with_state)
+    {
+      MergeMaps mm = new MergeMaps();
+      if (with_state)
+      {
+        for (Map.Entry<Object,Set<Object>> e : m_map.entrySet())
+        {
+          HashSet<Object> new_set = new HashSet<Object>();
+          new_set.addAll(e.getValue());
+          mm.m_map.put(e.getKey(), new_set);
+        }
+      }
+      return mm;
     }
   }
 }

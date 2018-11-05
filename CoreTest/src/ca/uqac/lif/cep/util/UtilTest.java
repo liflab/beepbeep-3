@@ -382,7 +382,7 @@ public class UtilTest
 	{
 		Map<Object,Object> m1, m2;
 		QueueSource s1 = new QueueSource().setEvents(new Object[]{0, 0}, new Object[]{1, 1});
-		Maps.ArrayPutInto pi = new Maps.ArrayPutInto();
+		Maps.MapPutInto pi = new Maps.MapPutInto();
 		assertEquals(Map.class, pi.getOutputType(0));
 		Connector.connect(s1, pi);
 		Pullable p = pi.getPullableOutput();
