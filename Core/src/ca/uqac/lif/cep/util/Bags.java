@@ -401,6 +401,10 @@ public class Bags
       {
         return ((Collection<?>) o).size();
       }
+      if (o.getClass().isArray())
+      {
+        return ((Object[]) o).length;
+      }
       return 0;
     }
   }
