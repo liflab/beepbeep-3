@@ -38,11 +38,11 @@ public class VariableStutter extends SynchronousProcessor
   @Override
   protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
   {
-    float x = ((Number) inputs[0]).floatValue();
+    Object o = inputs[0];
     int n = ((Number) inputs[1]).intValue();
     for (int i = 0; i < n; i++)
     {
-      outputs.add(new Object[] {x});
+      outputs.add(new Object[] {o});
     }
     return true;
   }
