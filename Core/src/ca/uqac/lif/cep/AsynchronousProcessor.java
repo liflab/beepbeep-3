@@ -81,6 +81,7 @@ public abstract class AsynchronousProcessor extends Processor
   @Override
   public void reset()
   {
+    super.reset();
     m_outputPullables = new Pullable[m_outputArity];
     m_inFrontsProcessed = 0;
     m_inputEventsReceived = new int[m_inputArity];

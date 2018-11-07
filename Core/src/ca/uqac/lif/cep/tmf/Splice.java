@@ -76,6 +76,7 @@ public class Splice extends Source
   @Override
   public void reset()
   {
+    super.reset();
     m_processorIndex = 0;
     for (Processor p : m_processors)
     {

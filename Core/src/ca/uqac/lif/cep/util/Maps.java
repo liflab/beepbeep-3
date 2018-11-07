@@ -129,6 +129,7 @@ public class Maps
     @Override
     public void reset()
     {
+      super.reset();
       m_map.clear();
     }
 
@@ -177,6 +178,7 @@ public class Maps
     @Override
     public void reset()
     {
+      super.reset();
       m_map.clear();
     }
 
@@ -306,6 +308,7 @@ public class Maps
     @Override
     public void reset()
     {
+      super.reset();
       m_map.clear();
     }
 

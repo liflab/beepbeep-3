@@ -143,6 +143,7 @@ public class GroupProcessor extends Processor
   @Override
   public synchronized void reset()
   {
+    super.reset();
     // Reset all processors inside the group
     for (Processor p : m_processors)
     {

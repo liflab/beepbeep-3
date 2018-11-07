@@ -238,6 +238,7 @@ public class Tank extends Processor
   @Override
   public void reset()
   {
+    super.reset();
     synchronized (m_inputQueues[0])
     {
       m_inputQueues[0].clear();

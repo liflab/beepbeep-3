@@ -395,6 +395,7 @@ public class Multiset implements Set<Object>
     @Override
     public void reset()
     {
+      super.reset();
       m_set.clear();
     }
   }

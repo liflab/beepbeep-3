@@ -37,368 +37,369 @@ import ca.uqac.lif.cep.tmf.QueueSink;
  */
 public class ConnectorTest
 {
-	@Test
-	public void testOutOfBounds1()
-	{
-		Apples a1 = new Apples();
-		Apples a2 = new Apples();
-		boolean got_exception = false;
-		try
-		{
-			Connector.connect(a1, 10, a2, 0);
-		}
-		catch (ConnectorException ce)
-		{
-			Connector.IndexOutOfBoundsException ioobe = (Connector.IndexOutOfBoundsException) ce;
-			assertNotNull(ioobe.getMessage());
-			got_exception = true;
-		}
-		assertTrue(got_exception);
-	}
-	
-	@Test
-	public void testOutOfBounds2()
-	{
-		Apples a1 = new Apples();
-		Apples a2 = new Apples();
-		boolean got_exception = false;
-		try
-		{
-			Connector.connect(a1, 0, a2, 10);
-		}
-		catch (ConnectorException ce)
-		{
-			Connector.IndexOutOfBoundsException ioobe = (Connector.IndexOutOfBoundsException) ce;
-			assertNotNull(ioobe.getMessage());
-			got_exception = true;
-		}
-		assertTrue(got_exception);
-	}
-	
-	@Test
-	public void testConnectWithTracker() 
-	{
-		Apples a1 = new Apples();
-		Apples a2 = new Apples();
-		ProvenanceTest.DummyTracker tracker = new ProvenanceTest.DummyTracker();
-		Connector.connect(tracker, a1, a2);
-		assertTrue(tracker.containsConnection(a1.getId(), 0, a2.getId(), 0));
-		assertFalse(tracker.containsConnection(a2.getId(), 0, a1.getId(), 0));
-	}
-	
-	@Test
-	public void testConnectNothing() 
-	{
-		Apples a = new Apples();
-		Connector.connect(a);
-		// Nothing happens
-	}
-	
-	@Test
-	public void testIsCompatible1()
-	{
-		assertTrue(Connector.isCompatible(new Apples(), 0, new Apples(), 0));
-	}
-	
-	@Test
-	public void testIsCompatible2()
-	{
-		assertFalse(Connector.isCompatible(new Apples(), 10, new Apples(), 0));
-	}
-	
-	@Test
-	public void testIsCompatible3()
-	{
-		assertTrue(!Connector.s_checkForTypes || !Connector.isCompatible(new Apples(), 0, new Oranges(), 0));
-	}
-	
-	@Test
-	public void testSelfLoop()
-	{
-		Apples a = new Apples();
-		boolean got_exception = false;
-		try
-		{
-			Connector.connect(a, a);
-		}
-		catch (Connector.SelfLoopException sle)
-		{
-			assertNotNull(sle.getMessage());
-			got_exception = true;
-		}
-		catch (ConnectorException e)
-		{
-			
-		}
-		assertTrue(got_exception);
-	}
-	
-	@Test
-	public void testTwoUnary() 
-	{
-		Passthrough p1 = new Passthrough(1);
-		QueueSink qs1 = new QueueSink(1);
-		Connector.connect(p1, qs1);
-		Pushable push1 = p1.getPushableInput(0);
-		for (int k = 0; k < 2; k++)
-		{
-			Queue<Object> queue = qs1.getQueue(0);
-			for (int i = 0; i < 5; i++)
-			{
-				push1.push(i);
-				Utilities.queueContains(i, queue);
-			}
-			p1.reset();
-			qs1.reset();
-		}
-	}
-	
-	@Test
-	public void testTwoBinary() 
-	{
-		Passthrough p1 = new Passthrough(2);
-		QueueSink qs1 = new QueueSink(2);
-		Connector.connect(p1, 0, qs1, 1);
-		Connector.connect(p1, 1, qs1, 0);
-		Pushable push1 = p1.getPushableInput(0);
-		Pushable push2 = p1.getPushableInput(1);
-		for (int k = 0; k < 2; k++)
-		{
-			Queue<Object> queue1 = qs1.getQueue(0);
-			Queue<Object> queue2 = qs1.getQueue(1);
-			for (int i = 0; i < 5; i++)
-			{
-				push1.push(i);
-				push2.push(2 * i + 1);
-				Utilities.queueContains(i, queue2);
-				Utilities.queueContains(2 * i + 1, queue1);
-			}
-			p1.reset();
-			qs1.reset();
-		}
-	}
-	
-	@Test
-	public void testThreeUnary1() 
-	{
-		Passthrough p1 = new Passthrough(1);
-		QueueSink qs1 = new QueueSink(1);
-		Connector.connect(p1, qs1);
-		Pushable push1 = p1.getPushableInput(0);
-		for (int k = 0; k < 2; k++)
-		{
-			Queue<Object> queue = qs1.getQueue(0);
-			for (int i = 0; i < 5; i++)
-			{
-				push1.push(i);
-				Utilities.queueContains(i, queue);
-			}
-			p1.reset();
-			qs1.reset();
-		}
-	}
-	
-	@Test
-	public void testThreeUnary2() 
-	{
-		Passthrough p1 = new Passthrough(1);
-		Incrementer p2 = new Incrementer(10);
-		QueueSink qs1 = new QueueSink(1);
-		Connector.connect(p1, p2, qs1);
-		Pushable push1 = p1.getPushableInput(0);
-		for (int k = 0; k < 2; k++)
-		{
-			Queue<Object> queue = qs1.getQueue(0);
-			for (int i = 0; i < 5; i++)
-			{
-				push1.push(i);
-				Utilities.queueContains(i + 10, queue);
-			}
-			p1.reset();
-			qs1.reset();
-		}
-	}
-	
-	@Test
-	public void testIncompatibleTypes() 
-	{
-		Processor apples = new Apples();
-		Processor oranges = new Oranges();
-		assertFalse(Connector.isCompatible(apples, 0, oranges, 0));
-	}
-	
-	@Test
-	public void testConnectIncompatible()
-	{
-		Processor apples = new Apples();
-		Processor oranges = new Oranges();
-		try
-		{
-			Connector.connect(apples, oranges);
-		}
-		catch (ConnectorException e)
-		{
-			IncompatibleTypesException ite = (IncompatibleTypesException) e;
-			assertNotNull(ite.getMessage());
-		}
-	}
-	
-	@Test
-	public void testVariantOutput()
-	{
-		assertTrue(Connector.isCompatible(new Variants(), 0, new Oranges(), 0));
-	}
-	
-	@Test
-	public void testVariantInput()
-	{
-		assertTrue(Connector.isCompatible(new Oranges(), 0, new Variants(), 0));
-	}
-	
-	public static class Incrementer extends ApplyFunction
-	{
-		public Incrementer(int i)
-		{
-			super(new Plus(i));
-		}
-	}
-	
-	public static class Plus extends UnaryFunction<Integer,Integer>
-	{
-		int m_plus = 0;
-		
-		public Plus(int i)
-		{
-			super(Integer.class, Integer.class);
-			m_plus = i;
-		}
-		
-		@Override
-		public Integer getValue(Integer x) 
-		{
-			return x + 10;
-		}
-		
-	}
-	
-	public static class Apples extends SynchronousProcessor
-	{
-		public Apples()
-		{
-			super(1, 1);
-		}
+  @Test
+  public void testOutOfBounds1()
+  {
+    Apples a1 = new Apples();
+    Apples a2 = new Apples();
+    boolean got_exception = false;
+    try
+    {
+      Connector.connect(a1, 10, a2, 0);
+    }
+    catch (ConnectorException ce)
+    {
+      Connector.IndexOutOfBoundsException ioobe = (Connector.IndexOutOfBoundsException) ce;
+      assertNotNull(ioobe.getMessage());
+      got_exception = true;
+    }
+    assertTrue(got_exception);
+  }
 
-		@Override
-		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
-		{
-			// TODO Auto-generated method stub
-			return false;
-		}
+  @Test
+  public void testOutOfBounds2()
+  {
+    Apples a1 = new Apples();
+    Apples a2 = new Apples();
+    boolean got_exception = false;
+    try
+    {
+      Connector.connect(a1, 0, a2, 10);
+    }
+    catch (ConnectorException ce)
+    {
+      Connector.IndexOutOfBoundsException ioobe = (Connector.IndexOutOfBoundsException) ce;
+      assertNotNull(ioobe.getMessage());
+      got_exception = true;
+    }
+    assertTrue(got_exception);
+  }
 
-		@Override
-		public Apples duplicate(boolean with_state) 
-		{
-			return new Apples();
-		}
-		
-		@Override
-		public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
-		{
-			classes.add(Number.class);
-		}
-		
-		@Override
-		public Class<?> getOutputType(int index)
-		{
-			if (index != 0)
-				throw new ArrayIndexOutOfBoundsException();
-			return Number.class;
-		}
-	}
-	
-	public static class Oranges extends SynchronousProcessor
-	{
-		public boolean started = false;
-		
-		boolean reset = false;
+  @Test
+  public void testConnectWithTracker() 
+  {
+    Apples a1 = new Apples();
+    Apples a2 = new Apples();
+    ProvenanceTest.DummyTracker tracker = new ProvenanceTest.DummyTracker();
+    Connector.connect(tracker, a1, a2);
+    assertTrue(tracker.containsConnection(a1.getId(), 0, a2.getId(), 0));
+    assertFalse(tracker.containsConnection(a2.getId(), 0, a1.getId(), 0));
+  }
 
-		public Oranges()
-		{
-			super(1, 1);
-		}
+  @Test
+  public void testConnectNothing() 
+  {
+    Apples a = new Apples();
+    Connector.connect(a);
+    // Nothing happens
+  }
 
-		@Override
-		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
-		{
-			// TODO Auto-generated method stub
-			return false;
-		}
-		
-		@Override
-		public void reset()
-		{
-			reset = true;
-		}
+  @Test
+  public void testIsCompatible1()
+  {
+    assertTrue(Connector.isCompatible(new Apples(), 0, new Apples(), 0));
+  }
 
-		@Override
-		public Oranges duplicate(boolean with_state) 
-		{
-			return new Oranges();
-		}
-		
-		@Override
-		public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
-		{
-			classes.add(String.class);
-		}
-		
-		@Override
-		public Class<?> getOutputType(int index)
-		{
-			if (index != 0)
-				throw new ArrayIndexOutOfBoundsException();
-			return String.class;
-		}
-		
-		@Override
-		public void start()
-		{
-			started = true;
-		}
-		
-		@Override
-		public void stop()
-		{
-			started = false;
-		}
-	}
-	
-	public static class Variants extends SynchronousProcessor
-	{
-		public Variants()
-		{
-			super(1, 1);
-		}
+  @Test
+  public void testIsCompatible2()
+  {
+    assertFalse(Connector.isCompatible(new Apples(), 10, new Apples(), 0));
+  }
 
-		@Override
-		protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
-		{
-			// TODO Auto-generated method stub
-			return false;
-		}
+  @Test
+  public void testIsCompatible3()
+  {
+    assertTrue(!Connector.s_checkForTypes || !Connector.isCompatible(new Apples(), 0, new Oranges(), 0));
+  }
 
-		@Override
-		public Variants duplicate(boolean with_state) 
-		{
-			return new Variants();
-		}
-		
-		@Override
-		public Class<?> getOutputType(int index)
-		{
-			if (index != 0)
-				throw new ArrayIndexOutOfBoundsException();
-			return Connector.Variant.class;
-		}
-	}
+  @Test
+  public void testSelfLoop()
+  {
+    Apples a = new Apples();
+    boolean got_exception = false;
+    try
+    {
+      Connector.connect(a, a);
+    }
+    catch (Connector.SelfLoopException sle)
+    {
+      assertNotNull(sle.getMessage());
+      got_exception = true;
+    }
+    catch (ConnectorException e)
+    {
+
+    }
+    assertTrue(got_exception);
+  }
+
+  @Test
+  public void testTwoUnary() 
+  {
+    Passthrough p1 = new Passthrough(1);
+    QueueSink qs1 = new QueueSink(1);
+    Connector.connect(p1, qs1);
+    Pushable push1 = p1.getPushableInput(0);
+    for (int k = 0; k < 2; k++)
+    {
+      Queue<Object> queue = qs1.getQueue(0);
+      for (int i = 0; i < 5; i++)
+      {
+        push1.push(i);
+        Utilities.queueContains(i, queue);
+      }
+      p1.reset();
+      qs1.reset();
+    }
+  }
+
+  @Test
+  public void testTwoBinary() 
+  {
+    Passthrough p1 = new Passthrough(2);
+    QueueSink qs1 = new QueueSink(2);
+    Connector.connect(p1, 0, qs1, 1);
+    Connector.connect(p1, 1, qs1, 0);
+    Pushable push1 = p1.getPushableInput(0);
+    Pushable push2 = p1.getPushableInput(1);
+    for (int k = 0; k < 2; k++)
+    {
+      Queue<Object> queue1 = qs1.getQueue(0);
+      Queue<Object> queue2 = qs1.getQueue(1);
+      for (int i = 0; i < 5; i++)
+      {
+        push1.push(i);
+        push2.push(2 * i + 1);
+        Utilities.queueContains(i, queue2);
+        Utilities.queueContains(2 * i + 1, queue1);
+      }
+      p1.reset();
+      qs1.reset();
+    }
+  }
+
+  @Test
+  public void testThreeUnary1() 
+  {
+    Passthrough p1 = new Passthrough(1);
+    QueueSink qs1 = new QueueSink(1);
+    Connector.connect(p1, qs1);
+    Pushable push1 = p1.getPushableInput(0);
+    for (int k = 0; k < 2; k++)
+    {
+      Queue<Object> queue = qs1.getQueue(0);
+      for (int i = 0; i < 5; i++)
+      {
+        push1.push(i);
+        Utilities.queueContains(i, queue);
+      }
+      p1.reset();
+      qs1.reset();
+    }
+  }
+
+  @Test
+  public void testThreeUnary2() 
+  {
+    Passthrough p1 = new Passthrough(1);
+    Incrementer p2 = new Incrementer(10);
+    QueueSink qs1 = new QueueSink(1);
+    Connector.connect(p1, p2, qs1);
+    Pushable push1 = p1.getPushableInput(0);
+    for (int k = 0; k < 2; k++)
+    {
+      Queue<Object> queue = qs1.getQueue(0);
+      for (int i = 0; i < 5; i++)
+      {
+        push1.push(i);
+        Utilities.queueContains(i + 10, queue);
+      }
+      p1.reset();
+      qs1.reset();
+    }
+  }
+
+  @Test
+  public void testIncompatibleTypes() 
+  {
+    Processor apples = new Apples();
+    Processor oranges = new Oranges();
+    assertFalse(Connector.isCompatible(apples, 0, oranges, 0));
+  }
+
+  @Test
+  public void testConnectIncompatible()
+  {
+    Processor apples = new Apples();
+    Processor oranges = new Oranges();
+    try
+    {
+      Connector.connect(apples, oranges);
+    }
+    catch (ConnectorException e)
+    {
+      IncompatibleTypesException ite = (IncompatibleTypesException) e;
+      assertNotNull(ite.getMessage());
+    }
+  }
+
+  @Test
+  public void testVariantOutput()
+  {
+    assertTrue(Connector.isCompatible(new Variants(), 0, new Oranges(), 0));
+  }
+
+  @Test
+  public void testVariantInput()
+  {
+    assertTrue(Connector.isCompatible(new Oranges(), 0, new Variants(), 0));
+  }
+
+  public static class Incrementer extends ApplyFunction
+  {
+    public Incrementer(int i)
+    {
+      super(new Plus(i));
+    }
+  }
+
+  public static class Plus extends UnaryFunction<Integer,Integer>
+  {
+    int m_plus = 0;
+
+    public Plus(int i)
+    {
+      super(Integer.class, Integer.class);
+      m_plus = i;
+    }
+
+    @Override
+    public Integer getValue(Integer x) 
+    {
+      return x + 10;
+    }
+
+  }
+
+  public static class Apples extends SynchronousProcessor
+  {
+    public Apples()
+    {
+      super(1, 1);
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
+    {
+      // TODO Auto-generated method stub
+      return false;
+    }
+
+    @Override
+    public Apples duplicate(boolean with_state) 
+    {
+      return new Apples();
+    }
+
+    @Override
+    public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+    {
+      classes.add(Number.class);
+    }
+
+    @Override
+    public Class<?> getOutputType(int index)
+    {
+      if (index != 0)
+        throw new ArrayIndexOutOfBoundsException();
+      return Number.class;
+    }
+  }
+
+  public static class Oranges extends SynchronousProcessor
+  {
+    public boolean started = false;
+
+    boolean reset = false;
+
+    public Oranges()
+    {
+      super(1, 1);
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
+    {
+      // TODO Auto-generated method stub
+      return false;
+    }
+
+    @Override
+    public void reset()
+    {
+      super.reset();
+      reset = true;
+    }
+
+    @Override
+    public Oranges duplicate(boolean with_state) 
+    {
+      return new Oranges();
+    }
+
+    @Override
+    public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+    {
+      classes.add(String.class);
+    }
+
+    @Override
+    public Class<?> getOutputType(int index)
+    {
+      if (index != 0)
+        throw new ArrayIndexOutOfBoundsException();
+      return String.class;
+    }
+
+    @Override
+    public void start()
+    {
+      started = true;
+    }
+
+    @Override
+    public void stop()
+    {
+      started = false;
+    }
+  }
+
+  public static class Variants extends SynchronousProcessor
+  {
+    public Variants()
+    {
+      super(1, 1);
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
+    {
+      // TODO Auto-generated method stub
+      return false;
+    }
+
+    @Override
+    public Variants duplicate(boolean with_state) 
+    {
+      return new Variants();
+    }
+
+    @Override
+    public Class<?> getOutputType(int index)
+    {
+      if (index != 0)
+        throw new ArrayIndexOutOfBoundsException();
+      return Connector.Variant.class;
+    }
+  }
 }

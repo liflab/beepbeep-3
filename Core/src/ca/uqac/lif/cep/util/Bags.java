@@ -194,9 +194,19 @@ public class Bags
     protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
     {
       m_processor.reset();
-      for (Object o : (Collection<?>) inputs[0])
+      if (inputs[0].getClass().isArray())
       {
-        m_pushable.push(o);
+        for (Object o : (Object[]) inputs[0])
+        {
+          m_pushable.push(o);
+        }
+      }
+      else
+      {
+        for (Object o : (Collection<?>) inputs[0])
+        {
+          m_pushable.push(o);
+        }
       }
       Object[] last = m_sink.getLast();
       if (last != null)
@@ -258,7 +268,7 @@ public class Bags
     @Override
     public void reset()
     {
-      // Nothing to do
+      super.reset();
     }
 
     @Override

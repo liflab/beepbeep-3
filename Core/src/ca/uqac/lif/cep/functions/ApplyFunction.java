@@ -53,6 +53,7 @@ public class ApplyFunction extends UniformProcessor
   @Override
   public void reset()
   {
+    super.reset();
     m_function.reset();
   }
 

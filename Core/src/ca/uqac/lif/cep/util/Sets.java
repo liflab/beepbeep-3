@@ -67,6 +67,7 @@ public class Sets
     @Override
     public void reset()
     {
+      super.reset();
       m_set.clear();
     }
 

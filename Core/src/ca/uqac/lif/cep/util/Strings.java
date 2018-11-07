@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.HashSet;
@@ -47,6 +49,72 @@ public class Strings
   public static final StartsWith startsWith = new StartsWith();
 
   public static final ToString toString = ToString.instance;
+  
+  /**
+   * Concatenates input strings into an output string
+   */
+  public static class BuildString extends UniformProcessor
+  {
+    /**
+     * The string builder used to store the output string
+     */
+    protected StringBuilder m_builder;
+    
+    /**
+     * An optional separator to insert after each string
+     */
+    protected String m_separator;
+    
+    /**
+     * Creates a new build string processor
+     */
+    public BuildString()
+    {
+      super(1, 1);
+      m_builder = new StringBuilder();
+      m_separator = "";
+    }
+    
+    public BuildString setSeparator(String separator)
+    {
+      m_separator = separator;
+      return this;
+    }
+    
+    @Override
+    public void reset()
+    {
+      super.reset();
+      m_builder = new StringBuilder();
+      m_inputCount = 0;
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Object[] outputs)
+    {
+      if (m_inputCount > 0)
+      {
+        m_builder.append(m_separator);
+      }
+      m_builder.append(inputs[0].toString());
+      outputs[0] = m_builder.toString();
+      m_inputCount++;
+      return true;
+    }
+
+    @Override
+    public Processor duplicate(boolean with_state)
+    {
+      BuildString bs = new BuildString();
+      bs.m_separator = m_separator;
+      if (with_state)
+      {
+        bs.m_builder.append(m_builder.toString());
+        bs.m_inputCount = m_inputCount;
+      }
+      return bs;
+    }
+  }
 
   /**
    * Concatenates two strings

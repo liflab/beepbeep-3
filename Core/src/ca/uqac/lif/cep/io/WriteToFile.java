@@ -57,6 +57,7 @@ public class WriteToFile extends Sink
   @Override
   public void reset()
   {
+    super.reset();
     m_outputCount = 0;
   }
 

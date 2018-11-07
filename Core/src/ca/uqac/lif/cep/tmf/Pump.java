@@ -158,6 +158,18 @@ public class Pump extends Processor implements Runnable
     for (int i = 0; i < times; i++)
     {
       pushable.push(pullable.pull());
+      if (m_interval >= 0)
+      {
+        try
+        {
+          Thread.sleep(m_interval);
+        }
+        catch (InterruptedException e)
+        {
+          // Restore interrupted state
+          Thread.currentThread().interrupt();
+        }
+      }
     }
   }
 }
