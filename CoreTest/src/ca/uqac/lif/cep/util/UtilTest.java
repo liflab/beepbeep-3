@@ -395,59 +395,6 @@ public class UtilTest
 		assertEquals(0, m1.size());
 	}
 	
-	@Test
-	@SuppressWarnings("unchecked")
-	public void testSetsPut1()
-	{
-		Set<Object> m1, m2;
-		QueueSource s1 = new QueueSource().setEvents(0, 1, 2);
-		Sets.PutInto pi = new Sets.PutInto();
-		assertEquals(Set.class, pi.getOutputType(0));
-		Connector.connect(s1, pi);
-		Pullable p = pi.getPullableOutput();
-		m1 = (Set<Object>) p.pull();
-		assertEquals(1, m1.size());
-		m2 = (Set<Object>) p.pull();
-		assertTrue(m1 == m2);
-		assertEquals(2, m1.size());
-		pi.reset();
-		assertEquals(0, m1.size());
-	}
-	
-	@Test
-	@SuppressWarnings("unchecked")
-	public void testSetsPut2()
-	{
-		Set<Object> m1, m2;
-		QueueSource s1 = new QueueSource().setEvents(0, 1, 2);
-		Sets.PutIntoNew pi = new Sets.PutIntoNew();
-		assertEquals(Set.class, pi.getOutputType(0));
-		Connector.connect(s1, 0, pi, 0);
-		Pullable p = pi.getPullableOutput();
-		m1 = (Set<Object>) p.pull();
-		assertEquals(1, m1.size());
-		m2 = (Set<Object>) p.pull();
-		assertFalse(m1 == m2);
-		assertEquals(2, m2.size());
-		pi.reset();
-		assertEquals(1, m1.size());
-	}
-	
-	@Test
-	public void testSubset()
-	{
-		Set<Integer> s1 = new HashSet<Integer>();
-		s1.add(0);
-		s1.add(1);
-		Set<Integer> s2 = new HashSet<Integer>();
-		s2.add(0);
-		s2.add(1);
-		s2.add(2);
-		assertTrue((Boolean) FunctionsTest.evaluate(Sets.isSubsetOrEqual, s1, s2));
-		s1.add(3);
-		assertFalse((Boolean) FunctionsTest.evaluate(Sets.isSubsetOrEqual, s1, s2));
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetElementsSet()
