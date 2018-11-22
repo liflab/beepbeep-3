@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.Context;
  * can be given as an argument to a `FunctionTree`.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class StreamVariable extends Variable
 {

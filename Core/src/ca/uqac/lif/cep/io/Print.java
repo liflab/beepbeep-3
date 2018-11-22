@@ -38,7 +38,7 @@ import java.util.Queue;
  * such as an ANSI-aware printer.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class Print extends Sink

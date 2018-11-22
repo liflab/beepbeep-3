@@ -21,7 +21,7 @@ package ca.uqac.lif.cep.functions;
  * A function with memory.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class CumulativeFunction<T> extends UnaryFunction<T, T>
 {

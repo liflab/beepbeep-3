@@ -26,7 +26,7 @@ import java.util.Queue;
  * ![QueueSink]({@docRoot}/doc-files/tmf/QueueSink.png)
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class QueueSink extends Sink

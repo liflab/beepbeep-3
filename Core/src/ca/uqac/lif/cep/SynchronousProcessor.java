@@ -41,7 +41,7 @@ import java.util.concurrent.Future;
  * implement.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  *
  */
 @SuppressWarnings("squid:S2160")

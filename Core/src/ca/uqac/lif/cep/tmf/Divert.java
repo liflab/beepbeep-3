@@ -249,5 +249,12 @@ public class Divert extends Processor
     {
       // Nothing to do
     }
+    
+    @Override
+    public void remove()
+    {
+      // Cannot remove
+      throw new UnsupportedOperationException("Cannot remove on a Pullable");
+    }
   }
 }

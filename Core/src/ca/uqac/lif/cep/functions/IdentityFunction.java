@@ -28,7 +28,7 @@ import java.util.Set;
  * ![IdentityFunction]({@docRoot}/doc-files/functions/IdentityFunction.png)
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public final class IdentityFunction extends Function
 {

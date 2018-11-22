@@ -47,7 +47,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * as containing instances of `Object`, Java's most generic type.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  *
  */
 public abstract class Processor implements DuplicableProcessor, Contextualizable

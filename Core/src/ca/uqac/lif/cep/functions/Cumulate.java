@@ -29,7 +29,7 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * ![Cumulate]({@docRoot}/doc-files/functions/Cumulate.png)
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class Cumulate extends ApplyFunction
 {

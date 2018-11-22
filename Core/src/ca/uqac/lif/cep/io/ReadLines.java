@@ -26,7 +26,7 @@ import java.util.Scanner;
  * Source that reads text lines from a Java {@link InputStream}.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class ReadLines extends ReadInputStream

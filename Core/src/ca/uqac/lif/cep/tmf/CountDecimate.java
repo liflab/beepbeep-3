@@ -28,7 +28,7 @@ package ca.uqac.lif.cep.tmf;
  * ![QueueSink]({@docRoot}/doc-files/tmf/CountDecimate.png)
  *
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class CountDecimate extends Decimate

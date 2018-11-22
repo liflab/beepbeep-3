@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.Context;
  * given as an argument to a `FunctionTree`.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class ContextVariable extends Variable
 {

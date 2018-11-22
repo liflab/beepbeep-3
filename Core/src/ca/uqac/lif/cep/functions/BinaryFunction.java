@@ -13,7 +13,7 @@ import java.util.Set;
  *          The type of the output
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public abstract class BinaryFunction<T, V, U> extends Function
 {

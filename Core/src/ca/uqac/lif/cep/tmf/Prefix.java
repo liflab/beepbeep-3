@@ -23,7 +23,7 @@ import java.util.Queue;
  * Returns the first <i>n</i> input events and discards the following ones.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class Prefix extends Trim

@@ -40,7 +40,7 @@ import ca.uqac.lif.cep.Pushable;
  * The opposite of the Pump is the {@link ca.uqac.lif.cep.tmf.Tank Tank}.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class Pump extends Processor implements Runnable

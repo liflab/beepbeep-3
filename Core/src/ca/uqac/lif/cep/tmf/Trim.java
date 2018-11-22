@@ -24,7 +24,7 @@ import java.util.Queue;
  * Discards the first *n* events of the input, and outputs the remaining ones.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class Trim extends SynchronousProcessor

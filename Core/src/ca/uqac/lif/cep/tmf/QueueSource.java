@@ -33,7 +33,7 @@ import java.util.Queue;
  * This behaviour can be changed with {@link #loop(boolean)}.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class QueueSource extends Source

@@ -32,7 +32,7 @@ import java.util.Scanner;
  * returned as events in the form of strings.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class HttpGet extends Source

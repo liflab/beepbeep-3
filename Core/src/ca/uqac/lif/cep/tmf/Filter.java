@@ -30,7 +30,7 @@ import java.util.Queue;
  * ![Filter]({@docRoot}/doc-files/tmf/Filter.png)
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class Filter extends SynchronousProcessor

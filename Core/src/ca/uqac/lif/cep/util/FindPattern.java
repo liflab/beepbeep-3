@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  * Extracts chunks of an input stream based on a regular expression.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class FindPattern extends SynchronousProcessor
 {

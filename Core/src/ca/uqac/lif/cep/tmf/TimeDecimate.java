@@ -26,7 +26,7 @@ package ca.uqac.lif.cep.tmf;
  * event of the trace if it has not been output already.
  *
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class TimeDecimate extends Decimate

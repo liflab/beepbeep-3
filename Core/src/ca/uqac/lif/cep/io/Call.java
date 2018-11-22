@@ -26,7 +26,7 @@ import java.io.IOException;
  * the output of that command as its output stream.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class Call extends UniformProcessor

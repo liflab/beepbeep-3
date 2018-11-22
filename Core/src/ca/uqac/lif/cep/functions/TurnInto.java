@@ -27,7 +27,7 @@ import java.util.Set;
  * ![TurnInto]({@docRoot}/doc-files/functions/TurnInto.png)
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class TurnInto extends UniformProcessor

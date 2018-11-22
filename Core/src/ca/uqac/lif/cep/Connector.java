@@ -42,7 +42,7 @@ import java.util.Set;
  * so you can simply write `connect` instead of `Connector.connect` every time.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class Connector
 {

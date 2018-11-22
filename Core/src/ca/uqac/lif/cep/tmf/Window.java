@@ -39,7 +39,7 @@ import java.util.concurrent.Future;
  * events 1 to <i>n</i>-1... - ...and so on
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class Window extends AbstractWindow

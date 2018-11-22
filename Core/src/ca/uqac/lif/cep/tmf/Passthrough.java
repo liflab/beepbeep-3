@@ -29,7 +29,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  * ![Passthrough]({@docRoot}/doc-files/tmf/Passthrough.png)
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 @SuppressWarnings("squid:S2160")
 public class Passthrough extends UniformProcessor

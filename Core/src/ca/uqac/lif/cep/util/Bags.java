@@ -39,7 +39,7 @@ import java.util.Set;
  * collections, i.e. "bags" of objects.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class Bags
 {

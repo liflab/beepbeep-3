@@ -31,7 +31,7 @@ import java.util.Set;
  * ![FunctionTree]({@docRoot}/doc-files/functions/FunctionTree.png)
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class FunctionTree extends Function
 {

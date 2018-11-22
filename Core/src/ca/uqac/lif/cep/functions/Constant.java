@@ -24,7 +24,7 @@ import java.util.Set;
  * Representation of a unary constant.
  * 
  * @author Sylvain Hallé
- * @dictentry
+ *
  */
 public class Constant extends Function
 {
