@@ -38,6 +38,7 @@
   <!-- Installation folders -->
   <srcdir>Core/src</srcdir>
   <bindir>Core/bin</bindir>
+  <libdir>lib</libdir>
   <docdir>doc</docdir>
   <depdir>dep</depdir>
   <test>

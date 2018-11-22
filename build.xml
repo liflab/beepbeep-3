@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.4.1"/>
+  <property name="antrun.version" value="1.4.2"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -92,7 +92,7 @@
   <basename property="build.jar.basename" file="${build.jar.filename}" suffix=".jar"/>
   
   <!-- The filename pattern to recognize test files -->
-  <property name="build.build.test.filenamepattern" value="**/*.java"/>
+  <property name="build.test.filenamepattern" value="**/*.java"/>
   
   <!-- Location of the Java 6 boot classpath. If this is not set, the compiler
        will resort to the default boot classpath. -->
