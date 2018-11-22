@@ -208,7 +208,7 @@ public class GroupProcessor extends Processor
   }
 
   /**
-   * Declares that the <i>i/</i>-th output of the group is linked to the
+   * Declares that the <i>i</i>-th output of the group is linked to the
    * <i>j</i>-th output of processor p
    * 
    * @param i
