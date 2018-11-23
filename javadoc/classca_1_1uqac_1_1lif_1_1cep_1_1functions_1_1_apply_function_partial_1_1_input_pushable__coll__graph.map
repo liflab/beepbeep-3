@@ -1,4 +1,0 @@
-<map id="ca.uqac.lif.cep.functions.ApplyFunctionPartial.InputPushable" name="ca.uqac.lif.cep.functions.ApplyFunctionPartial.InputPushable">
-<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html" title="Gives events to some of a processor&#39;s input. " alt="" coords="37,109,203,136"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html" title="ca.uqac.lif.cep.FutureDone\l\&lt; ca.uqac.lif.cep.Pushable \&gt;" alt="" coords="25,5,215,47"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="ca.uqac.lif.cep.tmf.Decimate.onEndOfTrace" name="ca.uqac.lif.cep.tmf.Decimate.onEndOfTrace">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a9b7ed543969e1c7ca9b1258135dbf59c" title="Returns the processor&#39;s input arity. " alt="" coords="281,5,473,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ab649cae2ce57c716ef9b578bf1465949" title="Associates an input event to an output event. " alt="" coords="262,71,493,112"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#a1c32ddb94b0fefc68e05f68715c35de4" title="Indicates if the inputs should be processed and output. " alt="" coords="261,136,493,177"/>
-<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#a59983637f1ef2ac69eb12242e7cd18f6" title="Associates an output event from a processor to an input event from that same processor. " alt="" coords="541,71,791,112"/>
-</map>

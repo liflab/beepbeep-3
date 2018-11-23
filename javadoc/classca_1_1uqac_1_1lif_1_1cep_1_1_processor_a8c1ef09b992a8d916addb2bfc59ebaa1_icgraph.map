@@ -1,5 +1,0 @@
-<map id="ca.uqac.lif.cep.Processor.getPullableOutput" name="ca.uqac.lif.cep.Processor.getPullableOutput">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a9db24c793760387160467121b0c7dd62" title="Declares that the i/&#45;th output of the group is linked to the j&#45;th output of processor p..." alt="" coords="245,5,511,47"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html#a0aea1d122154fa0491a6b8db62f34371" title="ca.uqac.lif.cep.tmf.Splice.set\lPullablesTo" alt="" coords="282,71,474,112"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a655eb769895d8b7841b37e923deff88e" title="Associates the endpoints of a new GroupProcessor like the ones in the current group. " alt="" coords="559,5,824,47"/>
-</map>

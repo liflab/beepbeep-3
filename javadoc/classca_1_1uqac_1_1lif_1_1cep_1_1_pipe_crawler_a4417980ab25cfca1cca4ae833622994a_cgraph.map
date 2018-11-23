@@ -1,9 +1,0 @@
-<map id="ca.uqac.lif.cep.PipeCrawler.crawl" name="ca.uqac.lif.cep.PipeCrawler.crawl">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_pipe_crawler.html#a663f88fdd2598813107ae26bfdab49bb" title="Do something on a processor. " alt="" coords="271,5,481,32"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a9b7ed543969e1c7ca9b1258135dbf59c" title="Returns the processor&#39;s input arity. " alt="" coords="280,57,472,98"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a6f0d1894081766b77ef3b30cc664fe88" title="Returns the processor&#39;s output arity. " alt="" coords="280,122,472,163"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a8db90f0a9c963b457462d826706b46dc" title="Retrieves the Pushable associated to the processor&#39;s i&#45;th output. " alt="" coords="280,187,472,229"/>
-<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a0f0288ccf54406146f53e36250639cc8" title="Gets the processor instance this Pushable is linked to. " alt="" coords="283,253,469,294"/>
-<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#aa7de1678f0202115d2b889bc0e0b7fe3" title="Returns the Pullable corresponding to the processor&#39;s i&#45;th input. " alt="" coords="280,318,472,359"/>
-<area shape="rect" id="node8" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#affad11f66c00127d9721bb6a003c3518" title="Gets the processor instance this Pullable is linked to. " alt="" coords="287,383,465,425"/>
-</map>

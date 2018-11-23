@@ -1,4 +1,0 @@
-var dir_8a91276d40daf9024226164f8a626874 =
-[
-    [ "uqac", "dir_438fb1fe7268e0a019147e43575de03e.html", "dir_438fb1fe7268e0a019147e43575de03e" ]
-];

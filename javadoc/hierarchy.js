@@ -30,10 +30,12 @@ var hierarchy =
           [ "ca.uqac.lif.cep.tmf.Filter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter.html", null ],
           [ "ca.uqac.lif.cep.tmf.Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html", null ],
           [ "ca.uqac.lif.cep.tmf.KeepLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last.html", null ],
+          [ "ca.uqac.lif.cep.tmf.ResetLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_reset_last.html", null ],
           [ "ca.uqac.lif.cep.tmf.SimpleFilter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html", null ],
           [ "ca.uqac.lif.cep.tmf.Sink", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html", [
             [ "ca.uqac.lif.cep.io.Print", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_print.html", null ],
             [ "ca.uqac.lif.cep.io.WriteOutputStream", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_output_stream.html", null ],
+            [ "ca.uqac.lif.cep.io.WriteToFile", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_to_file.html", null ],
             [ "ca.uqac.lif.cep.tmf.BlackHole", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_black_hole.html", null ],
             [ "ca.uqac.lif.cep.tmf.QueueSink", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html", null ],
             [ "ca.uqac.lif.cep.tmf.SinkLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html", null ]
@@ -69,6 +71,7 @@ var hierarchy =
           ] ],
           [ "ca.uqac.lif.cep.util.FindPattern", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html", null ]
         ] ],
+        [ "ca.uqac.lif.cep.tmf.Divert", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert.html", null ],
         [ "ca.uqac.lif.cep.tmf.Multiplex", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex.html", null ],
         [ "ca.uqac.lif.cep.tmf.Pump", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html", null ],
         [ "ca.uqac.lif.cep.tmf.Tank", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank.html", [
@@ -113,6 +116,7 @@ var hierarchy =
         [ "ca.uqac.lif.cep.GroupProcessor.ProxyPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html", null ],
         [ "ca.uqac.lif.cep.Pullable.PullNotSupported", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html", null ],
         [ "ca.uqac.lif.cep.SynchronousProcessor.OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html", null ],
+        [ "ca.uqac.lif.cep.tmf.Divert.DivertPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert_1_1_divert_pullable.html", null ],
         [ "ca.uqac.lif.cep.tmf.Multiplex.MuxPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pullable.html", null ],
         [ "ca.uqac.lif.cep.tmf.Tank.QueuePullable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pullable.html", null ],
         [ "ca.uqac.lif.cep.TypedPullable< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html", null ],
@@ -130,6 +134,7 @@ var hierarchy =
       [ "ca.uqac.lif.cep.functions.ApplyFunctionPartial.InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_input_pushable.html", null ],
       [ "ca.uqac.lif.cep.GroupProcessor.ProxyPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html", null ],
       [ "ca.uqac.lif.cep.SynchronousProcessor.InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_input_pushable.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Divert.DivertPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert_1_1_divert_pushable.html", null ],
       [ "ca.uqac.lif.cep.tmf.Multiplex.MuxPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pushable.html", null ],
       [ "ca.uqac.lif.cep.tmf.Tank.QueuePushable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pushable.html", null ],
       [ "ca.uqac.lif.cep.UniformProcessor.UnaryPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html", null ]

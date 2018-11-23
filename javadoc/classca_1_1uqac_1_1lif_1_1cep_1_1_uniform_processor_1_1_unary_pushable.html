@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.9-alpha</span>
+   &#160;<span id="projectnumber">0.10-alpha</span>
    </div>
   </td>
  </tr>
@@ -70,14 +70,6 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1_unif
 
 <p>A special type of <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html" title="Gives events to some of a processor&#39;s input. ">Pushable</a> for uniform processors with an input and output arity of exactly 1.  
  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html#details">More...</a></p>
-<div class="dynheader">
-Inheritance diagram for ca.uqac.lif.cep.UniformProcessor.UnaryPushable:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable__inherit__graph.png" border="0" usemap="#ca_8uqac_8lif_8cep_8_uniform_processor_8_unary_pushable_inherit__map" alt="Inheritance graph"/></div>
-<map name="ca_8uqac_8lif_8cep_8_uniform_processor_8_unary_pushable_inherit__map" id="ca_8uqac_8lif_8cep_8_uniform_processor_8_unary_pushable_inherit__map">
-<area shape="rect" id="node2" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html" title="Gives events to some of a processor&#39;s input. " alt="" coords="33,5,198,141"/>
-</map>
-</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -131,7 +123,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a6b4022d39622435f9894ec0ba8035505">ca.uqac.lif.cep.Pushable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00199">199</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00202">202</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -155,7 +147,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a0f0288ccf54406146f53e36250639cc8">ca.uqac.lif.cep.Pushable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00193">193</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00196">196</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -206,7 +198,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pushes an event into one of the processor's input trace. </p>
-<p>Contrarily to <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html#ad7d1ce189ae67bcf8c48b93b540f42e7">pushFast(Object)</a>, this method <em>must</em> return only when the push operation is completely done. Calling <a class="el" href="">waitFor()</a> afterwards must <em>not</em> be necessary.</p>
+<p>Contrarily to <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html#ad7d1ce189ae67bcf8c48b93b540f42e7">pushFast(Object)</a>, this method <em>must</em> return only when the push operation is completely done.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">o</td><td>The event. Although you can technically push <code>null</code>, the behaviour in this case is undefined. It <code>may</code> be interpreted as if you are passing no event. </td></tr>
@@ -238,15 +230,14 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pushes an event into one of the processor's input trace, but does not wait for the push operation to terminate. </p>
-<p>In other words, this is a non-blocking call to <code><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html#a3d787f71474fd482c749268a14386137" title="Pushes an event into one of the processor&#39;s input trace. ">push()</a></code> that returns control to the caller immediately. In order to resynchronize the caller with the result of the push operation, one must use the <code>Future</code> object that the method returns. </p>
-<p>Some implementations of this interface do not implement non-blocking calls; in such a case, a call to <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html#ad7d1ce189ae67bcf8c48b93b540f42e7">pushFast()</a> will be identical to a call to <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html#a3d787f71474fd482c749268a14386137">push()</a>, and calling <a class="el" href="">waitFor()</a> will return immediately.</p>
+<p>In other words, this is a non-blocking call to <code><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html#a3d787f71474fd482c749268a14386137" title="Pushes an event into one of the processor&#39;s input trace. ">push()</a></code> that returns control to the caller immediately. In order to resynchronize the caller with the result of the push operation, one must use the <code>Future</code> object that the method returns.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">o</td><td>The event. Although you can technically push <code>null</code>, the behaviour in this case is undefined. It <code>may</code> be interpreted as if you are passing no event. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="">Future</a> object that can be used to wait until the call to <div class="fragment"><div class="line"><a class="code" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html#ad7d1ce189ae67bcf8c48b93b540f42e7">pushFast</a> </div></div><!-- fragment --> is finished. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="">Future</a> object that can be used to wait until the call to <code>pushFast</code> is finished. </dd></dl>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a92f728151fe1562f6e91a9774ba159b9">ca.uqac.lif.cep.Pushable</a>.</p>
 
@@ -263,7 +254,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html">UniformProcessor</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html">UnaryPushable</a></li>
-    <li class="footer">Generated on Thu Oct 11 2018 08:11:31 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,4 +1,0 @@
-<map id="ca.uqac.lif.cep.Pullable.hasNextSoft" name="ca.uqac.lif.cep.Pullable.hasNextSoft">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html#a2c528e1389892d1ebd397e49bf42d75c" title="Determines if an event can be pulled from the output. " alt="" coords="255,5,464,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html#a34bf8553dc8080ca0ed2eb1ae3597098" title="Determines if an event can be pulled from the output. " alt="" coords="236,71,483,112"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="ca.uqac.lif.cep.Processor.duplicate" name="ca.uqac.lif.cep.Processor.duplicate">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a276f2d7ad8f3b497a09351b69f9566d6" title="Creates a copy of a processor. " alt="" coords="280,5,517,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a10d172acec9fcf0af81a550503e945fa" title="ca.uqac.lif.cep.tmf.Slice.compute" alt="" coords="290,71,507,98"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a53fb3e85b6e029d25fe535b48b108187" title="Duplicates an object. " alt="" coords="289,122,508,149"/>
-</map>

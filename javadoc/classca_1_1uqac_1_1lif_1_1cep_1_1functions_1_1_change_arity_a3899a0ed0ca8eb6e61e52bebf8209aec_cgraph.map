@@ -1,6 +1,0 @@
-<map id="ca.uqac.lif.cep.functions.ChangeArity.duplicate" name="ca.uqac.lif.cep.functions.ChangeArity.duplicate">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_change_arity.html#a3ce4077ac278b4e893b0a553e9b800ab" title="ca.uqac.lif.cep.functions.\lChangeArity.ChangeArity" alt="" coords="232,5,403,47"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a9b7ed543969e1c7ca9b1258135dbf59c" title="Returns the processor&#39;s input arity. " alt="" coords="221,71,413,112"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#aef157a8007b39531e4ad12e5502eeaee" title="Duplicates an object and sets it to its initial state. " alt="" coords="233,136,401,177"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#ae9ad9ceabbd4af9a6b8e07b7b56190c1" title="Gets the function&#39;s output arity, i.e. " alt="" coords="461,5,629,47"/>
-</map>

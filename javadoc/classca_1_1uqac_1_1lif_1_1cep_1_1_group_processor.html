@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.9-alpha</span>
+   &#160;<span id="projectnumber">0.10-alpha</span>
    </div>
   </td>
  </tr>
@@ -73,17 +73,6 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1_grou
 
 <p>Encapsulates a chain of processors as if it were a single one.  
  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#details">More...</a></p>
-<div class="dynheader">
-Inheritance diagram for ca.uqac.lif.cep.GroupProcessor:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor__inherit__graph.png" border="0" usemap="#ca_8uqac_8lif_8cep_8_group_processor_inherit__map" alt="Inheritance graph"/></div>
-<map name="ca_8uqac_8lif_8cep_8_group_processor_inherit__map" id="ca_8uqac_8lif_8cep_8_group_processor_inherit__map">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="99,300,297,803"/>
-<area shape="rect" id="node3" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="{ca.uqac.lif.cep.Duplicable\lProcessor\n||+ duplicate()\l}" alt="" coords="5,153,177,245"/>
-<area shape="rect" id="node4" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="5,5,177,97"/>
-<area shape="rect" id="node5" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="{ca.uqac.lif.cep.Contextualizable\n||+ setContext()\l+ setContext()\l+ getContext()\l}" alt="" coords="202,145,410,252"/>
-</map>
-</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -118,7 +107,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a921996cb11818619475ceafe99398975"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declares that the <em>i</em>-th input of the group is linked to the <em>j</em>-th input of processor <code>p</code>  <a href="#a921996cb11818619475ceafe99398975">More...</a><br /></td></tr>
 <tr class="separator:a921996cb11818619475ceafe99398975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9db24c793760387160467121b0c7dd62"><td class="memItemLeft" align="right" valign="top">synchronized <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html">GroupProcessor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a9db24c793760387160467121b0c7dd62">associateOutput</a> (int i, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> p, int j)</td></tr>
-<tr class="memdesc:a9db24c793760387160467121b0c7dd62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declares that the <em>i/</em>-th output of the group is linked to the <em>j</em>-th output of processor p.  <a href="#a9db24c793760387160467121b0c7dd62">More...</a><br /></td></tr>
+<tr class="memdesc:a9db24c793760387160467121b0c7dd62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declares that the <em>i</em>-th output of the group is linked to the <em>j</em>-th output of processor p.  <a href="#a9db24c793760387160467121b0c7dd62">More...</a><br /></td></tr>
 <tr class="separator:a9db24c793760387160467121b0c7dd62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43f56f55dea17139060bc535dc4b83ca"><td class="memItemLeft" align="right" valign="top">synchronized <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html">ProxyPushable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a43f56f55dea17139060bc535dc4b83ca">getPushableInput</a> (int index)</td></tr>
 <tr class="separator:a43f56f55dea17139060bc535dc4b83ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,15 +167,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:acf38d9cd6037833a284d68b393ae4f21 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a complete context to this object.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#acf38d9cd6037833a284d68b393ae4f21">More...</a><br /></td></tr>
 <tr class="separator:acf38d9cd6037833a284d68b393ae4f21 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3eb42b0ac26f3c4ee999ef06849254e3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a3eb42b0ac26f3c4ee999ef06849254e3">hashCode</a> ()</td></tr>
+<tr class="memdesc:a3eb42b0ac26f3c4ee999ef06849254e3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of <a class="el" href="">hashCode()</a> specific to processors.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a3eb42b0ac26f3c4ee999ef06849254e3">More...</a><br /></td></tr>
 <tr class="separator:a3eb42b0ac26f3c4ee999ef06849254e3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e2d23d739099c04c114699f1ea9a8fa inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">final boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a2e2d23d739099c04c114699f1ea9a8fa">equals</a> (Object o)</td></tr>
+<tr class="memdesc:a2e2d23d739099c04c114699f1ea9a8fa inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of <a class="el" href="">equals()</a> specific to processors.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a2e2d23d739099c04c114699f1ea9a8fa">More...</a><br /></td></tr>
 <tr class="separator:a2e2d23d739099c04c114699f1ea9a8fa inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a991d8fc57df1cc3dcdfd69c9754a84d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a991d8fc57df1cc3dcdfd69c9754a84d3">getId</a> ()</td></tr>
-<tr class="memdesc:a991d8fc57df1cc3dcdfd69c9754a84d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the processor instance's unique ID.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a991d8fc57df1cc3dcdfd69c9754a84d3">More...</a><br /></td></tr>
-<tr class="separator:a991d8fc57df1cc3dcdfd69c9754a84d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45dbe127671b759fbb626984415233d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a45dbe127671b759fbb626984415233d3">reset</a> ()</td></tr>
-<tr class="memdesc:a45dbe127671b759fbb626984415233d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the processor.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a45dbe127671b759fbb626984415233d3">More...</a><br /></td></tr>
-<tr class="separator:a45dbe127671b759fbb626984415233d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c46b6e4433f058b9e98f3cbcd68cf6 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a31c46b6e4433f058b9e98f3cbcd68cf6">getId</a> ()</td></tr>
+<tr class="memdesc:a31c46b6e4433f058b9e98f3cbcd68cf6 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the processor instance's unique ID.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a31c46b6e4433f058b9e98f3cbcd68cf6">More...</a><br /></td></tr>
+<tr class="separator:a31c46b6e4433f058b9e98f3cbcd68cf6 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a060b4d99ce0737de3cba5b16f27358d7 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">synchronized void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a060b4d99ce0737de3cba5b16f27358d7">reset</a> ()</td></tr>
+<tr class="memdesc:a060b4d99ce0737de3cba5b16f27358d7 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the processor.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a060b4d99ce0737de3cba5b16f27358d7">More...</a><br /></td></tr>
+<tr class="separator:a060b4d99ce0737de3cba5b16f27358d7 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ed1947748497a7ca345e1bc8c7c81bf inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">abstract <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html">Pushable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a7ed1947748497a7ca345e1bc8c7c81bf">getPushableInput</a> (int index)</td></tr>
 <tr class="memdesc:a7ed1947748497a7ca345e1bc8c7c81bf inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html">Pushable</a> corresponding to the processor's <em>i</em>-th input trace.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a7ed1947748497a7ca345e1bc8c7c81bf">More...</a><br /></td></tr>
 <tr class="separator:a7ed1947748497a7ca345e1bc8c7c81bf inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -404,15 +395,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the current group processor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00160">160</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_adf3e512cb4605141d71110d9092bc624_icgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_adf3e512cb4605141d71110d9092bc624_icgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_adf3e512cb4605141d71110d9092bc624_icgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_adf3e512cb4605141d71110d9092bc624_icgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a3bda02559d94e340ead0ef92a1370941" title="Clones the contents of the current GroupProcessor into a new group. " alt="" coords="284,13,547,39"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00161">161</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -441,7 +424,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the current group processor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00177">177</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00178">178</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -488,18 +471,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00359">359</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a655eb769895d8b7841b37e923deff88e_cgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a655eb769895d8b7841b37e923deff88e_cgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a655eb769895d8b7841b37e923deff88e_cgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a655eb769895d8b7841b37e923deff88e_cgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a921996cb11818619475ceafe99398975" title="Declares that the i&#45;th input of the group is linked to the j&#45;th input of processor p ..." alt="" coords="319,5,584,47"/>
-<area shape="rect" id="node4" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a9db24c793760387160467121b0c7dd62" title="Declares that the i/&#45;th output of the group is linked to the j&#45;th output of processor p..." alt="" coords="319,71,584,112"/>
-<area shape="rect" id="node3" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a7ed1947748497a7ca345e1bc8c7c81bf" title="Returns the Pushable corresponding to the processor&#39;s i&#45;th input trace. " alt="" coords="632,5,824,47"/>
-<area shape="rect" id="node5" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a8c1ef09b992a8d916addb2bfc59ebaa1" title="Returns the Pullable corresponding to the processor&#39;s i&#45;th output trace. " alt="" coords="632,71,824,112"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00360">360</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -546,23 +518,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the current group processor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00202">202</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a921996cb11818619475ceafe99398975_cgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a921996cb11818619475ceafe99398975_cgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a921996cb11818619475ceafe99398975_cgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a921996cb11818619475ceafe99398975_cgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a7ed1947748497a7ca345e1bc8c7c81bf" title="Returns the Pushable corresponding to the processor&#39;s i&#45;th input trace. " alt="" coords="319,5,511,47"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a921996cb11818619475ceafe99398975_icgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a921996cb11818619475ceafe99398975_icgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a921996cb11818619475ceafe99398975_icgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a921996cb11818619475ceafe99398975_icgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a655eb769895d8b7841b37e923deff88e" title="Associates the endpoints of a new GroupProcessor like the ones in the current group. " alt="" coords="319,5,584,47"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00203">203</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -598,7 +554,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Declares that the <em>i/</em>-th output of the group is linked to the <em>j</em>-th output of processor p. </p>
+<p>Declares that the <em>i</em>-th output of the group is linked to the <em>j</em>-th output of processor p. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>The number of the output of the group </td></tr>
@@ -609,23 +565,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the current group processor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00221">221</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a9db24c793760387160467121b0c7dd62_cgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a9db24c793760387160467121b0c7dd62_cgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a9db24c793760387160467121b0c7dd62_cgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a9db24c793760387160467121b0c7dd62_cgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a8c1ef09b992a8d916addb2bfc59ebaa1" title="Returns the Pullable corresponding to the processor&#39;s i&#45;th output trace. " alt="" coords="319,5,511,47"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a9db24c793760387160467121b0c7dd62_icgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a9db24c793760387160467121b0c7dd62_icgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a9db24c793760387160467121b0c7dd62_icgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a9db24c793760387160467121b0c7dd62_icgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a655eb769895d8b7841b37e923deff88e" title="Associates the endpoints of a new GroupProcessor like the ones in the current group. " alt="" coords="319,5,584,47"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00222">222</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -659,21 +599,13 @@ Here is the caller graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">group</td><td>The <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html">GroupProcessor</a> to clone into. When the method is called, it is expected to be empty. </td></tr>
-    <tr><td class="paramname">with_state</td><td>It set to<div class="fragment"><div class="line"><span class="keyword">true</span> </div></div><!-- fragment --> , each processor in the new group has the same events in its input/output buffers as in the original. Otherwise, the queues are empty. </td></tr>
+    <tr><td class="paramname">with_state</td><td>It set to <code>true</code>, each processor in the new group has the same events in its input/output buffers as in the original. Otherwise, the queues are empty. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An association between IDs and the new processors that have been put into the group </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00325">325</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a3bda02559d94e340ead0ef92a1370941_cgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a3bda02559d94e340ead0ef92a1370941_cgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a3bda02559d94e340ead0ef92a1370941_cgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a3bda02559d94e340ead0ef92a1370941_cgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#adf3e512cb4605141d71110d9092bc624" title="Adds a processor to the group. " alt="" coords="316,5,547,47"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00326">326</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -715,24 +647,13 @@ Here is the call graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>The processor to copy. Nothing is changed on this processor. </td></tr>
-    <tr><td class="paramname">with_state</td><td>If set to<div class="fragment"><div class="line"><span class="keyword">true</span> </div></div><!-- fragment --> , the new copy has the same events in its input/output buffers as the original. Otherwise, the queues are empty. </td></tr>
+    <tr><td class="paramname">with_state</td><td>If set to <code>true</code>, the new copy has the same events in its input/output buffers as the original. Otherwise, the queues are empty. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The new processor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00391">391</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a276f2d7ad8f3b497a09351b69f9566d6_cgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a276f2d7ad8f3b497a09351b69f9566d6_cgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a276f2d7ad8f3b497a09351b69f9566d6_cgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a276f2d7ad8f3b497a09351b69f9566d6_cgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad49e29bdc1432481cb8d01fd579ed918" title="Duplicates an object and sets it to its initial state. " alt="" coords="291,5,517,32"/>
-<area shape="rect" id="node3" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a599c26f46c3e9a9381f22c52f2949b13" title="Adds an object to the object&#39;s context. " alt="" coords="308,57,500,98"/>
-<area shape="rect" id="node4" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad0feea00fdbd88552a2dee0adae65b8f" title="Creates a new empty context map. " alt="" coords="565,27,764,69"/>
-<area shape="rect" id="node5" href="classca_1_1uqac_1_1lif_1_1cep_1_1_context.html#a8a15eb952e4553368f3b831d7c8a80ee" title="ca.uqac.lif.cep.Context.put" alt="" coords="575,93,754,120"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00392">392</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -756,7 +677,7 @@ Here is the call graph for this function:</div>
 <p>Optionally, set the object into the same state as the source object.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">with_state</td><td>Set to<div class="fragment"><div class="line"><span class="keyword">true</span> </div></div><!-- fragment --> to replicate the object's state,<div class="fragment"><div class="line"><span class="keyword">false</span> </div></div><!-- fragment --> to create a new copy in the initial state. </td></tr>
+    <tr><td class="paramname">with_state</td><td>Set to <code>true</code> to replicate the object's state, <code>false</code> to create a new copy in the initial state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -764,19 +685,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html#a2b396be53d47717ebffc88ea80ae38db">ca.uqac.lif.cep.Duplicable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00411">411</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a78d846981d1a61958e725a31e273066f_cgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a78d846981d1a61958e725a31e273066f_cgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a78d846981d1a61958e725a31e273066f_cgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_a78d846981d1a61958e725a31e273066f_cgraph">
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a6f0d1894081766b77ef3b30cc664fe88" title="Returns the processor&#39;s output arity. " alt="" coords="320,5,512,47"/>
-<area shape="rect" id="node3" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a8db90f0a9c963b457462d826706b46dc" title="Retrieves the Pushable associated to the processor&#39;s i&#45;th output. " alt="" coords="320,71,512,112"/>
-<area shape="rect" id="node4" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a0f0288ccf54406146f53e36250639cc8" title="Gets the processor instance this Pushable is linked to. " alt="" coords="323,136,509,177"/>
-<area shape="rect" id="node5" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a6b4022d39622435f9894ec0ba8035505" title="Gets the position this Pushable is associated to: 0 is the first input (or output), 1 the second, etc. " alt="" coords="323,201,509,243"/>
-<area shape="rect" id="node6" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a991d8fc57df1cc3dcdfd69c9754a84d3" title="Fetches the processor instance&#39;s unique ID. " alt="" coords="315,267,517,294"/>
-</map>
-</div>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00412">412</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -803,9 +712,9 @@ Here is the call graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The processor, or<div class="fragment"><div class="line">null </div></div><!-- fragment --> if no processor is associated to this index </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The processor, or <code>null</code> if no processor is associated to this index </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00691">691</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00692">692</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -825,7 +734,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00306">306</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00307">307</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -845,7 +754,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00235">235</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00236">236</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -865,7 +774,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00229">229</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00230">230</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -885,7 +794,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00299">299</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00300">300</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -908,7 +817,7 @@ Here is the call graph for this function:</div>
 <p>Sets the processor to notify the QueueSource objects in the group to push an event when a call to push is made on the group. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">b</td><td>Set to<div class="fragment"><div class="line"><span class="keyword">true</span> </div></div><!-- fragment --> to notify the sources </td></tr>
+    <tr><td class="paramname">b</td><td>Set to <code>true</code> to notify the sources </td></tr>
   </table>
   </dd>
 </dl>
@@ -963,7 +872,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html#a342281e4c9fd7b8ce4bf1b682e6dbeab">ca.uqac.lif.cep.Contextualizable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00480">480</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00481">481</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1004,7 +913,7 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html#ab58e0a2d0c33a9c770d3698942a704aa">ca.uqac.lif.cep.Contextualizable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00490">490</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00491">491</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1034,7 +943,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00241">241</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00242">242</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1070,7 +979,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00259">259</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00260">260</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1109,7 +1018,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00286">286</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00287">287</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1148,7 +1057,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00269">269</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00270">270</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1178,7 +1087,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00253">253</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00254">254</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1214,7 +1123,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00247">247</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00248">248</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1233,7 +1142,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00664">664</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00665">665</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1252,7 +1161,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00674">674</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00675">675</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -1265,7 +1174,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html">GroupProcessor</a></li>
-    <li class="footer">Generated on Thu Oct 11 2018 08:11:31 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

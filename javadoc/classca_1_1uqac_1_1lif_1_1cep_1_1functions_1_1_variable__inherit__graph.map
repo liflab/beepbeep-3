@@ -1,7 +1,0 @@
-<map id="ca.uqac.lif.cep.functions.Variable" name="ca.uqac.lif.cep.functions.Variable">
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_context_variable.html" title="Placeholder for the value of a context element. " alt="" coords="5,851,173,1031"/>
-<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html" title="Symbol standing for the i&#45;th trace given as input. " alt="" coords="197,815,365,1068"/>
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html" title="Represents a stateless m&#45;to&#45;n function. " alt="" coords="101,285,269,539"/>
-<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function.html" title="{ca.uqac.lif.cep.functions.\lDuplicableFunction\n||+ duplicate()\l}" alt="" coords="101,145,269,237"/>
-<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="99,5,271,97"/>
-</map>

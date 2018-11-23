@@ -1,9 +1,0 @@
-<map id="ca.uqac.lif.cep.Processor.getOutputArity" name="ca.uqac.lif.cep.Processor.getOutputArity">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a78d846981d1a61958e725a31e273066f" title="Duplicates an object. " alt="" coords="245,5,507,32"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_pipe_crawler.html#a4417980ab25cfca1cca4ae833622994a" title="Crawls a graph from some starting point. " alt="" coords="267,56,485,83"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html#a8d35bb22c2da63c30b41b68acd05bf40" title="Creates a new abstract window processor. " alt="" coords="285,107,467,149"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a26ae0e802d1779b6978d4daf2a6f8cf9" title="Creates a new Slice processor. " alt="" coords="293,173,459,214"/>
-<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html#a401af3b3dc9d9b558f3ad22e49d7636a" title="Creates a new Splice processor. " alt="" coords="289,238,463,279"/>
-<area shape="rect" id="node7" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#a77cd7b3eeca92f54696ef77dbbae920b" title="Creates a new window processor. " alt="" coords="283,303,469,345"/>
-<area shape="rect" id="node8" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html#af2fac76b90029288f73a51d9618f2562" title="ca.uqac.lif.cep.util.Randomize.compute" alt="" coords="250,369,502,396"/>
-</map>

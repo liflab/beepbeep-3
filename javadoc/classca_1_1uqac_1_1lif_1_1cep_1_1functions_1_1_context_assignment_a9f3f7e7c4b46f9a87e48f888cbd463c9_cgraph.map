@@ -1,7 +1,0 @@
-<map id="ca.uqac.lif.cep.functions.ContextAssignment.assign" name="ca.uqac.lif.cep.functions.ContextAssignment.assign">
-<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html#acf94e17fea2c53a4e362a5bbf0c685b8" title="Gets the context associated to this object. " alt="" coords="232,5,463,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_context_assignment.html#a0242fa5cbfe1b49cdac4a8e7e2643e48" title="Assigns a value to a context element. " alt="" coords="258,71,437,112"/>
-<area shape="rect" id="node6" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html#a342281e4c9fd7b8ce4bf1b682e6dbeab" title="Adds a complete context to this object. " alt="" coords="232,136,463,177"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a76eae0aee66b2cf1520f5913c3ccd20f" title="Evaluates the outputs of the function, given some inputs. " alt="" coords="516,41,684,83"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_context.html#a8a15eb952e4553368f3b831d7c8a80ee" title="ca.uqac.lif.cep.Context.put" alt="" coords="511,107,689,134"/>
-</map>

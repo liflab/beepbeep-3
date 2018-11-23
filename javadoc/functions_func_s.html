@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.9-alpha</span>
+   &#160;<span id="projectnumber">0.10-alpha</span>
    </div>
   </td>
  </tr>
@@ -119,6 +119,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <li>setPushableOutput()
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a590b83b5bac02f2ce692385504568840">ca.uqac.lif.cep.GroupProcessor</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a96b126274054874d70c5a94a0bd58947">ca.uqac.lif.cep.Processor</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert.html#a659544ff29ed04eb1047ac0369cb2136">ca.uqac.lif.cep.tmf.Divert</a>
 </li>
 <li>setPushableOutputAssociation()
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a6866439350d49eb0d3856f5e2a5b9948">ca.uqac.lif.cep.GroupProcessor</a>
@@ -177,6 +178,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html#a1b58b3f718362be93197316fd9c3cbe1">ca.uqac.lif.cep.Pullable.PullNotSupported</a>
 , <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a1f9b138ef1a9c5ac00c309984b79ccb2">ca.uqac.lif.cep.Pullable</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html#a7bba0896a8f0edaa5a8bd8e51e6f2903">ca.uqac.lif.cep.SynchronousProcessor.OutputPullable</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert_1_1_divert_pullable.html#aa0de11ded67c111489592cdaf9b7316f">ca.uqac.lif.cep.tmf.Divert.DivertPullable</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pullable.html#a58cfb784cd09a50a70ca8047271cfef6">ca.uqac.lif.cep.tmf.Multiplex.MuxPullable</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#a0f004a50bad0605fcfb6686172cddb78">ca.uqac.lif.cep.tmf.Pump</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pullable.html#a1c688b0a484e177d2808a5e036d9555f">ca.uqac.lif.cep.tmf.Tank.QueuePullable</a>
@@ -195,6 +197,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html#a6705a9290a3a671d948cb8f308680fae">ca.uqac.lif.cep.Pullable.PullNotSupported</a>
 , <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a1e76b36ba3b342f7e561130f30e19fd7">ca.uqac.lif.cep.Pullable</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html#a4693840fc2aaccf795a28226f9bd415f">ca.uqac.lif.cep.SynchronousProcessor.OutputPullable</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert_1_1_divert_pullable.html#aac8685a99240c6350e33ebbac253967e">ca.uqac.lif.cep.tmf.Divert.DivertPullable</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pullable.html#a17d9991c22bba64990b2e2b08c800d3e">ca.uqac.lif.cep.tmf.Multiplex.MuxPullable</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#adb566459794f77a316896e0aa5f1d0d3">ca.uqac.lif.cep.tmf.Pump</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pullable.html#a70223a5ed0a68c3ab01d5801e27131e1">ca.uqac.lif.cep.tmf.Tank.QueuePullable</a>
@@ -223,7 +226,7 @@ $(document).ready(function(){initNavTree('functions_func_s.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Oct 11 2018 08:11:32 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Nov 23 2018 17:09:13 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

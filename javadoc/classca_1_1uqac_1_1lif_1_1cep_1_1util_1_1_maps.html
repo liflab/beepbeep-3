@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.9-alpha</span>
+   &#160;<span id="projectnumber">0.10-alpha</span>
    </div>
   </td>
  </tr>
@@ -77,11 +77,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>ApplyAll</b></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new map by applying a function to all the values of a map given as input. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>ArrayPutInto</b></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a map by putting key-value pairs into it. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>Get</b></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value in the map, based on the name of a key. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>MapPutInto</b></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a map by putting key-value pairs into it. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>MergeMaps</b></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a map by merging its contents with a stream of incoming maps. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>PutInto</b></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a map by putting key-value pairs into it. <br /></td></tr>
@@ -93,6 +96,7 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a9c1ab6954cedee8055cd1ea174c9ca51"><td class="memItemLeft" align="right" valign="top">static final transient Values&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps.html#a9c1ab6954cedee8055cd1ea174c9ca51">values</a> = new Values()</td></tr>
+<tr class="memdesc:a9c1ab6954cedee8055cd1ea174c9ca51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the set of values of a map.  <a href="#a9c1ab6954cedee8055cd1ea174c9ca51">More...</a><br /></td></tr>
 <tr class="separator:a9c1ab6954cedee8055cd1ea174c9ca51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -105,7 +109,7 @@ The "new" function takes as input a map object, and returns a <em>new copy</em> 
 </ul>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_maps_8java_source.html#l00039">39</a> of file <a class="el" href="_maps_8java_source.html">Maps.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_maps_8java_source.html#l00041">41</a> of file <a class="el" href="_maps_8java_source.html">Maps.java</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a9c1ab6954cedee8055cd1ea174c9ca51"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9c1ab6954cedee8055cd1ea174c9ca51">&#9670;&nbsp;</a></span>values</h2>
@@ -127,7 +131,9 @@ The "new" function takes as input a map object, and returns a <em>new copy</em> 
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_maps_8java_source.html#l00041">41</a> of file <a class="el" href="_maps_8java_source.html">Maps.java</a>.</p>
+<p>Extracts the set of values of a map. </p>
+
+<p class="definition">Definition at line <a class="el" href="_maps_8java_source.html#l00047">47</a> of file <a class="el" href="_maps_8java_source.html">Maps.java</a>.</p>
 
 </div>
 </div>
@@ -140,7 +146,7 @@ The "new" function takes as input a map object, and returns a <em>new copy</em> 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1util.html">util</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps.html">Maps</a></li>
-    <li class="footer">Generated on Thu Oct 11 2018 08:11:32 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

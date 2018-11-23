@@ -1,7 +1,0 @@
-<map id="ca.uqac.lif.cep.GroupProcessor.duplicate" name="ca.uqac.lif.cep.GroupProcessor.duplicate">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a6f0d1894081766b77ef3b30cc664fe88" title="Returns the processor&#39;s output arity. " alt="" coords="320,5,512,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a8db90f0a9c963b457462d826706b46dc" title="Retrieves the Pushable associated to the processor&#39;s i&#45;th output. " alt="" coords="320,71,512,112"/>
-<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a0f0288ccf54406146f53e36250639cc8" title="Gets the processor instance this Pushable is linked to. " alt="" coords="323,136,509,177"/>
-<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a6b4022d39622435f9894ec0ba8035505" title="Gets the position this Pushable is associated to: 0 is the first input (or output), 1 the second, etc. " alt="" coords="323,201,509,243"/>
-<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a991d8fc57df1cc3dcdfd69c9754a84d3" title="Fetches the processor instance&#39;s unique ID. " alt="" coords="315,267,517,294"/>
-</map>

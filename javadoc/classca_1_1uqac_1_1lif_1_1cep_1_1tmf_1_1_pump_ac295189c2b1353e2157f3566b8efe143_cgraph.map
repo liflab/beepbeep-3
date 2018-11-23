@@ -1,6 +1,0 @@
-<map id="ca.uqac.lif.cep.tmf.Pump.run" name="ca.uqac.lif.cep.tmf.Pump.run">
-<area shape="rect" id="node2" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#adb823454d39e60741566069b84b48097" title="Determines if an event can be pulled from the output, by trying &quot;harder&quot; than hasNextSoft(). " alt="" coords="244,5,455,32"/>
-<area shape="rect" id="node3" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#abf6e4fd3d233b6d16f3bb5ba837ecf37" title="Attempts to pull an event from the source. " alt="" coords="259,56,440,83"/>
-<area shape="rect" id="node4" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a67a7a65c6fa9c293eeb615b6a35267bb" title="Pushes an event into one of the processor&#39;s input trace. " alt="" coords="251,107,448,133"/>
-<area shape="rect" id="node5" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#ae31b07749cb0910cf3f7bf00c6c9c47f" title="Notifies the pushable that there is no more event to be pushed, i.e. " alt="" coords="249,158,450,199"/>
-</map>

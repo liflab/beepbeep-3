@@ -1,7 +1,0 @@
-<map id="ca.uqac.lif.cep.tmf.Slice.duplicate" name="ca.uqac.lif.cep.tmf.Slice.duplicate">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#aef157a8007b39531e4ad12e5502eeaee" title="Duplicates an object and sets it to its initial state. " alt="" coords="301,5,469,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad49e29bdc1432481cb8d01fd579ed918" title="Duplicates an object and sets it to its initial state. " alt="" coords="272,71,499,98"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a599c26f46c3e9a9381f22c52f2949b13" title="Adds an object to the object&#39;s context. " alt="" coords="289,123,481,164"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad0feea00fdbd88552a2dee0adae65b8f" title="Creates a new empty context map. " alt="" coords="547,93,745,135"/>
-<area shape="rect" id="node6" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_context.html#a8a15eb952e4553368f3b831d7c8a80ee" title="ca.uqac.lif.cep.Context.put" alt="" coords="557,159,735,186"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="ca.uqac.lif.cep.tmf.Decimate.compute" name="ca.uqac.lif.cep.tmf.Decimate.compute">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#a1c32ddb94b0fefc68e05f68715c35de4" title="Indicates if the inputs should be processed and output. " alt="" coords="301,5,533,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#a57c85d30d52d303369bc3d5981af2c1d" title="Method to override if you do not want to output inputs only but also need to calculate a specific out..." alt="" coords="297,71,537,112"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#a639f56e943b66c604dd497b6ede74225" title="Called after every output. " alt="" coords="308,136,527,177"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#ad77a472f4f98f376dbbebf50ec3cd39c" title="Called after each compute. " alt="" coords="308,201,527,243"/>
-</map>

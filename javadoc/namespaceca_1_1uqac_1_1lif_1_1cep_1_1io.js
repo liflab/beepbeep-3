@@ -7,5 +7,6 @@ var namespaceca_1_1uqac_1_1lif_1_1cep_1_1io =
     [ "ReadInputStream", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_input_stream.html", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_input_stream" ],
     [ "ReadLines", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_lines.html", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_lines" ],
     [ "ReadStringStream", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_string_stream.html", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_string_stream" ],
-    [ "WriteOutputStream", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_output_stream.html", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_output_stream" ]
+    [ "WriteOutputStream", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_output_stream.html", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_output_stream" ],
+    [ "WriteToFile", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_to_file.html", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_to_file" ]
 ];

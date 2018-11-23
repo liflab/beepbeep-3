@@ -1,5 +1,0 @@
-<map id="ca.uqac.lif.cep.util.Multiset.remove" name="ca.uqac.lif.cep.util.Multiset.remove">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a751ee42a28cc320d19347a93d5a3d427" title="Checks if an element is contained (at least once) into this multiset. " alt="" coords="279,5,509,32"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a1c36682ccf3ec5b975a8eb07e0e2fcbe" title="Removes an element from this multiset. " alt="" coords="281,57,507,98"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a0897dd0046d8a4f0f22a72ce67a3e835" title="Gets the cardinality of an element. " alt="" coords="557,64,757,91"/>
-</map>

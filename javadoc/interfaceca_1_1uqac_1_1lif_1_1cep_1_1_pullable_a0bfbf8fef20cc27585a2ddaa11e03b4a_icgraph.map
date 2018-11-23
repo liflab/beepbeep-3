@@ -1,5 +1,0 @@
-<map id="ca.uqac.lif.cep.Pullable.pullSoft" name="ca.uqac.lif.cep.Pullable.pullSoft">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html#acfbc8bbd682d857c7540d58f827a7c62" title="Attempts to pull an event from the source. " alt="" coords="275,5,484,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html#a368428a65dc5b9795d7e08ba91277dec" title="Tells the sink to pull events from the pipeline. " alt="" coords="287,71,471,98"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html#a183f77b4da66896233edba8d39dfe1f9" title="Attempts to pull an event from the source. " alt="" coords="259,122,500,149"/>
-</map>

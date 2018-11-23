@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.9-alpha</span>
+   &#160;<span id="projectnumber">0.10-alpha</span>
    </div>
   </td>
  </tr>
@@ -70,25 +70,6 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1
 
 <p>Produces output events from no input.  
  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html#details">More...</a></p>
-<div class="dynheader">
-Inheritance diagram for ca.uqac.lif.cep.tmf.Source:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source__inherit__graph.png" border="0" usemap="#ca_8uqac_8lif_8cep_8tmf_8_source_inherit__map" alt="Inheritance graph"/></div>
-<map name="ca_8uqac_8lif_8cep_8tmf_8_source_inherit__map" id="ca_8uqac_8lif_8cep_8tmf_8_source_inherit__map">
-<area shape="rect" id="node7" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_http_get.html" title="Reads chunks of data from an URL, using an HTTP request. " alt="" coords="24,1263,195,1399"/>
-<area shape="rect" id="node8" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_input_stream.html" title="Read contents from a Java InputStream. " alt="" coords="219,1233,405,1428"/>
-<area shape="rect" id="node11" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source.html" title="Source whose input is a queue of objects. " alt="" coords="429,1204,601,1457"/>
-<area shape="rect" id="node13" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html" title="Joins multiple sources as a single one. " alt="" coords="625,1233,796,1428"/>
-<area shape="rect" id="node2" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html" title="Performs a computation on input events to produce output events. " alt="" coords="320,851,507,1016"/>
-<area shape="rect" id="node3" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. " alt="" coords="314,300,513,803"/>
-<area shape="rect" id="node4" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html" title="{ca.uqac.lif.cep.Duplicable\lProcessor\n||+ duplicate()\l}" alt="" coords="221,153,393,245"/>
-<area shape="rect" id="node5" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html" title="Interface indicating that an object can be duplicated. " alt="" coords="221,5,393,97"/>
-<area shape="rect" id="node6" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html" title="{ca.uqac.lif.cep.Contextualizable\n||+ setContext()\l+ setContext()\l+ getContext()\l}" alt="" coords="417,145,625,252"/>
-<area shape="rect" id="node9" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_lines.html" title="Source that reads text lines from a Java InputStream. " alt="" coords="5,1505,192,1685"/>
-<area shape="rect" id="node10" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_string_stream.html" title="Extracts character strings from a Java InputStream. " alt="" coords="217,1535,407,1656"/>
-<area shape="rect" id="node12" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_batch.html" title="Operates like QueueSource, except that it dumps all its queue at once, instead of releasing the event..." alt="" coords="431,1542,603,1649"/>
-</map>
-</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -122,15 +103,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:acf38d9cd6037833a284d68b393ae4f21 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a complete context to this object.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#acf38d9cd6037833a284d68b393ae4f21">More...</a><br /></td></tr>
 <tr class="separator:acf38d9cd6037833a284d68b393ae4f21 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3eb42b0ac26f3c4ee999ef06849254e3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a3eb42b0ac26f3c4ee999ef06849254e3">hashCode</a> ()</td></tr>
+<tr class="memdesc:a3eb42b0ac26f3c4ee999ef06849254e3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of <a class="el" href="">hashCode()</a> specific to processors.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a3eb42b0ac26f3c4ee999ef06849254e3">More...</a><br /></td></tr>
 <tr class="separator:a3eb42b0ac26f3c4ee999ef06849254e3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e2d23d739099c04c114699f1ea9a8fa inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">final boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a2e2d23d739099c04c114699f1ea9a8fa">equals</a> (Object o)</td></tr>
+<tr class="memdesc:a2e2d23d739099c04c114699f1ea9a8fa inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of <a class="el" href="">equals()</a> specific to processors.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a2e2d23d739099c04c114699f1ea9a8fa">More...</a><br /></td></tr>
 <tr class="separator:a2e2d23d739099c04c114699f1ea9a8fa inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a991d8fc57df1cc3dcdfd69c9754a84d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a991d8fc57df1cc3dcdfd69c9754a84d3">getId</a> ()</td></tr>
-<tr class="memdesc:a991d8fc57df1cc3dcdfd69c9754a84d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the processor instance's unique ID.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a991d8fc57df1cc3dcdfd69c9754a84d3">More...</a><br /></td></tr>
-<tr class="separator:a991d8fc57df1cc3dcdfd69c9754a84d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45dbe127671b759fbb626984415233d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a45dbe127671b759fbb626984415233d3">reset</a> ()</td></tr>
-<tr class="memdesc:a45dbe127671b759fbb626984415233d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the processor.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a45dbe127671b759fbb626984415233d3">More...</a><br /></td></tr>
-<tr class="separator:a45dbe127671b759fbb626984415233d3 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c46b6e4433f058b9e98f3cbcd68cf6 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a31c46b6e4433f058b9e98f3cbcd68cf6">getId</a> ()</td></tr>
+<tr class="memdesc:a31c46b6e4433f058b9e98f3cbcd68cf6 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the processor instance's unique ID.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a31c46b6e4433f058b9e98f3cbcd68cf6">More...</a><br /></td></tr>
+<tr class="separator:a31c46b6e4433f058b9e98f3cbcd68cf6 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a060b4d99ce0737de3cba5b16f27358d7 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">synchronized void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a060b4d99ce0737de3cba5b16f27358d7">reset</a> ()</td></tr>
+<tr class="memdesc:a060b4d99ce0737de3cba5b16f27358d7 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the processor.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a060b4d99ce0737de3cba5b16f27358d7">More...</a><br /></td></tr>
+<tr class="separator:a060b4d99ce0737de3cba5b16f27358d7 inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ed1947748497a7ca345e1bc8c7c81bf inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memItemLeft" align="right" valign="top">abstract <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html">Pushable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a7ed1947748497a7ca345e1bc8c7c81bf">getPushableInput</a> (int index)</td></tr>
 <tr class="memdesc:a7ed1947748497a7ca345e1bc8c7c81bf inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html">Pushable</a> corresponding to the processor's <em>i</em>-th input trace.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a7ed1947748497a7ca345e1bc8c7c81bf">More...</a><br /></td></tr>
 <tr class="separator:a7ed1947748497a7ca345e1bc8c7c81bf inherit pub_methods_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -326,14 +309,6 @@ Additional Inherited Members</h2></td></tr>
 <p>Tells the source to push events into the pipeline. </p>
 
 <p class="definition">Definition at line <a class="el" href="_source_8java_source.html#l00053">53</a> of file <a class="el" href="_source_8java_source.html">Source.java</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source_ae86e5c23b8d07de29df8c7035be98074_cgraph.png" border="0" usemap="#classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source_ae86e5c23b8d07de29df8c7035be98074_cgraph" alt=""/></div>
-<map name="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source_ae86e5c23b8d07de29df8c7035be98074_cgraph" id="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source_ae86e5c23b8d07de29df8c7035be98074_cgraph">
-<area shape="rect" id="node2" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html#a92f728151fe1562f6e91a9774ba159b9" title="Pushes an event into one of the processor&#39;s input trace, but does not wait for the push operation to ..." alt="" coords="260,5,483,32"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -346,7 +321,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1tmf.html">tmf</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html">Source</a></li>
-    <li class="footer">Generated on Thu Oct 11 2018 08:11:32 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

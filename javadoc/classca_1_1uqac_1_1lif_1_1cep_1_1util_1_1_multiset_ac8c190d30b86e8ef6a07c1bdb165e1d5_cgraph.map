@@ -1,6 +1,0 @@
-<map id="ca.uqac.lif.cep.util.Multiset.addAll" name="ca.uqac.lif.cep.util.Multiset.addAll">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a36d06202115cfd64412587abe4f0d5fa" title="Performs the union of two multisets. " alt="" coords="272,5,491,32"/>
-<area shape="rect" id="node5" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#af2fac964a4ccd97d40c1207c3b3936d6" title="Adds an element to this multiset. " alt="" coords="280,57,483,98"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#ab4d72daa7d8a3fd25e3272e3cc3dd211" title="Gets the (normal) set of all elements in this multiset. " alt="" coords="539,5,761,32"/>
-<area shape="rect" id="node4" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a0897dd0046d8a4f0f22a72ce67a3e835" title="Gets the cardinality of an element. " alt="" coords="550,60,750,87"/>
-</map>
