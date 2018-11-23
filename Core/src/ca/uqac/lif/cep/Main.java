@@ -27,7 +27,7 @@ public class Main
   /**
    * Minor version number
    */
-  public static final int s_minorVersion = 9;
+  public static final int s_minorVersion = 10;
 
   /**
    * Revision version number
