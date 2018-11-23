@@ -29,10 +29,10 @@ import java.util.concurrent.Future;
  * <em>push</em> mode, to a downstream part that operates in <em>pull</em> mode.
  * 
  * Graphically, this processor is represented as:
- * 
- * ![Tank]({@docRoot}/doc-files/tmf/Tank.png)
- * 
- * The opposite of the tank is the {@link ca.uqac.lif.tmf.Pump Pump}.
+ * <p>
+ * <img src="{@docRoot}/doc-files/tmf/Tank.png" alt="Processor">
+ * <p>
+ * The opposite of the tank is the {@link ca.uqac.lif.cep.tmf.Pump Pump}.
  * 
  * @author Sylvain Hallé
  *

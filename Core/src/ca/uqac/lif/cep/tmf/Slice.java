@@ -276,8 +276,8 @@ public class Slice extends UniformProcessor
    * handled as individual slice IDs.
    * 
    * @param b
-   *          Set to {@code true} to handle collections as multiple IDs. The
-   *          default is {@code false}
+   *          Set to <tt>true</tt> to handle collections as multiple IDs. The
+   *          default is <tt>false</tt>
    * @return This slicer
    */
   public Slice explodeCollections(boolean b)

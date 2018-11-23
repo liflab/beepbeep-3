@@ -21,22 +21,25 @@ import java.util.Iterator;
 
 /**
  * Queries events on one of a processor's outputs. For a processor with an
- * output arity <i>n</i>, there exists *n* distinct pullables, namely one for
- * each output trace. Every pullable works roughly like a classical `Iterator`:
+ * output arity <i>n</i>, there exists <i>n</i> distinct pullables, namely one for
+ * each output pipe. Every pullable works roughly like a classical <tt>Iterator</tt>:
  * it is possible to check whether new output events are available, and get one
  * new output event.
  * 
- * However, contrarily to iterators, `Pullable`s have two versions of each
- * method: a *soft* and a *hard* version.
+ * However, contrarily to iterators, <tt>Pullable</tt>s have two versions of each
+ * method: a <em>soft</em> and a <em>hard</em> version.
  * 
- * - **Soft** methods make a single attempt at producing an output event. Since
+ * <ul>
+ * <li><strong>Soft</strong> methods make a single attempt at producing an
+ * output event. Since
  * processors are connected in a chain, this generally means pulling events from
  * the input in order to produce the output. However, if pulling the input
  * produces no event, no output event can be produced. In such a case,
  * {@link #hasNextSoft()} will return a special value (<code>MAYBE</code>), and
  * {@link #pullSoft()} will return <code>null</code>. Soft methods can be seen a
  * doing "one turn of the crank" on the whole chain of processors --whether or
- * not this outputs something. - **Hard** methods are actually calls to soft
+ * not this outputs something.</li>
+ * <li><strong>Hard</strong> methods are actually calls to soft
  * methods until an output event is produced: the "crank" is turned as long as
  * necessary to produce something. This means that one call to, e.g.
  * {@link #pull()} may consume more than one event from a processor's input.
@@ -44,26 +47,35 @@ import java.util.Iterator;
  * <code>YES</code> or <code>NO</code>), and {@link #pull()} returns
  * <code>null</code> only if no event will ever be output in the future (this
  * occurs, for example, when pulling events from a file, and the end of the file
- * has been reached).
+ * has been reached).</li>
+ * </ul>
+ * <p>
+ * The lifecycle of a <tt>Pullable</tt> object is as follows:
  * 
- * The lifecycle of a `Pullable` object is as follows:
- * 
- * - One obtains a reference to one of a processor's pullables. This can be done
+ * <ul>
+ * <li>One obtains a reference to one of a processor's pullables. This can be done
  * explicitly, e.g. by calling {@link Processor#getPullableOutput(int)}, or
  * implicitly, for example through every call to
- * {@link Connector#connect(Processor...)}. - At various moments, one calls
+ * {@link Connector#connect(Processor...)}.</li>
+ * <li>At various moments, one calls
  * {@link #hasNextSoft()} (or {@link #hasNext()} to check if events are
  * available - One calls {@link #pullSoft()} (or {@link #pull()} to produce the
- * next available output event.
+ * next available output event.</li>
+ * </ul>
  * 
- * The Pullable interface extends the `Iterator` and `Iterable` interfaces. This
- * means that an instance of Pullable can also be iterated over like this: ```
- * Pullable p = ...; for (Object o : p) { // Do something } ``` Note however
- * that if <code>p</code> refers to a processor producing an infinite number of
- * events, this loop will never terminate by itself.
+ * The Pullable interface extends the <tt>Iterator</tt> and <tt>Iterable</tt>
+ * interfaces. This means that an instance of <tt>Pullable</tt> can also be iterated over like this:
+ * <pre>
+ * Pullable p = ...; 
+ * for (Object o : p) {
+ *   // Do something 
+ * }
+ * </pre>
+ * Note however that if <code>p</code> refers to a processor producing an
+ * infinite number of events, this loop will never terminate by itself.
  * 
  * For the same processor, mixing calls to soft and hard methods is discouraged.
- * As a matter of fact, the Pullable's behaviour in such a situation is left
+ * As a matter of fact, the <tt>Pullable</tt>'s behaviour in such a situation is left
  * undefined.
  * 
  * @author Sylvain Hallé
@@ -177,7 +189,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
    * A runtime exception indicating that something went wrong when attempting to
    * check if a next event exists. This happens, for example, if one of a
    * processor's inputs it not connected to anything. Rather than throwing a
-   * {@code NullPointerException}, the issue will be wrapped within a
+   * <tt>NullPointerException</tt>, the issue will be wrapped within a
    * PullableException with a better error message.
    */
   public static class PullableException extends RuntimeException

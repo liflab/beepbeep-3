@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * A `Function` that raises the arity of another function.
  * Given an *m*:*n* function *f*, an instance of *r* `RaiseArity`
- * makes *f* behave like an *m'*:*n* function, with *m'* > *m*. The extra 
+ * makes *f* behave like an *m'*:*n* function, with *m'* &gt; *m*. The extra 
  * arguments given to *r* are simply ignored.
  *  
  * @author Sylvain Hallé

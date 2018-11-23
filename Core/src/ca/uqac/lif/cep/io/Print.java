@@ -237,8 +237,8 @@ public class Print extends Sink
    * Prints an object in an eye-pleasing way. So far, this method only does
    * something special for numbers.
    * 
-   * @param o
-   *          The object to print
+   * @param ps The print stream to print into
+   * @param o The object to print
    */
   protected void prettyPrint(/* @NotNull */ PrintStream ps, /* @NotNull */ Object o)
   {

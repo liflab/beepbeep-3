@@ -26,7 +26,7 @@ import java.util.concurrent.Future;
  * This has for effect of triggering the processor's computation and "pushing"
  * results (if any) to the processor's output.
  * 
- * If a processor is of input arity *n*, there exist *n* distinct
+ * If a processor is of input arity <i>n</i>, there exist <i>n</i> distinct
  * {@link Pullable}s: one for each input trace.
  * 
  * @author Sylvain Hallé
@@ -37,8 +37,7 @@ public interface Pushable
   /**
    * Pushes an event into one of the processor's input trace. Contrarily to
    * {@link #pushFast(Object)}, this method <em>must</em> return only when the
-   * push operation is completely done. Calling {@link #waitFor()} afterwards must
-   * <em>not</em> be necessary.
+   * push operation is completely done.
    * 
    * @param o
    *          The event. Although you can technically push <code>null</code>, the
@@ -55,18 +54,13 @@ public interface Pushable
    * call to <code>push()</code> that returns control to the caller immediately.
    * In order to resynchronize the caller with the result of the push operation,
    * one must use the <tt>Future</tt> object that the method returns.
-   * <p>
-   * Some implementations of this interface do not implement non-blocking calls;
-   * in such a case, a call to {@link #pushFast(Object) pushFast()} will be
-   * identical to a call to {@link #push(Object) push()}, and calling
-   * {@link #waitFor()} will return immediately.
    * 
    * @param o
    *          The event. Although you can technically push <code>null</code>, the
    *          behaviour in this case is undefined. It <code>may</code> be
    *          interpreted as if you are passing no event.
    * @return A {@link Future} object that can be used to wait until the call to
-   *         {@code pushFast} is finished.
+   *         <tt>pushFast</tt> is finished.
    */
   public Future<Pushable> pushFast(Object o);
 
@@ -98,7 +92,7 @@ public interface Pushable
    * A runtime exception indicating that something went wrong when attempting to
    * check if a next event exists. This happens, for example, if one of a
    * processor's inputs it not connected to anything. Rather than throwing a
-   * {@code NullPointerException}, the issue will be wrapped within a
+   * <tt>NullPointerException</tt>, the issue will be wrapped within a
    * PullableException with a better error message.
    */
   public static class PushableException extends RuntimeException

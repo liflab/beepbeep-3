@@ -86,8 +86,8 @@ public abstract class Function implements DuplicableFunction
    *          arguments contains placeholders, they will be replaced by the
    *          corresponding object fetched from this map before evaluating the
    *          function
-   * @return {@code true} if the function succeeded in producing an output
-   *          value, {@code false} otherwise
+   * @return <tt>true</tt> if the function succeeded in producing an output
+   *          value, <tt>false</tt> otherwise
    */
   /*@ pure @*/ public boolean evaluatePartial(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
@@ -114,8 +114,8 @@ public abstract class Function implements DuplicableFunction
    *          The outputs of the function. The size of the array returned should
    *          be equal to the function's declared output arity. @ Any exception
    *          that may occur during the evaluation of a function
-   * @return {@code true} if the function succeeded in producing an output
-   *          value, {@code false} otherwise 
+   * @return <tt>true</tt> if the function succeeded in producing an output
+   *          value, <tt>false</tt> otherwise 
    */
   /*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs)
@@ -179,7 +179,9 @@ public abstract class Function implements DuplicableFunction
    * @param outputs
    *          Output values
    * @param context
-   *          Context object @ Thrown when evaluating the function
+   *          Context object
+   * @param service The service responsible for assigning threads
+   * @return A {@link Future} object for this function call
    */
   /*@ pure @*/ public Future<Object[]> evaluateFast(Object[] inputs, Object[] outputs, 
       Context context, ExecutorService service)

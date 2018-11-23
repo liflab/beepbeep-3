@@ -21,7 +21,8 @@ import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Repeatedly outputs the first event it has received. <code>Freeze</code> works
- * a bit like {@link PullConstant}; however, while <code>Constant</code> is
+ * a bit like {@link ca.uqac.lif.cep.functions.Constant Constant}; however, while
+ * <code>Constant</code> is
  * given the event to output, <code>Freeze</code> waits for a first event,
  * outputs it, and then outputs that event whenever some new input comes in.
  * 

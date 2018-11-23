@@ -241,7 +241,7 @@ public class Strings
      * Sets whether to apply <tt>trim()</tt> to each substring
      * 
      * @param b
-     *          Set to {@code true} to trim, {@code false} otherwise
+     *          Set to <tt>true</tt> to trim, <tt>false</tt> otherwise
      * @return This function
      */
     public SplitString trim(boolean b)

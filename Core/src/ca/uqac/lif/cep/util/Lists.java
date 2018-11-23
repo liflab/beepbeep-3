@@ -76,7 +76,7 @@ public class Lists
   /**
    * Accumulates events from a first input pipe, and sends them in a burst into a
    * list based on the Boolean value received on its second input pipe. A value of
-   * {@code true} triggers the output of a list, while a value of {@code false}
+   * <tt>true</tt> triggers the output of a list, while a value of <tt>false</tt>
    * accumulates the event into the existing list.
    * <p>
    * This processor is represented graphically as follows:

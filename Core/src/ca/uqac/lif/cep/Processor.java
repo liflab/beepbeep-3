@@ -33,15 +33,15 @@ import java.util.concurrent.locks.ReentrantLock;
  * 
  * A processor is depicted graphically as a "box", with "pipes" representing its
  * input and output streams.
- * 
- * ![Processor]({@docRoot}/doc-files/Processor-generic.png)
- * 
+ * <p>
+ * <img src="{@docRoot}/doc-files/Processor-generic.png" alt="Processor">
+ * <p>
  * This class itself is abstract; nevertheless, it provides important methods
  * for handling input/output event queues, connecting processors together, etc.
  * However, if you write your own processor, you will most likely want to
  * inherit from its child, {@link SynchronousProcessor}, which does some more work
  * for you.
- * 
+ * <p>
  * The {@link Processor} class does not assume anything about the type of events
  * being input or output. All its input and output queues are therefore declared
  * as containing instances of `Object`, Java's most generic type.
@@ -256,12 +256,25 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
     }
   }
 
+  /**
+   * Implementation of {@link java.lang.Object#hashCode() hashCode()} specific
+   * to processors. Every processor instance in BeepBeep is given a unique ID;
+   * even a clone of a processor (created using {@link Processor#duplicate()} will
+   * be identical to the original, except for this ID. This behavior cannot be
+   * overridden by descendants.
+   */
   @Override
   public final int hashCode()
   {
     return m_uniqueId;
   }
 
+  /**
+   * Implementation of {@link java.lang.Object#equals(Object) equals()} specific
+   * to processors. Since every processor has a unique ID, equality amounts to
+   * equality of the field {@link #m_uniqueId}. This behavior cannot be
+   * overridden by descendants. 
+   */
   @Override
   public final boolean equals(Object o)
   {
@@ -278,7 +291,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
    * 
    * @return The ID
    */
-  public int getId()
+  public final int getId()
   {
     return m_uniqueId;
   }
@@ -289,7 +302,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
    * should also reset this state to its "initial" settings (whatever that means
    * in your context).
    */
-  public void reset()
+  public synchronized void reset()
   {
     // Reset input
     for (int i = 0; i < m_inputArity; i++)
@@ -608,7 +621,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
   /**
    * Gets the instance of event tracker associated to this processor
    * 
-   * @return The event tracker, or {@code null} of no event tracker is associated
+   * @return The event tracker, or <tt>null</tt> of no event tracker is associated
    *         to this processor
    */
   public final /* @Null */ EventTracker getEventTracker()
@@ -620,7 +633,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
    * Associates an event tracker to this processor
    * 
    * @param tracker
-   *          The event tracker, or {@code null} to remove the association to an
+   *          The event tracker, or <tt>null</tt> to remove the association to an
    *          existing tracker
    * @return This processor
    */

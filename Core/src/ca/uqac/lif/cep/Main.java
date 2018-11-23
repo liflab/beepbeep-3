@@ -17,6 +17,10 @@
  */
 package ca.uqac.lif.cep;
 
+/**
+ * A dummy main file defining a few system-wide constants.
+ * @author Sylvain Hallé
+ */
 public class Main
 {
   /**

@@ -90,7 +90,7 @@ public class Cumulate extends ApplyFunction
     protected int m_processorId;
 
     /**
-     * In case the corresponding function is n-ary (with n &geq; 2), the index of
+     * In case the corresponding function is n-ary (with n &gt; 2), the index of
      * the input stream
      */
     protected int m_index;

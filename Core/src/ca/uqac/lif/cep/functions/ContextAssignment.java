@@ -75,6 +75,9 @@ public class ContextAssignment
    * 
    * @param inputs
    *          The inputs to evaluate the assignment function
+  * @param outputs
+   *          An array in which the outputs the the assignment function
+   *          are placed
    * @param context
    *          The context to update @ Any exception occurring when assigning a
    *          value to the context element
@@ -91,6 +94,9 @@ public class ContextAssignment
    * 
    * @param inputs
    *          The inputs to evaluate the assignment function
+  * @param outputs
+   *          An array in which the outputs the the assignment function
+   *          are placed
    * @param c
    *          The object
    */

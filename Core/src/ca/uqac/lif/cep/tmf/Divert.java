@@ -31,7 +31,8 @@ import java.util.concurrent.Future;
  * <p>
  * More specifically, the divert processor is a 1:1 processor,
  * to which multiple downstream processors can be linked using calls
- * to {@link Connector#connect}. However, only a single of them is actually
+ * to {@link ca.uqac.lif.cep.Connector#connect(Processor...) connect()}.
+ * However, only a single of them is actually
  * "active"; that is, if one pushes an event to the Divert processor, this
  * event will be pushed to a single one of the downstream processors.
  * Which one is determined by a number called the "flow index"; this index

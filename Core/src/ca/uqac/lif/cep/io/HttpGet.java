@@ -91,9 +91,9 @@ public class HttpGet extends Source
    * Sends a GET request to the specified URL, and obtains an input stream with
    * the contents of the response
    * 
-   * @param url
-   *          The URL to send the HTTP request
+   * @param url The URL to send the HTTP request
    * @return An input stream, where the HTTP response can be read from
+   * @throws IOException Thrown if sending the request fails
    */
   protected static InputStream sendGet(String url) throws IOException
   {

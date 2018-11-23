@@ -31,7 +31,7 @@ import java.util.Set;
  * two flavors:
  * <ul>
  * <li>The "plain" function takes as input a map object and returns the
- * <em>same</em> object</li>, to which a modification has been applied
+ * <em>same</em> object, to which a modification has been applied
  * <li>The "new" function takes as input a map object, and returns a <em>new
  * copy</em> of the object with the modification made to it</li>
  * </ul>

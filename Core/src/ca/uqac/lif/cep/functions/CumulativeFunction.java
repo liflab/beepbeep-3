@@ -37,6 +37,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
 
   /**
    * Instantiates a new cumulative function
+   * @param function The function to cumulate
    */
   public CumulativeFunction(BinaryFunction<T, T, T> function)
   {

@@ -33,7 +33,7 @@ public interface Duplicable
 {
   /**
    * Duplicates an object and sets it to its initial state. This should be the
-   * same thing as calling {@code duplicate(false)}.
+   * same thing as calling <tt>duplicate(false)</tt>.
    * 
    * @return Another object
    */
@@ -44,7 +44,7 @@ public interface Duplicable
    * source object.
    * 
    * @param with_state
-   *          Set to {@code true} to replicate the object's state, {@code false}
+   *          Set to <tt>true</tt> to replicate the object's state, <tt>false</tt>
    *          to create a new copy in the initial state.
    * @return Another object
    */

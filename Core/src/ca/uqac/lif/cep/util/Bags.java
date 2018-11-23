@@ -521,7 +521,7 @@ public class Bags
 
   /**
    * Returns any element of a collection. If the collection is empty, returns
-   * {@code null}.
+   * <tt>null</tt>.
    */
   @SuppressWarnings("rawtypes")
   public static class AnyElement extends UnaryFunction<Collection, Object>
@@ -607,7 +607,7 @@ public class Bags
    * 
    * @param o
    *          The object
-   * @return An array, or {@code null} if the object could not be converted into
+   * @return An array, or <tt>null</tt> if the object could not be converted into
    *         an array.
    */
   public static Object[] toObjectArray(Object o)

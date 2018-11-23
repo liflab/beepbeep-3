@@ -94,8 +94,8 @@ public abstract class ReadInputStream extends Source
    * source.
    * 
    * @param b
-   *          Set to {@code true} to tell the reader it is reading a file,
-   *          {@code false} otherwise
+   *          Set to <tt>true</tt> to tell the reader it is reading a file,
+   *          <tt>false</tt> otherwise
    * @return This stream reader
    */
   public ReadInputStream setIsFile(boolean b)

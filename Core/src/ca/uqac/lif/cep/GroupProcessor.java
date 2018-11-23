@@ -98,7 +98,7 @@ public class GroupProcessor extends Processor
    * event when a call to push is made on the group.
    * 
    * @param b
-   *          Set to {@code true} to notify the sources
+   *          Set to <tt>true</tt> to notify the sources
    * @return This group processor
    */
   public GroupProcessor notifySources(boolean b)
@@ -317,7 +317,7 @@ public class GroupProcessor extends Processor
    *          The {@link GroupProcessor} to clone into. When the method is called,
    *          it is expected to be empty.
    * @param with_state
-   *          It set to {@code true}, each processor in the new group has the same
+   *          It set to <tt>true</tt>, each processor in the new group has the same
    *          events in its input/output buffers as in the original. Otherwise,
    *          the queues are empty.
    * @return An association between IDs and the new processors that have been put
@@ -384,7 +384,7 @@ public class GroupProcessor extends Processor
    * @param p
    *          The processor to copy. Nothing is changed on this processor.
    * @param with_state
-   *          If set to {@code true}, the new copy has the same events in its
+   *          If set to <tt>true</tt>, the new copy has the same events in its
    *          input/output buffers as the original. Otherwise, the queues are
    *          empty.
    * @return The new processor
@@ -686,7 +686,7 @@ public class GroupProcessor extends Processor
    * 
    * @param index
    *          The index
-   * @return The processor, or {@code null} if no processor is associated to this
+   * @return The processor, or <tt>null</tt> if no processor is associated to this
    *         index
    */
   public Processor getAssociatedInput(int index)

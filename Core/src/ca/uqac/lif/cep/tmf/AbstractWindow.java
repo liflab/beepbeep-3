@@ -24,17 +24,16 @@ import java.util.LinkedList;
 /**
  * Simulates the application of a "sliding window" to a trace. It is represented
  * graphically as:
- * 
- * ![Window]({@docRoot}/doc-files/tmf/Window.png)
- * 
- * -The processor takes as arguments another processor &phi; and a window width
- * *n* - It returns the result of &phi; after processing events 0 to
- * <i>n</i>-1... - Then the result of (a new instance of &phi;) that processes
- * events 1 to <i>n</i>-1... - ...and so on
- * 
- * There are two "flavors" of Window: one that pushes events to the internal
- * processor {@link Window} and one that pull events from the internal processor
- * {@link WindowPull}.
+ * <p>
+ * <img src="{@docRoot}/doc-files/tmf/Window.png" alt="Processor">
+ * <ul>
+ * <li>The processor takes as arguments another processor &phi; and a window width
+ * <i>n</i></li>
+ * <li>It returns the result of &phi; after processing events 0 to
+ * <i>n</i>-1...</li>
+ * <li>Then the result of (a new instance of &phi;) that processes
+ * events 1 to <i>n</i>-1... - ...and so on</li>
+ * </ul>
  * 
  * @author Sylvain Hallé
  * 
