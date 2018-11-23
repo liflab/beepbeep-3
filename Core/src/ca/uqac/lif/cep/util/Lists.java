@@ -97,9 +97,14 @@ public class Lists
     }
 
     @Override
-    public Processor duplicate(boolean with_state)
+    public Pack duplicate(boolean with_state)
     {
-      return new Pack();
+      Pack p = new Pack();
+      if (with_state)
+      {
+        p.m_packedEvents.addAll(m_packedEvents);
+      }
+      return p;
     }
 
     @Override
