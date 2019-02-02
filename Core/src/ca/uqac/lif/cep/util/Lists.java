@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.util;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
