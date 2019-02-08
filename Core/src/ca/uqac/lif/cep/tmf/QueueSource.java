@@ -222,6 +222,10 @@ public class QueueSource extends Source
     return Variant.class;
   }
 
+  /**
+   * Provenance function that links an output event to an element of the
+   * processor's queue.
+   */
   public static class QueueFunction implements NodeFunction
   {
     protected int m_queueIndex = 0;

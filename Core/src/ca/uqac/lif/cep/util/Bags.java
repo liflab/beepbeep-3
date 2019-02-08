@@ -145,6 +145,9 @@ public class Bags
     }
   }
 
+  /**
+   * Checks if an object is a member of a collection.
+   */
   @SuppressWarnings("rawtypes")
   public static class Contains extends BinaryFunction<Collection, Object, Boolean>
   {
@@ -545,10 +548,11 @@ public class Bags
   }
 
   /**
-   * A 1:*m* `Function`provided by the `Bags` utility class. 
-   * Given a collection of size *m*, it returns as its *m* outputs 
+   * A 1:<i>m</i> function provided by the <tt>Bags</tt> utility class. 
+   * Given a collection of size *m*, it returns as its <i>m</i> outputs 
    * the elements of the collection. It can be seen as the oppsite of 
-   * `ToArray`, `ToList` and `ToSet`. The ordering of the arguments is 
+   * <tt>ToArray</tt>, <tt>ToList</tt> and <tt>ToSet</tt>.
+   * The ordering of the arguments is 
    * ensured when the input collection is itself ordered. 
    */
   public static class Explode extends Function

@@ -50,7 +50,7 @@ public class Strings
   public static final StartsWith startsWith = new StartsWith();
 
   public static final ToString toString = ToString.instance;
-  
+
   /**
    * Concatenates input strings into an output string
    */
@@ -60,12 +60,12 @@ public class Strings
      * The string builder used to store the output string
      */
     protected StringBuilder m_builder;
-    
+
     /**
      * An optional separator to insert after each string
      */
     protected String m_separator;
-    
+
     /**
      * Creates a new build string processor
      */
@@ -75,13 +75,13 @@ public class Strings
       m_builder = new StringBuilder();
       m_separator = "";
     }
-    
+
     public BuildString setSeparator(String separator)
     {
       m_separator = separator;
       return this;
     }
-    
+
     @Override
     public void reset()
     {
@@ -320,11 +320,21 @@ public class Strings
     }
   }
 
+  /**
+   * Finds all substrings that match a regular expression.
+   * @author Sylvain Hallé
+   */
   @SuppressWarnings("rawtypes")
   public static class FindRegex extends UnaryFunction<String, Set>
   {
+    /**
+     * The regular expression to look for
+     */
     protected String m_regex;
 
+    /**
+     * The pattern object compiled from this regular expression
+     */
     protected transient Pattern m_pattern;
 
     /**

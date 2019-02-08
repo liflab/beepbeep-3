@@ -365,6 +365,9 @@ public class Multiset implements Set<Object>
     return null;
   }
 
+  /**
+   * Puts incoming events into a multiset, and returns this set.
+   */
   public static class PutInto extends SynchronousProcessor
   {
     protected Multiset m_set;

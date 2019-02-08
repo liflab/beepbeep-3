@@ -26,7 +26,8 @@ import java.util.Queue;
  * part of the <a href="https://liflab.github.io/beepbeep-3-examples">examples
  * repository</a>, and was used in a few code examples at the beginning of the
  * <a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3">book</a>
- * (before the {@link ApplyFunction} processor was introduced). However, people
+ * (before the {@link ca.uqac.lif.cep.functions.ApplyFunction ApplyFunction}
+ * processor was introduced). However, people
  * who were simply copy-pasting the code snippets without cloning the whole
  * examples repository would not find the {@link Adder} processor and could not
  * compile the example. It was hence
@@ -35,7 +36,8 @@ import java.util.Queue;
  * smoother for beginners. 
  * <p>
  * Apart from the code examples, we do not recommend that you use this processor.
- * The "clean" way to add numbers is to use {@link ApplyFunction} with
+ * The "clean" way to add numbers is to use 
+ * {@link ca.uqac.lif.cep.functions.ApplyFunction ApplyFunction} with
  * {@link ca.uqac.lif.cep.util.Numbers#addition Numbers.addition}.
  * 
  * @author Sylvain Hallé
@@ -45,7 +47,8 @@ public class Adder extends SynchronousProcessor
 {
   /**
    * Creates a new adder processor. Since this processor is stateless, it would
-   * make more sense to make it a singleton {@link Function}, and to
+   * make more sense to make it a singleton 
+   * {@link ca.uqac.lif.cep.functions.Function Function}, and to
    * provide a static reference to a single instance of the class. However,
    * remember that the purpose of this processor is to be used in one of the
    * very first examples of the user manual, where it is too early to talk

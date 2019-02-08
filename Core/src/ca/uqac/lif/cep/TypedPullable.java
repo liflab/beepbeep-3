@@ -22,7 +22,6 @@ import java.util.Iterator;
 /**
  * A Pullable object that casts all its output to a given type. The
  * TypedPullable is used by wrapping it around an existing pullable:
- * <p>
  * <pre>
  * ...
  * Pullable p = my_processor.getPullableOutput(0);

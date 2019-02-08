@@ -197,6 +197,9 @@ public class Numbers
     }
   }
 
+  /**
+   * Checks if a number is greater than or equal to an other number.
+   */
   public static final class IsGreaterOrEqual extends BinaryFunction<Number, Number, Boolean>
   {
     protected IsGreaterOrEqual()
@@ -224,6 +227,9 @@ public class Numbers
 
   }
 
+  /**
+   * Checks if a number is greater than other number.
+   */
   public static final class IsGreaterThan extends BinaryFunction<Number, Number, Boolean>
   {
     protected IsGreaterThan()
@@ -251,6 +257,9 @@ public class Numbers
 
   }
 
+  /**
+   * Checks if a number is less than or equal to an other number.
+   */
   public static final class IsLessOrEqual extends BinaryFunction<Number, Number, Boolean>
   {
     private IsLessOrEqual()
@@ -278,6 +287,9 @@ public class Numbers
 
   }
 
+  /**
+   * Checks if a number is less than an other number.
+   */
   public static final class IsLessThan extends BinaryFunction<Number, Number, Boolean>
   {
     protected IsLessThan()
@@ -374,7 +386,7 @@ public class Numbers
     {
       return x.floatValue() * y.floatValue();
     }
-    
+
     @Override
     public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
     {

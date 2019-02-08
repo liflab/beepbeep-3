@@ -25,7 +25,7 @@ import java.util.Iterator;
  * each output pipe. Every pullable works roughly like a classical <tt>Iterator</tt>:
  * it is possible to check whether new output events are available, and get one
  * new output event.
- * 
+ * <p>
  * However, contrarily to iterators, <tt>Pullable</tt>s have two versions of each
  * method: a <em>soft</em> and a <em>hard</em> version.
  * 
@@ -71,9 +71,10 @@ import java.util.Iterator;
  *   // Do something 
  * }
  * </pre>
+ * <p>
  * Note however that if <code>p</code> refers to a processor producing an
  * infinite number of events, this loop will never terminate by itself.
- * 
+ * <p>
  * For the same processor, mixing calls to soft and hard methods is discouraged.
  * As a matter of fact, the <tt>Pullable</tt>'s behaviour in such a situation is left
  * undefined.
