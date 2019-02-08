@@ -4,6 +4,9 @@ var dir_a8c5d33bfb6336598568d0f33b26f112 =
     [ "io", "dir_9b18e3caf872ced10af39584bf6eed18.html", "dir_9b18e3caf872ced10af39584bf6eed18" ],
     [ "tmf", "dir_60bb765f511b78b06715fd6a7ec24fc9.html", "dir_60bb765f511b78b06715fd6a7ec24fc9" ],
     [ "util", "dir_6d07caa9358766d193336e9c645c4c5e.html", "dir_6d07caa9358766d193336e9c645c4c5e" ],
+    [ "Adder.java", "_adder_8java.html", [
+      [ "Adder", "classca_1_1uqac_1_1lif_1_1cep_1_1_adder.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_adder" ]
+    ] ],
     [ "AsynchronousProcessor.java", "_asynchronous_processor_8java.html", [
       [ "AsynchronousProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor" ],
       [ "InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_input_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_input_pushable" ],
@@ -18,6 +21,9 @@ var dir_a8c5d33bfb6336598568d0f33b26f112 =
     ] ],
     [ "Contextualizable.java", "_contextualizable_8java.html", [
       [ "Contextualizable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable" ]
+    ] ],
+    [ "Doubler.java", "_doubler_8java.html", [
+      [ "Doubler", "classca_1_1uqac_1_1lif_1_1cep_1_1_doubler.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_doubler" ]
     ] ],
     [ "Duplicable.java", "_duplicable_8java.html", [
       [ "Duplicable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable" ]
@@ -34,11 +40,13 @@ var dir_a8c5d33bfb6336598568d0f33b26f112 =
     ] ],
     [ "GroupProcessor.java", "_group_processor_8java.html", [
       [ "GroupProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor" ],
+      [ "ProcessorAssociation", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_processor_association.html", null ],
+      [ "CopyCrawler", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler" ],
       [ "ProxyPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable" ],
       [ "ProxyPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable" ]
     ] ],
     [ "Main.java", "_main_8java.html", [
-      [ "Main", "classca_1_1uqac_1_1lif_1_1cep_1_1_main.html", null ]
+      [ "Main", "classca_1_1uqac_1_1lif_1_1cep_1_1_main.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_main" ]
     ] ],
     [ "package-info.java", "ca_2uqac_2lif_2cep_2package-info_8java.html", null ],
     [ "PipeCrawler.java", "_pipe_crawler_8java.html", [
@@ -52,11 +60,14 @@ var dir_a8c5d33bfb6336598568d0f33b26f112 =
     ] ],
     [ "Pullable.java", "_pullable_8java.html", [
       [ "Pullable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable" ],
+      [ "PullableException", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pullable_exception.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pullable_exception" ],
       [ "PullNotSupported", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported" ],
       [ "NextStatus", "enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status.html", "enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status" ]
     ] ],
     [ "Pushable.java", "_pushable_8java.html", [
-      [ "Pushable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable" ]
+      [ "Pushable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable" ],
+      [ "PushableException", "classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_pushable_exception.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_pushable_exception" ],
+      [ "PushNotSupported", "classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_push_not_supported.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_push_not_supported" ]
     ] ],
     [ "SynchronousProcessor.java", "_synchronous_processor_8java.html", [
       [ "SynchronousProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor" ],

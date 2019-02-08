@@ -274,11 +274,13 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Performs a computation on input events to produce output events. </p>
-<p>This is the direct descendant of <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a>, and probably the one you'll want to inherit from when creating your own processors. While <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> takes care of input and output queues, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html">SynchronousProcessor</a> also implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a>s and <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html">Pushable</a>s. These take care of collecting input events, waiting until one new event is received from all input traces before triggering the computation, pulling and buffering events from all outputs when either of the <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a>s is being called, etc.</p>
-<p>The only thing that is left undefined is what to do when new input events have been received from all input traces. This is the task of abstract method <a class="el" href="">compute(Object[], Queue)</a>, which descendants of this class must implement.</p>
+<p>This is the direct descendant of <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a>, and probably the one you'll want to inherit from when creating your own processors. While <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> takes care of input and output queues, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html">SynchronousProcessor</a> also implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a>s and <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html">Pushable</a>s. These take care of collecting input events, waiting until one new event is received from all input traces before triggering the computation, pulling and buffering events from all outputs when either of the <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a>s is being called, etc. </p>
+<p>The only thing that is left undefined is what to do when new input events have been received from all input traces. This is the task of abstract method <a class="el" href="">compute(Object[], Queue)</a>, which descendants of this class must implement. </p>
+<p>In early versions of the library, this class was called <code>SingleProcessor</code>.</p>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.1 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00048">48</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00051">51</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7e7bb9a149ea3d5db3c0d1259694dde1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e7bb9a149ea3d5db3c0d1259694dde1">&#9670;&nbsp;</a></span>SynchronousProcessor()</h2>
@@ -315,7 +317,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00074">74</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00077">77</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -382,7 +384,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00093">93</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00096">96</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -402,7 +404,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00083">83</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00086">86</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -429,7 +431,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>An array of input pushables. </p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00059">59</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00062">62</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -455,7 +457,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>An array of output pullables. </p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00064">64</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00067">67</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -481,7 +483,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>A queue object that will be passed to the <a class="el" href="">compute(Object[], Queue)</a> method. </p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00054">54</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00057">57</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -494,7 +496,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html">SynchronousProcessor</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

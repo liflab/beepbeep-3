@@ -119,14 +119,14 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html" title="Queries events on one of a processor&#39;s outputs. ">Pullable</a> object that casts all its output to a given type. </p>
-<p>The <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html" title="A Pullable object that casts all its output to a given type. ">TypedPullable</a> is used by wrapping it around an existing pullable:</p>
-<pre>
+<p>The <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html" title="A Pullable object that casts all its output to a given type. ">TypedPullable</a> is used by wrapping it around an existing pullable: </p><pre>
 ...
 <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html" title="Queries events on one of a processor&#39;s outputs. ">Pullable</a> p = my_processor.getPullableOutput(0);
 <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html" title="A Pullable object that casts all its output to a given type. ">TypedPullable</a>&lt;Integer&gt; tp = new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html" title="A Pullable object that casts all its output to a given type. ">TypedPullable</a>&lt;Integer&gt;(p);
 int event = tp.pull();
-</pre><p><b>Caveat emptor:</b> This pullable simply <em>casts</em> what it receives from its underlying pullable to the type it was created with. It is up to the user to make sure that this cast makes sense; otherwise, a <code>ClassCastException</code> will be thrown at runtime.</p>
-<dl class="section author"><dt>Author</dt><dd>Sylvain Hallé</dd></dl>
+</pre> <p><b>Caveat emptor:</b> This pullable simply <em>casts</em> what it receives from its underlying pullable to the type it was created with. It is up to the user to make sure that this cast makes sense; otherwise, a <code>ClassCastException</code> will be thrown at runtime.</p>
+<dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.2.1</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">&lt;T&gt;</td><td>The type of the output objects </td></tr>
@@ -134,7 +134,7 @@ int event = tp.pull();
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00044">44</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00043">43</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6c479a86d275025b0877914f59b72cee"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c479a86d275025b0877914f59b72cee">&#9670;&nbsp;</a></span>TypedPullable()</h2>
@@ -152,7 +152,7 @@ int event = tp.pull();
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00051">51</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00050">50</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -177,7 +177,7 @@ int event = tp.pull();
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a708f546a5a4a7f28cac0cb6a061e959d">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00126">126</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00125">125</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -201,7 +201,7 @@ int event = tp.pull();
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a7e45c179cf60d6fa5860b6975f3ffd78">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00102">102</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00101">101</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -225,7 +225,7 @@ int event = tp.pull();
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#affad11f66c00127d9721bb6a003c3518">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00096">96</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00095">95</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -259,7 +259,7 @@ To avoid infinite looping, the method eventually gives up (and answers "no") aft
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#adb823454d39e60741566069b84b48097">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00090">90</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00089">89</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -294,7 +294,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#acbb54cf0a90c18a31bba453842f80bd1">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00084">84</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00083">83</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -313,7 +313,7 @@ Otherwise, returns "yes" </li>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00108">108</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00107">107</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -337,7 +337,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#abf7c4dab5116d2979a41a8065125f921">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00078">78</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00077">77</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -362,7 +362,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#abf6e4fd3d233b6d16f3bb5ba837ecf37">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00071">71</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00070">70</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -387,7 +387,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a0bfbf8fef20cc27585a2ddaa11e03b4a">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00065">65</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00064">64</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -406,7 +406,7 @@ Otherwise, returns "yes" </li>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00058">58</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00057">57</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -430,7 +430,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a1f9b138ef1a9c5ac00c309984b79ccb2">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00114">114</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00113">113</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -454,7 +454,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a1e76b36ba3b342f7e561130f30e19fd7">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00120">120</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00119">119</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -481,7 +481,7 @@ Otherwise, returns "yes" </li>
 
 <p>The actual pullable this class is wrapping. </p>
 
-<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00049">49</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_typed_pullable_8java_source.html#l00048">48</a> of file <a class="el" href="_typed_pullable_8java_source.html">TypedPullable.java</a>.</p>
 
 </div>
 </div>
@@ -494,7 +494,7 @@ Otherwise, returns "yes" </li>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html">TypedPullable</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_pipe_crawler.html" title="Visits every processor. " alt="" coords="5,5,188,32"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html" title="Utility class to run commands on the command line and fetch their output. " alt="" coords="116,5,301,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner_1_1_stream_gobbler.html" title="Constantly reads an input stream and captures its content. " alt="" coords="116,71,301,112"/>
 </map>

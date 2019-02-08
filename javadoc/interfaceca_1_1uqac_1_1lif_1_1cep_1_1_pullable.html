@@ -77,8 +77,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status.html">NextStatus</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The "next" status of a <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a> object.  <a href="enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>PullableException</b></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A runtime exception indicating that something went wrong when attempting to check if a next event exists. <br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pullable_exception.html">PullableException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A runtime exception indicating that something went wrong when attempting to check if a next event exists.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pullable_exception.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html">PullNotSupported</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html" title="Queries events on one of a processor&#39;s outputs. ">Pullable</a> object that throws an <a class="el" href="">UnsupportedOperationException</a> upon every call to each of its methods (except <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html#aeaba02394adc0ebe7b63def5c6800c12">getProcessor()</a>).  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html#details">More...</a><br /></td></tr>
@@ -119,7 +119,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Queries events on one of a processor's outputs. </p>
-<p>For a processor with an output arity <em>n</em>, there exists <em>n</em> distinct pullables, namely one for each output pipe. Every pullable works roughly like a classical <code>Iterator</code>: it is possible to check whether new output events are available, and get one new output event.</p>
+<p>For a processor with an output arity <em>n</em>, there exists <em>n</em> distinct pullables, namely one for each output pipe. Every pullable works roughly like a classical <code>Iterator</code>: it is possible to check whether new output events are available, and get one new output event. </p>
 <p>However, contrarily to iterators, <code><a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html" title="Queries events on one of a processor&#39;s outputs. ">Pullable</a></code>s have two versions of each method: a <em>soft</em> and a <em>hard</em> version.</p>
 <ul>
 <li>
@@ -139,11 +139,12 @@ At various moments, one calls <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1
 for (Object o : p) {
   // Do something 
 }
-</pre><p> Note however that if <code>p</code> refers to a processor producing an infinite number of events, this loop will never terminate by itself.</p>
+</pre> <p>Note however that if <code>p</code> refers to a processor producing an infinite number of events, this loop will never terminate by itself. </p>
 <p>For the same processor, mixing calls to soft and hard methods is discouraged. As a matter of fact, the <code><a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html" title="Queries events on one of a processor&#39;s outputs. ">Pullable</a></code>'s behaviour in such a situation is left undefined.</p>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.1 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_pullable_8java_source.html#l00084">84</a> of file <a class="el" href="_pullable_8java_source.html">Pullable.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_pullable_8java_source.html#l00085">85</a> of file <a class="el" href="_pullable_8java_source.html">Pullable.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a708f546a5a4a7f28cac0cb6a061e959d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a708f546a5a4a7f28cac0cb6a061e959d">&#9670;&nbsp;</a></span>dispose()</h2>
@@ -397,7 +398,7 @@ Otherwise, returns "yes" </li>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

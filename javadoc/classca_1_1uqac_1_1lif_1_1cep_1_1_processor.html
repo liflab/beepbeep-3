@@ -248,11 +248,12 @@ Protected Attributes</h2></td></tr>
 <p>The processor is the fundamental class where all computation occurs. All of BeepBeep's processors (including yours) are descendants of this class.</p>
 <p>A processor is depicted graphically as a "box", with "pipes" representing its input and output streams. </p>
 <div class="image">
-<img src="doc-files/Processor-generic.png" alt="Processor"/>
+<img src="{@docRoot}/doc-files/Processor-generic.png" alt="Processor"/>
 </div>
  <p>This class itself is abstract; nevertheless, it provides important methods for handling input/output event queues, connecting processors together, etc. However, if you write your own processor, you will most likely want to inherit from its child, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html">SynchronousProcessor</a>, which does some more work for you. </p>
 <p>The <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> class does not assume anything about the type of events being input or output. All its input and output queues are therefore declared as containing instances of <code>Object</code>, Java's most generic type.</p>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.1 </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00053">53</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -1819,7 +1820,7 @@ long as necessary", in practice a bound was put on the number of attempts as a s
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

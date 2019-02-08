@@ -1,6 +1,7 @@
 var interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable =
 [
     [ "NextStatus", "enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status.html", "enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status" ],
+    [ "PullableException", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pullable_exception.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pullable_exception" ],
     [ "PullNotSupported", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported" ],
     [ "dispose", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a708f546a5a4a7f28cac0cb6a061e959d", null ],
     [ "getPosition", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a7e45c179cf60d6fa5860b6975f3ffd78", null ],

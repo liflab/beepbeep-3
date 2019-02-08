@@ -76,8 +76,8 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>ToAllSlices</b></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dummy object telling the slicer that an event must be sent to all slices. <br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_1_1_to_all_slices.html">ToAllSlices</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dummy object telling the slicer that an event must be sent to all slices.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_1_1_to_all_slices.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -344,10 +344,11 @@ Additional Inherited Members</h2></td></tr>
 <div class="textblock"><p>Separates an input trace into different "slices". </p>
 <p>The slicer takes as input a processor <em>p</em> and a slicing function <em>f</em>. There exists potentially one instance of <em>p</em> for each value in the image of <em>f</em>. </p>
 <p>When an event <em>e</em> arrives, the slicer evaluates <em>c</em> = <em>f</em>(<em>e</em>). This value determines to what instance of <em>p</em> the event will be dispatched. If no slice with such value currently exists, a new instance of <em>p</em> will be created. The processor then outputs a <code>Collection</code> object (typically a set) containing the <em>last</em> events returned by every slice.</p>
-<p>The function <em>f</em> may return <code>null</code>, or the special object <a class="el" href="">ToAllSlices</a>. This indicates that no new slice must be created, but that the incoming event must be dispatched to <em>all</em> slices one by one.</p>
+<p>The function <em>f</em> may return <code>null</code>, or the special object <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_1_1_to_all_slices.html">ToAllSlices</a>. This indicates that no new slice must be created, but that the incoming event must be dispatched to <em>all</em> slices one by one.</p>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.3 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00054">54</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00055">55</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aff56729554633c50813180f77216bb12"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff56729554633c50813180f77216bb12">&#9670;&nbsp;</a></span>Slice() <span class="overload">[1/3]</span></h2>
@@ -372,7 +373,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00086">86</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00087">87</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -418,7 +419,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00101">101</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00102">102</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -448,7 +449,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00113">113</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00114">114</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -489,7 +490,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00299">299</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00300">300</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -527,7 +528,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00132">132</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00133">133</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -559,7 +560,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html#a2b396be53d47717ebffc88ea80ae38db">ca.uqac.lif.cep.Duplicable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00327">327</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00328">328</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -588,7 +589,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>This slicer </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00283">283</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00284">284</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -610,7 +611,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the number of slices the slicer currently handles. </p>
 <dl class="section return"><dt>Returns</dt><dd>The number of slices </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00321">321</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00322">322</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -629,7 +630,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00305">305</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00306">306</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -658,7 +659,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>This slicer </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00125">125</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00126">126</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -685,7 +686,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>The cleaning function. </p>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00069">69</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00070">70</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -711,7 +712,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>If the slicing function returns a collection, treat each element of the collection as a slice id. </p>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00084">84</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00085">85</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -737,7 +738,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>The last value output by the processor for each slice. </p>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00078">78</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00079">79</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -763,7 +764,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>The internal processor. </p>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00064">64</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00065">65</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -787,7 +788,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00073">73</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00074">74</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -811,7 +812,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00071">71</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00072">72</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -837,7 +838,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>The slicing function. </p>
 
-<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00059">59</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_slice_8java_source.html#l00060">60</a> of file <a class="el" href="_slice_8java_source.html">Slice.java</a>.</p>
 
 </div>
 </div>
@@ -850,7 +851,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1tmf.html">tmf</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html">Slice</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

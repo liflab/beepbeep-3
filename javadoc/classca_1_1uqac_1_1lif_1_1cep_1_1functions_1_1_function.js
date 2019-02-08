@@ -11,5 +11,6 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function =
     [ "getInputTypesFor", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#aca3116397faff5f473056954b362eb34", null ],
     [ "getOutputArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#ae9ad9ceabbd4af9a6b8e07b7b56190c1", null ],
     [ "getOutputTypeFor", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a97f43216b101f3c149bd19e4d1a13b2d", null ],
-    [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a543c369e6450de630790432ad67b171e", null ]
+    [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a543c369e6450de630790432ad67b171e", null ],
+    [ "s_maxInputArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html#a7f4155491d40545be2e44820ae30d7be", null ]
 ];

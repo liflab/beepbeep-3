@@ -21,7 +21,8 @@ var dir_fe1d71a22b1d538c62170c002eacc0df =
       [ "ContextVariable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_context_variable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_context_variable" ]
     ] ],
     [ "Cumulate.java", "_cumulate_8java.html", [
-      [ "Cumulate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate" ]
+      [ "Cumulate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate" ],
+      [ "StartValue", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate_1_1_start_value.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate_1_1_start_value" ]
     ] ],
     [ "CumulativeFunction.java", "_cumulative_function_8java.html", [
       [ "CumulativeFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulative_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulative_function" ]

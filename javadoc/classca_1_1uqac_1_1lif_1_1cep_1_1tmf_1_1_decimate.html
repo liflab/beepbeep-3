@@ -298,8 +298,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Practical examples of <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html">Decimate</a> processors are the <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html">CountDecimate</a>, which outputs the first event of a window of size <em>n</em> and discards all the other, and the <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_time_decimate.html">TimeDecimate</a> which outputs an input event and discards all others for the next <em>n</em> nanoseconds.</p>
 <p>In case the processor is notified of the end of the trace (EOT, i.e. there is no more event to compute), by default the processor does not output anything, meaning that the last input event will never be processed nor output (except if it matched the decimation interval). Nevertheless, it is possible to specify that you do want to process and output the last input even if it does not match the decimation interval by passing true to <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#ae519a9ea62cc9655e889502d27f9fe46">Decimate(boolean)</a>.</p>
 <dl class="section author"><dt>Author</dt><dd>Quentin Betti </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.7 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00052">52</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00053">53</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae519a9ea62cc9655e889502d27f9fe46"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae519a9ea62cc9655e889502d27f9fe46">&#9670;&nbsp;</a></span>Decimate() <span class="overload">[1/2]</span></h2>
@@ -325,7 +326,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00073">73</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00074">74</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -344,7 +345,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00080">80</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00081">81</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -383,7 +384,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00086">86</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00087">87</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -411,7 +412,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00106">106</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00107">107</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -441,7 +442,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Called after each compute. </p>
 <p>It should mainly be used to update the state of the decimation (e.g. update a counter). By default does nothing. </p>
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00142">142</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00143">143</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -471,7 +472,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Called after every output. </p>
 <p>Should be used to update a state after an output front has been produced (e.g. storing the time of the last output event production). By default does nothing. </p>
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00165">165</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00166">166</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -508,7 +509,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result that will be added to the outputs, by default returns the inputs as they are </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00155">155</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00156">156</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -563,7 +564,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>The last inputs processed by <a class="el" href="">processInputs(Object[])</a> stored (in case of EOT processing mode). </p>
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00064">64</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00065">65</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -589,7 +590,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Indicates whether or not the last input event of the trace should be processed and output even if it should not due to the decimation interval. </p>
 
-<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00058">58</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_decimate_8java_source.html#l00059">59</a> of file <a class="el" href="_decimate_8java_source.html">Decimate.java</a>.</p>
 
 </div>
 </div>
@@ -602,7 +603,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1tmf.html">tmf</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html">Decimate</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

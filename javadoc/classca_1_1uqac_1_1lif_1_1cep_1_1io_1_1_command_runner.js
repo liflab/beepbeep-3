@@ -8,6 +8,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner =
     [ "getBytes", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#afb0de16bd6213f0edf658e8e69229b12", null ],
     [ "getString", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#af3753e306e2fee3f9a83e39b84b49ad5", null ],
     [ "run", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#af05b5a9c433680656d2318595b7778fc", null ],
+    [ "runAndGet", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#af0d2d53287345e98d91fd312baa9c8ec", null ],
+    [ "runAndGet", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#ada5c06fdd63ca92504eef8b03a823c4d", null ],
     [ "stopCommand", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#ab4844cca70b6d66229d127bcae222570", null ],
     [ "m_command", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#a5b0b15608679534a39d8bdae022e4534", null ],
     [ "m_errorCode", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#a0274e3dbaf1ed1d740b75b6ca1803d31", null ],

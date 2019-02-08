@@ -68,14 +68,17 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1util_
 <div class="title">ca.uqac.lif.cep.util.Randomize Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A <em>n</em>:<em>n</em> processor that turns an arbitrary input event front into an output front made of randomly selected numerical values.  
+ <a href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7ee5ce324b99e4083484a6fda506b78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html#ab7ee5ce324b99e4083484a6fda506b78">Randomize</a> (int arity, float min, float max)</td></tr>
-<tr class="memdesc:ab7ee5ce324b99e4083484a6fda506b78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html">Randomize</a> processor.  <a href="#ab7ee5ce324b99e4083484a6fda506b78">More...</a><br /></td></tr>
+<tr class="memdesc:ab7ee5ce324b99e4083484a6fda506b78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html" title="A n:n processor that turns an arbitrary input event front into an output front made of randomly selec...">Randomize</a> processor.  <a href="#ab7ee5ce324b99e4083484a6fda506b78">More...</a><br /></td></tr>
 <tr class="separator:ab7ee5ce324b99e4083484a6fda506b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52c0fea3485d8a6a28fab331aa4bfb94"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html#a52c0fea3485d8a6a28fab331aa4bfb94">Randomize</a> (float min, float max)</td></tr>
-<tr class="memdesc:a52c0fea3485d8a6a28fab331aa4bfb94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html">Randomize</a> processor with an input/output arity of 1.  <a href="#a52c0fea3485d8a6a28fab331aa4bfb94">More...</a><br /></td></tr>
+<tr class="memdesc:a52c0fea3485d8a6a28fab331aa4bfb94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html" title="A n:n processor that turns an arbitrary input event front into an output front made of randomly selec...">Randomize</a> processor with an input/output arity of 1.  <a href="#a52c0fea3485d8a6a28fab331aa4bfb94">More...</a><br /></td></tr>
 <tr class="separator:a52c0fea3485d8a6a28fab331aa4bfb94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1febbe800e557d541f16486d5d50637"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html#ac1febbe800e557d541f16486d5d50637">setSeed</a> (int seed)</td></tr>
 <tr class="memdesc:ac1febbe800e557d541f16486d5d50637"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets.html" title="A container object for set functions and processors. ">Sets</a> the seed of the random number generator.  <a href="#ac1febbe800e557d541f16486d5d50637">More...</a><br /></td></tr>
@@ -296,8 +299,15 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a81e91593c54357c39a005edc1833c43d inherit pro_attribs_classca_1_1uqac_1_1lif_1_1cep_1_1_processor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00023">23</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
+<div class="textblock"><p>A <em>n</em>:<em>n</em> processor that turns an arbitrary input event front into an output front made of randomly selected numerical values. </p>
+<p>The interval in which values are selected can be specified. It is represented graphically as: </p>
+<div class="image">
+<img src="{@docRoot}/doc-files/util/Randomize.png" alt="Randomize"/>
+</div>
+<dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.9 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00034">34</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab7ee5ce324b99e4083484a6fda506b78"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab7ee5ce324b99e4083484a6fda506b78">&#9670;&nbsp;</a></span>Randomize() <span class="overload">[1/2]</span></h2>
@@ -331,7 +341,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates a new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html">Randomize</a> processor. </p>
+<p>Creates a new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html" title="A n:n processor that turns an arbitrary input event front into an output front made of randomly selec...">Randomize</a> processor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">arity</td><td>The input/output arity of this processor </td></tr>
@@ -341,7 +351,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00050">50</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00061">61</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
 
 </div>
 </div>
@@ -371,7 +381,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates a new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html">Randomize</a> processor with an input/output arity of 1. </p>
+<p>Creates a new <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html" title="A n:n processor that turns an arbitrary input event front into an output front made of randomly selec...">Randomize</a> processor with an input/output arity of 1. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min</td><td>The lower bound of the interval for the random values to generate </td></tr>
@@ -380,7 +390,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00065">65</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00076">76</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
 
 </div>
 </div>
@@ -419,7 +429,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00080">80</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00091">91</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
 
 </div>
 </div>
@@ -451,7 +461,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html#a2b396be53d47717ebffc88ea80ae38db">ca.uqac.lif.cep.Duplicable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00090">90</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00101">101</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
 
 </div>
 </div>
@@ -479,7 +489,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00074">74</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_randomize_8java_source.html#l00085">85</a> of file <a class="el" href="_randomize_8java_source.html">Randomize.java</a>.</p>
 
 </div>
 </div>
@@ -492,7 +502,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1util.html">util</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_randomize.html">Randomize</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

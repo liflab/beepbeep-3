@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_compound_future.html" title="A Future object whose termination and output value depends on the termination and output values of mu..." alt="" coords="130,5,305,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html" title="ca.uqac.lif.cep.FutureDone\&lt; T \&gt;" alt="" coords="112,71,323,98"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html" title="A Future object indicating that the computation is completed. " alt="" coords="112,71,323,98"/>
 </map>

@@ -297,9 +297,11 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. ">Processor</a> that produces exactly one output front for each input front received. </p>
+<p>Descending from this class, rather than the more generic <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html">SynchronousProcessor</a>, can bring performance improvements when the processor has an input/output arity of exactly 1. In such a case, the <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pullable.html">UnaryPullable</a> and <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html">UnaryPushable</a> objects work about twice as fast as <code><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html" title="Performs a computation on input events to produce output events. ">SynchronousProcessor</a></code>'s <a class="el" href="">OutputPullable</a> and <a class="el" href="">InputPushable</a> objects.</p>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00034">34</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00039">39</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a202448334d13103be20f33afcc5f355d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a202448334d13103be20f33afcc5f355d">&#9670;&nbsp;</a></span>UniformProcessor()</h2>
@@ -336,7 +338,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00049">49</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00054">54</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -375,7 +377,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00056">56</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00061">61</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -441,7 +443,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00106">106</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00111">111</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -461,7 +463,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00123">123</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00128">128</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -489,7 +491,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00077">77</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00082">82</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -533,7 +535,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00100">100</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00105">105</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -560,7 +562,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>An array that will be used by the processor to compute its output. </p>
 
-<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00039">39</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_uniform_processor_8java_source.html#l00044">44</a> of file <a class="el" href="_uniform_processor_8java_source.html">UniformProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -573,7 +575,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html">UniformProcessor</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

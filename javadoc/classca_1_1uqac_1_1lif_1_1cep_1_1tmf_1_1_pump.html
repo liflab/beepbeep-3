@@ -269,14 +269,15 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html" title="Receives zero or more input events, and produces zero or more output events. ">Processor</a> that repeatedly pulls its input, and pushes the resulting events to its output. </p>
-<p>The <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html" title="Processor that repeatedly pulls its input, and pushes the resulting events to its output...">Pump</a> is a way to bridge an upstream part of a processor chain that works in <em>pull</em> mode, to a downstream part that operates in <em>push</em> mode.</p>
-<p>Graphically, this processor is represented as:</p>
+<p>The <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html" title="Processor that repeatedly pulls its input, and pushes the resulting events to its output...">Pump</a> is a way to bridge an upstream part of a processor chain that works in <em>pull</em> mode, to a downstream part that operates in <em>push</em> mode. </p>
+<p>Graphically, this processor is represented as: </p>
 <div class="image">
-<img src="doc-files/tmf/Pump.png" alt="Pump"/>
+<img src="{@docRoot}/doc-files/tmf/Pump.png" alt="Pump"/>
 </div>
-<p>The repeated pulling of events from its input is started by calling this processor's <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#a0f004a50bad0605fcfb6686172cddb78">start()</a> method. In the background, this will instantiate a new thread, which will endlessly call <code>pull()</code> on whatever input is connected to the pump, and then call <code>push()</code> on whatever input is connected to it.</p>
+ <p>The repeated pulling of events from its input is started by calling this processor's <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#a0f004a50bad0605fcfb6686172cddb78">start()</a> method. In the background, this will instantiate a new thread, which will endlessly call <code>pull()</code> on whatever input is connected to the pump, and then call <code>push()</code> on whatever input is connected to it. </p>
 <p>The opposite of the <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html" title="Processor that repeatedly pulls its input, and pushes the resulting events to its output...">Pump</a> is the <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank.html">Tank</a>.</p>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6 </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_pump_8java_source.html#l00046">46</a> of file <a class="el" href="_pump_8java_source.html">Pump.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -544,7 +545,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1tmf.html">tmf</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html">Pump</a></li>
-    <li class="footer">Generated on Fri Nov 23 2018 17:09:12 for BeepBeep 3 by
+    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

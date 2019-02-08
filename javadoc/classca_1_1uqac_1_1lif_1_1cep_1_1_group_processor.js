@@ -1,5 +1,7 @@
 var classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor =
 [
+    [ "CopyCrawler", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler" ],
+    [ "ProcessorAssociation", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_processor_association.html", null ],
     [ "ProxyPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable" ],
     [ "ProxyPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable" ],
     [ "GroupProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a82ed05b71e030ed5eaac22d839a98b58", null ],
@@ -9,6 +11,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor =
     [ "associateInput", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a921996cb11818619475ceafe99398975", null ],
     [ "associateOutput", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a9db24c793760387160467121b0c7dd62", null ],
     [ "cloneInto", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a3bda02559d94e340ead0ef92a1370941", null ],
+    [ "copyProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a276f2d7ad8f3b497a09351b69f9566d6", null ],
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a78d846981d1a61958e725a31e273066f", null ],
     [ "getAssociatedInput", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a0b7d265eaf27c8a98956dc794f9ce630", null ],
     [ "getPullableInput", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#af612db3d38e807821b94b0d37eaf05eb", null ],

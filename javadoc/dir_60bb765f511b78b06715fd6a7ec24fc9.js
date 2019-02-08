@@ -54,7 +54,8 @@ var dir_60bb765f511b78b06715fd6a7ec24fc9 =
       [ "QueueSink", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink" ]
     ] ],
     [ "QueueSource.java", "_queue_source_8java.html", [
-      [ "QueueSource", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source" ]
+      [ "QueueSource", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source" ],
+      [ "QueueFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_1_1_queue_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_1_1_queue_function" ]
     ] ],
     [ "QueueSourceBatch.java", "_queue_source_batch_8java.html", [
       [ "QueueSourceBatch", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_batch.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_batch" ]
@@ -72,7 +73,8 @@ var dir_60bb765f511b78b06715fd6a7ec24fc9 =
       [ "SinkLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last" ]
     ] ],
     [ "Slice.java", "_slice_8java.html", [
-      [ "Slice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice" ]
+      [ "Slice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice" ],
+      [ "ToAllSlices", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_1_1_to_all_slices.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_1_1_to_all_slices" ]
     ] ],
     [ "Source.java", "_source_8java.html", [
       [ "Source", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source" ]
