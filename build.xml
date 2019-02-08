@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
     AntRun, a general-purpose Ant build script
-    Copyright (C) 2015-2018  Sylvain Hallé
+    Copyright (C) 2015-2019  Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.4.2"/>
+  <property name="antrun.version" value="1.4.3"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -217,6 +217,7 @@
     </javac>
     <copy todir="${build.test.bindir}" includeemptydirs="false">
       <fileset dir="${build.test.srcdir}" excludes="**/*.java"/>
+      <fileset dir="${build.test.srcdir}" excludes="**/doc-files/*.*"/>
     </copy>
   </target>
   
