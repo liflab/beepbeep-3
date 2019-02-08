@@ -26,21 +26,21 @@ import ca.uqac.lif.cep.Pushable;
  * its output. The Pump is a way to bridge an upstream part of a processor chain
  * that works in <em>pull</em> mode, to a downstream part that operates in
  * <em>push</em> mode.
- * 
+ * <p>
  * Graphically, this processor is represented as:
- * 
- * ![Pump]({@docRoot}/doc-files/tmf/Pump.png)
- * 
+ * <p>
+ * <img src="{@docRoot}/doc-files/tmf/Pump.png" alt="Pump">
+ * <p>
  * The repeated pulling of events from its input is started by calling this
  * processor's {@link #start()} method. In the background, this will instantiate
  * a new thread, which will endlessly call <tt>pull()</tt> on whatever input is
  * connected to the pump, and then call <tt>push()</tt> on whatever input is
  * connected to it.
- * 
+ * <p>
  * The opposite of the Pump is the {@link ca.uqac.lif.cep.tmf.Tank Tank}.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.6
  */
 @SuppressWarnings("squid:S2160")
 public class Pump extends Processor implements Runnable

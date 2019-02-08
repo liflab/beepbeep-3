@@ -29,10 +29,13 @@ import java.util.Scanner;
 
 /**
  * Reads chunks of data from an URL, using an HTTP request. These chunks are
- * returned as events in the form of strings.
+ * returned as events in the form of strings. It is represented
+ * graphically as:
+ * <p>
+ * <img src="{@docRoot}/doc-files/io/HttpGet.png" alt="HttpGet">
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class HttpGet extends Source

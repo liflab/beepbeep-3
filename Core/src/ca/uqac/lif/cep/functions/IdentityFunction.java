@@ -24,11 +24,11 @@ import java.util.Set;
 /**
  * Function that returns its input for its output. It is illustrated
  * graphically as follows:
- * 
- * ![IdentityFunction]({@docRoot}/doc-files/functions/IdentityFunction.png)
+ * <p>
+ * <img src="{@docRoot}/doc-files/functions/IdentityFunction.png" alt="IdentityFunction">
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.3
  */
 public final class IdentityFunction extends Function
 {

@@ -35,7 +35,7 @@ import java.util.concurrent.Future;
  * The opposite of the tank is the {@link ca.uqac.lif.cep.tmf.Pump Pump}.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.7
  */
 @SuppressWarnings("squid:S2160")
 public class Tank extends Processor

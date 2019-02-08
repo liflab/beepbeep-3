@@ -25,6 +25,7 @@ import java.util.Queue;
  * Repeats each input event a specified number of times.
  * 
  * @author Sylvain Hallé
+ * @since 0.2.1
  */
 public class Stutter extends SynchronousProcessor
 {

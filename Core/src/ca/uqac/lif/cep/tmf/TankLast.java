@@ -24,6 +24,7 @@ import ca.uqac.lif.cep.Pushable;
  * received
  * 
  * @author Sylvain Hallé
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class TankLast extends Tank

@@ -24,13 +24,13 @@ import java.util.Queue;
  * Discards events from an input trace based on a selection criterion. The
  * processor takes as input two events simultaneously; it outputs the first if
  * the second is true.
- * 
+ * <p>
  * Graphically, this processor is represented as:
- * 
- * ![Filter]({@docRoot}/doc-files/tmf/Filter.png)
+ * <p>
+ * <img src="{@docRoot}/doc-files/tmf/Filter.png" alt="Filter">
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class Filter extends SynchronousProcessor

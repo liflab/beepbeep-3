@@ -29,7 +29,7 @@ import java.util.Queue;
  * Extracts character strings from a Java {@link InputStream}.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.7
  */
 public class ReadStringStream extends ReadInputStream
 {

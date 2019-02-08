@@ -51,6 +51,7 @@ import java.util.concurrent.Future;
  * <img src="{@docRoot}/doc-files/tmf/Divert.png" alt="Divert">
  * 
  * @author Sylvain Hallé
+ * @since 0.10
  */
 public class Divert extends Processor
 {

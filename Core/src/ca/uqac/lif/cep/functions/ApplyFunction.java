@@ -26,9 +26,12 @@ import java.util.Set;
  * provides a way to "lift" any <i>m</i>-to-<i>n</i> function into an
  * <i>m</i>-to-<i>n</i> processor, by simply calling the function on the inputs
  * to produce the outputs.
+ * <p>
+ * In earlier versions of the library, this class was called
+ * <tt>FunctionProcessor</tt>.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class ApplyFunction extends UniformProcessor

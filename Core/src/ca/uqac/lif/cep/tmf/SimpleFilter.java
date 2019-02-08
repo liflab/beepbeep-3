@@ -34,6 +34,7 @@ import java.util.Queue;
  * 
  * @see Filter
  * @author Sylvain Hallé
+ * @since 0.6
  */
 @SuppressWarnings("squid:S2160")
 public class SimpleFilter extends SynchronousProcessor

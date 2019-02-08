@@ -27,7 +27,7 @@ package ca.uqac.lif.cep;
  * cloning. Hence the need for a different interface.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.7
  */
 public interface Duplicable
 {

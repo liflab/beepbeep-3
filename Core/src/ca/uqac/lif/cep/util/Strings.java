@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
  * A container object for string functions
  * 
  * @author Sylvain Hallé
+ * @since 0.7
  */
 public class Strings
 {

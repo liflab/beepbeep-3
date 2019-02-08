@@ -25,6 +25,7 @@ import java.util.concurrent.Future;
 /**
  * Processor that handles its inputs asynchronously.
  * @author Sylvain Hallé
+ * @since 0.9
  */
 public abstract class AsynchronousProcessor extends Processor 
 {

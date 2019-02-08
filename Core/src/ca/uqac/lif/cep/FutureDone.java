@@ -22,6 +22,12 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * A {@link Future} object indicating that the computation is completed.
+ * @author Sylvain Hallé
+ * @since 0.9
+ * @param <T> The type of the value returned by the computation
+ */
 public class FutureDone<T> implements Future<T>
 {
   private final transient T m_value;

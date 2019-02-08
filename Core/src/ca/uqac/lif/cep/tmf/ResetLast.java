@@ -23,6 +23,14 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
+/**
+ * Processor that receives two input streams; it pushes the events of a first
+ * stream into a processor, and resets this processor whenever the event on the
+ * second input stream is <tt>true</tt>.
+ * @author Sylvain Hallé
+ * 
+ * @since 0.10
+ */
 public class ResetLast extends SynchronousProcessor
 {
   /**

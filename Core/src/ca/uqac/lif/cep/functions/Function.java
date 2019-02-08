@@ -28,7 +28,7 @@ import java.util.concurrent.Future;
  * Represents a stateless <i>m</i>-to-<i>n</i> function.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 public abstract class Function implements DuplicableFunction
 {

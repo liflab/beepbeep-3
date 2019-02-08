@@ -31,6 +31,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * A container object for functions and processors applying to lists.
  * 
  * @author Sylvain Hallé
+ * @since 0.7
  */
 public class Lists
 {

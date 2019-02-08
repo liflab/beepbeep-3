@@ -26,7 +26,7 @@ import java.util.Queue;
  * forward, padding the beginning of the trace with some dummy element.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class Insert extends SynchronousProcessor

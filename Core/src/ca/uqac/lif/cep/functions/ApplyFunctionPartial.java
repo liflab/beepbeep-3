@@ -28,6 +28,7 @@ import java.util.concurrent.Future;
  * Evaluates a function on each event front in a <em>lazy</em> manner.
  * 
  * @author Sylvain Hallé
+ * @since 0.9
  */
 public class ApplyFunctionPartial extends Processor 
 {

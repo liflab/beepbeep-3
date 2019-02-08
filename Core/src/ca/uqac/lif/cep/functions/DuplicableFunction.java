@@ -19,6 +19,11 @@ package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Duplicable;
 
+/**
+ * Interface implemented by functions that can be duplicated.
+ * @author Sylvain Hallé
+ * @since 0.7
+ */
 public interface DuplicableFunction extends Duplicable
 {
   @Override

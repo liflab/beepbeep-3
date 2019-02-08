@@ -37,7 +37,7 @@ import java.util.concurrent.Future;
  * it.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.1 
  */
 @SuppressWarnings("squid:S2160")
 public abstract class Source extends SynchronousProcessor

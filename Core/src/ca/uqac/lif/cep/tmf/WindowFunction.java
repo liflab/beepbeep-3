@@ -31,6 +31,7 @@ import java.util.Queue;
  * 
  * @see Window
  * @author Sylvain Hallé
+ * @since 0.3
  */
 @SuppressWarnings("squid:S2160")
 public class WindowFunction extends SynchronousProcessor

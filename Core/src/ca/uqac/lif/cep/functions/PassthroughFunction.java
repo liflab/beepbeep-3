@@ -31,7 +31,7 @@ import java.util.Set;
  * object).
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.4
  */
 public abstract class PassthroughFunction extends Function
 {

@@ -18,17 +18,17 @@
 package ca.uqac.lif.cep.tmf;
 
 /**
- * Returns one input event and discards the next *n*-1. The value *n* is called
- * the **decimation interval**. However, a mode can be specified in order to
- * output the *n*-th input event if it is the last event of the trace and it has
+ * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i> is called
+ * the <strong>decimation interval</strong>. However, a mode can be specified in order to
+ * output the <i>n</i>-th input event if it is the last event of the trace and it has
  * not been output already.
- * 
+ * <p>
  * It is represented graphically as:
- * 
- * ![QueueSink]({@docRoot}/doc-files/tmf/CountDecimate.png)
+ * <p>
+ * <img src="{@docRoot}/doc-files/tmf/CountDecimate.png" alt="CountDecimate">
  *
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class CountDecimate extends Decimate

@@ -23,11 +23,11 @@ import java.util.Set;
 /**
  * Processor that turns any event into a predefined object. It is represented
  * graphically as:
- * 
- * ![TurnInto]({@docRoot}/doc-files/functions/TurnInto.png)
+ * <p>
+ * <img src="{@docRoot}/doc-files/functions/TurnInto.png" alt="TurnInto">
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class TurnInto extends UniformProcessor

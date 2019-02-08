@@ -21,9 +21,13 @@ import ca.uqac.lif.cep.tmf.Source;
 import java.io.InputStream;
 
 /**
- * Read contents from a Java {@link InputStream}.
+ * Read contents from a Java {@link InputStream}. It is represented
+ * graphically as:
+ * <p>
+ * <img src="{@docRoot}/doc-files/io/StreamReader.png" alt="ReadInputStream">
  * 
  * @author Sylvain Hallé
+ * @since 0.7
  */
 public abstract class ReadInputStream extends Source
 {

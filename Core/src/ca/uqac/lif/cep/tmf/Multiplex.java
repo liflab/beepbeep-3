@@ -45,7 +45,7 @@ import java.util.concurrent.Future;
  * input trace.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class Multiplex extends Processor

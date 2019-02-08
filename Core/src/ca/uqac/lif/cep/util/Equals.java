@@ -25,7 +25,7 @@ import java.util.Collection;
  * A function that checks for the equality of various data types.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.1
  */
 public class Equals extends BinaryFunction<Object, Object, Boolean>
 {

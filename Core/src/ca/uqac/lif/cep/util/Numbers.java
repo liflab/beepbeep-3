@@ -26,7 +26,7 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * A container object for functions applying to numbers.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.7
  */
 public class Numbers
 {

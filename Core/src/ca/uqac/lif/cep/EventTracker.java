@@ -35,6 +35,7 @@ import ca.uqac.lif.petitpoucet.ProvenanceNode;
  * dependencies may be broken at some point.
  * 
  * @author Sylvain Hallé
+ * @since 0.7
  */
 public interface EventTracker
 {

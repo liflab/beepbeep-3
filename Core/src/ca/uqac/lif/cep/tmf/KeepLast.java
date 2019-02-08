@@ -7,7 +7,7 @@ import java.util.Queue;
  * Outputs only the last event received.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.8 
  */
 public class KeepLast extends SynchronousProcessor
 {

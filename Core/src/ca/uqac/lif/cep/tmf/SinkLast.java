@@ -24,7 +24,7 @@ import java.util.Queue;
  * with {@link #getLast()}.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class SinkLast extends Sink

@@ -28,8 +28,13 @@ import java.io.IOException;
 import java.util.Queue;
 
 /**
- * Writes input events to one or more files.
+ * Writes input events to one or more files. It is represented
+ * graphically as:
+ * <p>
+ * <img src="{@docRoot}/doc-files/io/WriteToFile.png" alt="WriteToFile">
  * @author Sylvain Hallé
+ * @since 0.10
+ * @see WriteOutputStream
  */
 public class WriteToFile extends Sink
 {

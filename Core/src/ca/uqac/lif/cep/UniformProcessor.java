@@ -25,10 +25,15 @@ import java.util.concurrent.Future;
 
 /**
  * Processor that produces exactly one output front for each input front
- * received.
+ * received. Descending from this class, rather than the more generic
+ * {@link SynchronousProcessor}, can bring performance improvements when the
+ * processor has an input/output arity of exactly 1. In such a case, the
+ * {@link UnaryPullable} and {@link UnaryPushable} objects work about twice
+ * as fast as <tt>SynchronousProcessor</tt>'s {@link OutputPullable} and
+ * {@link InputPushable} objects.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.6
  */
 @SuppressWarnings("squid:S2160")
 public abstract class UniformProcessor extends SynchronousProcessor

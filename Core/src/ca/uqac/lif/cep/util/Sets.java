@@ -33,6 +33,7 @@ import java.util.Set;
  * </ul>
  * 
  * @author Sylvain Hallé
+ * @since 0.7
  */
 public class Sets
 {

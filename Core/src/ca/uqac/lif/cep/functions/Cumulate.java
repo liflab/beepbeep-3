@@ -23,13 +23,15 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * Creates a cumulative processor out of a cumulative function. This is simply a
  * {@link ApplyFunction} whose function is of a specific type (a
  * {@link CumulativeFunction}).
- * 
+ * <p>
  * It is represented graphically as:
- * 
- * ![Cumulate]({@docRoot}/doc-files/functions/Cumulate.png)
- * 
+ * <p>
+ * <img src="{@docRoot}/doc-files/functions/Cumulate.png" alt="Cumulate">
+ * <p>
+ * In earlier versions of the library, this class was called
+ * <tt>CumulativeProcessor</tt>.
  * @author Sylvain Hallé
- *
+ * @since 0.1
  */
 public class Cumulate extends ApplyFunction
 {

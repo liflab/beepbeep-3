@@ -30,6 +30,7 @@ import java.util.concurrent.Future;
  * Encapsulates a chain of processors as if it were a single one.
  * 
  * @author Sylvain Hallé
+ * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
 public class GroupProcessor extends Processor

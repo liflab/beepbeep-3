@@ -23,9 +23,12 @@ import java.util.Queue;
 import java.util.Set;
 
 /**
- * Visits every processor
+ * An object that visits every processor in a chain, from a processor
+ * used as a starting point. Currently, this crawler is only used to clone
+ * {@link GroupProcessor}s.
  * 
  * @author Sylvain Hallé
+ * @since 0.3
  */
 public abstract class PipeCrawler
 {

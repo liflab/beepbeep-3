@@ -23,7 +23,9 @@ import java.util.Queue;
 /**
  * Processor that repeats input events a number of times based on
  * a control signal.
+ * 
  * @author Sylvain Hallé
+ * @since 0.2.1
  */
 public class VariableStutter extends SynchronousProcessor
 {

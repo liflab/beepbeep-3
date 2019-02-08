@@ -33,6 +33,7 @@ import ca.uqac.lif.cep.SynchronousProcessor;
  * methods {@link #pull()} and {@link #pullHard()}.
  * 
  * @author Sylvain Hallé
+ * @since 0.1
  *
  */
 @SuppressWarnings("squid:S2160")

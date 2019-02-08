@@ -79,7 +79,7 @@ import java.util.Iterator;
  * undefined.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.1
  */
 public interface Pullable extends Iterator<Object>, Iterable<Object>
 {

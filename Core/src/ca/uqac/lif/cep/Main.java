@@ -20,6 +20,7 @@ package ca.uqac.lif.cep;
 /**
  * A dummy main file defining a few system-wide constants.
  * @author Sylvain Hallé
+ * @since 0.8
  */
 public class Main
 {
@@ -36,7 +37,7 @@ public class Main
   /**
    * Revision version number
    */
-  public static final int s_revisionVersion = 0;
+  public static final int s_revisionVersion = 1;
 
   private Main()
   {

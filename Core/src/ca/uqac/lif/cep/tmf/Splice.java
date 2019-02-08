@@ -31,7 +31,7 @@ import java.util.Queue;
  * it is given must have an input arity of 0.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.3
  */
 @SuppressWarnings("squid:S2160")
 public class Splice extends Source

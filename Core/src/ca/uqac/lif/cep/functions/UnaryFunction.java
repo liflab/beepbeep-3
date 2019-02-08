@@ -27,7 +27,7 @@ import java.util.Set;
  * @param <U>
  *          The type of the output
  * 
- *
+ * @since 0.2.1
  */
 public abstract class UnaryFunction<T, U> extends Function
 {

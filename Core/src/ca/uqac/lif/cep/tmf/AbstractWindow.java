@@ -36,7 +36,7 @@ import java.util.LinkedList;
  * </ul>
  * 
  * @author Sylvain Hallé
- * 
+ * @since 0.8
  */
 public abstract class AbstractWindow extends SynchronousProcessor
 {

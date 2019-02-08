@@ -21,10 +21,10 @@ import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
 /**
- * Discards the first *n* events of the input, and outputs the remaining ones.
+ * Discards the first <i>n</i> events of the input, and outputs the remaining ones.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class Trim extends SynchronousProcessor

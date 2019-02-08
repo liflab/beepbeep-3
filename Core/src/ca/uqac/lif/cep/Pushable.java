@@ -30,7 +30,7 @@ import java.util.concurrent.Future;
  * {@link Pullable}s: one for each input trace.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.1
  */
 public interface Pushable
 {

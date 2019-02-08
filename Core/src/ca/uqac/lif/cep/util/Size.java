@@ -31,6 +31,7 @@ import java.util.Map;
  * </ul>
  * 
  * @author Sylvain Hallé
+ * @since 0.3
  */
 @SuppressWarnings("rawtypes")
 public class Size extends UnaryFunction<Object, Integer>

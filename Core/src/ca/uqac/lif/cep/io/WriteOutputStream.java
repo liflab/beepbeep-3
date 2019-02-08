@@ -24,9 +24,13 @@ import java.io.OutputStream;
 import java.util.Queue;
 
 /**
- * Processor that writes events to a Java {@link OutputStream}.
+ * Processor that writes events to a Java {@link OutputStream}. It is represented
+ * graphically as:
+ * <p>
+ * <img src="{@docRoot}/doc-files/io/WriteOutputStream.png" alt="WriteOutputStream">
  * 
  * @author Sylvain Hallé
+ * @since 0.7
  */
 public class WriteOutputStream extends Sink
 {

@@ -23,10 +23,13 @@ import java.io.IOException;
 
 /**
  * Processor calling an external command upon receiving an event, and returning
- * the output of that command as its output stream.
+ * the output of that command as its output stream. It is represented
+ * graphically as:
+ * <p>
+ * <img src="{@docRoot}/doc-files/io/Call.png" alt="Call">
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class Call extends UniformProcessor

@@ -20,6 +20,17 @@ package ca.uqac.lif.cep.util;
 import ca.uqac.lif.cep.UniformProcessor;
 import java.util.Random;
 
+/**
+ * A <i>n</i>:<i>n</i> processor that turns an arbitrary input event
+ * front into an output front made of randomly selected numerical values.
+ * The interval in which values are selected can be specified. It is
+ * represented graphically as:
+ * <p>
+ * <img src="{@docRoot}/doc-files/util/Randomize.png" alt="Randomize">
+ * 
+ * @author Sylvain Hallé
+ * @since 0.9
+ */
 public class Randomize extends UniformProcessor
 {
   /**

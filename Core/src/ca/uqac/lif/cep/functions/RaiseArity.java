@@ -22,12 +22,13 @@ import ca.uqac.lif.cep.Context;
 import java.util.Set;
 
 /**
- * A `Function` that raises the arity of another function.
- * Given an *m*:*n* function *f*, an instance of *r* `RaiseArity`
- * makes *f* behave like an *m'*:*n* function, with *m'* &gt; *m*. The extra 
- * arguments given to *r* are simply ignored.
+ * A {@link Function} that raises the arity of another function.
+ * Given an <i>m</i>:<i>n</i> function <i>f</i>, an instance of <i>r</i> `RaiseArity`
+ * makes <i>f</i> behave like an <i>m</i>':<i>n</i> function, with <i>m</i>' &gt; <i>m</i>.
+ * The extra arguments given to <i>r</i> are simply ignored.
  *  
  * @author Sylvain Hallé
+ * @since 0.3
  */
 public class RaiseArity extends Function
 {

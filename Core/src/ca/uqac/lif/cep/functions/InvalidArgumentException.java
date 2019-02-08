@@ -21,6 +21,7 @@ package ca.uqac.lif.cep.functions;
  * Exception thrown when a function is given an argument that is invalid.
  * 
  * @author Sylvain Hallé
+ * @since 0.3
  */
 @SuppressWarnings("squid:S2166")
 public class InvalidArgumentException extends FunctionException

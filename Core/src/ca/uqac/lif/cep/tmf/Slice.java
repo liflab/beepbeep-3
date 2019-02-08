@@ -49,6 +49,7 @@ import java.util.concurrent.Future;
  * that the incoming event must be dispatched to <em>all</em> slices one by one.
  * 
  * @author Sylvain Hallé
+ * @since 0.3
  */
 @SuppressWarnings("squid:S2160")
 public class Slice extends UniformProcessor

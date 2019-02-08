@@ -25,7 +25,7 @@ import java.util.Queue;
  * Override that method to do some processing on these events.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class CallbackSink extends SynchronousProcessor

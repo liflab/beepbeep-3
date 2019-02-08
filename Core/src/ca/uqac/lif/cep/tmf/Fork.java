@@ -30,6 +30,7 @@ import java.util.Queue;
  * <img src="{@docRoot}/doc-files/tmf/Fork.png" alt="Fork">
  * 
  * @author Sylvain Hallé
+ * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
 public class Fork extends UniformProcessor

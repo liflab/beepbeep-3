@@ -21,6 +21,7 @@ package ca.uqac.lif.cep;
  * An override on the return type of {@link Duplicable} that enforces the
  * return of a processor.
  * @author Sylvain Hallé
+ * @since 0.7
  */
 public interface DuplicableProcessor extends Duplicable
 {

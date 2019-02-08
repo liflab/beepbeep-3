@@ -25,6 +25,7 @@ import java.util.Map;
  * operations on a `Context` object are synchronized.
  * 
  * @author Sylvain Hallé
+ * @since 0.3
  *
  */
 public class Context extends HashMap<String, Object>

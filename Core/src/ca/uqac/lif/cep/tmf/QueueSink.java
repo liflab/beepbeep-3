@@ -22,11 +22,11 @@ import java.util.Queue;
 
 /**
  * Sink that accumulates events into queues. It is represented graphically as:
- * 
- * ![QueueSink]({@docRoot}/doc-files/tmf/QueueSink.png)
+ * <p>
+ * <img src="{@docRoot}/doc-files/tmf/QueueSink.png" alt="QueueSink">
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
 public class QueueSink extends Sink

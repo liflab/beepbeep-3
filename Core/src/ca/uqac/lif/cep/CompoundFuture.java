@@ -26,6 +26,7 @@ import java.util.concurrent.TimeoutException;
  * A Future object whose termination and output value depends on the
  * termination and output values of multiple other Future objects.
  * @author Sylvain Hallé
+ * @since 0.9
  *
  * @param <T> The output type of this future
  * @param <U> The output type of the multiple "sub-futures" this Future

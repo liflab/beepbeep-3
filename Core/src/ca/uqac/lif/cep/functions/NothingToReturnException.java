@@ -21,9 +21,10 @@ package ca.uqac.lif.cep.functions;
  * Exception thrown when a function cannot produce a return value. This is a
  * "generic" type of exception; for example, if the function cannot return a
  * value because one of its arguments is of the wrong type, it should rather
- * throw a {@link InvalidArgumentException}.
+ * throw an {@link InvalidArgumentException}.
  * 
  * @author Sylvain Hallé
+ * @since 0.3
  */
 @SuppressWarnings("squid:S2166")
 public class NothingToReturnException extends FunctionException

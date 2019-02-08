@@ -25,7 +25,7 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * A container object for Boolean functions.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.7
  */
 public class Booleans
 {

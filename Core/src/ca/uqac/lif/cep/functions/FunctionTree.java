@@ -21,17 +21,19 @@ import ca.uqac.lif.cep.Context;
 import java.util.Set;
 
 /**
- * A `Function` object representing the composition of multiple functions 
- * together to form a "compound" function. A function tree has a *root*, 
- * which consists of an *m*:*n* function. This function is connected to *n* 
+ * A {@link Function} object representing the composition of multiple functions 
+ * together to form a "compound" function.
+ * <p>
+ * A function tree has a <em>root</em>, 
+ * which consists of an <i>m</i>:<i>m</i> function. This function is connected to <i>n</i> 
  * children, which can be functions or function trees themselves. The 
  * drawing below depicts a function tree that composes multiplication 
  * and addition to form a more complex function of two arguments.
- * 
- * ![FunctionTree]({@docRoot}/doc-files/functions/FunctionTree.png)
+ * <p>
+ * <img src="{@docRoot}/doc-files/functions/FunctionTree.png" alt="FunctionTree">
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.3
  */
 public class FunctionTree extends Function
 {

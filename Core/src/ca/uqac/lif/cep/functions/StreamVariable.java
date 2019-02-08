@@ -21,10 +21,10 @@ import ca.uqac.lif.cep.Context;
 
 /**
  * Symbol standing for the <i>i</i>-th trace given as input. A `StreamVariable`
- * can be given as an argument to a `FunctionTree`.
+ * can be given as an argument to a {@link FunctionTree}.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.3
  */
 public class StreamVariable extends Variable
 {

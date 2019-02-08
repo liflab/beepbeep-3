@@ -26,7 +26,9 @@ import java.util.Queue;
 import java.util.Set;
 
 /**
- * A set where each element can be present more than once
+ * A set where each element can be present more than once.
+ * @author Sylvain Hallé
+ * @since 0.9
  */
 public class Multiset implements Set<Object>
 {

@@ -26,7 +26,7 @@ import java.util.List;
  * list).
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.7
  */
 public class NthElement extends UnaryFunction<Object, Object>
 {

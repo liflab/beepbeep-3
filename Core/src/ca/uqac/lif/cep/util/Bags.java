@@ -39,7 +39,7 @@ import java.util.Set;
  * collections, i.e. "bags" of objects.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.7
  */
 public class Bags
 {

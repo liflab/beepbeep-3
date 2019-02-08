@@ -26,9 +26,9 @@ import java.util.Queue;
  * processor takes whatever event it receives (i.e. any Java <tt>Object</tt>),
  * calls its {@link Object#toString() toString()} method, and pushes the
  * resulting output to a print stream. Graphically, it is represented as:
- * 
- * ![Processor]({@docRoot}/doc-files/cli/Print.png)
- * 
+ * <p>
+ * <img src="{@docRoot}/doc-files/cli/Print.png" alt="Print">
+ * <p>
  * The behaviour of this processor can be configured in a few ways. Methods
  * {@link #setPrefix(String) setPrefix()} and {@link #setPrefix(String)
  * setSuffix()} can specify the character string to be displayed before and
@@ -38,7 +38,7 @@ import java.util.Queue;
  * such as an ANSI-aware printer.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
 public class Print extends Sink

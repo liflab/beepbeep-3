@@ -34,14 +34,17 @@ import java.util.concurrent.Future;
  * one new event is received from all input traces before triggering the
  * computation, pulling and buffering events from all outputs when either of the
  * {@link Pullable}s is being called, etc.
- * 
+ * <p>
  * The only thing that is left undefined is what to do when new input events
  * have been received from all input traces. This is the task of abstract method
  * {@link #compute(Object[], Queue)}, which descendants of this class must
  * implement.
+ * <p>
+ * In early versions of the library, this class was called
+ * <tt>SingleProcessor</tt>.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.1
  *
  */
 @SuppressWarnings("squid:S2160")

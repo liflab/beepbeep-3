@@ -24,6 +24,7 @@ import ca.uqac.lif.cep.Contextualizable;
  * An object that assigns a value to a specific key in a
  * {@link ca.uqac.lif.cep.Context Context} object.
  * @author Sylvain Hallé
+ * @since 0.3
  */
 public class ContextAssignment
 {

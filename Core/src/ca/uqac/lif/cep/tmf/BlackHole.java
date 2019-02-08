@@ -23,7 +23,7 @@ import java.util.Queue;
  * A special type of {@link Sink} that discards everything it receives.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
 public class BlackHole extends Sink

@@ -20,6 +20,11 @@ package ca.uqac.lif.cep.functions;
 import ca.uqac.lif.cep.Connector.Variant;
 import java.util.Set;
 
+/**
+ * A function that acts as a placeholder for a value to be computed at a later time.
+ * @author Sylvain Hallé
+ * @since 0.3
+ */
 public abstract class Variable extends Function
 {
   /**

@@ -22,23 +22,23 @@ import java.util.Iterator;
 /**
  * A Pullable object that casts all its output to a given type. The
  * TypedPullable is used by wrapping it around an existing pullable:
- * 
+ * <p>
  * <pre>
  * ...
  * Pullable p = my_processor.getPullableOutput(0);
  * TypedPullable&lt;Integer&gt; tp = new TypedPullable&lt;Integer&gt;(p);
  * int event = tp.pull();
  * </pre>
- * 
+ * <p>
  * <strong>Caveat emptor:</strong> This pullable simply <em>casts</em> what it
  * receives from its underlying pullable to the type it was created with. It is
  * up to the user to make sure that this cast makes sense; otherwise, a
  * <tt>ClassCastException</tt> will be thrown at runtime.
  * 
  * @author Sylvain Hallé
+ * @since 0.2.1
  *
- * @param <T>
- *          The type of the output objects
+ * @param <T> The type of the output objects
  */
 @SuppressWarnings("unchecked")
 public class TypedPullable<T> implements Pullable

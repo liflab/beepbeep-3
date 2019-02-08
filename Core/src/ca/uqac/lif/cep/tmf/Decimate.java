@@ -48,6 +48,7 @@ import java.util.Queue;
  * {@link #Decimate(boolean)}.
  *
  * @author Quentin Betti
+ * @since 0.7
  */
 public abstract class Decimate extends SynchronousProcessor
 {

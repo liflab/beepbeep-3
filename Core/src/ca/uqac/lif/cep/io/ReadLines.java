@@ -23,10 +23,13 @@ import java.util.Queue;
 import java.util.Scanner;
 
 /**
- * Source that reads text lines from a Java {@link InputStream}.
+ * Source that reads text lines from a Java {@link InputStream}. It is represented
+ * graphically as:
+ * <p>
+ * <img src="{@docRoot}/doc-files/io/ReadLines.png" alt="ReadLines">
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.3
  */
 @SuppressWarnings("squid:S2160")
 public class ReadLines extends ReadInputStream

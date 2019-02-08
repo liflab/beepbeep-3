@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * Utility class to run commands on the command line and fetch their output.
  * 
  * @author Sylvain Hallé
- *
+ * @since 0.2.1
  */
 public class CommandRunner extends Thread
 {
