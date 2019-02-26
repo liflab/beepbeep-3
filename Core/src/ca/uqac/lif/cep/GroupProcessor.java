@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,12 +18,14 @@
 package ca.uqac.lif.cep;
 
 import ca.uqac.lif.cep.tmf.Source;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.Future;
 
 /**
@@ -230,7 +232,7 @@ public class GroupProcessor extends Processor
   @Override
   public synchronized ProxyPushable getPushableInput(int index)
   {
-    return new ProxyPushable(m_inputPushables.get(index), index);
+    return (ProxyPushable) m_inputPushables.get(index);
   }
 
   @Override
@@ -272,11 +274,11 @@ public class GroupProcessor extends Processor
   {
     if (i == m_inputPushables.size())
     {
-      m_inputPushables.add(p);
+      m_inputPushables.add(new ProxyPushable(p, i));
     }
     else
     {
-      m_inputPushables.set(i, p);
+      m_inputPushables.set(i, new ProxyPushable(p, i));
     }
   }
 
@@ -595,8 +597,14 @@ public class GroupProcessor extends Processor
 
   public class ProxyPushable implements Pushable
   {
+    /**
+     * The {@link Pushable} of which this one is a proxy
+     */
     private Pushable m_pushable;
 
+    /**
+     * The position of this pushable in the group processor
+     */
     private int m_position = 0;
 
     /**
@@ -646,7 +654,74 @@ public class GroupProcessor extends Processor
     @Override
     public void notifyEndOfTrace() throws PushableException
     {
-      m_pushable.notifyEndOfTrace();
+      // Nothing to do if the Pushable has already been notified
+      if (m_hasBeenNotifiedOfEndOfTrace)
+      {
+        return;
+      }
+      m_hasBeenNotifiedOfEndOfTrace = true;
+
+      // Notify the end of trace on all the inner Pushables
+      for (Pushable p : m_inputPushables)
+      {
+        ((ProxyPushable) p).m_pushable.notifyEndOfTrace();
+      }
+      
+      // Collect from processor the events to generate for the end
+      Queue<Object[]> temp_queue = new ArrayDeque<Object[]>();
+      boolean outs;
+      try
+      {
+        outs = onEndOfTrace(temp_queue);
+      }
+      catch (ProcessorException e)
+      {
+        throw new PushableException(e);
+      }
+      outputEvent(temp_queue, outs);
+
+      // Notify the output pushables of the end of the trace
+      for (int i = 0; i < m_outputPushables.length; i++)
+      {
+        ProcessorAssociation pa = m_outputPushableAssociations.get(i);
+        Pushable p = pa.m_processor.getPushableOutput(pa.m_ioNumber);
+        if (p == null)
+        {
+          throw new PushableException("Output " + i
+              + " of this processor is connected to nothing", getProcessor());
+        }
+        p.notifyEndOfTrace();
+      }
+    }
+
+    /**
+     * Pushes output event (if any) to the corresponding output {@link Pushable}s.
+     *
+     * @param temp_queue The queue of object fronts to push
+     * @param outs Set to <tt>true</tt> to enable the output of an event,
+     * <tt>false</tt> otherwise.
+     */
+    private final void outputEvent(Queue<Object[]> temp_queue, boolean outs)
+    {
+      if (outs && !temp_queue.isEmpty())
+      {
+        for (Object[] evt : temp_queue)
+        {
+          if (evt != null)
+          {
+            for (int i = 0; i < m_outputPushables.length; i++)
+            {
+              Pushable p = m_outputPushables[i];
+              if (p == null)
+              {
+                throw new PushableException(
+                    "Output " + i + " of this processor is connected to nothing", getProcessor());
+              }
+              p.push(evt[i]);
+            }
+          }
+        }
+      }
     }
 
     @Override
@@ -697,5 +772,11 @@ public class GroupProcessor extends Processor
       return null;
     }
     return m_inputPullableAssociations.get(index).m_processor;
+  }
+
+  @Override
+  public boolean onEndOfTrace(Queue<Object[]> outputs)
+  {
+    return false;
   }
 }

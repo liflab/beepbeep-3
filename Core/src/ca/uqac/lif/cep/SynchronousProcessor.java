@@ -205,7 +205,7 @@ public abstract class SynchronousProcessor extends Processor
     @Override
     public void notifyEndOfTrace()
     {
-      // nothing to do if the pushable has already been notified
+      // Nothing to do if the Pushable has already been notified
       if (m_hasBeenNotifiedOfEndOfTrace)
       {
         return;

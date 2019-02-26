@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -64,7 +64,7 @@ public abstract class UniformProcessor extends SynchronousProcessor
     outputs.add(m_outputArray);
     return b;
   }
-  
+
   /**
    * Computes one output events from its input events
    * 
@@ -89,7 +89,7 @@ public abstract class UniformProcessor extends SynchronousProcessor
     }
     return b;
   }
-  
+
   /**
    * Allows to describe a specific behavior when the trace of input fronts has
    * reached its end. Called in "push mode" only. In "pull mode", implementing
@@ -183,18 +183,26 @@ public abstract class UniformProcessor extends SynchronousProcessor
     @Override
     public synchronized void notifyEndOfTrace() throws PushableException
     {
+      // Nothing to do if the Pushable has already been notified
+      boolean b = false;
+      if (m_hasBeenNotifiedOfEndOfTrace)
+      {
+        return;
+      }
+      m_hasBeenNotifiedOfEndOfTrace = true;
       try
       {
-        onEndOfTrace(m_outputArray);
+        b = onEndOfTrace(m_outputArray);
       }
       catch (ProcessorException e)
       {
         throw new PushableException(e);
       }
-      if (m_outputArray[0] != null)
+      if (b)
       {
         m_outputPushables[0].push(m_outputArray[0]);
       }
+      m_outputPushables[0].notifyEndOfTrace();
     }
 
     @Override
