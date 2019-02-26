@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.util;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,9 +41,114 @@ public class Lists
   {
     // Utility class
   }
+  
+  /**
+   * Processor that updates a list
+   * @since 0.10.2
+   */
+  protected abstract static class ListUpdateProcessor extends UniformProcessor
+  {
+    /**
+     * The underlying list
+     */
+    protected List<Object> m_list;
+
+    /**
+     * Create a new instance of the processor
+     */
+    public ListUpdateProcessor()
+    {
+      super(1, 1);
+      m_list = new ArrayList<Object>();
+    }
+
+    @Override
+    public void reset()
+    {
+      super.reset();
+      m_list.clear();
+    }
+
+    @Override
+    public Class<?> getOutputType(int index)
+    {
+      return List.class;
+    }
+  }
+  
+  /**
+   * Updates a list.
+   * @since 0.10.2
+   */
+  public static class PutInto extends ListUpdateProcessor
+  {
+    /**
+     * Create a new instance of the processor
+     */
+    public PutInto()
+    {
+      super();
+    }
+
+    @Override
+    public PutInto duplicate(boolean with_state)
+    {
+      PutInto pi = new PutInto();
+      if (with_state)
+      {
+        pi.m_list.addAll(m_list);
+      }
+      return pi;
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Object[] outputs)
+    {
+      m_list.add(inputs[0]);
+      outputs[0] = m_list;
+      return true;
+    }
+  }
+
+  /**
+   * Updates a list.
+   * @since 0.10.2
+   */
+  public static class PutIntoNew extends ListUpdateProcessor
+  {
+    /**
+     * Create a new instance of the processor
+     */
+    public PutIntoNew()
+    {
+      super();
+    }
+
+    @Override
+    public PutIntoNew duplicate(boolean with_state)
+    {
+      PutIntoNew pi = new PutIntoNew();
+      if (with_state)
+      {
+        pi.m_list.addAll(m_list);
+      }
+      return pi;
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Object[] outputs)
+    {
+      m_list.add(inputs[0]);
+      ArrayList<Object> new_set = new ArrayList<Object>();
+      new_set.addAll(m_list);
+      outputs[0] = new_set;
+      return true;
+    }
+  }
 
   /**
    * Common ancestor to {@link TimePack} and {@link Pack}.
+   * @since 0.7
    */
   protected abstract static class AbstractPack extends SynchronousProcessor
   {
@@ -85,6 +192,7 @@ public class Lists
    * {@docRoot}/doc-files/util/Pack.png" alt="Processor graph"></a>
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static class Pack extends AbstractPack
   {
@@ -131,6 +239,7 @@ public class Lists
    * {@docRoot}/doc-files/ListPacker.png" alt="Processor graph"></a>
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static class TimePack extends AbstractPack
   {
@@ -283,11 +392,22 @@ public class Lists
     @Override
     protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
     {
-      @SuppressWarnings("unchecked")
-      Collection<Object> list = (Collection<Object>) inputs[0];
-      for (Object o : list)
+      if (inputs[0].getClass().isArray())
       {
-        outputs.add(new Object[] { o });
+        Object[] list = (Object[]) inputs[0];
+        for (Object o : list)
+        {
+          outputs.add(new Object[] { o });
+        }
+      }
+      else
+      {
+        @SuppressWarnings("unchecked")
+        Collection<Object> list = (Collection<Object>) inputs[0];
+        for (Object o : list)
+        {
+          outputs.add(new Object[] { o });
+        }
       }
       return true;
     }
