@@ -280,6 +280,7 @@ public class Slice extends UniformProcessor
    *          Set to <tt>true</tt> to handle collections as multiple IDs. The
    *          default is <tt>false</tt>
    * @return This slicer
+   * @since 0.8
    */
   public Slice explodeCollections(boolean b)
   {
