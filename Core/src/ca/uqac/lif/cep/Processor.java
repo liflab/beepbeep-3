@@ -17,10 +17,20 @@
  */
 package ca.uqac.lif.cep;
 
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.Printable;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -50,7 +60,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 0.1
  *
  */
-public abstract class Processor implements DuplicableProcessor, Contextualizable
+public abstract class Processor implements DuplicableProcessor, 
+  Contextualizable, Printable, Readable
 {
   /**
    * The processor's input arity, i.e. the number of input events it requires to
@@ -120,7 +131,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
   /**
    * A lock to access the ID counter
    */
-  private static Lock s_counterLock = new ReentrantLock();
+  private static transient Lock s_counterLock = new ReentrantLock();
 
   /**
    * The unique ID given to this processor instance
@@ -138,8 +149,8 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
    * long as necessary", in practice a bound was put on the number of attempts as
    * a safeguard to avoid infinite loops.
    */
-  public static final int MAX_PULL_RETRIES = 10000000;
-  
+  public static final transient int MAX_PULL_RETRIES = 10000000;
+
   /**
    * Indicates whether the processor has been notified of the end of trace or not
    */
@@ -315,6 +326,8 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
       m_outputQueues[i].clear();
     }
     m_hasBeenNotifiedOfEndOfTrace = false;
+    m_inputCount = 0;
+    m_outputCount = 0;
   }
 
   /**
@@ -691,7 +704,7 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
           out_stream_pos);
     }
   }
-  
+
   /**
    * Allows to describe a specific behavior when the trace of input fronts has
    * reached its end. Called in "push mode" only. In "pull mode", implementing
@@ -711,6 +724,145 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
   protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
   {
     return false;
+  }
+
+  /**
+   * Gets the number of event fronts received so far by this processor
+   * @return The number of fronts
+   */
+  public final int getInputCount()
+  {
+    return m_inputCount;
+  }
+
+  /**
+   * Gets the number of event fronts produced so far by this processor
+   * @return The number of fronts
+   */
+  public final int getOutputCount()
+  {
+    return m_outputCount;
+  }
+
+  /**
+   * Prints the contents of this processor into an object printer.
+   * @param printer The printer to print this processor to
+   * @return The printed processor
+   * @since 0.11
+   */
+  @Override
+  public final Object print(ObjectPrinter<?> printer) throws ProcessorException
+  {
+    Map<String,Object> contents = new HashMap<String,Object>();
+    contents.put("id", m_uniqueId);
+    contents.put("input-count", m_inputCount);
+    contents.put("output-count", m_outputCount);
+    contents.put("context", m_context);
+    List<Queue<Object>> in_queues = new ArrayList<Queue<Object>>(m_inputQueues.length);
+    for (Queue<Object> q : m_inputQueues)
+    {
+      in_queues.add(q);
+    }
+    contents.put("input-queues", in_queues);
+    List<Queue<Object>> out_queues = new ArrayList<Queue<Object>>(m_outputQueues.length);
+    for (Queue<Object> q : m_outputQueues)
+    {
+      out_queues.add(q);
+    }
+    contents.put("output-queues", in_queues);
+    contents.put("contents", printState());
+    try
+    {
+      return printer.print(contents);
+    }
+    catch (PrintException e)
+    {
+      throw new ProcessorException(e);
+    }
+  }
+
+  /**
+   * Produces an object that represents the state of the current processor.
+   * A concrete processor should override this method to add whatever state
+   * information that needs to be preserved in the serialization process.
+   * @return Any object representing the processor's state 
+   * (including <tt>null</tt>)
+   * @since 0.11
+   */
+  protected Object printState()
+  {
+    return null;
+  }
+  
+  /**
+   * Reads the content of a processor from a serialized object.
+   * @param reader An object reader
+   * @param o The object to read from
+   * @return The serialized processor
+   * @throws ProcessorException If the read operation failed for some reason
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public final Processor read(ObjectReader<?> reader, Object o) throws ProcessorException
+  {
+    Map<String, Object> contents = null;
+    try
+    {
+      contents = (Map<String,Object>) reader.read(o);
+    }
+    catch (ReadException e)
+    {
+      throw new ProcessorException(e);
+    }
+    Processor p = null;
+    if (contents.containsKey("contents"))
+    {
+      Object o_contents = contents.get("contents");
+      try
+      {
+        p = readState(o_contents);
+      }
+      catch (UnsupportedOperationException e)
+      {
+        throw new ProcessorException(e);
+      }
+    }
+    if (p == null)
+    {
+      throw new ProcessorException("The processor returned null with being deserialized");
+    }
+    p.m_inputCount = (Integer) contents.get("input-count");
+    p.m_outputCount = (Integer) contents.get("output-count");
+    try
+    {
+      ObjectReader.setField(p, "m_uniqueId", (Integer) contents.get("id"));
+    }
+    catch (ReadException e)
+    {
+      throw new ProcessorException(e);
+    }
+    List<Queue<Object>> in_queues = (List<Queue<Object>>) contents.get("input-queues");
+    for (int i = 0; i < in_queues.size(); i++)
+    {
+      p.m_inputQueues[i] = in_queues.get(i);
+    }
+    List<Queue<Object>> out_queues = (List<Queue<Object>>) contents.get("output-queues");
+    for (int i = 0; i < out_queues.size(); i++)
+    {
+      p.m_outputQueues[i] = in_queues.get(i);
+    }
+    return p;
+  }
+
+  /**
+   * Reads the state of a processor and uses it to create a new instance
+   * @param o The object containing the processor's state
+   * @return A new processor instance
+   * @since 0.11
+   */
+  protected Processor readState(Object o)
+  {
+    throw new UnsupportedOperationException("This processor does not support deserialization");
   }
 
   @Override

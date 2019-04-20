@@ -69,6 +69,14 @@ public class Doubler extends SynchronousProcessor
   @Override
   public Processor duplicate(boolean with_state)
   {
-    return this;
+    return new Doubler();
+  }
+  
+  /**
+   * @since 0.11
+   */
+  public Doubler readState(Object o)
+  {
+    return new Doubler();
   }
 }

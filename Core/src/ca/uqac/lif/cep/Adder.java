@@ -71,4 +71,13 @@ public class Adder extends SynchronousProcessor
     outputs.add(new Object[]{((Integer) inputs[0]) + ((Integer) inputs[1])});
     return true;
   }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Adder readState(Object o)
+  {
+    return new Adder();
+  }
 }

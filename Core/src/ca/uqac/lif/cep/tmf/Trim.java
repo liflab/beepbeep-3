@@ -32,12 +32,16 @@ public class Trim extends SynchronousProcessor
   /**
    * How many events to ignore at the beginning of the trace
    */
-  private final int m_delay;
-
+  protected final int m_delay;
+  
   /**
-   * The number of events received so far
+   * No-args constructor. Useful only for deserialization.
    */
-  protected int m_eventsReceived;
+  private Trim()
+  {
+    super(1, 1);
+    m_delay = 0;
+  }
 
   /**
    * Creates a new delay processor.
@@ -52,17 +56,9 @@ public class Trim extends SynchronousProcessor
   }
 
   @Override
-  public void reset()
-  {
-    super.reset();
-    m_eventsReceived = 0;
-  }
-
-  @Override
   protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
   {
-    m_eventsReceived++;
-    if (m_eventsReceived > getDelay())
+    if (m_inputCount >= getDelay())
     {
       outputs.add(inputs);
       if (m_eventTracker != null)
@@ -84,15 +80,37 @@ public class Trim extends SynchronousProcessor
     Trim t = new Trim(getDelay());
     if (with_state)
     {
-      t.m_eventsReceived = m_eventsReceived;
       t.m_inputCount = m_inputCount;
       t.m_outputCount = m_outputCount;
     }
     return t;
   }
 
+  /**
+   * Gets the delay associated to the trim processor
+   * @return The delay
+   */
   public int getDelay()
   {
     return m_delay;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  protected Object printState()
+  {
+    return m_delay;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  protected Trim readState(Object o)
+  {
+    int delay = (Integer) o;
+    return new Trim(delay);
   }
 }

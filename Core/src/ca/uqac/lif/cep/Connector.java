@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -324,6 +326,39 @@ public class Connector
       throw new IndexOutOfBoundsException(p1, i, p2, j);
     }
   }
+  
+  /**
+   * Returns the set of connections associated to a processor
+   * @param p The processor
+   * @return The set of collections
+   * @since 0.11
+   */
+  public static Collection<Connection> getConnections(Processor p)
+  {
+    Set<Connection> connections = new HashSet<Connection>();
+    int p_id = p.getId();
+    for (int i = 0; i < p.getInputArity(); i++)
+    {
+      Pullable pl = p.getPullableInput(i);
+      Processor d_p = pl.getProcessor();
+      if (d_p == null)
+      {
+        continue;
+      }
+      connections.add(new Connection(d_p.getId(), pl.getPosition(), p_id, i));
+    }
+    for (int i = 0; i < p.getOutputArity(); i++)
+    {
+      Pushable ps = p.getPushableOutput(i);
+      Processor d_p = ps.getProcessor();
+      if (d_p == null)
+      {
+        continue;
+      }
+      connections.add(new Connection(p_id, i, d_p.getId(), ps.getPosition()));
+    }
+    return connections;
+  }
 
   /**
    * Exception thrown when a problem occurs when connecting two processors
@@ -450,12 +485,96 @@ public class Connector
    */
   public static final class Variant
   {
+    /**
+     * A single visible instance of the Variant class
+     */
     public static final Variant instance = new Variant();
 
+    /**
+     * Empty constructor
+     */
     private Variant()
     {
       super();
     }
-
+  }
+  
+  /**
+   * Represents a connection between two pipes.
+   * @since 0.11
+   */
+  public static class Connection
+  {
+    /**
+     * The ID of the source processor
+     */
+    protected int m_sourceProcessorId;
+    
+    /**
+     * The number of the source pipe
+     */
+    protected int m_sourcePipeNumber;
+    
+    /**
+     * The ID of the destination processor
+     */
+    protected int m_destinationProcessorId;
+    
+    /**
+     * The number of the destination pipe
+     */
+    protected int m_destinationPipeNumber;
+    
+    /**
+     * Empty constructor
+     */
+    protected Connection()
+    {
+      this(-1, -1, -1, -1);
+    }
+    
+    /**
+     * Creates a new connection
+     * @param src_id The ID of the source processor
+     * @param src_pipe The number of the source pipe
+     * @param dest_id The ID of the destination processor
+     * @param dest_pipe The number of the destination pipe
+     */
+    public Connection(int src_id, int src_pipe, int dest_id, int dest_pipe)
+    {
+      super();
+      m_sourceProcessorId = src_id;
+      m_destinationProcessorId = dest_id;
+      m_sourcePipeNumber = src_pipe;
+      m_destinationPipeNumber = dest_pipe;
+    }
+    
+    @Override
+    public String toString()
+    {
+      return m_sourceProcessorId + "#" + m_sourcePipeNumber + "->"
+          + m_destinationProcessorId + "#" + m_destinationPipeNumber;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+      return m_sourceProcessorId * m_sourcePipeNumber
+          + m_destinationProcessorId * m_destinationPipeNumber;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+      if (o == null || !(o instanceof Connection))
+      {
+        return false;
+      }
+      Connection c = (Connection) o;
+      return c.m_sourcePipeNumber == m_sourcePipeNumber
+          && c.m_destinationPipeNumber == m_destinationPipeNumber
+          && c.m_sourceProcessorId == m_sourceProcessorId
+          && c.m_destinationProcessorId == m_destinationProcessorId;
+    }
   }
 }

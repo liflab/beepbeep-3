@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.Future;
 
 /**
@@ -778,5 +779,26 @@ public class GroupProcessor extends Processor
   public boolean onEndOfTrace(Queue<Object[]> outputs)
   {
     return false;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    Map<String,Object> contents = new HashMap<String,Object>();
+    contents.put("processors", m_processors);
+    contents.put("sources", m_sources);
+    contents.put("notify-sources", m_notifySources);
+    contents.put("input-associations", m_inputPullableAssociations);
+    contents.put("output-associations", m_outputPushableAssociations);
+    Set<Connector.Connection> connections = new HashSet<Connector.Connection>();
+    for (Processor p : m_processors)
+    {
+      connections.addAll(Connector.getConnections(p));
+    }
+    contents.put("connections", connections);
+    return contents;
   }
 }

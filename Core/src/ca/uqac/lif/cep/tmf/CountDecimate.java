@@ -17,6 +17,9 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i> is called
  * the <strong>decimation interval</strong>. However, a mode can be specified in order to
@@ -114,4 +117,27 @@ public class CountDecimate extends Decimate
     return new CountDecimate(m_interval, m_shouldProcessLastInputs);
   }
 
+  /**
+   * @since 0.11
+   */
+  @Override
+  protected Object printState()
+  {
+    Map<String,Object> map = new HashMap<String,Object>();
+    map.put("interval", m_interval);
+    map.put("current", m_current);
+    map.put("process-last", m_shouldProcessLastInputs);
+    return map;
+  }
+  
+  @SuppressWarnings("unchecked")
+  @Override
+  protected CountDecimate readState(Object o)
+  {
+    Map<String,Object> map = (Map<String,Object>) o;
+    CountDecimate cd = new CountDecimate((Integer) map.get("interval"), 
+        (Boolean) map.get("process-last"));
+    cd.m_current = (Integer) map.get("current");
+    return cd;
+  }
 }

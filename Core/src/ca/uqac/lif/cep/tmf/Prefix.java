@@ -37,8 +37,8 @@ public class Prefix extends Trim
   @SuppressWarnings("squid:S1168")
   protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
   {
-    m_eventsReceived++;
-    if (m_eventsReceived <= getDelay())
+    m_inputCount++;
+    if (m_inputCount <= getDelay())
     {
       outputs.add(inputs);
       return true;
@@ -50,6 +50,5 @@ public class Prefix extends Trim
   public void reset()
   {
     super.reset();
-    m_eventsReceived = 0;
   }
 }
