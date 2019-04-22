@@ -86,4 +86,21 @@ public class Fork extends UniformProcessor
     }
     m_outputPushables = out_pushables;
   }
+  
+  /**
+   * @since 0.11
+   */
+  public Object printState()
+  {
+    return getOutputArity();
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Fork readState(Object o)
+  {
+    return new Fork((Integer) o);
+  }
 }

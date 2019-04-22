@@ -28,6 +28,16 @@ import java.util.Queue;
 @SuppressWarnings("squid:S2160")
 public class BlackHole extends Sink
 {
+  public BlackHole()
+  {
+    this(1);
+  }
+  
+  public BlackHole(int arity)
+  {
+    super(arity);
+  }
+  
   @Override
   protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
   {
@@ -38,5 +48,22 @@ public class BlackHole extends Sink
   public BlackHole duplicate(boolean with_state)
   {
     return new BlackHole();
+  }
+  
+  /**
+   * @since 0.11
+   */
+  public Object printState()
+  {
+    return getInputArity();
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public BlackHole readState(Object o)
+  {
+    return new BlackHole((Integer) o);
   }
 }

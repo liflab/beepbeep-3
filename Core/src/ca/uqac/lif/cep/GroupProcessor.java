@@ -96,6 +96,14 @@ public class GroupProcessor extends Processor
     m_inputPullableAssociations = new HashMap<Integer, ProcessorAssociation>();
     m_outputPushableAssociations = new HashMap<Integer, ProcessorAssociation>();
   }
+  
+  /**
+   * No-args constructor. Used only for serialization and deserialization.
+   */
+  protected GroupProcessor()
+  {
+    this(1, 1);
+  }
 
   /**
    * Sets the processor to notify the QueueSource objects in the group to push an
@@ -142,16 +150,13 @@ public class GroupProcessor extends Processor
       m_ioNumber = number;
       m_processor = p;
     }
-  }
-
-  @Override
-  public synchronized void reset()
-  {
-    super.reset();
-    // Reset all processors inside the group
-    for (Processor p : m_processors)
+    
+    /**
+     * No-args constructor. Used only for serialization and deserialization.
+     */
+    protected ProcessorAssociation()
     {
-      p.reset();
+      super();
     }
   }
 
@@ -788,11 +793,33 @@ public class GroupProcessor extends Processor
   public Object printState()
   {
     Map<String,Object> contents = new HashMap<String,Object>();
+    contents.put("in-arity", getInputArity());
+    contents.put("out-arity", getOutputArity());
     contents.put("processors", m_processors);
     contents.put("sources", m_sources);
     contents.put("notify-sources", m_notifySources);
-    contents.put("input-associations", m_inputPullableAssociations);
-    contents.put("output-associations", m_outputPushableAssociations);
+    Set<List<Integer>> in_assocs = new HashSet<List<Integer>>();
+    for (Map.Entry<Integer,ProcessorAssociation> entry : m_inputPullableAssociations.entrySet())
+    {
+      List<Integer> list = new ArrayList<Integer>(3);
+      list.add(entry.getKey());
+      ProcessorAssociation pa = entry.getValue();
+      list.add(pa.m_ioNumber);
+      list.add(pa.m_processor.getId());
+      in_assocs.add(list);
+    }
+    contents.put("input-associations", in_assocs);
+    Set<List<Integer>> out_assocs = new HashSet<List<Integer>>();
+    for (Map.Entry<Integer,ProcessorAssociation> entry : m_outputPushableAssociations.entrySet())
+    {
+      List<Integer> list = new ArrayList<Integer>(3);
+      list.add(entry.getKey());
+      ProcessorAssociation pa = entry.getValue();
+      list.add(pa.m_ioNumber);
+      list.add(pa.m_processor.getId());
+      out_assocs.add(list);
+    }
+    contents.put("output-associations", out_assocs);
     Set<Connector.Connection> connections = new HashSet<Connector.Connection>();
     for (Processor p : m_processors)
     {
@@ -800,5 +827,88 @@ public class GroupProcessor extends Processor
     }
     contents.put("connections", connections);
     return contents;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public GroupProcessor readState(Object o) throws ProcessorException
+  {
+    Map<String,Object> contents = (HashMap<String,Object>) o;
+    // Create processor
+    GroupProcessor gp = new GroupProcessor((Integer) contents.get("in-arity"), 
+        (Integer) contents.get("out-arity"));
+    // Add internal processors (regular and source)
+    Map<Integer,Processor> procs = new HashMap<Integer,Processor>();
+    for (Processor p : (Set<Processor>) contents.get("processors"))
+    {
+      gp.addProcessor(p);
+      procs.put(p.getId(), p);
+    }
+    for (Processor p : (Set<Processor>) contents.get("sources"))
+    {
+      gp.addProcessor(p);
+      procs.put(p.getId(), p);
+    }
+    // Connect each of them according to the connections
+    Set<Connector.Connection> connections = (Set<Connector.Connection>) contents.get("connections");
+    for (Connector.Connection conn : connections)
+    {
+      Processor p1 = procs.get(conn.m_sourceProcessorId);
+      Processor p2 = procs.get(conn.m_destinationProcessorId);
+      if (p1 == null || p2 == null)
+      {
+        // Ignore
+        continue;
+      }
+      Connector.connect(p1, conn.m_sourcePipeNumber, p2, conn.m_destinationPipeNumber);
+    }
+    // Associate group's inputs to processor inputs
+    for (List<Integer> list : ((Set<List<Integer>>) contents.get("input-associations")))
+    {
+      int io_1 = list.get(0);
+      int io_2 = list.get(1);
+      int p_id = list.get(2);
+      if (!procs.containsKey(p_id))
+      {
+        // Ignore
+        continue;
+      }
+      Processor p = procs.get(p_id);
+      gp.associateInput(io_1, p, io_2);
+    }
+    // Associate group's outputs to processor outputs
+    for (List<Integer> list : ((Set<List<Integer>>) contents.get("output-associations")))
+    {
+      int io_1 = list.get(0);
+      int io_2 = list.get(1);
+      int p_id = list.get(2);
+      if (!procs.containsKey(p_id))
+      {
+        // Ignore
+        continue;
+      }
+      Processor p = procs.get(p_id);
+      gp.associateOutput(io_1, p, io_2);
+    }
+    gp.m_notifySources = (Boolean) contents.get("notify-sources");
+    return gp;
+  }
+  
+  @Override
+  public void reset()
+  {
+    super.reset();
+    for (Processor p : m_processors)
+    {
+      p.reset();
+    }
+    for (Source p : m_sources)
+    {
+      p.reset();
+    }
+
   }
 }

@@ -769,7 +769,7 @@ public abstract class Processor implements DuplicableProcessor,
     {
       out_queues.add(q);
     }
-    contents.put("output-queues", in_queues);
+    contents.put("output-queues", out_queues);
     contents.put("contents", printState());
     try
     {

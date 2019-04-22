@@ -340,6 +340,10 @@ public class Connector
     for (int i = 0; i < p.getInputArity(); i++)
     {
       Pullable pl = p.getPullableInput(i);
+      if (pl == null)
+      {
+        continue;
+      }
       Processor d_p = pl.getProcessor();
       if (d_p == null)
       {
@@ -350,6 +354,10 @@ public class Connector
     for (int i = 0; i < p.getOutputArity(); i++)
     {
       Pushable ps = p.getPushableOutput(i);
+      if (ps == null)
+      {
+        continue;
+      }
       Processor d_p = ps.getProcessor();
       if (d_p == null)
       {

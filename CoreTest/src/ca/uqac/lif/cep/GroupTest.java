@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,7 +25,10 @@ import java.util.Set;
 import java.util.Vector;
 
 import org.junit.Test;
-
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.azrael.clone.ClonePrinter;
+import ca.uqac.lif.azrael.clone.CloneReader;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
@@ -654,6 +657,67 @@ public class GroupTest
 		assertEquals(gp.getId(), p.getProcessor().getId());
 		assertEquals(0, p.getPosition());
 	}
+	
+	@Test
+  public void testSerialization1() throws ProcessorException, PrintException, ReadException
+  {
+	  ClonePrinter printer = new ClonePrinter();
+    CloneReader reader = new CloneReader();
+    GroupProcessor gp1 = new GroupProcessor(1, 1);
+    Passthrough pt = new Passthrough();
+    gp1.addProcessor(pt);
+    gp1.associateInput(0, pt, 0);
+    gp1.associateOutput(0, pt, 0);
+    BlackHole bh = new BlackHole();
+    Connector.connect(gp1, bh);
+    Pushable p1 = gp1.getPushableInput();
+    p1.push("foo");
+    Object e = printer.print(gp1);
+    assertNotNull(e);
+    Object o = reader.read(e);
+    assertNotNull(o);
+    assertTrue(o instanceof GroupProcessor);
+    GroupProcessor gp2 = (GroupProcessor) o;
+    QueueSink sink = new QueueSink();
+    Connector.connect(gp2, sink);
+    Queue<Object> q = sink.getQueue();
+    Pushable p2 = gp2.getPushableInput();
+    p2.push("bar");
+    assertFalse(q.isEmpty());
+  }
+  
+  @Test
+  public void testSerialization2() throws ProcessorException, PrintException, ReadException
+  {
+    ClonePrinter printer = new ClonePrinter();
+    CloneReader reader = new CloneReader();
+    GroupProcessor gp1 = new GroupProcessor(2, 1);
+    Adder pt = new Adder();
+    gp1.addProcessor(pt);
+    gp1.associateInput(0, pt, 0);
+    gp1.associateInput(1, pt, 1);
+    gp1.associateOutput(0, pt, 0);
+    BlackHole bh = new BlackHole();
+    Connector.connect(gp1, bh);
+    Pushable p1 = gp1.getPushableInput();
+    p1.push(8);
+    Object e = printer.print(gp1);
+    assertNotNull(e);
+    Object o = reader.read(e);
+    assertNotNull(o);
+    assertTrue(o instanceof GroupProcessor);
+    GroupProcessor gp2 = (GroupProcessor) o;
+    QueueSink sink = new QueueSink();
+    Connector.connect(gp2, sink);
+    Queue<Object> q = sink.getQueue();
+    Pushable p2_1 = gp2.getPushableInput(0);
+    Pushable p2_2 = gp2.getPushableInput(1);
+    p2_1.push(7);
+    assertTrue(q.isEmpty());
+    p2_2.push(3);
+    assertFalse(q.isEmpty());
+    assertEquals(11, q.remove());
+  }
 	
 	public static class Incrementer extends ApplyFunction
 	{

@@ -85,4 +85,21 @@ public class SinkLast extends Sink
   {
     return new SinkLast(getInputArity());
   }
+  
+  /**
+   * @since 0.11
+   */
+  public Object printState()
+  {
+    return getInputArity();
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public SinkLast readState(Object o)
+  {
+    return new SinkLast((Integer) o);
+  }
 }

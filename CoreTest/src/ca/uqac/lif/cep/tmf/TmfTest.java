@@ -33,7 +33,6 @@ import ca.uqac.lif.cep.functions.TurnInto;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.Filter;
 import ca.uqac.lif.cep.tmf.Freeze;
 import ca.uqac.lif.cep.tmf.Insert;
@@ -42,7 +41,6 @@ import ca.uqac.lif.cep.tmf.Prefix;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.SinkLast;
-import ca.uqac.lif.cep.tmf.Trim;
 import ca.uqac.lif.cep.tmf.Window;
 import ca.uqac.lif.cep.util.Numbers;
 
@@ -72,30 +70,6 @@ public class TmfTest
 	}
 
 	@Test
-	public void testTrim() 
-	{
-		Trim d = new Trim(3);
-		QueueSink qs = new QueueSink(1);
-		Connector.connect(d, qs);
-		Pushable in = d.getPushableInput(0);
-		Queue<Object> queue = qs.getQueue(0);
-		for (int k = 0; k < 2; k++)
-		{
-			in.push(0);
-			assertTrue(queue.isEmpty());
-			in.push(1);
-			assertTrue(queue.isEmpty());
-			in.push(2);
-			assertTrue(queue.isEmpty());
-			in.push(3);
-			Utilities.queueContains(3, queue);
-			in.push(4);
-			Utilities.queueContains(4, queue);
-			d.reset();
-		}
-	}
-
-	@Test
 	public void testFilter() 
 	{
 		Filter f = new Filter();
@@ -113,57 +87,7 @@ public class TmfTest
 			f.reset();
 		}
 	}
-
-	@Test
-	public void testCountDecimate1() 
-	{
-		CountDecimate f = new CountDecimate(3);
-		QueueSink qs = new QueueSink(1);
-		Connector.connect(f, qs);
-		Pushable in = f.getPushableInput(0);
-		Queue<Object> queue = qs.getQueue(0);
-		for (int k = 0; k < 2; k++)
-		{
-			in.push(0);
-			assertEquals(1, queue.size());
-			Utilities.queueContains(0, queue);
-			in.push(1);
-			assertTrue(queue.isEmpty());
-			in.push(2);
-			assertTrue(queue.isEmpty());
-			in.push(3);
-			Utilities.queueContains(3, queue);
-			in.push(4);
-			assertTrue(queue.isEmpty());
-			in.push(5);
-			assertTrue(queue.isEmpty());
-			in.push(6);
-			Utilities.queueContains(6, queue);
-			f.reset();
-		}
-	}
-
-	@Test
-	public void testCountDecimate2() 
-	{
-		CountDecimate f = new CountDecimate();
-		QueueSink qs = new QueueSink(1);
-		Connector.connect(f, qs);
-		Pushable in = f.getPushableInput(0);
-		Queue<Object> queue = qs.getQueue(0);
-		for (int k = 0; k < 2; k++)
-		{
-			in.push(0);
-			assertEquals(1, queue.size());
-			Utilities.queueContains(0, queue);
-			in.push(1);
-			Utilities.queueContains(1, queue);
-			in.push(2);
-			Utilities.queueContains(2, queue);
-			f.reset();
-		}
-	}
-
+	
 	@Test
 	public void testFreeze() 
 	{

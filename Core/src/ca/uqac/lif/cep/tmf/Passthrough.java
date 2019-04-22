@@ -20,9 +20,9 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
- * Returns its input as its output. Although it seems useless, `Passthrough` is
- * used internally by the ESQL interpreter as a placeholder when building
- * processor chains from an expression.
+ * Returns its input as its output. Although it seems useless,
+ * <tt>Passthrough</tt> is used internally by interpreters as a
+ * placeholder when building processor chains from an expression.
  * <p>
  * Graphically, this processor is represented as:
  * <p>
@@ -64,5 +64,22 @@ public class Passthrough extends UniformProcessor
   public Passthrough duplicate(boolean with_state)
   {
     return new Passthrough(getInputArity());
+  }
+  
+  /**
+   * @since 0.11
+   */
+  public Object printState()
+  {
+    return getInputArity();
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Passthrough readState(Object o)
+  {
+    return new Passthrough((Integer) o);
   }
 }

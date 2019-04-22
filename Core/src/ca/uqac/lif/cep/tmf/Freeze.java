@@ -18,6 +18,8 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.UniformProcessor;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Repeatedly outputs the first event it has received. <code>Freeze</code> works
@@ -67,5 +69,43 @@ public class Freeze extends UniformProcessor
   public Freeze duplicate(boolean with_state)
   {
     return new Freeze();
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    if (m_output != null)
+    {
+      List<Object> front = new ArrayList<Object>(m_output.length);
+      for (Object o : m_output)
+      {
+        front.add(o);
+      }
+      return front;
+    }
+    return null;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Freeze readState(Object o)
+  {
+    Freeze f = new Freeze();
+    if (o != null)
+    {
+      @SuppressWarnings("unchecked")
+      List<Object> front = (List<Object>) o;
+      f.m_output = new Object[front.size()];
+      for (int i = 0; i < f.m_output.length; i++)
+      {
+        f.m_output[i] = front.get(i);
+      }
+    }
+    return f;
   }
 }
