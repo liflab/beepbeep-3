@@ -81,4 +81,22 @@ public class TurnInto extends UniformProcessor
   {
     return "Turn into " + m_event;
   }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    return m_event;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public TurnInto readState(Object o)
+  {
+    return new TurnInto(o);
+  }
 }

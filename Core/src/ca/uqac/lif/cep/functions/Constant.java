@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -31,12 +31,12 @@ public class Constant extends Function
   /**
    * A constant representing the number zero
    */
-  public static final Constant ZERO = new Constant(0);
+  public static final transient Constant ZERO = new Constant(0);
 
   /**
    * A constant representing the number one
    */
-  public static final Constant ONE = new Constant(1);
+  public static final transient Constant ONE = new Constant(1);
 
   /**
    * The value to return by this constant
@@ -129,5 +129,24 @@ public class Constant extends Function
   public Object getValue()
   {
     return m_value;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    return m_value;
+  }
+  
+  /**
+   * @since 0.11
+   * @return
+   */
+  @Override
+  public Constant readState(Object o)
+  {
+    return new Constant(o);
   }
 }

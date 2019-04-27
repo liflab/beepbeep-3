@@ -100,6 +100,6 @@ public class SinkLast extends Sink
   @Override
   public SinkLast readState(Object o)
   {
-    return new SinkLast((Integer) o);
+    return new SinkLast(((Number) o).intValue());
   }
 }

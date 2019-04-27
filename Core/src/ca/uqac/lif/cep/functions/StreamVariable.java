@@ -129,4 +129,35 @@ public class StreamVariable extends Variable
   {
     return "$" + m_index;
   }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    return m_index;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public StreamVariable readState(Object o)
+  {
+    int index = ((Number) o).intValue();
+    if (index == 0)
+    {
+      return StreamVariable.X;
+    }
+    if (index == 1)
+    {
+      return StreamVariable.Y;
+    }
+    if (index == 2)
+    {
+      return StreamVariable.Z;
+    }
+    return new StreamVariable(index);
+  }
 }

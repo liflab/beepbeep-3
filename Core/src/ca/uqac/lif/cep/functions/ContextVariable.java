@@ -20,8 +20,8 @@ package ca.uqac.lif.cep.functions;
 import ca.uqac.lif.cep.Context;
 
 /**
- * Placeholder for the value of a context element. A `ContextVariable` can be
- * given as an argument to a `FunctionTree`.
+ * Placeholder for the value of a context element. A <tt>ContextVariable</tt>
+ * can be given as an argument to a {@link FunctionTree}.
  * 
  * @author Sylvain Hallé
  * @since 0.3
@@ -95,4 +95,21 @@ public class ContextVariable extends Variable
     return "$" + m_name;
   }
 
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    return m_name;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public ContextVariable readState(Object o)
+  {
+    return new ContextVariable((String) o);
+  }
 }

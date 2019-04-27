@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -263,6 +263,7 @@ public abstract class SynchronousProcessor extends Processor
             }
           }
         }
+        m_tempQueue.clear();
       }
     }
 
@@ -442,16 +443,19 @@ public abstract class SynchronousProcessor extends Processor
             else
             {
               // This source will NEVER output anything again
+              m_tempQueue.clear();
               return false;
             }
           }
           if (status_to_return == NextStatus.YES)
           {
+            m_tempQueue.clear();
             return true;
           }
         }
         // Otherwise, try the whole thing again
       }
+      m_tempQueue.clear();
       return false;
     }
 

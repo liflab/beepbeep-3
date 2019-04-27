@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,9 +17,16 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.Printable;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.FutureDone;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -30,7 +37,7 @@ import java.util.concurrent.Future;
  * @author Sylvain Hallé
  * @since 0.2.1
  */
-public abstract class Function implements DuplicableFunction
+public abstract class Function implements DuplicableFunction, Printable, Readable
 {
   /**
    * The maximum input arity that a function can have
@@ -198,4 +205,86 @@ public abstract class Function implements DuplicableFunction
 
   @Override
   /*@ pure non_null @*/ public abstract Function duplicate(boolean with_state);
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object print(ObjectPrinter<?> printer)
+  {
+    Map<String,Object> map = new HashMap<String,Object>();
+    map.put("contents", printState());
+    try
+    {
+      return printer.print(map);
+    }
+    catch (PrintException e)
+    {
+      throw new FunctionException(e);
+    }
+  }
+  
+  /**
+   * Produces an object that represents the state of the current function.
+   * A concrete function should override this method to add whatever state
+   * information that needs to be preserved in the serialization process.
+   * @return Any object representing the function's state 
+   * (including <tt>null</tt>)
+   * @since 0.11
+   */
+  protected Object printState()
+  {
+    return null;
+  }
+  
+  /**
+   * Reads the content of a function from a serialized object.
+   * @param reader An object reader
+   * @param o The object to read from
+   * @return The deserialized function
+   * @throws FunctionException If the read operation failed for some reason
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public final Function read(ObjectReader<?> reader, Object o) throws FunctionException
+  {
+    Map<String, Object> contents = null;
+    try
+    {
+      contents = (Map<String,Object>) reader.read(o);
+    }
+    catch (ReadException e)
+    {
+      throw new FunctionException(e);
+    }
+    Function f = null;
+    if (contents.containsKey("contents"))
+    {
+      Object o_contents = contents.get("contents");
+      try
+      {
+        f = readState(o_contents);
+      }
+      catch (UnsupportedOperationException e)
+      {
+        throw new FunctionException(e);
+      }
+    }
+    if (f == null)
+    {
+      throw new FunctionException("The function returned null with being deserialized");
+    }
+    return f;
+  }
+  
+  /**
+   * Reads the state of a function and uses it to create a new instance
+   * @param o The object containing the function's state
+   * @return A new function instance
+   * @since 0.11
+   */
+  protected Function readState(Object o)
+  {
+    throw new UnsupportedOperationException("This function does not support deserialization");
+  }
 }

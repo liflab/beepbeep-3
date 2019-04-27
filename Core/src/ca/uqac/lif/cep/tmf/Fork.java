@@ -101,6 +101,6 @@ public class Fork extends UniformProcessor
   @Override
   public Fork readState(Object o)
   {
-    return new Fork((Integer) o);
+    return new Fork(((Number) o).intValue());
   }
 }

@@ -46,6 +46,14 @@ public class NthElement extends UnaryFunction<Object, Object>
     super(Object.class, Object.class);
     m_n = n;
   }
+  
+  /**
+   * Empty constructor. Used only for deserialization.
+   */
+  protected NthElement()
+  {
+    this(0);
+  }
 
   @Override
   public Object getValue(Object x)
@@ -87,5 +95,23 @@ public class NthElement extends UnaryFunction<Object, Object>
   public String toString()
   {
     return m_n + "th of ";
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Integer printState()
+  {
+    return m_n;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public NthElement readState(Object o)
+  {
+    return new NthElement(((Number) o).intValue());
   }
 }

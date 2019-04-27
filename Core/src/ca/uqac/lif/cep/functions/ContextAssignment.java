@@ -17,8 +17,16 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.Printable;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Contextualizable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An object that assigns a value to a specific key in a
@@ -26,7 +34,7 @@ import ca.uqac.lif.cep.Contextualizable;
  * @author Sylvain Hallé
  * @since 0.3
  */
-public class ContextAssignment
+public class ContextAssignment implements Printable, Readable
 {
   /**
    * The name of the context element to modify
@@ -113,5 +121,30 @@ public class ContextAssignment
   public String toString()
   {
     return m_lvalue + ":=" + m_value;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object print(ObjectPrinter<?> printer) throws PrintException
+  {
+    List<Object> list = new ArrayList<Object>(2);
+    list.add(m_lvalue);
+    list.add(m_value);
+    return printer.print(list);
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public ContextAssignment read(ObjectReader<?> reader, Object o) throws ReadException
+  {
+    List<Object> list = (List<Object>) reader.read(o);
+    String l_value = (String) list.get(0);
+    Function value = (Function) list.get(1);
+    return new ContextAssignment(l_value, value);
   }
 }

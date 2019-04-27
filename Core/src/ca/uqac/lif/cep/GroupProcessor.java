@@ -838,8 +838,8 @@ public class GroupProcessor extends Processor
   {
     Map<String,Object> contents = (HashMap<String,Object>) o;
     // Create processor
-    GroupProcessor gp = new GroupProcessor((Integer) contents.get("in-arity"), 
-        (Integer) contents.get("out-arity"));
+    GroupProcessor gp = new GroupProcessor(((Number) contents.get("in-arity")).intValue(), 
+        ((Number) contents.get("out-arity")).intValue());
     // Add internal processors (regular and source)
     Map<Integer,Processor> procs = new HashMap<Integer,Processor>();
     for (Processor p : (Set<Processor>) contents.get("processors"))

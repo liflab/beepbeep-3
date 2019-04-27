@@ -17,6 +17,9 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A function with memory.
  * 
@@ -75,6 +78,31 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
     {
       cf.m_lastValue = m_lastValue;
     }
+    return cf;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    List<Object> list = new ArrayList<Object>(2);
+    list.add(m_function);
+    list.add(m_lastValue);
+    return list;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @SuppressWarnings("unchecked")
+  public CumulativeFunction<T> readState(Object o)
+  {
+    List<Object> list = (List<Object>) o;
+    BinaryFunction<T,T,T> func = (BinaryFunction<T,T,T>) list.get(0);
+    CumulativeFunction<T> cf = new CumulativeFunction<T>(func);
+    cf.m_lastValue = (T) list.get(1);
     return cf;
   }
 }

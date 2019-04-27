@@ -201,7 +201,7 @@ public abstract class Processor implements DuplicableProcessor,
     m_outputPushables = new Pushable[m_outputArity];
     m_hasBeenNotifiedOfEndOfTrace = false;
   }
-
+  
   /**
    * Creates a new empty context map
    * 
@@ -831,11 +831,11 @@ public abstract class Processor implements DuplicableProcessor,
     {
       throw new ProcessorException("The processor returned null with being deserialized");
     }
-    p.m_inputCount = (Integer) contents.get("input-count");
-    p.m_outputCount = (Integer) contents.get("output-count");
+    p.m_inputCount = ((Number) contents.get("input-count")).intValue();
+    p.m_outputCount = ((Number) contents.get("output-count")).intValue();
     try
     {
-      ObjectReader.setField(p, "m_uniqueId", (Integer) contents.get("id"));
+      ObjectReader.setField(p, "m_uniqueId", ((Number) contents.get("id")).intValue());
     }
     catch (ReadException e)
     {

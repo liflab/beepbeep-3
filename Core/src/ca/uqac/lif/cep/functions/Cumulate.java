@@ -173,4 +173,23 @@ public class Cumulate extends ApplyFunction
     cloneInto(c, with_state);
     return c;
   }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    return m_function;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Cumulate readState(Object o)
+  {
+    CumulativeFunction<?> f = (CumulativeFunction<?>) o;
+    return new Cumulate(f);
+  }
 }

@@ -110,7 +110,7 @@ public class Trim extends SynchronousProcessor
   @Override
   protected Trim readState(Object o)
   {
-    int delay = (Integer) o;
+    int delay = ((Number) o).intValue();
     return new Trim(delay);
   }
 }

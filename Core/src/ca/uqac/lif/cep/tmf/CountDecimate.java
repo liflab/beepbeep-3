@@ -130,14 +130,17 @@ public class CountDecimate extends Decimate
     return map;
   }
   
+  /**
+   * @since 0.11
+   */
   @SuppressWarnings("unchecked")
   @Override
   protected CountDecimate readState(Object o)
   {
     Map<String,Object> map = (Map<String,Object>) o;
-    CountDecimate cd = new CountDecimate((Integer) map.get("interval"), 
+    CountDecimate cd = new CountDecimate(((Number) map.get("interval")).intValue(), 
         (Boolean) map.get("process-last"));
-    cd.m_current = (Integer) map.get("current");
+    cd.m_current = ((Number) map.get("current")).intValue();
     return cd;
   }
 }

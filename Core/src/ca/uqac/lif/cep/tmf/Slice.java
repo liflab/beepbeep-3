@@ -27,6 +27,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -359,5 +360,52 @@ public class Slice extends UniformProcessor
     {
       super();
     }
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    Map<String,Object> contents = new HashMap<String,Object>();
+    contents.put("cleaning-function", m_cleaningFunction);
+    contents.put("explode-arrays", m_explodeArrays);
+    contents.put("last-values", m_lastValues);
+    contents.put("sinks", m_sinks);
+    contents.put("slices", m_slices);
+    contents.put("processor", m_processor);
+    contents.put("slicing-function", m_slicingFunction);
+    return contents;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public Slice readState(Object o) throws ProcessorException
+  {
+    Map<String,Object> contents = (HashMap<String,Object>) o;
+    Function cleaning_function = (Function) contents.get("cleaning-function");
+    Function slicing_function = (Function) contents.get("slicing-function");
+    Processor proc = (Processor) contents.get("processor");
+    Slice s = new Slice(slicing_function, proc, cleaning_function);
+    s.m_lastValues = (HashMap<Object,Object>) contents.get("last-values");
+    s.m_sinks = (HashMap<Object,QueueSink>) contents.get("sinks");
+    s.m_slices = (HashMap<Object,Processor>) contents.get("slices");
+    s.m_explodeArrays = (Boolean) contents.get("explode-arrays");
+    // Connect slices to sinks
+    for (Map.Entry<Object,Processor> entry : s.m_slices.entrySet())
+    {
+      Processor p = entry.getValue();
+      if (!s.m_sinks.containsKey(entry.getKey()))
+      {
+        throw new ProcessorException("Cannot restore the state of the slice processor");
+      }
+      QueueSink qs = s.m_sinks.get(entry.getKey());
+      Connector.connect(p, qs);
+    }
+    return s;
   }
 }

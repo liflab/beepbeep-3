@@ -50,11 +50,27 @@ public abstract class UniformProcessor extends SynchronousProcessor
    *          The input arity
    * @param out_arity
    *          The output arity
+   * @param c
+   *          The processor's context (can be null)
+   * @since 0.11
    */
-  public UniformProcessor(int in_arity, int out_arity)
+  public UniformProcessor(int in_arity, int out_arity, /*@ null @*/ Context c)
   {
     super(in_arity, out_arity);
     m_outputArray = new Object[out_arity];
+  }
+
+  /**
+   * Initializes a processor
+   * 
+   * @param in_arity
+   *          The input arity
+   * @param out_arity
+   *          The output arity
+   */
+  public UniformProcessor(int in_arity, int out_arity)
+  {
+    this(in_arity, out_arity, null);
   }
 
   @Override

@@ -18,6 +18,10 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -232,5 +236,38 @@ public class FunctionTree extends Function
       out.append("]");
     }
     return out.toString();
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    Map<String,Object> map = new HashMap<String,Object>();
+    map.put("function", m_function);
+    List<Function> children = new ArrayList<Function>(m_children.length);
+    for (int i = 0; i < m_children.length; i++)
+    {
+      children.add(m_children[i]);
+    }
+    map.put("children", children);
+    return map;
+  }
+  
+  @SuppressWarnings("unchecked")
+  @Override
+  public FunctionTree readState(Object o)
+  {
+    Map<String,Object> map = (Map<String,Object>) o;
+    Function f = (Function) map.get("function");
+    List<Function> children = (List<Function>) map.get("children");
+    FunctionTree ft = new FunctionTree(f);
+    ft.m_children = new Function[children.size()];
+    for (int i = 0; i < children.size(); i++)
+    {
+      ft.m_children[i] = children.get(i);
+    }
+    return ft;
   }
 }

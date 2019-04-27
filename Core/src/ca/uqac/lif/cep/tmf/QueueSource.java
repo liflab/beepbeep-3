@@ -22,7 +22,9 @@ import ca.uqac.lif.petitpoucet.DirectValue;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -266,5 +268,33 @@ public class QueueSource extends Source
     {
       return m_queueIndex;
     }
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    Map<String,Object> map = new HashMap<String,Object>();
+    map.put("index", m_index);
+    map.put("loop", m_loop);
+    map.put("events", m_events);
+    return map;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public QueueSource readState(Object o)
+  {
+    Map<String,Object> map = (Map<String,Object>) o;
+    QueueSource qs = new QueueSource();
+    qs.m_index = ((Number) map.get("index")).intValue();
+    qs.m_events = (List<Object>) map.get("events");
+    qs.m_loop = (Boolean) map.get("loop");
+    return qs;
   }
 }

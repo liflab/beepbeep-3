@@ -20,8 +20,11 @@ package ca.uqac.lif.cep.functions;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -290,5 +293,45 @@ public class ApplyFunctionPartial extends Processor
     {
       // Nothing to do
     }
+  }
+  
+  @Override
+  public Object printState()
+  {
+    Map<String,Object> contents = new HashMap<String,Object>();
+    contents.put("function", m_function);
+    List<Integer> front_nb = new ArrayList<Integer>(m_frontNumber.length);
+    for (int i = 0; i < m_frontNumber.length; i++)
+    {
+      front_nb.add(m_frontNumber[i]);
+    }
+    contents.put("front-nb", front_nb);
+    List<Object> front = new ArrayList<Object>(m_inputFront.length);
+    for (int i = 0; i < m_inputFront.length; i++)
+    {
+      front.add(m_inputFront[i]);
+    }
+    contents.put("front", front);
+    return contents;
+  }
+  
+  @SuppressWarnings("unchecked")
+  @Override
+  public ApplyFunctionPartial readState(Object o)
+  {
+    Map<String,Object> contents = (HashMap<String,Object>) o;
+    Function f = (Function) contents.get("function");
+    ApplyFunctionPartial afp = new ApplyFunctionPartial(f);
+    List<Integer> front_nb = (List<Integer>) contents.get("front-nb");
+    for (int i = 0; i < front_nb.size(); i++)
+    {
+      afp.m_frontNumber[i] = front_nb.get(i);
+    }
+    List<Object> front = (List<Object>) contents.get("front");
+    for (int i = 0; i < front.size(); i++)
+    {
+      afp.m_inputFront[i] = front.get(i);
+    }
+    return afp;
   }
 }

@@ -96,7 +96,7 @@ public class ApplyFunction extends UniformProcessor
   }
 
   @Override
-  public final void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, int index)
+  public final void getInputTypesFor(/*@ non_null @*/ Set<Class<?>> classes, int index)
   {
     // The type is determined by that of the underlying function
     m_function.getInputTypesFor(classes, index);
@@ -129,5 +129,24 @@ public class ApplyFunction extends UniformProcessor
   {
     super.duplicateInto(af);
     af.m_function = m_function.duplicate(with_state);
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    return m_function;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public ApplyFunction readState(Object o)
+  {
+    Function f = (Function) o;
+    return new ApplyFunction(f);
   }
 }

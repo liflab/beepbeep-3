@@ -18,6 +18,8 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -133,5 +135,35 @@ public class QueueSink extends Sink
       }
     }
     return qs;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object printState()
+  {
+    List<Queue<Object>> list = new ArrayList<Queue<Object>>(m_queues.length);
+    for (Queue<Object> q : m_queues)
+    {
+      list.add(q);
+    }
+    return list;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public QueueSink readState(Object o)
+  {
+    List<Queue<Object>> list = (List<Queue<Object>>) o;
+    QueueSink sink = new QueueSink(list.size());
+    for (int i = 0; i < list.size(); i++)
+    {
+      sink.m_queues[i] = list.get(i);
+    }
+    return sink;
   }
 }

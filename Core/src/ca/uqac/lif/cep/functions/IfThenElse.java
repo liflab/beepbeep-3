@@ -35,7 +35,7 @@ public class IfThenElse extends Function
   /**
    * The unique visible instance of this function
    */
-  public static final IfThenElse instance = new IfThenElse();
+  public static final transient IfThenElse instance = new IfThenElse();
 
   protected IfThenElse()
   {
@@ -103,5 +103,11 @@ public class IfThenElse extends Function
   public Class<?> getOutputTypeFor(int index)
   {
     return Variant.class;
+  }
+
+  @Override
+  public IfThenElse readState(Object o)
+  {
+    return instance;
   }
 }

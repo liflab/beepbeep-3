@@ -103,5 +103,4 @@ public abstract class PassthroughFunction extends Function
   {
     return m_function.getOutputTypeFor(index);
   }
-
 }

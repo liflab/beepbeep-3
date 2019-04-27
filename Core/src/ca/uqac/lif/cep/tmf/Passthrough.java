@@ -80,6 +80,6 @@ public class Passthrough extends UniformProcessor
   @Override
   public Passthrough readState(Object o)
   {
-    return new Passthrough((Integer) o);
+    return new Passthrough(((Number) o).intValue());
   }
 }

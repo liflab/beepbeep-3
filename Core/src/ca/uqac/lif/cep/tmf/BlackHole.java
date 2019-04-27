@@ -64,6 +64,6 @@ public class BlackHole extends Sink
   @Override
   public BlackHole readState(Object o)
   {
-    return new BlackHole((Integer) o);
+    return new BlackHole(((Number) o).intValue());
   }
 }
