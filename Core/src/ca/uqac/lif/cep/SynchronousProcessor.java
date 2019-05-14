@@ -257,7 +257,7 @@ public abstract class SynchronousProcessor extends Processor
               if (p == null)
               {
                 throw new PushableException(
-                    "Output " + i + " of this processor is connected to nothing", getProcessor());
+                    "Output " + i + " of processor " + SynchronousProcessor.this + " is connected to nothing", getProcessor());
               }
               p.push(evt[i]);
             }
@@ -371,7 +371,7 @@ public abstract class SynchronousProcessor extends Processor
           Pullable p = m_inputPullables[i];
           if (p == null)
           {
-            throw new PullableException("Input " + i + " of this processor is connected to nothing",
+            throw new PullableException("Input " + i + " of processor " + SynchronousProcessor.this + " is connected to nothing",
                 getProcessor());
           }
           boolean status = p.hasNext();
