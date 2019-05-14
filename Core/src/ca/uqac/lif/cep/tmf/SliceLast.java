@@ -21,58 +21,69 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.functions.Function;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
 /**
- * Concrete version of {@link AbstractSlice} whose output is an associative
- * map between slice IDs and the last event produced by that slice processor.
+ * Concrete version of {@link AbstractSlice} whose output is a stream of
+ * lists, where each list contains all the events produced by inner slices
+ * from a given input even. When multiple slices produce an output
+ * event for the same input event, the order in which these events are
+ * put into the list is undefined.
  * 
  * @author Sylvain Hallé
- * @since 0.3
+ * @since 0.11
  */
-@SuppressWarnings("squid:S2160")
-public class Slice extends AbstractSlice
+public class SliceLast extends AbstractSlice
 {
   /**
-   * The last value output by the processor for each slice
+   * A list of values produced by slice processors
    */
-  protected HashMap<Object, Object> m_lastValues;
-
+  protected List<Object> m_currentList;
+  
   /**
-   * Creates a dummy slice processor. This constructor is only used for
-   * deserialization purposes.
-   */
-  protected Slice()
-  {
-    super();
-  }
-
-  /**
-   * Creates a new Slice processor.
+   * Creates a new SliceLast processor.
    * 
    * @param func The slicing function
    * @param proc The processor to apply on each slice
    * @param clean_func The cleaning function
    */
-  public Slice(/*@ non_null @*/ Function func, /*@ non_null @*/ Processor proc,
+  public SliceLast(/* @ non_null @ */ Function func, /* @ non_null @ */ Processor proc,
       Function clean_func)
   {
     super(func, proc, clean_func);
-    m_lastValues = new HashMap<Object, Object>();
+    m_currentList = new ArrayList<Object>();
   }
-
+  
   /**
-   * Creates a new Slice processor.
+   * Creates a new SliceLast processor.
    * @param func The slicing function
    * @param proc The processor to apply on each slice
    */
-  public Slice(/*@ non_null @*/ Function func, /*@ non_null @*/ Processor proc)
+  public SliceLast(/*@ non_null @*/ Function func, /*@ non_null @*/ Processor proc)
   {
     this(func, proc, null);
   }
 
+  @Override
+  protected boolean produceReturn(Queue<Object[]> outputs)
+  {
+    ArrayList<Object> list = new ArrayList<Object>(m_currentList.size());
+    list.addAll(m_currentList);
+    m_currentList.clear();
+    outputs.add(new Object[] {list});
+    return true;
+  }
+
+  @Override
+  protected void handleNewSliceValue(Object slice_id, Object value, Queue<Object[]> outputs)
+  {
+    m_currentList.add(value);
+  }
+  
   /**
    * @since 0.11
    */
@@ -82,29 +93,29 @@ public class Slice extends AbstractSlice
     Map<String,Object> contents = new HashMap<String,Object>();
     contents.put("cleaning-function", m_cleaningFunction);
     contents.put("explode-arrays", m_explodeArrays);
-    contents.put("last-values", m_lastValues);
     contents.put("sinks", m_sinks);
     contents.put("slices", m_slices);
     contents.put("processor", m_processor);
+    contents.put("list", m_currentList);
     contents.put("slicing-function", m_slicingFunction);
     return contents;
   }
-
+  
   /**
    * @since 0.11
    */
   @SuppressWarnings("unchecked")
   @Override
-  public Slice readState(Object o) throws ProcessorException
+  public SliceLast readState(Object o) throws ProcessorException
   {
     Map<String,Object> contents = (HashMap<String,Object>) o;
     Function cleaning_function = (Function) contents.get("cleaning-function");
     Function slicing_function = (Function) contents.get("slicing-function");
     Processor proc = (Processor) contents.get("processor");
-    Slice s = new Slice(slicing_function, proc, cleaning_function);
-    s.m_lastValues = (HashMap<Object,Object>) contents.get("last-values");
+    SliceLast s = new SliceLast(slicing_function, proc, cleaning_function);
     s.m_sinks = (HashMap<Object,QueueSink>) contents.get("sinks");
     s.m_slices = (HashMap<Object,Processor>) contents.get("slices");
+    s.m_currentList = (List<Object>) contents.get("list");
     s.m_explodeArrays = (Boolean) contents.get("explode-arrays");
     // Connect slices to sinks
     for (Map.Entry<Object,Processor> entry : s.m_slices.entrySet())
@@ -119,48 +130,11 @@ public class Slice extends AbstractSlice
     }
     return s;
   }
-
-  @Override
-  public Slice duplicate(boolean with_state)
-  {
-    Slice s = null;
-    if (m_cleaningFunction == null)
-    {
-      s = new Slice(m_slicingFunction.duplicate(with_state), m_processor.duplicate(with_state));
-    }
-    else
-    {
-      s = new Slice(m_slicingFunction.duplicate(with_state), m_processor.duplicate(with_state),
-          m_cleaningFunction.duplicate(with_state));
-    }
-    s.setContext(m_context);
-    s.m_explodeArrays = m_explodeArrays;
-    if (with_state)
-    {
-      throw new UnsupportedOperationException(
-          "Duplication with state not supported yet on this processor");
-    }
-    return s;
-  }
-
+  
   @Override
   public void reset()
   {
     super.reset();
-    m_lastValues.clear();
+    m_currentList.clear();
   }
-
-  @Override
-  protected boolean produceReturn(Queue<Object[]> outputs)
-  {
-    outputs.add(new Object[] {m_lastValues});
-    return true;
-  }
-
-  @Override
-  protected void handleNewSliceValue(Object slice_id, Object value, Queue<Object[]> outputs)
-  {
-    m_lastValues.put(slice_id, value);
-  }
-
 }

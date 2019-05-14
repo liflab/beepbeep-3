@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.tmf;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
@@ -267,6 +268,32 @@ public class SliceTest
 		Pullable p = sli.getPullableOutput();
 		p.pull();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testSliceLastPush()
+	{
+	  SliceLast sl = new SliceLast(EvenAll.instance, new Passthrough());
+	  QueueSink sink = new QueueSink();
+	  Connector.connect(sl, sink);
+	  Queue<Object> q = sink.getQueue();
+	  Pushable p = sl.getPushableInput();
+	  p.push(3);
+	  
+    List<Object> ol = (List<Object>) q.remove();
+	  assertEquals(1, ol.size());
+	  q.clear();
+	  p.push(1);
+	  ol = (List<Object>) q.remove();
+	  assertTrue(ol.isEmpty());
+	  p.push(6);
+	  ol = (List<Object>) q.remove();
+	  assertEquals(1, ol.size());
+    q.clear();
+    p.push(2);
+    ol = (List<Object>) q.remove();
+    assertEquals(2, ol.size());
+	}
 
 	public static class Sum extends Cumulate
 	{
@@ -276,6 +303,13 @@ public class SliceTest
 		}
 	}
 
+	/**
+	 * Slicing function designed specifically for testing the behaviour
+	 * of the slice processors. Given an integer <i>x</i>, it returns
+	 * {@link ToAllSlices} if <i>x</i> is equal to 2, <tt>null</tt> if <i>x</i>
+	 * is equal to 1, and <tt>true</tt> or <tt>false</tt> for the remaining
+	 * numbers, depending on whether they are even or odd.  
+	 */
 	public static class EvenAll extends UnaryFunction<Number,Object>
 	{
 		public static final EvenAll instance = new EvenAll();
