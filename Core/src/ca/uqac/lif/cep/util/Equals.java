@@ -39,6 +39,34 @@ public class Equals extends BinaryFunction<Object, Object, Boolean>
   @Override
   public Boolean getValue(Object x, Object y)
   {
+    return isEqualTo(x, y);
+  }
+
+  @Override
+  public String toString()
+  {
+    return "=";
+  }
+  
+  /**
+   * Determines if two objects <i>x</i> and <i>y</i> are equal. The method
+   * uses the following rules to determine equality:
+   * <ul>
+   * <li>If any of <i>x</i> and <i>y</i> is null, the answer is false</li>
+   * <li>{@link Constant} objects are compared according to the value
+   * they contain</li>
+   * <li>Collections are equal if they have the same size and the
+   * same elements</li>
+   * <li>Strings and numbers are compared according to their value</li>
+   * <li>Any other objects are compared by calling their {@link #equals(Object)}
+   * method</li>
+   * </ul>
+   * @param x The first object
+   * @param y The second object
+   * @return <tt>true</tt> if they are equal, <tt>false</tt> otherwise
+   */
+  public static boolean isEqualTo(Object x, Object y)
+  {
     if (x == null || y == null)
     {
       return false;
@@ -66,11 +94,5 @@ public class Equals extends BinaryFunction<Object, Object, Boolean>
       return ((Number) x).floatValue() == ((Number) y).floatValue();
     }
     return x.equals(y);
-  }
-
-  @Override
-  public String toString()
-  {
-    return "=";
   }
 }
