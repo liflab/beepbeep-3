@@ -26,7 +26,7 @@
   <name>BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.10.1-alpha</version>
+  <version>0.11-alpha</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -40,10 +40,11 @@
   <bindir>Core/bin</bindir>
   <libdir>lib</libdir>
   <docdir>doc</docdir>
-  <depdir>dep</depdir>
+  <depdir>Core/dep</depdir>
   <test>
     <srcdir>CoreTest/src</srcdir>
     <bindir>CoreTest/bin</bindir>
+    <depdir>CoreTest/dep</depdir>
   </test>
   
   <!-- Output jar -->
@@ -65,6 +66,17 @@
       <classname>ca.uqac.lif.petitpoucet.ProvenanceNode</classname>
       <files>
         <zip>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.zip</zip>
+      </files>
+      <bundle>true</bundle>
+    </dependency>
+    <dependency>
+      <!--
+      Petit Poucet. Used to store provenance information.
+      -->
+      <name>Azrael Core</name>
+      <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
+      <files>
+        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.0/azrael-core.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>
