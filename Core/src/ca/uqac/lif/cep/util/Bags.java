@@ -67,6 +67,16 @@ public class Bags
    * Gets any element of a bag
    */
   public static final AnyElement anyElement = new AnyElement();
+  
+  /**
+   * Gets the maximum value of a collection
+   */
+  public static final MaximumValue maxValue = new MaximumValue();
+  
+  /**
+   * Gets the minimum value of a collection
+   */
+  public static final MinimumValue minValue = new MinimumValue();
 
   /**
    * Gets all the elements of the collection that satisfy some condition. This
@@ -558,19 +568,19 @@ public class Bags
   public static class Explode extends Function
   {
     public Class<?>[] m_classes;
-  
+
     public Explode(Class<?> ... classes)
     {
       super();
       m_classes = classes;
     }
-  
+
     @Override
     public Explode duplicate(boolean with_state)
     {
       return new Explode(m_classes);
     }
-  
+
     @Override
     public void evaluate(Object[] inputs, Object[] outputs)
     {
@@ -580,25 +590,25 @@ public class Bags
         outputs[i] = ins[i];
       }
     }
-  
+
     @Override
     public int getInputArity()
     {
       return 1;
     }
-  
+
     @Override
     public int getOutputArity()
     {
       return m_classes.length;
     }
-  
+
     @Override
     public void getInputTypesFor(Set<Class<?>> classes, int index)
     {
       classes.add(Variant.class);
     }
-  
+
     @Override
     public Class<?> getOutputTypeFor(int index)
     {
@@ -632,6 +642,102 @@ public class Bags
       return a;
     }
     return null;
+  }
+
+  /**
+   * Returns the element with the maximum value in a collection. If the
+   * collection contains non-numerical elements, they are ignored. If
+   * no numerical element is found in the collection, the function returns 0.
+   * 
+   * @since 0.11 
+   */
+  @SuppressWarnings("rawtypes")
+  public static class MaximumValue extends UnaryFunction<Collection,Number>
+  {
+    protected MaximumValue()
+    {
+      super(Collection.class, Number.class);
+    }
+    
+    @Override
+    public Number getValue(Collection x)
+    {
+      if (x.isEmpty())
+      {
+        return 0;
+      }
+      boolean first = true;
+      Number value = 0;
+      for (Object o : x)
+      {
+        if (!(o instanceof Number))
+        {
+          continue;
+        }
+        Number n = (Number) o;
+        if (first)
+        {
+          first = false;
+          value = n;
+        }
+        else
+        {
+          if (value.floatValue() < n.floatValue())
+          {
+            value = n;
+          }
+        }
+      }
+      return value;
+    }
+  }
+  
+  /**
+   * Returns the element with the maximum value in a collection. If the
+   * collection contains non-numerical elements, they are ignored. If
+   * no numerical element is found in the collection, the function returns 0.
+   * 
+   * @since 0.11 
+   */
+  @SuppressWarnings("rawtypes")
+  public static class MinimumValue extends UnaryFunction<Collection,Number>
+  {
+    protected MinimumValue()
+    {
+      super(Collection.class, Number.class);
+    }
+    
+    @Override
+    public Number getValue(Collection x)
+    {
+      if (x.isEmpty())
+      {
+        return 0;
+      }
+      boolean first = true;
+      Number value = 0;
+      for (Object o : x)
+      {
+        if (!(o instanceof Number))
+        {
+          continue;
+        }
+        Number n = (Number) o;
+        if (first)
+        {
+          first = false;
+          value = n;
+        }
+        else
+        {
+          if (value.floatValue() > n.floatValue())
+          {
+            value = n;
+          }
+        }
+      }
+      return value;
+    }
   }
 
 }
