@@ -71,6 +71,10 @@ public class SliceLast extends AbstractSlice
   @Override
   protected boolean produceReturn(Queue<Object[]> outputs)
   {
+    if (m_currentList.isEmpty())
+    {
+      return true;
+    }
     ArrayList<Object> list = new ArrayList<Object>(m_currentList.size());
     list.addAll(m_currentList);
     m_currentList.clear();
@@ -81,7 +85,10 @@ public class SliceLast extends AbstractSlice
   @Override
   protected void handleNewSliceValue(Object slice_id, Object value, Queue<Object[]> outputs)
   {
-    m_currentList.add(value);
+    if (value != null)
+    {
+      m_currentList.add(value);
+    }
   }
   
   /**
