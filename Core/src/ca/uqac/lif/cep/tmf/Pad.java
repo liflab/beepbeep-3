@@ -17,12 +17,12 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import java.util.Queue;
-
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
+
+import java.util.Queue;
 
 /**
  * 
@@ -43,6 +43,12 @@ public class Pad extends SynchronousProcessor
   
   protected QueueSink m_sink;
   
+  /**
+   * Creates a Pad processor
+   * @param p The processor whose output is to be padded
+   * @param times The number of times to pad
+   * @param front The event front to pad before the output of <tt>p</tt>
+   */
   public Pad(Processor p, int times, Object ... front)
   {
     super(p.getInputArity(), p.getOutputArity());
