@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
@@ -49,9 +50,14 @@ public class Bags
   }
 
   /**
-   * Checks if a collectioncontains another
+   * Checks if a collection contains another
    */
   public static final Contains contains = new Contains();
+  
+  /**
+   * Checks if an element is contained in a collection
+   */
+  public static final IsElement isElement = new IsElement();
 
   /**
    * Gets the size of a collection
@@ -316,7 +322,7 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context)
     {
       Object[] out = new Object[inputs.length];
       for (int i = 0; i < inputs.length; i++)
@@ -346,7 +352,7 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context)
     {
       List<Object> out = new ArrayList<Object>(inputs.length);
       for (int i = 0; i < inputs.length; i++)
@@ -380,7 +386,7 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context)
     {
       Set<Object> out = new HashSet<Object>(inputs.length);
       for (int i = 0; i < inputs.length; i++)
@@ -582,7 +588,7 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context)
     {
       Object[] ins = (Object[]) inputs[0];
       for (int i = 0; i < ins.length; i++)
@@ -740,4 +746,22 @@ public class Bags
     }
   }
 
+  /**
+   * Checks if an element is a member of a collection.
+   * @since 0.11
+   */
+  @SuppressWarnings("rawtypes")
+  public static class IsElement extends BinaryFunction<Object,Collection,Boolean>
+  {
+    protected IsElement()
+    {
+      super(Object.class, Collection.class, Boolean.class);
+    }
+
+    @Override
+    public Boolean getValue(Object x, Collection y)
+    {
+      return y.contains(x);
+    }
+  }
 }

@@ -41,9 +41,15 @@ public class Sets
   {
     // Utility class
   }
-
-  public static final IsSubsetOrEqual isSubsetOrEqual = new IsSubsetOrEqual();
   
+  /**
+   * Single visible instance of the function {@link IsSubsetOrEqual}
+   */
+  public static final IsSubsetOrEqual isSubsetOrEqual = new IsSubsetOrEqual();
+
+  /**
+   * Single visible instance of the function {@link IsSupersetOrEqual}
+   */
   public static final IsSupersetOrEqual isSupersetOrEqual = new IsSupersetOrEqual();
 
   /**
@@ -166,7 +172,7 @@ public class Sets
       return y.containsAll(x);
     }
   }
-  
+
   /**
    * Checks if a set is a superset of another. The first argument is the set to
    * check, and the second argument is the reference set.

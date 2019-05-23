@@ -59,12 +59,9 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          corresponding object fetched from this map before evaluating the
    *          function
    */
-  /*@ pure @*/ public void evaluate(/*@ non_null @*/ Object[] inputs, 
-      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
-  {
-    evaluate(inputs, outputs);
-  }
-  
+  /*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context);
+
   /**
    * Evaluates the outputs of the function, given some inputs
    * 
@@ -76,8 +73,11 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          be equal to the function's declared output arity. @ Any exception
    *          that may occur during the evaluation of a function
    */
-  /*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
-      /*@ non_null @*/ Object[] outputs);
+  /*@ pure @*/ public void evaluate(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs)
+  {
+    evaluate(inputs, outputs, null);
+  }
 
   /**
    * Evaluates the outputs of the function, given some inputs
@@ -205,7 +205,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
 
   @Override
   /*@ pure non_null @*/ public abstract Function duplicate(boolean with_state);
-  
+
   /**
    * @since 0.11
    */
@@ -223,7 +223,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
       throw new FunctionException(e);
     }
   }
-  
+
   /**
    * Produces an object that represents the state of the current function.
    * A concrete function should override this method to add whatever state
@@ -236,7 +236,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
   {
     return null;
   }
-  
+
   /**
    * Reads the content of a function from a serialized object.
    * @param reader An object reader
@@ -276,7 +276,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
     }
     return f;
   }
-  
+
   /**
    * Reads the state of a function and uses it to create a new instance
    * @param o The object containing the function's state

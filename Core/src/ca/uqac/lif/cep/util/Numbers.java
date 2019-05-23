@@ -44,11 +44,21 @@ public class Numbers
    * Adds two numbers
    */
   public static final Addition addition = new Addition();
+  
+  /**
+   * Rounds a number up to the nearest integer
+   */
+  public static final Ceiling ceiling = new Ceiling();
 
   /**
    * Computes the quotient of two numbers
    */
   public static final Division division = new Division();
+  
+  /**
+   * Rounds a number down to the nearest integer
+   */
+  public static final Floor floor = new Floor();
 
   public static final IsEven isEven = new IsEven();
 
@@ -80,6 +90,7 @@ public class Numbers
    * Computes the absolute value of its argument
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class AbsoluteValue extends UnaryFunction<Number, Number>
   {
@@ -105,6 +116,7 @@ public class Numbers
    * Computes the sum of its arguments
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class Addition extends BinaryFunction<Number, Number, Number>
   {
@@ -140,6 +152,7 @@ public class Numbers
    * Computes the quotient of its arguments
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class Division extends BinaryFunction<Number, Number, Number>
   {
@@ -171,6 +184,7 @@ public class Numbers
    * Computes if a number is even
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class IsEven extends UnaryFunction<Number, Boolean>
   {
@@ -199,6 +213,8 @@ public class Numbers
 
   /**
    * Checks if a number is greater than or equal to an other number.
+   * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class IsGreaterOrEqual extends BinaryFunction<Number, Number, Boolean>
   {
@@ -229,6 +245,8 @@ public class Numbers
 
   /**
    * Checks if a number is greater than other number.
+   * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class IsGreaterThan extends BinaryFunction<Number, Number, Boolean>
   {
@@ -259,6 +277,8 @@ public class Numbers
 
   /**
    * Checks if a number is less than or equal to an other number.
+   * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class IsLessOrEqual extends BinaryFunction<Number, Number, Boolean>
   {
@@ -289,6 +309,8 @@ public class Numbers
 
   /**
    * Checks if a number is less than an other number.
+   * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class IsLessThan extends BinaryFunction<Number, Number, Boolean>
   {
@@ -321,6 +343,7 @@ public class Numbers
    * Returns the maximum of two numbers.
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class Maximum extends BinaryFunction<Number, Number, Number>
   {
@@ -347,6 +370,7 @@ public class Numbers
    * Returns the minimum of two numbers.
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class Minimum extends BinaryFunction<Number, Number, Number>
   {
@@ -373,6 +397,7 @@ public class Numbers
    * Computes the product of its arguments
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class Multiplication extends BinaryFunction<Number, Number, Number>
   {
@@ -426,6 +451,7 @@ public class Numbers
    * Converts an object into a number
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class NumberCast extends UnaryFunction<Object, Number>
   {
@@ -490,6 +516,7 @@ public class Numbers
    * Computes the power of its arguments
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class Power extends BinaryFunction<Number, Number, Number>
   {
@@ -515,6 +542,7 @@ public class Numbers
    * Computes the signum of its argument
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class Signum extends UnaryFunction<Number, Number>
   {
@@ -548,6 +576,7 @@ public class Numbers
    * Computes the square root of its argument
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class SquareRoot extends UnaryFunction<Number, Number>
   {
@@ -574,6 +603,7 @@ public class Numbers
    * Computes the difference of its arguments
    * 
    * @author Sylvain Hallé
+   * @since 0.7
    */
   public static final class Subtraction extends BinaryFunction<Number, Number, Number>
   {
@@ -598,6 +628,56 @@ public class Numbers
     public String toString()
     {
       return "-";
+    }
+  }
+  
+  /**
+   * Rounds a number up to the nearest integer
+   * @author Sylvain Hallé
+   * @since 0.11
+   */
+  public static final class Ceiling extends UnaryFunction<Number,Number>
+  {
+    private Ceiling()
+    {
+      super(Number.class, Number.class);
+    }
+
+    @Override
+    public Number getValue(Number x)
+    {
+      return Math.ceil(x.floatValue());
+    }
+    
+    @Override
+    public String toString()
+    {
+      return "CEIL";
+    }
+  }
+  
+  /**
+   * Rounds a number down to the nearest integer
+   * @author Sylvain Hallé
+   * @since 0.11
+   */
+  public static final class Floor extends UnaryFunction<Number,Number>
+  {
+    private Floor()
+    {
+      super(Number.class, Number.class);
+    }
+
+    @Override
+    public Number getValue(Number x)
+    {
+      return Math.floor(x.floatValue());
+    }
+    
+    @Override
+    public String toString()
+    {
+      return "FLOOR";
     }
   }
 }

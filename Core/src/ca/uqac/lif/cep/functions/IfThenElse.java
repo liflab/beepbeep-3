@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.cep.Context;
 import java.util.Set;
 
 /**
@@ -43,7 +44,7 @@ public class IfThenElse extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     try
     {

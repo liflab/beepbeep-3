@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.cep.Context;
 import java.util.Set;
 
 /**
@@ -59,7 +60,8 @@ public abstract class UnaryFunction<T, U> extends Function
   @SuppressWarnings("unchecked")
   @Override
   /* @ requires inputs.length == 1 */
-  public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs)
+  public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs, 
+      /*@ null @*/ Context context)
   {
     T in = (T) inputs[0];
     outputs[0] = getValue(in);

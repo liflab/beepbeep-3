@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.cep.Context;
 import java.util.Set;
 
 /**
@@ -70,7 +71,8 @@ public abstract class BinaryFunction<T, V, U> extends Function
   @SuppressWarnings("unchecked")
   @Override
   /* @ requires inputs.length == 2 */
-  public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs)
+  public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs,
+      /*@ null @*/ Context context)
   {
     outputs[0] = getValue((T) inputs[0], (V) inputs[1]);
   }
