@@ -160,7 +160,10 @@ public class Slice extends AbstractSlice
   @Override
   protected void handleNewSliceValue(Object slice_id, Object value, Queue<Object[]> outputs)
   {
-    m_lastValues.put(slice_id, value);
+    if (value != null)
+    {
+      m_lastValues.put(slice_id, value);
+    }
   }
 
 }
