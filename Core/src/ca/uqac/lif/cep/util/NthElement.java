@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.InvalidArgumentException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.List;
@@ -67,7 +68,7 @@ public class NthElement extends UnaryFunction<Object, Object>
       }
       catch (ArrayIndexOutOfBoundsException e)
       {
-        throw new InvalidArgumentException(this, 0);
+        throw new FunctionException("There is no " + m_n + "th element in the input argument");
       }
     }
     if (x instanceof List<?>)
@@ -79,7 +80,7 @@ public class NthElement extends UnaryFunction<Object, Object>
       }
       catch (IndexOutOfBoundsException e)
       {
-        throw new InvalidArgumentException(this, 0);
+        throw new FunctionException("There is no " + m_n + "th element in the input argument");
       }
     }
     throw new InvalidArgumentException(this, 0);
