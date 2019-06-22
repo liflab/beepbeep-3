@@ -14,10 +14,10 @@
 **/doc/
 lib/
 doxygen/
-/dep/
-/tests/
-/html/
-/cov-int/
+**/dep/
+**/tests/
+**/html/
+**/cov-int/
 
 # Top-level jar, but not jars in subfolders (if any)
 *.jar

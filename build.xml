@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.4.3"/>
+  <property name="antrun.version" value="1.5.1"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -274,10 +274,10 @@
 	    <include name="**/*.jar" if="${build.jar.withdeps}"/>
 	  </zipgroupfileset>
 	  <fileset dir="${build.srcdir}">
-	    <include name="*" if="${build.jar.withsrc}"/>
+	     <include name="**/*" if="${build.jar.withsrc}"/>
 	  </fileset>
 	  <fileset dir="${build.docdir}">
-	    <include name="*" if="${build.jar.withdoc}"/>
+	    <include name="**/*" if="${build.jar.withdoc}"/>
 	  </fileset>
       </jar>
   </target>
@@ -548,6 +548,20 @@
 		              </patternset>
 		              <mapper type="flatten"/>
 		            </unzip>
+                  </actions>
+                </call>
+                <call path="/build/dependencies/dependency[name='@{depname}']/files/tgz">
+                  <param name="url" path="text()"/>
+                  <actions>
+                    <get src="@{url}" dest="${depdest}"/>
+                    <var name="basename" unset="true"/>
+                    <basename property="basename" file="@{url}"/>
+		            <untar src="${depdest}/${basename}" dest="${depdest}" compression="gzip">
+		              <patternset>
+                        <include name="**/*.jar"/>
+		              </patternset>
+		              <mapper type="flatten"/>
+		            </untar>
                   </actions>
                 </call>
               </xmltask>
