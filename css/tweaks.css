@@ -31,3 +31,16 @@ body {
 figcaption {
 	color: black;
 }
+
+.section.first {
+	margin-top: 40pt;
+}
+
+.blog-item-text h3 {
+	margin-top: 20pt;
+	font-size: 150%;
+}
+
+#blog .blog-item-wrapper {
+	background: transparent;
+}

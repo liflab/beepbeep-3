@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Sylvain Hallé">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
-    <title>BeepBeep 3</title>
+    <title>Download - BeepBeep 3</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -44,9 +44,6 @@
             <ul class="navbar-nav mr-auto w-100 justify-content-end">
               <li class="nav-item">
                 <a class="nav-link page-scroll" href="index.html#hero-area">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link page-scroll" href="news.html">News</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link page-scroll" href="use-cases.html">Use Cases</a>
@@ -95,166 +92,48 @@
 
       </nav>
       <!-- Navbar End -->   
-      <div class="container">      
-        <div class="row justify-content-md-center">
-          <div class="col-md-10">
-            <div class="contents text-center">
-              <h1 class="wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="0.3s">Event stream processing made easy</h1>
-              <p class="lead  wow fadeIn" data-wow-duration="1000ms" data-wow-delay="400ms">BeepBeep 3 is a free and open source stream processing engine that allows you to quickly and easily process log data and live event feeds. With BeepBeep, you can get up and running in five minutes and just a few lines of code.</p>
-              <a href="download.html" class="btn btn-common wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">Download</a>
-            </div>
-          </div>
-        </div> 
-      </div>
-      <hr class="ground"/>
     </header>
     <!-- Header Section End -->
     
     
-    <section id="simple" class="section">
+    <section id="simple" class="section first">
       <div class="container">
         <div class="section-header">          
-          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Simple to Use</h2>
+          <h2 class="section-title">Download BeepBeep</h2>
           <hr class="lines wow zoomIn" data-wow-delay="0.3s">
-          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Everything in BeepBeep is based on the concept of <strong>pipes</strong>. Crunching a stream of events is done by instantiating simple boxes called <strong>processors</strong>, and by connecting the outputs of some processors to the input of others to create a processing <strong>chain</strong>. Events come in from one end, and come out from the other end, in a purely streaming fashion.</p>
-          <figure>
-          	<img src="img/AverageFork.gif" alt="Processor chain" class="mx-auto d-block img-fluid"/>
-          	<figcaption style="font-style: italic">Can you guess what this processor chain is computing?</figcaption>
-          </figure>
-          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Every script written with BeepBeep also has an intuitive graphical representation, such as the one shown above. This makes it easy to understand what a processor chain is doing without even reading any code.</p>
+          <p class="section-subtitle" data-wow-duration="1000ms" data-wow-delay="0.3s">BeepBeep is free and open source software, released under the <a href="https://www.gnu.org/licenses/lgpl-3.0.en.html">GNU Lesser General Public License</a>. This means you can include it into commercial software free of charge. There are many ways you can obtain BeepBeep.</p>
         </div>
-        <div class="row">
-        </div>
+        <div class="row pricing-tables">
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="pricing-table">
+              <div class="pricing-details">
+                <h2>Direct Download</h2>
+                <!--<span>$00</span>-->
+                <p>You can download BeepBeep as a stand-alone JAR file you can then include into any Java project. Simply download the latest release on GitHub and you're good to go.</p>
+                <p>The latest release of BeepBeep is a JAR file of less than 200 kb.</p>
+              </div>
+              <div class="plan-button">
+                <a href="https://github.com/liflab/beepbeep-3/releases" class="btn btn-common">Download BeepBeep</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="pricing-table">
+              <div class="pricing-details">
+                <h2>Palettes</h2>
+                <!--<span>$3.99</span>-->
+                <p>Palettes are BeepBeep's term for plugins. Palettes extend BeepBeep's core library with various domain-specific functionalities. There are palettes for handling network communications, parsing XML and JSON, performing some basic signal processing, etc. A bundle of useful palettes can be downloaded as a set of additional JAR files.</p>
+              </div>
+              <div class="plan-button">
+                <a href="https://github.com/liflab/beepbeep-3-palettes/releases" class="btn btn-common">Download Palettes</a>
+              </div>
+            </div>
+          </div>
       </div>
     </section>
     
-<!-- Features Section Start -->
-    <section id="features" class="section" data-stellar-background-ratio="0.2">
-      <div class="container">
-        <div class="section-header">          
-          <h2 class="section-title">Some Features</h2>
-          <hr class="lines">
-          <p class="section-subtitle">BeepBeep 3 is an event stream engine: it receives a stream of events produced by some application or process, and produces in realtime a new stream of events. Internally, BeepBeep analyzes and transforms the event stream by passing it through a chain of basic event processors, with the output of one (or more) processor being piped to the input of the next one. Here are some of the features that make using BeepBeep a fun and easy way to process data streams.</p>
-        </div>
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-xs-12">
-            <div class="container">
-              <div class="row">
-                 <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
-                    <span class="icon">
-                      <i class="lnr lnr-rocket"></i>
-                    </span>
-                    <div class="text">
-                      <h4>Lightweight</h4>
-                      <p>BeepBeep's core is a Java library of less than 200 kilobytes. No dependencies, just download and use.</p>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
-                    <span class="icon">
-                      <i class="lnr lnr-laptop-phone"></i>
-                    </span>
-                    <div class="text">
-                      <h4>Open source</h4>
-                      <p>BeepBeep is free software distributed under the GNU LGPL.</p>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
-                    <span class="icon">
-                      <i class="lnr lnr-layers"></i>
-                    </span>
-                    <div class="text">
-                      <h4>Simple</h4>
-                      <p>You can start crunching data streams in just a few lines of code. No need to learn a query language!</p>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
-                    <span class="icon">
-                      <i class="lnr lnr-cog"></i>
-                    </span>
-                    <div class="text">
-                      <h4>Versatile</h4>
-                      <p>Dozens of extensions exist for BeepBeep, from network packet analysis to data mining.</p>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <!--
-          <div class="col-lg-4 col-xs-12">
-            <div class="show-box">
-              <img class="img-fulid" src="img/features/feature.png" alt="">
-            </div>
-          </div>
-          -->
-        </div>
-      </div>
-    </section>
-    <!-- Features Section End -->    
-    
-    <!-- Small explanatory text -->
-    <div class="container">
-    	<div class="row">
-    		<div class="col-md-9">
-    		<!-- Left column -->
-    			<div class="row">
-    				<h2 class="wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">What is BeepBeep?</h2>
-    				<p></p>
-    			</div>
-    		</div>
-    		<div class="col-md-3">
-    			<!-- Right column -->
-    			<div class="row">
-    				<h3 class="section-title">News</h3>
-    				<dl>
-    				<dt>BeepBeep 
-    				</dl>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-
-    <!-- Services Section Start -->
-    <section id="use-cases" class="section">
-      <div class="container">
-        <div class="section-header">          
-          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Use Cases</h2>
-          <hr class="lines wow zoomIn" data-wow-delay="0.3s">
-          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">You can use BeepBeep on anything that produces a sequence of events: analyze a web server log, find patterns in a stream of network packets, look for policy violations in the execution of a system, etc. BeepBeep can read data from a pre-recorded file (offline analysis), or even be connected directly to the event source and compute its result as the input events come in (online analysis).</p>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-sm-6">
-            <div class="item-boxes wow fadeInDown" data-wow-delay="0.2s">
-              <div class="icon">
-                <i class="lnr lnr-pencil"></i>
-              </div>
-              <h4>Log analysis</h4>
-              <p>Crunch system logs produced a web server, an operating system or any other application.</p>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6">
-            <div class="item-boxes wow fadeInDown" data-wow-delay="0.8s">
-              <div class="icon">
-                <i class="lnr lnr-code"></i>
-              </div>
-              <h4>Real-time monitoring</h4>
-              <p>Receive data feeds from sensors, an application under test or a network capture.</p>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6">
-            <div class="item-boxes wow fadeInDown" data-wow-delay="1.2s">
-              <div class="icon">
-                <i class="lnr lnr-mustache"></i>
-              </div>
-              <h4>Business Consultancy</h4>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Services Section End -->
-
-<!-- Contact Section Start -->
+    <!-- Contact Section Start -->
     <section id="contact" class="section" data-stellar-background-ratio="-0.2">      
       <div class="contact-form">
         <div class="container">
