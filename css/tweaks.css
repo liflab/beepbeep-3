@@ -41,6 +41,24 @@ figcaption {
 	font-size: 150%;
 }
 
+.container h3 {
+	font-size: 150%;
+}
+
 #blog .blog-item-wrapper {
 	background: transparent;
+}
+
+ul.normal {
+	display: block;
+	margin-top: 10pt;
+	margin-bottom: 10pt;
+	line-height: 1.75;
+}
+
+ul.normal > li {
+	
+	list-style-type: disc;
+	padding-left: 10pt;
+	margin-left: 10pt;
 }
