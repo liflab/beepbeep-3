@@ -1,0 +1,33 @@
+/* Ultra font for headings */
+@import url('https://fonts.googleapis.com/css?family=Ultra&display=swap');
+
+hr.ground {
+	background-image: url('../img/ground.png');
+	height: 100px;
+	border: none;
+	margin-bottom: -0px;
+}
+
+/* Text outline stolen from https://wpshout.com/quick-guides/create-text-outline-css/ */
+#hero-area .contents h1 {
+	font-family: 'Ultra', sans-serif;
+	font-weight: normal;
+	color: #d38d5f;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}
+
+#hero-area {
+	/*margin-bottom: 20pt;*/
+}
+
+body {
+	background: url('../img/stripes.png');
+}
+
+figcaption {
+	color: black;
+}

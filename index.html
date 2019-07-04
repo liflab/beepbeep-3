@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="css/main.css">    
     <link rel="stylesheet" href="css/responsive.css">
 
+    <!-- Sylvain's tweaks -->
+    <link rel="stylesheet" href="css/tweaks.css">
   </head>
   <body>
 
@@ -43,10 +45,10 @@
                 <a class="nav-link page-scroll" href="#hero-area">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link page-scroll" href="#use-cases">Cases</a>
+                <a class="nav-link page-scroll" href="#features">Features</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link page-scroll" href="#features">Features</a>
+                <a class="nav-link page-scroll" href="use-cases.html">Use Cases</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link page-scroll" href="#download">Download</a>
@@ -102,52 +104,30 @@
             </div>
           </div>
         </div> 
-      </div>           
+      </div>
+      <hr class="ground"/>
     </header>
-    <!-- Header Section End --> 
-
-    <!-- Services Section Start -->
-    <section id="use-cases" class="section">
+    <!-- Header Section End -->
+    
+    
+    <section id="simple" class="section">
       <div class="container">
         <div class="section-header">          
-          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Use Cases</h2>
+          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Simple to Use</h2>
           <hr class="lines wow zoomIn" data-wow-delay="0.3s">
-          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">You can use BeepBeep on anything that produces a sequence of events: analyze a web server log, find patterns in a stream of network packets, look for policy violations in the execution of a system, etc. BeepBeep can read data from a pre-recorded file (offline analysis), or even be connected directly to the event source and compute its result as the input events come in (online analysis).</p>
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Everything in BeepBeep is based on the concept of <strong>pipes</strong>. Crunching a stream of events is done by instantiating simple boxes called <strong>processors</strong>, and by connecting the outputs of some processors to the input of others to create a processing <strong>chain</strong>. Events come in from one end, and come out from the other end, in a purely streaming fashion.</p>
+          <figure>
+          	<img src="img/AverageFork.gif" alt="Processor chain" class="mx-auto d-block img-fluid"/>
+          	<figcaption style="font-style: italic">Can you guess what this processor chain is computing?</figcaption>
+          </figure>
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Every script written with BeepBeep also has an intuitive graphical representation, such as the one shown above. This makes it easy to understand what a processor chain is doing without even reading any code.</p>
         </div>
         <div class="row">
-          <div class="col-md-4 col-sm-6">
-            <div class="item-boxes wow fadeInDown" data-wow-delay="0.2s">
-              <div class="icon">
-                <i class="lnr lnr-pencil"></i>
-              </div>
-              <h4>Log analysis</h4>
-              <p>Crunch system logs produced a web server, an operating system or any other application.</p>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6">
-            <div class="item-boxes wow fadeInDown" data-wow-delay="0.8s">
-              <div class="icon">
-                <i class="lnr lnr-code"></i>
-              </div>
-              <h4>Real-time monitoring</h4>
-              <p>Receive data feeds from sensors, an application under test or a network capture.</p>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6">
-            <div class="item-boxes wow fadeInDown" data-wow-delay="1.2s">
-              <div class="icon">
-                <i class="lnr lnr-mustache"></i>
-              </div>
-              <h4>Business Consultancy</h4>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
-    <!-- Services Section End -->
-
-    <!-- Features Section Start -->
+    
+<!-- Features Section Start -->
     <section id="features" class="section" data-stellar-background-ratio="0.2">
       <div class="container">
         <div class="section-header">          
@@ -209,6 +189,69 @@
       </div>
     </section>
     <!-- Features Section End -->    
+    
+    <!-- Small explanatory text -->
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-9">
+    		<!-- Left column -->
+    			<div class="row">
+    				<h2 class="wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">What is BeepBeep?</h2>
+    				<p></p>
+    			</div>
+    		</div>
+    		<div class="col-md-3">
+    			<!-- Right column -->
+    			<div class="row">
+    				<h3 class="section-title">News</h3>
+    				<dl>
+    				<dt>BeepBeep 
+    				</dl>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
+    <!-- Services Section Start -->
+    <section id="use-cases" class="section">
+      <div class="container">
+        <div class="section-header">          
+          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Use Cases</h2>
+          <hr class="lines wow zoomIn" data-wow-delay="0.3s">
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">You can use BeepBeep on anything that produces a sequence of events: analyze a web server log, find patterns in a stream of network packets, look for policy violations in the execution of a system, etc. BeepBeep can read data from a pre-recorded file (offline analysis), or even be connected directly to the event source and compute its result as the input events come in (online analysis).</p>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.2s">
+              <div class="icon">
+                <i class="lnr lnr-pencil"></i>
+              </div>
+              <h4>Log analysis</h4>
+              <p>Crunch system logs produced a web server, an operating system or any other application.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.8s">
+              <div class="icon">
+                <i class="lnr lnr-code"></i>
+              </div>
+              <h4>Real-time monitoring</h4>
+              <p>Receive data feeds from sensors, an application under test or a network capture.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="1.2s">
+              <div class="icon">
+                <i class="lnr lnr-mustache"></i>
+              </div>
+              <h4>Business Consultancy</h4>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Services Section End -->
 
     <!-- Start Video promo Section -->
     <!--
