@@ -404,8 +404,9 @@ button:focus {
    3. Hero Area
    ========================================================================== */
 #hero-area {
-  background: url(../img/hero-area.jpg) fixed no-repeat;
+  background: url(../img/pipes.png) fixed no-repeat;
   background-size: cover;
+  background-position; center;
   color: #fff;
   overflow: hidden;
   position: relative;
@@ -426,15 +427,15 @@ button:focus {
 }
 
 #hero-area .contents h1 {
-  color: #fff;
+  color: #411;
   font-size: 42px;
   font-weight: 700;
   margin-bottom: 25px;
 }
 
 #hero-area .contents p {
-  font-size: 14px;
-  color: #fff;
+  font-size: 18px;
+  color: #411;
   font-weight: 400;
   line-height: 30px;
   letter-spacing: 0.5px;
@@ -465,24 +466,39 @@ button:focus {
 /* ==========================================================================
    4. Navbar Style
    ========================================================================== */
+   
+.navbar {
+	padding-top: 0rem;
+	padding-bottom: .5rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.navbar div.container {
+	padding-top: 0;
+}
+
 .navbar-brand {
   position: relative;
   padding: 0px;
 }
 
 .top-nav-collapse {
-  background: #fff;
+  background: url('../img/clouds.png');
+  background-position: cover;
   z-index: 999999;
   top: 0px !important;
   padding: 0;
-  box-shadow: 0px 3px 6px 3px rgba(0, 0, 0, 0.06);
+  padding-top: 20pt;
+  line-height: 2;
+  /*box-shadow: 0px 3px 6px 3px rgba(0, 0, 0, 0.06);*/
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
-  background: #fff !important;
+  background-image: url('../img/clouds.png') !important;
 }
 
 .top-nav-collapse .navbar-brand {
@@ -504,11 +520,13 @@ button:focus {
 }
 
 .indigo {
-  background: transparent;
+  background: url('../img/clouds.png');
+  background-size: cover;
+  background-position: center bottom;
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
-  color: #fff;
+  color: #411;
   padding: 0 22px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -539,6 +557,10 @@ button:focus {
   border-color: #E97011;
 }
 
+.slicknav_menu {
+	margin-bottom: 10pt;
+}
+
 .slicknav_menu .slicknav_icon-bar {
   background: #E97011;
 }
@@ -562,7 +584,16 @@ button:focus {
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+.slicknav_menu ul {
+  background: transparent;
+  margin-bottom: 30pt;
+}
+
+.slicknav_btn {
+	border-radius: 4pt;
+}
+
+@media screen and (max-width: 991px) {
   .navbar-header {
     width: 100%;
   }
