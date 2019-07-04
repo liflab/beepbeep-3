@@ -8,6 +8,13 @@ hr.ground {
 	margin-bottom: -0px;
 }
 
+hr.ground-dark {
+	background-image: url('../img/ground-dark.png');
+	height: 95px;
+	border: none;
+	margin-top: -90px;
+}
+
 /* Text outline stolen from https://wpshout.com/quick-guides/create-text-outline-css/ */
 #hero-area .contents h1 {
 	font-family: 'Ultra', sans-serif;
