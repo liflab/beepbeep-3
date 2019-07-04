@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Sylvain Hallé">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
-    <title>ICECCS 2019 Tutorial - BeepBeep 3</title>
-    <base href="../">
+    <title>Use Cases - BeepBeep 3</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -105,78 +104,103 @@
       <!-- Container Starts -->
       <div class="container">
         <div class="section-header">          
-          <h2 class="section-title">Upcoming tutorial on BeepBeep at ICECCS 2019</h2>
+          <h2 class="section-title">Use Cases</h2>
           <hr class="lines">
-          <p class="section-subtitle">An introductory, 2-hour tutorial on BeepBeep will be presented in an international conference in Hong Kong, next November.</p>
+          <p class="section-subtitle">BeepBeeep has been used in a variety of real-world use cases. This page maintains a list of the various projects where BeepBeep has been used, and for which documentation is available.</p>
         </div>
         <div class="row">
-          <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 blog-item">
-          
-          <h3>Details</h3>
-          
-          <ul class="normal">
-          <li><strong>Date:</strong> November 10th, 2019</li>
-          <li><strong>Conference:</strong> 29th International Conference on Engineering of Complex Computer Systems (<a href="https://formal-analysis.com/iceccs/2019/">ICECCS 2019</a>)</li>
-          <li><strong>Location:</strong> Metropark Hotel Mongkok, Hong Kong, China</li>
-          </ul>
-          
-          <p>ICECCS is an A-ranked international conference by the Computing Research and Education Association of Australasia (CORE) 2018 ranking. </p>
-          
-          <h3>Context</h3>
-          
-          <p>Event logs and event streams can be found in software systems of very diverse kinds. For instance, workflow management systems and ERP platforms produce event logs in some common format based on XML. Financial transaction systems also keep a log of their operations in some standardized and documented format, as is the case for web servers such as Apache and Microsoft IIS. Network monitors also receive streams of packets whose various headers and fields can be analyzed. Recently, even the world of video games has seen an increasing trend towards the logging of players’ realtime activities. In other words, most of today's complex systems produce a trace of their execution, whose content ---and value--- is often overlooked.</p>
-          
-          <p style="text-align:center">
-          <img class="img-fluid" src="img/blog/Scripts.png" alt="Queries on logs" style="max-width:66%"/>
-          </p>
-
-          <p>Analyzing the wealth of information contained in these logs can serve multiple purposes. Business process logs can be used to reconstruct a workflow based on a sample of its possible executions; financial database logs can be audited for compliance to regulations; suspicious or malicious activity can be detected by studying patterns in network or server logs. However, the available tools to process logs or streams of events are often large systems that are hard to setup, and even simple examples seem needlessly complicated.</p>
-          
-          <h3>Tutorial contents</h3>
-          
-          <p>In this tutorial, the audience will learn about <a href="https://liflab.github.io/beepbeep-3">BeepBeep</a>, a versatile Java library intended to make the processing of event streams (either offline or in realtime) both fun and simple. BeepBeep is the result of more than a decade of research lead by a team at <a href="http://liflab.ca/">Laboratoire d'informatique formelle</a> at <a href="https://www.uqac.ca">Université du Québec à Chicoutimi</a> (Canada). Over the past few years, BeepBeep has been involved in a variety of case studies, and provides built-in support for <a href="https://www.researchgate.net/publication/328798420">writing domain-specific languages</a>. Recently, a <a href="https://www.puq.ca/catalogue/livres/event-stream-processing-with-beep-beep-3663.html">complete textbook</a> has been published on BeepBeep, testifying to the maturity that the system has acquired.</p>
-
-          <p>Starting from basic concepts, this step-by-step tutorial will lead the audience through a variety of concrete use cases where event logs can be processed, analyzed, and provide actionable information about complex systems. Possible examples will include:
-          <ul class="normal">
-          <li>the dection of bugs during the execution of a video game;</li>
-          <li>the analysis of a heart rate monitor;</li>
-          <li>the detection of errors in an automated surgery instrument;</li>
-          <li>the processing of data from NASA's Voyager space probes;</li>
-          <li>the application of clustering algorithms on business process engine logs.</li>
-          </ul>
-          
-          <h3>Interest for practicioners</h3>
-
-          <p>This tutorial shall prove interesting in two respects. First, there are more available examples than the time allows, and the audience will be asked to choose which ones they want to explore with the presenter.</p>
-          
-          <p style="text-align:center">
-          <img class="img-fluid" src="img/blog/HopAll.png" alt="Processor chain" style="max-width:66%"/>
-          </p>
-          
-          <p>Second, an interesting feature of BeepBeep is that all code examples have an appealing and colorful graphical representation (see Figure above), which provides an intuitive way of understanding what is happening "under the hood". Participants shall leave this tutorial with a good preliminary knowledge of the potential of log analysis and event stream processing in various fields, which may lead them to try these techniques on their own complex systems.
-          </p>
-          
-          <h3>For more information</h3>
-          	
-          	<p>Please contact <a href="http://leduotang.ca/sylvain">Sylvain Hallé</a> for any question related to the contents of the tutorial.</p>
-            <!-- Blog Item Wrapper Ends-->
-          </div> <!--/col-->
-          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-          <p>
-          	<img src="img/blog/Sylvain_Halle_2013-site_Internet.jpg" alt="Sylvain Hallé" class="img-fluid"/>
-          	</p>
-          	<h3 style="margin-top:10pt;">About the Speaker</h3>
-          	<p><strong>Sylvain Hallé, Ph.D.</strong> is a Full Professor in the Department of Computer Science and Mathematics at Université du Québec à Chicoutimi, Canada, since 2010, and is the current holder of the Canada Research Chair on Software Specification, Testing and Verification. He earned his Ph.D. from Université du Québec à Montréal, Canada, and has been a postdoctoral research fellow at University of California, Santa Barbara. Both an ACM and IEEE senior member, Pr. Hallé has won multiple awards in international conferences for his research on software testing and formal methods. The team he leads at <i>Laboratoire d'informatique formelle</i> has produced a number of free software tools that directly apply the results of his research.</p>
-          	<p>In addition to the BeepBeep event stream processing engine, let us mention <a href="http://liflab.ca/index.php/research/cornipickle/">Cornipickle</a>, an automated testing tool for web interfaces, and <a href="https://liflab.github.io/labpal">LabPal</a>, an environment for streamlining the execution of computer experiments and their inclusion within research papers.</p>
-          	<p>Over a carrer spanning fifteen years, he has authored more than a hundred scientific publications, which, according to Google Scholar, have been cited close to 600 times in the last five years.</p>
-          	
-          	<p>Pr. Hallé has earned a reputation for his fun and lively presentations at international events over the years. You can have a look at some of the slide decks from past talks on his <a href="https://www.slideshare.net/sylvainhalle">Slideshare page</a>.</p>
-          	
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.2s">
+              <div class="icon">
+                <a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3/use-cases#stock-ticker"><i class="fa fa-line-chart"></i></a>
+              </div>
+              <h4><a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3/use-cases#stock-ticker">Stock ticker</a></h4>
+              <p>Compute statistics over data produced by a fake stock ticker.</p>
+            </div>
           </div>
-        </div> <!--/row-->
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.8s">
+              <div class="icon">
+                <a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3/use-cases#medical-records-management"><i class="fa fa-medkit"></i></a>
+              </div>
+              <h4><a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3/use-cases#medical-records-management">Medical Records Management</a></h4>
+              <p>Detect abnormal patterns in data simulated from an electronic medical record system.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="1.2s">
+              <div class="icon">
+                <a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3/use-cases#online-auction-system"><i class="fa fa-handshake-o"></i></a>
+              </div>
+              <h4><a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3/use-cases#online-auction-system">Online Auction System</a></h4>
+              <p>Enforce lifecycle policies over possible events generated by an online auction system.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.2s">
+              <div class="icon">
+                <a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3/use-cases#voyager-telemetry"><i class="fa fa-space-shuttle"></i></a>
+              </div>
+              <h4><a href="https://liflab.gitbook.io/event-stream-processing-with-beepbeep-3/use-cases#voyager-telemetry">Voyager Telemetry</a></h4>
+              <p>Identify planetary encounters of NASA's Voyager probes by processing their telemetry.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.8s">
+              <div class="icon">
+                <a href="https://www.researchgate.net/publication/323230748"><i class="fa fa-user-secret"></i></a>
+              </div>
+              <h4><a href="https://www.researchgate.net/publication/323230748">Monitoring of Security Policies</a></h4>
+              <p>Prevent malicious software by enforcing security policies on Java method calls.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="1.2s">
+              <div class="icon">
+                <a href="https://www.researchgate.net/publication/299763967"><i class="fa fa-plug"></i></a>
+              </div>
+              <h4><a href="https://www.researchgate.net/publication/299763967">Electric Load Monitoring</a></h4>
+              <p>Detect and identify electrical appliances by analyzing the signature of their power consumption.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.2s">
+              <div class="icon">
+                <a href="https://liflab.github.io/beepbeep-3-examples/classartimon_1_1_engine.html"><i class="fa fa-car"></i></a>
+              </div>
+              <h4><a href="https://liflab.github.io/beepbeep-3-examples/classartimon_1_1_engine.html">Hybrid Car Engine</a></h4>
+              <p>Analyze the data taken from a running hybrid engine.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="0.8s">
+              <div class="icon">
+                <a href="https://liflab.github.io/beepbeep-3-examples/namespaceepisodes.html"><i class="fa fa-heartbeat"></i></a>
+              </div>
+              <h4><a href="https://liflab.github.io/beepbeep-3-examples/namespaceepisodes.html">Pressure Sensor Analysis</a></h4>
+              <p>Detect "episodes" in data collected by a medical pressure sensor and trigger a warning when abnormal patterns are observed.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="item-boxes wow fadeInDown" data-wow-delay="1.2s">
+              <div class="icon">
+                <a href="https://www.researchgate.net/publication/328172038"><i class="fa fa-bell"></i></a>
+              </div>
+              <h4><a href="https://www.researchgate.net/publication/328172038">Trend Deviations</a></h4>
+              <p>Compute a generic trend over a stream of events, and raise an alarm when this trend starts to deviate.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <!-- blog Section End -->
+
 
 <!-- Contact Section Start -->
     <section id="contact" class="section" data-stellar-background-ratio="-0.2">      
