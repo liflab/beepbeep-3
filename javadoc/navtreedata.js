@@ -23,13 +23,14 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_abstract_window_8java.html",
-"classca_1_1uqac_1_1lif_1_1cep_1_1_compound_future.html#a7b8efc9f6fd5f4ebdb8724a5a1d4ff07",
-"classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pullable.html#ac3d0485d483f64b40cc19a48e17e9fd4",
-"classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#a0274e3dbaf1ed1d740b75b6ca1803d31",
-"classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_1_1_queue_function.html#a0b3e31909f239933c269b4b0ae93f4d6",
-"classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html#a55b21d63fc3a42500ca384539609f0f1",
-"classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_strings_1_1_find_regex.html"
+"_abstract_slice_8java.html",
+"classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_output_pullable.html#a6bbbf5201da1f9fe53d67a0773237fba",
+"classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html#ac9f7b009fb3c6e67dec7e7a68e7d98a2",
+"classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_raise_arity.html#a12adab6836720dbf282b9e40552195b7",
+"classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_freeze.html#a2d149f265d2b897d0dd16f15d4f171af",
+"classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#ab40b3014ccce4842d14d5c91a667bf75",
+"classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a48515e37a3e01449b4689457bd2ed04d",
+"functions_w.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

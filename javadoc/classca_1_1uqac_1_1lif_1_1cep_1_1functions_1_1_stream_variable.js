@@ -8,6 +8,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable =
     [ "evaluatePartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a0d355687bf3e5ffb0644bb052bbb571b", null ],
     [ "getIndex", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#ac413e73e8357180508319c66112ad3dc", null ],
     [ "hashCode", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a1a7d90c912230bdbe5e70c6ce8283de7", null ],
+    [ "printState", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#ac96dd2a0419860ec0cb22376727ef467", null ],
+    [ "readState", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#ac5f539564c66d666dc6f95b33556722b", null ],
     [ "toString", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#a030b6e683d57fe6a70a628ea204dc454", null ],
     [ "m_index", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#ae80dac14b4dd75ff4e3419d50f6c83ed", null ],
     [ "X", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_stream_variable.html#affc0876c52e7a8ad09f11b45970728d3", null ],

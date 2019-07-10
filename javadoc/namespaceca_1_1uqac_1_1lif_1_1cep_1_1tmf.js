@@ -1,5 +1,6 @@
 var namespaceca_1_1uqac_1_1lif_1_1cep_1_1tmf =
 [
+    [ "AbstractSlice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice" ],
     [ "AbstractWindow", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window" ],
     [ "BlackHole", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_black_hole.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_black_hole" ],
     [ "CallbackSink", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_callback_sink.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_callback_sink" ],
@@ -12,6 +13,7 @@ var namespaceca_1_1uqac_1_1lif_1_1cep_1_1tmf =
     [ "Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert" ],
     [ "KeepLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last" ],
     [ "Multiplex", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex" ],
+    [ "Pad", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad" ],
     [ "Passthrough", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough" ],
     [ "Prefix", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_prefix.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_prefix" ],
     [ "Pump", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump" ],
@@ -23,6 +25,7 @@ var namespaceca_1_1uqac_1_1lif_1_1cep_1_1tmf =
     [ "Sink", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink" ],
     [ "SinkLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last" ],
     [ "Slice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice" ],
+    [ "SliceLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_last.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_last" ],
     [ "Source", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source" ],
     [ "Splice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice" ],
     [ "Stutter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter" ],

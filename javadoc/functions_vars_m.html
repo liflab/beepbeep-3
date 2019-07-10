@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.10-alpha</span>
+   &#160;<span id="projectnumber">0.10.2-alpha</span>
    </div>
   </td>
  </tr>
@@ -85,7 +85,7 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_explode.html#af05c7097345c20e2e1fb5920e41cfbec">ca.uqac.lif.cep.util.Bags.Explode</a>
 </li>
 <li>m_cleaningFunction
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#ad36a22addec5fbb6d493783ff4256e1f">ca.uqac.lif.cep.tmf.Slice</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a63e1023426b5b866ad7b7df781bfea9c">ca.uqac.lif.cep.tmf.AbstractSlice</a>
 </li>
 <li>m_command
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_call.html#a6ff59b44e5dc468b19fbfe798b5679a2">ca.uqac.lif.cep.io.Call</a>
@@ -107,6 +107,12 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 <li>m_current
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#a5dc00c15698c5b1eaa829511085d3537">ca.uqac.lif.cep.tmf.CountDecimate</a>
 </li>
+<li>m_currentList
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_last.html#a2173b87261d2a63640da7f97093cf493">ca.uqac.lif.cep.tmf.SliceLast</a>
+</li>
+<li>m_delay
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html#a3d4ef0042a5cc6a53e596f56550fdb37">ca.uqac.lif.cep.tmf.Trim</a>
+</li>
 <li>m_downstreamPushables
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert.html#a35dbd9c6e176979ab35709a584c39aaa">ca.uqac.lif.cep.tmf.Divert</a>
 </li>
@@ -122,20 +128,20 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 <li>m_events
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source.html#acc46e08d7addc68c60b7c368bf407597">ca.uqac.lif.cep.tmf.QueueSource</a>
 </li>
-<li>m_eventsReceived
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html#a32686327057227ac3c9f519f026efd33">ca.uqac.lif.cep.tmf.Trim</a>
-</li>
 <li>m_eventTracker
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#abf9980c710a42b8ade18c7817d35e09c">ca.uqac.lif.cep.Processor</a>
 </li>
 <li>m_explodeArrays
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#abbf13d6979e1b49e6880efd8cfa2ddf3">ca.uqac.lif.cep.tmf.Slice</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a82cb12ae5fa2cb2fc3ac8887dd09cb08">ca.uqac.lif.cep.tmf.AbstractSlice</a>
 </li>
 <li>m_filenamePattern
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_to_file.html#aa388a3a2c3d0a830c546eef553b4fdc2">ca.uqac.lif.cep.io.WriteToFile</a>
 </li>
 <li>m_flowIndex
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert.html#ad6fce3cd7d632bb171a8e5e9a519f900">ca.uqac.lif.cep.tmf.Divert</a>
+</li>
+<li>m_front
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html#ac6eba8bfa62f38bb35b108e3c8481804">ca.uqac.lif.cep.tmf.Pad</a>
 </li>
 <li>m_frontNumber
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a307c8be936402e44efd6121b07a5555e">ca.uqac.lif.cep.functions.ApplyFunctionPartial</a>
@@ -177,6 +183,9 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 </li>
 <li>m_innerInputs
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#aa153aa29d0f956ee0060420592cd93eb">ca.uqac.lif.cep.tmf.Window</a>
+</li>
+<li>m_innerPushables
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html#ac7083f1b66882734a2d21c02920fe60c">ca.uqac.lif.cep.tmf.Pad</a>
 </li>
 <li>m_inputArity
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a10cc488487147cafc5012d8c8182e315">ca.uqac.lif.cep.Processor</a>
@@ -232,6 +241,9 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 <li>m_lastValues
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#ad675e9cc2141bb0bcd528e5ba2443398">ca.uqac.lif.cep.tmf.Slice</a>
 </li>
+<li>m_list
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_list_update_processor.html#aa9342266cdcaff91801493df2c926c3f">ca.uqac.lif.cep.util.Lists.ListUpdateProcessor</a>
+</li>
 <li>m_lock
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_abstract_pack.html#aed9d9faa7979ed13a814fff223d66c7f">ca.uqac.lif.cep.util.Lists.AbstractPack</a>
 </li>
@@ -254,6 +266,9 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 </li>
 <li>m_numCurrentFront
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a820064e4eb5b092a0d18d8b204b9e4c6">ca.uqac.lif.cep.functions.ApplyFunctionPartial</a>
+</li>
+<li>m_numPad
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html#a6ae8e7179e1ab3a0cfabb7dc9de373f7">ca.uqac.lif.cep.tmf.Pad</a>
 </li>
 <li>m_numReps
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter.html#a73ebb3e10f6acbdf6bda0eeb4660f6c2">ca.uqac.lif.cep.tmf.Stutter</a>
@@ -314,9 +329,10 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html#a3d1a7fbf5fd602c9139ec614ae35c225">ca.uqac.lif.cep.Pullable.PullNotSupported</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_pushable_exception.html#a4d08f79474e0c2c771bcc7c9945eee01">ca.uqac.lif.cep.Pushable.PushableException</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_push_not_supported.html#a42593000a6d0dd464d5c245bbfc0b915">ca.uqac.lif.cep.Pushable.PushNotSupported</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a5d788e174e4608d8cb744bca8386f076">ca.uqac.lif.cep.tmf.AbstractSlice</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html#a8d3fd72322c7c217a07b0ae3e3974e33">ca.uqac.lif.cep.tmf.AbstractWindow</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html#a90140178952719e4fac4e1a2a35ce222">ca.uqac.lif.cep.tmf.Pad</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_reset_last.html#abc34ec7ff78d7a7a3d6e1c598cda305f">ca.uqac.lif.cep.tmf.ResetLast</a>
-, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#ae135de33b0463e6baaad1f5c699492fe">ca.uqac.lif.cep.tmf.Slice</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_run_on.html#a2b06be2f816e37c6ba29e9136c980149">ca.uqac.lif.cep.util.Bags.RunOn</a>
 </li>
 <li>m_processorId
@@ -370,18 +386,19 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#a8f734bcbb3c9d0116e85b9f4ed584562">ca.uqac.lif.cep.tmf.Decimate</a>
 </li>
 <li>m_sink
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_reset_last.html#ac78f773f15d2df5905993ddcf22379dc">ca.uqac.lif.cep.tmf.ResetLast</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html#a388b2182c3d1f31ab434f1f186b23312">ca.uqac.lif.cep.tmf.Pad</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_reset_last.html#ac78f773f15d2df5905993ddcf22379dc">ca.uqac.lif.cep.tmf.ResetLast</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#aa0651db2edd611791cbfcb943738a75d">ca.uqac.lif.cep.tmf.Window</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_run_on.html#a6b32253dce65dd34ac792d89678ef764">ca.uqac.lif.cep.util.Bags.RunOn</a>
 </li>
 <li>m_sinks
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#ac7bce20e027822fb44573873900e9683">ca.uqac.lif.cep.tmf.Slice</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a071715f0067662dffa122cae81c8c10f">ca.uqac.lif.cep.tmf.AbstractSlice</a>
 </li>
 <li>m_slices
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a9d1f3e0c040ea6506971dad1650a8eef">ca.uqac.lif.cep.tmf.Slice</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a6ab59ea0464021f32dea3712e9811f31">ca.uqac.lif.cep.tmf.AbstractSlice</a>
 </li>
 <li>m_slicingFunction
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a6f3fe50bdbc89b7fda757d3fdc42f453">ca.uqac.lif.cep.tmf.Slice</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a3a5055c8dc13d21413ce464ee45ebc5c">ca.uqac.lif.cep.tmf.AbstractSlice</a>
 </li>
 <li>m_stderrGobbler
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html#abca9d1c14a648846a475381309f9a56d">ca.uqac.lif.cep.io.CommandRunner</a>
@@ -410,6 +427,9 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 </li>
 <li>m_timerThread
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_time_pack.html#a7c29fff82f17b24c3af95eb5c1af69c0">ca.uqac.lif.cep.util.Lists.TimePack</a>
+</li>
+<li>m_times
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html#a00f4ba9c67359d2fd8cde858bcc2bc00">ca.uqac.lif.cep.tmf.Pad</a>
 </li>
 <li>m_trim
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_read_lines.html#a53025493b7aad42b99ef33c50ba20ffa">ca.uqac.lif.cep.io.ReadLines</a>
@@ -440,13 +460,19 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_input_pushable.html#a12d7426eb1ce28ae333dc345b5248234">ca.uqac.lif.cep.functions.ApplyFunctionPartial.InputPushable</a>
 </li>
 <li>MAX_PULL_RETRIES
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a25c8aac8ea1cb9b28882a89cf8154b14">ca.uqac.lif.cep.Processor</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ab1bce965802bedbc02dcddc3dbf8a0ab">ca.uqac.lif.cep.Processor</a>
 </li>
 <li>maximum
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a716e9a8dc4d7be178ae8eae5f9288895">ca.uqac.lif.cep.util.Numbers</a>
 </li>
+<li>maxValue
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags.html#a2252e4db50bf3cbb45eeb23a70757ec8">ca.uqac.lif.cep.util.Bags</a>
+</li>
 <li>minimum
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#ada7238274675b9b0fe05165baa282bf5">ca.uqac.lif.cep.util.Numbers</a>
+</li>
+<li>minValue
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags.html#a13a5ba88d020d4678021d2c1ab94875a">ca.uqac.lif.cep.util.Bags</a>
 </li>
 <li>multiplication
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a1c457f4985a0d8d077c04b02c1e92347">ca.uqac.lif.cep.util.Numbers</a>
@@ -457,7 +483,7 @@ $(document).ready(function(){initNavTree('functions_vars_m.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Feb 8 2019 17:27:45 for BeepBeep 3 by
+    <li class="footer">Generated on Wed Jul 10 2019 23:11:31 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

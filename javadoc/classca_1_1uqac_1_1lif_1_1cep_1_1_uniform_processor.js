@@ -2,6 +2,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor =
 [
     [ "UnaryPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pullable" ],
     [ "UnaryPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable" ],
+    [ "UniformProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html#ab117cc5d2cedaa9267dc3c16aaed454e", null ],
     [ "UniformProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html#a202448334d13103be20f33afcc5f355d", null ],
     [ "compute", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html#a7a65a67368e8e58e3f8c279c630cae34", null ],
     [ "compute", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html#ab4c5f0ff263901b229e9f77524dc4ac9", null ],

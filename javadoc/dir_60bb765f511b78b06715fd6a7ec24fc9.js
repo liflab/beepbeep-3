@@ -1,5 +1,9 @@
 var dir_60bb765f511b78b06715fd6a7ec24fc9 =
 [
+    [ "AbstractSlice.java", "_abstract_slice_8java.html", [
+      [ "AbstractSlice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice" ],
+      [ "ToAllSlices", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice_1_1_to_all_slices.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice_1_1_to_all_slices" ]
+    ] ],
     [ "AbstractWindow.java", "_abstract_window_8java.html", [
       [ "AbstractWindow", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window" ]
     ] ],
@@ -41,6 +45,9 @@ var dir_60bb765f511b78b06715fd6a7ec24fc9 =
       [ "MuxPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pushable" ]
     ] ],
     [ "package-info.java", "ca_2uqac_2lif_2cep_2tmf_2package-info_8java.html", null ],
+    [ "Pad.java", "_pad_8java.html", [
+      [ "Pad", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad" ]
+    ] ],
     [ "Passthrough.java", "_passthrough_8java.html", [
       [ "Passthrough", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough" ]
     ] ],
@@ -73,8 +80,10 @@ var dir_60bb765f511b78b06715fd6a7ec24fc9 =
       [ "SinkLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last" ]
     ] ],
     [ "Slice.java", "_slice_8java.html", [
-      [ "Slice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice" ],
-      [ "ToAllSlices", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_1_1_to_all_slices.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_1_1_to_all_slices" ]
+      [ "Slice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice" ]
+    ] ],
+    [ "SliceLast.java", "_slice_last_8java.html", [
+      [ "SliceLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_last.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_last" ]
     ] ],
     [ "Source.java", "_source_8java.html", [
       [ "Source", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source" ]

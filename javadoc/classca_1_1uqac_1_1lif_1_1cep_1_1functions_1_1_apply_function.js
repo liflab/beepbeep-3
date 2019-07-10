@@ -7,6 +7,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function =
     [ "getFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#ad5698daffe9240dbdd8b510282d819e5", null ],
     [ "getInputTypesFor", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a302f4f83ed5d134848aa687b8cf99f01", null ],
     [ "getOutputType", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a26fb7f848795c5c7763506668ec4e0c7", null ],
+    [ "printState", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a9779d531f6359190c22418bfbe13907c", null ],
+    [ "readState", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a6dd16e6c12d8541270811bf196b97916", null ],
     [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a73bf471fcbce56716cde7d31a76e54a3", null ],
     [ "toString", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a34d743399c719964c0f438b8e8c00341", null ],
     [ "m_function", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html#a4c7e27e3d7326f05107f1df3db12b105", null ]

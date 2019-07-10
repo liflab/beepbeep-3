@@ -11,6 +11,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree =
     [ "getInputTypesFor", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a79d1c959766bff0fb7c26ba57b868036", null ],
     [ "getOutputArity", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a99a5a9387bca60fab81da74f091cba8b", null ],
     [ "getOutputTypeFor", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a660face6ebcda65e28da6c9d4592400d", null ],
+    [ "printState", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#aacdcf59038fa241c80bb114fe9ca45ce", null ],
+    [ "readState", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a551a174dc27dd7af8faad2e00cdcf73b", null ],
     [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#aaafc1e0f40285f878ecbd0a38d5b5553", null ],
     [ "setChild", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#aac6d09fda0df46599c51602b1366da9b", null ],
     [ "toString", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html#a8318de9a6d8df06871681ec4b00f6df5", null ],

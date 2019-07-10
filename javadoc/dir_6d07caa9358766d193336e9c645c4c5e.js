@@ -13,7 +13,10 @@ var dir_6d07caa9358766d193336e9c645c4c5e =
       [ "ApplyToAll", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_apply_to_all.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_apply_to_all" ],
       [ "Product", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_product.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_product" ],
       [ "AnyElement", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_any_element.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_any_element" ],
-      [ "Explode", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_explode.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_explode" ]
+      [ "Explode", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_explode.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_explode" ],
+      [ "MaximumValue", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_maximum_value.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_maximum_value" ],
+      [ "MinimumValue", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_minimum_value.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_minimum_value" ],
+      [ "IsElement", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_is_element.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_is_element" ]
     ] ],
     [ "Booleans.java", "_booleans_8java.html", [
       [ "Booleans", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans" ],
@@ -30,6 +33,9 @@ var dir_6d07caa9358766d193336e9c645c4c5e =
     ] ],
     [ "Lists.java", "_lists_8java.html", [
       [ "Lists", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists" ],
+      [ "ListUpdateProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_list_update_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_list_update_processor" ],
+      [ "PutInto", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_put_into.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_put_into" ],
+      [ "PutIntoNew", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_put_into_new.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_put_into_new" ],
       [ "AbstractPack", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_abstract_pack.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_abstract_pack" ],
       [ "Pack", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_pack.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_pack" ],
       [ "TimePack", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_time_pack.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_time_pack" ],
@@ -69,7 +75,9 @@ var dir_6d07caa9358766d193336e9c645c4c5e =
       [ "Power", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_power.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_power" ],
       [ "Signum", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_signum.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_signum" ],
       [ "SquareRoot", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_square_root.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_square_root" ],
-      [ "Subtraction", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_subtraction.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_subtraction" ]
+      [ "Subtraction", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_subtraction.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_subtraction" ],
+      [ "Ceiling", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_ceiling.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_ceiling" ],
+      [ "Floor", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_floor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_floor" ]
     ] ],
     [ "package-info.java", "ca_2uqac_2lif_2cep_2util_2package-info_8java.html", null ],
     [ "Randomize.java", "_randomize_8java.html", [

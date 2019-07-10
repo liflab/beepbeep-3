@@ -3,6 +3,9 @@ var dir_fe1d71a22b1d538c62170c002eacc0df =
     [ "ApplyFunction.java", "_apply_function_8java.html", [
       [ "ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function" ]
     ] ],
+    [ "ApplyFunctionArgument.java", "_apply_function_argument_8java.html", [
+      [ "ApplyFunctionArgument", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_argument.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_argument" ]
+    ] ],
     [ "ApplyFunctionPartial.java", "_apply_function_partial_8java.html", [
       [ "ApplyFunctionPartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial" ],
       [ "InputPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_input_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_input_pushable" ],

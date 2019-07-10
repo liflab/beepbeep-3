@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.10-alpha</span>
+   &#160;<span id="projectnumber">0.10.2-alpha</span>
    </div>
   </td>
  </tr>
@@ -167,6 +167,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad31287709e80476d4e27c6991af1fd24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad31287709e80476d4e27c6991af1fd24">associateToOutput</a> (int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)</td></tr>
 <tr class="memdesc:ad31287709e80476d4e27c6991af1fd24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associates an input event to an output event.  <a href="#ad31287709e80476d4e27c6991af1fd24">More...</a><br /></td></tr>
 <tr class="separator:ad31287709e80476d4e27c6991af1fd24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9c45eca2b0e1625057f465959445f96"><td class="memItemLeft" align="right" valign="top">final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ae9c45eca2b0e1625057f465959445f96">getInputCount</a> ()</td></tr>
+<tr class="memdesc:ae9c45eca2b0e1625057f465959445f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of event fronts received so far by this processor.  <a href="#ae9c45eca2b0e1625057f465959445f96">More...</a><br /></td></tr>
+<tr class="separator:ae9c45eca2b0e1625057f465959445f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb4b229afe56ab1442f84b576ddd817e"><td class="memItemLeft" align="right" valign="top">final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#abb4b229afe56ab1442f84b576ddd817e">getOutputCount</a> ()</td></tr>
+<tr class="memdesc:abb4b229afe56ab1442f84b576ddd817e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of event fronts produced so far by this processor.  <a href="#abb4b229afe56ab1442f84b576ddd817e">More...</a><br /></td></tr>
+<tr class="separator:abb4b229afe56ab1442f84b576ddd817e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afed213ae7f7eeb252a54b64c1e6b436f"><td class="memItemLeft" align="right" valign="top">final Object&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#afed213ae7f7eeb252a54b64c1e6b436f">print</a> (ObjectPrinter&lt;?&gt; printer)  throws ProcessorException   </td></tr>
+<tr class="memdesc:afed213ae7f7eeb252a54b64c1e6b436f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the contents of this processor into an object printer.  <a href="#afed213ae7f7eeb252a54b64c1e6b436f">More...</a><br /></td></tr>
+<tr class="separator:afed213ae7f7eeb252a54b64c1e6b436f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7690110f90994aaefe25e20a501d6b28"><td class="memItemLeft" align="right" valign="top">final <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a7690110f90994aaefe25e20a501d6b28">read</a> (ObjectReader&lt;?&gt; reader, Object o)  throws ProcessorException   </td></tr>
+<tr class="memdesc:a7690110f90994aaefe25e20a501d6b28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the content of a processor from a serialized object.  <a href="#a7690110f90994aaefe25e20a501d6b28">More...</a><br /></td></tr>
+<tr class="separator:a7690110f90994aaefe25e20a501d6b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad49e29bdc1432481cb8d01fd579ed918"><td class="memItemLeft" align="right" valign="top">final <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad49e29bdc1432481cb8d01fd579ed918">duplicate</a> ()</td></tr>
 <tr class="memdesc:ad49e29bdc1432481cb8d01fd579ed918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicates an object and sets it to its initial state.  <a href="#ad49e29bdc1432481cb8d01fd579ed918">More...</a><br /></td></tr>
 <tr class="separator:ad49e29bdc1432481cb8d01fd579ed918"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,9 +206,9 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:ab2981d657c6e27d0007faf8bf43c5da7"><td class="memItemLeft" align="right" valign="top">static final transient String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ab2981d657c6e27d0007faf8bf43c5da7">s_versionString</a> = &quot;0.7&quot;</td></tr>
 <tr class="memdesc:ab2981d657c6e27d0007faf8bf43c5da7"><td class="mdescLeft">&#160;</td><td class="mdescRight">A string used to identify the program's version.  <a href="#ab2981d657c6e27d0007faf8bf43c5da7">More...</a><br /></td></tr>
 <tr class="separator:ab2981d657c6e27d0007faf8bf43c5da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25c8aac8ea1cb9b28882a89cf8154b14"><td class="memItemLeft" align="right" valign="top">static final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a25c8aac8ea1cb9b28882a89cf8154b14">MAX_PULL_RETRIES</a> = 10000000</td></tr>
-<tr class="memdesc:a25c8aac8ea1cb9b28882a89cf8154b14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of times the <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#adb823454d39e60741566069b84b48097">Pullable#hasNext()</a> method tries to produce an output from the input before giving up.  <a href="#a25c8aac8ea1cb9b28882a89cf8154b14">More...</a><br /></td></tr>
-<tr class="separator:a25c8aac8ea1cb9b28882a89cf8154b14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1bce965802bedbc02dcddc3dbf8a0ab"><td class="memItemLeft" align="right" valign="top">static final transient int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ab1bce965802bedbc02dcddc3dbf8a0ab">MAX_PULL_RETRIES</a> = 10000000</td></tr>
+<tr class="memdesc:ab1bce965802bedbc02dcddc3dbf8a0ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of times the <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#adb823454d39e60741566069b84b48097">Pullable#hasNext()</a> method tries to produce an output from the input before giving up.  <a href="#ab1bce965802bedbc02dcddc3dbf8a0ab">More...</a><br /></td></tr>
+<tr class="separator:ab1bce965802bedbc02dcddc3dbf8a0ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -206,6 +218,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a9b9e88d1aa780ba8f56d8a244d371047"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a9b9e88d1aa780ba8f56d8a244d371047">onEndOfTrace</a> (Queue&lt; Object[]&gt; outputs)  throws ProcessorException   </td></tr>
 <tr class="memdesc:a9b9e88d1aa780ba8f56d8a244d371047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to describe a specific behavior when the trace of input fronts has reached its end.  <a href="#a9b9e88d1aa780ba8f56d8a244d371047">More...</a><br /></td></tr>
 <tr class="separator:a9b9e88d1aa780ba8f56d8a244d371047"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa460035cff5ffdcc5791167bba83934b"><td class="memItemLeft" align="right" valign="top">Object&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#aa460035cff5ffdcc5791167bba83934b">printState</a> ()</td></tr>
+<tr class="memdesc:aa460035cff5ffdcc5791167bba83934b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Produces an object that represents the state of the current processor.  <a href="#aa460035cff5ffdcc5791167bba83934b">More...</a><br /></td></tr>
+<tr class="separator:aa460035cff5ffdcc5791167bba83934b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3d4135a23bd29a3eb2770d9bfbb11b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad3d4135a23bd29a3eb2770d9bfbb11b4">readState</a> (Object o)</td></tr>
+<tr class="memdesc:ad3d4135a23bd29a3eb2770d9bfbb11b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the state of a processor and uses it to create a new instance.  <a href="#ad3d4135a23bd29a3eb2770d9bfbb11b4">More...</a><br /></td></tr>
+<tr class="separator:ad3d4135a23bd29a3eb2770d9bfbb11b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -255,7 +273,7 @@ Protected Attributes</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.1 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00053">53</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00063">63</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8379962de7173c4f3d4f7c408d29a98b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8379962de7173c4f3d4f7c408d29a98b">&#9670;&nbsp;</a></span>Processor()</h2>
@@ -301,7 +319,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00171">171</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00182">182</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -340,7 +358,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if all elements in the array are null, <code>false</code> otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00460">460</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00473">473</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -386,7 +404,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00670">670</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00683">683</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -439,7 +457,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00653">653</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00666">666</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -492,7 +510,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00685">685</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00698">698</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -517,7 +535,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html#a9187659f759d1574759908e53dd4e5d7">ca.uqac.lif.cep.DuplicableProcessor</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00717">717</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00869">869</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -583,7 +601,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00478">478</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00491">491</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -606,7 +624,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Implementation of <a class="el" href="">equals()</a> specific to processors. </p>
 <p>Since every processor has a unique ID, equality amounts to equality of the field <a class="el" href="">m_uniqueId</a>. This behavior cannot be overridden by descendants. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00279">279</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00290">290</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -635,7 +653,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The object, or <code>null</code> if no object exists with such key </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00211">211</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00222">222</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -659,7 +677,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html#acf94e17fea2c53a4e362a5bbf0c685b8">ca.uqac.lif.cep.Contextualizable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00221">221</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00232">232</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -690,7 +708,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>It is recommended that processors call this method to get a queue instance, rather than instantiate their own manually.</p>
 <dl class="section return"><dt>Returns</dt><dd>The queue </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00564">564</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00577">577</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -712,7 +730,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Gets the instance of event tracker associated to this processor. </p>
 <dl class="section return"><dt>Returns</dt><dd>The event tracker, or <code>null</code> of no event tracker is associated to this processor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00627">627</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00640">640</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -734,7 +752,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Fetches the processor instance's unique ID. </p>
 <dl class="section return"><dt>Returns</dt><dd>The ID </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00294">294</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00305">305</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -756,7 +774,29 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Returns the processor's input arity. </p>
 <dl class="section return"><dt>Returns</dt><dd>The arity </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00435">435</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00448">448</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+
+</div>
+</div>
+<a id="ae9c45eca2b0e1625057f465959445f96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9c45eca2b0e1625057f465959445f96">&#9670;&nbsp;</a></span>getInputCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">final int ca.uqac.lif.cep.Processor.getInputCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the number of event fronts received so far by this processor. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of fronts </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00733">733</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -786,7 +826,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A set of classes. If <code>index</code> it less than 0 or greater than the processor's declared input arity, the set will be empty. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00505">505</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00518">518</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -826,7 +866,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00530">530</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00543">543</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -848,7 +888,29 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Returns the processor's output arity. </p>
 <dl class="section return"><dt>Returns</dt><dd>The arity </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00445">445</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00458">458</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+
+</div>
+</div>
+<a id="abb4b229afe56ab1442f84b576ddd817e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb4b229afe56ab1442f84b576ddd817e">&#9670;&nbsp;</a></span>getOutputCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">final int ca.uqac.lif.cep.Processor.getOutputCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the number of event fronts produced so far by this processor. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of fronts </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00742">742</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -878,7 +940,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The type of the output. If <code>index</code> it less than 0 or greater than the processor's declared output arity, this method <em>may</em> throw an IndexOutOfBoundsException. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00552">552</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00565">565</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -907,7 +969,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The pullable </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00395">395</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00408">408</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -964,7 +1026,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Returns the <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a> corresponding to the processor's first output trace. </p>
 <dl class="section return"><dt>Returns</dt><dd>The pullable if the processor has at least one output. An ArrayIndexOutOfBounds will be thrown if the processor has an output arity of 0. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00366">366</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00379">379</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1021,7 +1083,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Returns the <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html">Pushable</a> corresponding to the processor's first input trace. </p>
 <dl class="section return"><dt>Returns</dt><dd>The pushable if the processor has at least one input. An ArrayIndexOutOfBounds will be thrown if the processor has an input arity of 0. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00341">341</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00354">354</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1050,7 +1112,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The pushable </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00425">425</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00438">438</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1072,7 +1134,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Implementation of <a class="el" href="">hashCode()</a> specific to processors. </p>
 <p>Every processor instance in BeepBeep is given a unique ID; even a clone of a processor (created using <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ad49e29bdc1432481cb8d01fd579ed918">Processor#duplicate()</a> will be identical to the original, except for this ID. This behavior cannot be overridden by descendants. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00267">267</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00278">278</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1102,7 +1164,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Creates a new empty context map. </p>
 <dl class="section return"><dt>Returns</dt><dd>The context map </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00199">199</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00210">210</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1146,7 +1208,152 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00711">711</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00724">724</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+
+</div>
+</div>
+<a id="afed213ae7f7eeb252a54b64c1e6b436f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afed213ae7f7eeb252a54b64c1e6b436f">&#9670;&nbsp;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">final Object ca.uqac.lif.cep.Processor.print </td>
+          <td>(</td>
+          <td class="paramtype">ObjectPrinter&lt;?&gt;&#160;</td>
+          <td class="paramname"><em>printer</em></td><td>)</td>
+          <td> throws <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor_exception.html">ProcessorException</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints the contents of this processor into an object printer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">printer</td><td>The printer to print this processor to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The printed processor </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.10.2 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00754">754</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+
+</div>
+</div>
+<a id="aa460035cff5ffdcc5791167bba83934b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa460035cff5ffdcc5791167bba83934b">&#9670;&nbsp;</a></span>printState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Object ca.uqac.lif.cep.Processor.printState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Produces an object that represents the state of the current processor. </p>
+<p>A concrete processor should override this method to add whatever state information that needs to be preserved in the serialization process. </p><dl class="section return"><dt>Returns</dt><dd>Any object representing the processor's state (including <code>null</code>) </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.10.2 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00792">792</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+
+</div>
+</div>
+<a id="a7690110f90994aaefe25e20a501d6b28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7690110f90994aaefe25e20a501d6b28">&#9670;&nbsp;</a></span>read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">final <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> ca.uqac.lif.cep.Processor.read </td>
+          <td>(</td>
+          <td class="paramtype">ObjectReader&lt;?&gt;&#160;</td>
+          <td class="paramname"><em>reader</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Object&#160;</td>
+          <td class="paramname"><em>o</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> throws <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor_exception.html">ProcessorException</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads the content of a processor from a serialized object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reader</td><td>An object reader </td></tr>
+    <tr><td class="paramname">o</td><td>The object to read from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The serialized processor </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor_exception.html" title="Generic class for any exception thrown in the lifecycle of a processor. ">ProcessorException</a></td><td>If the read operation failed for some reason </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00806">806</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+
+</div>
+</div>
+<a id="ad3d4135a23bd29a3eb2770d9bfbb11b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3d4135a23bd29a3eb2770d9bfbb11b4">&#9670;&nbsp;</a></span>readState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> ca.uqac.lif.cep.Processor.readState </td>
+          <td>(</td>
+          <td class="paramtype">Object&#160;</td>
+          <td class="paramname"><em>o</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reads the state of a processor and uses it to create a new instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">o</td><td>The object containing the processor's state </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new processor instance </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.10.2 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00863">863</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1168,7 +1375,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Resets the processor. </p>
 <p>This has for effect of flushing the contents of all input and output event queues. If the processor has an internal state, this should also reset this state to its "initial" settings (whatever that means in your context). </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00305">305</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00316">316</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1209,7 +1416,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html#ab58e0a2d0c33a9c770d3698942a704aa">ca.uqac.lif.cep.Contextualizable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00233">233</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00244">244</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1239,7 +1446,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html#a342281e4c9fd7b8ce4bf1b682e6dbeab">ca.uqac.lif.cep.Contextualizable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00245">245</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00256">256</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1268,7 +1475,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>This processor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00640">640</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00653">653</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1307,7 +1514,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00380">380</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00393">393</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1346,7 +1553,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00410">410</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00423">423</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1368,7 +1575,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Starts the processor. </p>
 <p>This has no effect, except for processors that use threads; in such a case, calling this method should start the thread. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00573">573</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00586">586</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1404,7 +1611,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00593">593</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00606">606</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1426,7 +1633,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>Stops the processor. </p>
 <p>This has no effect, except for processors that use threads; in such a case, calling this method should stop the thread. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00582">582</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00595">595</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1462,7 +1669,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00610">610</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00623">623</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1489,7 +1696,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>The context in which the processor is instantiated. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00133">133</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00144">144</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1515,7 +1722,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>An object that keeps track of the relationship between input and output events. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00082">82</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00093">93</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1541,7 +1748,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>Indicates whether the processor has been notified of the end of trace or not. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00146">146</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00157">157</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1568,7 +1775,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>The processor's input arity, i.e. </p>
 <p>the number of input events it requires to produce an output </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00059">59</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00070">70</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1594,7 +1801,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>A counter incremented upon each input front processed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00106">106</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00117">117</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1620,7 +1827,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>An array of <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a>s, one for each input trace this processor receives. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00095">95</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00106">106</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1647,7 +1854,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>An array of input event queues. </p>
 <p>This is where the input events will be stored before the processor consumes them. There are as many input queues as the input arity of the processor. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00076">76</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00087">87</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1674,7 +1881,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>The processor's output arity, i.e. </p>
 <p>the number of output events it produces </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00064">64</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00075">75</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1700,7 +1907,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>A counter incremented upon each output front processed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00111">111</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00122">122</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1726,7 +1933,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 
 <p>An array of <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html">Pushable</a>s, one for each output trace this processor produces. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00101">101</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00112">112</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1753,12 +1960,12 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>An array of output event queues. </p>
 <p>This is where the output events will be stored when the processor does its computation. There are as many output queues as the output arity of the processor. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00089">89</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00100">100</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
-<a id="a25c8aac8ea1cb9b28882a89cf8154b14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25c8aac8ea1cb9b28882a89cf8154b14">&#9670;&nbsp;</a></span>MAX_PULL_RETRIES</h2>
+<a id="ab1bce965802bedbc02dcddc3dbf8a0ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1bce965802bedbc02dcddc3dbf8a0ab">&#9670;&nbsp;</a></span>MAX_PULL_RETRIES</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1767,7 +1974,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">final int ca.uqac.lif.cep.Processor.MAX_PULL_RETRIES = 10000000</td>
+          <td class="memname">final transient int ca.uqac.lif.cep.Processor.MAX_PULL_RETRIES = 10000000</td>
         </tr>
       </table>
   </td>
@@ -1781,7 +1988,7 @@ Creating arrays of empty input and output queues, as well as arrays of <a class=
 <p>While in theory, the method tries "as
 long as necessary", in practice a bound was put on the number of attempts as a safeguard to avoid infinite loops. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00141">141</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00152">152</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1807,7 +2014,7 @@ long as necessary", in practice a bound was put on the number of attempts as a s
 
 <p>A string used to identify the program's version. </p>
 
-<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00069">69</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_processor_8java_source.html#l00080">80</a> of file <a class="el" href="_processor_8java_source.html">Processor.java</a>.</p>
 
 </div>
 </div>
@@ -1820,7 +2027,7 @@ long as necessary", in practice a bound was put on the number of attempts as a s
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a></li>
-    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
+    <li class="footer">Generated on Wed Jul 10 2019 23:11:30 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

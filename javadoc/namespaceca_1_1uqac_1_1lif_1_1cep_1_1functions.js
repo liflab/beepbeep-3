@@ -1,6 +1,7 @@
 var namespaceca_1_1uqac_1_1lif_1_1cep_1_1functions =
 [
     [ "ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function" ],
+    [ "ApplyFunctionArgument", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_argument.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_argument" ],
     [ "ApplyFunctionPartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial" ],
     [ "BinaryFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function" ],
     [ "Constant", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant" ],

@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.10-alpha</span>
+   &#160;<span id="projectnumber">0.10.2-alpha</span>
    </div>
   </td>
  </tr>
@@ -115,7 +115,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Implementation of a <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html">Pullable</a> for a single processor. </p>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00281">281</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00283">283</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2ca993dd280b85a098d581a768f360ee"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2ca993dd280b85a098d581a768f360ee">&#9670;&nbsp;</a></span>OutputPullable()</h2>
@@ -141,7 +141,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00295">295</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00297">297</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -166,7 +166,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a708f546a5a4a7f28cac0cb6a061e959d">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00579">579</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00584">584</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -190,7 +190,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a7e45c179cf60d6fa5860b6975f3ffd78">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00555">555</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00560">560</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -214,7 +214,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#affad11f66c00127d9721bb6a003c3518">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00549">549</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00554">554</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -242,13 +242,13 @@ If all inputs answer "yes" when called for <a class="el" href="classca_1_1uqac_1
 <li>
 Otherwise, the method will keep calling <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html#ab43d35d63c2d7c6be5676fe2609b6747">hasNext()</a> on the inputs as long as they don't answer "no", and will try to produce an output event until one is produced. </li>
 <li>
-To avoid infinite looping, the method eventually gives up (and answers "no") after some maximum number of repetitions is reached. This is configured by the static field <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#a25c8aac8ea1cb9b28882a89cf8154b14">Processor#MAX_PULL_RETRIES</a>. </li>
+To avoid infinite looping, the method eventually gives up (and answers "no") after some maximum number of repetitions is reached. This is configured by the static field <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html#ab1bce965802bedbc02dcddc3dbf8a0ab">Processor#MAX_PULL_RETRIES</a>. </li>
 </ul>
 <dl class="section return"><dt>Returns</dt><dd>Whether a next event exists </dd></dl>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#adb823454d39e60741566069b84b48097">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00356">356</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00358">358</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -283,7 +283,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#acbb54cf0a90c18a31bba453842f80bd1">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00459">459</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00464">464</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -302,7 +302,7 @@ Otherwise, returns "yes" </li>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00561">561</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00566">566</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -326,7 +326,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#abf7c4dab5116d2979a41a8065125f921">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00350">350</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00352">352</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -351,7 +351,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#abf6e4fd3d233b6d16f3bb5ba837ecf37">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00329">329</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00331">331</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -376,7 +376,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a0bfbf8fef20cc27585a2ddaa11e03b4a">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00309">309</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00311">311</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -395,7 +395,7 @@ Otherwise, returns "yes" </li>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00302">302</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00304">304</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -419,7 +419,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a1f9b138ef1a9c5ac00c309984b79ccb2">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00567">567</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00572">572</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -443,7 +443,7 @@ Otherwise, returns "yes" </li>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html#a1e76b36ba3b342f7e561130f30e19fd7">ca.uqac.lif.cep.Pullable</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00573">573</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_synchronous_processor_8java_source.html#l00578">578</a> of file <a class="el" href="_synchronous_processor_8java_source.html">SynchronousProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -456,7 +456,7 @@ Otherwise, returns "yes" </li>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html">SynchronousProcessor</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html">OutputPullable</a></li>
-    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
+    <li class="footer">Generated on Wed Jul 10 2019 23:11:31 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -6,6 +6,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink =
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#a890e7b06e03503033f07f2b5980435fb", null ],
     [ "getQueue", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#a63e32b6f315cec76ba6207dc1e5815d3", null ],
     [ "getQueue", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#a4b100bd36077235176835dc8ba9dcdb3", null ],
+    [ "printState", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#a9732e80a6f9cb9cc81a8086ca77b8dea", null ],
+    [ "readState", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#af141e05f7700287959726b8376aa39cb", null ],
     [ "remove", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#ae81559c56b96e13ffb5891f54b808f65", null ],
     [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#a5982a659e260c54a8bb3e7c61cfbe307", null ],
     [ "m_queues", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#ab9eec3864dc7ee8a7333aa7467ede1eb", null ]

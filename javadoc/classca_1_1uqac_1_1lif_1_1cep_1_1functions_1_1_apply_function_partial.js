@@ -6,6 +6,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial =
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#aa779fdcd4171d4790770f0e1e7f9fd7f", null ],
     [ "getPullableOutput", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a021c3da2eb5fafd2aa2aa6fa6bd7170a", null ],
     [ "getPushableInput", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a9a0d555dadc5ebc645d38f27b11cf54b", null ],
+    [ "printState", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a32c6c300c1ac01bdf34b2da1a8815c60", null ],
+    [ "readState", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a5e002fc98fe365056dd51a91618d926c", null ],
     [ "m_frontNumber", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a307c8be936402e44efd6121b07a5555e", null ],
     [ "m_function", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a4b4d8bc25328bd20a84f01229b1816c6", null ],
     [ "m_inputFront", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html#a27237a2042aae33010b465cee3fe20a8", null ],

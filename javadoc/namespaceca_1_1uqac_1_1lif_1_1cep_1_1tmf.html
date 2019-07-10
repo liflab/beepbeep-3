@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.10-alpha</span>
+   &#160;<span id="projectnumber">0.10.2-alpha</span>
    </div>
   </td>
  </tr>
@@ -72,6 +72,9 @@ $(document).ready(function(){initNavTree('namespaceca_1_1uqac_1_1lif_1_1cep_1_1t
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html">AbstractSlice</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separates an input trace into different "slices".  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html">AbstractWindow</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulates the application of a "sliding window" to a trace.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_window.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,6 +111,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex.html">Multiplex</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges the contents of multiple traces into a single trace.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html">Pad</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html">Passthrough</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns its input as its output.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,7 +144,10 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink.html" title="Receives input events and stores them. ">Sink</a> that remembers only the last event sent to it.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html">Slice</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separates an input trace into different "slices".  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concrete version of <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html">AbstractSlice</a> whose output is an associative map between slice IDs and the last event produced by that slice processor.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_last.html">SliceLast</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concrete version of <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html">AbstractSlice</a> whose output is a stream of lists, where each list contains all the events produced by inner slices from a given input even.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice_last.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html">Source</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Produces output events from no input.  <a href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_source.html#details">More...</a><br /></td></tr>
@@ -182,7 +190,7 @@ Classes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1tmf.html">tmf</a></li>
-    <li class="footer">Generated on Fri Feb 8 2019 17:27:44 for BeepBeep 3 by
+    <li class="footer">Generated on Wed Jul 10 2019 23:11:31 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

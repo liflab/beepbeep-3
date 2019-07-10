@@ -6,6 +6,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate =
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#a8769ab53aa588711f8390a790da5de8b", null ],
     [ "getInterval", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#a8ddc73dfb609ac3d003902cfe5ae2e4b", null ],
     [ "postCompute", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#a7cd59caf55a72071a11ed91b30e37bd6", null ],
+    [ "printState", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#a46c709422ab9572cf7662fb1577e81db", null ],
+    [ "readState", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#aae3ebdfddd5d28007df2d7fdef68e33f", null ],
     [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#a776673bfcc842b58634408bafb863689", null ],
     [ "shouldOutput", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#ae0896d6321cdeacb780790a8416f1b48", null ],
     [ "m_current", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#a5dc00c15698c5b1eaa829511085d3537", null ]

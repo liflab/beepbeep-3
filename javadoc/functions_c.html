@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.10-alpha</span>
+   &#160;<span id="projectnumber">0.10.2-alpha</span>
    </div>
   </td>
  </tr>
@@ -73,6 +73,9 @@ $(document).ready(function(){initNavTree('functions_c.html','');});
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_compound_future.html#ac85d27f5d791ca2174fe8992bb849324">ca.uqac.lif.cep.CompoundFuture&lt; T, U &gt;</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html#aecc71f18b309b6ffd3c670e13cacda28">ca.uqac.lif.cep.FutureDone&lt; T &gt;</a>
 </li>
+<li>ceiling
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a48515e37a3e01449b4689457bd2ed04d">ca.uqac.lif.cep.util.Numbers</a>
+</li>
 <li>clear()
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#ac038549b527684117fb1b653fffb5090">ca.uqac.lif.cep.util.Multiset</a>
 </li>
@@ -106,6 +109,7 @@ $(document).ready(function(){initNavTree('functions_c.html','');});
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_output_stream.html#a2088f91604b8a3a416c60e906b5fb125">ca.uqac.lif.cep.io.WriteOutputStream</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_write_to_file.html#ab18ea7a0fefc9e0d055a9ad1613a107c">ca.uqac.lif.cep.io.WriteToFile</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html#a4defbc8693ed00313398ea007fdca709">ca.uqac.lif.cep.SynchronousProcessor</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a25b556ec12f735e7ba500a7cef66182c">ca.uqac.lif.cep.tmf.AbstractSlice</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_black_hole.html#acbc9de44186e9dba1690b66160de6d08">ca.uqac.lif.cep.tmf.BlackHole</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_callback_sink.html#a0e36f092648695fc7d86fb95dab6367a">ca.uqac.lif.cep.tmf.CallbackSink</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_decimate.html#a3f8dded97a23ba1ef4051c13de0674f7">ca.uqac.lif.cep.tmf.Decimate</a>
@@ -114,6 +118,7 @@ $(document).ready(function(){initNavTree('functions_c.html','');});
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_freeze.html#a3e9a3c89b185ae6b850b87b0f0199424">ca.uqac.lif.cep.tmf.Freeze</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html#a1f7f981460b054083c3198dacaea2956">ca.uqac.lif.cep.tmf.Insert</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last.html#a40f2e55516ce3922b5a41da33a5c39e6">ca.uqac.lif.cep.tmf.KeepLast</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html#ac7e0e464be2b5065740c7434dbe42a59">ca.uqac.lif.cep.tmf.Pad</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html#a6663130d909ac896f9324e80698d3398">ca.uqac.lif.cep.tmf.Passthrough</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_prefix.html#aa9e5bc70daaf529877a0585e56f27ad0">ca.uqac.lif.cep.tmf.Prefix</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_sink.html#a1bd1754f3bf58b787f42379faa2b2c66">ca.uqac.lif.cep.tmf.QueueSink</a>
@@ -122,17 +127,18 @@ $(document).ready(function(){initNavTree('functions_c.html','');});
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_reset_last.html#a13d812c39eba0710514cf464ef62fb70">ca.uqac.lif.cep.tmf.ResetLast</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html#a03e0bdcf0ae055bd9a1e90db2c9eb8fa">ca.uqac.lif.cep.tmf.SimpleFilter</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_sink_last.html#a25f839b1ea2b4faa408f245545cd23cd">ca.uqac.lif.cep.tmf.SinkLast</a>
-, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_slice.html#a10d172acec9fcf0af81a550503e945fa">ca.uqac.lif.cep.tmf.Slice</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_splice.html#a97332ca28386de30d85eb2e1ba322859">ca.uqac.lif.cep.tmf.Splice</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter.html#ad74c48c486b1596b0173bc7b783e8f3e">ca.uqac.lif.cep.tmf.Stutter</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html#a2193f5140a6f493f23daff1f73e2d457">ca.uqac.lif.cep.tmf.Trim</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_variable_stutter.html#aa9f3175776b6404b38c326d542d543b2">ca.uqac.lif.cep.tmf.VariableStutter</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#a84c4baab18d4e4b50e890839f635d38d">ca.uqac.lif.cep.tmf.Window</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window_function.html#a63ee328209d6498f2a566e15337a31c8">ca.uqac.lif.cep.tmf.WindowFunction</a>
-, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html#a7a65a67368e8e58e3f8c279c630cae34">ca.uqac.lif.cep.UniformProcessor</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html#ab4c5f0ff263901b229e9f77524dc4ac9">ca.uqac.lif.cep.UniformProcessor</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_run_on.html#a78f391010fc2f18c2425c2efc530e46a">ca.uqac.lif.cep.util.Bags.RunOn</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html#a55b21d63fc3a42500ca384539609f0f1">ca.uqac.lif.cep.util.FindPattern</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_pack.html#ab754d4d1f832c348f93fac39bd10d768">ca.uqac.lif.cep.util.Lists.Pack</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_put_into.html#adb142d3b823cc12825c0699aa3f6ecd9">ca.uqac.lif.cep.util.Lists.PutInto</a>
+, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_put_into_new.html#a18bb5f2ad0e34e571eac9949b9081bca">ca.uqac.lif.cep.util.Lists.PutIntoNew</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_time_pack.html#af1052bdfada5bc1639d377fc096c0126">ca.uqac.lif.cep.util.Lists.TimePack</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_unpack.html#acd52be37695e1ede32f65f39990a11bb">ca.uqac.lif.cep.util.Lists.Unpack</a>
 , <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_map_put_into.html#a2d3878b76ce04f2c9166c37936bea7b9">ca.uqac.lif.cep.util.Maps.MapPutInto</a>
@@ -173,7 +179,7 @@ $(document).ready(function(){initNavTree('functions_c.html','');});
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_context.html#af019d5263b2827b97a39558d79107fe7">ca.uqac.lif.cep.Context</a>
 </li>
 <li>Context()
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_context.html#a72c1ff38da97d547894b3c6cf5770d43">ca.uqac.lif.cep.Context</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_context.html#a75672407fe326a3547876177aef787da">ca.uqac.lif.cep.Context</a>
 </li>
 <li>ContextAssignment()
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_context_assignment.html#a2d9726d909848ca4d24e4991f7d325b0">ca.uqac.lif.cep.functions.ContextAssignment</a>
@@ -188,7 +194,7 @@ $(document).ready(function(){initNavTree('functions_c.html','');});
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a276f2d7ad8f3b497a09351b69f9566d6">ca.uqac.lif.cep.GroupProcessor</a>
 </li>
 <li>CountDecimate()
-: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#ae4690e26f48f309ff35507cb7522e29b">ca.uqac.lif.cep.tmf.CountDecimate</a>
+: <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html#a7b812bdf57c434376019e067f0b026f8">ca.uqac.lif.cep.tmf.CountDecimate</a>
 </li>
 <li>crawl()
 : <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html#a87908592b2ef4cee2c0c726529913ca1">ca.uqac.lif.cep.GroupProcessor.CopyCrawler</a>
@@ -215,7 +221,7 @@ $(document).ready(function(){initNavTree('functions_c.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Feb 8 2019 17:27:45 for BeepBeep 3 by
+    <li class="footer">Generated on Wed Jul 10 2019 23:11:31 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

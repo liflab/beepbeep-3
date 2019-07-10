@@ -40,7 +40,7 @@ var dir_a8c5d33bfb6336598568d0f33b26f112 =
     ] ],
     [ "GroupProcessor.java", "_group_processor_8java.html", [
       [ "GroupProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor" ],
-      [ "ProcessorAssociation", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_processor_association.html", null ],
+      [ "ProcessorAssociation", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_processor_association.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_processor_association" ],
       [ "CopyCrawler", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler" ],
       [ "ProxyPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable" ],
       [ "ProxyPushable", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable" ]
