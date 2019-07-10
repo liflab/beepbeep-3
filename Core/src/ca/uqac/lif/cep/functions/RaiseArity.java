@@ -108,7 +108,7 @@ public class RaiseArity extends Function
   }
 
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -120,7 +120,7 @@ public class RaiseArity extends Function
   }
 
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @SuppressWarnings("unchecked")
   public RaiseArity readState(Object o)

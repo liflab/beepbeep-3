@@ -73,7 +73,7 @@ public class Doubler extends SynchronousProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   public Doubler readState(Object o)
   {

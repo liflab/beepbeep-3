@@ -82,7 +82,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -94,7 +94,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @SuppressWarnings("unchecked")
   public CumulativeFunction<T> readState(Object o)

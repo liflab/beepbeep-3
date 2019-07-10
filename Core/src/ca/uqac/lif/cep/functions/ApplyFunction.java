@@ -132,7 +132,7 @@ public class ApplyFunction extends UniformProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -141,7 +141,7 @@ public class ApplyFunction extends UniformProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public ApplyFunction readState(Object o)

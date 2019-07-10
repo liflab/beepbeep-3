@@ -331,7 +331,7 @@ public class Connector
    * Returns the set of connections associated to a processor
    * @param p The processor
    * @return The set of collections
-   * @since 0.11
+   * @since 0.10.2
    */
   public static Collection<Connection> getConnections(Processor p)
   {
@@ -509,7 +509,7 @@ public class Connector
   
   /**
    * Represents a connection between two pipes.
-   * @since 0.11
+   * @since 0.10.2
    */
   public static class Connection
   {

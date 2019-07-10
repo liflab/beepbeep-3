@@ -51,7 +51,7 @@ public class BlackHole extends Sink
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   public Object printState()
   {
@@ -59,7 +59,7 @@ public class BlackHole extends Sink
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public BlackHole readState(Object o)

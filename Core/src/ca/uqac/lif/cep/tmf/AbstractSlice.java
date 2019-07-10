@@ -56,7 +56,7 @@ import java.util.concurrent.Future;
  * that the incoming event must be dispatched to <em>all</em> slices one by one.
  * 
  * @author Sylvain Hallé
- * @since 0.11
+ * @since 0.10.2
  */
 @SuppressWarnings("squid:S2160")
 public abstract class AbstractSlice extends SynchronousProcessor

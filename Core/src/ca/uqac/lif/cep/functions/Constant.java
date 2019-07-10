@@ -132,7 +132,7 @@ public class Constant extends Function
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -141,8 +141,7 @@ public class Constant extends Function
   }
   
   /**
-   * @since 0.11
-   * @return
+   * @since 0.10.2
    */
   @Override
   public Constant readState(Object o)

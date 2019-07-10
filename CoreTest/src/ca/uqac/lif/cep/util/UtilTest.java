@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -37,6 +37,7 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.FunctionsTest;
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.InvalidArgumentException;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -176,7 +177,7 @@ public class UtilTest
 		assertEquals(-3f, out, 0.01f);
 	}
 	
-	@Test(expected=InvalidArgumentException.class)
+	@Test(expected=FunctionException.class)
 	public void testNthElement3()
 	{
 		List<Float> set = new LinkedList<Float>();
@@ -188,7 +189,7 @@ public class UtilTest
 		assertEquals(-3f, out, 0.01f);
 	}
 	
-	@Test(expected=InvalidArgumentException.class)
+	@Test(expected=FunctionException.class)
 	public void testNthElement4()
 	{
 		Float[] set = new Float[]{0f, -3f, 5f};
@@ -197,7 +198,7 @@ public class UtilTest
 		assertEquals(-3f, out, 0.01f);
 	}
 	
-	@Test(expected=InvalidArgumentException.class)
+	@Test(expected=FunctionException.class)
 	public void testNthElement5()
 	{
 		NthElement ata = new NthElement(0);

@@ -67,7 +67,7 @@ public class Passthrough extends UniformProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   public Object printState()
   {
@@ -75,7 +75,7 @@ public class Passthrough extends UniformProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Passthrough readState(Object o)

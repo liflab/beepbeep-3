@@ -73,7 +73,7 @@ public class Adder extends SynchronousProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Adder readState(Object o)

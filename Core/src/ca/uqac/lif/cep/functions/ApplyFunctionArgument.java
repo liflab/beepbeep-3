@@ -25,7 +25,7 @@ import java.util.Set;
  * A function of two arguments, the first of which is a 1:1 function; it
  * applies this function to the second argument and returns the result.
  * @author Sylvain Hallé
- * @since 0.11
+ * @since 0.10.2
  */
 public class ApplyFunctionArgument extends Function
 {

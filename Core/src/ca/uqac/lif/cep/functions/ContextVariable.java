@@ -96,7 +96,7 @@ public class ContextVariable extends Variable
   }
 
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -105,7 +105,7 @@ public class ContextVariable extends Variable
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public ContextVariable readState(Object o)

@@ -52,7 +52,7 @@ public abstract class UniformProcessor extends SynchronousProcessor
    *          The output arity
    * @param c
    *          The processor's context (can be null)
-   * @since 0.11
+   * @since 0.10.2
    */
   public UniformProcessor(int in_arity, int out_arity, /*@ null @*/ Context c)
   {

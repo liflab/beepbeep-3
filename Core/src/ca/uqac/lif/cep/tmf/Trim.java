@@ -96,7 +96,7 @@ public class Trim extends SynchronousProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   protected Object printState()
@@ -105,7 +105,7 @@ public class Trim extends SynchronousProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   protected Trim readState(Object o)

@@ -32,12 +32,12 @@ public class Main
   /**
    * Minor version number
    */
-  public static final int s_minorVersion = 11;
+  public static final int s_minorVersion = 10;
 
   /**
    * Revision version number
    */
-  public static final int s_revisionVersion = 0;
+  public static final int s_revisionVersion = 2;
 
   private Main()
   {

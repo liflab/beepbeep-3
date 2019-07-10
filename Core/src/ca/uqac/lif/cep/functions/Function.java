@@ -207,7 +207,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
   /*@ pure non_null @*/ public abstract Function duplicate(boolean with_state);
 
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object print(ObjectPrinter<?> printer)
@@ -230,7 +230,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    * information that needs to be preserved in the serialization process.
    * @return Any object representing the function's state 
    * (including <tt>null</tt>)
-   * @since 0.11
+   * @since 0.10.2
    */
   protected Object printState()
   {
@@ -281,7 +281,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    * Reads the state of a function and uses it to create a new instance
    * @param o The object containing the function's state
    * @return A new function instance
-   * @since 0.11
+   * @since 0.10.2
    */
   protected Function readState(Object o)
   {

@@ -88,7 +88,7 @@ public class Fork extends UniformProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   public Object printState()
   {
@@ -96,7 +96,7 @@ public class Fork extends UniformProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Fork readState(Object o)

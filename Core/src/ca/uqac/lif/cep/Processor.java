@@ -748,7 +748,7 @@ public abstract class Processor implements DuplicableProcessor,
    * Prints the contents of this processor into an object printer.
    * @param printer The printer to print this processor to
    * @return The printed processor
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public final Object print(ObjectPrinter<?> printer) throws ProcessorException
@@ -787,7 +787,7 @@ public abstract class Processor implements DuplicableProcessor,
    * information that needs to be preserved in the serialization process.
    * @return Any object representing the processor's state 
    * (including <tt>null</tt>)
-   * @since 0.11
+   * @since 0.10.2
    */
   protected Object printState()
   {
@@ -858,7 +858,7 @@ public abstract class Processor implements DuplicableProcessor,
    * Reads the state of a processor and uses it to create a new instance
    * @param o The object containing the processor's state
    * @return A new processor instance
-   * @since 0.11
+   * @since 0.10.2
    */
   protected Processor readState(Object o)
   {

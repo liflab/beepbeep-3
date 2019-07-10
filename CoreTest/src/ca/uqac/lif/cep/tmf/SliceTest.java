@@ -279,13 +279,11 @@ public class SliceTest
 	  Queue<Object> q = sink.getQueue();
 	  Pushable p = sl.getPushableInput();
 	  p.push(3);
-	  
     List<Object> ol = (List<Object>) q.remove();
 	  assertEquals(1, ol.size());
 	  q.clear();
 	  p.push(1);
-	  ol = (List<Object>) q.remove();
-	  assertTrue(ol.isEmpty());
+	  assertNull(q.poll());
 	  p.push(6);
 	  ol = (List<Object>) q.remove();
 	  assertEquals(1, ol.size());

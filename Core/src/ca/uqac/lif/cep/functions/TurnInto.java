@@ -83,7 +83,7 @@ public class TurnInto extends UniformProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -92,7 +92,7 @@ public class TurnInto extends UniformProcessor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public TurnInto readState(Object o)

@@ -124,7 +124,7 @@ public class ContextAssignment implements Printable, Readable
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object print(ObjectPrinter<?> printer) throws PrintException
@@ -136,7 +136,7 @@ public class ContextAssignment implements Printable, Readable
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @SuppressWarnings("unchecked")
   @Override

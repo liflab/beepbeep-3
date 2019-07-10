@@ -787,7 +787,7 @@ public class GroupProcessor extends Processor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -830,7 +830,7 @@ public class GroupProcessor extends Processor
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @SuppressWarnings("unchecked")
   @Override

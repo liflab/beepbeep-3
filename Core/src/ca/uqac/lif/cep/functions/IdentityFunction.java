@@ -101,7 +101,7 @@ public final class IdentityFunction extends Function
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -110,7 +110,7 @@ public final class IdentityFunction extends Function
   }
 
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public IdentityFunction readState(Object o)

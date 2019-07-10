@@ -87,7 +87,7 @@ public class SinkLast extends Sink
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   public Object printState()
   {
@@ -95,7 +95,7 @@ public class SinkLast extends Sink
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public SinkLast readState(Object o)

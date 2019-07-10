@@ -35,7 +35,7 @@ import java.util.Queue;
  * put into the list is undefined.
  * 
  * @author Sylvain Hallé
- * @since 0.11
+ * @since 0.10.2
  */
 public class SliceLast extends AbstractSlice
 {
@@ -92,7 +92,7 @@ public class SliceLast extends AbstractSlice
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -109,7 +109,7 @@ public class SliceLast extends AbstractSlice
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @SuppressWarnings("unchecked")
   @Override

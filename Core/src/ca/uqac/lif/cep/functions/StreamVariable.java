@@ -131,7 +131,7 @@ public class StreamVariable extends Variable
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -140,7 +140,7 @@ public class StreamVariable extends Variable
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public StreamVariable readState(Object o)

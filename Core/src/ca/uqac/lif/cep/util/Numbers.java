@@ -634,7 +634,7 @@ public class Numbers
   /**
    * Rounds a number up to the nearest integer
    * @author Sylvain Hallé
-   * @since 0.11
+   * @since 0.10.2
    */
   public static final class Ceiling extends UnaryFunction<Number,Number>
   {
@@ -659,7 +659,7 @@ public class Numbers
   /**
    * Rounds a number down to the nearest integer
    * @author Sylvain Hallé
-   * @since 0.11
+   * @since 0.10.2
    */
   public static final class Floor extends UnaryFunction<Number,Number>
   {

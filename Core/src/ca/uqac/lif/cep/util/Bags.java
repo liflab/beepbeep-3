@@ -655,7 +655,7 @@ public class Bags
    * collection contains non-numerical elements, they are ignored. If
    * no numerical element is found in the collection, the function returns 0.
    * 
-   * @since 0.11 
+   * @since 0.10.2 
    */
   @SuppressWarnings("rawtypes")
   public static class MaximumValue extends UnaryFunction<Collection,Number>
@@ -703,7 +703,7 @@ public class Bags
    * collection contains non-numerical elements, they are ignored. If
    * no numerical element is found in the collection, the function returns 0.
    * 
-   * @since 0.11 
+   * @since 0.10.2 
    */
   @SuppressWarnings("rawtypes")
   public static class MinimumValue extends UnaryFunction<Collection,Number>
@@ -748,7 +748,7 @@ public class Bags
 
   /**
    * Checks if an element is a member of a collection.
-   * @since 0.11
+   * @since 0.10.2
    */
   @SuppressWarnings("rawtypes")
   public static class IsElement extends BinaryFunction<Object,Collection,Boolean>

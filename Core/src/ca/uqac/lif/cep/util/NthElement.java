@@ -99,7 +99,7 @@ public class NthElement extends UnaryFunction<Object, Object>
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Integer printState()
@@ -108,7 +108,7 @@ public class NthElement extends UnaryFunction<Object, Object>
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public NthElement readState(Object o)

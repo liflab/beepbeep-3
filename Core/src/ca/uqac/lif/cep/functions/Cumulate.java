@@ -175,7 +175,7 @@ public class Cumulate extends ApplyFunction
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Object printState()
@@ -184,7 +184,7 @@ public class Cumulate extends ApplyFunction
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   public Cumulate readState(Object o)

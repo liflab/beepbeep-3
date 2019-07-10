@@ -118,7 +118,7 @@ public class CountDecimate extends Decimate
   }
 
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @Override
   protected Object printState()
@@ -131,7 +131,7 @@ public class CountDecimate extends Decimate
   }
   
   /**
-   * @since 0.11
+   * @since 0.10.2
    */
   @SuppressWarnings("unchecked")
   @Override
