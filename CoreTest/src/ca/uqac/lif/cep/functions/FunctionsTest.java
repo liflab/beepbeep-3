@@ -113,6 +113,7 @@ public class FunctionsTest
 		assertEquals(6, evaluate(ptf, new Context(), 6));
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testContext1() 
 	{
@@ -146,7 +147,8 @@ public class FunctionsTest
 		assertEquals(9f, evaluate(f, c, 4));
 	}
 	
-	@Test
+	@SuppressWarnings("unlikely-arg-type")
+  @Test
 	public void testArgumentPlaceholder1() 
 	{
 		StreamVariable aph = new StreamVariable(0);

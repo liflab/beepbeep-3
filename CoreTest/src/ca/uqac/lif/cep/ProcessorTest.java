@@ -119,6 +119,7 @@ public class ProcessorTest
 		assertEquals(0, pt2.getContext("a"));
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testEquals()
 	{

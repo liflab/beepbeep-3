@@ -58,7 +58,11 @@ public class Main
     System.exit(0);
   }
 
-  @SuppressWarnings("unused")
+  /**
+   * Formats the version number. The function takes the major, minor and
+   * revision number and creates a pretty-printed version of these numbers.
+   * @return A formatted version number
+   */
   private static String formatVersion()
   {
     String out = "" + s_majorVersion + "." + s_minorVersion;
