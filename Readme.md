@@ -29,6 +29,8 @@ BeepBeep tries to have as few dependencies as possible. However, the
 following companion library needs to be installed for BeepBeep to
 compile and run:
 
+- [Azrael](https://github.com/sylvainhalle/Azrael), a library for
+  serializing objects in various formats
 - [Petit Poucet](https://github.com/liflab/petitpoucet), a library for
   managing data traceability
 
@@ -64,7 +66,7 @@ system by typing:
 
     ant download-deps
 
-This will put the missing JAR files in the `deps` folder in the project's
+This will put the missing JAR files in the `dep` folder in the project's
 root.
 
 ### Compiling
@@ -141,7 +143,7 @@ About the author                                                   {#about}
 ----------------
 
 BeepBeep 3 was written by [Sylvain Hallé](http://leduotang.ca/sylvain),
-associate professor at Université du Québec à Chicoutimi, Canada. Part of
+full professor at Université du Québec à Chicoutimi, Canada. Part of
 this work has been funded by the Canada Research Chair in Software
 Specification, Testing and Verification and the
 [Natural Sciences and Engineering Research Council
