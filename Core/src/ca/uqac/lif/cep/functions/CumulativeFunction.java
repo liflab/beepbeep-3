@@ -1,108 +1,114 @@
-/*
-    BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ca.uqac.lif.cep.functions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A function with memory.
- * 
- * @author Sylvain Hallé
- * @since 0.1
- */
-public class CumulativeFunction<T> extends UnaryFunction<T, T>
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.cep.Context;
+
+public class CumulativeFunction<T> implements Function
 {
-  /**
-   * The last value returned by the function
-   */
-  private T m_lastValue;
+	protected T m_currentValue;
+	
+	/*@ non_null @*/ protected CumulableFunction<T> m_function;
+	
+	public CumulativeFunction(/*@ non_null @*/ CumulableFunction<T> f)
+	{
+		super();
+		m_function = f;
+		m_currentValue = f.getInitialValue();
+	}
+	
+	@Override
+	public final int getInputArity() 
+	{
+		return 1;
+	}
 
-  /**
-   * The stateless binary function to apply on each call
-   */
-  private BinaryFunction<T, T, T> m_function;
+	@Override
+	public final int getOutputArity() 
+	{
+		return 1;
+	}
 
-  /**
-   * Instantiates a new cumulative function
-   * @param function The function to cumulate
-   */
-  public CumulativeFunction(BinaryFunction<T, T, T> function)
-  {
-    super(function.getInputTypeLeft(), function.getOutputType());
-    m_function = function;
-    m_lastValue = m_function.getStartValue();
-  }
+	@Override
+	public final void evaluate(Object[] inputs, Object[] outputs) 
+	{
+		evaluate(inputs, outputs, null);
+	}
 
-  @Override
-  public T getValue(T x)
-  {
-    if (m_lastValue == null)
-    {
-      // If the function did not provide a start value, use the
-      // first given argument as the start value
-      m_lastValue = x;
-      return x;
-    }
-    T value = m_function.getValue(m_lastValue, x);
-    m_lastValue = value;
-    return value;
-  }
+	@SuppressWarnings("unchecked")
+	@Override
+	public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+	{
+		Object[] ins = new Object[] {m_currentValue, inputs[0]};
+		m_function.evaluate(ins, outputs, context);
+		m_currentValue = (T) outputs[0];
+	}
 
-  @Override
-  public void reset()
-  {
-    m_lastValue = m_function.getStartValue();
-  }
+	@SuppressWarnings("unchecked")
+	@Override
+	public CumulativeFunction<T> duplicate(boolean with_state)
+	{
+		CumulativeFunction<T> new_f = new CumulativeFunction<T>((CumulableFunction<T>) m_function.duplicate(with_state));
+		if (with_state)
+		{
+			new_f.m_currentValue = m_currentValue;
+		}
+		return new_f;
+	}
 
-  @Override
-  public CumulativeFunction<T> duplicate(boolean with_state)
-  {
-    CumulativeFunction<T> cf = new CumulativeFunction<T>(m_function.duplicate(with_state));
-    if (with_state)
-    {
-      cf.m_lastValue = m_lastValue;
-    }
-    return cf;
-  }
-  
-  /**
-   * @since 0.10.2
-   */
-  @Override
-  public Object printState()
-  {
-    List<Object> list = new ArrayList<Object>(2);
-    list.add(m_function);
-    list.add(m_lastValue);
-    return list;
-  }
-  
-  /**
-   * @since 0.10.2
-   */
-  @SuppressWarnings("unchecked")
-  public CumulativeFunction<T> readState(Object o)
-  {
-    List<Object> list = (List<Object>) o;
-    BinaryFunction<T,T,T> func = (BinaryFunction<T,T,T>) list.get(0);
-    CumulativeFunction<T> cf = new CumulativeFunction<T>(func);
-    cf.m_lastValue = (T) list.get(1);
-    return cf;
-  }
+	@Override
+	public Function duplicate() 
+	{
+		return duplicate(true);
+	}
+	
+	public void reset()
+	{
+		m_currentValue = m_function.getInitialValue();
+	}
+
+	@Override
+	public Object print(ObjectPrinter<?> printer) throws PrintException
+	{
+		List<Object> list = new ArrayList<Object>(2);
+		list.add(m_function);
+		list.add(m_currentValue);
+		return printer.print(list);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object read(ObjectReader<?> reader, Object o) throws ReadException
+	{
+		Object state = reader.read(o);
+		if (!(state instanceof List))
+		{
+			throw new ReadException("Unexpected object");
+		}
+		List<?> list = (List<?>) state;
+		if (list.size() != 2)
+		{
+			throw new ReadException("Invalid list format");
+		}
+		Object o_f = list.get(0);
+		if (!(o_f instanceof CumulableFunction))
+		{
+			throw new ReadException("Unexpected object");
+		}
+		try
+		{
+			CumulativeFunction<T> cf = new CumulativeFunction<T>((CumulableFunction<T>) o_f);
+			cf.m_currentValue = (T) list.get(1);
+			return cf;
+		}
+		catch (ClassCastException e)
+		{
+			throw new ReadException(e);
+		}
+	}
 }

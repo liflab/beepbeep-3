@@ -1,914 +1,717 @@
-/*
-    BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ca.uqac.lif.cep;
 
-import ca.uqac.lif.cep.tmf.Source;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.Future;
 
-/**
- * Encapsulates a chain of processors as if it were a single one.
- * 
- * @author Sylvain Hallé
- * @since 0.1
- */
-@SuppressWarnings("squid:S2160")
-public class GroupProcessor extends Processor
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.Printable;
+import ca.uqac.lif.azrael.Readable;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.petitpoucet.Designator;
+import ca.uqac.lif.petitpoucet.Queryable;
+import ca.uqac.lif.petitpoucet.TraceabilityNode;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery;
+import ca.uqac.lif.petitpoucet.Tracer;
+import ca.uqac.lif.petitpoucet.Trackable;
+import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
+
+public class GroupProcessor implements Processor
 {
-  /**
-   * The set of processors included in the group
-   */
-  private HashSet<Processor> m_processors = null;
-
-  /**
-   * The set of sources included in the group
-   */
-  private HashSet<Source> m_sources = null;
-
-  /**
-   * The {@link Pushable}s associated to each of the processor's input traces
-   */
-  private transient List<Pushable> m_inputPushables = null;
-
-  /**
-   * The {@link Pullable}s associated to each of the processor's output traces
-   */
-  private transient List<Pullable> m_outputPullables = null;
-
-  /**
-   * Whether to notify the QueueSource objects in the group to push an event when
-   * a call to push is made on the group
-   */
-  private boolean m_notifySources = false;
-
-  /**
-   * A map between numbers and processor associations. An element (m,(n,p)) of
-   * this map means that the <i>m</i>-th input of the group processor is in fact
-   * the <i>n</i>-th input of processor <code>p</code>
-   */
-  private HashMap<Integer, ProcessorAssociation> m_inputPullableAssociations;
-
-  /**
-   * A map between numbers and processor associations. An element (m,(n,p)) of
-   * this map means that the <i>m</i>-th output of the group processor is in fact
-   * the <i>n</i>-th output of processor <code>p</code>
-   */
-  private HashMap<Integer, ProcessorAssociation> m_outputPushableAssociations;
-
-  /**
-   * Crate a group processor
-   * 
-   * @param in_arity
-   *          The input arity
-   * @param out_arity
-   *          The output arity
-   */
-  public GroupProcessor(int in_arity, int out_arity)
-  {
-    super(in_arity, out_arity);
-    m_processors = new HashSet<Processor>();
-    m_sources = new HashSet<Source>();
-    m_inputPushables = new ArrayList<Pushable>();
-    m_outputPullables = new ArrayList<Pullable>();
-    m_inputPullableAssociations = new HashMap<Integer, ProcessorAssociation>();
-    m_outputPushableAssociations = new HashMap<Integer, ProcessorAssociation>();
-  }
-  
-  /**
-   * No-args constructor. Used only for serialization and deserialization.
-   */
-  protected GroupProcessor()
-  {
-    this(1, 1);
-  }
-
-  /**
-   * Sets the processor to notify the QueueSource objects in the group to push an
-   * event when a call to push is made on the group.
-   * 
-   * @param b
-   *          Set to <tt>true</tt> to notify the sources
-   * @return This group processor
-   */
-  public GroupProcessor notifySources(boolean b)
-  {
-    m_notifySources = b;
-    return this;
-  }
-
-  /**
-   * Tuple made of a number and a processor.
-   * 
-   * @author Sylvain Hallé
-   */
-  protected static class ProcessorAssociation
-  {
-    /**
-     * The number
-     */
-    int m_ioNumber;
-
-    /**
-     * The processor
-     */
-    Processor m_processor;
-
-    /**
-     * Create a new processor association
-     * 
-     * @param number
-     *          The number
-     * @param p
-     *          The processor associated to that number
-     */
-    ProcessorAssociation(int number, Processor p)
-    {
-      super();
-      m_ioNumber = number;
-      m_processor = p;
-    }
-    
-    /**
-     * No-args constructor. Used only for serialization and deserialization.
-     */
-    protected ProcessorAssociation()
-    {
-      super();
-    }
-  }
-
-  /**
-   * Adds a processor to the group
-   * 
-   * @param p
-   *          The processor to add
-   * @return A reference to the current group processor
-   */
-  public synchronized GroupProcessor addProcessor(Processor p)
-  {
-    m_processors.add(p);
-    if (p instanceof Source)
-    {
-      m_sources.add((Source) p);
-    }
-    return this;
-  }
-
-  /**
-   * Adds multiple processors to the group
-   * 
-   * @param procs
-   *          The processors to add
-   * @return A reference to the current group processor
-   */
-  public synchronized GroupProcessor addProcessors(Processor ... procs)
-  {
-    for (Processor p : procs)
-    {
-      m_processors.add(p);
-      if (p instanceof Source)
-      {
-        m_sources.add((Source) p);
-      }
-    }
-    return this;
-  }
-
-  /**
-   * Declares that the <i>i</i>-th input of the group is linked to the <i>j</i>-th
-   * input of processor <code>p</code>
-   * 
-   * @param i
-   *          The number of the input of the group
-   * @param p
-   *          The processor to connect to
-   * @param j
-   *          The number of the input of processor <code>p</code>
-   * @return A reference to the current group processor
-   */
-  public synchronized GroupProcessor associateInput(int i, Processor p, int j)
-  {
-    setPushableInput(i, p.getPushableInput(j));
-    setPullableInputAssociation(i, p, j);
-    return this;
-  }
-
-  /**
-   * Declares that the <i>i</i>-th output of the group is linked to the
-   * <i>j</i>-th output of processor p
-   * 
-   * @param i
-   *          The number of the output of the group
-   * @param p
-   *          The processor to connect to
-   * @param j
-   *          The number of the output of processor <code>p</code>
-   * @return A reference to the current group processor
-   */
-  public synchronized GroupProcessor associateOutput(int i, Processor p, int j)
-  {
-    setPullableOutput(i, p.getPullableOutput(j));
-    setPushableOutputAssociation(i, p, j);
-    return this;
-  }
-
-  @Override
-  public synchronized ProxyPushable getPushableInput(int index)
-  {
-    return (ProxyPushable) m_inputPushables.get(index);
-  }
-
-  @Override
-  public synchronized Pullable getPullableOutput(int index)
-  {
-    return new ProxyPullable(m_outputPullables.get(index), index);
-  }
-
-  @Override
-  public final synchronized void setPullableInput(int i, Pullable p)
-  {
-    ProcessorAssociation a = m_inputPullableAssociations.get(i);
-    a.m_processor.setPullableInput(a.m_ioNumber, p);
-  }
-
-  public final synchronized void setPushableOutputAssociation(int i, Processor p, int j)
-  {
-    m_outputPushableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
-  }
-
-  @Override
-  public final synchronized void setPushableOutput(int i, Pushable p)
-  {
-    ProcessorAssociation a = m_outputPushableAssociations.get(i);
-    a.m_processor.setPushableOutput(a.m_ioNumber, p);
-  }
-
-  public final synchronized void setPullableInputAssociation(int i, Processor p, int j)
-  {
-    m_inputPullableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
-  }
-
-  /**
-   * Sets an input pushable for this processor
-   * @param i The position
-   * @param p The pushable
-   */
-  public final synchronized void setPushableInput(int i, Pushable p)
-  {
-    if (i == m_inputPushables.size())
-    {
-      m_inputPushables.add(new ProxyPushable(p, i));
-    }
-    else
-    {
-      m_inputPushables.set(i, new ProxyPushable(p, i));
-    }
-  }
-
-  /**
-   * Sets an output pullable for this processor
-   * @param i The index of the pullable
-   * @param p The pullable
-   */
-  public final synchronized void setPullableOutput(int i, Pullable p)
-  {
-    if (i == m_outputPullables.size())
-    {
-      m_outputPullables.add(p);
-    }
-    else
-    {
-      m_outputPullables.set(i, p);
-    }
-  }
-
-  @Override
-  public final synchronized Pushable getPushableOutput(int index)
-  {
-    ProcessorAssociation a = m_outputPushableAssociations.get(index);
-    return a.m_processor.getPushableOutput(a.m_ioNumber);
-  }
-
-  @Override
-  public final synchronized Pullable getPullableInput(int index)
-  {
-    ProcessorAssociation a = m_inputPullableAssociations.get(index);
-    return a.m_processor.getPullableInput(a.m_ioNumber);
-  }
-
-  /**
-   * Clones the contents of the current {@link GroupProcessor} into a new group
-   * 
-   * @param group
-   *          The {@link GroupProcessor} to clone into. When the method is called,
-   *          it is expected to be empty.
-   * @param with_state
-   *          It set to <tt>true</tt>, each processor in the new group has the same
-   *          events in its input/output buffers as in the original. Otherwise,
-   *          the queues are empty.
-   * @return An association between IDs and the new processors that have been put
-   *         into the group
-   */
-  public synchronized Map<Integer, Processor> cloneInto(GroupProcessor group, boolean with_state)
-  {
-    super.duplicateInto(group);
-    group.m_notifySources = m_notifySources;
-    Map<Integer, Processor> new_procs = new HashMap<Integer, Processor>();
-    Processor start = null;
-    // Clone every processor of the original group
-    for (Processor p : m_processors)
-    {
-      if (start == null && p.getOutputArity() > 0)
-      {
-        start = p;
-      }
-      Processor clone_p = copyProcessor(p, with_state);
-      new_procs.put(p.getId(), clone_p);
-      group.addProcessor(clone_p);
-    }
-    // Re-pipe the inputs and outputs like in the original group
-    associateEndpoints(group, new_procs);
-    // Re-pipe the internal processors like in the original group
-    CopyCrawler cc = new CopyCrawler(new_procs);
-    cc.crawl(start);
-    return new_procs;
-  }
-
-  /**
-   * Associates the endpoints of a new {@link GroupProcessor} like the ones in the
-   * current group
-   * 
-   * @param group
-   *          The new group
-   * @param new_procs
-   *          An association between processor IDs and processors
-   */
-  protected synchronized void associateEndpoints(GroupProcessor group,
-      Map<Integer, Processor> new_procs)
-  {
-    // Re-pipe the inputs like in the original group
-    for (Map.Entry<Integer, ProcessorAssociation> entry : m_inputPullableAssociations.entrySet())
-    {
-      int input_number = entry.getKey();
-      ProcessorAssociation pa = entry.getValue();
-      Processor clone_p = new_procs.get(pa.m_processor.getId());
-      group.associateInput(input_number, clone_p, pa.m_ioNumber);
-    }
-    // Re-pipe the outputs like in the original group
-    for (Map.Entry<Integer, ProcessorAssociation> entry : m_outputPushableAssociations.entrySet())
-    {
-      int output_number = entry.getKey();
-      ProcessorAssociation pa = entry.getValue();
-      Processor clone_p = new_procs.get(pa.m_processor.getId());
-      group.associateOutput(output_number, clone_p, pa.m_ioNumber);
-    }
-  }
-
-  /**
-   * Creates a copy of a processor.
-   * 
-   * @param p
-   *          The processor to copy. Nothing is changed on this processor.
-   * @param with_state
-   *          If set to <tt>true</tt>, the new copy has the same events in its
-   *          input/output buffers as the original. Otherwise, the queues are
-   *          empty.
-   * @return The new processor
-   */
-  protected static synchronized Processor copyProcessor(Processor p, boolean with_state)
-  {
-    Processor clone_p = p.duplicate(with_state);
-    clone_p.setContext(p.m_context);
-    if (with_state)
-    {
-      // Put same content in input and output queues
-      for (int i = 0; i < p.m_inputQueues.length; i++)
-      {
-        clone_p.m_inputQueues[i].addAll(p.m_inputQueues[i]);
-      }
-      for (int i = 0; i < p.m_outputQueues.length; i++)
-      {
-        clone_p.m_outputQueues[i].addAll(p.m_outputQueues[i]);
-      }
-    }
-    return clone_p;
-  }
-
-  @Override
-  public synchronized GroupProcessor duplicate(boolean with_state)
-  {
-    GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
-    cloneInto(group, with_state);
-    return group;
-  }
-
-  /**
-   * Crawler that creates copies (clones) of whatever it encounters on its way and
-   * re-pipes processors as in the original group.
-   * <p>
-   * <strong>Caveat emptor</strong>: the starting point of the crawl cannot be a
-   * processor with output arity of 0. Otherwise, none of the processors in the
-   * new group will be piped together.
-   * 
-   * @author Sylvain Hallé
-   */
-  protected static class CopyCrawler extends PipeCrawler
-  {
-    private final Map<Integer, Processor> m_correspondences;
-
-    public CopyCrawler(Map<Integer, Processor> correspondences)
-    {
-      super();
-      m_correspondences = new HashMap<Integer, Processor>();
-      m_correspondences.putAll(correspondences);
-    }
-
-    @Override
-    public synchronized void crawl(Processor start)
-    {
-      if (start.getOutputArity() == 0)
-      {
-        throw new UnsupportedOperationException(
-            "A copy crawl cannot start from a processor of output arity 0.");
-      }
-      super.crawl(start);
-    }
-
-    @Override
-    public synchronized void visit(Processor p)
-    {
-      int out_arity = p.getOutputArity();
-      for (int i = 0; i < out_arity; i++)
-      {
-        Pushable push = p.getPushableOutput(i);
-        if (push != null)
-        {
-          Processor target = push.getProcessor();
-          int j = push.getPosition();
-          Processor new_p;
-          Processor new_target;
-          synchronized (m_correspondences)
-          {
-            new_p = m_correspondences.get(p.getId());
-            new_target = m_correspondences.get(target.getId());
-          }
-          if (new_p != null && new_target != null)
-          {
-            // new_p and new_target may be null if they refer to a processor
-            // outside of the group
-            Connector.connect(new_p, i, new_target, j);
-          }
-        }
-      }
-    }
-  }
-
-  @Override
-  public synchronized void setContext(Context context)
-  {
-    super.setContext(context);
-    for (Processor p : m_processors)
-    {
-      p.setContext(context);
-    }
-  }
-
-  @Override
-  public synchronized void setContext(String key, Object value)
-  {
-    super.setContext(key, value);
-    for (Processor p : m_processors)
-    {
-      p.setContext(key, value);
-    }
-  }
-
-  public class ProxyPullable implements Pullable
-  {
-    protected Pullable m_pullable;
-
-    @Override
-    public synchronized void remove()
-    {
-      // Cannot remove an event on a pullable
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public synchronized Object pullSoft()
-    {
-      return m_pullable.pullSoft();
-    }
-
-    @Override
-    public synchronized Object pull()
-    {
-      return m_pullable.pull();
-    }
-
-    @Override
-    public synchronized Object next()
-    {
-      return m_pullable.next();
-    }
-
-    @Override
-    public synchronized NextStatus hasNextSoft()
-    {
-      return m_pullable.hasNextSoft();
-    }
-
-    @Override
-    public synchronized boolean hasNext()
-    {
-      return m_pullable.hasNext();
-    }
-
-    @Override
-    public synchronized Processor getProcessor()
-    {
-      return GroupProcessor.this;
-    }
-
-    @Override
-    public synchronized int getPosition()
-    {
-      return m_position;
-    }
-
-    protected int m_position = 0;
-
-    /**
-     * Creates a new proxy pullable
-     * @param p The pullable to create the proxy from
-     * @param position The position
-     */
-    public ProxyPullable(Pullable p, int position)
-    {
-      super();
-      synchronized (this)
-      {
-        m_pullable = p;
-        m_position = position;
-      }
-    }
-
-    @Override
-    public synchronized Iterator<Object> iterator()
-    {
-      return this;
-    }
-
-    @Override
-    public synchronized void start()
-    {
-      m_pullable.start();
-    }
-
-    @Override
-    public synchronized void stop()
-    {
-      m_pullable.stop();
-    }
-
-    @Override
-    public synchronized void dispose()
-    {
-      m_pullable.dispose();
-    }
-  }
-
-  public class ProxyPushable implements Pushable
-  {
-    /**
-     * The {@link Pushable} of which this one is a proxy
-     */
-    private Pushable m_pushable;
-
-    /**
-     * The position of this pushable in the group processor
-     */
-    private int m_position = 0;
-
-    /**
-     * Creates a new proxy pushable
-     * @param p The pushable to create the proxy from
-     * @param position The position
-     */
-    public ProxyPushable(Pushable p, int position)
-    {
-      super();
-      synchronized (this)
-      {
-        m_pushable = p;
-        m_position = position;
-      }
-    }
-
-    @Override
-    public synchronized Pushable push(Object o)
-    {
-      m_pushable.push(o);
-      notifySources();
-      return m_pushable;
-    }
-
-    @Override
-    public synchronized Future<Pushable> pushFast(Object o)
-    {
-      push(o);
-      return Pushable.NULL_FUTURE;
-    }
-
-    /**
-     * Notifies each source in the group to push an event
-     */
-    protected void notifySources()
-    {
-      if (m_notifySources)
-      {
-        for (Source s : m_sources)
-        {
-          s.push();
-        }
-      }
-    }
-
-    @Override
-    public void notifyEndOfTrace() throws PushableException
-    {
-      // Nothing to do if the Pushable has already been notified
-      if (m_hasBeenNotifiedOfEndOfTrace)
-      {
-        return;
-      }
-      m_hasBeenNotifiedOfEndOfTrace = true;
-
-      // Notify the end of trace on all the inner Pushables
-      for (Pushable p : m_inputPushables)
-      {
-        ((ProxyPushable) p).m_pushable.notifyEndOfTrace();
-      }
-      
-      // Collect from processor the events to generate for the end
-      Queue<Object[]> temp_queue = new ArrayDeque<Object[]>();
-      boolean outs;
-      try
-      {
-        outs = onEndOfTrace(temp_queue);
-      }
-      catch (ProcessorException e)
-      {
-        throw new PushableException(e);
-      }
-      outputEvent(temp_queue, outs);
-
-      // Notify the output pushables of the end of the trace
-      for (int i = 0; i < m_outputPushables.length; i++)
-      {
-        ProcessorAssociation pa = m_outputPushableAssociations.get(i);
-        Pushable p = pa.m_processor.getPushableOutput(pa.m_ioNumber);
-        if (p == null)
-        {
-          throw new PushableException("Output " + i
-              + " of this processor is connected to nothing", getProcessor());
-        }
-        p.notifyEndOfTrace();
-      }
-    }
-
-    /**
-     * Pushes output event (if any) to the corresponding output {@link Pushable}s.
-     *
-     * @param temp_queue The queue of object fronts to push
-     * @param outs Set to <tt>true</tt> to enable the output of an event,
-     * <tt>false</tt> otherwise.
-     */
-    private final void outputEvent(Queue<Object[]> temp_queue, boolean outs)
-    {
-      if (outs && !temp_queue.isEmpty())
-      {
-        for (Object[] evt : temp_queue)
-        {
-          if (evt != null)
-          {
-            for (int i = 0; i < m_outputPushables.length; i++)
-            {
-              Pushable p = m_outputPushables[i];
-              if (p == null)
-              {
-                throw new PushableException(
-                    "Output " + i + " of this processor is connected to nothing", getProcessor());
-              }
-              p.push(evt[i]);
-            }
-          }
-        }
-      }
-    }
-
-    @Override
-    public synchronized Processor getProcessor()
-    {
-      return GroupProcessor.this;
-    }
-
-    @Override
-    public synchronized int getPosition()
-    {
-      return m_position;
-    }
-  }
-
-  @Override
-  public synchronized void start()
-  {
-    super.start();
-    for (Processor p : m_processors)
-    {
-      p.start();
-    }
-  }
-
-  @Override
-  public synchronized void stop()
-  {
-    super.stop();
-    for (Processor p : m_processors)
-    {
-      p.stop();
-    }
-  }
-
-  /**
-   * Gets the processor associated to the i-th input of the group
-   * 
-   * @param index
-   *          The index
-   * @return The processor, or <tt>null</tt> if no processor is associated to this
-   *         index
-   */
-  public Processor getAssociatedInput(int index)
-  {
-    if (!m_inputPullableAssociations.containsKey(index))
-    {
-      return null;
-    }
-    return m_inputPullableAssociations.get(index).m_processor;
-  }
-
-  @Override
-  public boolean onEndOfTrace(Queue<Object[]> outputs)
-  {
-    return false;
-  }
-  
-  /**
-   * @since 0.10.2
-   */
-  @Override
-  public Object printState()
-  {
-    Map<String,Object> contents = new HashMap<String,Object>();
-    contents.put("in-arity", getInputArity());
-    contents.put("out-arity", getOutputArity());
-    contents.put("processors", m_processors);
-    contents.put("sources", m_sources);
-    contents.put("notify-sources", m_notifySources);
-    Set<List<Integer>> in_assocs = new HashSet<List<Integer>>();
-    for (Map.Entry<Integer,ProcessorAssociation> entry : m_inputPullableAssociations.entrySet())
-    {
-      List<Integer> list = new ArrayList<Integer>(3);
-      list.add(entry.getKey());
-      ProcessorAssociation pa = entry.getValue();
-      list.add(pa.m_ioNumber);
-      list.add(pa.m_processor.getId());
-      in_assocs.add(list);
-    }
-    contents.put("input-associations", in_assocs);
-    Set<List<Integer>> out_assocs = new HashSet<List<Integer>>();
-    for (Map.Entry<Integer,ProcessorAssociation> entry : m_outputPushableAssociations.entrySet())
-    {
-      List<Integer> list = new ArrayList<Integer>(3);
-      list.add(entry.getKey());
-      ProcessorAssociation pa = entry.getValue();
-      list.add(pa.m_ioNumber);
-      list.add(pa.m_processor.getId());
-      out_assocs.add(list);
-    }
-    contents.put("output-associations", out_assocs);
-    Set<Connector.Connection> connections = new HashSet<Connector.Connection>();
-    for (Processor p : m_processors)
-    {
-      connections.addAll(Connector.getConnections(p));
-    }
-    contents.put("connections", connections);
-    return contents;
-  }
-  
-  /**
-   * @since 0.10.2
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public GroupProcessor readState(Object o) throws ProcessorException
-  {
-    Map<String,Object> contents = (HashMap<String,Object>) o;
-    // Create processor
-    GroupProcessor gp = new GroupProcessor(((Number) contents.get("in-arity")).intValue(), 
-        ((Number) contents.get("out-arity")).intValue());
-    // Add internal processors (regular and source)
-    Map<Integer,Processor> procs = new HashMap<Integer,Processor>();
-    for (Processor p : (Set<Processor>) contents.get("processors"))
-    {
-      gp.addProcessor(p);
-      procs.put(p.getId(), p);
-    }
-    for (Processor p : (Set<Processor>) contents.get("sources"))
-    {
-      gp.addProcessor(p);
-      procs.put(p.getId(), p);
-    }
-    // Connect each of them according to the connections
-    Set<Connector.Connection> connections = (Set<Connector.Connection>) contents.get("connections");
-    for (Connector.Connection conn : connections)
-    {
-      Processor p1 = procs.get(conn.m_sourceProcessorId);
-      Processor p2 = procs.get(conn.m_destinationProcessorId);
-      if (p1 == null || p2 == null)
-      {
-        // Ignore
-        continue;
-      }
-      Connector.connect(p1, conn.m_sourcePipeNumber, p2, conn.m_destinationPipeNumber);
-    }
-    // Associate group's inputs to processor inputs
-    for (List<Integer> list : ((Set<List<Integer>>) contents.get("input-associations")))
-    {
-      int io_1 = list.get(0);
-      int io_2 = list.get(1);
-      int p_id = list.get(2);
-      if (!procs.containsKey(p_id))
-      {
-        // Ignore
-        continue;
-      }
-      Processor p = procs.get(p_id);
-      gp.associateInput(io_1, p, io_2);
-    }
-    // Associate group's outputs to processor outputs
-    for (List<Integer> list : ((Set<List<Integer>>) contents.get("output-associations")))
-    {
-      int io_1 = list.get(0);
-      int io_2 = list.get(1);
-      int p_id = list.get(2);
-      if (!procs.containsKey(p_id))
-      {
-        // Ignore
-        continue;
-      }
-      Processor p = procs.get(p_id);
-      gp.associateOutput(io_1, p, io_2);
-    }
-    gp.m_notifySources = (Boolean) contents.get("notify-sources");
-    return gp;
-  }
-  
-  @Override
-  public void reset()
-  {
-    super.reset();
-    for (Processor p : m_processors)
-    {
-      p.reset();
-    }
-    for (Source p : m_sources)
-    {
-      p.reset();
-    }
-
-  }
+	/*@ non_null @*/ protected Context m_context;
+
+	/*@ non_null @*/ protected Set<Processor> m_innerProcessors;
+
+	/*@ non_null @*/ protected InputProxyConnection[] m_inputPlaceholders;
+
+	/*@ non_null @*/ protected OutputProxyConnection[] m_outputPlaceholders;
+	
+	static final transient String s_processorsKey = "processors";
+	
+	static final transient String s_connectionsKey = "connections";
+	
+	static final transient String s_arityKey = "arity";
+	
+	static final transient String s_contextKey = "context";
+
+	public GroupProcessor(int in_arity, int out_arity)
+	{
+		super();
+		m_context = new Context();
+		m_innerProcessors = new HashSet<Processor>();
+		m_inputPlaceholders = new InputProxyConnection[in_arity];
+		for (int i = 0; i < in_arity; i++)
+		{
+			m_inputPlaceholders[i] = new InputProxyConnection(i);
+		}
+		m_outputPlaceholders = new OutputProxyConnection[out_arity];
+		for (int i = 0; i < out_arity; i++)
+		{
+			m_outputPlaceholders[i] = new OutputProxyConnection(i);
+		}
+	}
+
+	/**
+	 * @deprecated This method has no effect as of version 0.11. As for any
+	 * other processor chain, a {@link GroupProcessor} that contains sources
+	 * cannot be used in push mode.
+	 * @param b Whether to notify the sources 
+	 * @return This group
+	 */
+	@Deprecated
+	public final GroupProcessor notifySources(boolean b)
+	{
+		throw new UnsupportedOperationException("Method GroupProcessor.notifySources is no longer supported");
+	}
+
+	public void add(Processor ... processors)
+	{
+		for (Processor p : processors)
+		{
+			m_innerProcessors.add(p);
+		}
+	}
+
+	public void add(Collection<Processor> processors)
+	{
+		m_innerProcessors.addAll(processors);
+	}
+
+	/**
+	 * @deprecated Use {@link #add(Processor...)}
+	 * @param processors
+	 */
+	public final void addProcessors(Processor ... processors)
+	{
+		add(processors);
+	}
+
+	@Override
+	public void setToInput(int index, CircuitConnection connection)
+	{
+		setPullableInput(index, (Pullable) connection);
+	}
+
+	@Override
+	public void setToOutput(int index, CircuitConnection connection) 
+	{
+		setPushableOutput(index, (Pushable) connection);
+	}
+
+	@Override
+	public int getInputArity() 
+	{
+		return m_inputPlaceholders.length;
+	}
+
+	@Override
+	public int getOutputArity() 
+	{
+		return m_outputPlaceholders.length;
+	}
+
+	@Override
+	public Object getContext(String key) 
+	{
+		return m_context.get(key);
+	}
+
+	@Override
+	public void setContext(String key, Object value)
+	{
+		m_context.put(key, value);
+	}
+
+	public void associateInput(int i, Processor p, int j)
+	{
+		m_inputPlaceholders[i].setPushable(p.getPushableInput(j));
+		p.setPullableInput(j, m_inputPlaceholders[i]);
+	}
+
+	public void associateOutput(int i, Processor p, int j)
+	{
+		m_outputPlaceholders[i].setPullable(p.getPullableOutput(j));
+		p.setPushableOutput(j, m_outputPlaceholders[i]);
+	}
+
+	@Override
+	public void start()
+	{
+		for (Processor p : m_innerProcessors)
+		{
+			p.start();
+		}
+	}
+
+	@Override
+	public void stop()
+	{
+		for (Processor p : m_innerProcessors)
+		{
+			p.stop();
+		}
+	}
+
+	@Override
+	public GroupProcessor duplicate(boolean with_state) 
+	{
+		GroupProcessor gp = new GroupProcessor(m_inputPlaceholders.length, m_outputPlaceholders.length);
+		return copyInto(gp, with_state, new HashMap<Processor,Processor>());
+	}
+
+	protected GroupProcessor copyInto(GroupProcessor gp, boolean with_state, Map<Processor,Processor> correspondences)
+	{
+		if (with_state)
+		{
+			gp.m_context.putAll(m_context);
+		}
+		for (Processor p : m_innerProcessors)
+		{
+			Processor p_dup = p.duplicate(with_state);
+			correspondences.put(p, p_dup);
+			gp.add(p_dup);
+		}
+		for (Map.Entry<Processor,Processor> e : correspondences.entrySet())
+		{
+			Processor p_src = e.getKey();
+			Processor p_dst = e.getValue();
+			for (int i = 0; i < p_src.getInputArity(); i++)
+			{
+				CircuitConnection cc = p_src.getInputConnection(i);
+				if (cc == null)
+				{
+					throw new ProcessorException("Processor " + p_src + " has no connection on input pipe " + i);
+				}
+				Processor src_upstream = (Processor) cc.getObject();
+				if (src_upstream == this)
+				{
+					// This happens when processor is connected to the group's ProxyConnection
+					continue;
+				}
+				Processor dst_upstream = correspondences.get(src_upstream);;
+				assert dst_upstream != null;
+				Connector.connect(dst_upstream, cc.getIndex(), p_dst, i);
+			}
+		}
+		for (int i = 0; i < m_inputPlaceholders.length; i++)
+		{
+			ProxyConnection pc = m_inputPlaceholders[i];
+			Pushable push = pc.getPushable();
+			if (push != null)
+			{
+				Processor target_p = (Processor) push.getObject();
+				gp.associateInput(i, correspondences.get(target_p), pc.getIndex());
+			}
+		}
+		for (int i = 0; i < m_outputPlaceholders.length; i++)
+		{
+			ProxyConnection pc = m_outputPlaceholders[i];
+			Pullable pull = pc.getPullable();
+			if (pull != null)
+			{
+				Processor source_p = (Processor) pull.getObject();
+				gp.associateOutput(i, correspondences.get(source_p), pc.getIndex());
+			}
+		}
+		return gp;
+	}
+
+	@Override
+	public final GroupProcessor duplicate() 
+	{
+		return duplicate(false);
+	}
+
+	@Override
+	public Pushable getPushableInput(int index) 
+	{
+		try
+		{
+			return m_inputPlaceholders[index];
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new ProcessorException(e);
+		}
+	}
+
+	@Override
+	public final Pushable getPushableInput()
+	{
+		return getPushableInput(0);
+	}
+
+	@Override
+	public Pullable getPullableOutput(int index) 
+	{
+		try
+		{
+			return m_outputPlaceholders[index];
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new ProcessorException(e);
+		}
+	}
+
+	@Override
+	public final Pullable getPullableOutput() 
+	{
+		return getPullableOutput(0);
+	}
+
+	@Override
+	public void setPullableInput(int index, Pullable p) 
+	{
+		try
+		{
+			m_inputPlaceholders[index].setPullable(p);
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new ProcessorException(e);
+		}
+	}
+
+	@Override
+	public void setPushableOutput(int index, Pushable p) 
+	{
+		try
+		{
+			m_outputPlaceholders[index].setPushable(p);
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new ProcessorException(e);
+		}
+	}
+
+	@Override
+	public void reset() 
+	{
+		for (Processor p : m_innerProcessors)
+		{
+			p.reset();
+		}
+	}
+
+	protected abstract class ProxyConnection implements Pullable, Pushable
+	{
+		protected final int m_index;
+
+		/*@ null @*/ protected Pushable m_pushable;
+
+		/*@ null @*/ protected Pullable m_pullable;
+
+		public ProxyConnection(int index)
+		{
+			super();
+			m_index = index;
+		}
+
+		@Override
+		/*@ pure @*/ public int getIndex()
+		{
+			return m_index;
+		}
+
+		public void setPullable(/*@ non_null @*/ Pullable p)
+		{
+			m_pullable = p;
+		}
+
+		/*@ pure null @*/ public Pullable getPullable()
+		{
+			return m_pullable;
+		}
+
+		public void setPushable(/*@ non_null @*/ Pushable p)
+		{
+			m_pushable = p;
+		}
+
+		/*@ pure null @*/ public Pushable getPushable()
+		{
+			return m_pushable;
+		}
+
+		@Override
+		/*@ pure non_null @*/ public Processor getObject() 
+		{
+			return GroupProcessor.this;
+		}
+
+		@Override
+		public void reset()
+		{
+			// Nothing to do
+		}
+
+		@Override
+		public void push(Object o) 
+		{
+			m_pushable.push(o);
+		}
+
+		@Override
+		public Object pull()
+		{
+			return m_pullable.pull();
+		}
+
+		@Override
+		/*@ pure @*/ public boolean hasNext() 
+		{
+			return m_pullable.hasNext();
+		}
+
+		@Override
+		public Object next() 
+		{
+			return pull();
+		}
+
+		@Override
+		public void end() 
+		{
+			m_pushable.end();
+		}
+		
+		@Override
+		public NextStatus hasNextSoft()
+		{
+			if (hasNext())
+			{
+				return NextStatus.YES;
+			}
+			return NextStatus.NO;
+		}
+
+		@Override
+		public Object pullSoft() 
+		{
+			return pull();
+		}
+	}
+
+	protected class InputProxyConnection extends ProxyConnection
+	{
+		public InputProxyConnection(int index)
+		{
+			super(index);
+		}	
+
+		@Override
+		/*@ pure nullable @*/ public Class<?> getType()
+		{
+			if (m_pushable != null)
+			{
+				return m_pushable.getType();
+			}
+			return null;
+		}
+	}
+
+	protected class OutputProxyConnection extends ProxyConnection
+	{
+		public OutputProxyConnection(int index)
+		{
+			super(index);
+		}	
+
+		@Override
+		/*@ pure nullable @*/ public Class<?> getType()
+		{
+			if (m_pullable != null)
+			{
+				return m_pullable.getType();
+			}
+			return null;
+		}
+
+		@Override
+		public void push(Object o) 
+		{
+			m_pushable.push(o);
+		}
+	}
+
+	@Override
+	public CircuitConnection getInputConnection(int index) 
+	{
+		try
+		{
+			return m_inputPlaceholders[index].m_pullable;
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new ProcessorException(e);
+		}
+	}
+
+	@Override
+	public CircuitConnection getOutputConnection(int index) 
+	{
+		try
+		{
+			return m_outputPlaceholders[index].m_pushable;
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			throw new ProcessorException(e);
+		}
+	}
+
+	@Override
+	public Object print(ObjectPrinter<?> printer) throws PrintException
+	{
+		return print(printer, new ArrayList<Processor>(m_innerProcessors.size()));
+	}
+
+	Object print(ObjectPrinter<?> printer, List<Processor> proc_list) throws PrintException
+	{
+		List<ProcessorConnection> connections = new ArrayList<ProcessorConnection>();
+		List<Object> printed_procs = new ArrayList<Object>(m_innerProcessors.size());
+		Map<Processor,Integer> positions = new HashMap<Processor,Integer>();
+		{
+			int i = 0;
+			for (Processor proc : m_innerProcessors)
+			{
+				proc_list.add(proc);
+				printed_procs.add(printer.print(proc));
+				positions.put(proc, i);
+				i++;
+			}
+		}
+		for (int i = 0; i < proc_list.size(); i++)
+		{
+			Processor proc = proc_list.get(i);
+			for (int j = 0; j < proc.getInputArity(); j++)
+			{
+				Pullable pl = (Pullable) proc.getInputConnection(j);
+				if (pl == null || pl instanceof InputProxyConnection)
+				{
+					// We handle ProxyConnections later
+					continue;
+				}
+				Processor proc_up = pl.getObject();
+				int src_index = positions.get(proc_up);
+				ProcessorConnection pc = new ProcessorConnection(src_index, pl.getIndex(), i, j);
+				connections.add(pc);
+			}
+		}
+		for (int i = 0; i < m_inputPlaceholders.length; i++)
+		{
+			InputProxyConnection ipc = m_inputPlaceholders[i];
+			Pushable ph_dest = ipc.getPushable();
+			if (ph_dest == null)
+			{
+				continue;
+			}
+			Processor proc_dest = ph_dest.getObject();
+			ProcessorConnection pc = new ProcessorConnection(-1, i, positions.get(proc_dest), ph_dest.getIndex());
+			connections.add(pc);
+		}
+		for (int i = 0; i < m_outputPlaceholders.length; i++)
+		{
+			OutputProxyConnection opc = m_outputPlaceholders[i];
+			Pullable pl_dest = opc.getPullable();
+			if (pl_dest == null)
+			{
+				continue;
+			}
+			Processor proc_dest = pl_dest.getObject();
+			if (proc_dest == null)
+			{
+				continue;
+			}
+			ProcessorConnection pc = new ProcessorConnection(positions.get(proc_dest), pl_dest.getIndex(), -1, i);
+			connections.add(pc);
+		}
+		List<Integer> arity = new ArrayList<Integer>(2);
+		arity.add(m_inputPlaceholders.length);
+		arity.add(m_outputPlaceholders.length);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put(s_arityKey, arity);
+		map.put(s_processorsKey, printed_procs);
+		map.put(s_connectionsKey, connections);
+		map.put(s_contextKey, m_context);
+		return map;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object read(ObjectReader<?> reader, Object o) throws ReadException
+	{
+		Object r_o = reader.read(o);
+		if (!(r_o instanceof Map))
+		{
+			throw new ReadException("Unexpected object type");
+		}
+		Map<?,?> map = (Map<?,?>) r_o;
+		if (!map.containsKey(s_processorsKey) || !map.containsKey(s_connectionsKey) ||
+				!map.containsKey(s_arityKey) || !map.containsKey(s_contextKey))
+		{
+			throw new ReadException("Unexpected map format");
+		}
+		try
+		{
+			List<Integer> arity_list = (List<Integer>) map.get(s_arityKey);
+			List<Processor> proc_list = (List<Processor>) map.get(s_processorsKey);
+			List<ProcessorConnection> connections = (List<ProcessorConnection>) map.get(s_connectionsKey);
+			Context context = (Context) map.get(s_contextKey);
+			if (arity_list == null || proc_list == null || connections == null || context == null)
+			{
+				throw new ReadException("One of the deserialized elements is null");
+			}
+			GroupProcessor gp = getInstance(arity_list.get(0), arity_list.get(1));
+			gp.m_innerProcessors.addAll(proc_list);
+			for (ProcessorConnection pc : connections)
+			{
+				if (pc.m_sourceId == -1)
+				{
+					Processor p_dest = getOrNull(proc_list, pc.m_destinationId);
+					if (p_dest == null)
+					{
+						throw new ReadException("Cannot find deserialized processor inside group");
+					}
+					gp.associateInput(pc.m_sourceIndex, p_dest, pc.m_destinationIndex);
+				}
+				else if (pc.m_destinationId == -1)
+				{
+					Processor p_src = getOrNull(proc_list, pc.m_sourceId);
+					if (p_src == null)
+					{
+						throw new ReadException("Cannot find deserialized processor inside group");
+					}
+					gp.associateOutput(pc.m_sourceIndex, p_src, pc.m_destinationIndex);
+				}
+				else
+				{
+					Processor p1 = getOrNull(proc_list, pc.m_sourceId);
+					Processor p2 = getOrNull(proc_list, pc.m_destinationId);
+					if (p1 == null || p2 == null)
+					{
+						throw new ReadException("Cannot find deserialized processor inside group");
+					}
+					Connector.connect(p1, pc.m_sourceIndex, p2, pc.m_destinationIndex);					
+				}
+			}
+			gp.m_context.putAll(context);
+			return gp;
+		}
+		catch (ClassCastException cce)
+		{
+			throw new ReadException(cce);
+		}
+	}
+	
+	/**
+	 * Gets an instance of {@link GroupProcessor}
+	 * @param in_arity The input arity of the processor
+	 * @param out_arity The output arity of the processor
+	 * @return A new instance
+	 */
+	protected GroupProcessor getInstance(int in_arity, int out_arity)
+	{
+		return new GroupProcessor(in_arity, out_arity);
+	}
+	
+	/**
+	 * Bound-safe element list retrieval.
+	 * @param list The list
+	 * @param index The index in the list
+	 * @return The element at position <tt>index</tt> or <tt>null</tt> if
+	 * the index is out of bounds
+	 */
+	protected static Processor getOrNull(List<Processor> list, int index)
+	{
+		try
+		{
+			return list.get(index);
+		}
+		catch (IndexOutOfBoundsException e)
+		{
+			return null;
+		}
+	}
+
+	/**
+	 * Auxiliary object representing the connection of a processor's output
+	 * pipe to the input pipe of another. It is used during the serialization
+	 * of a group.
+	 */
+	protected static class ProcessorConnection implements Printable, Readable
+	{
+		int m_sourceId;
+
+		int m_sourceIndex;
+
+		int m_destinationId;
+
+		int m_destinationIndex;
+
+		public ProcessorConnection(int src_id, int src_index, int dst_id, int dst_index)
+		{
+			super();
+			m_sourceId = src_id;
+			m_sourceIndex = src_index;
+			m_destinationId = dst_id;
+			m_destinationIndex = dst_index;
+		}
+
+		public static ProcessorConnection readState(Object o) throws ReadException 
+		{
+			try
+			{
+				@SuppressWarnings("unchecked")
+				List<Integer> list = (List<Integer>) o;
+				return new ProcessorConnection(list.get(0), list.get(1), list.get(2), list.get(3));
+			}
+			catch (ClassCastException cce)
+			{
+				throw new ReadException(cce);
+			}
+			catch (IndexOutOfBoundsException cce)
+			{
+				throw new ReadException(cce);
+			}
+		}
+
+		public List<Integer> printState() throws PrintException
+		{
+			List<Integer> list = new ArrayList<Integer>(4);
+			list.add(m_sourceId);
+			list.add(m_sourceIndex);
+			list.add(m_destinationId);
+			list.add(m_destinationIndex);
+			return list;
+		}
+
+		@Override
+		public ProcessorConnection read(ObjectReader<?> reader, Object o) throws ReadException 
+		{
+			Object r_o = reader.read(o);
+			return readState(r_o);
+		}
+
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException 
+		{
+			return printer.print(printState());
+		}
+	}
+	
+	@Override
+	/*@ pure null @*/ public Queryable getQueryable()
+	{
+		// TODO
+		return null;
+	}
 }

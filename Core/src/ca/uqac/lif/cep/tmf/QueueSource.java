@@ -1,300 +1,294 @@
-/*
-    BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.Connector.Variant;
-import ca.uqac.lif.petitpoucet.DirectValue;
-import ca.uqac.lif.petitpoucet.NodeFunction;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-/**
- * Source whose input is a queue of objects. One gives the
- * <code>QueueSource</code> a list of events, and that source sends these events
- * as its input one by one. When reaching the end of the list, the source
- * returns to the beginning and keeps feeding events from the list endlessly.
- * This behaviour can be changed with {@link #loop(boolean)}.
- * 
- * @author Sylvain Hallé
- * @since 0.1
- */
-@SuppressWarnings("squid:S2160")
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.cep.ProcessorQueryable;
+import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.petitpoucet.ComposedDesignator;
+import ca.uqac.lif.petitpoucet.Designator;
+import ca.uqac.lif.petitpoucet.TraceabilityNode;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery;
+import ca.uqac.lif.petitpoucet.Tracer;
+import ca.uqac.lif.petitpoucet.common.NthOf;
+import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
+import ca.uqac.lif.petitpoucet.common.CollectionDesignator.NthElement;
+
 public class QueueSource extends Source
 {
-  /**
-   * The events to repeat endlessly
-   */
-  protected List<Object> m_events;
+	protected boolean m_loop = true;
 
-  /**
-   * Whether to loop over the events endlessly
-   */
-  protected boolean m_loop = true;
+	protected int m_index = 0;
 
-  /**
-   * The index of the next event to produce
-   */
-  protected int m_index;
+	/*@ non_null @*/ protected List<Object[]> m_queue;
+	
+	public static final transient String s_loopKey = "loop";
+	
+	public static final transient String s_queueKey = "queue";
+	
+	public static final transient String s_indexKey = "index";
 
-  /**
-   * Creates a new queue source of given output arity. The events of the queue
-   * source will be duplicated on each of the outputs.
-   * 
-   * @param arity
-   *          The output arity
-   */
-  public QueueSource(int arity)
-  {
-    super(arity);
-    m_events = new ArrayList<Object>();
-    m_index = 0;
-  }
+	public QueueSource(int out_arity)
+	{
+		super(out_arity);
+		m_queue = new ArrayList<Object[]>();
+		m_queryable = new QueueSourceQueryable(toString(), 0, out_arity, 0, m_loop);
+	}
 
-  /**
-   * Creates a new queue source of output arity 1
-   */
-  public QueueSource()
-  {
-    super(1);
-    m_events = new ArrayList<Object>();
-    m_index = 0;
-  }
+	public QueueSource()
+	{
+		this(1);
+	}
 
-  /**
-   * Sets the events that the queue will output
-   * 
-   * @param queue
-   *          A collection of events that the queue source will output. If the
-   *          collection is ordered, the events will be output in the order they
-   *          appear in the collection.
-   */
-  public void setEvents(Collection<Object> queue)
-  {
-    for (Object o : queue)
-    {
-      m_events.add(o);
-    }
-  }
+	@Override
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	{
+		try
+		{
+			outputs.add(m_queue.get(m_index));
+			m_index++;
+			if (m_loop)
+			{
+				m_index = m_index % m_queue.size();
+			}
+			return m_index < m_queue.size();
+		}
+		catch (IndexOutOfBoundsException e)
+		{
+			return false;
+		}
+	}
 
-  /**
-   * Sets the events that the queue will output
-   * 
-   * @param queue
-   *          An array of events that the queue source will output. The events
-   *          will be output in the order they appear in the collection.
-   * @return This queue source
-   */
-  public QueueSource setEvents(Object ... queue)
-  {
-    for (Object o : queue)
-    {
-      m_events.add(o);
-    }
-    return this;
-  }
+	public QueueSource add(Object ... front)
+	{
+		m_queue.add(front);
+		((QueueSourceQueryable) m_queryable).setQueueSize(m_queue.size());
+		return this;
+	}
 
-  /**
-   * Adds an event to the queue
-   * 
-   * @param e
-   *          The event to add
-   * @return This queue source
-   */
-  public QueueSource addEvent(Object e)
-  {
-    m_events.add(e);
-    return this;
-  }
+	public QueueSource setEvents(Object ... events)
+	{
+		for (Object e : events)
+		{
+			m_queue.add(new Object[] {e});
+		}
+		((QueueSourceQueryable) m_queryable).setQueueSize(m_queue.size());
+		return this;
+	}
 
-  /**
-   * Sets whether to loop over the events endlessly
-   * 
-   * @param b
-   *          Set to <code>true</code> to loop over the events endlessly
-   *          (default), or <code>false</code> to play them only once.
-   * @return This queue source
-   */
-  public QueueSource loop(boolean b)
-  {
-    m_loop = b;
-    return this;
-  }
+	public QueueSource loop(boolean b)
+	{
+		m_loop = b;
+		((QueueSourceQueryable) m_queryable).setLoop(b);
+		return this;
+	}
 
-  @Override
-  @SuppressWarnings("squid:S1168")
-  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-  {
-    int size = m_events.size();
-    if (m_index >= size)
-    {
-      return false;
-    }
-    Object[] output = new Object[getOutputArity()];
-    Object event = m_events.get(m_index);
-    if (m_loop)
-    {
-      m_index = (m_index + 1) % size;
-    }
-    else
-    {
-      // If we don't loop, play the events only once
-      m_index++;
-    }
-    if (m_index > size && !m_loop)
-    {
-      // No more events from this queue
-      return false;
-    }
-    for (int i = 0; i < getOutputArity(); i++)
-    {
-      if (event == null)
-      {
-        // If one of the elements is null, don't output anything
-        return true;
-      }
-      output[i] = event;
-    }
-    outputs.add(output);
-    if (m_eventTracker != null)
-    {
-      int index = m_index - 1;
-      if (index < 0)
-      {
-        index += size;
-      }
-      for (int i = 0; i < getOutputArity(); i++)
-      {
-        associateTo(new QueueFunction(getId(), index), i, m_outputCount);
-      }
-    }
-    m_outputCount++;
-    return true;
-  }
+	@Override
+	public void reset()
+	{
+		super.reset();
+		m_index = 0;
+	}
 
-  @Override
-  public void reset()
-  {
-    super.reset();
-    m_index = 0;
-  }
+	@Override
+	public QueueSource duplicate(boolean with_state)
+	{
+		QueueSource qs = new QueueSource(getOutputArity());
+		return (QueueSource) copyInto(qs,  with_state);
+	}
 
-  @Override
-  public QueueSource duplicate(boolean with_state)
-  {
-    QueueSource out = new QueueSource(getOutputArity());
-    out.m_loop = m_loop;
-    out.setEvents(m_events);
-    if (with_state)
-    {
-      out.m_index = m_index;
-    }
-    return out;
-  }
+	protected SingleProcessor copyInto(SingleProcessor p, boolean with_state)
+	{
+		p = super.copyInto(p, with_state);
+		((QueueSource) p).m_queue.addAll(m_queue);
+		if (with_state)
+		{
+			((QueueSource) p).m_index = m_index;
+		}
+		return p;
+	}
 
-  @Override
-  public Class<?> getOutputType(int index)
-  {
-    // We return the type of the first non-null object in the queue
-    for (Object o : m_events)
-    {
-      if (o != null)
-      {
-        return o.getClass();
-      }
-    }
-    return Variant.class;
-  }
+	@SuppressWarnings("unchecked")
+	@Override
+	protected QueueSource readState(Object state, int in_arity, int out_arity) throws ReadException 
+	{
+		try
+		{
+			Map<String,Object> map = (Map<String,Object>) state;
+			QueueSource src = new QueueSource();
+			src.m_loop = (Boolean) map.get(s_loopKey);
+			src.m_index = (Integer) map.get(s_indexKey);
+			List<List<Object>> queue = (List<List<Object>>) map.get(s_queueKey);
+			for (int i = 0; i < queue.size(); i++)
+			{
+				List<Object> l_o = queue.get(i);
+				src.m_queue.add(l_o.toArray());
+			}
+			return src;
+		}
+		catch (ClassCastException e)
+		{
+			throw new ReadException(e);
+		}
+		catch (NullPointerException e)
+		{
+			throw new ReadException(e);
+		}
+	}
 
-  /**
-   * Provenance function that links an output event to an element of the
-   * processor's queue.
-   */
-  public static class QueueFunction implements NodeFunction
-  {
-    protected int m_queueIndex = 0;
+	@Override
+	protected Object printState() 
+	{
+		Map<String,Object> state = new HashMap<String,Object>();
+		state.put(s_loopKey, m_loop);
+		state.put(s_indexKey, m_index);
+		List<List<Object>> queue = new ArrayList<List<Object>>(m_queue.size());
+		for (int i = 0; i < m_queue.size(); i++)
+		{
+			Object[] front = m_queue.get(i);
+			List<Object> l_front = new ArrayList<Object>(front.length);
+			for (int j = 0; j < front.length; j++)
+			{
+				l_front.add(front[j]);
+			}
+			queue.add(l_front);
+		}
+		state.put(s_queueKey, queue);
+		return state;
+	}
+	
+	@Override
+	protected ProcessorQueryable getQueryable(int in_arity, int out_arity) 
+	{
+		return new QueueSourceQueryable(toString(), in_arity, out_arity, 0, m_loop);
+	}
+	
+	protected static class QueueSourceQueryable extends ProcessorQueryable
+	{
+		protected int m_queueSize;
+		
+		protected boolean m_loop;
+		
+		public static final transient String s_sizeKey = "size";
+		
+		public QueueSourceQueryable(/*@ non_null @*/ String reference, int in_arity, int out_arity, int queue_size, boolean loop)
+		{
+			super(reference, in_arity, out_arity);
+			m_queueSize = queue_size;
+			m_loop = loop;
+		}
+		
+		public void setQueueSize(int size)
+		{
+			m_queueSize = size;
+		}
+		
+		public void setLoop(boolean b)
+		{
+			m_loop = b;
+		}
 
-    protected int m_processorId = 0;
+		@Override
+		public ProcessorQueryable duplicate(boolean with_state)
+		{
+			return new QueueSourceQueryable(m_reference, m_inputConnections.length, m_outputConnections.length, m_queueSize, m_loop);
+		}
+		
+		@Override
+		protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
+				Designator tail, TraceabilityNode root, Tracer factory)
+		{
+			Designator t_head = tail.peek();
+			Designator t_tail = tail.tail();
+			if (!(t_head instanceof NthEvent))
+			{
+				// Unknown
+				return unknownLink(root, factory);
+			}
+			NthEvent nth = (NthEvent) t_head;
+			int index = nth.getIndex();
+			if (index < 0 || (!m_loop && index >= m_queueSize))
+			{
+				// Unknown
+				return unknownLink(root, factory);
+			}
+			int queue_pos = index % m_queueSize;
+			ComposedDesignator cd = new ComposedDesignator(t_tail, new NthOfQueue(queue_pos), new NthElement(out_index));
+			TraceabilityNode node = factory.getObjectNode(cd, null);
+			root.addChild(node, Quality.EXACT);
+			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);
+			leaves.add(node);
+			return leaves;
+		}
+		
+		@Override
+		public Object printState()
+		{
+			Map<String,Object> map = new HashMap<String,Object>(2);
+			map.put(s_loopKey, m_loop);
+			map.put(s_sizeKey, m_queueSize);
+			return map;
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public QueueSourceQueryable readState(/*@ non_null @*/ String reference, int in_arity, int out_arity, /*@ nullable @*/ Object o) throws ReadException
+		{
+			if (o == null)
+			{
+				throw new ReadException("Invalid map");
+			}
+			try
+			{
+				Map<String,Object> map = (Map<String,Object>) o;
+				if (!map.containsKey(s_sizeKey) || !map.containsKey(s_loopKey))
+				{
+					throw new ReadException("Invalid map format");
+				}
+				int size = (int) map.get(s_sizeKey);
+				boolean loop = (boolean) map.get(s_loopKey);
+				return new QueueSourceQueryable(reference, in_arity, out_arity, size, loop);
+			}
+			catch (ClassCastException cce)
+			{
+				throw new ReadException(cce);
+			}
+		}
+	}
+	
+	public static class NthOfQueue extends NthOf
+	{
+		public NthOfQueue(int index) 
+		{
+			super(index);
+		}
 
-    /**
-     * Creates a new QueueFunction
-     * @param proc_id The id of the processor
-     * @param index The position of the event in the queue
-     */
-    public QueueFunction(int proc_id, int index)
-    {
-      super();
-      m_processorId = proc_id;
-      m_queueIndex = index;
-    }
+		@Override
+		public boolean appliesTo(Object o) 
+		{
+			return o instanceof Queue;
+		}
 
-    @Override
-    public String getDataPointId()
-    {
-      return "BP" + m_processorId + ".Q." + m_queueIndex;
-    }
+		@Override
+		public Designator peek() 
+		{
+			return this;
+		}
 
-    @Override
-    public String toString()
-    {
-      return getDataPointId();
-    }
-
-    @Override
-    public NodeFunction dependsOn()
-    {
-      return DirectValue.instance;
-    }
-
-    public int getIndex()
-    {
-      return m_queueIndex;
-    }
-  }
-  
-  /**
-   * @since 0.10.2
-   */
-  @Override
-  public Object printState()
-  {
-    Map<String,Object> map = new HashMap<String,Object>();
-    map.put("index", m_index);
-    map.put("loop", m_loop);
-    map.put("events", m_events);
-    return map;
-  }
-  
-  /**
-   * @since 0.10.2
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public QueueSource readState(Object o)
-  {
-    Map<String,Object> map = (Map<String,Object>) o;
-    QueueSource qs = new QueueSource();
-    qs.m_index = ((Number) map.get("index")).intValue();
-    qs.m_events = (List<Object>) map.get("events");
-    qs.m_loop = (Boolean) map.get("loop");
-    return qs;
-  }
+		@Override
+		public Designator tail() 
+		{
+			return null;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return "Element #" + m_index + " of queue";
+		}
+	}
 }

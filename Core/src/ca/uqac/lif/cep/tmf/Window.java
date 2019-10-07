@@ -1,216 +1,398 @@
-/*
-    BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.Pushable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Queue;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
-/**
- * Simulates the application of a "sliding window" to a trace. It is represented
- * graphically as:
- * <p>
- * <img src="{@docRoot}/doc-files/tmf/Window.png" alt="Window">
- * <p>
- * The processor takes as arguments another processor &phi; and a window width
- * <i>n</i>. It returns the result of &phi; after processing events 0 to
- * <i>n</i>-1&hellip; Then the result of (a new instance of &phi;) that processes
- * events 1 to <i>n</i>-1&hellip; and so on.
- * 
- * @author Sylvain Hallé
- * @since 0.2.1
- *
- */
-@SuppressWarnings("squid:S2160")
-public class Window extends AbstractWindow
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.Printable;
+import ca.uqac.lif.azrael.Readable;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorQueryable;
+import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.StateDuplicable;
+import ca.uqac.lif.cep.functions.SlidableFunction;
+
+public class Window extends SingleProcessor
 {
+	/*@ non_null @*/ protected ProcessorWindow m_windowProcessor;
+	
+	public static final transient String s_widthKey = "width";
+	
+	public static final transient String s_windowKey = "window";
+	
+	// requires width > 0;
+	public Window(/*@ non_null @*/ Processor p, int width)
+	{
+		this(new GenericWindow(p, width));
+	}
 
-  /**
-   * The internal processor's input pushables
-   */
-  protected transient Pushable[] m_innerInputs;
+	// requires width > 0;
+	public Window(/*@ non_null @*/ SlidableFunction f, int width)
+	{
+		this(new SlidableWindow(f, width));
+	}
 
-  /**
-   * The sink that will receive the events produced by the inner processor
-   */
-  protected SinkLast m_sink = null;
+	// requires width > 0;
+	protected Window(/*@ non_null @*/ ProcessorWindow p)
+	{
+		super(1, 1);
+		m_windowProcessor = p;
+		m_queryable = new WindowQueryable(toString(), 1, 1);
+	}
+	
+	//@ ensures \result > 0;
+	/*@ pure @*/ public int getWidth()
+	{
+		return m_windowProcessor.getWidth();
+	}
 
-  /**
-   * Creates a new window processor
-   * @param in_processor The processor to run on each window
-   * @param width The width of the window
-   */
-  public Window(Processor in_processor, int width)
-  {
-    super(in_processor, width);
-    m_sink = new SinkLast(in_processor.getOutputArity());
-    reset();
-  }
+	@Override
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	{
+		Queue<Object[]> q = new ArrayDeque<Object[]>();
+		m_windowProcessor.compute(inputs, q, m_context);
+		outputs.addAll(q);
+		return true;
+	}
+	
+	@Override
+	public void reset()
+	{
+		super.reset();
+		m_windowProcessor.reset();
+	}
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public void reset()
-  {
-    super.reset();
-    int arity = getInputArity();
-    m_window = new LinkedList[arity];
-    m_innerInputs = new Pushable[arity];
-    m_processor.reset();
-    for (int i = 0; i < arity; i++)
-    {
-      m_window[i] = new LinkedList<Object>();
-      m_innerInputs[i] = m_processor.getPushableInput(i);
-    }
-    m_sink.reset();
-    Connector.connect(m_processor, m_sink);
-  }
+	@Override
+	/*@ pure non_null @*/ public Window duplicate(boolean with_state) 
+	{
+		Window w = new Window(m_windowProcessor.duplicate(with_state));
+		return (Window) copyInto(w, with_state);
+	}
 
-  @Override
-  @SuppressWarnings("squid:S3516")
-  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-  {
-    // Add the inputs to each window
-    boolean windows_ok = true;
-    int arity = inputs.length;
-    for (int i = 0; i < arity; i++)
-    {
-      LinkedList<Object> q = m_window[i];
-      q.add(inputs[i]);
-      int size_diff = q.size() - m_width;
-      leftTrim(size_diff, q);
-      if (size_diff < 0)
-      {
-        // Window is still to small to compute
-        windows_ok = false;
-      }
-    }
-    Object[] out = null;
-    if (windows_ok) // All windows have the proper width
-    {
-      m_processor.reset();
-      m_sink.reset();
-      int input_arity = getInputArity();
-      @SuppressWarnings("unchecked")
-      Future<Pushable>[] futures = new Future[m_width * input_arity];
-      for (int i = 0; i < m_width; i++)
-      {
-        for (int j = 0; j < input_arity; j++)
-        {
-          // Feed
-          LinkedList<Object> q = m_window[j];
-          Object o = q.get(i);
-          Pushable p = m_innerInputs[j];
-          futures[i * input_arity + j] = p.pushFast(o);
-          p.notifyEndOfTrace();
-        }
-        for (Future<?> f : futures)
-        {
-          if (f != null)
-          {
-            try
-            {
-              f.get();
-            }
-            catch (InterruptedException e)
-            {
-              throw new ProcessorException(e);
-            }
-            catch (ExecutionException e)
-            {
-              throw new ProcessorException(e);
-            }
-          }
-        }
-        out = m_sink.getLast();
-      }
-    }
-    if (out == null)
-    {
-      // Don't return false, otherwise it would signal that no
-      // event will every be produced in the future
-      return true;
-    }
-    outputs.add(out);
-    return true;
-  }
+	protected abstract static class ProcessorWindow implements Printable, Readable, StateDuplicable<ProcessorWindow>
+	{
+		protected int m_windowWidth;
+		
+		public ProcessorWindow(int width)
+		{
+			super();
+			m_windowWidth = width;
+		}
+		
+		//@ ensures \result > 0;
+		/*@ pure @*/ public int getWidth()
+		{
+			return m_windowWidth;
+		}
+		
+		public abstract void compute(Object[] o, Queue<Object[]> q, Context c);
 
-  /**
-   * Trims <i>n</i> events from the beginning of <tt>q</tt>
-   * 
-   * @param n
-   *          The number of events to trim. If <i>n</i>&nbsp;&lt;1, trims nothing.
-   *          If <i>n</i> is larger than the list's size, empties the list
-   * @param q
-   *          The queue to trim
-   */
-  protected static void leftTrim(int n, List<Object> q)
-  {
-    if (n <= 0)
-    {
-      return;
-    }
-    if (n >= q.size())
-    {
-      q.clear();
-      return;
-    }
-    for (int i = 0; i < n; i++)
-    {
-      q.remove(0);
-    }
-  }
+		public abstract void reset();
+		
+		@Override
+		public abstract ProcessorWindow duplicate();
+		
+		@Override
+		public abstract ProcessorWindow duplicate(boolean with_state);
+	}
 
-  @Override
-  public Window duplicate(boolean with_state)
-  {
-    Window w = new Window(m_processor.duplicate(), m_width);
-    if (with_state)
-    {
-      throw new UnsupportedOperationException(
-          "Duplication with state not supported yet on this processor");
-    }
-    return w;
-  }
+	static class GenericWindow extends ProcessorWindow
+	{
+		/*@ non_null @*/ protected Processor m_processor;
 
-  /**
-   * Gets the width of the window
-   * 
-   * @return The width
-   */
-  public int getWidth()
-  {
-    return m_width;
-  }
+		/*@ non_null @*/ protected CircularBuffer<Object> m_window;
 
-  /**
-   * Sets the width of the window
-   * 
-   * @param m_width
-   *          The width
-   */
-  public void setWidth(int m_width)
-  {
-    this.m_width = m_width;
-  }
+		/*@ non_null @*/ protected Pushable m_pushable;
+
+		/*@ non_null @*/ protected SinkLast m_sink;
+
+		public GenericWindow(/*@ non_null @*/ Processor p, int width)
+		{
+			super(width);
+			m_processor = p;
+			m_sink = new SinkLast();
+			m_pushable = m_processor.getPushableInput();
+			Connector.connect(m_processor, m_sink);
+			m_window = new CircularBuffer<Object>(m_windowWidth);
+		}
+
+		@Override
+		public void compute(Object[] inputs, Queue<Object[]> outputs, Context c)
+		{
+			m_window.add(inputs[0]);
+			if (m_window.isFull())
+			{
+				m_processor.reset();
+				m_sink.reset();
+				for (Object o : m_window)
+				{
+					m_pushable.push(o);
+				}
+				if (!m_sink.isEmpty())
+				{
+					outputs.add(new Object[] {m_sink.getLast()});
+				}
+			}
+		}
+
+		@Override
+		public void reset()
+		{
+			m_window.clear();
+		}
+		
+		@Override
+		public GenericWindow duplicate()
+		{
+			return duplicate(false);
+		}
+		
+		@Override
+		public GenericWindow duplicate(boolean with_state)
+		{
+			GenericWindow gw = new GenericWindow(m_processor.duplicate(with_state), m_windowWidth);
+			if (with_state)
+			{
+				gw.m_window = m_window.duplicate(with_state);
+			}
+			return gw;
+		}
+
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	}
+
+	protected static class SlidableWindow extends ProcessorWindow
+	{
+		/*@ non_null @*/ protected SlidableFunction m_function;
+		
+		/*@ non_null @*/ protected CircularBuffer<Object> m_window;
+
+		public SlidableWindow(SlidableFunction f, int width)
+		{
+			super(width);
+			m_function = f;
+			m_window = new CircularBuffer<Object>(m_windowWidth);
+		}
+
+		@Override
+		public void compute(Object[] o, Queue<Object[]> q, Context c)
+		{
+			boolean was_full = m_window.isFull();
+			Object o_out = m_window.add(o[0]);
+			Object[] outs = new Object[1];
+			if (was_full)
+			{
+				m_function.devaluate(new Object[] {o_out}, outs, c);
+			}
+			m_function.evaluate(o, outs, c);
+			if (was_full || m_window.isFull())
+			{
+				q.add(outs);
+			}
+		}
+
+		@Override
+		public void reset()
+		{
+			m_function.reset();
+			m_window.clear();
+		}
+		
+		@Override
+		public SlidableWindow duplicate()
+		{
+			return duplicate(false);
+		}
+		
+		@Override
+		public SlidableWindow duplicate(boolean with_state)
+		{
+			SlidableWindow sw = new SlidableWindow((SlidableFunction) m_function.duplicate(with_state), m_windowWidth);
+			if (with_state)
+			{
+				sw.m_window = m_window.duplicate(with_state);
+			}
+			return sw;
+		}
+
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	}
+	
+	public static class WindowQueryable extends ProcessorQueryable
+	{
+		public WindowQueryable(String reference, int in_arity, int out_arity)
+		{
+			super(reference, in_arity, out_arity);
+		}
+	}
+
+	protected static class CircularBuffer<T> implements Iterable<T>, StateDuplicable<CircularBuffer<T>>
+	{
+		Object[] m_buffer;
+
+		protected int m_head;
+
+		protected int m_size = 0;
+
+		public CircularBuffer(int width)
+		{
+			super();
+			m_buffer = new Object[width];
+			m_head = 0;
+			m_size = 0;
+		}
+
+		public void clear()
+		{
+			m_head = 0;
+			m_size = 0;
+			for (int i = 0; i < m_buffer.length; i++)
+			{
+				m_buffer[i] = null;
+			}
+		}
+
+		@SuppressWarnings("unchecked")
+		public T add(Object o)
+		{
+			T old = (T) m_buffer[m_head];
+			if (m_size != 0)
+			{
+				m_head = (m_head + 1) % m_buffer.length;
+			}
+			m_buffer[m_head] = o;
+			m_size = Math.min(m_size + 1, m_buffer.length);
+			return old;
+		}
+
+		public boolean isFull()
+		{
+			return m_size == m_buffer.length;
+		}
+
+		@Override
+		public Iterator<T> iterator()
+		{
+			return new CircularBufferIterator();
+		}
+
+		public class CircularBufferIterator implements Iterator<T>
+		{
+			protected int m_index;
+
+			protected boolean m_running;
+
+			public CircularBufferIterator()
+			{
+				super();
+				if (isFull())
+				{
+					m_index = (m_head + 1) % m_buffer.length;
+				}
+				else
+				{
+					m_index = 0;
+				}
+				m_running = (m_buffer.length > 0);
+			}
+
+			@Override
+			public boolean hasNext() 
+			{
+				return m_running && m_buffer[m_index] != null;
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public T next() 
+			{
+				if (!m_running)
+				{
+					throw new NoSuchElementException();
+				}
+				if (m_index == m_head)
+				{
+					// We returned to the head: done enumerating
+					m_running = false;
+				}
+				T t = (T) m_buffer[m_index];
+				m_index = (m_index + 1) % m_buffer.length;
+				return t;
+			}
+			
+			@Override
+			public void remove()
+			{
+				throw new UnsupportedOperationException("Operation remove not supported on a circular buffer");
+			}
+		}
+
+		@Override
+		public CircularBuffer<T> duplicate() 
+		{
+			return duplicate(false);
+		}
+
+		@Override
+		public CircularBuffer<T> duplicate(boolean with_state) 
+		{
+			CircularBuffer<T> cb = new CircularBuffer<T>(m_buffer.length);
+			if (with_state)
+			{
+				cb.m_size = m_size;
+				cb.m_head = m_head;
+				for (int i = 0; i < m_buffer.length; i++)
+				{
+					cb.m_buffer[i] = m_buffer[i];
+				}
+			}
+			return cb;
+		}
+	}
+
+	@Override
+	protected Window readState(Object state, int in_arity, int out_arity) throws ReadException 
+	{
+		if (state == null || !(state instanceof ProcessorWindow))
+		{
+			throw new ReadException("Unexpected processor window");
+		}
+		return new Window((ProcessorWindow) state);
+	}
+
+	@Override
+	protected ProcessorWindow printState() 
+	{
+		return m_windowProcessor;
+	}
 }

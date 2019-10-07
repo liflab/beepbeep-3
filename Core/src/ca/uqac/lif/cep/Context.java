@@ -1,87 +1,118 @@
-/*
-    BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package ca.uqac.lif.cep;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-/**
- * Associative map used by processors to store persistent data. In addition, all
- * operations on a `Context` object are synchronized.
- * 
- * @author Sylvain Hallé
- * @since 0.3
- *
- */
-public class Context extends HashMap<String, Object>
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.Printable;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.azrael.Readable;
+
+public class Context implements Map<String,Object>, Printable, Readable
 {
-  /**
-   * Dummy UID
-   */
-  private static final long serialVersionUID = 1L;
+	/*@ non_null @*/ private final Map<String,Object> m_map;
 
-  /**
-   * Creates a new empty context
-   */
-  public Context()
-  {
-    super();
-  }
+	public Context()
+	{
+		super();
+		m_map = new HashMap<String,Object>();
+	}
 
-  /**
-   * Creates a new context object from an existing one. This effectively
-   * creates a copy of the context passed as parameter.
-   * @param c The context object to copy from
-   */
-  public Context(Context c)
-  {
-    super();
-    if (c != null)
-    {
-      putAll(c);
-    }
-  }
+	@Override
+	public int size() 
+	{
+		return m_map.size();
+	}
 
-  @Override
-  @SuppressWarnings("squid:S1185")
-  public synchronized void putAll(Map<? extends String, ? extends Object> o)
-  {
-    super.putAll(o);
-  }
+	@Override
+	public boolean isEmpty()
+	{
+		return m_map.isEmpty();
+	}
 
-  @Override
-  @SuppressWarnings("squid:S1185")
-  public synchronized Object get(Object key)
-  {
-    return super.get(key);
-  }
+	@Override
+	public boolean containsKey(Object key)
+	{
+		return m_map.containsKey(key);
+	}
 
-  @Override
-  @SuppressWarnings("squid:S1185")
-  public synchronized Object put(String key, Object value)
-  {
-    return super.put(key, value);
-  }
+	@Override
+	public boolean containsValue(Object value) 
+	{
+		return m_map.containsValue(value);
+	}
 
-  @Override
-  @SuppressWarnings("squid:S1185")
-  public synchronized boolean containsKey(Object key)
-  {
-    return super.containsKey(key);
-  }
+	@Override
+	public Object get(Object key) 
+	{
+		return m_map.get(key);
+	}
+
+	@Override
+	public Object put(String key, Object value)
+	{
+		return m_map.put(key, value);
+	}
+
+	@Override
+	public Object remove(Object key)
+	{
+		return m_map.remove(key);
+	}
+
+	@Override
+	public void putAll(Map<? extends String, ? extends Object> m)
+	{
+		m_map.putAll(m);
+	}
+
+	@Override
+	public void clear()
+	{
+		m_map.clear();
+	}
+
+	@Override
+	public Set<String> keySet()
+	{
+		return m_map.keySet();
+	}
+
+	@Override
+	public Collection<Object> values() 
+	{
+		return m_map.values();
+	}
+
+	@Override
+	public Set<Entry<String, Object>> entrySet() 
+	{
+		return m_map.entrySet();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Context read(ObjectReader<?> reader, Object o) throws ReadException
+	{
+		Object r_o = reader.read(o);
+		if (!(r_o instanceof Map))
+		{
+			throw new ReadException("Unexpected object");
+		}
+		Context c = new Context();
+		c.putAll((Map<String,Object>) r_o);
+		return c;
+	}
+
+	@Override
+	public Object print(ObjectPrinter<?> printer) throws PrintException 
+	{
+		Map<String,Object> map = new HashMap<String,Object>(size());
+		map.putAll(this);
+		return printer.print(map);
+	}
 }
