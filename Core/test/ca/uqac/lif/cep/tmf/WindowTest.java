@@ -31,8 +31,8 @@ import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.Window.CircularBuffer;
-import ca.uqac.lif.cep.tmf.Window.GenericWindow;
 import ca.uqac.lif.cep.tmf.Window.ProcessorWindow;
+import ca.uqac.lif.cep.tmf.Window.GenericWindow;
 import ca.uqac.lif.cep.tmf.Window.SlidableWindow;
 import ca.uqac.lif.cep.util.Numbers;
 
@@ -143,7 +143,7 @@ public class WindowTest
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Window win = new Window(spw, 3);
 		Map<String,Object> printed = (Map<String,Object>) iop.print(win);
-		GenericWindow pw = (GenericWindow) printed.get(SingleProcessor.s_contentsKey);
+		ProcessorWindow pw = (ProcessorWindow) printed.get(SingleProcessor.s_contentsKey);
 		assertEquals(3, pw.m_windowWidth);
 		assertEquals(spw, pw.m_processor);
 	}
@@ -209,7 +209,7 @@ public class WindowTest
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
-		GenericWindow gw = new GenericWindow(spw, 3);
+		ProcessorWindow gw = new ProcessorWindow(spw, 3);
 		assertEquals(3, gw.getWidth());
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		gw.compute(new Object[] {3}, out_queue, null);
@@ -239,7 +239,7 @@ public class WindowTest
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
-		GenericWindow gw = new GenericWindow(spw, 3);
+		ProcessorWindow gw = new ProcessorWindow(spw, 3);
 		assertEquals(3, gw.getWidth());
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		gw.compute(new Object[] {3}, out_queue, null);
@@ -265,13 +265,13 @@ public class WindowTest
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
-		GenericWindow gw = new GenericWindow(spw, 3);
+		ProcessorWindow gw = new ProcessorWindow(spw, 3);
 		assertEquals(3, gw.m_windowWidth);
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		gw.compute(new Object[] {3}, out_queue, null);
 		assertEquals(1, gw.m_window.m_size);
 		assertEquals(0, fronts.size());
-		GenericWindow gw_dup = gw.duplicate(true);
+		ProcessorWindow gw_dup = gw.duplicate(true);
 		assertFalse(gw == gw_dup);
 		assertFalse(gw.m_processor == gw_dup.m_processor);
 		assertFalse(gw.m_window == gw_dup.m_window);
@@ -284,13 +284,13 @@ public class WindowTest
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
-		GenericWindow gw = new GenericWindow(spw, 3);
+		ProcessorWindow gw = new ProcessorWindow(spw, 3);
 		assertEquals(3, gw.m_windowWidth);
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		gw.compute(new Object[] {3}, out_queue, null);
 		assertEquals(1, gw.m_window.m_size);
 		assertEquals(0, fronts.size());
-		GenericWindow gw_dup = gw.duplicate();
+		ProcessorWindow gw_dup = gw.duplicate();
 		assertFalse(gw == gw_dup);
 		assertFalse(gw.m_processor == gw_dup.m_processor);
 		assertFalse(gw.m_window == gw_dup.m_window);
@@ -301,24 +301,30 @@ public class WindowTest
 	@Test
 	public void testCircularBuffer1()
 	{
+		Object out;
 		CircularBuffer<Integer> cb = new CircularBuffer<Integer>(3);
 		assertEquals(0, cb.m_size);
 		assertFalse(cb.isFull());
-		cb.add(3);
+		out = cb.add(3);
 		assertEquals(1, cb.m_size);
 		assertFalse(cb.isFull());
-		cb.add(1);
+		assertNull(out);
+		out = cb.add(1);
 		assertEquals(2, cb.m_size);
 		assertFalse(cb.isFull());
-		cb.add(4);
+		assertNull(out);
+		out = cb.add(4);
 		assertEquals(3, cb.m_size);
 		assertTrue(cb.isFull());
-		cb.add(1);
+		assertNull(out);
+		out = cb.add(1);
 		assertEquals(3, cb.m_size);
 		assertTrue(cb.isFull());
-		cb.add(5);
+		assertEquals(3, out);
+		out = cb.add(5);
 		assertEquals(3, cb.m_size);
 		assertTrue(cb.isFull());
+		assertEquals(1, out);
 	}
 	
 	@Test

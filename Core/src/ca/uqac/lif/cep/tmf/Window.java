@@ -1,8 +1,10 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -24,7 +26,7 @@ import ca.uqac.lif.cep.functions.SlidableFunction;
 
 public class Window extends SingleProcessor
 {
-	/*@ non_null @*/ protected ProcessorWindow m_windowProcessor;
+	/*@ non_null @*/ protected GenericWindow m_windowProcessor;
 	
 	public static final transient String s_widthKey = "width";
 	
@@ -33,7 +35,7 @@ public class Window extends SingleProcessor
 	// requires width > 0;
 	public Window(/*@ non_null @*/ Processor p, int width)
 	{
-		this(new GenericWindow(p, width));
+		this(new ProcessorWindow(p, width));
 	}
 
 	// requires width > 0;
@@ -43,7 +45,7 @@ public class Window extends SingleProcessor
 	}
 
 	// requires width > 0;
-	protected Window(/*@ non_null @*/ ProcessorWindow p)
+	protected Window(/*@ non_null @*/ GenericWindow p)
 	{
 		super(1, 1);
 		m_windowProcessor = p;
@@ -79,11 +81,11 @@ public class Window extends SingleProcessor
 		return (Window) copyInto(w, with_state);
 	}
 
-	protected abstract static class ProcessorWindow implements Printable, Readable, StateDuplicable<ProcessorWindow>
+	protected abstract static class GenericWindow implements Printable, Readable, StateDuplicable<GenericWindow>
 	{
 		protected int m_windowWidth;
 		
-		public ProcessorWindow(int width)
+		public GenericWindow(int width)
 		{
 			super();
 			m_windowWidth = width;
@@ -100,13 +102,13 @@ public class Window extends SingleProcessor
 		public abstract void reset();
 		
 		@Override
-		public abstract ProcessorWindow duplicate();
+		public abstract GenericWindow duplicate();
 		
 		@Override
-		public abstract ProcessorWindow duplicate(boolean with_state);
+		public abstract GenericWindow duplicate(boolean with_state);
 	}
 
-	static class GenericWindow extends ProcessorWindow
+	static class ProcessorWindow extends GenericWindow
 	{
 		/*@ non_null @*/ protected Processor m_processor;
 
@@ -116,7 +118,7 @@ public class Window extends SingleProcessor
 
 		/*@ non_null @*/ protected SinkLast m_sink;
 
-		public GenericWindow(/*@ non_null @*/ Processor p, int width)
+		public ProcessorWindow(/*@ non_null @*/ Processor p, int width)
 		{
 			super(width);
 			m_processor = p;
@@ -153,15 +155,15 @@ public class Window extends SingleProcessor
 		}
 		
 		@Override
-		public GenericWindow duplicate()
+		public ProcessorWindow duplicate()
 		{
 			return duplicate(false);
 		}
 		
 		@Override
-		public GenericWindow duplicate(boolean with_state)
+		public ProcessorWindow duplicate(boolean with_state)
 		{
-			GenericWindow gw = new GenericWindow(m_processor.duplicate(with_state), m_windowWidth);
+			ProcessorWindow gw = new ProcessorWindow(m_processor.duplicate(with_state), m_windowWidth);
 			if (with_state)
 			{
 				gw.m_window = m_window.duplicate(with_state);
@@ -170,19 +172,21 @@ public class Window extends SingleProcessor
 		}
 
 		@Override
-		public Object print(ObjectPrinter<?> printer) throws PrintException {
+		public Object print(ObjectPrinter<?> printer) throws PrintException
+		{
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
-		public Object read(ObjectReader<?> reader, Object o) throws ReadException {
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException
+		{
 			// TODO Auto-generated method stub
 			return null;
 		}
 	}
 
-	static class SlidableWindow extends ProcessorWindow
+	static class SlidableWindow extends GenericWindow
 	{
 		/*@ non_null @*/ protected SlidableFunction m_function;
 		
@@ -257,13 +261,19 @@ public class Window extends SingleProcessor
 		}
 	}
 
-	protected static class CircularBuffer<T> implements Iterable<T>, StateDuplicable<CircularBuffer<T>>
+	protected static class CircularBuffer<T> implements Iterable<T>, Printable, Readable, StateDuplicable<CircularBuffer<T>>
 	{
 		Object[] m_buffer;
 
 		protected int m_head;
 
 		protected int m_size = 0;
+		
+		static final transient String s_headKey = "head";
+		
+		static final transient String s_sizeKey = "index";
+		
+		static final transient String s_bufferKey = "buffer";
 
 		public CircularBuffer(int width)
 		{
@@ -286,10 +296,14 @@ public class Window extends SingleProcessor
 		@SuppressWarnings("unchecked")
 		public T add(Object o)
 		{
-			T old = (T) m_buffer[m_head];
+			T old = null;
 			if (m_size != 0)
 			{
 				m_head = (m_head + 1) % m_buffer.length;
+			}
+			if (m_size == m_buffer.length)
+			{
+				old = (T) m_buffer[m_head];
 			}
 			m_buffer[m_head] = o;
 			m_size = Math.min(m_size + 1, m_buffer.length);
@@ -379,20 +393,72 @@ public class Window extends SingleProcessor
 			}
 			return cb;
 		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public CircularBuffer<T> read(ObjectReader<?> reader, Object o) throws ReadException
+		{
+			Object r_o = reader.read(o);
+			if (r_o == null || !(r_o instanceof Map))
+			{
+				throw new ReadException("Unexpected object format");
+			}
+			try
+			{
+				Map<String,Object> map = (Map<String,Object>) r_o;
+				if (!map.containsKey(s_headKey) || !map.containsKey(s_sizeKey) || !map.containsKey(s_bufferKey))
+				{
+					throw new ReadException("Unexpected map format");
+				}
+				int head = (Integer) map.get(s_headKey);
+				int size = (Integer) map.get(s_sizeKey);
+				List<Object> buffer = (List<Object>) map.get(s_bufferKey);
+				if (buffer.size() != size)
+				{
+					throw new ReadException("Unexpected buffer size");
+				}
+				CircularBuffer<T> cb = new CircularBuffer<T>(size);
+				cb.m_head = head;
+				for (int i = 0; i < cb.m_buffer.length; i++)
+				{
+					cb.m_buffer[i] = buffer.get(i);
+				}
+				return cb;
+			}
+			catch (ClassCastException cce)
+			{
+				throw new ReadException(cce);
+			}
+		}
+
+		@Override
+		public Map<String,Object> print(ObjectPrinter<?> printer) throws PrintException
+		{
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put(s_headKey, m_head);
+			map.put(s_sizeKey, m_size);
+			List<Object> buffer = new ArrayList<Object>(m_buffer.length);
+			for (int i = 0; i < m_buffer.length; i++)
+			{
+				buffer.add(m_buffer[i]);
+			}
+			map.put(s_bufferKey, buffer);
+			return map;
+		}
 	}
 
 	@Override
 	protected Window readState(Object state, int in_arity, int out_arity) throws ReadException 
 	{
-		if (state == null || !(state instanceof ProcessorWindow))
+		if (state == null || !(state instanceof GenericWindow))
 		{
 			throw new ReadException("Unexpected processor window");
 		}
-		return new Window((ProcessorWindow) state);
+		return new Window((GenericWindow) state);
 	}
 
 	@Override
-	protected ProcessorWindow printState() 
+	protected GenericWindow printState() 
 	{
 		return m_windowProcessor;
 	}
