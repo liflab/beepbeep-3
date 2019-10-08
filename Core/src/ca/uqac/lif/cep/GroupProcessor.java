@@ -22,7 +22,7 @@ import ca.uqac.lif.petitpoucet.Tracer;
 import ca.uqac.lif.petitpoucet.Trackable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
 
-public class GroupProcessor implements Processor
+public class GroupProcessor implements Processor, Printable, Readable
 {
 	/*@ non_null @*/ protected Context m_context;
 

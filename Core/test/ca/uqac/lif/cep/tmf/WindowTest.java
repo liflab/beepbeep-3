@@ -206,8 +206,74 @@ public class WindowTest
 		assertEquals(1, tsf.getCallsToReset());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
-	public void testGenericWindowOutput()
+	public void testSlidableWindowPrint() throws PrintException
+	{
+		IdentityObjectPrinter iop = new IdentityObjectPrinter();
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		SlidableWindow sw = new SlidableWindow(tsf, 3);
+		Map<String,Object> printed = (Map<String,Object>) iop.print(sw);
+		assertEquals(3, printed.size());
+		assertEquals(sw.m_windowWidth, printed.get(GenericWindow.s_widthKey));
+		assertEquals(sw.m_window, printed.get(GenericWindow.s_windowKey));
+		assertEquals(sw.m_function, printed.get(SlidableWindow.s_functionKey));
+	}
+	
+	@Test
+	public void testSlidableWindowRead() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Map<String,Object> printed = new HashMap<String,Object>();
+		printed.put(GenericWindow.s_widthKey, 3);
+		CircularBuffer<Object> cb = new CircularBuffer<Object>(3);
+		cb.add(3);
+		cb.add(1);
+		printed.put(GenericWindow.s_windowKey, cb);
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		printed.put(SlidableWindow.s_functionKey, tsf);
+		SlidableWindow sw = new SlidableWindow(new TestableSlidableFunction(), 0).read(ior, printed);
+		assertNotNull(sw);
+		assertEquals(tsf, sw.m_function);
+		assertEquals(cb, sw.m_window);
+		assertEquals(3, sw.m_windowWidth);
+	}
+	
+	@Test(expected = ReadException.class)
+	public void testSlidableWindowReadInvalid1() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Map<String,Object> printed = new HashMap<String,Object>();
+		CircularBuffer<Object> cb = new CircularBuffer<Object>(3);
+		cb.add(3);
+		cb.add(1);
+		printed.put(GenericWindow.s_windowKey, cb);
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		printed.put(SlidableWindow.s_functionKey, tsf);
+		new SlidableWindow(new TestableSlidableFunction(), 0).read(ior, printed);
+	}
+	
+	@Test(expected = ReadException.class)
+	public void testSlidableWindowReadInvalid2() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Map<String,Object> printed = new HashMap<String,Object>();
+		printed.put(GenericWindow.s_widthKey, 3);
+		printed.put(GenericWindow.s_windowKey, 3);
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		printed.put(SlidableWindow.s_functionKey, tsf);
+		new SlidableWindow(new TestableSlidableFunction(), 0).read(ior, printed);
+	}
+	
+	@Test(expected = ReadException.class)
+	public void testSlidableWindowReadInvalid3() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		new SlidableWindow(new TestableSlidableFunction(), 0).read(ior, 3);
+	}
+	
+	@Test
+	public void testProcessorWindowOutput()
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
@@ -237,7 +303,7 @@ public class WindowTest
 	}
 	
 	@Test
-	public void testGenericWindowReset()
+	public void testProcessorWindowReset()
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
@@ -263,7 +329,7 @@ public class WindowTest
 	}
 	
 	@Test
-	public void testGenericWindowDuplicateState()
+	public void testProcessorWindowDuplicateState()
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
@@ -282,7 +348,7 @@ public class WindowTest
 	}
 	
 	@Test
-	public void testGenericWindowDuplicateNoState()
+	public void testProcessorWindowDuplicateNoState()
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
@@ -457,7 +523,7 @@ public class WindowTest
 	{
 		Map<String,Object> printed = new HashMap<String,Object>(3);
 		printed.put(CircularBuffer.s_headKey, 1);
-		printed.put(CircularBuffer.s_sizeKey, 3);		
+		printed.put(CircularBuffer.s_sizeKey, 2);		
 		List<Object> buffer = new ArrayList<Object>(3);
 		buffer.add(3);
 		buffer.add(1);
@@ -472,4 +538,43 @@ public class WindowTest
 		assertEquals(1, cb.m_buffer[1]);
 		assertNull(cb.m_buffer[2]);
 	}
+	
+	@Test(expected = ReadException.class)
+	public void testCircularBufferReadInvalid1() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		new CircularBuffer<Integer>(0).read(ior, 3);
+	}
+	
+	@Test(expected = ReadException.class)
+	public void testCircularBufferReadInvalid2() throws ReadException
+	{
+		Map<String,Object> printed = new HashMap<String,Object>(3);
+		printed.put(CircularBuffer.s_headKey, 1);		
+		List<Object> buffer = new ArrayList<Object>(3);
+		buffer.add(3);
+		buffer.add(1);
+		buffer.add(null);
+		printed.put(CircularBuffer.s_bufferKey, buffer);
+		IdentityObjectReader ior = new IdentityObjectReader();
+		new CircularBuffer<Integer>(0).read(ior, printed);
+	}
+	
+	@Test(expected = ReadException.class)
+	public void testCircularBufferReadInvalid3() throws ReadException
+	{
+		Map<String,Object> printed = new HashMap<String,Object>(3);
+		printed.put(CircularBuffer.s_headKey, 1);
+		printed.put(CircularBuffer.s_sizeKey, 2);
+		printed.put(CircularBuffer.s_bufferKey, 3);
+		IdentityObjectReader ior = new IdentityObjectReader();
+		CircularBuffer<Integer> cb = new CircularBuffer<Integer>(0).read(ior, printed);
+		assertNotNull(cb);
+		assertEquals(1, cb.m_head);
+		assertEquals(2, cb.m_size);
+		assertEquals(3, cb.m_buffer[0]);
+		assertEquals(1, cb.m_buffer[1]);
+		assertNull(cb.m_buffer[2]);
+	}
+	
 }

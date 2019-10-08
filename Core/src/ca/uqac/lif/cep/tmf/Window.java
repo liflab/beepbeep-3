@@ -85,10 +85,17 @@ public class Window extends SingleProcessor
 	{
 		protected int m_windowWidth;
 		
+		/*@ non_null @*/ protected CircularBuffer<Object> m_window;
+		
+		static final transient String s_widthKey = "width";
+		
+		static final transient String s_windowKey = "window"; 
+		
 		public GenericWindow(int width)
 		{
 			super();
 			m_windowWidth = width;
+			m_window = new CircularBuffer<Object>(m_windowWidth);
 		}
 		
 		//@ ensures \result > 0;
@@ -112,8 +119,6 @@ public class Window extends SingleProcessor
 	{
 		/*@ non_null @*/ protected Processor m_processor;
 
-		/*@ non_null @*/ protected CircularBuffer<Object> m_window;
-
 		/*@ non_null @*/ protected Pushable m_pushable;
 
 		/*@ non_null @*/ protected SinkLast m_sink;
@@ -125,7 +130,6 @@ public class Window extends SingleProcessor
 			m_sink = new SinkLast();
 			m_pushable = m_processor.getPushableInput();
 			Connector.connect(m_processor, m_sink);
-			m_window = new CircularBuffer<Object>(m_windowWidth);
 		}
 
 		@Override
@@ -190,7 +194,7 @@ public class Window extends SingleProcessor
 	{
 		/*@ non_null @*/ protected SlidableFunction m_function;
 		
-		/*@ non_null @*/ protected CircularBuffer<Object> m_window;
+		protected static final transient String s_functionKey = "function";
 
 		public SlidableWindow(SlidableFunction f, int width)
 		{
@@ -241,15 +245,42 @@ public class Window extends SingleProcessor
 		}
 
 		@Override
-		public Object print(ObjectPrinter<?> printer) throws PrintException {
-			// TODO Auto-generated method stub
-			return null;
+		public Map<String,Object> print(ObjectPrinter<?> printer) throws PrintException 
+		{
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put(GenericWindow.s_widthKey, m_windowWidth);
+			map.put(GenericWindow.s_windowKey, m_window);
+			map.put(s_functionKey, m_function);
+			return map;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
-		public Object read(ObjectReader<?> reader, Object o) throws ReadException {
-			// TODO Auto-generated method stub
-			return null;
+		public SlidableWindow read(ObjectReader<?> reader, Object o) throws ReadException
+		{
+			Object r_o = reader.read(o);
+			if (r_o == null || !(r_o instanceof Map))
+			{
+				throw new ReadException("Unexpected object format");
+			}
+			try
+			{
+				Map<String,Object> map = (Map<String,Object>) r_o;
+				if (!map.containsKey(s_widthKey) || !map.containsKey(s_windowKey) || !map.containsKey(s_functionKey))
+				{
+					throw new ReadException("Unexpected map format");
+				}
+				int width = (Integer) map.get(s_widthKey);
+				CircularBuffer<Object> window = (CircularBuffer<Object>) map.get(s_windowKey);
+				SlidableFunction function = (SlidableFunction) map.get(s_functionKey);
+				SlidableWindow sw = new SlidableWindow(function, width);
+				sw.m_window = window;
+				return sw;
+			}
+			catch (ClassCastException cce)
+			{
+				throw new ReadException(cce);
+			}
 		}
 	}
 	
@@ -413,12 +444,9 @@ public class Window extends SingleProcessor
 				int head = (Integer) map.get(s_headKey);
 				int size = (Integer) map.get(s_sizeKey);
 				List<Object> buffer = (List<Object>) map.get(s_bufferKey);
-				if (buffer.size() != size)
-				{
-					throw new ReadException("Unexpected buffer size");
-				}
-				CircularBuffer<T> cb = new CircularBuffer<T>(size);
+				CircularBuffer<T> cb = new CircularBuffer<T>(buffer.size());
 				cb.m_head = head;
+				cb.m_size = size;
 				for (int i = 0; i < cb.m_buffer.length; i++)
 				{
 					cb.m_buffer[i] = buffer.get(i);
