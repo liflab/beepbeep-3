@@ -8,9 +8,4 @@ public abstract class Sink extends SingleProcessor
 	{
 		super(in_arity, 0);
 	}
-	
-	public Sink()
-	{
-		this(1);
-	}
 }

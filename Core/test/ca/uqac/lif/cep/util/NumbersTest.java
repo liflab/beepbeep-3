@@ -1,4 +1,4 @@
-package ca.uqac.lif.cep.tmf.util;
+package ca.uqac.lif.cep.util;
 
 import static org.junit.Assert.*;
 

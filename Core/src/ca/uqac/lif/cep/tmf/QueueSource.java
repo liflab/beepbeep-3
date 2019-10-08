@@ -249,8 +249,8 @@ public class QueueSource extends Source
 				{
 					throw new ReadException("Invalid map format");
 				}
-				int size = (int) map.get(s_sizeKey);
-				boolean loop = (boolean) map.get(s_loopKey);
+				int size = (Integer) map.get(s_sizeKey);
+				boolean loop = (Boolean) map.get(s_loopKey);
 				return new QueueSourceQueryable(reference, in_arity, out_arity, size, loop);
 			}
 			catch (ClassCastException cce)

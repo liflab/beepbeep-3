@@ -191,12 +191,6 @@ public class ProcessorQueryable implements CircuitQueryable, Readable, Printable
 		{
 			return m_queryable;
 		}
-
-		@Override
-		public void reset() 
-		{
-			// Nothing to do
-		}
 	}
 
 	protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
@@ -254,13 +248,13 @@ public class ProcessorQueryable implements CircuitQueryable, Readable, Printable
 		Map<?,?> map = (Map<?,?>) r_o;
 		try
 		{
-			List<Integer> list = (List<Integer>) map.getOrDefault(s_arityKey, null);
+			List<Integer> list = (List<Integer>) getOrDefault(map, s_arityKey, null);
 			if (list == null)
 			{
 				throw new ReadException("Unexpected format for list");
 			}
-			Object state = map.getOrDefault(s_contentsKey, null);
-			String reference = (String) map.getOrDefault(s_referenceKey, null);
+			Object state = getOrDefault(map, s_contentsKey, null);
+			String reference = (String) getOrDefault(map, s_referenceKey, null);
 			if (reference == null)
 			{
 				throw new ReadException("Reference string is null");
@@ -287,5 +281,14 @@ public class ProcessorQueryable implements CircuitQueryable, Readable, Printable
 	public ProcessorQueryable readState(/*@ non_null @*/ String reference, int in_arity, int out_arity, /*@ nullable @*/ Object state) throws ReadException
 	{
 		return new ProcessorQueryable(reference, in_arity, out_arity);
+	}
+	
+	protected static Object getOrDefault(Map<?,?> map, Object key, Object default_value)
+	{
+		if (!map.containsKey(key)) 
+		{
+			return default_value;
+		}
+		return map.get(key);
 	}
 }

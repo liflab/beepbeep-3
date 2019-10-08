@@ -219,6 +219,12 @@ public abstract class SingleProcessor implements Processor
 			super();
 			m_index = index;
 		}
+		
+		@Override
+		public void remove()
+		{
+			throw new UnsupportedOperationException("Remove is not supported");
+		}
 
 		protected void handlePull()
 		{
@@ -287,12 +293,6 @@ public abstract class SingleProcessor implements Processor
 		public final Object next()
 		{
 			return pull();
-		}
-
-		@Override
-		public void reset()
-		{
-			// Do nothing
 		}
 
 		@Override
@@ -433,12 +433,6 @@ public abstract class SingleProcessor implements Processor
 					m_outputPushables[i].end();
 				}
 			}
-		}
-
-		@Override
-		public void reset()
-		{
-			// Do nothing
 		}
 
 		@Override
@@ -621,7 +615,7 @@ public abstract class SingleProcessor implements Processor
 			throw new ReadException("Invalid format for output queues");
 		}
 		List<?> out_q = (List<?>) o_oq;
-		Object state = map.getOrDefault(s_contentsKey, null);
+		Object state = getOrDefault(map, s_contentsKey, null);
 		SingleProcessor new_p = readState(state, in_q.size(), out_q.size());
 		for (int i = 0; i < in_q.size(); i++)
 		{
@@ -641,7 +635,7 @@ public abstract class SingleProcessor implements Processor
 			}
 			new_p.m_outputQueues[i].addAll((Queue<?>) q_r);
 		}
-		Object o_context = map.getOrDefault(s_contextKey, null);
+		Object o_context = getOrDefault(map, s_contextKey, null);
 		if (o_context != null && o_context instanceof Context)
 		{
 			new_p.m_context.putAll((Context) o_context);
@@ -650,7 +644,7 @@ public abstract class SingleProcessor implements Processor
 		{
 			throw new ReadException("Invalid format for context");
 		}
-		Object q_oq = map.getOrDefault(s_queryableKey, null);
+		Object q_oq = getOrDefault(map, s_queryableKey, null);
 		if (q_oq == null || !(q_oq instanceof ProcessorQueryable))
 		{
 			throw new ReadException("Invalid format for queryable");
@@ -748,5 +742,14 @@ public abstract class SingleProcessor implements Processor
 	/*@ non_null @*/ protected ProcessorQueryable getQueryable(int in_arity, int out_arity)
 	{
 		return new ProcessorQueryable(SingleProcessor.this.toString(), in_arity, out_arity);
+	}
+	
+	protected static Object getOrDefault(Map<?,?> map, Object key, Object default_value)
+	{
+		if (!map.containsKey(key)) 
+		{
+			return default_value;
+		}
+		return map.get(key);
 	}
 }

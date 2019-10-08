@@ -14,9 +14,9 @@ import org.junit.Test;
 
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectPrinter;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectReader;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.SingleProcessorWrapper;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
+import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
 import ca.uqac.lif.petitpoucet.DesignatedObject;
 import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
@@ -33,7 +33,7 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableUnknownUpstream()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
 		assertEquals(1, pq.getInputArity());
@@ -50,7 +50,7 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableWrongDirection()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
 		assertEquals(1, pq.getInputArity());
@@ -67,7 +67,7 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableWrongInputArity()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
 		assertEquals(1, pq.getInputArity());
@@ -84,7 +84,7 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableWrongOutputArity()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
 		assertEquals(1, pq.getInputArity());
@@ -101,7 +101,7 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableUnknownDesignator()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
 		assertEquals(1, pq.getInputArity());
@@ -118,8 +118,8 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableConnectedUpstream1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_up = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_up = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw_up, spw);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
@@ -140,8 +140,8 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableConnectedUpstream2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_up = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_up = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw_up, spw);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
@@ -159,8 +159,8 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableConnectedDownstream1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_dn = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_dn = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw, spw_dn);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
@@ -181,8 +181,8 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableConnectedDownstream2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_dn = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_dn = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw, spw_dn);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
@@ -200,8 +200,8 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableUpstreamOutOfBounds()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_up = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_up = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw_up, spw);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
@@ -219,8 +219,8 @@ public class ProcessorQueryableTest
 	@Test
 	public void testQueryableDownstreamOutOfBounds()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_dn = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_dn = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw, spw_dn);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
@@ -238,7 +238,7 @@ public class ProcessorQueryableTest
 	@Test
 	public void testDuplicateNoState()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		ProcessorQueryable pq_dup = (ProcessorQueryable) pq.duplicate();
 		assertFalse(pq == pq_dup);
@@ -249,7 +249,7 @@ public class ProcessorQueryableTest
 	@Test
 	public void testDuplicateState()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		ProcessorQueryable pq_dup = (ProcessorQueryable) pq.duplicate(true);
 		assertFalse(pq == pq_dup);
@@ -261,7 +261,7 @@ public class ProcessorQueryableTest
 	@Test
 	public void testPrint() throws PrintException
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 1);
 		ProcessorQueryable q = (ProcessorQueryable) spw.getQueryable();
 		IdentityObjectPrinter iop = new IdentityObjectPrinter();
 		Map<String,Object> printed = (Map<String,Object>) iop.print(q);

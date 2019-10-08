@@ -5,15 +5,15 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.SingleProcessorWrapper;
+import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
 
 public class ConnectorTest 
 {
 	@Test
 	public void testArity1()
 	{
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw1, spw2);
 		assertEquals(spw1, spw2.getInputPullable(0).getObject());
 		assertEquals(spw2, spw1.getOutputPushable(0).getObject());
@@ -22,8 +22,8 @@ public class ConnectorTest
 	@Test
 	public void testArity2()
 	{
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(2, 2);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(2, 2);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(2, 2);
 		// We deliberately interlace to make sure the indices are correctly kept
 		Connector.connect(spw1, 0, spw2, 1);
 		Connector.connect(spw1, 1, spw2, 0);
@@ -40,16 +40,16 @@ public class ConnectorTest
 	@Test(expected = ConnectorException.class)
 	public void testInputOutOfBounds()
 	{
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw1, 1, spw2, 0);
 	}
 	
 	@Test(expected = ConnectorException.class)
 	public void testOutputOutOfBounds()
 	{
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw1, 0, spw2, 1);
 	}
 	
@@ -60,9 +60,9 @@ public class ConnectorTest
 	@Test(expected = ConnectorException.class)
 	public void testTypes1()
 	{
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
 		spw1.setOutputType(Processor.class);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		spw2.setInputType(Number.class);
 		Connector.connect(spw1, spw2);
 	}
@@ -74,9 +74,9 @@ public class ConnectorTest
 	@Test
 	public void testTypes2()
 	{
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
 		spw1.setOutputType(Integer.class);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		spw2.setInputType(Number.class);
 		Connector.connect(spw1, spw2);
 	}
@@ -88,9 +88,9 @@ public class ConnectorTest
 	@Test
 	public void testTypes3()
 	{
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
 		spw1.setOutputType(Typed.Variant.class);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		spw2.setInputType(Number.class);
 		Connector.connect(spw1, spw2);
 	}
@@ -102,9 +102,9 @@ public class ConnectorTest
 	@Test
 	public void testTypes4()
 	{
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
 		spw1.setOutputType(Integer.class);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		spw2.setInputType(Typed.Variant.class);
 		Connector.connect(spw1, spw2);
 	}

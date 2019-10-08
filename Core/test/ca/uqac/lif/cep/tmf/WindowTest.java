@@ -23,9 +23,9 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.SingleProcessorTestTemplate;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectPrinter;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectReader;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.SingleProcessorWrapper;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
+import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
 import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.Function;
@@ -41,31 +41,31 @@ public class WindowTest
 	@Test
 	public void testMultiplePushable1()
 	{
-		SingleProcessorTestTemplate.testMultiplePushable1(new Window(new Passthrough(), 2));
+		SingleProcessorTestTemplate.checkMultiplePushable1(new Window(new Passthrough(), 2));
 	}
 	
 	@Test
 	public void testMultiplePullable1()
 	{
-		SingleProcessorTestTemplate.testMultiplePullable1(new Window(new Passthrough(), 2));
+		SingleProcessorTestTemplate.checkMultiplePullable1(new Window(new Passthrough(), 2));
 	}
 
 	@Test
 	public void testArityGeneric()
 	{
-		SingleProcessorTestTemplate.testArity(new Window(new Passthrough(), 2), 1, 1);
+		SingleProcessorTestTemplate.checkArity(new Window(new Passthrough(), 2), 1, 1);
 	}
 	
 	@Test
 	public void testArityFunction()
 	{
-		SingleProcessorTestTemplate.testArity(new Window(new Numbers.Average(), 2), 1, 1);
+		SingleProcessorTestTemplate.checkArity(new Window(new Numbers.Average(), 2), 1, 1);
 	}
 	
 	@Test
 	public void testOutputProcessor()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Window win = new Window(spw, 3);
 		assertEquals(3, win.getWidth());
 		QueueSink qs = new QueueSink();
@@ -100,7 +100,7 @@ public class WindowTest
 	@Test
 	public void testResetProcessor()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Window win = new Window(spw, 3);
 		assertEquals(3, win.getWidth());
 		QueueSink qs = new QueueSink();
@@ -123,7 +123,7 @@ public class WindowTest
 	@Test
 	public void testDuplicateProcessorState()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Window win = new Window(spw, 3);
 		BlackHole bh = new BlackHole();
 		Connector.connect(win, bh);
@@ -140,7 +140,7 @@ public class WindowTest
 	public void testPrint() throws PrintException
 	{
 		IdentityObjectPrinter iop = new IdentityObjectPrinter();
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Window win = new Window(spw, 3);
 		Map<String,Object> printed = (Map<String,Object>) iop.print(win);
 		GenericWindow pw = (GenericWindow) printed.get(SingleProcessor.s_contentsKey);
@@ -207,7 +207,7 @@ public class WindowTest
 	@Test
 	public void testGenericWindowOutput()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
 		GenericWindow gw = new GenericWindow(spw, 3);
 		assertEquals(3, gw.getWidth());
@@ -237,7 +237,7 @@ public class WindowTest
 	@Test
 	public void testGenericWindowReset()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
 		GenericWindow gw = new GenericWindow(spw, 3);
 		assertEquals(3, gw.getWidth());
@@ -263,7 +263,7 @@ public class WindowTest
 	@Test
 	public void testGenericWindowDuplicateState()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
 		GenericWindow gw = new GenericWindow(spw, 3);
 		assertEquals(3, gw.m_windowWidth);
@@ -282,7 +282,7 @@ public class WindowTest
 	@Test
 	public void testGenericWindowDuplicateNoState()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = spw.getFronts();
 		GenericWindow gw = new GenericWindow(spw, 3);
 		assertEquals(3, gw.m_windowWidth);

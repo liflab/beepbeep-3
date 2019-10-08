@@ -348,12 +348,6 @@ public class GroupProcessor implements Processor
 		}
 
 		@Override
-		public void reset()
-		{
-			// Nothing to do
-		}
-
-		@Override
 		public void push(Object o) 
 		{
 			m_pushable.push(o);
@@ -397,6 +391,12 @@ public class GroupProcessor implements Processor
 		public Object pullSoft() 
 		{
 			return pull();
+		}
+		
+		@Override
+		public void remove()
+		{
+			throw new UnsupportedOperationException("Remove not supported");
 		}
 	}
 

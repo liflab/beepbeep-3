@@ -1,5 +1,7 @@
 package ca.uqac.lif.cep;
 
+import org.junit.Test;
+
 import ca.uqac.lif.cep.Processor.NthEvent;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.Passthrough;
@@ -31,6 +33,12 @@ public class ProvenanceDemo {
 		renderer.setFlatten(false);
 		String out = renderer.render(root);
 		System.out.println(out);
+	}
+	
+	@Test
+	public void dummyTest()
+	{
+		
 	}
 
 }

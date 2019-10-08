@@ -115,4 +115,13 @@ public class Context implements Map<String,Object>, Printable, Readable
 		map.putAll(this);
 		return printer.print(map);
 	}
+	
+	public Object getOrDefault(Object key, Object default_value)
+	{
+		if (!containsKey(key))
+		{
+			return default_value;
+		}
+		return get(key);
+	}
 }

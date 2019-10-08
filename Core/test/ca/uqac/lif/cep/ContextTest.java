@@ -14,8 +14,8 @@ import org.junit.Test;
 
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectPrinter;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectReader;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
 
 public class ContextTest
 {
@@ -94,8 +94,8 @@ public class ContextTest
 		assertTrue(o instanceof Map);
 		Map<String,Object> map = (Map<String,Object>) o;
 		assertEquals(2, map.size());
-		assertEquals(0, map.getOrDefault("foo", null));
-		assertEquals(1, map.getOrDefault("bar", null));
+		assertEquals(0, map.get("foo"));
+		assertEquals(1, map.get("bar"));
 	}
 	
 	@Test

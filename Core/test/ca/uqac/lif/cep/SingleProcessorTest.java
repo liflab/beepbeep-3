@@ -21,10 +21,10 @@ import ca.uqac.lif.azrael.clone.ClonePrinter;
 import ca.uqac.lif.azrael.clone.CloneReader;
 import ca.uqac.lif.cep.Processor.ProcessorException;
 import ca.uqac.lif.cep.Pullable.NextStatus;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectPrinter;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectReader;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.SingleProcessorWrapper;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.StutteringQueueSource;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
+import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
+import ca.uqac.lif.cep.TestUtilities.StutteringQueueSource;
 import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.tmf.BlackHole;
@@ -60,7 +60,7 @@ public class SingleProcessorTest
 	@Test
 	public void testContext()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		spw.setContext("foo", 10);
 		assertEquals(10, spw.getContext("foo"));
 		// Undefined keys return null
@@ -78,9 +78,9 @@ public class SingleProcessorTest
 	@Test
 	public void testContextDuplicateState()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		spw.setContext("foo", 10);
-		SingleProcessorWrapper spw2 = spw.duplicate(true);
+		TestableSingleProcessor spw2 = spw.duplicate(true);
 		// Contexts are not shared objects
 		assertFalse(spw.getContextMap() == spw2.getContextMap());
 		// Context is preserved on stateful duplication
@@ -97,9 +97,9 @@ public class SingleProcessorTest
 	@Test
 	public void testContextDuplicateNoState()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		spw.setContext("foo", 10);
-		SingleProcessorWrapper spw2 = (SingleProcessorWrapper) spw.duplicate();
+		TestableSingleProcessor spw2 = (TestableSingleProcessor) spw.duplicate();
 		// Contexts are not shared objects
 		assertFalse(spw.getContextMap() == spw2.getContextMap());
 		// Duplication without state wipes the context
@@ -122,14 +122,13 @@ public class SingleProcessorTest
 	@Test
 	public void testPushable1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Pushable p = spw.getPushableInput();
 		assertNotNull(p);
 		assertEquals(0, p.getIndex());
 		assertEquals(spw, p.getObject());
 		Pushable p2 = spw.getPushableInput();
 		assertEquals(p, p2);
-		p.reset(); // Just make sure it does not throw anything
 	}
 
 	/**
@@ -147,7 +146,7 @@ public class SingleProcessorTest
 	@Test
 	public void testPushable2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		Pushable p1 = spw.getPushableInput(0);
 		Pushable p2 = spw.getPushableInput(1);
 		assertNotNull(p1);
@@ -169,7 +168,7 @@ public class SingleProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testPushableException1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		spw.getPushableInput(1);
 	}
 	
@@ -180,8 +179,8 @@ public class SingleProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testPushableException2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		Pullable p = spw.getPullableOutput(0);
 		spw2.setToInput(1, p);
 	}
@@ -193,8 +192,8 @@ public class SingleProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testPushableException3()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		Pullable p = spw.getPullableOutput(0);
 		spw2.setToInput(0, p);
 		assertEquals(p, spw2.getInputConnection(0));
@@ -217,14 +216,13 @@ public class SingleProcessorTest
 	@Test
 	public void testPullable1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Pullable p = spw.getPullableOutput();
 		assertNotNull(p);
 		assertEquals(0, p.getIndex());
 		assertEquals(spw, p.getObject());
 		Pullable p2 = spw.getPullableOutput();
 		assertEquals(p, p2);
-		p.reset(); // Just make sure it does not throw anything
 	}
 
 	/**
@@ -242,7 +240,7 @@ public class SingleProcessorTest
 	@Test
 	public void testPullable2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		Pullable p1 = spw.getPullableOutput(0);
 		Pullable p2 = spw.getPullableOutput(1);
 		assertNotNull(p1);
@@ -264,7 +262,7 @@ public class SingleProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testPullableException()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		spw.getPullableOutput(1);
 	}
 	
@@ -275,8 +273,8 @@ public class SingleProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testPullableException2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		Pushable p = spw2.getPushableInput(0);
 		spw.setToOutput(1, p);
 	}
@@ -288,8 +286,8 @@ public class SingleProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testPullableException3()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		Pushable p = spw2.getPushableInput(0);
 		spw.setToOutput(0, p);
 		assertEquals(p, spw.getOutputConnection(0));
@@ -313,7 +311,7 @@ public class SingleProcessorTest
 	public void testQueuesUnaryPush()
 	{
 		Object[] front;
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		BlackHole bh = new BlackHole();
 		Connector.connect(spw, bh);
 		Queue<Object[]> fronts = spw.getFronts();
@@ -344,7 +342,7 @@ public class SingleProcessorTest
 	public void testQueuesUnaryPull()
 	{
 		Object[] front;
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		StutteringQueueSource sq1 = new StutteringQueueSource();
 		sq1.setEvents(3).loop(false);
 		Connector.connect(sq1, spw);
@@ -380,7 +378,7 @@ public class SingleProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testQueuesUnaryPullException()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		StutteringQueueSource sq1 = new StutteringQueueSource();
 		sq1.setEvents(3).loop(false);
 		Connector.connect(sq1, spw);
@@ -396,7 +394,7 @@ public class SingleProcessorTest
 	public void testQueuesUnaryPullDecimate()
 	{
 		Object[] front;
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		StutteringQueueSource sq1 = new StutteringQueueSource();
 		sq1.setStutterAmount(-2);
 		sq1.setEvents(3, 1, 4, 1, 5);
@@ -431,7 +429,7 @@ public class SingleProcessorTest
 	public void testQueuesBinaryPullDecimate()
 	{
 		Object[] front;
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		StutteringQueueSource sq1 = new StutteringQueueSource();
 		sq1.setStutterAmount(-2);
 		sq1.setEvents(3, 1, 4, 1, 5).loop(false);
@@ -487,7 +485,7 @@ public class SingleProcessorTest
 	public void testQueuesBinaryPullStutter()
 	{
 		Object[] front;
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		spw.setStutterAmount(2);
 		StutteringQueueSource sq1 = new StutteringQueueSource();
 		sq1.setStutterAmount(1);
@@ -591,7 +589,7 @@ public class SingleProcessorTest
 	public void testQueuesBinaryPush()
 	{
 		Object[] front;
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		BlackHole bh = new BlackHole(2);
 		Connector.connect(spw, bh);
 		Queue<Object[]> fronts = spw.getFronts();
@@ -650,13 +648,13 @@ public class SingleProcessorTest
 	@Test
 	public void testQueuesDuplicateStatePush1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		BlackHole bh = new BlackHole(2);
 		Connector.connect(spw, bh);
 		Pushable p1 = spw.getPushableInput(0);
 		Pushable p2 = spw.getPushableInput(1);
 		p1.push(10);
-		SingleProcessorWrapper spw2 = spw.duplicate(true);
+		TestableSingleProcessor spw2 = spw.duplicate(true);
 		assertEquals(1, spw2.getInputQueue(0).size());
 		assertEquals(0, spw2.getInputQueue(1).size());
 		assertEquals(0, spw2.getOutputQueue(0).size());
@@ -667,13 +665,13 @@ public class SingleProcessorTest
 	@Test
 	public void testQueuesDuplicateStatePush2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		BlackHole bh = new BlackHole(2);
 		Connector.connect(spw, bh);
 		Pushable p1 = spw.getPushableInput(0);
 		Pushable p2 = spw.getPushableInput(1);
 		p2.push(10);
-		SingleProcessorWrapper spw2 = spw.duplicate(true);
+		TestableSingleProcessor spw2 = spw.duplicate(true);
 		assertEquals(0, spw2.getInputQueue(0).size());
 		assertEquals(1, spw2.getInputQueue(1).size());
 		assertEquals(0, spw2.getOutputQueue(0).size());
@@ -684,13 +682,13 @@ public class SingleProcessorTest
 	@Test
 	public void testQueuesDuplicateNoStatePush1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		BlackHole bh = new BlackHole(2);
 		Connector.connect(spw, bh);
 		Pushable p1 = spw.getPushableInput(0);
 		Pushable p2 = spw.getPushableInput(1);
 		p1.push(10);
-		SingleProcessorWrapper spw2 = spw.duplicate(false);
+		TestableSingleProcessor spw2 = spw.duplicate(false);
 		assertEquals(0, spw2.getInputQueue(0).size());
 		assertEquals(0, spw2.getInputQueue(1).size());
 		assertEquals(0, spw2.getOutputQueue(0).size());
@@ -700,13 +698,13 @@ public class SingleProcessorTest
 	@Test
 	public void testQueuesDuplicateNoStatePush2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		BlackHole bh = new BlackHole(2);
 		Connector.connect(spw, bh);
 		Pushable p1 = spw.getPushableInput(0);
 		Pushable p2 = spw.getPushableInput(1);
 		p2.push(10);
-		SingleProcessorWrapper spw2 = spw.duplicate(false);
+		TestableSingleProcessor spw2 = spw.duplicate(false);
 		assertEquals(0, spw2.getInputQueue(0).size());
 		assertEquals(0, spw2.getInputQueue(1).size());
 		assertEquals(0, spw2.getOutputQueue(0).size());
@@ -722,7 +720,7 @@ public class SingleProcessorTest
 	@Test
 	public void testEndPush1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		SinkLast bh = new SinkLast();
 		Connector.connect(spw, bh);
 		Pushable p1 = spw.getPushableInput();
@@ -745,7 +743,7 @@ public class SingleProcessorTest
 	@Test
 	public void testEndPush2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		SinkLast bh1 = new SinkLast();
 		SinkLast bh2 = new SinkLast();
 		Connector.connect(spw, 0, bh1, 0);
@@ -774,7 +772,7 @@ public class SingleProcessorTest
 	@Test
 	public void testEndPush3()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		SinkLast bh1 = new SinkLast();
 		SinkLast bh2 = new SinkLast();
 		Connector.connect(spw, 0, bh1, 0);
@@ -799,7 +797,7 @@ public class SingleProcessorTest
 	@Test
 	public void testEndPush4()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		SinkLast bh1 = new SinkLast();
 		SinkLast bh2 = new SinkLast();
 		Connector.connect(spw, 0, bh1, 0);
@@ -832,7 +830,7 @@ public class SingleProcessorTest
 	@Test
 	public void testEndPush5()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		QueueSink bh1 = new QueueSink(2);
 		Connector.connect(spw, 0, bh1, 0);
 		Connector.connect(spw, 1, bh1, 1);
@@ -875,10 +873,10 @@ public class SingleProcessorTest
 	@Test
 	public void testEndPush6()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
-		SingleProcessorWrapper spw_d1 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
+		TestableSingleProcessor spw_d1 = new TestableSingleProcessor(1, 1);
 		BlackHole bh1 = new BlackHole();
-		SingleProcessorWrapper spw_d2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw_d2 = new TestableSingleProcessor(1, 1);
 		BlackHole bh2 = new BlackHole();
 		Connector.connect(spw, 0, spw_d1, 0);
 		Connector.connect(spw, 1, spw_d2, 0);
@@ -905,8 +903,8 @@ public class SingleProcessorTest
 	@Test
 	public void testEndPush7()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_d1 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_d1 = new TestableSingleProcessor(1, 1);
 		BlackHole bh1 = new BlackHole();
 		Connector.connect(spw, 0, spw_d1, 0);
 		Connector.connect(spw_d1, bh1);
@@ -920,7 +918,7 @@ public class SingleProcessorTest
 	@Test
 	public void testResetPush1()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		BlackHole bh = new BlackHole(2);
 		Connector.connect(spw, bh);
 		Pushable p1 = spw.getPushableInput(0);
@@ -940,7 +938,7 @@ public class SingleProcessorTest
 	@Test
 	public void testResetPush2()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		BlackHole bh = new BlackHole(2);
 		Connector.connect(spw, bh);
 		Pushable p1 = spw.getPushableInput(0);
@@ -966,7 +964,7 @@ public class SingleProcessorTest
 	@Test
 	public void testHasMorePush()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		BlackHole bh1 = new BlackHole();
 		BlackHole bh2 = new BlackHole();
 		Connector.connect(spw, 0, bh1, 0);
@@ -1007,7 +1005,7 @@ public class SingleProcessorTest
 		StutteringQueueSource qs2 = new StutteringQueueSource();
 		qs2.setEvents(2, 7, 1);
 		qs2.setStutterAmount(1);
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		Connector.connect(qs1, 0, spw, 0);
 		Connector.connect(qs2, 0, spw, 1);
 		Pullable p1 = spw.getPullableOutput(0);
@@ -1036,7 +1034,7 @@ public class SingleProcessorTest
 	@Test
 	public void testStart()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		spw.start();
 	}
 	
@@ -1048,7 +1046,7 @@ public class SingleProcessorTest
 	@Test
 	public void testStop()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		spw.stop();
 	}
 	
@@ -1061,7 +1059,7 @@ public class SingleProcessorTest
 	@Test
 	public void testPrint1() throws PrintException
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		spw.getInputQueue(0).add("foo");
 		spw.getInputQueue(1).add(11);
 		spw.getOutputQueue(0).add(22);
@@ -1117,7 +1115,7 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		map.put(SingleProcessor.s_queryableKey, new ProcessorQueryable("procfoo", 1, 1));
 		IdentityObjectReader ior = new IdentityObjectReader();
-		SingleProcessorWrapper spw = (SingleProcessorWrapper) new SingleProcessorWrapper(0, 0).read(ior, map);
+		TestableSingleProcessor spw = (TestableSingleProcessor) new TestableSingleProcessor(0, 0).read(ior, map);
 		assertNotNull(spw);
 		assertEquals(1, spw.getInputQueue(0).size());
 		assertEquals("foo0", spw.getInputQueue(0).peek());
@@ -1152,7 +1150,7 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_outputQueuesKey, out_q);
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, map);
+		new TestableSingleProcessor(0, 0).read(ior, map);
 	}
 	
 	@Test(expected = ReadException.class)
@@ -1176,7 +1174,7 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_outputQueuesKey, out_q);
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, map);
+		new TestableSingleProcessor(0, 0).read(ior, map);
 	}
 	
 	@Test(expected = ReadException.class)
@@ -1195,7 +1193,7 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_outputQueuesKey, out_q);
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, map);
+		new TestableSingleProcessor(0, 0).read(ior, map);
 	}
 	
 	@Test(expected = ReadException.class)
@@ -1214,7 +1212,7 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_outputQueuesKey, 0);
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, map);
+		new TestableSingleProcessor(0, 0).read(ior, map);
 	}
 	
 	@Test(expected = ReadException.class)
@@ -1232,7 +1230,7 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_outputQueuesKey, out_q);
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, map);
+		new TestableSingleProcessor(0, 0).read(ior, map);
 	}
 	
 	@Test(expected = ReadException.class)
@@ -1249,7 +1247,7 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_inputQueuesKey, in_q);
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, map);
+		new TestableSingleProcessor(0, 0).read(ior, map);
 	}
 	
 	@Test(expected = ReadException.class)
@@ -1274,14 +1272,14 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_outputQueuesKey, out_q);
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, map);
+		new TestableSingleProcessor(0, 0).read(ior, map);
 	}
 	
 	@Test(expected = ReadException.class)
 	public void testReadInvalid8() throws ReadException
 	{
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, 0);
+		new TestableSingleProcessor(0, 0).read(ior, 0);
 	}
 	
 	@Test(expected = ReadException.class)
@@ -1309,7 +1307,7 @@ public class SingleProcessorTest
 		map.put(SingleProcessor.s_outputQueuesKey, out_q);
 		map.put(SingleProcessor.s_contentsKey, "baz");
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new SingleProcessorWrapper(0, 0).read(ior, map);
+		new TestableSingleProcessor(0, 0).read(ior, map);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -1317,7 +1315,7 @@ public class SingleProcessorTest
 	public void testHasNextSoftUnary()
 	{
 		QueueSource qs = new QueueSource().setEvents(1, 2).loop(false);
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Connector.connect(qs, spw);
 		Pullable p = spw.getPullableOutput();
 		assertEquals(NextStatus.YES, p.hasNextSoft());
@@ -1333,7 +1331,7 @@ public class SingleProcessorTest
 	{
 		QueueSource qs1 = new QueueSource().setEvents(1, 2).loop(false);
 		QueueSource qs2 = new QueueSource().setEvents(4, 8).loop(false);
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		Connector.connect(qs1, 0, spw, 0);
 		Connector.connect(qs2, 0, spw, 1);
 		Pullable p1 = spw.getPullableOutput(0);
@@ -1355,7 +1353,7 @@ public class SingleProcessorTest
 	@Test
 	public void testQueryable()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
 		assertEquals(1, pq.getInputArity());
@@ -1371,7 +1369,7 @@ public class SingleProcessorTest
 	@Test
 	public void testQueryableReset()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		assertNotNull(pq);
 		assertEquals(1, pq.getInputArity());
@@ -1384,8 +1382,8 @@ public class SingleProcessorTest
 	@Test
 	public void testQueryableConnectedUpstream()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_up = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_up = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw_up, spw);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		ProcessorQueryable pq_up = (ProcessorQueryable) spw_up.getQueryable();
@@ -1396,8 +1394,8 @@ public class SingleProcessorTest
 	@Test
 	public void testQueryableConnectedDownstream()
 	{
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw_dn = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw_dn = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw, spw_dn);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		ProcessorQueryable pq_dn = (ProcessorQueryable) spw_dn.getQueryable();

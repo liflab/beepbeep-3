@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import ca.uqac.lif.cep.Processor.ProcessorException;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.SingleProcessorWrapper;
+import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
 
 public class ProcessorTest
 {
@@ -38,7 +38,7 @@ public class ProcessorTest
 	{
 		Processor.NthEvent ne = new Processor.NthEvent(3);
 		assertFalse(ne.appliesTo(3));
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		assertTrue(ne.appliesTo(spw));
 		assertEquals(ne, ne.peek());
 		assertNull(ne.tail());

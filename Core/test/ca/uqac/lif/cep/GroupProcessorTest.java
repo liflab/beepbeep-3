@@ -1,6 +1,7 @@
 package ca.uqac.lif.cep;
 
 import static org.junit.Assert.*;
+import static ca.uqac.lif.cep.TestUtilities.verifyConnections;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,23 +12,26 @@ import java.util.Queue;
 import java.util.Set;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import ca.uqac.lif.azrael.ObjectPrinter;
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.GroupProcessor.InputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.OutputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.ProcessorConnection;
 import ca.uqac.lif.cep.Processor.ProcessorException;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectPrinter;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectReader;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.SingleProcessorWrapper;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
+import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
+import ca.uqac.lif.cep.TestUtilities.TestableGroupProcessor;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import static ca.uqac.lif.cep.ProcessorTest.assertConnectedTo;
 import static ca.uqac.lif.cep.ProcessorTest.assertNotConnectedTo;
 
+@RunWith(JUnit4.class)
 public class GroupProcessorTest 
 {
 	/**
@@ -41,7 +45,7 @@ public class GroupProcessorTest
 	@Test
 	public void testContext()
 	{
-		GroupProcessorWrapper spw = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor spw = new TestableGroupProcessor(1, 1);
 		spw.setContext("foo", 10);
 		assertEquals(10, spw.getContext("foo"));
 		// Undefined keys return null
@@ -59,9 +63,9 @@ public class GroupProcessorTest
 	@Test
 	public void testContextDuplicateState()
 	{
-		GroupProcessorWrapper spw = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor spw = new TestableGroupProcessor(1, 1);
 		spw.setContext("foo", 10);
-		GroupProcessorWrapper spw2 = (GroupProcessorWrapper) spw.duplicate(true);
+		TestableGroupProcessor spw2 = (TestableGroupProcessor) spw.duplicate(true);
 		// Contexts are not shared objects
 		assertFalse(spw.getContextMap() == spw2.getContextMap());
 		// Context is preserved on stateful duplication
@@ -78,9 +82,9 @@ public class GroupProcessorTest
 	@Test
 	public void testContextDuplicateNoState()
 	{
-		GroupProcessorWrapper spw = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor spw = new TestableGroupProcessor(1, 1);
 		spw.setContext("foo", 10);
-		GroupProcessorWrapper spw2 = (GroupProcessorWrapper) spw.duplicate();
+		TestableGroupProcessor spw2 = (TestableGroupProcessor) spw.duplicate();
 		// Contexts are not shared objects
 		assertFalse(spw.getContextMap() == spw2.getContextMap());
 		// Duplication without state wipes the context
@@ -121,7 +125,7 @@ public class GroupProcessorTest
 		assertTrue(p instanceof OutputProxyConnection);
 		assertEquals(1, p.getIndex());
 		assertEquals(gp, p.getObject());
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		spw.setOutputType(Number.class);
 		gp.add(spw);
 		gp.associateInput(0, spw, 0);
@@ -141,7 +145,7 @@ public class GroupProcessorTest
 		assertTrue(p instanceof InputProxyConnection);
 		assertEquals(1, p.getIndex());
 		assertEquals(gp, p.getObject());
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(2, 2);
+		TestableSingleProcessor spw = new TestableSingleProcessor(2, 2);
 		spw.setInputType(Number.class);
 		gp.add(spw);
 		gp.associateInput(0, spw, 0);
@@ -170,7 +174,7 @@ public class GroupProcessorTest
 	public void testPullableException2()
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Pullable p = spw.getPullableOutput();
 		gp.setPullableInput(2, p);
 	}
@@ -179,7 +183,7 @@ public class GroupProcessorTest
 	public void testPullableException3()
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Pullable p = spw.getPullableOutput();
 		gp.setToInput(2, p);
 	}
@@ -195,7 +199,7 @@ public class GroupProcessorTest
 	public void testPushableException2()
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Pushable p = spw.getPushableInput();
 		gp.setPushableOutput(2, p);
 	}
@@ -204,7 +208,7 @@ public class GroupProcessorTest
 	public void testPushableException3()
 	{
 		GroupProcessor gp = new GroupProcessor(1, 1);
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		Pushable p = spw.getPushableInput();
 		gp.setToOutput(2, p);
 	}
@@ -237,7 +241,7 @@ public class GroupProcessorTest
 	@Test
 	public void testInitializationUnary()
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
 		Set<Processor> gp_ip = gp.getProcessors();
 		assertTrue(gp_ip.isEmpty());
 		Pushable psh = gp.getPushableInput();
@@ -254,7 +258,7 @@ public class GroupProcessorTest
 		assertNull(opc.m_pullable);
 		assertNull(opc.m_pushable);
 		assertEquals(0, opc.getIndex());
-		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
 		gp.add(spw);
 		// The added processor is not a source
 		assertEquals(1, gp_ip.size());
@@ -271,13 +275,13 @@ public class GroupProcessorTest
 		assertEquals(spw.getPullableOutput(0), opc.m_pullable);
 		assertNull(opc.m_pushable);
 		// Connect something to the input
-		SingleProcessorWrapper spw_up = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw_up = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw_up, gp);
 		assertNotNull(ipc.m_pullable);
 		assertEquals(spw_up.getPullableOutput(0), ipc.m_pullable);
 		assertNull(opc.m_pushable);
 		// Connect something to the output
-		SingleProcessorWrapper spw_dn = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw_dn = new TestableSingleProcessor(1, 1);
 		Connector.connect(gp, spw_dn);
 		assertNotNull(opc.m_pushable);
 		assertEquals(spw_dn.getPushableInput(0), opc.m_pushable);
@@ -286,11 +290,11 @@ public class GroupProcessorTest
 	@Test
 	public void testAddMultiple()
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
 		Set<Processor> procs = new HashSet<Processor>(3);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw3 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw3 = new TestableSingleProcessor(1, 1);
 		procs.add(spw1);
 		procs.add(spw2);
 		procs.add(spw3);
@@ -308,11 +312,11 @@ public class GroupProcessorTest
 	@Test
 	public void testAddMultiple2()
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
 		Set<Processor> procs = new HashSet<Processor>(3);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw3 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw3 = new TestableSingleProcessor(1, 1);
 		gp.addProcessors(spw1, spw2, spw3);
 		Set<Processor> set_procs = gp.getProcessors();
 		// When adding a collection, the group's inner set is not the
@@ -326,11 +330,11 @@ public class GroupProcessorTest
 	@Test
 	public void testStart()
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
 		Set<Processor> procs = new HashSet<Processor>(3);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw3 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw3 = new TestableSingleProcessor(1, 1);
 		procs.add(spw1);
 		procs.add(spw2);
 		procs.add(spw3);
@@ -344,11 +348,11 @@ public class GroupProcessorTest
 	@Test
 	public void testStop()
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
 		Set<Processor> procs = new HashSet<Processor>(3);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw3 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw3 = new TestableSingleProcessor(1, 1);
 		procs.add(spw1);
 		procs.add(spw2);
 		procs.add(spw3);
@@ -362,10 +366,10 @@ public class GroupProcessorTest
 	@Test
 	public void testPassthroughUnaryPull()
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
 		Set<Processor> gp_ip = gp.getProcessors();
 		assertTrue(gp_ip.isEmpty());
-		SingleProcessorWrapper pt = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor pt = new TestableSingleProcessor(1, 1);
 		gp.associateInput(0, pt, 0);
 		gp.associateOutput(0, pt, 0);
 		gp.add(pt);
@@ -389,8 +393,8 @@ public class GroupProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testPassthroughUnaryPullException()
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper pt = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor pt = new TestableSingleProcessor(1, 1);
 		gp.associateInput(0, pt, 0);
 		gp.associateOutput(0, pt, 0);
 		gp.add(pt);
@@ -406,8 +410,8 @@ public class GroupProcessorTest
 	@Test
 	public void testPassthroughUnaryPush()
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper pt = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor pt = new TestableSingleProcessor(1, 1);
 		Queue<Object[]> fronts = pt.getFronts();
 		gp.associateInput(0, pt, 0);
 		gp.associateOutput(0, pt, 0);
@@ -435,17 +439,17 @@ public class GroupProcessorTest
 	@Test(expected = ProcessorException.class)
 	public void testDisconnectedDuplicate()
 	{
-		GroupProcessorWrapper gpw = new GroupProcessorWrapper(1, 1);
-		gpw.add(new SingleProcessorWrapper(1, 1), new SingleProcessorWrapper(1, 1));
+		TestableGroupProcessor gpw = new TestableGroupProcessor(1, 1);
+		gpw.add(new TestableSingleProcessor(1, 1), new TestableSingleProcessor(1, 1));
 		gpw.duplicate();
 	}
 	
 	@Test
 	public void testReset()
 	{
-		GroupProcessorWrapper gpw = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gpw = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		Connector.connect(spw1, spw2);
 		gpw.add(spw1, spw2);
 		gpw.associateInput(0, spw1, 0);
@@ -463,21 +467,21 @@ public class GroupProcessorTest
 	@Test
 	public void testDuplicateChainState()
 	{
-		GroupProcessorWrapper gpw = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gpw = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		spw1.setContext("foo1", "bar1");
 		spw2.setContext("foo2", "bar2");
 		Connector.connect(spw1, spw2);
 		gpw.add(spw1, spw2);
 		gpw.associateInput(0, spw1, 0);
 		gpw.associateOutput(0, spw2, 0);
-		GroupProcessorWrapper gpw_d = (GroupProcessorWrapper) gpw.duplicate(true);
+		TestableGroupProcessor gpw_d = (TestableGroupProcessor) gpw.duplicate(true);
 		assertNotNull(gpw_d);
 		assertFalse(gpw.m_innerProcessors == gpw_d.m_innerProcessors);
 		Map<Processor,Processor> correspondences = gpw.m_correspondences;
-		SingleProcessorWrapper spw1_d = (SingleProcessorWrapper) correspondences.get(spw1);
-		SingleProcessorWrapper spw2_d = (SingleProcessorWrapper) correspondences.get(spw2);
+		TestableSingleProcessor spw1_d = (TestableSingleProcessor) correspondences.get(spw1);
+		TestableSingleProcessor spw2_d = (TestableSingleProcessor) correspondences.get(spw2);
 		assertEquals("bar1", spw1_d.getContext("foo1"));
 		assertEquals("bar2", spw2_d.getContext("foo2"));
 		assertConnectedTo(spw1_d, 0, spw2_d, 0);
@@ -491,21 +495,21 @@ public class GroupProcessorTest
 	@Test
 	public void testDuplicateChainNoState()
 	{
-		GroupProcessorWrapper gpw = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gpw = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		spw1.setContext("foo1", "bar1");
 		spw2.setContext("foo2", "bar2");
 		Connector.connect(spw1, spw2);
 		gpw.add(spw1, spw2);
 		gpw.associateInput(0, spw1, 0);
 		gpw.associateOutput(0, spw2, 0);
-		GroupProcessorWrapper gpw_d = (GroupProcessorWrapper) gpw.duplicate(false);
+		TestableGroupProcessor gpw_d = (TestableGroupProcessor) gpw.duplicate(false);
 		assertNotNull(gpw_d);
 		assertFalse(gpw.m_innerProcessors == gpw_d.m_innerProcessors);
 		Map<Processor,Processor> correspondences = gpw.m_correspondences;
-		SingleProcessorWrapper spw1_d = (SingleProcessorWrapper) correspondences.get(spw1);
-		SingleProcessorWrapper spw2_d = (SingleProcessorWrapper) correspondences.get(spw2);
+		TestableSingleProcessor spw1_d = (TestableSingleProcessor) correspondences.get(spw1);
+		TestableSingleProcessor spw2_d = (TestableSingleProcessor) correspondences.get(spw2);
 		assertNull("bar1", spw1_d.getContext("foo1"));
 		assertNull("bar2", spw2_d.getContext("foo2"));
 		assertConnectedTo(spw1_d, 0, spw2_d, 0);
@@ -521,7 +525,7 @@ public class GroupProcessorTest
 	{
 		QueueSource src1 = new QueueSource().setEvents(3, 4, 5);
 		QueueSource src2 = new QueueSource().setEvents(10, 11, 12);
-		GroupProcessorWrapper gpw = new GroupProcessorWrapper(2, 2);
+		TestableGroupProcessor gpw = new TestableGroupProcessor(2, 2);
 		Connector.connect(src1, 0, gpw, 0);
 		Connector.connect(src2, 0, gpw, 1);
 		Pullable p1 = (Pullable) gpw.getInputConnection(0);
@@ -537,7 +541,7 @@ public class GroupProcessorTest
 	{
 		SinkLast src1 = new SinkLast();
 		SinkLast src2 = new SinkLast();
-		GroupProcessorWrapper gpw = new GroupProcessorWrapper(2, 2);
+		TestableGroupProcessor gpw = new TestableGroupProcessor(2, 2);
 		Connector.connect(gpw, 0, src1, 0);
 		Connector.connect(gpw, 1, src2, 0);
 		Pushable p1 = (Pushable) gpw.getOutputConnection(0);
@@ -552,7 +556,7 @@ public class GroupProcessorTest
 	public void testInputConnectionOutOfBounds()
 	{
 		QueueSource src1 = new QueueSource().setEvents(3, 4, 5);
-		GroupProcessorWrapper gpw = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor gpw = new TestableGroupProcessor(1, 1);
 		Connector.connect(src1, 0, gpw, 0);
 		gpw.getInputConnection(1);
 	}
@@ -561,7 +565,7 @@ public class GroupProcessorTest
 	public void testOutputConnectionOutOfBounds()
 	{
 		SinkLast src1 = new SinkLast();
-		GroupProcessorWrapper gpw = new GroupProcessorWrapper(1, 1);
+		TestableGroupProcessor gpw = new TestableGroupProcessor(1, 1);
 		Connector.connect(gpw, 0, src1, 0);
 		gpw.getOutputConnection(1);
 	}
@@ -581,8 +585,8 @@ public class GroupProcessorTest
 		assertTrue(map.containsKey(GroupProcessor.s_contextKey));
 		List<?> arity = (List<?>) map.get(GroupProcessor.s_arityKey);
 		assertEquals(2, arity.size());
-		assertEquals(3, (int) arity.get(0));
-		assertEquals(2, (int) arity.get(1));
+		assertEquals(3, ((Integer) arity.get(0)).intValue());
+		assertEquals(2, ((Integer) arity.get(1)).intValue());
 		List<?> procs = (List<?>) map.get(GroupProcessor.s_processorsKey);
 		assertEquals(0, procs.size());
 		List<?> connections = (List<?>) map.get(GroupProcessor.s_connectionsKey);
@@ -596,8 +600,8 @@ public class GroupProcessorTest
 	@Test
 	public void testPrint2() throws PrintException
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor sp = new TestableSingleProcessor(1, 1);
 		gp.add(sp);
 		gp.associateInput(0, sp, 0);
 		gp.associateOutput(0, sp, 0);
@@ -610,8 +614,8 @@ public class GroupProcessorTest
 		assertTrue(map.containsKey(GroupProcessor.s_contextKey));
 		List<?> arity = (List<?>) map.get(GroupProcessor.s_arityKey);
 		assertEquals(2, arity.size());
-		assertEquals(1, (int) arity.get(0));
-		assertEquals(1, (int) arity.get(1));
+		assertEquals(1, ((Integer) arity.get(0)).intValue());
+		assertEquals(1, ((Integer) arity.get(1)).intValue());
 		List<?> procs = (List<?>) map.get(GroupProcessor.s_processorsKey);
 		assertEquals(1, procs.size());
 		List<?> connections = (List<?>) map.get(GroupProcessor.s_connectionsKey);
@@ -624,9 +628,9 @@ public class GroupProcessorTest
 	@Test
 	public void testPrint3() throws PrintException
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp2 = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor sp1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor sp2 = new TestableSingleProcessor(1, 1);
 		Connector.connect(sp1, sp2);
 		gp.add(sp1, sp2);
 		gp.associateInput(0, sp1, 0);
@@ -640,8 +644,8 @@ public class GroupProcessorTest
 		assertTrue(map.containsKey(GroupProcessor.s_contextKey));
 		List<?> arity = (List<?>) map.get(GroupProcessor.s_arityKey);
 		assertEquals(2, arity.size());
-		assertEquals(1, (int) arity.get(0));
-		assertEquals(1, (int) arity.get(1));
+		assertEquals(1, ((Integer) arity.get(0)).intValue());
+		assertEquals(1, ((Integer) arity.get(1)).intValue());
 		List<?> procs = (List<?>) map.get(GroupProcessor.s_processorsKey);
 		assertEquals(2, procs.size());
 		List<?> connections = (List<?>) map.get(GroupProcessor.s_connectionsKey);
@@ -654,9 +658,9 @@ public class GroupProcessorTest
 	@Test
 	public void testPrintDisconnected1() throws PrintException
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp2 = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor sp1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor sp2 = new TestableSingleProcessor(1, 1);
 		Connector.connect(sp1, sp2);
 		gp.add(sp1, sp2);
 		gp.associateOutput(0, sp2, 0);
@@ -669,8 +673,8 @@ public class GroupProcessorTest
 		assertTrue(map.containsKey(GroupProcessor.s_contextKey));
 		List<?> arity = (List<?>) map.get(GroupProcessor.s_arityKey);
 		assertEquals(2, arity.size());
-		assertEquals(1, (int) arity.get(0));
-		assertEquals(1, (int) arity.get(1));
+		assertEquals(1, ((Integer) arity.get(0)).intValue());
+		assertEquals(1, ((Integer) arity.get(1)).intValue());
 		List<?> procs = (List<?>) map.get(GroupProcessor.s_processorsKey);
 		assertEquals(2, procs.size());
 		List<?> connections = (List<?>) map.get(GroupProcessor.s_connectionsKey);
@@ -683,9 +687,9 @@ public class GroupProcessorTest
 	@Test
 	public void testPrintDisconnected2() throws PrintException
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp2 = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor sp1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor sp2 = new TestableSingleProcessor(1, 1);
 		Connector.connect(sp1, sp2);
 		gp.add(sp1, sp2);
 		gp.associateInput(0, sp1, 0);
@@ -698,8 +702,8 @@ public class GroupProcessorTest
 		assertTrue(map.containsKey(GroupProcessor.s_contextKey));
 		List<?> arity = (List<?>) map.get(GroupProcessor.s_arityKey);
 		assertEquals(2, arity.size());
-		assertEquals(1, (int) arity.get(0));
-		assertEquals(1, (int) arity.get(1));
+		assertEquals(1, ((Integer) arity.get(0)).intValue());
+		assertEquals(1, ((Integer) arity.get(1)).intValue());
 		List<?> procs = (List<?>) map.get(GroupProcessor.s_processorsKey);
 		assertEquals(2, procs.size());
 		List<?> connections = (List<?>) map.get(GroupProcessor.s_connectionsKey);
@@ -712,9 +716,9 @@ public class GroupProcessorTest
 	@Test
 	public void testPrintDisconnected3() throws PrintException
 	{
-		GroupProcessorWrapper gp = new GroupProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper sp2 = new SingleProcessorWrapper(1, 1);
+		TestableGroupProcessor gp = new TestableGroupProcessor(1, 1);
+		TestableSingleProcessor sp1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor sp2 = new TestableSingleProcessor(1, 1);
 		gp.add(sp1, sp2);
 		gp.associateInput(0, sp1, 0);
 		gp.associateOutput(0, sp2, 0);
@@ -727,8 +731,8 @@ public class GroupProcessorTest
 		assertTrue(map.containsKey(GroupProcessor.s_contextKey));
 		List<?> arity = (List<?>) map.get(GroupProcessor.s_arityKey);
 		assertEquals(2, arity.size());
-		assertEquals(1, (int) arity.get(0));
-		assertEquals(1, (int) arity.get(1));
+		assertEquals(1, ((Integer) arity.get(0)).intValue());
+		assertEquals(1, ((Integer) arity.get(1)).intValue());
 		List<?> procs = (List<?>) map.get(GroupProcessor.s_processorsKey);
 		assertEquals(2, procs.size());
 		List<?> connections = (List<?>) map.get(GroupProcessor.s_connectionsKey);
@@ -737,39 +741,7 @@ public class GroupProcessorTest
 		verifyConnections(gp, proc_list, (List<ProcessorConnection>) connections);
 	}
 	
-	/**
-	 * Checks that the connections listed in the <tt>connections</tt> element
-	 * of the serialized group match the actual connections between the
-	 * processors in the group.
-	 * @param gp The group that has been serialized
-	 * @param proc_list The list of processors in the group, at the same positions
-	 * as the ones in the serialized list of processors
-	 * @param connections The list of serialized connections to verify
-	 */
-	protected static void verifyConnections(GroupProcessor gp, List<Processor> proc_list, List<ProcessorConnection> connections)
-	{
-		for (ProcessorConnection pc : connections)
-		{
-			if (pc.m_sourceId == -1)
-			{
-				InputProxyConnection ipc = gp.m_inputPlaceholders[pc.m_sourceIndex];
-				assertEquals(ipc.m_pushable.getIndex(), pc.m_destinationIndex);
-				assertEquals(ipc.m_pushable.getObject(), proc_list.get(pc.m_destinationId));
-			}
-			else if (pc.m_destinationId == -1)
-			{
-				OutputProxyConnection opc = gp.m_outputPlaceholders[pc.m_destinationIndex];
-				assertEquals(opc.m_pullable.getIndex(), pc.m_sourceIndex);
-				assertEquals(opc.m_pullable.getObject(), proc_list.get(pc.m_sourceId));
-			}
-			else
-			{
-				Processor p1 = proc_list.get(pc.m_sourceId);
-				Processor p2 = proc_list.get(pc.m_destinationId);
-				assertConnectedTo(p1, pc.m_sourceIndex, p2, pc.m_destinationIndex);
-			}
-		}
-	}
+	
 	
 	@Test
 	public void testRead1() throws ReadException
@@ -787,7 +759,7 @@ public class GroupProcessorTest
 		c.put("foo", "bar");
 		map.put(GroupProcessor.s_contextKey, c);
 		IdentityObjectReader ior = new IdentityObjectReader();
-		GroupProcessorWrapper gpw = (GroupProcessorWrapper) new GroupProcessorWrapper(0, 0).read(ior, map);
+		TestableGroupProcessor gpw = (TestableGroupProcessor) new TestableGroupProcessor(0, 0).read(ior, map);
 		assertNotNull(gpw);
 		assertEquals(3, gpw.getInputArity());
 		assertEquals(2, gpw.getOutputArity());
@@ -806,8 +778,8 @@ public class GroupProcessorTest
 		arity.add(1);
 		arity.add(1);
 		map.put(GroupProcessor.s_arityKey, arity);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		List<Processor> procs = new ArrayList<Processor>(1);
 		procs.add(spw1);
 		procs.add(spw2);
@@ -818,7 +790,7 @@ public class GroupProcessorTest
 		connections.add(new ProcessorConnection(1, 0, -1, 0));
 		map.put(GroupProcessor.s_connectionsKey, connections);
 		IdentityObjectReader ior = new IdentityObjectReader();
-		GroupProcessorWrapper gpw = (GroupProcessorWrapper) new GroupProcessorWrapper(0, 0).read(ior, map);
+		TestableGroupProcessor gpw = (TestableGroupProcessor) new TestableGroupProcessor(0, 0).read(ior, map);
 		assertNotNull(gpw);
 		assertEquals(1, gpw.getInputArity());
 		assertEquals(1, gpw.getOutputArity());
@@ -850,7 +822,7 @@ public class GroupProcessorTest
 		connections.add(new ProcessorConnection(1, 0, -1, 0));
 		map.put(GroupProcessor.s_connectionsKey, connections);
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new GroupProcessorWrapper(0, 0).read(ior, map);
+		new TestableGroupProcessor(0, 0).read(ior, map);
 	}
 	
 	/**
@@ -868,8 +840,8 @@ public class GroupProcessorTest
 		arity.add(1);
 		arity.add(1);
 		map.put(GroupProcessor.s_arityKey, arity);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		List<Processor> procs = new ArrayList<Processor>(1);
 		procs.add(spw1);
 		procs.add(spw2);
@@ -880,7 +852,7 @@ public class GroupProcessorTest
 		connections.add(new ProcessorConnection(1, 0, -1, 0));
 		map.put(GroupProcessor.s_connectionsKey, connections);
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new GroupProcessorWrapper(0, 0).read(ior, map);
+		new TestableGroupProcessor(0, 0).read(ior, map);
 	}
 	
 	/**
@@ -893,7 +865,7 @@ public class GroupProcessorTest
 	public void testReadInvalid3() throws ReadException, PrintException
 	{
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new GroupProcessorWrapper(0, 0).read(ior, 3);
+		new TestableGroupProcessor(0, 0).read(ior, 3);
 	}
 	
 	/**
@@ -911,8 +883,8 @@ public class GroupProcessorTest
 		arity.add(1);
 		arity.add(1);
 		map.put(GroupProcessor.s_arityKey, arity);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		List<Processor> procs = new ArrayList<Processor>(1);
 		procs.add(spw1);
 		procs.add(spw2);
@@ -923,7 +895,7 @@ public class GroupProcessorTest
 		connections.add(new ProcessorConnection(1, 0, -1, 0));
 		map.put(GroupProcessor.s_connectionsKey, connections);
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new GroupProcessorWrapper(0, 0).read(ior, map);
+		new TestableGroupProcessor(0, 0).read(ior, map);
 	}
 	
 	/**
@@ -941,8 +913,8 @@ public class GroupProcessorTest
 		arity.add(1);
 		arity.add(1);
 		map.put(GroupProcessor.s_arityKey, arity);
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		List<Processor> procs = new ArrayList<Processor>(1);
 		procs.add(spw1);
 		procs.add(spw2);
@@ -953,7 +925,7 @@ public class GroupProcessorTest
 		connections.add(new ProcessorConnection(3, 0, -1, 0)); // The error is 3 here
 		map.put(GroupProcessor.s_connectionsKey, connections);
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new GroupProcessorWrapper(0, 0).read(ior, map);
+		new TestableGroupProcessor(0, 0).read(ior, map);
 	}
 	
 	/**
@@ -968,8 +940,8 @@ public class GroupProcessorTest
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put(GroupProcessor.s_contextKey, new Context());
 		map.put(GroupProcessor.s_arityKey, 3); // Error is here: should be a list
-		SingleProcessorWrapper spw1 = new SingleProcessorWrapper(1, 1);
-		SingleProcessorWrapper spw2 = new SingleProcessorWrapper(1, 1);
+		TestableSingleProcessor spw1 = new TestableSingleProcessor(1, 1);
+		TestableSingleProcessor spw2 = new TestableSingleProcessor(1, 1);
 		List<Processor> procs = new ArrayList<Processor>(1);
 		procs.add(spw1);
 		procs.add(spw2);
@@ -980,7 +952,7 @@ public class GroupProcessorTest
 		connections.add(new ProcessorConnection(1, 0, -1, 0));
 		map.put(GroupProcessor.s_connectionsKey, connections);
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new GroupProcessorWrapper(0, 0).read(ior, map);
+		new TestableGroupProcessor(0, 0).read(ior, map);
 	}
 	
 	/**
@@ -1006,7 +978,7 @@ public class GroupProcessorTest
 		connections.add(new ProcessorConnection(1, 0, -1, 0));
 		map.put(GroupProcessor.s_connectionsKey, connections);
 		IdentityObjectReader ior = new IdentityObjectReader();
-		new GroupProcessorWrapper(0, 0).read(ior, map);
+		new TestableGroupProcessor(0, 0).read(ior, map);
 	}
 	
 	@Test
@@ -1017,10 +989,10 @@ public class GroupProcessorTest
 		Object o = iop.print(pc);
 		assertTrue(o instanceof List);
 		List<?> list = (List<?>) o;
-		assertEquals(2, (int) list.get(0));
-		assertEquals(7, (int) list.get(1));
-		assertEquals(1, (int) list.get(2));
-		assertEquals(8, (int) list.get(3));
+		assertEquals(2, ((Integer) list.get(0)).intValue());
+		assertEquals(7, ((Integer) list.get(1)).intValue());
+		assertEquals(1, ((Integer) list.get(2)).intValue());
+		assertEquals(8, ((Integer) list.get(3)).intValue());
 	}
 	
 	@Test
@@ -1065,57 +1037,5 @@ public class GroupProcessorTest
 		GroupProcessor gp2 = gp.getInstance(2, 3);
 		assertEquals(2, gp2.getInputArity());
 		assertEquals(3, gp2.getOutputArity());
-	}
-
-	/**
-	 * A wrapper around {@link GroupProcessor} that exposes more of its
-	 * internal member fields, for testing purposes.
-	 */
-	protected static class GroupProcessorWrapper extends GroupProcessor
-	{
-		protected Map<Processor,Processor> m_correspondences;
-		
-		protected List<Processor> m_procList;
-		
-		public GroupProcessorWrapper(int in_arity, int out_arity) 
-		{
-			super(in_arity, out_arity);
-		}
-
-		Set<Processor> getProcessors()
-		{
-			return m_innerProcessors;
-		}
-		
-		List<Processor> getProcessorList()
-		{
-			return m_procList;
-		}
-		
-		Context getContextMap()
-		{
-			return m_context;
-		}
-		
-		@Override
-		public GroupProcessorWrapper duplicate(boolean with_state)
-		{
-			GroupProcessorWrapper gpw = new GroupProcessorWrapper(getInputArity(), getOutputArity());
-			m_correspondences = new HashMap<Processor,Processor>();
-			return (GroupProcessorWrapper) super.copyInto(gpw, with_state, m_correspondences);
-		}
-		
-		@Override
-		public Object print(ObjectPrinter<?> printer) throws PrintException
-		{
-			m_procList = new ArrayList<Processor>(m_innerProcessors.size());
-			return print(printer, m_procList);
-		}
-		
-		@Override
-		protected GroupProcessorWrapper getInstance(int in_arity, int out_arity)
-		{
-			return new GroupProcessorWrapper(in_arity, out_arity);
-		}		
 	}
 }

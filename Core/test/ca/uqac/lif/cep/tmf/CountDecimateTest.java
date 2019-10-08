@@ -20,8 +20,8 @@ import ca.uqac.lif.cep.SingleProcessorTest;
 import ca.uqac.lif.cep.Processor.NthEvent;
 import ca.uqac.lif.cep.ProcessorQueryable;
 import ca.uqac.lif.cep.ProcessorQueryableTest;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectPrinter;
-import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectReader;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
 import ca.uqac.lif.cep.tmf.CountDecimate.CountDecimateQueryable;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
 import ca.uqac.lif.petitpoucet.DesignatedObject;
@@ -256,7 +256,7 @@ public class CountDecimateTest
 		CountDecimateQueryable cdq = (CountDecimateQueryable) decim.getQueryable();
 		IdentityObjectPrinter iop = new IdentityObjectPrinter();
 		Map<String,Object> printed = (Map<String,Object>) iop.print(cdq);
-		int interval = (int) printed.get(ProcessorQueryable.s_contentsKey);
+		int interval = (Integer) printed.get(ProcessorQueryable.s_contentsKey);
 		assertEquals(3, interval);
 	}
 	
