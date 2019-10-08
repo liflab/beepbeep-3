@@ -184,7 +184,7 @@ public class WindowTest
 	}
 	
 	@Test
-	public void testSlidableWindowDuplicate()
+	public void testSlidableWindowReset()
 	{
 		TestableSlidableFunction tsf = new TestableSlidableFunction();
 		SlidableWindow sw = new SlidableWindow(tsf, 3);
@@ -202,8 +202,54 @@ public class WindowTest
 		sw.compute(new Object[] {1}, out_queue, null);
 		assertEquals(4, tsf.getCallsToEvaluate());
 		assertEquals(1, tsf.getCallsToDevaluate());
-		tsf.reset();
+		sw.reset();
 		assertEquals(1, tsf.getCallsToReset());
+	}
+	
+	@Test
+	public void testSlidableWindowDuplicateState()
+	{
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		SlidableWindow sw = new SlidableWindow(tsf, 3);
+		assertEquals(3, sw.getWidth());
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		sw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		sw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(2, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		SlidableWindow sw_dup = sw.duplicate(true);
+		assertFalse(sw == sw_dup);
+		assertEquals(sw.m_windowWidth, sw_dup.m_windowWidth);
+		assertFalse(sw.m_window == sw_dup.m_window);
+		assertEquals(sw.m_window.m_size, sw_dup.m_window.m_size);
+		assertNotNull(sw_dup.m_window);
+		assertFalse(sw.m_function == sw_dup.m_function);
+		assertNotNull(sw_dup.m_function);
+	}
+	
+	@Test
+	public void testSlidableWindowDuplicateNoState()
+	{
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		SlidableWindow sw = new SlidableWindow(tsf, 3);
+		assertEquals(3, sw.getWidth());
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		sw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		sw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(2, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		SlidableWindow sw_dup = sw.duplicate();
+		assertFalse(sw == sw_dup);
+		assertEquals(sw.m_windowWidth, sw_dup.m_windowWidth);
+		assertFalse(sw.m_window == sw_dup.m_window);
+		assertEquals(0, sw_dup.m_window.m_size);
+		assertNotNull(sw_dup.m_window);
+		assertFalse(sw.m_function == sw_dup.m_function);
+		assertNotNull(sw_dup.m_function);
 	}
 	
 	@SuppressWarnings("unchecked")
