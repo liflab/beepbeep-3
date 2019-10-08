@@ -149,6 +149,7 @@ public class Window extends SingleProcessor
 		public void reset()
 		{
 			m_window.clear();
+			m_processor.reset();
 		}
 		
 		@Override
@@ -181,7 +182,7 @@ public class Window extends SingleProcessor
 		}
 	}
 
-	protected static class SlidableWindow extends ProcessorWindow
+	static class SlidableWindow extends ProcessorWindow
 	{
 		/*@ non_null @*/ protected SlidableFunction m_function;
 		

@@ -2,15 +2,22 @@ package ca.uqac.lif.cep.tmf;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import org.junit.Test;
 
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
 import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.ProcessorQueryable;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -21,9 +28,12 @@ import ca.uqac.lif.cep.SingleProcessorTestTemplate.IdentityObjectReader;
 import ca.uqac.lif.cep.SingleProcessorTestTemplate.SingleProcessorWrapper;
 import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.Window.CircularBuffer;
 import ca.uqac.lif.cep.tmf.Window.GenericWindow;
 import ca.uqac.lif.cep.tmf.Window.ProcessorWindow;
+import ca.uqac.lif.cep.tmf.Window.SlidableWindow;
 import ca.uqac.lif.cep.util.Numbers;
 
 public class WindowTest
@@ -41,13 +51,13 @@ public class WindowTest
 	}
 
 	@Test
-	public void tesArityGeneric()
+	public void testArityGeneric()
 	{
 		SingleProcessorTestTemplate.testArity(new Window(new Passthrough(), 2), 1, 1);
 	}
 	
 	@Test
-	public void tesArityFunction()
+	public void testArityFunction()
 	{
 		SingleProcessorTestTemplate.testArity(new Window(new Numbers.Average(), 2), 1, 1);
 	}
@@ -57,6 +67,7 @@ public class WindowTest
 	{
 		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
 		Window win = new Window(spw, 3);
+		assertEquals(3, win.getWidth());
 		QueueSink qs = new QueueSink();
 		Connector.connect(win, qs);
 		Queue<Object[]> queue = qs.getQueue();
@@ -86,6 +97,44 @@ public class WindowTest
 		assertEquals(2, spw.getCallsToReset());
 	}
 	
+	@Test
+	public void testResetProcessor()
+	{
+		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		Window win = new Window(spw, 3);
+		assertEquals(3, win.getWidth());
+		QueueSink qs = new QueueSink();
+		Connector.connect(win, qs);
+		Queue<Object[]> queue = qs.getQueue();
+		Queue<Object[]> fronts = spw.getFronts();
+		Pushable p = win.getPushableInput();
+		p.push(3);
+		assertTrue(queue.isEmpty());
+		assertEquals(0, fronts.size());
+		assertEquals(0, spw.getCallsToReset());
+		p.push(1);
+		assertTrue(queue.isEmpty());
+		assertEquals(0, fronts.size());
+		assertEquals(0, spw.getCallsToReset());
+		win.reset();
+		assertEquals(1, spw.getCallsToReset());
+	}
+	
+	@Test
+	public void testDuplicateProcessorState()
+	{
+		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		Window win = new Window(spw, 3);
+		BlackHole bh = new BlackHole();
+		Connector.connect(win, bh);
+		Pushable p = win.getPushableInput();
+		p.push("foo");
+		p.push("bar");
+		Window win_dup = win.duplicate(true);
+		assertFalse(win == win_dup);
+		assertFalse(win.m_windowProcessor == win_dup.m_windowProcessor);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testPrint() throws PrintException
@@ -97,6 +146,156 @@ public class WindowTest
 		GenericWindow pw = (GenericWindow) printed.get(SingleProcessor.s_contentsKey);
 		assertEquals(3, pw.m_windowWidth);
 		assertEquals(spw, pw.m_processor);
+	}
+	
+	@Test
+	public void testSlidableWindowOutput()
+	{
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		SlidableWindow sw = new SlidableWindow(tsf, 3);
+		assertEquals(3, sw.getWidth());
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		sw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		assertEquals(3, tsf.m_lastEvaluate);
+		sw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(2, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		assertEquals(1, tsf.m_lastEvaluate);
+		sw.compute(new Object[] {4}, out_queue, null);
+		assertEquals(3, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		assertEquals(4, tsf.m_lastEvaluate);
+		sw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(4, tsf.getCallsToEvaluate());
+		assertEquals(1, tsf.getCallsToDevaluate());
+		assertEquals(1, tsf.m_lastEvaluate);
+		assertEquals(3, tsf.m_lastDevaluate);
+		sw.compute(new Object[] {5}, out_queue, null);
+		assertEquals(5, tsf.getCallsToEvaluate());
+		assertEquals(2, tsf.getCallsToDevaluate());
+		assertEquals(5, tsf.m_lastEvaluate);
+		assertEquals(1, tsf.m_lastDevaluate);
+		tsf.reset();
+		assertEquals(1, tsf.getCallsToReset());
+	}
+	
+	@Test
+	public void testSlidableWindowDuplicate()
+	{
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		SlidableWindow sw = new SlidableWindow(tsf, 3);
+		assertEquals(3, sw.getWidth());
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		sw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		sw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(2, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		sw.compute(new Object[] {4}, out_queue, null);
+		assertEquals(3, tsf.getCallsToEvaluate());
+		assertEquals(0, tsf.getCallsToDevaluate());
+		sw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(4, tsf.getCallsToEvaluate());
+		assertEquals(1, tsf.getCallsToDevaluate());
+		tsf.reset();
+		assertEquals(1, tsf.getCallsToReset());
+	}
+	
+	@Test
+	public void testGenericWindowOutput()
+	{
+		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		Queue<Object[]> fronts = spw.getFronts();
+		GenericWindow gw = new GenericWindow(spw, 3);
+		assertEquals(3, gw.getWidth());
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		gw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, gw.m_window.m_size);
+		assertEquals(0, fronts.size());
+		gw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(2, gw.m_window.m_size);
+		assertEquals(0, fronts.size());
+		gw.compute(new Object[] {4}, out_queue, null);
+		assertEquals(3, gw.m_window.m_size);
+		assertEquals(3, fronts.size());
+		assertEquals(3, fronts.remove()[0]);
+		assertEquals(1, fronts.remove()[0]);
+		assertEquals(4, fronts.remove()[0]);
+		assertEquals(1, spw.getCallsToReset());
+		gw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(3, gw.m_window.m_size);
+		assertEquals(3, fronts.size());
+		assertEquals(1, fronts.remove()[0]);
+		assertEquals(4, fronts.remove()[0]);
+		assertEquals(1, fronts.remove()[0]);
+		assertEquals(2, spw.getCallsToReset());
+	}
+	
+	@Test
+	public void testGenericWindowReset()
+	{
+		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		Queue<Object[]> fronts = spw.getFronts();
+		GenericWindow gw = new GenericWindow(spw, 3);
+		assertEquals(3, gw.getWidth());
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		gw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, gw.m_window.m_size);
+		assertEquals(0, fronts.size());
+		gw.compute(new Object[] {1}, out_queue, null);
+		assertEquals(2, gw.m_window.m_size);
+		assertEquals(0, fronts.size());
+		gw.compute(new Object[] {4}, out_queue, null);
+		assertEquals(3, gw.m_window.m_size);
+		assertEquals(3, fronts.size());
+		assertEquals(3, fronts.remove()[0]);
+		assertEquals(1, fronts.remove()[0]);
+		assertEquals(4, fronts.remove()[0]);
+		assertEquals(1, spw.getCallsToReset());
+		gw.reset();
+		assertEquals(2, spw.getCallsToReset());
+		assertEquals(0, gw.m_window.m_size);
+	}
+	
+	@Test
+	public void testGenericWindowDuplicateState()
+	{
+		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		Queue<Object[]> fronts = spw.getFronts();
+		GenericWindow gw = new GenericWindow(spw, 3);
+		assertEquals(3, gw.m_windowWidth);
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		gw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, gw.m_window.m_size);
+		assertEquals(0, fronts.size());
+		GenericWindow gw_dup = gw.duplicate(true);
+		assertFalse(gw == gw_dup);
+		assertFalse(gw.m_processor == gw_dup.m_processor);
+		assertFalse(gw.m_window == gw_dup.m_window);
+		assertEquals(gw.m_windowWidth, gw_dup.m_windowWidth);
+		assertEquals(gw.m_window.m_size, gw_dup.m_window.m_size);
+	}
+	
+	@Test
+	public void testGenericWindowDuplicateNoState()
+	{
+		SingleProcessorWrapper spw = new SingleProcessorWrapper(1, 1);
+		Queue<Object[]> fronts = spw.getFronts();
+		GenericWindow gw = new GenericWindow(spw, 3);
+		assertEquals(3, gw.m_windowWidth);
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		gw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, gw.m_window.m_size);
+		assertEquals(0, fronts.size());
+		GenericWindow gw_dup = gw.duplicate();
+		assertFalse(gw == gw_dup);
+		assertFalse(gw.m_processor == gw_dup.m_processor);
+		assertFalse(gw.m_window == gw_dup.m_window);
+		assertEquals(gw.m_windowWidth, gw_dup.m_windowWidth);
+		assertEquals(0, gw_dup.m_window.m_size);
 	}
 	
 	@Test
@@ -184,5 +383,159 @@ public class WindowTest
 		Iterator<Integer> it = cb.iterator();
 		assertNotNull(it);
 		it.remove();
+	}
+	
+	@Test
+	public void testCircularBufferDuplicateState()
+	{
+		CircularBuffer<Integer> cb = new CircularBuffer<Integer>(3);
+		cb.add(3);
+		cb.add(1);
+		CircularBuffer<Integer> cb_dup = cb.duplicate(true);
+		assertFalse(cb == cb_dup);
+		assertEquals(cb.m_head, cb_dup.m_head);
+		assertEquals(cb.m_size, cb_dup.m_size);
+		assertFalse(cb.m_buffer == cb_dup.m_buffer);
+		assertEquals(cb.m_buffer.length, cb_dup.m_buffer.length);
+		assertEquals(cb.m_buffer[0], cb_dup.m_buffer[0]);
+		assertEquals(cb.m_buffer[1], cb_dup.m_buffer[1]);
+		assertEquals(cb.m_buffer[2], cb_dup.m_buffer[2]);
+	}
+	
+	@Test
+	public void testCircularBufferDuplicateNoState()
+	{
+		CircularBuffer<Integer> cb = new CircularBuffer<Integer>(3);
+		cb.add(3);
+		cb.add(1);
+		CircularBuffer<Integer> cb_dup = cb.duplicate();
+		assertFalse(cb == cb_dup);
+		assertEquals(0, cb_dup.m_head);
+		assertEquals(0, cb_dup.m_size);
+		assertFalse(cb.m_buffer == cb_dup.m_buffer);
+		assertEquals(cb.m_buffer.length, cb_dup.m_buffer.length);
+	}
+	
+	/**
+	 * A {@link SlidableFunction} with additional methods to query its internal
+	 * state, for testing purposes.
+	 */
+	public static class TestableSlidableFunction implements SlidableFunction
+	{
+		protected List<Object> m_buffer;
+		
+		protected int m_callsToEvaluate = 0;
+		
+		protected int m_callsToDevaluate = 0;
+		
+		protected int m_callsToReset = 0;
+		
+		protected Object m_lastEvaluate;
+		
+		protected Object m_lastDevaluate;
+		
+		public TestableSlidableFunction()
+		{
+			super();
+			m_buffer = new ArrayList<Object>();
+		}
+
+		@Override
+		public int getInputArity() 
+		{
+			return 1;
+		}
+
+		@Override
+		public int getOutputArity() 
+		{
+			return 1;
+		}
+		
+		public int getCallsToEvaluate()
+		{
+			return m_callsToEvaluate;
+		}
+		
+		public int getCallsToDevaluate()
+		{
+			return m_callsToDevaluate;
+		}
+		
+		public int getCallsToReset()
+		{
+			return m_callsToReset;
+		}
+
+		@Override
+		public void evaluate(Object[] inputs, Object[] outputs) 
+		{
+			m_buffer.add(inputs[0]);
+			m_callsToEvaluate++;
+			m_lastEvaluate = inputs[0];
+		}
+
+		@Override
+		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+		{
+			m_buffer.add(inputs[0]);
+			m_callsToEvaluate++;
+			m_lastEvaluate = inputs[0];
+		}
+
+		@Override
+		public void reset() 
+		{
+			m_buffer.clear();
+			m_callsToReset++;
+			m_lastEvaluate = null;
+			m_lastDevaluate = null;
+		}
+
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException
+		{
+			return m_buffer;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException 
+		{
+			TestableSlidableFunction tsf = new TestableSlidableFunction();
+			tsf.m_buffer = (List<Object>) reader.read(o);
+			return tsf;
+		}
+
+		@Override
+		public TestableSlidableFunction duplicate(boolean with_state)
+		{
+			TestableSlidableFunction tsf = new TestableSlidableFunction();
+			if (with_state)
+			{
+				tsf.m_buffer.addAll(m_buffer);
+			}
+			return tsf;
+		}
+
+		@Override
+		public TestableSlidableFunction duplicate() 
+		{
+			return duplicate(false);
+		}
+
+		@Override
+		public void devaluate(Object[] inputs, Object[] outputs, Context context) 
+		{
+			m_lastDevaluate = inputs[0];
+			m_callsToDevaluate++;
+		}
+
+		@Override
+		public void devaluate(Object[] inputs, Object[] outputs) 
+		{
+			m_lastDevaluate = inputs[0];
+			m_callsToDevaluate++;
+		}
 	}
 }
