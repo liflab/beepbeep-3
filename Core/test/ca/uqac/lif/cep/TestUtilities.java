@@ -24,6 +24,7 @@ import ca.uqac.lif.azrael.clone.ReadableReadHandler;
 import ca.uqac.lif.cep.GroupProcessor.InputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.OutputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.ProcessorConnection;
+import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 public class TestUtilities 
@@ -377,6 +378,139 @@ public class TestUtilities
 		{
 			m_callsToCompute++;
 			return super.compute(inputs, outputs);
+		}
+	}
+	
+	/**
+	 * A {@link SlidableFunction} with additional methods to query its internal
+	 * state, for testing purposes.
+	 */
+	public static class TestableSlidableFunction implements SlidableFunction
+	{
+		protected List<Object> m_buffer;
+		
+		protected int m_callsToEvaluate = 0;
+		
+		protected int m_callsToDevaluate = 0;
+		
+		protected int m_callsToReset = 0;
+		
+		protected Object m_lastEvaluate;
+		
+		protected Object m_lastDevaluate;
+		
+		public TestableSlidableFunction()
+		{
+			super();
+			m_buffer = new ArrayList<Object>();
+		}
+		
+		public Object getLastEvaluate()
+		{
+			return m_lastEvaluate;
+		}
+		
+		public Object getLastDevaluate()
+		{
+			return m_lastDevaluate;
+		}
+
+		@Override
+		public int getInputArity() 
+		{
+			return 1;
+		}
+
+		@Override
+		public int getOutputArity() 
+		{
+			return 1;
+		}
+		
+		public int getCallsToEvaluate()
+		{
+			return m_callsToEvaluate;
+		}
+		
+		public int getCallsToDevaluate()
+		{
+			return m_callsToDevaluate;
+		}
+		
+		public int getCallsToReset()
+		{
+			return m_callsToReset;
+		}
+
+		@Override
+		public void evaluate(Object[] inputs, Object[] outputs) 
+		{
+			m_buffer.add(inputs[0]);
+			m_callsToEvaluate++;
+			m_lastEvaluate = inputs[0];
+		}
+
+		@Override
+		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+		{
+			m_buffer.add(inputs[0]);
+			m_callsToEvaluate++;
+			m_lastEvaluate = inputs[0];
+		}
+
+		@Override
+		public void reset() 
+		{
+			m_buffer.clear();
+			m_callsToReset++;
+			m_lastEvaluate = null;
+			m_lastDevaluate = null;
+		}
+
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException
+		{
+			return m_buffer;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException 
+		{
+			TestableSlidableFunction tsf = new TestableSlidableFunction();
+			tsf.m_buffer = (List<Object>) reader.read(o);
+			return tsf;
+		}
+
+		@Override
+		public TestableSlidableFunction duplicate(boolean with_state)
+		{
+			TestableSlidableFunction tsf = new TestableSlidableFunction();
+			if (with_state)
+			{
+				tsf.m_buffer.addAll(m_buffer);
+			}
+			return tsf;
+		}
+
+		@Override
+		public TestableSlidableFunction duplicate() 
+		{
+			return duplicate(false);
+		}
+
+		@Override
+		public void devaluate(Object[] inputs, Object[] outputs, Context context) 
+		{
+			m_lastDevaluate = inputs[0];
+			m_callsToDevaluate++;
+		}
+
+		@Override
+		public void devaluate(Object[] inputs, Object[] outputs) 
+		{
+			m_lastDevaluate = inputs[0];
+			m_callsToDevaluate++;
 		}
 	}
 	

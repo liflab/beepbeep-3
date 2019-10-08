@@ -271,7 +271,7 @@ public class Window extends SingleProcessor
 		
 		static final transient String s_headKey = "head";
 		
-		static final transient String s_sizeKey = "index";
+		static final transient String s_sizeKey = "size";
 		
 		static final transient String s_bufferKey = "buffer";
 

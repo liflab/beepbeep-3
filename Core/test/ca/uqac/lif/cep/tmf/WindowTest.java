@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import ca.uqac.lif.cep.SingleProcessorTestTemplate;
 import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
 import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
 import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
+import ca.uqac.lif.cep.TestUtilities.TestableSlidableFunction;
 import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.Function;
@@ -158,25 +160,25 @@ public class WindowTest
 		sw.compute(new Object[] {3}, out_queue, null);
 		assertEquals(1, tsf.getCallsToEvaluate());
 		assertEquals(0, tsf.getCallsToDevaluate());
-		assertEquals(3, tsf.m_lastEvaluate);
+		assertEquals(3, tsf.getLastEvaluate());
 		sw.compute(new Object[] {1}, out_queue, null);
 		assertEquals(2, tsf.getCallsToEvaluate());
 		assertEquals(0, tsf.getCallsToDevaluate());
-		assertEquals(1, tsf.m_lastEvaluate);
+		assertEquals(1, tsf.getLastEvaluate());
 		sw.compute(new Object[] {4}, out_queue, null);
 		assertEquals(3, tsf.getCallsToEvaluate());
 		assertEquals(0, tsf.getCallsToDevaluate());
-		assertEquals(4, tsf.m_lastEvaluate);
+		assertEquals(4, tsf.getLastEvaluate());
 		sw.compute(new Object[] {1}, out_queue, null);
 		assertEquals(4, tsf.getCallsToEvaluate());
 		assertEquals(1, tsf.getCallsToDevaluate());
-		assertEquals(1, tsf.m_lastEvaluate);
-		assertEquals(3, tsf.m_lastDevaluate);
+		assertEquals(1, tsf.getLastEvaluate());
+		assertEquals(3, tsf.getLastDevaluate());
 		sw.compute(new Object[] {5}, out_queue, null);
 		assertEquals(5, tsf.getCallsToEvaluate());
 		assertEquals(2, tsf.getCallsToDevaluate());
-		assertEquals(5, tsf.m_lastEvaluate);
-		assertEquals(1, tsf.m_lastDevaluate);
+		assertEquals(5, tsf.getLastEvaluate());
+		assertEquals(1, tsf.getLastDevaluate());
 		tsf.reset();
 		assertEquals(1, tsf.getCallsToReset());
 	}
@@ -368,6 +370,15 @@ public class WindowTest
 		assertFalse(it2.hasNext());		
 	}
 	
+	@Test
+	public void testCircularBufferIterator3()
+	{
+		CircularBuffer<Integer> cb = new CircularBuffer<Integer>(3);
+		Iterator<Integer> it = cb.iterator();
+		assertNotNull(it);
+		assertFalse(it.hasNext());
+	}
+	
 	@Test(expected = NoSuchElementException.class)
 	public void testCircularBufferIteratorOutOfBounds()
 	{
@@ -422,126 +433,43 @@ public class WindowTest
 		assertEquals(cb.m_buffer.length, cb_dup.m_buffer.length);
 	}
 	
-	/**
-	 * A {@link SlidableFunction} with additional methods to query its internal
-	 * state, for testing purposes.
-	 */
-	public static class TestableSlidableFunction implements SlidableFunction
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testCircularBufferPrint() throws PrintException
 	{
-		protected List<Object> m_buffer;
-		
-		protected int m_callsToEvaluate = 0;
-		
-		protected int m_callsToDevaluate = 0;
-		
-		protected int m_callsToReset = 0;
-		
-		protected Object m_lastEvaluate;
-		
-		protected Object m_lastDevaluate;
-		
-		public TestableSlidableFunction()
-		{
-			super();
-			m_buffer = new ArrayList<Object>();
-		}
-
-		@Override
-		public int getInputArity() 
-		{
-			return 1;
-		}
-
-		@Override
-		public int getOutputArity() 
-		{
-			return 1;
-		}
-		
-		public int getCallsToEvaluate()
-		{
-			return m_callsToEvaluate;
-		}
-		
-		public int getCallsToDevaluate()
-		{
-			return m_callsToDevaluate;
-		}
-		
-		public int getCallsToReset()
-		{
-			return m_callsToReset;
-		}
-
-		@Override
-		public void evaluate(Object[] inputs, Object[] outputs) 
-		{
-			m_buffer.add(inputs[0]);
-			m_callsToEvaluate++;
-			m_lastEvaluate = inputs[0];
-		}
-
-		@Override
-		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
-		{
-			m_buffer.add(inputs[0]);
-			m_callsToEvaluate++;
-			m_lastEvaluate = inputs[0];
-		}
-
-		@Override
-		public void reset() 
-		{
-			m_buffer.clear();
-			m_callsToReset++;
-			m_lastEvaluate = null;
-			m_lastDevaluate = null;
-		}
-
-		@Override
-		public Object print(ObjectPrinter<?> printer) throws PrintException
-		{
-			return m_buffer;
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public Object read(ObjectReader<?> reader, Object o) throws ReadException 
-		{
-			TestableSlidableFunction tsf = new TestableSlidableFunction();
-			tsf.m_buffer = (List<Object>) reader.read(o);
-			return tsf;
-		}
-
-		@Override
-		public TestableSlidableFunction duplicate(boolean with_state)
-		{
-			TestableSlidableFunction tsf = new TestableSlidableFunction();
-			if (with_state)
-			{
-				tsf.m_buffer.addAll(m_buffer);
-			}
-			return tsf;
-		}
-
-		@Override
-		public TestableSlidableFunction duplicate() 
-		{
-			return duplicate(false);
-		}
-
-		@Override
-		public void devaluate(Object[] inputs, Object[] outputs, Context context) 
-		{
-			m_lastDevaluate = inputs[0];
-			m_callsToDevaluate++;
-		}
-
-		@Override
-		public void devaluate(Object[] inputs, Object[] outputs) 
-		{
-			m_lastDevaluate = inputs[0];
-			m_callsToDevaluate++;
-		}
+		CircularBuffer<Integer> cb = new CircularBuffer<Integer>(3);
+		cb.add(3);
+		cb.add(1);
+		IdentityObjectPrinter iop = new IdentityObjectPrinter();
+		Map<String,Object> printed = (Map<String,Object>) iop.print(cb);
+		assertEquals(3, printed.size());
+		assertEquals(cb.m_size, ((Integer) printed.get(CircularBuffer.s_sizeKey)).intValue());
+		assertEquals(cb.m_head, ((Integer) printed.get(CircularBuffer.s_headKey)).intValue());
+		List<Object> buffer = (List<Object>) printed.get(CircularBuffer.s_bufferKey);
+		assertEquals(3, buffer.size());
+		assertEquals(3, ((Integer) buffer.get(0)).intValue());
+		assertEquals(1, ((Integer) buffer.get(1)).intValue());
+		assertNull(buffer.get(2));
+	}
+	
+	@Test
+	public void testCircularBufferRead() throws ReadException
+	{
+		Map<String,Object> printed = new HashMap<String,Object>(3);
+		printed.put(CircularBuffer.s_headKey, 1);
+		printed.put(CircularBuffer.s_sizeKey, 3);		
+		List<Object> buffer = new ArrayList<Object>(3);
+		buffer.add(3);
+		buffer.add(1);
+		buffer.add(null);
+		printed.put(CircularBuffer.s_bufferKey, buffer);
+		IdentityObjectReader ior = new IdentityObjectReader();
+		CircularBuffer<Integer> cb = new CircularBuffer<Integer>(0).read(ior, printed);
+		assertNotNull(cb);
+		assertEquals(1, cb.m_head);
+		assertEquals(2, cb.m_size);
+		assertEquals(3, cb.m_buffer[0]);
+		assertEquals(1, cb.m_buffer[1]);
+		assertNull(cb.m_buffer[2]);
 	}
 }
