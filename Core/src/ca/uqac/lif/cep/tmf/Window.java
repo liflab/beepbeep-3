@@ -49,13 +49,19 @@ public class Window extends SingleProcessor
 	{
 		super(1, 1);
 		m_windowProcessor = p;
-		m_queryable = new WindowQueryable(toString(), 1, 1);
+		m_queryable = new WindowQueryable(toString(), p.getWidth());
 	}
 	
 	//@ ensures \result > 0;
 	/*@ pure @*/ public int getWidth()
 	{
 		return m_windowProcessor.getWidth();
+	}
+	
+	@Override
+	protected WindowQueryable getQueryable(int in_arity, int out_arity)
+	{
+		return new WindowQueryable(toString(), m_windowProcessor.getWidth());
 	}
 
 	@Override
@@ -113,6 +119,8 @@ public class Window extends SingleProcessor
 		
 		@Override
 		public abstract GenericWindow duplicate(boolean with_state);
+		
+		public abstract WindowQueryable getQueryable(String reference, int width);
 	}
 
 	static class ProcessorWindow extends GenericWindow
@@ -122,9 +130,7 @@ public class Window extends SingleProcessor
 		/*@ non_null @*/ protected Pushable m_pushable;
 
 		/*@ non_null @*/ protected SinkLast m_sink;
-		
-		static final transient String s_sinkKey = "sink";
-		
+				
 		static final transient String s_processorKey = "processor";
 
 		public ProcessorWindow(/*@ non_null @*/ Processor p, int width)
@@ -192,7 +198,7 @@ public class Window extends SingleProcessor
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public Object read(ObjectReader<?> reader, Object o) throws ReadException
+		public ProcessorWindow read(ObjectReader<?> reader, Object o) throws ReadException
 		{
 			Object r_o = reader.read(o);
 			if (r_o == null || !(r_o instanceof Map))
@@ -203,7 +209,7 @@ public class Window extends SingleProcessor
 			{
 				Map<String,Object> map = (Map<String,Object>) r_o;
 				if (!map.containsKey(s_widthKey) || !map.containsKey(s_windowKey) 
-						|| !map.containsKey(s_processorKey) || !map.containsKey(s_sinkKey))
+						|| !map.containsKey(s_processorKey))
 				{
 					throw new ReadException("Unexpected map format");
 				}
@@ -218,6 +224,12 @@ public class Window extends SingleProcessor
 			{
 				throw new ReadException(cce);
 			}
+		}
+
+		@Override
+		public ProcessorWindowQueryable getQueryable(String reference, int width) 
+		{
+			return new ProcessorWindowQueryable(reference, width);
 		}
 	}
 
@@ -313,13 +325,11 @@ public class Window extends SingleProcessor
 				throw new ReadException(cce);
 			}
 		}
-	}
-	
-	public static class WindowQueryable extends ProcessorQueryable
-	{
-		public WindowQueryable(String reference, int in_arity, int out_arity)
+
+		@Override
+		public SlidableWindowQueryable getQueryable(String reference, int width)
 		{
-			super(reference, in_arity, out_arity);
+			return new SlidableWindowQueryable(reference, width);
 		}
 	}
 
@@ -520,5 +530,32 @@ public class Window extends SingleProcessor
 	protected GenericWindow printState() 
 	{
 		return m_windowProcessor;
+	}
+	
+	static class WindowQueryable extends ProcessorQueryable
+	{
+		protected int m_windowWidth;
+		
+		public WindowQueryable(String reference, int width)
+		{
+			super(reference, 1, 1);
+			m_windowWidth = width;
+		}
+	}
+	
+	static class ProcessorWindowQueryable extends WindowQueryable
+	{
+		public ProcessorWindowQueryable(String reference, int width)
+		{
+			super(reference, width);
+		}
+	}
+	
+	static class SlidableWindowQueryable extends WindowQueryable
+	{
+		public SlidableWindowQueryable(String reference, int width)
+		{
+			super(reference, width);
+		}
 	}
 }

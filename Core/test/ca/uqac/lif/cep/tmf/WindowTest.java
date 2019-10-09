@@ -34,8 +34,10 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.Window.CircularBuffer;
 import ca.uqac.lif.cep.tmf.Window.ProcessorWindow;
+import ca.uqac.lif.cep.tmf.Window.ProcessorWindowQueryable;
 import ca.uqac.lif.cep.tmf.Window.GenericWindow;
 import ca.uqac.lif.cep.tmf.Window.SlidableWindow;
+import ca.uqac.lif.cep.tmf.Window.SlidableWindowQueryable;
 import ca.uqac.lif.cep.util.Numbers;
 
 public class WindowTest
@@ -319,6 +321,22 @@ public class WindowTest
 	}
 	
 	@Test
+	public void testSlidableWindowQueryable()
+	{
+		TestableSlidableFunction tsf = new TestableSlidableFunction();
+		SlidableWindow pw = new SlidableWindow(tsf, 3);
+		Queue<Object[]> queue = new ArrayDeque<Object[]>();
+		pw.compute(new Object[] {3}, queue, null);
+		pw.compute(new Object[] {1}, queue, null);
+		pw.compute(new Object[] {4}, queue, null);
+		pw.compute(new Object[] {1}, queue, null);
+		pw.compute(new Object[] {5}, queue, null);
+		SlidableWindowQueryable pwq = pw.getQueryable("foo", 3);
+		assertNotNull(pwq);
+		fail("Functionality not fully implemented yet");
+	}
+	
+	@Test
 	public void testProcessorWindowOutput()
 	{
 		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
@@ -426,8 +444,78 @@ public class WindowTest
 		assertEquals(1, gw.m_window.m_size);
 		assertEquals(0, fronts.size());
 		Map<String,Object> printed = (Map<String,Object>) iop.print(gw);
-		assertEquals(3, printed.get(GenericWindow.s_widthKey));
+		assertEquals(gw.m_windowWidth, printed.get(GenericWindow.s_widthKey));
 		CircularBuffer<Object> cb = (CircularBuffer<Object>) printed.get(GenericWindow.s_windowKey);
+		assertEquals(gw.m_window, cb);
+		assertEquals(gw.m_processor, spw);
+	}
+	
+	@Test
+	public void testProcessorWindowRead() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Map<String,Object> printed = new HashMap<String,Object>();
+		printed.put(GenericWindow.s_widthKey, 3);
+		CircularBuffer<Object> cb = new CircularBuffer<Object>(3);
+		cb.add(3);
+		cb.add(1);
+		printed.put(GenericWindow.s_windowKey, cb);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		printed.put(ProcessorWindow.s_processorKey, spw);
+		ProcessorWindow sw = new ProcessorWindow(new TestableSingleProcessor(1, 1), 1).read(ior, printed);
+		assertNotNull(sw);
+		assertEquals(spw, sw.m_processor);
+		assertEquals(cb, sw.m_window);
+		assertEquals(3, sw.m_windowWidth);
+	}
+	
+	@Test(expected = ReadException.class)
+	public void testProcessorWindowReadInvalid1() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Map<String,Object> printed = new HashMap<String,Object>();
+		CircularBuffer<Object> cb = new CircularBuffer<Object>(3);
+		cb.add(3);
+		cb.add(1);
+		printed.put(GenericWindow.s_windowKey, cb);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		printed.put(ProcessorWindow.s_processorKey, spw);
+		new ProcessorWindow(new TestableSingleProcessor(1, 1), 1).read(ior, printed);
+	}
+	
+	@Test(expected = ReadException.class)
+	public void testProcessorWindowReadInvalid2() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		new ProcessorWindow(new TestableSingleProcessor(1, 1), 1).read(ior, 3);
+	}
+	
+	@Test(expected = ReadException.class)
+	public void testProcessorWindowReadInvalid3() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Map<String,Object> printed = new HashMap<String,Object>();
+		printed.put(GenericWindow.s_widthKey, 3);
+		printed.put(GenericWindow.s_windowKey, 3);
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		printed.put(ProcessorWindow.s_processorKey, spw);
+		new ProcessorWindow(new TestableSingleProcessor(1, 1), 1).read(ior, printed);
+	}
+	
+	@Test
+	public void testProcessorWindowQueryable()
+	{
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		ProcessorWindow pw = new ProcessorWindow(spw, 3);
+		Queue<Object[]> queue = new ArrayDeque<Object[]>();
+		pw.compute(new Object[] {3}, queue, null);
+		pw.compute(new Object[] {1}, queue, null);
+		pw.compute(new Object[] {4}, queue, null);
+		pw.compute(new Object[] {1}, queue, null);
+		pw.compute(new Object[] {5}, queue, null);
+		ProcessorWindowQueryable pwq = pw.getQueryable("foo", 3);
+		assertNotNull(pwq);
+		fail("Functionality not fully implemented yet");
 	}
 	
 	@Test
