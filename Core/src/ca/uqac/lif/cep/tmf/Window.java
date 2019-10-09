@@ -26,11 +26,16 @@ import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.SinkLast.SinkContents;
 import ca.uqac.lif.cep.tmf.Window.GenericWindow.WindowQueryable;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
+import ca.uqac.lif.petitpoucet.DesignatedObject;
 import ca.uqac.lif.petitpoucet.Designator;
+import ca.uqac.lif.petitpoucet.LabeledEdge;
+import ca.uqac.lif.petitpoucet.ObjectNode;
 import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery;
 import ca.uqac.lif.petitpoucet.Tracer;
+import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
 import ca.uqac.lif.petitpoucet.common.CollectionDesignator.NthElement;
 
@@ -182,7 +187,7 @@ public class Window extends SingleProcessor
 				{
 					outputs.add(new Object[] {m_sink.getLast()});
 				}
-				m_queryable.add(m_processor.getQueryable(), m_sink.getQueryable());
+				m_queryable.add((ProcessorQueryable) m_processor.getQueryable(), (ProcessorQueryable) m_sink.getQueryable());
 			}
 		}
 
@@ -254,7 +259,11 @@ public class Window extends SingleProcessor
 		@Override
 		public ProcessorWindowQueryable getQueryable(String reference, int width) 
 		{
-			return new ProcessorWindowQueryable(reference, width);
+			if (m_queryable == null)
+			{
+				m_queryable = new ProcessorWindowQueryable(reference, width);
+			}
+			return m_queryable;
 		}
 		
 		static class ProcessorWindowQueryable extends WindowQueryable
@@ -270,10 +279,10 @@ public class Window extends SingleProcessor
 				m_sinkQueryables = new ArrayList<Queryable>();
 			}
 			
-			public void add(/*@ non_null @*/ Queryable processor_q, /*@ non_null @*/ Queryable sink_q)
+			public void add(/*@ non_null @*/ ProcessorQueryable processor_q, /*@ non_null @*/ ProcessorQueryable sink_q)
 			{
-				m_processorQueryables.add(processor_q);
-				m_sinkQueryables.add(sink_q);
+				m_processorQueryables.add(processor_q.duplicate(true));
+				m_sinkQueryables.add(sink_q.duplicate(true));
 			}
 			
 			@Override
@@ -293,13 +302,52 @@ public class Window extends SingleProcessor
 					return unknownLink(root, factory);
 				}
 				Queryable sink_q = m_sinkQueryables.get(num_event);
-				ComposedDesignator cd = new ComposedDesignator(tail_t, SinkContents.instance, new NthElement(0), new NthOutput(0));
+				ComposedDesignator cd = new ComposedDesignator(tail_t, new NthElement(0), SinkContents.instance);
 				List<TraceabilityNode> leaves = sink_q.query(q, cd, root, sub_factory);
 				// Connect each leaf to the window's actual input
 				List<TraceabilityNode> new_leaves = new ArrayList<TraceabilityNode>();
 				for (TraceabilityNode leaf : leaves)
 				{
-					// TODO
+					if (!(leaf instanceof ObjectNode))
+					{
+						new_leaves.add(leaf);
+						continue;
+					}
+					ObjectNode on = (ObjectNode) leaf;
+					DesignatedObject dob = on.getDesignatedObject();
+					Designator dob_d = dob.getDesignator();
+					if (!(dob_d.peek() instanceof NthInput))
+					{
+						TraceabilityNode unknown = factory.getUnknownNode();
+						leaf.addChild(unknown, Quality.NONE);
+						new_leaves.add(unknown);
+						continue;
+					}
+					NthInput ni = (NthInput) dob_d.peek();
+					Designator dob_d_t = dob_d.tail();
+					if (ni.getIndex() != 0)
+					{
+						TraceabilityNode unknown = factory.getUnknownNode();
+						leaf.addChild(unknown, Quality.NONE);
+						new_leaves.add(unknown);
+						continue;
+					}
+					Designator dob_d_tail_h = dob_d_t.peek();
+					Designator dob_d_tail_t = dob_d_t.tail();
+					if (!(dob_d_tail_h instanceof NthEvent))
+					{
+						TraceabilityNode unknown = factory.getUnknownNode();
+						leaf.addChild(unknown, Quality.NONE);
+						new_leaves.add(unknown);
+						continue;
+					}
+					NthEvent ne = (NthEvent) dob_d_tail_h;
+					int local_input_num = ne.getIndex();
+					int global_input_num = local_input_num + num_event;
+					ComposedDesignator leaf_cd = new ComposedDesignator(dob_d_tail_t, new NthEvent(global_input_num), new NthInput(0));
+					TraceabilityNode new_leaf = factory.getObjectNode(leaf_cd, this);
+					leaf.addChild(new_leaf, Quality.EXACT);
+					new_leaves.add(new_leaf);
 				}
 				return new_leaves;
 			}
@@ -307,6 +355,7 @@ public class Window extends SingleProcessor
 			@Override
 			protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
 			{
+				// TODO
 				return unknownLink(root, factory);
 			}
 		}

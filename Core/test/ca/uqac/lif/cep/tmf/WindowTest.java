@@ -16,6 +16,7 @@ import org.junit.Test;
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor.NthEvent;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.SingleProcessorTestTemplate;
@@ -30,6 +31,14 @@ import ca.uqac.lif.cep.tmf.Window.SlidableWindow.SlidableWindowQueryable;
 import ca.uqac.lif.cep.tmf.Window.GenericWindow;
 import ca.uqac.lif.cep.tmf.Window.SlidableWindow;
 import ca.uqac.lif.cep.util.Numbers;
+import ca.uqac.lif.petitpoucet.ComposedDesignator;
+import ca.uqac.lif.petitpoucet.TraceabilityNode;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
+import ca.uqac.lif.petitpoucet.graph.ConcreteDesignatedObject;
+import ca.uqac.lif.petitpoucet.graph.ConcreteObjectNode;
+import ca.uqac.lif.petitpoucet.graph.ConcreteTracer;
 
 public class WindowTest
 {
@@ -506,7 +515,17 @@ public class WindowTest
 		pw.compute(new Object[] {5}, queue, null);
 		ProcessorWindowQueryable pwq = pw.getQueryable("foo", 3);
 		assertNotNull(pwq);
-		fail("Functionality not fully implemented yet");
+		ConcreteTracer factory = new ConcreteTracer();
+		TraceabilityNode root = factory.getAndNode();
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), new NthOutput(0));
+		List<TraceabilityNode> leaves = pwq.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
+		assertEquals(1, leaves.size());
+		ConcreteObjectNode tn = (ConcreteObjectNode) leaves.get(0);
+		ConcreteDesignatedObject dob = (ConcreteDesignatedObject) tn.getDesignatedObject();
+		assertTrue(dob.getDesignator().peek() instanceof NthInput);
+		assertEquals(0, ((NthInput) dob.getDesignator().peek()).getIndex());
+		NthEvent ne = (NthEvent) dob.getDesignator().tail().peek();
+		assertEquals(3, ne.getIndex());
 	}
 	
 	@Test
