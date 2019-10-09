@@ -5,6 +5,7 @@ import java.util.Queue;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.ProcessorQueryable;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.petitpoucet.Designator;
 
 public class SinkLast extends Sink
 {
@@ -91,5 +92,42 @@ public class SinkLast extends Sink
 	protected Object printState() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Designator that refers to the event front contained in the sink
+	 */
+	public static class SinkContents implements Designator
+	{
+		public static final transient SinkContents instance = new SinkContents();
+		
+		protected SinkContents()
+		{
+			super();
+		}
+		
+		@Override
+		public boolean appliesTo(Object o)
+		{
+			return o instanceof SinkLast;
+		}
+
+		@Override
+		public Designator peek() 
+		{
+			return this;
+		}
+
+		@Override
+		public Designator tail() 
+		{
+			return Designator.identity;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return "Sink contents";
+		}
 	}
 }

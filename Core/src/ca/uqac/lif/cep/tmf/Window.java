@@ -23,6 +23,16 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.StateDuplicable;
 import ca.uqac.lif.cep.functions.SlidableFunction;
+import ca.uqac.lif.cep.tmf.SinkLast.SinkContents;
+import ca.uqac.lif.cep.tmf.Window.GenericWindow.WindowQueryable;
+import ca.uqac.lif.petitpoucet.ComposedDesignator;
+import ca.uqac.lif.petitpoucet.Designator;
+import ca.uqac.lif.petitpoucet.Queryable;
+import ca.uqac.lif.petitpoucet.TraceabilityNode;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery;
+import ca.uqac.lif.petitpoucet.Tracer;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
+import ca.uqac.lif.petitpoucet.common.CollectionDesignator.NthElement;
 
 public class Window extends SingleProcessor
 {
@@ -49,7 +59,7 @@ public class Window extends SingleProcessor
 	{
 		super(1, 1);
 		m_windowProcessor = p;
-		m_queryable = new WindowQueryable(toString(), p.getWidth());
+		m_queryable = p.getQueryable(toString(), p.getWidth());
 	}
 	
 	//@ ensures \result > 0;
@@ -61,7 +71,7 @@ public class Window extends SingleProcessor
 	@Override
 	protected WindowQueryable getQueryable(int in_arity, int out_arity)
 	{
-		return new WindowQueryable(toString(), m_windowProcessor.getWidth());
+		return m_windowProcessor.getQueryable(toString(), m_windowProcessor.getWidth());
 	}
 
 	@Override
@@ -121,6 +131,17 @@ public class Window extends SingleProcessor
 		public abstract GenericWindow duplicate(boolean with_state);
 		
 		public abstract WindowQueryable getQueryable(String reference, int width);
+		
+		static class WindowQueryable extends ProcessorQueryable
+		{
+			protected int m_windowWidth;
+			
+			public WindowQueryable(String reference, int width)
+			{
+				super(reference, 1, 1);
+				m_windowWidth = width;
+			}
+		}
 	}
 
 	static class ProcessorWindow extends GenericWindow
@@ -130,6 +151,8 @@ public class Window extends SingleProcessor
 		/*@ non_null @*/ protected Pushable m_pushable;
 
 		/*@ non_null @*/ protected SinkLast m_sink;
+		
+		/*@ non_null @*/ protected ProcessorWindowQueryable m_queryable;
 				
 		static final transient String s_processorKey = "processor";
 
@@ -140,6 +163,7 @@ public class Window extends SingleProcessor
 			m_sink = new SinkLast();
 			m_pushable = m_processor.getPushableInput();
 			Connector.connect(m_processor, m_sink);
+			m_queryable = getQueryable(p.toString(), width);
 		}
 
 		@Override
@@ -158,6 +182,7 @@ public class Window extends SingleProcessor
 				{
 					outputs.add(new Object[] {m_sink.getLast()});
 				}
+				m_queryable.add(m_processor.getQueryable(), m_sink.getQueryable());
 			}
 		}
 
@@ -230,6 +255,60 @@ public class Window extends SingleProcessor
 		public ProcessorWindowQueryable getQueryable(String reference, int width) 
 		{
 			return new ProcessorWindowQueryable(reference, width);
+		}
+		
+		static class ProcessorWindowQueryable extends WindowQueryable
+		{
+			/*@ non_null @*/ protected List<Queryable> m_processorQueryables;
+			
+			/*@ non_null @*/ protected List<Queryable> m_sinkQueryables;
+			
+			public ProcessorWindowQueryable(String reference, int width)
+			{
+				super(reference, width);
+				m_processorQueryables = new ArrayList<Queryable>();
+				m_sinkQueryables = new ArrayList<Queryable>();
+			}
+			
+			public void add(/*@ non_null @*/ Queryable processor_q, /*@ non_null @*/ Queryable sink_q)
+			{
+				m_processorQueryables.add(processor_q);
+				m_sinkQueryables.add(sink_q);
+			}
+			
+			@Override
+			protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
+					Designator tail, TraceabilityNode root, Tracer factory)
+			{
+				Designator head_t = tail.peek();
+				Designator tail_t = tail.tail();
+				if (!(head_t instanceof NthEvent))
+				{
+					return unknownLink(root, factory);
+				}
+				int num_event = ((NthEvent) head_t).getIndex();
+				Tracer sub_factory = factory.getSubTracer(num_event);
+				if (m_processorQueryables.size() <= num_event)
+				{
+					return unknownLink(root, factory);
+				}
+				Queryable sink_q = m_sinkQueryables.get(num_event);
+				ComposedDesignator cd = new ComposedDesignator(tail_t, SinkContents.instance, new NthElement(0), new NthOutput(0));
+				List<TraceabilityNode> leaves = sink_q.query(q, cd, root, sub_factory);
+				// Connect each leaf to the window's actual input
+				List<TraceabilityNode> new_leaves = new ArrayList<TraceabilityNode>();
+				for (TraceabilityNode leaf : leaves)
+				{
+					// TODO
+				}
+				return new_leaves;
+			}
+
+			@Override
+			protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
+			{
+				return unknownLink(root, factory);
+			}
 		}
 	}
 
@@ -330,6 +409,14 @@ public class Window extends SingleProcessor
 		public SlidableWindowQueryable getQueryable(String reference, int width)
 		{
 			return new SlidableWindowQueryable(reference, width);
+		}
+		
+		static class SlidableWindowQueryable extends WindowQueryable
+		{
+			public SlidableWindowQueryable(String reference, int width)
+			{
+				super(reference, width);
+			}
 		}
 	}
 
@@ -530,32 +617,5 @@ public class Window extends SingleProcessor
 	protected GenericWindow printState() 
 	{
 		return m_windowProcessor;
-	}
-	
-	static class WindowQueryable extends ProcessorQueryable
-	{
-		protected int m_windowWidth;
-		
-		public WindowQueryable(String reference, int width)
-		{
-			super(reference, 1, 1);
-			m_windowWidth = width;
-		}
-	}
-	
-	static class ProcessorWindowQueryable extends WindowQueryable
-	{
-		public ProcessorWindowQueryable(String reference, int width)
-		{
-			super(reference, width);
-		}
-	}
-	
-	static class SlidableWindowQueryable extends WindowQueryable
-	{
-		public SlidableWindowQueryable(String reference, int width)
-		{
-			super(reference, width);
-		}
 	}
 }

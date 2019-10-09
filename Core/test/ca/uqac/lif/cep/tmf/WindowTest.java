@@ -13,14 +13,9 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import ca.uqac.lif.azrael.ObjectPrinter;
-import ca.uqac.lif.azrael.ObjectReader;
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.ProcessorQueryable;
-import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.SingleProcessorTestTemplate;
@@ -28,16 +23,12 @@ import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
 import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
 import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
 import ca.uqac.lif.cep.TestUtilities.TestableSlidableFunction;
-import ca.uqac.lif.cep.functions.Cumulate;
-import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.Window.CircularBuffer;
 import ca.uqac.lif.cep.tmf.Window.ProcessorWindow;
-import ca.uqac.lif.cep.tmf.Window.ProcessorWindowQueryable;
+import ca.uqac.lif.cep.tmf.Window.ProcessorWindow.ProcessorWindowQueryable;
+import ca.uqac.lif.cep.tmf.Window.SlidableWindow.SlidableWindowQueryable;
 import ca.uqac.lif.cep.tmf.Window.GenericWindow;
 import ca.uqac.lif.cep.tmf.Window.SlidableWindow;
-import ca.uqac.lif.cep.tmf.Window.SlidableWindowQueryable;
 import ca.uqac.lif.cep.util.Numbers;
 
 public class WindowTest
@@ -331,7 +322,7 @@ public class WindowTest
 		pw.compute(new Object[] {4}, queue, null);
 		pw.compute(new Object[] {1}, queue, null);
 		pw.compute(new Object[] {5}, queue, null);
-		SlidableWindowQueryable pwq = pw.getQueryable("foo", 3);
+		ca.uqac.lif.cep.tmf.Window.SlidableWindow.SlidableWindowQueryable pwq = pw.getQueryable("foo", 3);
 		assertNotNull(pwq);
 		fail("Functionality not fully implemented yet");
 	}

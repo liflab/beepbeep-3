@@ -22,7 +22,7 @@ public interface Processor extends CircuitElement, Contextualizable, Printable, 
 	public void setPushableOutput(int index, Pushable p);
 	
 	public void reset();
-		
+	
 	public class ProcessorException extends RuntimeException
 	{
 		/**
