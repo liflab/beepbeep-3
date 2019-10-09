@@ -412,6 +412,24 @@ public class WindowTest
 		assertEquals(0, gw_dup.m_window.m_size);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testProcessorWindowPrint() throws PrintException
+	{
+		IdentityObjectPrinter iop = new IdentityObjectPrinter();
+		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
+		Queue<Object[]> fronts = spw.getFronts();
+		ProcessorWindow gw = new ProcessorWindow(spw, 3);
+		assertEquals(3, gw.m_windowWidth);
+		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		gw.compute(new Object[] {3}, out_queue, null);
+		assertEquals(1, gw.m_window.m_size);
+		assertEquals(0, fronts.size());
+		Map<String,Object> printed = (Map<String,Object>) iop.print(gw);
+		assertEquals(3, printed.get(GenericWindow.s_widthKey));
+		CircularBuffer<Object> cb = (CircularBuffer<Object>) printed.get(GenericWindow.s_windowKey);
+	}
+	
 	@Test
 	public void testCircularBuffer1()
 	{

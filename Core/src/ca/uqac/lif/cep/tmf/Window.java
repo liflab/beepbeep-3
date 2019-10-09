@@ -122,6 +122,10 @@ public class Window extends SingleProcessor
 		/*@ non_null @*/ protected Pushable m_pushable;
 
 		/*@ non_null @*/ protected SinkLast m_sink;
+		
+		static final transient String s_sinkKey = "sink";
+		
+		static final transient String s_processorKey = "processor";
 
 		public ProcessorWindow(/*@ non_null @*/ Processor p, int width)
 		{
@@ -156,6 +160,7 @@ public class Window extends SingleProcessor
 		{
 			m_window.clear();
 			m_processor.reset();
+			m_sink.reset();
 		}
 		
 		@Override
@@ -178,15 +183,41 @@ public class Window extends SingleProcessor
 		@Override
 		public Object print(ObjectPrinter<?> printer) throws PrintException
 		{
-			// TODO Auto-generated method stub
-			return null;
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put(GenericWindow.s_widthKey, m_windowWidth);
+			map.put(GenericWindow.s_windowKey, m_window);
+			map.put(s_processorKey, m_processor);
+			return map;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public Object read(ObjectReader<?> reader, Object o) throws ReadException
 		{
-			// TODO Auto-generated method stub
-			return null;
+			Object r_o = reader.read(o);
+			if (r_o == null || !(r_o instanceof Map))
+			{
+				throw new ReadException("Unexpected object format");
+			}
+			try
+			{
+				Map<String,Object> map = (Map<String,Object>) r_o;
+				if (!map.containsKey(s_widthKey) || !map.containsKey(s_windowKey) 
+						|| !map.containsKey(s_processorKey) || !map.containsKey(s_sinkKey))
+				{
+					throw new ReadException("Unexpected map format");
+				}
+				int width = (Integer) map.get(s_widthKey);
+				CircularBuffer<Object> window = (CircularBuffer<Object>) map.get(s_windowKey);
+				Processor processor = (Processor) map.get(s_processorKey);
+				ProcessorWindow pw = new ProcessorWindow(processor, width);
+				pw.m_window = window;
+				return pw;
+			}
+			catch (ClassCastException cce)
+			{
+				throw new ReadException(cce);
+			}
 		}
 	}
 
