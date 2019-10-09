@@ -41,27 +41,7 @@ public class ProcessorQueryableTest
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
 		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthInput(0), root, factory);
-		assertEquals(1, leaves.size());
-		TraceabilityNode leaf = leaves.get(0);
-		assertNotNull(leaf);
-		assertTrue(leaf instanceof UnknownNode);
-	}
-	
-	@Test
-	public void testQueryableWrongDirection()
-	{
-		TestableSingleProcessor spw = new TestableSingleProcessor(1, 1);
-		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
-		assertNotNull(pq);
-		assertEquals(1, pq.getInputArity());
-		assertEquals(1, pq.getOutputArity());
-		Tracer factory = new ConcreteTracer();
-		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.TaintQuery.instance, new NthOutput(0), root, factory);
-		assertEquals(1, leaves.size());
-		TraceabilityNode leaf = leaves.get(0);
-		assertNotNull(leaf);
-		assertTrue(leaf instanceof UnknownNode);
+		assertEquals(0, leaves.size());
 	}
 	
 	@Test
@@ -191,10 +171,7 @@ public class ProcessorQueryableTest
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
 		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthInput(0), root, factory);
-		assertEquals(1, leaves.size());
-		TraceabilityNode leaf = leaves.get(0);
-		assertNotNull(leaf);
-		assertTrue(leaf instanceof UnknownNode);
+		assertEquals(0, leaves.size());
 	}
 	
 	@Test

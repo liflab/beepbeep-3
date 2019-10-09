@@ -167,11 +167,20 @@ public class SinkLast extends Sink
 		public List<TraceabilityNode> query(TraceabilityQuery q, Designator d, TraceabilityNode root, Tracer factory)
 		{
 			Designator head = d.peek();
-			if (q instanceof UpstreamQuery && head instanceof SinkContents)
+			
+			if (q instanceof UpstreamQuery)
 			{
-				return queryOutput(q, -1, d.tail(), root, factory);
+				if (head instanceof SinkContents)
+				{
+					return queryOutput(q, -1, d.tail(), root, factory);
+				}
+				if (head instanceof NthInput)
+				{
+					return super.query(q, d, root, factory);
+				}
+				return unknownLink(root, factory);
 			}
-			return unknownLink(root, factory);
+			return super.query(q, head, root, factory);
 		}
 		
 		@Override

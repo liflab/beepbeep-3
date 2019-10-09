@@ -33,8 +33,10 @@ import ca.uqac.lif.petitpoucet.ObjectNode;
 import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery;
+import ca.uqac.lif.petitpoucet.TraceabilityTree;
 import ca.uqac.lif.petitpoucet.Tracer;
 import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
+import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
 import ca.uqac.lif.petitpoucet.common.CollectionDesignator.NthElement;
@@ -168,7 +170,7 @@ public class Window extends SingleProcessor
 			m_sink = new SinkLast();
 			m_pushable = m_processor.getPushableInput();
 			Connector.connect(m_processor, m_sink);
-			m_queryable = getQueryable(p.toString(), width);
+			m_queryable = getQueryable(toString(), width);
 		}
 
 		@Override
@@ -281,8 +283,12 @@ public class Window extends SingleProcessor
 			
 			public void add(/*@ non_null @*/ ProcessorQueryable processor_q, /*@ non_null @*/ ProcessorQueryable sink_q)
 			{
-				m_processorQueryables.add(processor_q.duplicate(true));
-				m_sinkQueryables.add(sink_q.duplicate(true));
+				ProcessorQueryable processor_q_dup = processor_q.duplicate(true);
+				ProcessorQueryable sink_q_dup = sink_q.duplicate(true);
+				processor_q_dup.setToOutput(0, new QueryableCircuitConnection(0, sink_q));
+				sink_q_dup.setToInput(0, new QueryableCircuitConnection(0, processor_q_dup));
+				m_processorQueryables.add(processor_q_dup);
+				m_sinkQueryables.add(sink_q_dup);
 			}
 			
 			@Override
@@ -302,8 +308,24 @@ public class Window extends SingleProcessor
 					return unknownLink(root, factory);
 				}
 				Queryable sink_q = m_sinkQueryables.get(num_event);
+				// Answer traceability query on sink
 				ComposedDesignator cd = new ComposedDesignator(tail_t, new NthElement(0), SinkContents.instance);
-				List<TraceabilityNode> leaves = sink_q.query(q, cd, root, sub_factory);
+				TraceabilityTree tree = sub_factory.trace(q, cd, sink_q);
+				root.addChild(tree.getRoot(), Quality.EXACT);
+				List<TraceabilityNode> leaves = tree.getLeaves();
+				// Connect processor inputs to window inputs
+				return connectProcessorToWindow(num_event, leaves, sub_factory);
+			}
+
+			@Override
+			protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
+			{
+				// TODO
+				return unknownLink(root, factory);
+			}
+			
+			protected List<TraceabilityNode> connectProcessorToWindow(int num_event, List<TraceabilityNode> leaves, Tracer sub_factory)
+			{
 				// Connect each leaf to the window's actual input
 				List<TraceabilityNode> new_leaves = new ArrayList<TraceabilityNode>();
 				for (TraceabilityNode leaf : leaves)
@@ -318,7 +340,7 @@ public class Window extends SingleProcessor
 					Designator dob_d = dob.getDesignator();
 					if (!(dob_d.peek() instanceof NthInput))
 					{
-						TraceabilityNode unknown = factory.getUnknownNode();
+						TraceabilityNode unknown = sub_factory.getUnknownNode();
 						leaf.addChild(unknown, Quality.NONE);
 						new_leaves.add(unknown);
 						continue;
@@ -327,7 +349,7 @@ public class Window extends SingleProcessor
 					Designator dob_d_t = dob_d.tail();
 					if (ni.getIndex() != 0)
 					{
-						TraceabilityNode unknown = factory.getUnknownNode();
+						TraceabilityNode unknown = sub_factory.getUnknownNode();
 						leaf.addChild(unknown, Quality.NONE);
 						new_leaves.add(unknown);
 						continue;
@@ -336,7 +358,7 @@ public class Window extends SingleProcessor
 					Designator dob_d_tail_t = dob_d_t.tail();
 					if (!(dob_d_tail_h instanceof NthEvent))
 					{
-						TraceabilityNode unknown = factory.getUnknownNode();
+						TraceabilityNode unknown = sub_factory.getUnknownNode();
 						leaf.addChild(unknown, Quality.NONE);
 						new_leaves.add(unknown);
 						continue;
@@ -345,18 +367,11 @@ public class Window extends SingleProcessor
 					int local_input_num = ne.getIndex();
 					int global_input_num = local_input_num + num_event;
 					ComposedDesignator leaf_cd = new ComposedDesignator(dob_d_tail_t, new NthEvent(global_input_num), new NthInput(0));
-					TraceabilityNode new_leaf = factory.getObjectNode(leaf_cd, this);
+					TraceabilityNode new_leaf = sub_factory.getObjectNode(leaf_cd, this);
 					leaf.addChild(new_leaf, Quality.EXACT);
 					new_leaves.add(new_leaf);
 				}
 				return new_leaves;
-			}
-
-			@Override
-			protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
-			{
-				// TODO
-				return unknownLink(root, factory);
 			}
 		}
 	}

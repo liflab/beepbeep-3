@@ -24,8 +24,18 @@ import ca.uqac.lif.azrael.clone.ReadableReadHandler;
 import ca.uqac.lif.cep.GroupProcessor.InputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.OutputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.ProcessorConnection;
+import ca.uqac.lif.cep.Processor.NthEvent;
 import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.tmf.Passthrough.PassthroughQueryable;
+import ca.uqac.lif.petitpoucet.ComposedDesignator;
+import ca.uqac.lif.petitpoucet.Designator;
+import ca.uqac.lif.petitpoucet.TraceabilityNode;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery;
+import ca.uqac.lif.petitpoucet.Tracer;
+import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
 
 public class TestUtilities 
 {
@@ -36,35 +46,35 @@ public class TestUtilities
 	protected static class TestableGroupProcessor extends GroupProcessor
 	{
 		protected Map<Processor,Processor> m_correspondences;
-		
+
 		protected List<Processor> m_procList;
-		
+
 		public TestableGroupProcessor(int in_arity, int out_arity) 
 		{
 			super(in_arity, out_arity);
 		}
-		
+
 		@Test
 		public void test()
 		{
-			
+
 		}
 
 		Set<Processor> getProcessors()
 		{
 			return m_innerProcessors;
 		}
-		
+
 		List<Processor> getProcessorList()
 		{
 			return m_procList;
 		}
-		
+
 		Context getContextMap()
 		{
 			return m_context;
 		}
-		
+
 		@Override
 		public TestableGroupProcessor duplicate(boolean with_state)
 		{
@@ -72,21 +82,21 @@ public class TestUtilities
 			m_correspondences = new HashMap<Processor,Processor>();
 			return (TestableGroupProcessor) super.copyInto(gpw, with_state, m_correspondences);
 		}
-		
+
 		@Override
 		public Object print(ObjectPrinter<?> printer) throws PrintException
 		{
 			m_procList = new ArrayList<Processor>(m_innerProcessors.size());
 			return print(printer, m_procList);
 		}
-		
+
 		@Override
 		protected TestableGroupProcessor getInstance(int in_arity, int out_arity)
 		{
 			return new TestableGroupProcessor(in_arity, out_arity);
 		}		
 	}
-	
+
 	/**
 	 * A processor that provides additional public methods to expose the
 	 * internal fields of the {@link SingleProcessor} class. This is used in
@@ -100,19 +110,19 @@ public class TestUtilities
 		protected Queue<Object[]> m_fronts;
 
 		protected int m_callsToEnd = 0;
-		
+
 		protected int m_callsToStart = 0;
-		
+
 		protected int m_callsToStop = 0;
-		
+
 		protected int m_callsToReset = 0;
 
 		protected int m_stutterAmount = 1;
-		
+
 		protected Class<?> m_inputType = Object.class;
-		
+
 		protected Class<?> m_outputType = Object.class;
-		
+
 		protected Object m_state = null;
 
 		public TestableSingleProcessor(int in_arity, int out_arity)
@@ -121,44 +131,44 @@ public class TestUtilities
 			m_fronts = new ArrayDeque<Object[]>();
 			m_queryable = new ProcessorQueryable(toString(), in_arity, out_arity);
 		}
-		
+
 		public void setState(Object o)
 		{
 			m_state = o;
 		}
-		
+
 		public Object getState()
 		{
 			return m_state;
 		}
-		
+
 		public void setInputType(Class<?> c)
 		{
 			m_inputType = c;
 		}
-		
+
 		public void setOutputType(Class<?> c)
 		{
 			m_outputType = c;
 		}
-		
+
 		@Override
 		public Class<?> getInputType(int index)
 		{
 			return m_inputType;
 		}
-		
+
 		@Override
 		public Class<?> getOutputType(int index)
 		{
 			return m_outputType;
 		}
-		
+
 		public Pullable getInputPullable(int index)
 		{
 			return m_inputPullables[index];
 		}
-		
+
 		public Pushable getOutputPushable(int index)
 		{
 			return m_outputPushables[index];
@@ -173,7 +183,7 @@ public class TestUtilities
 		{
 			return m_callsToEnd;
 		}
-		
+
 		public int getCallsToReset()
 		{
 			return m_callsToReset;
@@ -198,19 +208,19 @@ public class TestUtilities
 		{
 			return m_fronts;
 		}
-		
+
 		@Override
 		public void start()
 		{
 			m_callsToStart++;
 		}
-		
+
 		@Override
 		public void stop()
 		{
 			m_callsToStop++;
 		}
-		
+
 		@Override
 		public void reset()
 		{
@@ -262,15 +272,87 @@ public class TestUtilities
 		{
 			return m_state;
 		}
-		
+
 		public int getCallsToStart()
 		{
 			return m_callsToStart;
 		}
-		
+
 		public int getCallsToStop()
 		{
 			return m_callsToStop;
+		}
+
+		@Override
+		protected TestableSingleProcessorQueryable getQueryable(int in_arity, int out_arity)
+		{
+			return new TestableSingleProcessorQueryable(toString(), in_arity, out_arity);
+		}
+
+		public static class TestableSingleProcessorQueryable extends ProcessorQueryable
+		{
+			public TestableSingleProcessorQueryable(String reference, int in_arity, int out_arity) 
+			{
+				super(reference, in_arity, out_arity);
+			}
+
+			@Override
+			protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
+			{
+				Designator t_head = tail.peek();
+				Designator t_tail = tail.tail();
+				if (!(t_head instanceof NthEvent))
+				{
+					// Unknown
+					return super.queryOutput(q, in_index, t_tail, root, factory);
+				}
+				NthEvent nth = (NthEvent) t_head;
+				int index = nth.getIndex();
+				ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), new NthOutput(in_index));
+				TraceabilityNode node = factory.getObjectNode(cd, this);
+				root.addChild(node, Quality.EXACT);
+				List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);
+				leaves.add(node);
+				return leaves;
+			}
+
+			@Override
+			protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, Designator tail, TraceabilityNode root, Tracer factory)
+			{
+				Designator t_head = tail.peek();
+				Designator t_tail = tail.tail();
+				if (!(t_head instanceof NthEvent))
+				{
+					// Unknown
+					return super.queryOutput(q, out_index, t_tail, root, factory);
+				}
+				NthEvent nth = (NthEvent) t_head;
+				int index = nth.getIndex();
+				ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), new NthInput(out_index));
+				TraceabilityNode node = factory.getObjectNode(cd, this);
+				root.addChild(node, Quality.EXACT);
+				List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);
+				leaves.add(node);
+				return leaves;
+			}
+
+			@Override
+			public Object printState()
+			{
+				return null;
+			}
+
+			@Override
+			public TestableSingleProcessorQueryable readState(/*@ non_null @*/ String reference, int in_arity, int out_arity, /*@ nullable @*/ Object state) throws ReadException
+			{
+				return new TestableSingleProcessorQueryable(reference, in_arity, out_arity);
+			}
+
+			@Override
+			public TestableSingleProcessorQueryable duplicate(boolean with_state)
+			{
+				return new TestableSingleProcessorQueryable(m_reference, m_inputConnections.length, m_outputConnections.length);
+			}
 		}
 	}
 
@@ -320,7 +402,7 @@ public class TestUtilities
 			return true;
 		}
 	}
-	
+
 	public static class IdentityObjectPrinter extends ObjectPrinter<Object>
 	{
 		public IdentityObjectPrinter()
@@ -328,14 +410,14 @@ public class TestUtilities
 			super();
 			addHandler(new IdentityPrintHandler());
 		}
-		
+
 		@Override
 		public Object wrap(Object o, Object t) throws PrintException 
 		{
 			return t;
 		}
 	}
-	
+
 	public static class IdentityObjectReader extends ObjectReader<Object>
 	{
 		public IdentityObjectReader()
@@ -344,7 +426,7 @@ public class TestUtilities
 			addHandler(new ReadableReadHandler(this));
 			addHandler(new IdentityReadHandler());
 		}
-		
+
 		public Object read(Object o, Readable reference) throws ReadException
 		{
 			return reference.read(this, o);
@@ -368,11 +450,11 @@ public class TestUtilities
 			return false;
 		}
 	}
-	
+
 	public static class TestableQueueSource extends QueueSource
 	{
 		protected int m_callsToCompute = 0;
-		
+
 		@Override
 		public boolean compute(Object[] inputs, Queue<Object[]> outputs)
 		{
@@ -380,7 +462,7 @@ public class TestUtilities
 			return super.compute(inputs, outputs);
 		}
 	}
-	
+
 	/**
 	 * A {@link SlidableFunction} with additional methods to query its internal
 	 * state, for testing purposes.
@@ -388,28 +470,28 @@ public class TestUtilities
 	public static class TestableSlidableFunction implements SlidableFunction
 	{
 		protected List<Object> m_buffer;
-		
+
 		protected int m_callsToEvaluate = 0;
-		
+
 		protected int m_callsToDevaluate = 0;
-		
+
 		protected int m_callsToReset = 0;
-		
+
 		protected Object m_lastEvaluate;
-		
+
 		protected Object m_lastDevaluate;
-		
+
 		public TestableSlidableFunction()
 		{
 			super();
 			m_buffer = new ArrayList<Object>();
 		}
-		
+
 		public Object getLastEvaluate()
 		{
 			return m_lastEvaluate;
 		}
-		
+
 		public Object getLastDevaluate()
 		{
 			return m_lastDevaluate;
@@ -426,17 +508,17 @@ public class TestUtilities
 		{
 			return 1;
 		}
-		
+
 		public int getCallsToEvaluate()
 		{
 			return m_callsToEvaluate;
 		}
-		
+
 		public int getCallsToDevaluate()
 		{
 			return m_callsToDevaluate;
 		}
-		
+
 		public int getCallsToReset()
 		{
 			return m_callsToReset;
@@ -513,7 +595,7 @@ public class TestUtilities
 			m_callsToDevaluate++;
 		}
 	}
-	
+
 	/**
 	 * Checks that the connections listed in the <tt>connections</tt> element
 	 * of the serialized group match the actual connections between the

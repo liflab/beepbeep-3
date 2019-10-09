@@ -515,6 +515,7 @@ public class WindowTest
 		pw.compute(new Object[] {5}, queue, null);
 		ProcessorWindowQueryable pwq = pw.getQueryable("foo", 3);
 		assertNotNull(pwq);
+		assertEquals(pw.toString(), pwq.getReference());
 		ConcreteTracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
 		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), new NthOutput(0));

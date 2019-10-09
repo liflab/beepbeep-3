@@ -64,13 +64,7 @@ public class ProcessorQueryable implements CircuitQueryable, Readable, Printable
 				return out_list;
 			}
 			CircuitConnection cc = m_inputConnections[index];
-			if (cc == null)
-			{
-				TraceabilityNode node = factory.getUnknownNode();
-				root.addChild(node, Quality.NONE);
-				out_list.add(node);
-			}
-			else
+			if (cc != null)
 			{
 				ComposedDesignator cd = new ComposedDesignator(tail, new NthOutput(cc.getIndex()));
 				TraceabilityNode node = factory.getObjectNode(cd, cc.getObject());
@@ -90,13 +84,7 @@ public class ProcessorQueryable implements CircuitQueryable, Readable, Printable
 				return out_list;
 			}
 			CircuitConnection cc = m_outputConnections[index];
-			if (cc == null)
-			{
-				TraceabilityNode node = factory.getUnknownNode();
-				root.addChild(node, Quality.NONE);
-				out_list.add(node);
-			}
-			else
+			if (cc != null)
 			{
 				ComposedDesignator cd = new ComposedDesignator(tail, new NthInput(cc.getIndex()));
 				TraceabilityNode node = factory.getObjectNode(cd, cc.getObject());
@@ -117,6 +105,11 @@ public class ProcessorQueryable implements CircuitQueryable, Readable, Printable
 		root.addChild(node, Quality.NONE);
 		out_list.add(node);
 		return out_list;
+	}
+	
+	public String getReference()
+	{
+		return m_reference;
 	}
 
 	@Override
