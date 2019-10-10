@@ -29,68 +29,58 @@ import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
 public class FunctionQueryable extends CircuitQueryable implements StateDuplicable<FunctionQueryable>, Printable, Readable
 {
 	public static final transient String s_arityKey = "arity";
-	
+
 	public static final transient String s_contentsKey = "contents";
-	
+
 	public static final transient String s_referenceKey = "reference";
-	
+
 	public FunctionQueryable(/*@ non_null @*/ String reference, int in_arity, int out_arity)
 	{
 		super(reference, in_arity, out_arity);
 	}
-	
+
 	@Override
 	protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, 
 			Designator tail, TraceabilityNode root, Tracer factory)
 	{
-		Designator t_head = tail.peek();
-		Designator t_tail = tail.tail();
-		if (t_head instanceof NthInput)
+		if (q instanceof TaintQuery)
 		{
-			if (q instanceof TaintQuery)
-			{
-				allInputsLink(in_index, t_tail, root, factory);
-			}
-			if (q instanceof ConsequenceQuery)
-			{
-				return queryConsequence(in_index, t_tail, root, factory);
-			}
+			allInputsLink(in_index, tail, root, factory);
+		}
+		if (q instanceof ConsequenceQuery)
+		{
+			return queryConsequence(in_index, tail, root, factory);
 		}
 		return unknownLink(root, factory);
 	}
-	
+
 	@Override
 	protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
 			Designator tail, TraceabilityNode root, Tracer factory)
 	{
-		Designator t_head = tail.peek();
-		Designator t_tail = tail.tail();
-		if (t_head instanceof NthOutput)
+		if (q instanceof ProvenanceQuery)
 		{
-			if (q instanceof ProvenanceQuery)
-			{
-				return allInputsLink(out_index, t_tail, root, factory);
-			}
-			if (q instanceof CausalityQuery)
-			{
-				return queryCausality(out_index, t_tail, root, factory);
-			}
+			return allInputsLink(out_index, tail, root, factory);
+		}
+		if (q instanceof CausalityQuery)
+		{
+			return queryCausality(out_index, tail, root, factory);
 		}
 		return unknownLink(root, factory);
 	}
-	
+
 	protected List<TraceabilityNode> queryCausality(int out_index, 
 			Designator d, TraceabilityNode root, Tracer factory)
 	{
 		return allInputsLink(out_index, d, root, factory);
 	}
-	
+
 	protected List<TraceabilityNode> queryConsequence(int in_index, 
 			Designator d, TraceabilityNode root, Tracer factory)
 	{
 		return allOutputsLink(in_index, d, root, factory);
 	}
-	
+
 	protected List<TraceabilityNode> allInputsLink(int out_index, 
 			Designator t_tail, TraceabilityNode root, Tracer factory)
 	{
@@ -106,7 +96,7 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 		}
 		return leaves;
 	}
-	
+
 	protected List<TraceabilityNode> allOutputsLink(int out_index, 
 			Designator t_tail, TraceabilityNode root, Tracer factory)
 	{
@@ -183,13 +173,13 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 	{
 		return new FunctionQueryable(m_reference, m_inputConnections.length, m_outputConnections.length);
 	}
-	
+
 	protected Object printState() throws PrintException
 	{
 		// Nothing to do
 		return null;
 	}
-	
+
 	protected FunctionQueryable readState(String reference, int in_arity, int out_arity, Object o) throws ReadException
 	{
 		return new FunctionQueryable(reference, in_arity, out_arity);

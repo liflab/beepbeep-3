@@ -9,12 +9,13 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.BinaryFunction.BinaryFunctionQueryable.Inputs;
 import ca.uqac.lif.cep.functions.CumulableFunction;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionQueryable;
 import ca.uqac.lif.cep.functions.SlidableFunction;
 
 public class Numbers 
 {
 	public static final transient Addition addition = new Addition();
+	
+	public static final transient Multiplication multiplication = new Multiplication();
 	
 	public static final transient Division division = new Division();
 	
@@ -31,10 +32,10 @@ public class Numbers
 		}
 		
 		@Override
-		public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
+		public BinaryFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
 		{
 			outputs[0] = ((Number) inputs[0]).floatValue() + ((Number) inputs[1]).floatValue();
-			return new FunctionQueryable(toString(), 2, 1);
+			return new BinaryFunctionQueryable(toString(), Inputs.BOTH);
 		}
 
 		@Override
@@ -58,7 +59,7 @@ public class Numbers
 		}
 		
 		@Override
-		public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
+		public BinaryFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
 		{
 			outputs[0] = ((Number) inputs[0]).floatValue() * ((Number) inputs[1]).floatValue();
 			return new BinaryFunctionQueryable(toString(), getDependency(((Number) inputs[0]).floatValue(), ((Number) inputs[1]).floatValue()));
@@ -102,10 +103,10 @@ public class Numbers
 		}
 		
 		@Override
-		public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
+		public BinaryFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
 		{
 			outputs[0] = ((Number) inputs[0]).floatValue() / ((Number) inputs[1]).floatValue();
-			return new FunctionQueryable(toString(), 2, 1);
+			return new BinaryFunctionQueryable(toString(), Inputs.BOTH);
 		}
 
 		@Override

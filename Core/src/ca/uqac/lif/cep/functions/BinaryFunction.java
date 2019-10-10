@@ -7,6 +7,7 @@ import ca.uqac.lif.azrael.ObjectPrinter;
 import ca.uqac.lif.azrael.ObjectReader;
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
 import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
@@ -63,7 +64,7 @@ public abstract class BinaryFunction<T,U,V> implements Function
 	}
 	
 	@Override
-	public final FunctionQueryable evaluate(Object[] inputs, Object[] outputs) 
+	public final BinaryFunctionQueryable evaluate(Object[] inputs, Object[] outputs) 
 	{
 		return evaluate(inputs, outputs, null);
 	}
@@ -136,10 +137,11 @@ public abstract class BinaryFunction<T,U,V> implements Function
 				TraceabilityNode node1 = factory.getObjectNode(cd1, this);
 				or.addChild(node1, Quality.EXACT);
 				leaves.add(node1);
-				ComposedDesignator cd2 = new ComposedDesignator(d, new NthInput(0));
+				ComposedDesignator cd2 = new ComposedDesignator(d, new NthInput(1));
 				TraceabilityNode node2 = factory.getObjectNode(cd2, this);
 				or.addChild(node2, Quality.EXACT);
 				leaves.add(node2);
+				return leaves;
 			}
 			default:
 				return allInputsLink(out_index, d, root, factory);
@@ -185,4 +187,7 @@ public abstract class BinaryFunction<T,U,V> implements Function
 			return new BinaryFunctionQueryable(reference, Inputs.BOTH);
 		}
 	}
+	
+	@Override
+	public abstract BinaryFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c);
 }
