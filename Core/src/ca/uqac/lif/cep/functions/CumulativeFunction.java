@@ -35,14 +35,14 @@ public class CumulativeFunction<T> implements Function
 	}
 
 	@Override
-	public final void evaluate(Object[] inputs, Object[] outputs) 
+	public final FunctionQueryable evaluate(Object[] inputs, Object[] outputs) 
 	{
-		evaluate(inputs, outputs, null);
+		return evaluate(inputs, outputs, null);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+	public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context context) 
 	{
 		Object[] ins = new Object[] {m_currentValue, inputs[0]};
 		m_function.evaluate(ins, outputs, context);

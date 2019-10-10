@@ -14,10 +14,10 @@ import ca.uqac.lif.azrael.ObjectPrinter;
 import ca.uqac.lif.azrael.ObjectReader;
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
-import ca.uqac.lif.cep.ProcessorQueryable.QueryableCircuitConnection;
 import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
 import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
+import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable.QueryableCircuitConnection;
 
 public abstract class SingleProcessor implements Processor
 {
