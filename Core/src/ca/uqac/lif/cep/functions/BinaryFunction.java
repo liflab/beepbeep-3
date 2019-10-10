@@ -75,18 +75,6 @@ public abstract class BinaryFunction<T,U,V> implements Function
 		// Nothing to do
 	}
 	
-	@Override
-	public Object print(ObjectPrinter<?> printer) throws PrintException 
-	{
-		return null;
-	}
-	
-	@Override
-	public BinaryFunction<T,U,V> read(ObjectReader<?> reader, Object o) throws ReadException
-	{
-		return duplicate();
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public BinaryFunction<T,U,V> duplicate() 

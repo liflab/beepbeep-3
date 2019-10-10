@@ -49,6 +49,18 @@ public class Numbers
 		{
 			return 0;
 		}
+		
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException 
+		{
+			return null;
+		}
+
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException
+		{
+			return this;
+		}
 	}
 	
 	protected static class Multiplication extends BinaryFunction<Number,Number,Number> implements CumulableFunction<Number>
@@ -93,6 +105,18 @@ public class Numbers
 			}
 			return Inputs.BOTH;
 		}
+
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException 
+		{
+			return null;
+		}
+
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException
+		{
+			return this;
+		}
 	}
 	
 	protected static class Division extends BinaryFunction<Number,Number,Number> implements CumulableFunction<Number>
@@ -119,6 +143,18 @@ public class Numbers
 		public Number getInitialValue() 
 		{
 			return 1;
+		}
+		
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException 
+		{
+			return null;
+		}
+
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException
+		{
+			return this;
 		}
 	}
 	
@@ -186,6 +222,19 @@ public class Numbers
 			m_currentValue = 0;
 			m_queryable.reset();
 		}
+		
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 	
 	public static class Sum extends SlidableArithmeticFunction
@@ -222,18 +271,6 @@ public class Numbers
 				s.m_currentValue = m_currentValue;
 			}
 			return s;
-		}
-
-		@Override
-		public Object print(ObjectPrinter<?> printer) throws PrintException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Object read(ObjectReader<?> reader, Object o) throws ReadException {
-			// TODO Auto-generated method stub
-			return null;
 		}
 	}
 	
