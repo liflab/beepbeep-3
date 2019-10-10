@@ -3,6 +3,10 @@ package ca.uqac.lif.cep.functions;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
@@ -10,13 +14,13 @@ import ca.uqac.lif.petitpoucet.TraceabilityQuery;
 import ca.uqac.lif.petitpoucet.Tracer;
 import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
 
-public class Constant extends SingleFunction
+public class Constant implements Function
 {
 	protected Object m_value;
 	
 	public Constant(Object value)
 	{
-		super(0, 1);
+		super();
 		m_value = value;
 	}
 
@@ -27,29 +31,10 @@ public class Constant extends SingleFunction
 	}
 	
 	@Override
-	protected FunctionQueryable computeValue(Object[] inputs, Object[] outputs, Context c) 
+	public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
 	{
 		outputs[0] = m_value;
 		return new ConstantQueryable(toString());
-	}
-
-	static class ConstantQueryable extends FunctionQueryable
-	{
-		public ConstantQueryable(String reference)
-		{
-			super(reference, 0, 1);
-		}
-		
-		@Override
-		protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
-				Designator tail, TraceabilityNode root, Tracer factory)
-		{
-			TraceabilityNode node = factory.getObjectNode(HardValue.instance, this);
-			root.addChild(node, Quality.EXACT);
-			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);
-			leaves.add(node);
-			return leaves;
-		}
 	}
 
 	@Override
@@ -63,17 +48,48 @@ public class Constant extends SingleFunction
 	{
 		return m_value.getClass();
 	}
-
+	
 	@Override
-	public Object printState() 
+	public Object print(ObjectPrinter<?> printer) throws PrintException
 	{
-		return m_value;
+		return printer.print(m_value);
 	}
 
 	@Override
-	public Constant readState(int in_arity, int out_arity, Object o) 
+	public Constant read(ObjectReader<?> reader, Object o) throws ReadException
 	{
-		return new Constant(o);
+		Object r_o = reader.read(o);
+		return new Constant(r_o);
+	}
+
+	@Override
+	public Constant duplicate() 
+	{
+		return duplicate(false);
+	}
+
+	@Override
+	public FunctionQueryable evaluate(Object[] inputs, Object[] outputs)
+	{
+		return evaluate(inputs, outputs, null);
+	}
+
+	@Override
+	public int getInputArity()
+	{
+		return 0;
+	}
+
+	@Override
+	public int getOutputArity()
+	{
+		return 1;
+	}
+	
+	@Override
+	public void reset() 
+	{
+		// Nothing to do
 	}
 	
 	public static class HardValue implements Designator
@@ -107,6 +123,25 @@ public class Constant extends SingleFunction
 		public String toString()
 		{
 			return "Hard value";
+		}
+	}
+	
+	static class ConstantQueryable extends FunctionQueryable
+	{
+		public ConstantQueryable(String reference)
+		{
+			super(reference, 0, 1);
+		}
+		
+		@Override
+		protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
+				Designator tail, TraceabilityNode root, Tracer factory)
+		{
+			TraceabilityNode node = factory.getObjectNode(HardValue.instance, this);
+			root.addChild(node, Quality.EXACT);
+			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);
+			leaves.add(node);
+			return leaves;
 		}
 	}
 }

@@ -1387,8 +1387,8 @@ public class SingleProcessorTest
 		Connector.connect(spw_up, spw);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		ProcessorQueryable pq_up = (ProcessorQueryable) spw_up.getQueryable();
-		assertEquals(spw_up.getQueryable(), pq.getInputConnection(0).m_queryable);
-		assertEquals(spw.getQueryable(), pq_up.getOutputConnection(0).m_queryable);
+		assertEquals(spw_up.getQueryable(), pq.getInputConnection(0).getObject());
+		assertEquals(spw.getQueryable(), pq_up.getOutputConnection(0).getObject());
 	}
 	
 	@Test
@@ -1399,8 +1399,8 @@ public class SingleProcessorTest
 		Connector.connect(spw, spw_dn);
 		ProcessorQueryable pq = (ProcessorQueryable) spw.getQueryable();
 		ProcessorQueryable pq_dn = (ProcessorQueryable) spw_dn.getQueryable();
-		assertEquals(spw_dn.getQueryable(), pq.getOutputConnection(0).m_queryable);
-		assertEquals(spw.getQueryable(), pq_dn.getInputConnection(0).m_queryable);
+		assertEquals(spw_dn.getQueryable(), pq.getOutputConnection(0).getObject());
+		assertEquals(spw.getQueryable(), pq_dn.getInputConnection(0).getObject());
 	}
 	
 	public static Map<String,Object> getPrintedMap(int in_arity, int out_arity, Object queryable, Object contents)

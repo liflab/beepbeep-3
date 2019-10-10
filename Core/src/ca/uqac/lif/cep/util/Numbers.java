@@ -5,8 +5,11 @@ import ca.uqac.lif.azrael.ObjectReader;
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.BinaryFunction.BinaryFunctionQueryable.Inputs;
 import ca.uqac.lif.cep.functions.CumulableFunction;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionQueryable;
 import ca.uqac.lif.cep.functions.SlidableFunction;
 
 public class Numbers 
@@ -20,35 +23,18 @@ public class Numbers
 		super();
 	}
 	
-	protected static class Addition implements CumulableFunction<Number>
+	protected static class Addition extends BinaryFunction<Number,Number,Number> implements CumulableFunction<Number>
 	{
 		protected Addition()
 		{
-			super();
+			super(Number.class, Number.class, Number.class);
 		}
-
+		
 		@Override
-		public int getInputArity() 
-		{
-			return 2;
-		}
-
-		@Override
-		public int getOutputArity() 
-		{
-			return 1;
-		}
-
-		@Override
-		public void evaluate(Object[] inputs, Object[] outputs) 
-		{
-			evaluate(inputs, outputs, null);
-		}
-
-		@Override
-		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+		public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
 		{
 			outputs[0] = ((Number) inputs[0]).floatValue() + ((Number) inputs[1]).floatValue();
+			return new FunctionQueryable(toString(), 2, 1);
 		}
 
 		@Override
@@ -58,7 +44,28 @@ public class Numbers
 		}
 
 		@Override
-		public Addition duplicate() 
+		public Number getInitialValue() 
+		{
+			return 0;
+		}
+	}
+	
+	protected static class Multiplication extends BinaryFunction<Number,Number,Number> implements CumulableFunction<Number>
+	{
+		protected Multiplication()
+		{
+			super(Number.class, Number.class, Number.class);
+		}
+		
+		@Override
+		public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
+		{
+			outputs[0] = ((Number) inputs[0]).floatValue() * ((Number) inputs[1]).floatValue();
+			return new BinaryFunctionQueryable(toString(), getDependency(((Number) inputs[0]).floatValue(), ((Number) inputs[1]).floatValue()));
+		}
+
+		@Override
+		public Multiplication duplicate(boolean with_state) 
 		{
 			return this;
 		}
@@ -66,58 +73,39 @@ public class Numbers
 		@Override
 		public Number getInitialValue() 
 		{
-			return 0;
+			return 1;
 		}
 		
-		@Override
-		public void reset()
+		protected static Inputs getDependency(float x, float y)
 		{
-			// Do nothing
-		}
-
-		@Override
-		public Object print(ObjectPrinter<?> printer) throws PrintException 
-		{
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Object read(ObjectReader<?> reader, Object o) throws ReadException {
-			// TODO Auto-generated method stub
-			return null;
+			if (x == 0)
+			{
+				if (y == 0)
+				{
+					return Inputs.ANY;
+				}
+				return Inputs.LEFT;
+			}
+			if (y == 0)
+			{
+				return Inputs.RIGHT;
+			}
+			return Inputs.BOTH;
 		}
 	}
 	
-	protected static class Division implements CumulableFunction<Number>
+	protected static class Division extends BinaryFunction<Number,Number,Number> implements CumulableFunction<Number>
 	{
 		protected Division()
 		{
-			super();
+			super(Number.class, Number.class, Number.class);
 		}
-
+		
 		@Override
-		public int getInputArity() 
+		public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
 		{
-			return 2;
-		}
-
-		@Override
-		public int getOutputArity() 
-		{
-			return 1;
-		}
-
-		@Override
-		public void evaluate(Object[] inputs, Object[] outputs) 
-		{
-			evaluate(inputs, outputs, null);
-		}
-
-		@Override
-		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
-		{
-			outputs[0] = ((Number) inputs[0]).floatValue() + ((Number) inputs[1]).floatValue();
+			outputs[0] = ((Number) inputs[0]).floatValue() / ((Number) inputs[1]).floatValue();
+			return new FunctionQueryable(toString(), 2, 1);
 		}
 
 		@Override
@@ -127,33 +115,9 @@ public class Numbers
 		}
 
 		@Override
-		public Division duplicate() 
-		{
-			return this;
-		}
-
-		@Override
 		public Number getInitialValue() 
 		{
-			return 0;
-		}
-		
-		@Override
-		public void reset()
-		{
-			// Do nothing
-		}
-
-		@Override
-		public Object print(ObjectPrinter<?> printer) throws PrintException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Object read(ObjectReader<?> reader, Object o) throws ReadException {
-			// TODO Auto-generated method stub
-			return null;
+			return 1;
 		}
 	}
 	
@@ -161,9 +125,12 @@ public class Numbers
 	{
 		protected float m_currentValue;
 		
+		protected SlidableFunctionQueryable m_queryable;
+		
 		public SlidableArithmeticFunction()
 		{
 			super();
+			m_queryable = new SlidableFunctionQueryable(toString());
 		}
 		
 		@Override
@@ -179,15 +146,31 @@ public class Numbers
 		}
 		
 		@Override
-		public void evaluate(Object[] inputs, Object[] outputs) 
+		public Class<?> getInputType(int index)
 		{
-			evaluate(inputs, outputs,  null);
+			if (index == 0) 
+			{
+				return Number.class;
+			}
+			return null;
 		}
 		
 		@Override
-		public void devaluate(Object[] inputs, Object[] outputs) 
+		public Class<?> getOutputType(int index)
 		{
-			devaluate(inputs, outputs,  null);
+			return Number.class;
+		}
+		
+		@Override
+		public SlidableFunctionQueryable evaluate(Object[] inputs, Object[] outputs) 
+		{
+			return evaluate(inputs, outputs,  null);
+		}
+		
+		@Override
+		public SlidableFunctionQueryable devaluate(Object[] inputs, Object[] outputs) 
+		{
+			return devaluate(inputs, outputs,  null);
 		}
 		
 		@Override
@@ -200,6 +183,7 @@ public class Numbers
 		public void reset()
 		{
 			m_currentValue = 0;
+			m_queryable.reset();
 		}
 	}
 	
@@ -211,21 +195,25 @@ public class Numbers
 		}
 		
 		@Override
-		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+		public SlidableFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context context) 
 		{
 			m_currentValue += ((Number) inputs[0]).floatValue();
 			outputs[0] = m_currentValue;
+			m_queryable.addCallToEvaluate();
+			return m_queryable;
 		}
 		
 		@Override
-		public void devaluate(Object[] inputs, Object[] outputs, Context context) 
+		public SlidableFunctionQueryable devaluate(Object[] inputs, Object[] outputs, Context context) 
 		{
 			m_currentValue -= ((Number) inputs[0]).floatValue();
 			outputs[0] = m_currentValue;
+			m_queryable.addCallToDevaluate();
+			return m_queryable;
 		}
 
 		@Override
-		public Function duplicate(boolean with_state) 
+		public Sum duplicate(boolean with_state) 
 		{
 			Sum s = new Sum();
 			if (with_state)
@@ -259,16 +247,18 @@ public class Numbers
 		}
 		
 		@Override
-		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+		public SlidableFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context context) 
 		{
 			m_currentValue += ((Number) inputs[0]).floatValue();
 			m_numValues++;
 			outputs[0] = m_currentValue / m_numValues;
+			m_queryable.addCallToEvaluate();
+			return m_queryable;
 			
 		}
 		
 		@Override
-		public void devaluate(Object[] inputs, Object[] outputs, Context context) 
+		public SlidableFunctionQueryable devaluate(Object[] inputs, Object[] outputs, Context context) 
 		{
 			m_currentValue -= ((Number) inputs[0]).floatValue();
 			m_numValues--;
@@ -280,10 +270,12 @@ public class Numbers
 			{
 				outputs[0] = 0;
 			}
+			m_queryable.addCallToDevaluate();
+			return m_queryable;
 		}
 
 		@Override
-		public Function duplicate(boolean with_state) 
+		public Average duplicate(boolean with_state) 
 		{
 			Average s = new Average();
 			if (with_state)
@@ -297,6 +289,7 @@ public class Numbers
 		@Override
 		public void reset()
 		{
+			super.reset();
 			m_currentValue = 0;
 			m_numValues = 0;
 		}

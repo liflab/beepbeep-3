@@ -47,6 +47,7 @@ public class CumulativeFunction<T> implements Function
 		Object[] ins = new Object[] {m_currentValue, inputs[0]};
 		m_function.evaluate(ins, outputs, context);
 		m_currentValue = (T) outputs[0];
+		return new FunctionQueryable(toString(), 1, 1);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -110,5 +111,17 @@ public class CumulativeFunction<T> implements Function
 		{
 			throw new ReadException(e);
 		}
+	}
+
+	@Override
+	public Class<?> getInputType(int index) 
+	{
+		return m_function.getInputType(index);
+	}
+
+	@Override
+	public Class<?> getOutputType(int index) 
+	{
+		return m_function.getOutputType(index);
 	}
 }

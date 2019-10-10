@@ -40,7 +40,7 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 	}
 	
 	@Override
-	protected final List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, 
+	protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, 
 			Designator tail, TraceabilityNode root, Tracer factory)
 	{
 		Designator t_head = tail.peek();
@@ -60,7 +60,7 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 	}
 	
 	@Override
-	protected final List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
+	protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
 			Designator tail, TraceabilityNode root, Tracer factory)
 	{
 		Designator t_head = tail.peek();

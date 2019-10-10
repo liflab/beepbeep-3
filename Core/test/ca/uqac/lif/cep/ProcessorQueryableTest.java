@@ -258,9 +258,9 @@ public class ProcessorQueryableTest
 		IdentityObjectReader ior = new IdentityObjectReader();
 		Map<String,Object> map = getPrintedMap("procfoo", 2, 3, null);
 		ProcessorQueryable pq = (ProcessorQueryable) new ProcessorQueryable("procfoo", 1, 1).read(ior, map);
-		assertEquals(2, pq.m_inputConnections.length);
-		assertEquals(3, pq.m_outputConnections.length);
-		assertEquals("procfoo", pq.m_reference);
+		assertEquals(2, pq.getInputArity());
+		assertEquals(3, pq.getOutputArity());
+		assertEquals("procfoo", pq.getReference());
 	}
 	
 	@Test(expected = ReadException.class)

@@ -10,7 +10,7 @@ class FunctionConnector
 		super();
 	}
 	
-	public static void connect(Function f, int i, Function g, int j)
+	public static void connect(CircuitFunction f, int i, CircuitFunction g, int j)
 	{
 		f.setToOutput(i, new FunctionConnection(g, i));
 		g.setToInput(j, new FunctionConnection(f, i));
@@ -20,9 +20,9 @@ class FunctionConnector
 	{
 		protected int m_index;
 		
-		protected Function m_function;
+		protected CircuitFunction m_function;
 		
-		public FunctionConnection(Function f, int index)
+		public FunctionConnection(CircuitFunction f, int index)
 		{
 			super();
 			m_index = index;

@@ -24,10 +24,9 @@ import ca.uqac.lif.azrael.clone.ReadableReadHandler;
 import ca.uqac.lif.cep.GroupProcessor.InputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.OutputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.ProcessorConnection;
-import ca.uqac.lif.cep.Processor.NthEvent;
+import ca.uqac.lif.cep.Typed.Variant;
 import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tmf.Passthrough.PassthroughQueryable;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
 import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
@@ -480,11 +479,14 @@ public class TestUtilities
 		protected Object m_lastEvaluate;
 
 		protected Object m_lastDevaluate;
+		
+		protected SlidableFunctionQueryable m_queryable;
 
 		public TestableSlidableFunction()
 		{
 			super();
 			m_buffer = new ArrayList<Object>();
+			m_queryable = new SlidableFunctionQueryable(toString());
 		}
 
 		public Object getLastEvaluate()
@@ -525,19 +527,24 @@ public class TestUtilities
 		}
 
 		@Override
-		public void evaluate(Object[] inputs, Object[] outputs) 
+		public SlidableFunctionQueryable evaluate(Object[] inputs, Object[] outputs) 
 		{
 			m_buffer.add(inputs[0]);
 			m_callsToEvaluate++;
 			m_lastEvaluate = inputs[0];
+			m_queryable.addCallToEvaluate();
+			return m_queryable;
 		}
 
 		@Override
-		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+		public SlidableFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context context) 
 		{
 			m_buffer.add(inputs[0]);
 			m_callsToEvaluate++;
 			m_lastEvaluate = inputs[0];
+			m_queryable.addCallToEvaluate();
+			return m_queryable;
+			
 		}
 
 		@Override
@@ -582,17 +589,33 @@ public class TestUtilities
 		}
 
 		@Override
-		public void devaluate(Object[] inputs, Object[] outputs, Context context) 
+		public SlidableFunctionQueryable devaluate(Object[] inputs, Object[] outputs, Context context) 
 		{
 			m_lastDevaluate = inputs[0];
 			m_callsToDevaluate++;
+			m_queryable.addCallToDevaluate();
+			return m_queryable;
 		}
 
 		@Override
-		public void devaluate(Object[] inputs, Object[] outputs) 
+		public SlidableFunctionQueryable devaluate(Object[] inputs, Object[] outputs) 
 		{
 			m_lastDevaluate = inputs[0];
 			m_callsToDevaluate++;
+			m_queryable.addCallToDevaluate();
+			return m_queryable;
+		}
+
+		@Override
+		public Class<?> getInputType(int index) 
+		{
+			return Variant.class;
+		}
+
+		@Override
+		public Class<?> getOutputType(int index)
+		{
+			return Variant.class;
 		}
 	}
 
