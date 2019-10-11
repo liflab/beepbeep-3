@@ -4,12 +4,13 @@ import ca.uqac.lif.azrael.Printable;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.StateDuplicable;
+import ca.uqac.lif.petitpoucet.Queryable;
 
 public interface Function extends Printable, Readable, StateDuplicable<Function>
 {
-	public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c);
+	public Queryable evaluate(Object[] inputs, Object[] outputs, Context c);
 	
-	public FunctionQueryable evaluate(Object[] inputs, Object[] outputs);
+	public Queryable evaluate(Object[] inputs, Object[] outputs);
 	
 	public Class<?> getInputType(int index);
 	

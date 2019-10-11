@@ -9,12 +9,13 @@ import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Contextualizable;
+import ca.uqac.lif.cep.StateDuplicable;
 import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.Trackable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
 import ca.uqac.lif.petitpoucet.circuit.CircuitElement;
 
-public class CircuitFunction implements CircuitElement, Contextualizable, Function, Trackable
+public class CircuitFunction implements CircuitElement, Contextualizable, Function, Outputable, Trackable
 {
 	/*@ non_null @*/ protected CircuitConnection[] m_inputConnections;
 	
@@ -26,7 +27,7 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 	
 	/*@ non_null @*/ protected Function m_function;
 	
-	protected FunctionQueryable m_queryable;
+	protected Queryable m_queryable;
 	
 	protected boolean m_computed;
 	
@@ -39,11 +40,13 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 	public CircuitFunction(/*@ non_null @*/ Function f)
 	{
 		super();
+		m_function = f;
 		m_inputConnections = new CircuitConnection[f.getInputArity()];
 		m_outputConnections = new CircuitConnection[f.getOutputArity()];
 		m_outputValues = new Object[f.getOutputArity()];
 		m_computed = false;
 		m_context = new Context();
+		m_queryable = null;
 	}
 	
 	@Override
@@ -129,7 +132,7 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 			for (int i = 0; i < m_inputConnections.length; i++)
 			{
 				CircuitConnection cc = m_inputConnections[i];
-				CircuitFunction f = (CircuitFunction) cc.getObject();
+				Outputable f = (Outputable) cc.getObject();
 				inputs[i] = f.getOutput(cc.getIndex());
 			}
 			evaluate(inputs, m_outputValues, m_context); 
@@ -178,12 +181,16 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 		return copyInto(cf, with_state);
 	}
 	
+	@SuppressWarnings("unchecked")
 	protected CircuitFunction copyInto(/*@ non_null @*/ CircuitFunction cf, boolean with_state)
 	{
 		if (with_state)
 		{
 			cf.m_context.putAll(m_context);
-			cf.m_queryable = m_queryable.duplicate(with_state);
+			if (m_queryable != null && m_queryable instanceof StateDuplicable<?>)
+			{
+				cf.m_queryable = ((StateDuplicable<Queryable>) m_queryable).duplicate(with_state);
+			}
 			for (int i = 0; i < m_outputValues.length; i++)
 			{
 				cf.m_outputValues[i] = m_outputValues[i];
@@ -250,15 +257,15 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 	}
 	
 	@Override
-	public final FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c)
+	public final Queryable evaluate(Object[] inputs, Object[] outputs, Context c)
 	{
-		FunctionQueryable q = m_function.evaluate(inputs, outputs, c);
+		m_queryable = m_function.evaluate(inputs, outputs, c);
 		m_computed = true;
-		return q;
+		return m_queryable;
 	}
 	
 	@Override
-	public final FunctionQueryable evaluate(Object[] inputs, Object[] outputs) 
+	public final Queryable evaluate(Object[] inputs, Object[] outputs) 
 	{
 		return evaluate(inputs, outputs, m_context);
 	}
