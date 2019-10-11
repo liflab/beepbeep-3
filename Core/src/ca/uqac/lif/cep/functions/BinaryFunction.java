@@ -3,9 +3,6 @@ package ca.uqac.lif.cep.functions;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.uqac.lif.azrael.ObjectPrinter;
-import ca.uqac.lif.azrael.ObjectReader;
-import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
@@ -14,6 +11,7 @@ import ca.uqac.lif.petitpoucet.TraceabilityNode;
 import ca.uqac.lif.petitpoucet.Tracer;
 import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
 
 public abstract class BinaryFunction<T,U,V> implements Function
 {
@@ -137,6 +135,42 @@ public abstract class BinaryFunction<T,U,V> implements Function
 		}
 		
 		@Override
+		protected List<TraceabilityNode> queryConsequence(int in_index, 
+				Designator d, TraceabilityNode root, Tracer factory)
+		{
+			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>();
+			switch (m_inputs)
+			{
+			case LEFT:
+			{
+				Designator cd = new ComposedDesignator(d, new NthOutput(0));
+				if (in_index != 0)
+				{
+					cd = Designator.nothing;
+				}
+				TraceabilityNode node = factory.getObjectNode(cd, this);
+				root.addChild(node, Quality.EXACT);
+				leaves.add(node);
+				return leaves;
+			}
+			case RIGHT:
+			{
+				Designator cd = new ComposedDesignator(d, new NthOutput(0));
+				if (in_index != 1)
+				{
+					cd = Designator.nothing;
+				}
+				TraceabilityNode node = factory.getObjectNode(cd, this);
+				root.addChild(node, Quality.EXACT);
+				leaves.add(node);
+				return leaves;
+			}
+			default:
+				return allOutputsLink(in_index, d, root, factory);
+			}
+		}
+		
+		@Override
 		protected Integer printState()
 		{
 			switch (m_inputs)
@@ -173,6 +207,12 @@ public abstract class BinaryFunction<T,U,V> implements Function
 				return new BinaryFunctionQueryable(reference, Inputs.ANY);
 			}
 			return new BinaryFunctionQueryable(reference, Inputs.BOTH);
+		}
+		
+		@Override
+		public BinaryFunctionQueryable duplicate(boolean with_state)
+		{
+			return new BinaryFunctionQueryable(m_reference, m_inputs);
 		}
 	}
 	
