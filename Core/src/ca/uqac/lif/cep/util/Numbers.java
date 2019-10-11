@@ -15,6 +15,8 @@ public class Numbers
 {
 	public static final transient Addition addition = new Addition();
 	
+	public static final transient Subtraction subtraction = new Subtraction();
+	
 	public static final transient Multiplication multiplication = new Multiplication();
 	
 	public static final transient Division division = new Division();
@@ -40,6 +42,45 @@ public class Numbers
 
 		@Override
 		public Addition duplicate(boolean with_state) 
+		{
+			return this;
+		}
+
+		@Override
+		public Number getInitialValue() 
+		{
+			return 0;
+		}
+		
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException 
+		{
+			return null;
+		}
+
+		@Override
+		public Object read(ObjectReader<?> reader, Object o) throws ReadException
+		{
+			return this;
+		}
+	}
+	
+	protected static class Subtraction extends BinaryFunction<Number,Number,Number> implements CumulableFunction<Number>
+	{
+		protected Subtraction()
+		{
+			super(Number.class, Number.class, Number.class);
+		}
+		
+		@Override
+		public BinaryFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
+		{
+			outputs[0] = ((Number) inputs[0]).floatValue() - ((Number) inputs[1]).floatValue();
+			return new BinaryFunctionQueryable(toString(), Inputs.BOTH);
+		}
+
+		@Override
+		public Subtraction duplicate(boolean with_state) 
 		{
 			return this;
 		}
@@ -130,7 +171,7 @@ public class Numbers
 		public BinaryFunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
 		{
 			outputs[0] = ((Number) inputs[0]).floatValue() / ((Number) inputs[1]).floatValue();
-			return new BinaryFunctionQueryable(toString(), Inputs.BOTH);
+			return new BinaryFunctionQueryable(toString(), getDependency(((Number) inputs[0]).floatValue(), ((Number) inputs[1]).floatValue()));
 		}
 
 		@Override
@@ -155,6 +196,25 @@ public class Numbers
 		public Object read(ObjectReader<?> reader, Object o) throws ReadException
 		{
 			return this;
+		}
+		
+		protected static Inputs getDependency(float x, float y)
+		{
+			if (x == 0)
+			{
+				if (y == 0)
+				{
+					// Undefined 0/0
+					return Inputs.BOTH;
+				}
+				return Inputs.LEFT;
+			}
+			if (y == 0)
+			{
+				// Division by 0
+				return Inputs.RIGHT;
+			}
+			return Inputs.BOTH;
 		}
 	}
 	

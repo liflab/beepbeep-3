@@ -214,6 +214,11 @@ public abstract class BinaryFunction<T,U,V> implements Function
 		{
 			return new BinaryFunctionQueryable(m_reference, m_inputs);
 		}
+
+		/*@ pure non_null @*/ public Inputs getInputDependency()
+		{
+			return m_inputs;
+		}
 	}
 	
 	@Override

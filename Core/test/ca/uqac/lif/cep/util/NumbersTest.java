@@ -6,7 +6,12 @@ import java.util.List;
 
 import org.junit.Test;
 
+import ca.uqac.lif.azrael.PrintException;
+import ca.uqac.lif.azrael.ReadException;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
+import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
 import ca.uqac.lif.cep.functions.BinaryFunction.BinaryFunctionQueryable;
+import ca.uqac.lif.cep.functions.BinaryFunction.BinaryFunctionQueryable.Inputs;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
@@ -21,19 +26,101 @@ import ca.uqac.lif.petitpoucet.graph.OrNode;
 public class NumbersTest 
 {
 	@Test
-	public void testAdditionQueryableProvenance1()
+	public void testAdditionPrint() throws PrintException
+	{
+		IdentityObjectPrinter iop = new IdentityObjectPrinter();
+		assertNull(iop.print(Numbers.addition));
+	}
+	
+	@Test
+	public void testAdditionRead() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Object o = Numbers.addition.read(ior, null);
+		assertEquals(Numbers.addition, o);
+	}
+	
+	@Test
+	public void testAdditionDuplicate()
+	{
+		assertEquals(Numbers.addition, Numbers.addition.duplicate());
+	}
+	
+	@Test
+	public void testAdditionValues()
 	{
 		Object[] outputs = new Object[1];
-		BinaryFunctionQueryable bfq = Numbers.addition.evaluate(new Object[] {3, 2}, outputs);
-		ConcreteTracer factory = new ConcreteTracer();
-		List<TraceabilityNode> leaves = bfq.query(ProvenanceQuery.instance, new NthOutput(0), factory.getAndNode(), factory);
-		assertEquals(2, leaves.size());
-		ConcreteObjectNode left = (ConcreteObjectNode) leaves.get(0);
-		Designator d_left = left.getDesignatedObject().getDesignator();
-		assertEquals(0, ((NthInput) d_left.peek()).getIndex());
-		ConcreteObjectNode right = (ConcreteObjectNode) leaves.get(1);
-		Designator d_right = right.getDesignatedObject().getDesignator();
-		assertEquals(1, ((NthInput) d_right.peek()).getIndex());
+		Numbers.addition.evaluate(new Object[] {3, 2}, outputs);
+		assertEquals(5f, outputs[0]);
+		assertEquals(0, Numbers.addition.getInitialValue());
+	}
+	
+	@Test
+	public void testSubtractionValues()
+	{
+		Object[] outputs = new Object[1];
+		Numbers.subtraction.evaluate(new Object[] {3, 2}, outputs);
+		assertEquals(1f, outputs[0]);
+		assertEquals(0, Numbers.subtraction.getInitialValue());
+	}
+	
+	@Test
+	public void testSubtractionPrint() throws PrintException
+	{
+		IdentityObjectPrinter iop = new IdentityObjectPrinter();
+		assertNull(iop.print(Numbers.subtraction));
+	}
+	
+	@Test
+	public void testSubtractionRead() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Object o = Numbers.subtraction.read(ior, null);
+		assertEquals(Numbers.subtraction, o);
+	}
+	
+	@Test
+	public void testSubtractionDuplicate()
+	{
+		assertEquals(Numbers.subtraction, Numbers.subtraction.duplicate());
+	}
+	
+	@Test
+	public void testMultiplicationValues()
+	{
+		Object[] outputs = new Object[1];
+		Numbers.multiplication.evaluate(new Object[] {3, 2}, outputs);
+		assertEquals(6f, outputs[0]);
+		assertEquals(1, Numbers.multiplication.getInitialValue());
+	}
+	
+	@Test
+	public void testMultiplicationQueryableProvenance1()
+	{
+		Object[] outputs = new Object[1];
+		BinaryFunctionQueryable bfq = Numbers.multiplication.evaluate(new Object[] {3, 2}, outputs);
+		assertEquals(Inputs.BOTH, bfq.getInputDependency());
+	}
+	
+	@Test
+	public void testMultiplicationPrint() throws PrintException
+	{
+		IdentityObjectPrinter iop = new IdentityObjectPrinter();
+		assertNull(iop.print(Numbers.multiplication));
+	}
+	
+	@Test
+	public void testMultiplicationRead() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Object o = Numbers.multiplication.read(ior, null);
+		assertEquals(Numbers.multiplication, o);
+	}
+	
+	@Test
+	public void testMultiplicationDuplicate()
+	{
+		assertEquals(Numbers.multiplication, Numbers.multiplication.duplicate());
 	}
 	
 	@Test
@@ -41,15 +128,7 @@ public class NumbersTest
 	{
 		Object[] outputs = new Object[1];
 		BinaryFunctionQueryable bfq = Numbers.multiplication.evaluate(new Object[] {3, 2}, outputs);
-		ConcreteTracer factory = new ConcreteTracer();
-		List<TraceabilityNode> leaves = bfq.query(CausalityQuery.instance, new NthOutput(0), factory.getAndNode(), factory);
-		assertEquals(2, leaves.size());
-		ConcreteObjectNode left = (ConcreteObjectNode) leaves.get(0);
-		Designator d_left = left.getDesignatedObject().getDesignator();
-		assertEquals(0, ((NthInput) d_left.peek()).getIndex());
-		ConcreteObjectNode right = (ConcreteObjectNode) leaves.get(1);
-		Designator d_right = right.getDesignatedObject().getDesignator();
-		assertEquals(1, ((NthInput) d_right.peek()).getIndex());
+		assertEquals(Inputs.BOTH, bfq.getInputDependency());
 	}
 	
 	@Test
@@ -57,12 +136,7 @@ public class NumbersTest
 	{
 		Object[] outputs = new Object[1];
 		BinaryFunctionQueryable bfq = Numbers.multiplication.evaluate(new Object[] {0, 2}, outputs);
-		ConcreteTracer factory = new ConcreteTracer();
-		List<TraceabilityNode> leaves = bfq.query(CausalityQuery.instance, new NthOutput(0), factory.getAndNode(), factory);
-		assertEquals(1, leaves.size());
-		ConcreteObjectNode left = (ConcreteObjectNode) leaves.get(0);
-		Designator d_left = left.getDesignatedObject().getDesignator();
-		assertEquals(0, ((NthInput) d_left.peek()).getIndex());
+		assertEquals(Inputs.LEFT, bfq.getInputDependency());
 	}
 	
 	@Test
@@ -70,12 +144,7 @@ public class NumbersTest
 	{
 		Object[] outputs = new Object[1];
 		BinaryFunctionQueryable bfq = Numbers.multiplication.evaluate(new Object[] {2, 0}, outputs);
-		ConcreteTracer factory = new ConcreteTracer();
-		List<TraceabilityNode> leaves = bfq.query(CausalityQuery.instance, new NthOutput(0), factory.getAndNode(), factory);
-		assertEquals(1, leaves.size());
-		ConcreteObjectNode left = (ConcreteObjectNode) leaves.get(0);
-		Designator d_left = left.getDesignatedObject().getDesignator();
-		assertEquals(1, ((NthInput) d_left.peek()).getIndex());
+		assertEquals(Inputs.RIGHT, bfq.getInputDependency());
 	}
 	
 	@Test
@@ -83,12 +152,69 @@ public class NumbersTest
 	{
 		Object[] outputs = new Object[1];
 		BinaryFunctionQueryable bfq = Numbers.multiplication.evaluate(new Object[] {0, 0}, outputs);
-		ConcreteTracer factory = new ConcreteTracer();
-		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = bfq.query(CausalityQuery.instance, new NthOutput(0), root, factory);
-		assertEquals(1, root.getChildren().size());
-		assertTrue(root.getChildren().get(0).getNode() instanceof OrNode);
-		assertEquals(2, leaves.size());
+		assertEquals(Inputs.ANY, bfq.getInputDependency());
+	}
+	
+	@Test
+	public void testDivisionValues()
+	{
+		Object[] outputs = new Object[1];
+		Numbers.division.evaluate(new Object[] {3, 2}, outputs);
+		assertEquals(1.5f, outputs[0]);
+		assertEquals(1, Numbers.division.getInitialValue());
+	}
+	
+	@Test
+	public void testDivisionPrint() throws PrintException
+	{
+		IdentityObjectPrinter iop = new IdentityObjectPrinter();
+		assertNull(iop.print(Numbers.division));
+	}
+	
+	@Test
+	public void testDivisionRead() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Object o = Numbers.division.read(ior, null);
+		assertEquals(Numbers.division, o);
+	}
+	
+	@Test
+	public void testDivisionDuplicate()
+	{
+		assertEquals(Numbers.division, Numbers.division.duplicate());
+	}
+	
+	@Test
+	public void testDivisionQueryableCausality1()
+	{
+		Object[] outputs = new Object[1];
+		BinaryFunctionQueryable bfq = Numbers.division.evaluate(new Object[] {3, 2}, outputs);
+		assertEquals(Inputs.BOTH, bfq.getInputDependency());
+	}
+	
+	@Test
+	public void testDivisionQueryableCausality2()
+	{
+		Object[] outputs = new Object[1];
+		BinaryFunctionQueryable bfq = Numbers.division.evaluate(new Object[] {0, 2}, outputs);
+		assertEquals(Inputs.LEFT, bfq.getInputDependency());
+	}
+	
+	@Test
+	public void testDivisionQueryableCausality3()
+	{
+		Object[] outputs = new Object[1];
+		BinaryFunctionQueryable bfq = Numbers.division.evaluate(new Object[] {2, 0}, outputs);
+		assertEquals(Inputs.RIGHT, bfq.getInputDependency());
+	}
+	
+	@Test
+	public void testDivisionQueryableCausality4()
+	{
+		Object[] outputs = new Object[1];
+		BinaryFunctionQueryable bfq = Numbers.division.evaluate(new Object[] {0, 0}, outputs);
+		assertEquals(Inputs.BOTH, bfq.getInputDependency());
 	}
 	
 	@Test

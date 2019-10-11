@@ -45,7 +45,7 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 	{
 		if (q instanceof TaintQuery)
 		{
-			allInputsLink(in_index, tail, root, factory);
+			return allOutputsLink(in_index, tail, root, factory);
 		}
 		if (q instanceof ConsequenceQuery)
 		{
@@ -158,6 +158,8 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 	{
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<Integer> arities = new ArrayList<Integer>(2);
+		arities.add(getInputArity());
+		arities.add(getOutputArity());
 		map.put(s_arityKey, arities);
 		map.put(s_referenceKey, m_reference);
 		Object contents = printState();
