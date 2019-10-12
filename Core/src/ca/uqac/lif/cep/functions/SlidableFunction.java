@@ -66,7 +66,7 @@ public interface SlidableFunction extends Function
 			Designator t_tail = tail.tail();
 			if (!(t_head instanceof PastOutput))
 			{
-				return unknownLink(root, factory);
+				return factory.unknownLink(root);
 			}
 			int num_past_output = ((PastOutput) t_head).getIndex();
 			if (q instanceof ProvenanceQuery)
@@ -77,7 +77,7 @@ public interface SlidableFunction extends Function
 			{
 				return queryCausality(num_past_output, t_tail, root, factory);
 			}
-			return unknownLink(root, factory);
+			return factory.unknownLink(root);
 		}
 		
 		@Override
@@ -88,7 +88,7 @@ public interface SlidableFunction extends Function
 			Designator t_tail = tail.tail();
 			if (!(t_head instanceof PastInput))
 			{
-				return unknownLink(root, factory);
+				return factory.unknownLink(root);
 			}
 			int num_past_input = ((PastInput) t_head).getIndex();
 			if (q instanceof TaintQuery)
@@ -99,7 +99,7 @@ public interface SlidableFunction extends Function
 			{
 				return queryConsequence(num_past_input, t_tail, root, factory);
 			}
-			return unknownLink(root, factory);
+			return factory.unknownLink(root);
 		}
 	
 		protected List<TraceabilityNode> pastInputsLink(int out_index, 

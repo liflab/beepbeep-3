@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.functions.BinaryFunctionTest.TestableBinaryFunction;
 import ca.uqac.lif.cep.functions.CircuitFunction.CircuitFunctionQueryable;
+import ca.uqac.lif.cep.functions.Function.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionConnector.FunctionConnection;
 import ca.uqac.lif.cep.functions.GroupFunction.CircuitFunctionPlaceholder;
 import ca.uqac.lif.cep.functions.GroupFunction.GroupFunctionQueryable;
@@ -43,6 +44,40 @@ public class GroupFunctionTest
 		assertEquals(Object.class, gf.getOutputType(0));
 	}
 	
+	@Test(expected = FunctionException.class)
+	public void testTypesOutputOutOfBounds()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		gf.getOutputType(1);
+	}
+	
+	@Test(expected = FunctionException.class)
+	public void testTypesInputOutOfBounds()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		gf.getInputType(3);
+	}
+	
+	@Test
+	public void testContext()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		gf.setContext("foo", "bar");
+		assertEquals("bar", gf.getContext("foo"));
+	}
+	
+	@Test
+	public void testTypesUndefined()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		TestableBinaryFunction tbf = new TestableBinaryFunction();
+		CircuitFunction cf = new CircuitFunction(tbf);
+		gf.add(cf);
+		assertNull(gf.getInputType(0));
+		assertNull(gf.getInputType(1));
+		assertNull(gf.getOutputType(0));
+	}
+	
 	@Test
 	public void testReset()
 	{
@@ -63,9 +98,38 @@ public class GroupFunctionTest
 	}
 	
 	@Test
-	public void testPrint()
+	public void testConnected()
 	{
-		
+		GroupFunction gf = new GroupFunction(2, 1);
+		CircuitFunction add = new CircuitFunction(Numbers.addition);
+		CircuitFunction abs = new CircuitFunction(Numbers.abs);
+		gf.add(add, abs);
+		gf.connect(add, 0, abs, 0);
+		gf.associateInput(0, add, 0);
+		gf.associateInput(1, add, 1);
+		gf.associateOutput(0, abs, 0);
+		Object[] outputs = new Object[1];
+		gf.evaluate(new Object[] {-10, 2}, outputs);
+		assertEquals(8f, outputs[0]);
+	}
+	
+	@Test
+	public void testConnectedDuplicate()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		CircuitFunction add = new CircuitFunction(Numbers.addition);
+		CircuitFunction abs = new CircuitFunction(Numbers.abs);
+		gf.add(add, abs);
+		gf.connect(add, 0, abs, 0);
+		gf.associateInput(0, add, 0);
+		gf.associateInput(1, add, 1);
+		gf.associateOutput(0, abs, 0);
+		Object[] outputs = new Object[1];
+		gf.evaluate(new Object[] {-10, 2}, outputs);
+		assertEquals(8f, outputs[0]);
+		GroupFunction gf2 = gf.duplicate();
+		gf2.evaluate(new Object[] {-20, 2}, outputs);
+		assertEquals(18f, outputs[0]);
 	}
 	
 	@Test
@@ -109,11 +173,13 @@ public class GroupFunctionTest
 		gf.associateInput(0, cf_add, 1);
 		gf.associateInput(1, cf_add, 0);
 		gf.associateOutput(0, cf_add, 0);
+		gf.setContext("foo", "bar");
 		GroupFunction gf_dup = gf.duplicate(true);
 		assertNotNull(gf_dup);
 		assertFalse(gf == gf_dup);
 		assertFalse(gf.m_innerFunctions == gf_dup.m_innerFunctions);
 		assertFalse(gf.m_context == gf_dup.m_context);
+		assertEquals("bar", gf_dup.getContext("foo"));
 		assertEquals(1, gf_dup.m_innerFunctions.size());
 		CircuitFunction cf_dup = null;
 		for (CircuitFunction cf : gf_dup.m_innerFunctions)

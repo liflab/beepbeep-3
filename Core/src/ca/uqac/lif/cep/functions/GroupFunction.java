@@ -22,6 +22,8 @@ import ca.uqac.lif.petitpoucet.ComposedDesignator;
 import ca.uqac.lif.petitpoucet.DesignatedObject;
 import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery.DownstreamQuery;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery.UpstreamQuery;
 import ca.uqac.lif.petitpoucet.ObjectNode;
 import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
@@ -33,6 +35,7 @@ import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitElement;
 import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
+import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable.QueryableCircuitConnection;
 
 public class GroupFunction implements Contextualizable, Function, Trackable 
 {
@@ -270,6 +273,10 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 	public GroupFunction duplicate(boolean with_state) 
 	{
 		GroupFunction gf = new GroupFunction(m_inputPlaceholders.length, m_outputPlaceholders.length);
+		if (with_state)
+		{
+			gf.m_context.putAll(m_context);
+		}
 		Map<CircuitFunction,CircuitFunction> mapping = new HashMap<CircuitFunction,CircuitFunction>(m_innerFunctions.size());
 		for (CircuitFunction cf : m_innerFunctions)
 		{
@@ -304,6 +311,7 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 			CircuitFunction cf = mapping.get(p.m_upstreamConnection.getObject());
 			gf.associateOutput(i, cf, p.m_index);
 		}
+		gf.m_queryable = m_queryable.duplicate(with_state);
 		return gf;
 	}
 
@@ -399,7 +407,7 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 		return m_outputPlaceholders.length;
 	}
 
-	public static class GroupFunctionQueryable extends CircuitQueryable implements Printable, Readable, StateDuplicable<GroupFunctionQueryable>
+	public static class GroupFunctionQueryable implements Queryable, Printable, Readable, StateDuplicable<GroupFunctionQueryable>
 	{
 		/**
 		 * The set of functions contained in this composed function
@@ -409,10 +417,13 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 		/*@ non_null @*/ protected QueryablePlaceholder[] m_inputConnections;
 
 		/*@ non_null @*/ protected QueryablePlaceholder[] m_outputConnections;
+		
+		protected String m_reference;
 
 		public GroupFunctionQueryable(String reference, int in_arity, int out_arity)
 		{
-			super(reference, in_arity, out_arity);
+			super();
+			m_reference = reference;
 			m_innerQueryables = new HashSet<CircuitFunctionQueryable>();
 			m_inputConnections = new QueryablePlaceholder[in_arity];
 			for (int i = 0; i < in_arity; i++)
@@ -444,8 +455,8 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 		{
 			m_innerQueryables.add(q1);
 			m_innerQueryables.add(q2);
-			q1.setToOutput(i, new GroupConnection(q2, j));
-			q2.setToInput(j, new GroupConnection(q1, i));
+			q1.setToOutput(i, new QueryableCircuitConnection(j, q2));
+			q2.setToInput(j, new QueryableCircuitConnection(i, q1));
 		}
 		
 		public void associateInput(int i, CircuitQueryable cq, int j)
@@ -485,17 +496,17 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 				for (int i = 0; i < cf_src.getInputArity(); i++)
 				{
 					CircuitConnection cc = cf_src.getInputConnection(i);
-					CircuitElement ce = cc.getObject();
-					if (ce instanceof CircuitFunctionPlaceholder)
+					if (cc instanceof QueryablePlaceholder)
 					{
 						gfq.associateInput(cc.getIndex(), cf_dst, i);
 					}
 					else
 					{
+						CircuitElement ce = cc.getObject();
 						CircuitQueryable cf_up = (CircuitQueryable) ce;
 						CircuitQueryable cf_dst_up = mapping.get(cf_up);
-						cf_dst.setToInput(i, new GroupConnection(cf_dst_up, cc.getIndex()));
-						cf_dst_up.setToOutput(cc.getIndex(), new GroupConnection(cf_dst, i));
+						cf_dst.setToInput(i, new QueryableCircuitConnection(cc.getIndex(), cf_dst_up));
+						cf_dst_up.setToOutput(cc.getIndex(), new QueryableCircuitConnection(i, cf_dst));
 					}
 				}
 			}
@@ -519,8 +530,22 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 			// TODO Auto-generated method stub
 			return null;
 		}
-
+		
 		@Override
+		public List<TraceabilityNode> query(TraceabilityQuery q, 
+				Designator d, TraceabilityNode root, Tracer factory)
+		{
+			if (q instanceof UpstreamQuery && d.peek() instanceof NthOutput)
+			{
+				return queryOutput(q, ((NthOutput) d.peek()).getIndex(), d.tail(), root, factory);
+			}
+			if (q instanceof DownstreamQuery && d.peek() instanceof NthInput)
+			{
+				return queryInput(q, ((NthInput) d.peek()).getIndex(), d.tail(), root, factory);
+			}
+			return factory.unknownLink(root);
+		}
+
 		protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
 				Designator tail, TraceabilityNode root, Tracer factory)
 		{
@@ -562,7 +587,6 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 			return new_leaves;
 		}
 		
-		@Override
 		protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
 		{
 			// Send traceability sub-query to inner queryables
@@ -601,70 +625,6 @@ public class GroupFunction implements Contextualizable, Function, Trackable
 				}
 			}
 			return new_leaves;
-		}
-
-		@Override
-		public void setToInput(int index, CircuitConnection connection)
-		{
-			try
-			{
-				m_inputConnections[index].m_upstreamConnection = connection;
-			}
-			catch (ArrayIndexOutOfBoundsException e)
-			{
-				throw new FunctionException(e);
-			}
-		}
-
-		@Override
-		public void setToOutput(int index, CircuitConnection connection) 
-		{
-			try
-			{
-				m_outputConnections[index].m_downstreamConnection = connection;
-			}
-			catch (ArrayIndexOutOfBoundsException e)
-			{
-				throw new FunctionException(e);
-			}
-		}
-
-		@Override
-		public int getInputArity() 
-		{
-			return m_inputConnections.length;
-		}
-
-		@Override
-		public int getOutputArity() 
-		{
-			return m_inputConnections.length;
-		}
-
-		@Override
-		public QueryableCircuitConnection getInputConnection(int index) 
-		{
-			try
-			{
-				return (QueryableCircuitConnection) m_inputConnections[index].m_upstreamConnection;
-			}
-			catch (ArrayIndexOutOfBoundsException e)
-			{
-				throw new FunctionException(e);
-			}
-		}
-
-		@Override
-		public QueryableCircuitConnection getOutputConnection(int index)
-		{
-			try
-			{
-				return (QueryableCircuitConnection) m_outputConnections[index].m_downstreamConnection;
-			}
-			catch (ArrayIndexOutOfBoundsException e)
-			{
-				throw new FunctionException(e);
-			}
 		}
 		
 		protected static class QueryablePlaceholder extends QueryableCircuitConnection

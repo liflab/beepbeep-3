@@ -18,28 +18,68 @@ import ca.uqac.lif.petitpoucet.TraceabilityNode;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery.CausalityQuery;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery.ConsequenceQuery;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery.DownstreamQuery;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery.ProvenanceQuery;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery.TaintQuery;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery.UpstreamQuery;
 import ca.uqac.lif.petitpoucet.Tracer;
 import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
+import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
-import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
 
-public class FunctionQueryable extends CircuitQueryable implements StateDuplicable<FunctionQueryable>, Printable, Readable
+public class FunctionQueryable implements Queryable, StateDuplicable<FunctionQueryable>, Printable, Readable
 {
 	public static final transient String s_arityKey = "arity";
 
 	public static final transient String s_contentsKey = "contents";
 
 	public static final transient String s_referenceKey = "reference";
+	
+	protected int m_inputArity;
+	
+	protected int m_outputArity;
+	
+	protected String m_reference;
 
 	public FunctionQueryable(/*@ non_null @*/ String reference, int in_arity, int out_arity)
 	{
-		super(reference, in_arity, out_arity);
+		super();
+		m_inputArity = in_arity;
+		m_outputArity = out_arity;
+		m_reference = reference;
+	}
+	
+	public String getReference()
+	{
+		return m_reference;
+	}
+	
+	public int getInputArity()
+	{
+		return m_inputArity;
+	}
+	
+	public int getOutputArity()
+	{
+		return m_outputArity;
+	}
+	
+	@Override
+	public List<TraceabilityNode> query(TraceabilityQuery q, 
+			Designator d, TraceabilityNode root, Tracer factory)
+	{
+		if (q instanceof UpstreamQuery && d.peek() instanceof NthOutput)
+		{
+			return queryOutput(q, ((NthOutput) d.peek()).getIndex(), d.tail(), root, factory);
+		}
+		if (q instanceof DownstreamQuery && d.peek() instanceof NthInput)
+		{
+			return queryInput(q, ((NthInput) d.peek()).getIndex(), d.tail(), root, factory);
+		}
+		return factory.unknownLink(root);
 	}
 
-	@Override
 	protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, 
 			Designator tail, TraceabilityNode root, Tracer factory)
 	{
@@ -51,10 +91,9 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 		{
 			return queryConsequence(in_index, tail, root, factory);
 		}
-		return unknownLink(root, factory);
+		return factory.unknownLink(root);
 	}
 
-	@Override
 	protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
 			Designator tail, TraceabilityNode root, Tracer factory)
 	{
@@ -66,7 +105,7 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 		{
 			return queryCausality(out_index, tail, root, factory);
 		}
-		return unknownLink(root, factory);
+		return factory.unknownLink(root);
 	}
 
 	protected List<TraceabilityNode> queryCausality(int out_index, 
@@ -87,7 +126,7 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 		List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>();
 		TraceabilityNode and = factory.getAndNode();
 		root.addChild(and, Quality.EXACT);
-		for (int i = 0; i < m_inputConnections.length; i++)
+		for (int i = 0; i < m_inputArity; i++)
 		{
 			ComposedDesignator cd = new ComposedDesignator(t_tail, new NthInput(i));
 			TraceabilityNode node = factory.getObjectNode(cd, this);
@@ -103,7 +142,7 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 		List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>();
 		TraceabilityNode and = factory.getAndNode();
 		root.addChild(and, Quality.EXACT);
-		for (int i = 0; i < m_outputConnections.length; i++)
+		for (int i = 0; i < m_outputArity; i++)
 		{
 			ComposedDesignator cd = new ComposedDesignator(t_tail, new NthOutput(i));
 			TraceabilityNode node = factory.getObjectNode(cd, this);
@@ -158,8 +197,8 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 	{
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<Integer> arities = new ArrayList<Integer>(2);
-		arities.add(getInputArity());
-		arities.add(getOutputArity());
+		arities.add(m_inputArity);
+		arities.add(m_outputArity);
 		map.put(s_arityKey, arities);
 		map.put(s_referenceKey, m_reference);
 		Object contents = printState();
@@ -173,7 +212,7 @@ public class FunctionQueryable extends CircuitQueryable implements StateDuplicab
 	@Override
 	public FunctionQueryable duplicate(boolean with_state) 
 	{
-		return new FunctionQueryable(m_reference, m_inputConnections.length, m_outputConnections.length);
+		return new FunctionQueryable(m_reference, m_inputArity, m_outputArity);
 	}
 
 	protected Object printState() throws PrintException
