@@ -18,8 +18,10 @@ import ca.uqac.lif.cep.Contextualizable;
 import ca.uqac.lif.cep.StateDuplicable;
 import ca.uqac.lif.cep.functions.FunctionConnector.FunctionConnection;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
+import ca.uqac.lif.petitpoucet.DesignatedObject;
 import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
+import ca.uqac.lif.petitpoucet.ObjectNode;
 import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery;
@@ -78,7 +80,8 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 	{
 		for (CircuitFunction f : functions)
 		{
-			m_innerFunctions.add((CircuitFunction) f);
+			m_innerFunctions.add(f);
+			m_queryable.add((CircuitQueryable) f.getQueryable());
 		}
 	}
 
@@ -469,11 +472,10 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 
 		/*@ non_null @*/ protected QueryablePlaceholder[] m_outputConnections;
 
-		protected String m_reference;
-
 		public GroupFunctionQueryable(String reference, int in_arity, int out_arity)
 		{
 			super(reference, in_arity, out_arity);
+			m_innerQueryables = new HashSet<CircuitQueryable>();
 			m_inputConnections = new QueryablePlaceholder[in_arity];
 			for (int i = 0; i < in_arity; i++)
 			{
@@ -485,6 +487,11 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 				m_outputConnections[i] = new QueryablePlaceholder(i);
 			}
 			m_reference = reference;
+		}
+		
+		public void add(CircuitQueryable q)
+		{
+			m_innerQueryables.add(q);
 		}
 
 		public void connect(CircuitQueryable q1, int i, CircuitQueryable q2, int j)
@@ -498,16 +505,13 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 		public void associateInput(int i, CircuitQueryable cq, int j)
 		{
 			m_inputConnections[i].m_downstreamConnection = new QueryableCircuitConnection(j, cq);
+			cq.setToInput(j, m_inputConnections[i]);
 		}
 		
 		public void associateOutput(int i, CircuitQueryable cq, int j)
 		{
 			m_outputConnections[i].m_upstreamConnection = new QueryableCircuitConnection(j, cq);
-		}
-
-		public String getReference()
-		{
-			return m_reference;
+			cq.setToOutput(j, m_outputConnections[i]);
 		}
 
 		@Override
@@ -571,9 +575,48 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 		}
 
 		@Override
-		public List<TraceabilityNode> query(TraceabilityQuery q, Designator d, TraceabilityNode root, Tracer factory) {
-			// TODO Auto-generated method stub
-			return null;
+		protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
+				Designator tail, TraceabilityNode root, Tracer factory)
+		{
+			Tracer sub_tracer = factory.getSubTracer(toString());
+			CircuitConnection cc = m_outputConnections[out_index].m_upstreamConnection;
+			ComposedDesignator cd = new ComposedDesignator(tail, new NthOutput(cc.getIndex()));
+			Queryable fq = (Queryable) cc.getObject();
+			List<TraceabilityNode> leaves = fq.query(q, cd, root, sub_tracer);
+			List<TraceabilityNode> new_leaves = new ArrayList<TraceabilityNode>();
+			for (TraceabilityNode tn : leaves)
+			{
+				if (tn instanceof ObjectNode)
+				{
+					ObjectNode o_tn = (ObjectNode) tn;
+					DesignatedObject dob = o_tn.getDesignatedObject();
+					Designator d_head = dob.getDesignator().peek();
+					if (d_head instanceof NthInput)
+					{
+						int input_nb = ((NthInput) d_head).getIndex();
+						CircuitQueryable cq = (CircuitQueryable) dob.getObject();
+						CircuitConnection c_con = cq.getInputConnection(input_nb);
+						ComposedDesignator leaf_cd = new ComposedDesignator(dob.getDesignator().tail(), new NthInput(c_con.getIndex()));
+						TraceabilityNode new_leaf = factory.getObjectNode(leaf_cd, this);
+						tn.addChild(new_leaf, Quality.EXACT);
+						new_leaves.add(new_leaf);
+					}
+					else
+					{
+						// Not an "n-th input": dunno
+						TraceabilityNode unknown = factory.getUnknownNode();
+						tn.addChild(unknown, Quality.NONE);
+						new_leaves.add(unknown);
+					}
+				}
+			}
+			return new_leaves;
+		}
+		
+		@Override
+		protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
+		{
+			return unknownLink(root, factory);
 		}
 
 		@Override
@@ -654,7 +697,6 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 				m_index = index;
 			}
 
-			//@Override
 			public void setToInput(int index, CircuitConnection connection) 
 			{
 				m_upstreamConnection = connection;
@@ -677,6 +719,5 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 			}
 
 		}
-
 	}
 }

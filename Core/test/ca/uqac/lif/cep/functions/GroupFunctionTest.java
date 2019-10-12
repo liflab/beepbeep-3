@@ -3,14 +3,26 @@ package ca.uqac.lif.cep.functions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 
 import ca.uqac.lif.cep.functions.FunctionConnector.FunctionConnection;
 import ca.uqac.lif.cep.functions.GroupFunction.CircuitFunctionPlaceholder;
+import ca.uqac.lif.cep.functions.GroupFunction.GroupFunctionQueryable;
 import ca.uqac.lif.cep.util.Numbers;
+import ca.uqac.lif.petitpoucet.ObjectNode;
 import ca.uqac.lif.petitpoucet.Queryable;
+import ca.uqac.lif.petitpoucet.TraceabilityNode;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery;
+import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
+import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
+import ca.uqac.lif.petitpoucet.graph.ConcreteTracer;
 
 public class GroupFunctionTest 
 {
@@ -45,7 +57,7 @@ public class GroupFunctionTest
 		assertEquals(1f, outputs[0]);
 		assertNotNull(q);
 	}
-	
+
 	@Test
 	public void testDuplicateState()
 	{
@@ -87,5 +99,50 @@ public class GroupFunctionTest
 		assertFalse(cf_add == fc_dn.getObject());
 		assertEquals(Numbers.subtraction, ((CircuitFunction) fc_dn.getObject()).m_function);
 		assertEquals(0, fc_dn.getIndex());
+	}
+
+	@Test
+	public void testQueryableSubtraction()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		CircuitFunction cf_add = new CircuitFunction(Numbers.subtraction);
+		GroupFunctionQueryable gfq = gf.getQueryable();
+		assertNotNull(gfq);
+		gf.add(cf_add);
+		assertEquals(1, gfq.m_innerQueryables.size());
+		CircuitQueryable gfq_cq = null;
+		for (CircuitQueryable q : gfq.m_innerQueryables)
+		{
+			gfq_cq = q;
+			break;
+		}
+		CircuitQueryable add_q = (CircuitQueryable) cf_add.getQueryable();
+		assertEquals(gfq_cq, add_q);
+		assertNotNull(add_q);
+		gf.associateInput(0, cf_add, 1);
+		CircuitConnection cc_in_1 = add_q.getInputConnection(1);
+		assertNotNull(cc_in_1);
+		gf.associateInput(1, cf_add, 0);
+		CircuitConnection cc_in_0 = add_q.getInputConnection(0);
+		assertNotNull(cc_in_0);
+		gf.associateOutput(0, cf_add, 0);
+		CircuitConnection cc_out_0 = add_q.getOutputConnection(0);
+		assertNotNull(cc_out_0);
+		Object[] outputs = new Object[1];
+		GroupFunctionQueryable gfq2 = gf.evaluate(new Object[] {2, 3}, outputs);
+		assertEquals(1f, outputs[0]);
+		assertNotNull(gfq2);
+		assertEquals(gfq, gfq2);
+		ConcreteTracer factory = new ConcreteTracer();
+		TraceabilityNode root = factory.getAndNode();
+		List<TraceabilityNode> leaves = gfq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthOutput(0), root, factory);
+		assertEquals(2, leaves.size());
+		for (TraceabilityNode tn : leaves)
+		{
+			assertTrue(tn instanceof ObjectNode);
+			ObjectNode on = (ObjectNode) tn;
+			assertEquals(gfq, on.getDesignatedObject().getObject());
+			assertTrue(on.getDesignatedObject().getDesignator().peek() instanceof NthInput);
+		}
 	}
 }

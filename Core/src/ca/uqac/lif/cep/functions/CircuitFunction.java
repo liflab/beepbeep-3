@@ -1,6 +1,8 @@
 package ca.uqac.lif.cep.functions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ca.uqac.lif.azrael.ObjectPrinter;
@@ -10,10 +12,21 @@ import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Contextualizable;
 import ca.uqac.lif.cep.StateDuplicable;
+import ca.uqac.lif.petitpoucet.ComposedDesignator;
+import ca.uqac.lif.petitpoucet.DesignatedObject;
+import ca.uqac.lif.petitpoucet.Designator;
+import ca.uqac.lif.petitpoucet.ObjectNode;
 import ca.uqac.lif.petitpoucet.Queryable;
+import ca.uqac.lif.petitpoucet.TraceabilityNode;
+import ca.uqac.lif.petitpoucet.TraceabilityQuery;
+import ca.uqac.lif.petitpoucet.Tracer;
 import ca.uqac.lif.petitpoucet.Trackable;
+import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
 import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
+import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitElement;
+import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
 
 public class CircuitFunction implements CircuitElement, Contextualizable, Function, Outputable, Trackable
 {
@@ -27,7 +40,7 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 	
 	/*@ non_null @*/ protected Function m_function;
 	
-	protected Queryable m_queryable;
+	protected CircuitFunctionQueryable m_queryable;
 	
 	protected boolean m_computed;
 	
@@ -46,7 +59,7 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 		m_outputValues = new Object[f.getOutputArity()];
 		m_computed = false;
 		m_context = new Context();
-		m_queryable = null;
+		m_queryable = new CircuitFunctionQueryable(f.toString(), f.getInputArity(), f.getOutputArity());
 	}
 	
 	@Override
@@ -181,16 +194,12 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 		return copyInto(cf, with_state);
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected CircuitFunction copyInto(/*@ non_null @*/ CircuitFunction cf, boolean with_state)
 	{
 		if (with_state)
 		{
 			cf.m_context.putAll(m_context);
-			if (m_queryable != null && m_queryable instanceof StateDuplicable<?>)
-			{
-				cf.m_queryable = ((StateDuplicable<Queryable>) m_queryable).duplicate(with_state);
-			}
+			cf.m_queryable = m_queryable.duplicate(true);
 			for (int i = 0; i < m_outputValues.length; i++)
 			{
 				cf.m_outputValues[i] = m_outputValues[i];
@@ -240,7 +249,7 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 				throw new ReadException("Unexpected map format");
 			}
 			Function f = (Function) map.get(s_functionKey);
-			FunctionQueryable fq = (FunctionQueryable) map.get(s_queryableKey);
+			CircuitFunctionQueryable fq = (CircuitFunctionQueryable) map.get(s_queryableKey);
 			Object contents = null;
 			if (map.containsKey(s_contentsKey))
 			{
@@ -259,7 +268,7 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 	@Override
 	public final Queryable evaluate(Object[] inputs, Object[] outputs, Context c)
 	{
-		m_queryable = m_function.evaluate(inputs, outputs, c);
+		m_queryable.setQueryable(m_function.evaluate(inputs, outputs, c));
 		m_computed = true;
 		return m_queryable;
 	}
@@ -280,5 +289,89 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 	public Class<?> getOutputType(int index) 
 	{
 		return m_function.getOutputType(index);
+	}
+	
+	public static class CircuitFunctionQueryable extends CircuitQueryable implements StateDuplicable<CircuitFunctionQueryable>
+	{
+		/*@ nullable @*/ protected Queryable m_innerQueryable;
+		
+		public CircuitFunctionQueryable(String reference, int in_arity, int out_arity) 
+		{
+			super(reference, in_arity, out_arity);
+		}
+		
+		/*@ nullable @*/ public Queryable getQueryable()
+		{
+			return m_innerQueryable;
+		}
+		
+		public void setQueryable(/*@ nullable @*/ Queryable q)
+		{
+			m_innerQueryable = q;
+		}
+		
+		@Override
+		protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
+				Designator tail, TraceabilityNode root, Tracer factory)
+		{
+			if (m_innerQueryable == null)
+			{
+				return unknownLink(root, factory);
+			}
+			ComposedDesignator cd = new ComposedDesignator(tail, new NthOutput(out_index));
+			List<TraceabilityNode> leaves = m_innerQueryable.query(q, cd, root, factory);
+			List<TraceabilityNode> new_leaves = new ArrayList<TraceabilityNode>(leaves.size());
+			for (TraceabilityNode leaf : leaves)
+			{
+				if (!(leaf instanceof ObjectNode))
+				{
+					new_leaves.add(leaf);
+					continue;
+				}
+				ObjectNode on_leaf = (ObjectNode) leaf;
+				DesignatedObject leaf_dob = on_leaf.getDesignatedObject();
+				if (leaf_dob.getDesignator().peek() instanceof NthInput)
+				{
+					// Change designated object from inner function
+					// to the encasing CircuitFunction
+					TraceabilityNode new_leaf = factory.getObjectNode(leaf_dob.getDesignator(), this);
+					on_leaf.addChild(new_leaf, Quality.EXACT);
+					new_leaves.add(new_leaf);
+				}
+				else
+				{
+					// Not an "n-th input": dunno
+					TraceabilityNode unknown = factory.getUnknownNode();
+					on_leaf.addChild(unknown, Quality.NONE);
+					new_leaves.add(unknown);
+				}
+			}
+			return new_leaves;
+		}
+
+		@Override
+		protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
+		{
+			return unknownLink(root, factory);
+		}
+
+		@Override
+		public CircuitFunctionQueryable duplicate()
+		{
+			return duplicate(false);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		/*@ non_null @*/ public CircuitFunctionQueryable duplicate(boolean with_state) 
+		{
+			CircuitFunctionQueryable cf = new CircuitFunctionQueryable(m_reference, getInputArity(), getOutputArity());
+			if (with_state && cf.m_innerQueryable != null)
+			{
+				cf.m_innerQueryable = ((StateDuplicable<Queryable>) m_innerQueryable).duplicate(with_state);
+			}
+			return cf;
+		}
+		
 	}
 }
