@@ -352,7 +352,39 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 		@Override
 		protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
 		{
-			return unknownLink(root, factory);
+			if (m_innerQueryable == null)
+			{
+				return unknownLink(root, factory);
+			}
+			ComposedDesignator cd = new ComposedDesignator(tail, new NthInput(in_index));
+			List<TraceabilityNode> leaves = m_innerQueryable.query(q, cd, root, factory);
+			List<TraceabilityNode> new_leaves = new ArrayList<TraceabilityNode>(leaves.size());
+			for (TraceabilityNode leaf : leaves)
+			{
+				if (!(leaf instanceof ObjectNode))
+				{
+					new_leaves.add(leaf);
+					continue;
+				}
+				ObjectNode on_leaf = (ObjectNode) leaf;
+				DesignatedObject leaf_dob = on_leaf.getDesignatedObject();
+				if (leaf_dob.getDesignator().peek() instanceof NthOutput)
+				{
+					// Change designated object from inner function
+					// to the encasing CircuitFunction
+					TraceabilityNode new_leaf = factory.getObjectNode(leaf_dob.getDesignator(), this);
+					on_leaf.addChild(new_leaf, Quality.EXACT);
+					new_leaves.add(new_leaf);
+				}
+				else
+				{
+					// Not an "n-th output": dunno
+					TraceabilityNode unknown = factory.getUnknownNode();
+					on_leaf.addChild(unknown, Quality.NONE);
+					new_leaves.add(unknown);
+				}
+			}
+			return new_leaves;
 		}
 
 		@Override

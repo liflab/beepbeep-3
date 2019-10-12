@@ -321,15 +321,7 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 	@Override
 	public GroupFunctionQueryable evaluate(Object[] inputs, Object[] outputs) 
 	{
-		for (int i = 0; i < m_inputPlaceholders.length; i++)
-		{
-			m_inputPlaceholders[i].setValue(inputs[i]);
-		}
-		for (int i = 0; i < m_outputPlaceholders.length; i++)
-		{
-			outputs[i] = m_outputPlaceholders[i].getOutput();
-		}
-		return m_queryable;
+		return evaluate(inputs, outputs, m_context);
 	}
 
 	@Override
@@ -578,11 +570,14 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 		protected List<TraceabilityNode> queryOutput(TraceabilityQuery q, int out_index, 
 				Designator tail, TraceabilityNode root, Tracer factory)
 		{
+			// Send traceability sub-query to inner queryables
 			Tracer sub_tracer = factory.getSubTracer(toString());
 			CircuitConnection cc = m_outputConnections[out_index].m_upstreamConnection;
 			ComposedDesignator cd = new ComposedDesignator(tail, new NthOutput(cc.getIndex()));
 			Queryable fq = (Queryable) cc.getObject();
 			List<TraceabilityNode> leaves = fq.query(q, cd, root, sub_tracer);
+			// Once done, reconnect "input" leaves to the input of the group they are
+			// connected to
 			List<TraceabilityNode> new_leaves = new ArrayList<TraceabilityNode>();
 			for (TraceabilityNode tn : leaves)
 			{
@@ -616,7 +611,42 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 		@Override
 		protected List<TraceabilityNode> queryInput(TraceabilityQuery q, int in_index, Designator tail, TraceabilityNode root, Tracer factory)
 		{
-			return unknownLink(root, factory);
+			// Send traceability sub-query to inner queryables
+			Tracer sub_tracer = factory.getSubTracer(toString());
+			CircuitConnection cc = m_inputConnections[in_index].m_downstreamConnection;
+			ComposedDesignator cd = new ComposedDesignator(tail, new NthInput(cc.getIndex()));
+			Queryable fq = (Queryable) cc.getObject();
+			List<TraceabilityNode> leaves = fq.query(q, cd, root, sub_tracer);
+			// Once done, reconnect "output" leaves to the output of the group they are
+			// connected to
+			List<TraceabilityNode> new_leaves = new ArrayList<TraceabilityNode>();
+			for (TraceabilityNode tn : leaves)
+			{
+				if (tn instanceof ObjectNode)
+				{
+					ObjectNode o_tn = (ObjectNode) tn;
+					DesignatedObject dob = o_tn.getDesignatedObject();
+					Designator d_head = dob.getDesignator().peek();
+					if (d_head instanceof NthOutput)
+					{
+						int input_nb = ((NthOutput) d_head).getIndex();
+						CircuitQueryable cq = (CircuitQueryable) dob.getObject();
+						CircuitConnection c_con = cq.getOutputConnection(input_nb);
+						ComposedDesignator leaf_cd = new ComposedDesignator(dob.getDesignator().tail(), new NthOutput(c_con.getIndex()));
+						TraceabilityNode new_leaf = factory.getObjectNode(leaf_cd, this);
+						tn.addChild(new_leaf, Quality.EXACT);
+						new_leaves.add(new_leaf);
+					}
+					else
+					{
+						// Not an "n-th output": dunno
+						TraceabilityNode unknown = factory.getUnknownNode();
+						tn.addChild(unknown, Quality.NONE);
+						new_leaves.add(unknown);
+					}
+				}
+			}
+			return new_leaves;
 		}
 
 		@Override

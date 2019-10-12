@@ -102,7 +102,7 @@ public class GroupFunctionTest
 	}
 
 	@Test
-	public void testQueryableSubtraction()
+	public void testQueryableSubtractionProvenance()
 	{
 		GroupFunction gf = new GroupFunction(2, 1);
 		CircuitFunction cf_add = new CircuitFunction(Numbers.subtraction);
@@ -143,6 +143,51 @@ public class GroupFunctionTest
 			ObjectNode on = (ObjectNode) tn;
 			assertEquals(gfq, on.getDesignatedObject().getObject());
 			assertTrue(on.getDesignatedObject().getDesignator().peek() instanceof NthInput);
+		}
+	}
+	
+	@Test
+	public void testQueryableSubtractionTaint()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		CircuitFunction cf_add = new CircuitFunction(Numbers.subtraction);
+		GroupFunctionQueryable gfq = gf.getQueryable();
+		assertNotNull(gfq);
+		gf.add(cf_add);
+		assertEquals(1, gfq.m_innerQueryables.size());
+		CircuitQueryable gfq_cq = null;
+		for (CircuitQueryable q : gfq.m_innerQueryables)
+		{
+			gfq_cq = q;
+			break;
+		}
+		CircuitQueryable add_q = (CircuitQueryable) cf_add.getQueryable();
+		assertEquals(gfq_cq, add_q);
+		assertNotNull(add_q);
+		gf.associateInput(0, cf_add, 1);
+		CircuitConnection cc_in_1 = add_q.getInputConnection(1);
+		assertNotNull(cc_in_1);
+		gf.associateInput(1, cf_add, 0);
+		CircuitConnection cc_in_0 = add_q.getInputConnection(0);
+		assertNotNull(cc_in_0);
+		gf.associateOutput(0, cf_add, 0);
+		CircuitConnection cc_out_0 = add_q.getOutputConnection(0);
+		assertNotNull(cc_out_0);
+		Object[] outputs = new Object[1];
+		GroupFunctionQueryable gfq2 = gf.evaluate(new Object[] {2, 3}, outputs);
+		assertEquals(1f, outputs[0]);
+		assertNotNull(gfq2);
+		assertEquals(gfq, gfq2);
+		ConcreteTracer factory = new ConcreteTracer();
+		TraceabilityNode root = factory.getAndNode();
+		List<TraceabilityNode> leaves = gfq.query(TraceabilityQuery.TaintQuery.instance, new NthInput(0), root, factory);
+		assertEquals(1, leaves.size());
+		for (TraceabilityNode tn : leaves)
+		{
+			assertTrue(tn instanceof ObjectNode);
+			ObjectNode on = (ObjectNode) tn;
+			assertEquals(gfq, on.getDesignatedObject().getObject());
+			assertTrue(on.getDesignatedObject().getDesignator().peek() instanceof NthOutput);
 		}
 	}
 }
