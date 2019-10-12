@@ -9,7 +9,9 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.BinaryFunction.BinaryFunctionQueryable.Inputs;
 import ca.uqac.lif.cep.functions.CumulableFunction;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionQueryable;
 import ca.uqac.lif.cep.functions.SlidableFunction;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
 public class Numbers 
 {
@@ -21,9 +23,46 @@ public class Numbers
 	
 	public static final transient Division division = new Division();
 	
+	public static final transient AbsoluteValue abs = new AbsoluteValue();
+	
 	private Numbers()
 	{
 		super();
+	}
+	
+	protected static class AbsoluteValue extends UnaryFunction<Number,Number>
+	{
+		protected static final transient FunctionQueryable s_queryable = new FunctionQueryable("Numbers.AbsoluteValue", 1, 1);
+		
+		protected AbsoluteValue()
+		{
+			super(Number.class, Number.class);
+		}
+		
+		@Override
+		public Object print(ObjectPrinter<?> printer) throws PrintException 
+		{
+			return null;
+		}
+
+		@Override
+		public AbsoluteValue read(ObjectReader<?> reader, Object o) throws ReadException 
+		{
+			return this;
+		}
+
+		@Override
+		public AbsoluteValue duplicate(boolean with_state) 
+		{
+			return this;
+		}
+
+		@Override
+		public FunctionQueryable evaluate(Object[] inputs, Object[] outputs, Context c) 
+		{
+			outputs[0] = Math.abs(((Number) inputs[0]).floatValue());
+			return s_queryable;
+		}
 	}
 	
 	protected static class Addition extends BinaryFunction<Number,Number,Number> implements CumulableFunction<Number>

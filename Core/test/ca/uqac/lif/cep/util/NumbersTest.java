@@ -26,6 +26,35 @@ import ca.uqac.lif.petitpoucet.graph.OrNode;
 public class NumbersTest 
 {
 	@Test
+	public void testAbsoluteValuePrint() throws PrintException
+	{
+		IdentityObjectPrinter iop = new IdentityObjectPrinter();
+		assertNull(iop.print(Numbers.abs));
+	}
+	
+	@Test
+	public void testAbsoluteValueRead() throws ReadException
+	{
+		IdentityObjectReader ior = new IdentityObjectReader();
+		Object o = Numbers.abs.read(ior, null);
+		assertEquals(Numbers.abs, o);
+	}
+	
+	@Test
+	public void testAbsoluteValueDuplicate()
+	{
+		assertEquals(Numbers.abs, Numbers.abs.duplicate());
+	}
+	
+	@Test
+	public void testAbsoluteValueValues()
+	{
+		Object[] outputs = new Object[1];
+		Numbers.abs.evaluate(new Object[] {-3}, outputs);
+		assertEquals(3f, outputs[0]);
+	}
+	
+	@Test
 	public void testAdditionPrint() throws PrintException
 	{
 		IdentityObjectPrinter iop = new IdentityObjectPrinter();

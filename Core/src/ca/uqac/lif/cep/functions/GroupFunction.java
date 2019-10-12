@@ -16,6 +16,7 @@ import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Contextualizable;
 import ca.uqac.lif.cep.StateDuplicable;
+import ca.uqac.lif.cep.functions.CircuitFunction.CircuitFunctionQueryable;
 import ca.uqac.lif.cep.functions.FunctionConnector.FunctionConnection;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
 import ca.uqac.lif.petitpoucet.DesignatedObject;
@@ -32,9 +33,8 @@ import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitElement;
 import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
-import ca.uqac.lif.petitpoucet.graph.ConcreteDesignatedObject;
 
-public class GroupFunction implements CircuitElement, Contextualizable, Function, Trackable 
+public class GroupFunction implements Contextualizable, Function, Trackable 
 {
 	/**
 	 * The set of functions contained in this composed function
@@ -81,7 +81,7 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 		for (CircuitFunction f : functions)
 		{
 			m_innerFunctions.add(f);
-			m_queryable.add((CircuitQueryable) f.getQueryable());
+			m_queryable.add(f.getQueryable());
 		}
 	}
 
@@ -89,7 +89,7 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 	{
 		add(f, g);
 		FunctionConnector.connect(f, i, g, j);
-		m_queryable.connect((CircuitQueryable) f.getQueryable(), i, (CircuitQueryable) g.getQueryable(), j);
+		m_queryable.connect(f.getQueryable(), i, g.getQueryable(), j);
 	}
 
 	public void associateInput(int i, CircuitFunction cf, int j)
@@ -162,6 +162,7 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 		{
 			f.reset();
 		}
+		m_queryable.reset();
 	}
 
 	protected class CircuitFunctionPlaceholder implements CircuitElement, Outputable
@@ -339,7 +340,7 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 			{
 				return null;
 			}
-			return cf.getInputType(ip.m_index);
+			return cf.getInputType(ip.m_downstreamConnection.getIndex());
 		}
 		catch (ArrayIndexOutOfBoundsException e)
 		{
@@ -362,7 +363,7 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 			{
 				return null;
 			}
-			return cf.getOutputType(ip.m_index);
+			return cf.getOutputType(ip.m_upstreamConnection.getIndex());
 		}
 		catch (ArrayIndexOutOfBoundsException e)
 		{
@@ -387,35 +388,6 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 	}
 
 	@Override
-	public void setToInput(int index, CircuitConnection connection)
-	{
-		try
-		{
-			CircuitFunctionPlaceholder ip = m_inputPlaceholders[index];
-			ip.m_upstreamConnection = (FunctionConnection) connection;
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			throw new FunctionException(e);
-		}
-	}
-
-	@Override
-	public void setToOutput(int index, CircuitConnection connection) 
-	{
-		try
-		{
-			CircuitFunctionPlaceholder op = m_outputPlaceholders[index];
-			op.m_upstreamConnection = (FunctionConnection) connection;
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			throw new FunctionException(e);
-		}
-
-	}
-
-	@Override
 	public int getInputArity() 
 	{
 		return m_inputPlaceholders.length;
@@ -427,38 +399,12 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 		return m_outputPlaceholders.length;
 	}
 
-	@Override
-	public CircuitConnection getInputConnection(int index) 
-	{
-		try
-		{
-			return m_inputPlaceholders[index].m_upstreamConnection;
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			throw new FunctionException(e);
-		}
-	}
-
-	@Override
-	public CircuitConnection getOutputConnection(int index) 
-	{
-		try
-		{
-			return m_outputPlaceholders[index].m_downstreamConnection;
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			throw new FunctionException(e);
-		}
-	}
-
 	public static class GroupFunctionQueryable extends CircuitQueryable implements Printable, Readable, StateDuplicable<GroupFunctionQueryable>
 	{
 		/**
 		 * The set of functions contained in this composed function
 		 */
-		/*@ non_null @*/ protected Set<CircuitQueryable> m_innerQueryables;
+		/*@ non_null @*/ protected Set<CircuitFunctionQueryable> m_innerQueryables;
 
 		/*@ non_null @*/ protected QueryablePlaceholder[] m_inputConnections;
 
@@ -467,7 +413,7 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 		public GroupFunctionQueryable(String reference, int in_arity, int out_arity)
 		{
 			super(reference, in_arity, out_arity);
-			m_innerQueryables = new HashSet<CircuitQueryable>();
+			m_innerQueryables = new HashSet<CircuitFunctionQueryable>();
 			m_inputConnections = new QueryablePlaceholder[in_arity];
 			for (int i = 0; i < in_arity; i++)
 			{
@@ -481,12 +427,20 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 			m_reference = reference;
 		}
 		
-		public void add(CircuitQueryable q)
+		public void reset()
+		{
+			for (CircuitFunctionQueryable cq : m_innerQueryables)
+			{
+				cq.reset();
+			}
+		}
+		
+		public void add(CircuitFunctionQueryable q)
 		{
 			m_innerQueryables.add(q);
 		}
 
-		public void connect(CircuitQueryable q1, int i, CircuitQueryable q2, int j)
+		public void connect(CircuitFunctionQueryable q1, int i, CircuitFunctionQueryable q2, int j)
 		{
 			m_innerQueryables.add(q1);
 			m_innerQueryables.add(q2);
@@ -520,7 +474,7 @@ public class GroupFunction implements CircuitElement, Contextualizable, Function
 			Map<CircuitQueryable,CircuitQueryable> mapping = new HashMap<CircuitQueryable,CircuitQueryable>(m_innerQueryables.size());
 			for (CircuitQueryable q : m_innerQueryables)
 			{
-				CircuitQueryable q_dup = (CircuitQueryable) ((StateDuplicable<Queryable>) q).duplicate(with_state);
+				CircuitFunctionQueryable q_dup = (CircuitFunctionQueryable) ((StateDuplicable<Queryable>) q).duplicate(with_state);
 				mapping.put(q, q_dup);
 				gfq.m_innerQueryables.add(q_dup);
 			}

@@ -63,7 +63,7 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 	}
 	
 	@Override
-	public final Queryable getQueryable()
+	public final CircuitFunctionQueryable getQueryable()
 	{
 		return m_queryable;
 	}
@@ -308,6 +308,11 @@ public class CircuitFunction implements CircuitElement, Contextualizable, Functi
 		public void setQueryable(/*@ nullable @*/ Queryable q)
 		{
 			m_innerQueryable = q;
+		}
+		
+		public void reset()
+		{
+			m_innerQueryable = null;
 		}
 		
 		@Override

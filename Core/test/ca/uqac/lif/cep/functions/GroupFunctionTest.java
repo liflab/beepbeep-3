@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import ca.uqac.lif.cep.functions.BinaryFunctionTest.TestableBinaryFunction;
+import ca.uqac.lif.cep.functions.CircuitFunction.CircuitFunctionQueryable;
 import ca.uqac.lif.cep.functions.FunctionConnector.FunctionConnection;
 import ca.uqac.lif.cep.functions.GroupFunction.CircuitFunctionPlaceholder;
 import ca.uqac.lif.cep.functions.GroupFunction.GroupFunctionQueryable;
@@ -26,6 +28,46 @@ import ca.uqac.lif.petitpoucet.graph.ConcreteTracer;
 
 public class GroupFunctionTest 
 {
+	@Test
+	public void testTypes()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		TestableBinaryFunction tbf = new TestableBinaryFunction();
+		CircuitFunction cf = new CircuitFunction(tbf);
+		gf.add(cf);
+		gf.associateInput(0, cf, 1);
+		gf.associateInput(1, cf, 0);
+		gf.associateOutput(0, cf, 0);
+		assertEquals(String.class, gf.getInputType(0));
+		assertEquals(Number.class, gf.getInputType(1));
+		assertEquals(Object.class, gf.getOutputType(0));
+	}
+	
+	@Test
+	public void testReset()
+	{
+		GroupFunction gf = new GroupFunction(2, 1);
+		TestableBinaryFunction tbf = new TestableBinaryFunction();
+		CircuitFunction cf = new CircuitFunction(tbf);
+		CircuitFunctionQueryable cfq = cf.getQueryable();
+		assertNull(cfq.m_innerQueryable);
+		gf.add(cf);
+		gf.associateInput(0, cf, 1);
+		gf.associateInput(1, cf, 0);
+		gf.associateOutput(0, cf, 0);
+		Object[] outputs = new Object[1];
+		gf.evaluate(new Object[] {"foo", 2}, outputs);
+		assertNotNull(cfq.m_innerQueryable);
+		gf.reset();
+		assertNull(cfq.m_innerQueryable);
+	}
+	
+	@Test
+	public void testPrint()
+	{
+		
+	}
+	
 	@Test
 	public void testSubtraction()
 	{
