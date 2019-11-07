@@ -11,12 +11,6 @@ import java.util.List;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.functions.BinaryFunctionTest.TestableBinaryFunction;
-import ca.uqac.lif.cep.functions.CircuitFunction.CircuitFunctionQueryable;
-import ca.uqac.lif.cep.functions.Function.FunctionException;
-import ca.uqac.lif.cep.functions.FunctionConnector.FunctionConnection;
-import ca.uqac.lif.cep.functions.GroupFunction.CircuitFunctionPlaceholder;
-import ca.uqac.lif.cep.functions.GroupFunction.GroupFunctionQueryable;
-import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.petitpoucet.ObjectNode;
 import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
@@ -24,6 +18,14 @@ import ca.uqac.lif.petitpoucet.TraceabilityQuery;
 import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
+import ca.uqac.lif.petitpoucet.functions.CircuitFunction;
+import ca.uqac.lif.petitpoucet.functions.GroupFunction;
+import ca.uqac.lif.petitpoucet.functions.CircuitFunction.CircuitFunctionQueryable;
+import ca.uqac.lif.petitpoucet.functions.Function.FunctionException;
+import ca.uqac.lif.petitpoucet.functions.FunctionConnector.FunctionConnection;
+import ca.uqac.lif.petitpoucet.functions.GroupFunction.CircuitFunctionPlaceholder;
+import ca.uqac.lif.petitpoucet.functions.GroupFunction.GroupFunctionQueryable;
+import ca.uqac.lif.petitpoucet.functions.numbers.Numbers;
 import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
 import ca.uqac.lif.petitpoucet.graph.ConcreteTracer;
 
@@ -243,7 +245,7 @@ public class GroupFunctionTest
 		assertEquals(gfq, gfq2);
 		ConcreteTracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = gfq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthOutput(0), root, factory);
+		List<TraceabilityNode> leaves = gfq.query(TraceabilityQuery.ProvenanceQuery.instance, NthOutput.get(0), root, factory);
 		assertEquals(2, leaves.size());
 		for (TraceabilityNode tn : leaves)
 		{
@@ -288,7 +290,7 @@ public class GroupFunctionTest
 		assertEquals(gfq, gfq2);
 		ConcreteTracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = gfq.query(TraceabilityQuery.TaintQuery.instance, new NthInput(0), root, factory);
+		List<TraceabilityNode> leaves = gfq.query(TraceabilityQuery.TaintQuery.instance, NthInput.get(0), root, factory);
 		assertEquals(1, leaves.size());
 		for (TraceabilityNode tn : leaves)
 		{

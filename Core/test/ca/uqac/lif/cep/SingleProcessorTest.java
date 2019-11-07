@@ -25,14 +25,11 @@ import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
 import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
 import ca.uqac.lif.cep.TestUtilities.TestableSingleProcessor;
 import ca.uqac.lif.cep.TestUtilities.StutteringQueueSource;
-import ca.uqac.lif.cep.functions.Cumulate;
-import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.tmf.BlackHole;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.cep.tmf.Window;
-import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.petitpoucet.DesignatedObject;
 import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
@@ -43,6 +40,10 @@ import ca.uqac.lif.petitpoucet.graph.ConcreteTracer;
 import ca.uqac.lif.petitpoucet.graph.UnknownNode;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
+import ca.uqac.lif.petitpoucet.common.Context;
+import ca.uqac.lif.petitpoucet.functions.Cumulate;
+import ca.uqac.lif.petitpoucet.functions.CumulativeFunction;
+import ca.uqac.lif.petitpoucet.functions.numbers.Numbers;
 
 /**
  * Unit tests for the abstract {@link SingleProcessor} class.

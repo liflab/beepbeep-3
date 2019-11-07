@@ -106,7 +106,7 @@ public class PassthroughTest
 		assertNotNull(ptq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(3), new NthOutput(1));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(3), NthOutput.get(1));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) ptq.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		ConcreteObjectNode con = (ConcreteObjectNode) leaves.get(0);
@@ -127,7 +127,7 @@ public class PassthroughTest
 		assertNotNull(ptq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthOutput(3), new NthOutput(1));
+		ComposedDesignator cd = new ComposedDesignator(NthOutput.get(3), NthOutput.get(1));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) ptq.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		assertTrue(leaves.get(0) instanceof UnknownNode);
@@ -141,7 +141,7 @@ public class PassthroughTest
 		assertNotNull(ptq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(3), new NthInput(1));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(3), NthInput.get(1));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) ptq.query(TraceabilityQuery.TaintQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		ConcreteObjectNode con = (ConcreteObjectNode) leaves.get(0);
@@ -162,7 +162,7 @@ public class PassthroughTest
 		assertNotNull(ptq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthInput(3), new NthInput(1));
+		ComposedDesignator cd = new ComposedDesignator(NthInput.get(3), NthInput.get(1));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) ptq.query(TraceabilityQuery.TaintQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		assertTrue(leaves.get(0) instanceof UnknownNode);

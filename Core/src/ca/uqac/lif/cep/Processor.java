@@ -3,8 +3,10 @@ package ca.uqac.lif.cep;
 import ca.uqac.lif.azrael.Printable;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.petitpoucet.Designator;
+import ca.uqac.lif.petitpoucet.StateDuplicable;
 import ca.uqac.lif.petitpoucet.Trackable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitElement;
+import ca.uqac.lif.petitpoucet.common.Contextualizable;
 import ca.uqac.lif.petitpoucet.common.NthOf;
 
 public interface Processor extends CircuitElement, Contextualizable, Printable, Readable, Startable, StateDuplicable<Processor>, Trackable

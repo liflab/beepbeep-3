@@ -13,7 +13,6 @@ import ca.uqac.lif.azrael.ObjectReader;
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.Printable;
 import ca.uqac.lif.azrael.Readable;
-import ca.uqac.lif.cep.functions.CircuitFunction;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.Queryable;
@@ -23,6 +22,7 @@ import ca.uqac.lif.petitpoucet.Tracer;
 import ca.uqac.lif.petitpoucet.Trackable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
 import ca.uqac.lif.petitpoucet.circuit.CircuitElement;
+import ca.uqac.lif.petitpoucet.common.Context;
 
 public class GroupProcessor implements Processor, Printable, Readable
 {

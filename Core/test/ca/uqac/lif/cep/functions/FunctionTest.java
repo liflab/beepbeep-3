@@ -2,7 +2,7 @@ package ca.uqac.lif.cep.functions;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.functions.Function.FunctionException;
+import ca.uqac.lif.petitpoucet.functions.Function.FunctionException;
 
 public class FunctionTest
 {

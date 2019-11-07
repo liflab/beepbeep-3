@@ -16,13 +16,10 @@ import ca.uqac.lif.azrael.Printable;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorQueryable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.StateDuplicable;
-import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.SinkLast.SinkContents;
 import ca.uqac.lif.cep.tmf.Window.GenericWindow.WindowQueryable;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
@@ -31,6 +28,7 @@ import ca.uqac.lif.petitpoucet.Designator;
 import ca.uqac.lif.petitpoucet.LabeledEdge;
 import ca.uqac.lif.petitpoucet.ObjectNode;
 import ca.uqac.lif.petitpoucet.Queryable;
+import ca.uqac.lif.petitpoucet.StateDuplicable;
 import ca.uqac.lif.petitpoucet.TraceabilityNode;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery;
 import ca.uqac.lif.petitpoucet.TraceabilityTree;
@@ -39,7 +37,9 @@ import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
 import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
+import ca.uqac.lif.petitpoucet.common.Context;
 import ca.uqac.lif.petitpoucet.common.CollectionDesignator.NthElement;
+import ca.uqac.lif.petitpoucet.functions.SlidableFunction;
 
 public class Window extends SingleProcessor
 {
@@ -366,7 +366,7 @@ public class Window extends SingleProcessor
 					NthEvent ne = (NthEvent) dob_d_tail_h;
 					int local_input_num = ne.getIndex();
 					int global_input_num = local_input_num + num_event;
-					ComposedDesignator leaf_cd = new ComposedDesignator(dob_d_tail_t, new NthEvent(global_input_num), new NthInput(0));
+					ComposedDesignator leaf_cd = new ComposedDesignator(dob_d_tail_t, new NthEvent(global_input_num), NthInput.get(0));
 					TraceabilityNode new_leaf = sub_factory.getObjectNode(leaf_cd, this);
 					leaf.addChild(new_leaf, Quality.EXACT);
 					new_leaves.add(new_leaf);

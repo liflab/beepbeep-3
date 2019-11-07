@@ -12,6 +12,7 @@ import ca.uqac.lif.azrael.Printable;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.petitpoucet.Queryable;
+import ca.uqac.lif.petitpoucet.StateDuplicable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
 
 public class ProcessorQueryable extends CircuitQueryable implements Readable, Printable, StateDuplicable<Queryable>

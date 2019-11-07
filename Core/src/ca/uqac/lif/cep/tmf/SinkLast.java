@@ -201,7 +201,7 @@ public class SinkLast extends Sink
 				// Unknown element in the event front
 				return unknownLink(root, factory);
 			}
-			ComposedDesignator cd = new ComposedDesignator(t_t_tail, new NthEvent(m_calls - 1), new NthInput(index));
+			ComposedDesignator cd = new ComposedDesignator(t_t_tail, new NthEvent(m_calls - 1), NthInput.get(index));
 			TraceabilityNode node = factory.getObjectNode(cd, this);
 			root.addChild(node, Quality.EXACT);
 			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);

@@ -214,7 +214,7 @@ public class QueueSinkTest
 	public void testQueryableQueryOutput()
 	{
 		QueueSinkQueryable qsq = new QueueSinkQueryable("fooproc", 2, 0);
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(0), new NthOutput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(0), NthOutput.get(0));
 		ConcreteTracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
 		List<TraceabilityNode> leaves = qsq.query(TraceabilityQuery.TaintQuery.instance, cd, root, factory);

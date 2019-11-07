@@ -5,7 +5,8 @@ import java.util.Queue;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.functions.Function.FunctionException;
+import ca.uqac.lif.petitpoucet.functions.Function;
+import ca.uqac.lif.petitpoucet.functions.Function.FunctionException;
 
 public class ApplyFunction extends SingleProcessor
 {

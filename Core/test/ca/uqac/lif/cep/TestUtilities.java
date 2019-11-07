@@ -25,7 +25,6 @@ import ca.uqac.lif.cep.GroupProcessor.InputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.OutputProxyConnection;
 import ca.uqac.lif.cep.GroupProcessor.ProcessorConnection;
 import ca.uqac.lif.cep.Typed.Variant;
-import ca.uqac.lif.cep.functions.SlidableFunction;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.petitpoucet.ComposedDesignator;
 import ca.uqac.lif.petitpoucet.Designator;
@@ -35,6 +34,8 @@ import ca.uqac.lif.petitpoucet.Tracer;
 import ca.uqac.lif.petitpoucet.LabeledEdge.Quality;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
+import ca.uqac.lif.petitpoucet.common.Context;
+import ca.uqac.lif.petitpoucet.functions.SlidableFunction;
 
 public class TestUtilities 
 {
@@ -307,7 +308,7 @@ public class TestUtilities
 				}
 				NthEvent nth = (NthEvent) t_head;
 				int index = nth.getIndex();
-				ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), new NthOutput(in_index));
+				ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), NthOutput.get(in_index));
 				TraceabilityNode node = factory.getObjectNode(cd, this);
 				root.addChild(node, Quality.EXACT);
 				List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);
@@ -327,7 +328,7 @@ public class TestUtilities
 				}
 				NthEvent nth = (NthEvent) t_head;
 				int index = nth.getIndex();
-				ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), new NthInput(out_index));
+				ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), NthInput.get(out_index));
 				TraceabilityNode node = factory.getObjectNode(cd, this);
 				root.addChild(node, Quality.EXACT);
 				List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);

@@ -16,6 +16,7 @@ import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.TestUtilities.IdentityObjectPrinter;
 import ca.uqac.lif.cep.TestUtilities.IdentityObjectReader;
+import ca.uqac.lif.petitpoucet.common.Context;
 
 public class ContextTest
 {

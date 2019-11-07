@@ -4,6 +4,7 @@ import java.util.Queue;
 
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.petitpoucet.functions.CumulativeFunction;
 
 public class Cumulate extends SingleProcessor
 {

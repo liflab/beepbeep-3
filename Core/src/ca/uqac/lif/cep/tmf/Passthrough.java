@@ -80,7 +80,7 @@ public class Passthrough extends SingleProcessor
 			}
 			NthEvent nth = (NthEvent) t_head;
 			int index = nth.getIndex();
-			ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), new NthOutput(in_index));
+			ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), NthOutput.get(in_index));
 			TraceabilityNode node = factory.getObjectNode(cd, this);
 			root.addChild(node, Quality.EXACT);
 			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);
@@ -100,7 +100,7 @@ public class Passthrough extends SingleProcessor
 			}
 			NthEvent nth = (NthEvent) t_head;
 			int index = nth.getIndex();
-			ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), new NthInput(out_index));
+			ComposedDesignator cd = new ComposedDesignator(t_tail, new NthEvent(index), NthInput.get(out_index));
 			TraceabilityNode node = factory.getObjectNode(cd, this);
 			root.addChild(node, Quality.EXACT);
 			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);

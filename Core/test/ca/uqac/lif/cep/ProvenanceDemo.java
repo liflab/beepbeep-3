@@ -32,9 +32,9 @@ public class ProvenanceDemo {
 		p.pull();
 		p.pull();
 		ConcreteTracer tracer = new ConcreteTracer();
-		ComposedDesignator d = new ComposedDesignator(new NthEvent(2), new NthOutput(0));
+		ComposedDesignator d = new ComposedDesignator(new NthEvent(2), NthOutput.get(0));
 		ConcreteTraceabilityNode root = tracer.getTree(TraceabilityQuery.ProvenanceQuery.instance, d, win.getQueryable());
-		//ComposedDesignator d = new ComposedDesignator(new NthEvent(3), new NthOutput(0));
+		//ComposedDesignator d = new ComposedDesignator(new NthEvent(3), NthOutput.get(0));
 		//ConcreteTraceabilityNode root = tracer.getTree(TraceabilityQuery.TaintQuery.instance, d, qs.getQueryable());
 		TraceabilityNodeDotRenderer renderer = new TraceabilityNodeDotRenderer();
 		renderer.setFlatten(false);

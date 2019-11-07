@@ -168,7 +168,7 @@ public class CountDecimateTest
 		assertNotNull(cdq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(2), new NthOutput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(2), NthOutput.get(0));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) cdq.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		ConcreteObjectNode con = (ConcreteObjectNode) leaves.get(0);
@@ -189,7 +189,7 @@ public class CountDecimateTest
 		assertNotNull(cdq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthOutput(2), new NthOutput(0));
+		ComposedDesignator cd = new ComposedDesignator(NthOutput.get(2), NthOutput.get(0));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) cdq.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		assertTrue(leaves.get(0) instanceof UnknownNode);
@@ -203,7 +203,7 @@ public class CountDecimateTest
 		assertNotNull(cdq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(3), new NthInput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(3), NthInput.get(0));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) cdq.query(TraceabilityQuery.TaintQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		ConcreteObjectNode con = (ConcreteObjectNode) leaves.get(0);
@@ -224,7 +224,7 @@ public class CountDecimateTest
 		assertNotNull(cdq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(2), new NthInput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(2), NthInput.get(0));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) cdq.query(TraceabilityQuery.TaintQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		ConcreteObjectNode con = (ConcreteObjectNode) leaves.get(0);
@@ -242,7 +242,7 @@ public class CountDecimateTest
 		assertNotNull(cdq);
 		ConcreteTracer factory = new ConcreteTracer();
 		ConcreteTraceabilityNode root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthInput(2), new NthInput(0));
+		ComposedDesignator cd = new ComposedDesignator(NthInput.get(2), NthInput.get(0));
 		List<TraceabilityNode> leaves = (List<TraceabilityNode>) cdq.query(TraceabilityQuery.TaintQuery.instance, cd, root, factory);
 		assertEquals(1, leaves.size());
 		assertTrue(leaves.get(0) instanceof UnknownNode);

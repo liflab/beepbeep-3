@@ -28,6 +28,8 @@ import ca.uqac.lif.cep.TestUtilities.TestableGroupProcessor;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.SinkLast;
+import ca.uqac.lif.petitpoucet.common.Context;
+
 import static ca.uqac.lif.cep.ProcessorTest.assertConnectedTo;
 import static ca.uqac.lif.cep.ProcessorTest.assertNotConnectedTo;
 

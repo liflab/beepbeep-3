@@ -131,7 +131,7 @@ public class CountDecimate extends SingleProcessor
 			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);
 			if (index % m_interval == 0)
 			{
-				ComposedDesignator cd = new ComposedDesignator(new NthEvent(index / m_interval), new NthOutput(in_index), t_tail);
+				ComposedDesignator cd = new ComposedDesignator(new NthEvent(index / m_interval), NthOutput.get(in_index), t_tail);
 				TraceabilityNode node = factory.getObjectNode(cd, this);
 				root.addChild(node, Quality.EXACT);
 				leaves.add(node);
@@ -158,7 +158,7 @@ public class CountDecimate extends SingleProcessor
 			}
 			NthEvent nth = (NthEvent) t_head;
 			int index = nth.getIndex();
-			ComposedDesignator cd = new ComposedDesignator(new NthEvent(index * m_interval), new NthInput(out_index), t_tail);
+			ComposedDesignator cd = new ComposedDesignator(new NthEvent(index * m_interval), NthInput.get(out_index), t_tail);
 			TraceabilityNode node = factory.getObjectNode(cd, this);
 			root.addChild(node, Quality.EXACT);
 			List<TraceabilityNode> leaves = new ArrayList<TraceabilityNode>(1);

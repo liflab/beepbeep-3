@@ -19,6 +19,7 @@ import ca.uqac.lif.petitpoucet.TraceabilityNode;
 import ca.uqac.lif.petitpoucet.TraceabilityQuery;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthInput;
 import ca.uqac.lif.petitpoucet.circuit.CircuitDesignator.NthOutput;
+import ca.uqac.lif.petitpoucet.functions.FunctionQueryable;
 import ca.uqac.lif.petitpoucet.graph.ConcreteTracer;
 
 public class FunctionQueryableTest
@@ -29,7 +30,7 @@ public class FunctionQueryableTest
 		FunctionQueryable fq = new FunctionQueryable("foo", 3, 2);
 		ConcreteTracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = fq.query(TraceabilityQuery.TaintQuery.instance, new NthInput(2), root, factory);
+		List<TraceabilityNode> leaves = fq.query(TraceabilityQuery.TaintQuery.instance, NthInput.get(2), root, factory);
 		assertEquals(2, leaves.size());
 	}
 	
@@ -39,7 +40,7 @@ public class FunctionQueryableTest
 		FunctionQueryable fq = new FunctionQueryable("foo", 3, 2);
 		ConcreteTracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = fq.query(TraceabilityQuery.ConsequenceQuery.instance, new NthInput(2), root, factory);
+		List<TraceabilityNode> leaves = fq.query(TraceabilityQuery.ConsequenceQuery.instance, NthInput.get(2), root, factory);
 		assertEquals(2, leaves.size());
 	}
 	
@@ -49,7 +50,7 @@ public class FunctionQueryableTest
 		FunctionQueryable fq = new FunctionQueryable("foo", 3, 2);
 		ConcreteTracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = fq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthOutput(1), root, factory);
+		List<TraceabilityNode> leaves = fq.query(TraceabilityQuery.ProvenanceQuery.instance, NthOutput.get(1), root, factory);
 		assertEquals(3, leaves.size());
 	}
 	
@@ -59,7 +60,7 @@ public class FunctionQueryableTest
 		FunctionQueryable fq = new FunctionQueryable("foo", 3, 2);
 		ConcreteTracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = fq.query(TraceabilityQuery.CausalityQuery.instance, new NthOutput(1), root, factory);
+		List<TraceabilityNode> leaves = fq.query(TraceabilityQuery.CausalityQuery.instance, NthOutput.get(1), root, factory);
 		assertEquals(3, leaves.size());
 	}
 	

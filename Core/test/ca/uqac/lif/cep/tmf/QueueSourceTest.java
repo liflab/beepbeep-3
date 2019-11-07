@@ -256,7 +256,7 @@ public class QueueSourceTest
 		Queryable q = qs.getQueryable();
 		Tracer factory = new ConcreteTracer();
 		root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), new NthOutput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), NthOutput.get(0));
 		List<TraceabilityNode> list = q.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, list.size());
 		con = (ConcreteObjectNode) list.get(0);
@@ -275,7 +275,7 @@ public class QueueSourceTest
 		Queryable q = qs.getQueryable();
 		Tracer factory = new ConcreteTracer();
 		root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(4), new NthOutput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(4), NthOutput.get(0));
 		List<TraceabilityNode> list = q.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, list.size());
 		assertTrue(list.get(0) instanceof UnknownNode);
@@ -293,7 +293,7 @@ public class QueueSourceTest
 		Queryable q = qs.getQueryable();
 		Tracer factory = new ConcreteTracer();
 		root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), new NthOutput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), NthOutput.get(0));
 		List<TraceabilityNode> list = q.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, list.size());
 		con = (ConcreteObjectNode) list.get(0);
@@ -318,7 +318,7 @@ public class QueueSourceTest
 		Queryable q = qs.getQueryable();
 		Tracer factory = new ConcreteTracer();
 		root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), new NthOutput(1));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), NthOutput.get(1));
 		List<TraceabilityNode> list = q.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, list.size());
 		con = (ConcreteObjectNode) list.get(0);
@@ -341,7 +341,7 @@ public class QueueSourceTest
 		Queryable q = qs.getQueryable();
 		Tracer factory = new ConcreteTracer();
 		root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(4), new NthOutput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(4), NthOutput.get(0));
 		List<TraceabilityNode> list = q.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, list.size());
 		con = (ConcreteObjectNode) list.get(0);
@@ -373,7 +373,7 @@ public class QueueSourceTest
 		Queryable q = qs.getQueryable();
 		Tracer factory = new ConcreteTracer();
 		root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), new NthInput(0));
+		ComposedDesignator cd = new ComposedDesignator(new NthEvent(1), NthInput.get(0));
 		List<TraceabilityNode> list = q.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, list.size());
 		assertTrue(list.get(0) instanceof UnknownNode);
@@ -387,7 +387,7 @@ public class QueueSourceTest
 		Queryable q = qs.getQueryable();
 		Tracer factory = new ConcreteTracer();
 		root = factory.getAndNode();
-		ComposedDesignator cd = new ComposedDesignator(new NthInput(0), new NthOutput(0));
+		ComposedDesignator cd = new ComposedDesignator(NthInput.get(0), NthOutput.get(0));
 		List<TraceabilityNode> list = q.query(TraceabilityQuery.ProvenanceQuery.instance, cd, root, factory);
 		assertEquals(1, list.size());
 		assertTrue(list.get(0) instanceof UnknownNode);

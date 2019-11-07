@@ -40,7 +40,7 @@ public class ProcessorQueryableTest
 		assertEquals(1, pq.getOutputArity());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthInput(0), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, NthInput.get(0), root, factory);
 		assertEquals(0, leaves.size());
 	}
 	
@@ -54,7 +54,7 @@ public class ProcessorQueryableTest
 		assertEquals(1, pq.getOutputArity());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthInput(3), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, NthInput.get(3), root, factory);
 		assertEquals(1, leaves.size());
 		TraceabilityNode leaf = leaves.get(0);
 		assertNotNull(leaf);
@@ -71,7 +71,7 @@ public class ProcessorQueryableTest
 		assertEquals(1, pq.getOutputArity());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthInput(3), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, NthInput.get(3), root, factory);
 		assertEquals(1, leaves.size());
 		TraceabilityNode leaf = leaves.get(0);
 		assertNotNull(leaf);
@@ -108,7 +108,7 @@ public class ProcessorQueryableTest
 		assertEquals(spw_up.getQueryable(), pq.getInputConnection(0).getObject());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthInput(0), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, NthInput.get(0), root, factory);
 		assertEquals(1, leaves.size());
 		ConcreteObjectNode leaf = (ConcreteObjectNode) leaves.get(0);
 		DesignatedObject dob = leaf.getDesignatedObject();
@@ -129,7 +129,7 @@ public class ProcessorQueryableTest
 		assertEquals(1, pq.getOutputArity());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthOutput(0), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, NthOutput.get(0), root, factory);
 		assertEquals(1, leaves.size());
 		TraceabilityNode leaf = leaves.get(0);
 		assertNotNull(leaf);
@@ -149,7 +149,7 @@ public class ProcessorQueryableTest
 		assertEquals(spw_dn.getQueryable(), pq.getOutputConnection(0).getObject());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.TaintQuery.instance, new NthOutput(0), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.TaintQuery.instance, NthOutput.get(0), root, factory);
 		assertEquals(1, leaves.size());
 		ConcreteObjectNode leaf = (ConcreteObjectNode) leaves.get(0);
 		DesignatedObject dob = leaf.getDesignatedObject();
@@ -170,7 +170,7 @@ public class ProcessorQueryableTest
 		assertEquals(1, pq.getOutputArity());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthInput(0), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, NthInput.get(0), root, factory);
 		assertEquals(0, leaves.size());
 	}
 	
@@ -186,7 +186,7 @@ public class ProcessorQueryableTest
 		assertEquals(1, pq.getOutputArity());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, new NthInput(3), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.ProvenanceQuery.instance, NthInput.get(3), root, factory);
 		assertEquals(1, leaves.size());
 		TraceabilityNode leaf = leaves.get(0);
 		assertNotNull(leaf);
@@ -205,7 +205,7 @@ public class ProcessorQueryableTest
 		assertEquals(1, pq.getOutputArity());
 		Tracer factory = new ConcreteTracer();
 		TraceabilityNode root = factory.getAndNode();
-		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.TaintQuery.instance, new NthOutput(3), root, factory);
+		List<TraceabilityNode> leaves = pq.query(TraceabilityQuery.TaintQuery.instance, NthOutput.get(3), root, factory);
 		assertEquals(1, leaves.size());
 		TraceabilityNode leaf = leaves.get(0);
 		assertNotNull(leaf);

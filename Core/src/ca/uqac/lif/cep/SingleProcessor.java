@@ -18,6 +18,7 @@ import ca.uqac.lif.petitpoucet.Queryable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitConnection;
 import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable;
 import ca.uqac.lif.petitpoucet.circuit.CircuitQueryable.QueryableCircuitConnection;
+import ca.uqac.lif.petitpoucet.common.Context;
 
 public abstract class SingleProcessor implements Processor
 {
