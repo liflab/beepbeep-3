@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import java.util.Set;
 
 /**
@@ -72,9 +73,14 @@ public abstract class BinaryFunction<T, V, U> extends Function
   @Override
   /* @ requires inputs.length == 2 */
   public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs,
-      /*@ null @*/ Context context)
+      /*@ null @*/ Context context, EventTracker tracker)
   {
     outputs[0] = getValue((T) inputs[0], (V) inputs[1]);
+    if (tracker != null)
+    {
+      tracker.associateToOutput(-1, 0, 0, 0, 0);
+      tracker.associateToOutput(-1, 1, 0, 0, 0);
+    }
   }
 
   /**

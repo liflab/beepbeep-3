@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -65,9 +66,9 @@ public class RaiseArity extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
   {
-    m_function.evaluate(inputs, outputs, context);
+    m_function.evaluate(inputs, outputs, context, tracker);
   }
 
   @Override

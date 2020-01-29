@@ -154,6 +154,7 @@ public class Slice extends AbstractSlice
   protected boolean produceReturn(Queue<Object[]> outputs)
   {
     outputs.add(new Object[] {m_lastValues});
+    m_outputCount++;
     return true;
   }
 

@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import java.util.Set;
 
 /**
@@ -57,9 +58,10 @@ public abstract class PassthroughFunction extends Function
   public abstract Function getFunction();
 
   @Override
-  public final void evaluate(Object[] inputs, Object[] outputs, Context context)
+  public final void evaluate(Object[] inputs, Object[] outputs, Context context,
+      EventTracker tracker)
   {
-    m_function.evaluate(inputs, outputs, context);
+    m_function.evaluate(inputs, outputs, context, tracker);
   }
 
   @Override

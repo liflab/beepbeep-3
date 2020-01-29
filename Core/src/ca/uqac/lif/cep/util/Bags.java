@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2020 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.util;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
@@ -322,12 +323,16 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs, Context context)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
     {
       Object[] out = new Object[inputs.length];
       for (int i = 0; i < inputs.length; i++)
       {
         out[i] = inputs[i];
+        if (tracker != null)
+        {
+          tracker.associateToOutput(-1, i, 0, 0, 0);
+        }
       }
       outputs[0] = out;
     }
@@ -352,12 +357,16 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs, Context context)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
     {
       List<Object> out = new ArrayList<Object>(inputs.length);
       for (int i = 0; i < inputs.length; i++)
       {
         out.add(inputs[i]);
+        if (tracker != null)
+        {
+          tracker.associateToOutput(-1, i, 0, 0, 0);
+        }
       }
       outputs[0] = out;
     }
@@ -386,12 +395,16 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs, Context context)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
     {
       Set<Object> out = new HashSet<Object>(inputs.length);
       for (int i = 0; i < inputs.length; i++)
       {
         out.add(inputs[i]);
+        if (tracker != null)
+        {
+          tracker.associateToOutput(-1, i, 0, 0, 0);
+        }
       }
       outputs[0] = out;
     }
@@ -588,12 +601,16 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs, Context context)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
     {
       Object[] ins = (Object[]) inputs[0];
       for (int i = 0; i < ins.length; i++)
       {
         outputs[i] = ins[i];
+        if (tracker != null)
+        {
+          tracker.associateToOutput(-1, 0, 0, i, 0);
+        }
       }
     }
 

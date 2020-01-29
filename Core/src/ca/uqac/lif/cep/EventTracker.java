@@ -134,6 +134,12 @@ public interface EventTracker
     {
       super();
     }
+    
+    @Override
+    public NoOpEventTracker getCopy()
+    {
+      return instance;
+    }
 
     @Override
     public void associateTo(int id, NodeFunction f, int out_stream_index, int out_stream_pos)
@@ -174,4 +180,10 @@ public interface EventTracker
       // Do nothing
     }
   }
+  
+  /**
+   * Gets a copy of the event tracker
+   * @return
+   */
+  public EventTracker getCopy();
 }

@@ -586,4 +586,11 @@ public abstract class SynchronousProcessor extends Processor
       // Do nothing
     }
   }
+  
+  @Override
+  public final SynchronousProcessor setEventTracker(EventTracker tracker)
+  {
+    super.setEventTracker(tracker);
+    return this;
+  }
 }
