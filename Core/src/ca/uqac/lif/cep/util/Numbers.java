@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
@@ -410,6 +411,24 @@ public class Numbers
     public Number getValue(Number x, Number y)
     {
       return x.floatValue() * y.floatValue();
+    }
+    
+    @Override
+    protected void trackAssociations(Number x, Number y, Number z, EventTracker tracker)
+    {
+      if (x.floatValue() == 0)
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+      }
+      else if (y.floatValue() == 0)
+      {
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+      else
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
     }
 
     @Override

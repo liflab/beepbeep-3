@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
@@ -60,6 +61,24 @@ public class Booleans
     public Boolean getValue(Boolean x, Boolean y)
     {
       return x.booleanValue() && y.booleanValue();
+    }
+    
+    @Override
+    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
+    {
+      if (!x)
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+      }
+      else if (!y)
+      {
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+      else
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
     }
 
     @Override
@@ -130,6 +149,24 @@ public class Booleans
       }
       return false;
     }
+    
+    @Override
+    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
+    {
+      if (!x)
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+      }
+      else if (y)
+      {
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+      else
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+    }
 
     @Override
     public String toString()
@@ -156,6 +193,24 @@ public class Booleans
     public Boolean getValue(Boolean x, Boolean y)
     {
       return x.booleanValue() || y.booleanValue();
+    }
+    
+    @Override
+    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
+    {
+      if (x)
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+      }
+      else if (y)
+      {
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+      else
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
     }
 
     @Override
