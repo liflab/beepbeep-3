@@ -41,11 +41,15 @@ import java.util.Set;
  */
 public class Maps
 {
-  
   /**
    * Extracts the set of values of a map
    */
   public static final transient Values values = new Values();
+  
+  /**
+   * Extracts the multi-set of values of a map
+   */
+  public static final transient MultiValues multiValues = new MultiValues();
     
   private Maps()
   {
@@ -74,6 +78,38 @@ public class Maps
       Collection<?> col = x.values();
       col.remove(null);
       return col;
+    }
+  }
+  
+  /**
+   * Gets the multi-set of values in a map. This means that the same
+   * value occurring multiple times will be there multiple times as
+   * well.
+   * @since 0.10.3
+   */
+  @SuppressWarnings("rawtypes")
+  public static class MultiValues extends UnaryFunction<Map, Collection>
+  {
+    /**
+     * A single instance of the function
+     */
+    public static final transient MultiValues instance = new MultiValues();
+
+    protected MultiValues()
+    {
+      super(Map.class, Collection.class);
+    }
+
+    @Override
+    public Collection<?> getValue(Map x)
+    {
+      Multiset set = new Multiset();
+      for (Object o : x.entrySet())
+      {
+        Map.Entry<?,?> e  = (Map.Entry<?,?>) o;
+        set.add(e.getValue());
+      }
+      return set;
     }
   }
 

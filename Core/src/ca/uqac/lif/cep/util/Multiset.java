@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,6 +34,11 @@ import java.util.Set;
  */
 public class Multiset implements Set<Object>
 {
+  /**
+   * A single visible instance of the {@link GetCardinalities} function
+   */
+  public static final transient GetCardinalities getCardinalities = new GetCardinalities();
+  
   /**
    * The map used to store the relation between each element and its
    * cardinality
@@ -397,6 +403,39 @@ public class Multiset implements Set<Object>
       Multiset m = new Multiset(x);
       m.add(y);
       return m;
+    }
+    
+    @Override
+    public Insert duplicate(boolean with_state)
+    {
+      return this;
+    }
+  }
+  
+  /**
+   * Gets the cardinalities of each element in a multiset.
+   * The output is a map from elements to the number of times they appear
+   * in the multiset.
+   * @since 0.10.3
+   */
+  @SuppressWarnings("rawtypes")
+  public static class GetCardinalities extends UnaryFunction<Multiset,Map>
+  {
+    protected GetCardinalities()
+    {
+      super(Multiset.class, Map.class);
+    }
+
+    @Override
+    public Map getValue(Multiset x)
+    {
+      return x.m_map;
+    }
+    
+    @Override
+    public GetCardinalities duplicate(boolean with_state)
+    {
+      return this;
     }
   }
 
