@@ -1,10 +1,17 @@
 var dir_fe1d71a22b1d538c62170c002eacc0df =
 [
     [ "ApplyFunction.java", "_apply_function_8java.html", [
-      [ "ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function" ]
+      [ "ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function" ],
+      [ "ShiftTracker", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker" ]
     ] ],
     [ "ApplyFunctionArgument.java", "_apply_function_argument_8java.html", [
       [ "ApplyFunctionArgument", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_argument.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_argument" ]
+    ] ],
+    [ "ApplyFunctionLambda.java", "_apply_function_lambda_8java.html", [
+      [ "ApplyFunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda" ],
+      [ "UnaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_unary_lambda_evaluable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_unary_lambda_evaluable" ],
+      [ "BinaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_binary_lambda_evaluable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_binary_lambda_evaluable" ],
+      [ "LambdaEvaluable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_lambda_evaluable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_lambda_evaluable" ]
     ] ],
     [ "ApplyFunctionPartial.java", "_apply_function_partial_8java.html", [
       [ "ApplyFunctionPartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial" ],
@@ -38,6 +45,11 @@ var dir_fe1d71a22b1d538c62170c002eacc0df =
     ] ],
     [ "FunctionException.java", "_function_exception_8java.html", [
       [ "FunctionException", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_exception.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_exception" ]
+    ] ],
+    [ "FunctionLambda.java", "_function_lambda_8java.html", [
+      [ "FunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda" ],
+      [ "UnaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda_1_1_unary_lambda_evaluable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda_1_1_unary_lambda_evaluable" ],
+      [ "BinaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda_1_1_binary_lambda_evaluable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda_1_1_binary_lambda_evaluable" ]
     ] ],
     [ "FunctionTree.java", "_function_tree_8java.html", [
       [ "FunctionTree", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree" ]

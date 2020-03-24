@@ -2,6 +2,7 @@ var namespaceca_1_1uqac_1_1lif_1_1cep_1_1functions =
 [
     [ "ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function" ],
     [ "ApplyFunctionArgument", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_argument.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_argument" ],
+    [ "ApplyFunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda" ],
     [ "ApplyFunctionPartial", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial" ],
     [ "BinaryFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function" ],
     [ "Constant", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant" ],
@@ -12,6 +13,7 @@ var namespaceca_1_1uqac_1_1lif_1_1cep_1_1functions =
     [ "DuplicableFunction", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_duplicable_function" ],
     [ "Function", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function" ],
     [ "FunctionException", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_exception.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_exception" ],
+    [ "FunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda" ],
     [ "FunctionTree", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree" ],
     [ "IdentityFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_identity_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_identity_function" ],
     [ "IfThenElse", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_if_then_else.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_if_then_else" ],

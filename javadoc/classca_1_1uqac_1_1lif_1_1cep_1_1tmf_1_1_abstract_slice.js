@@ -16,6 +16,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice =
     [ "m_explodeArrays", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a82cb12ae5fa2cb2fc3ac8887dd09cb08", null ],
     [ "m_processor", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a5d788e174e4608d8cb744bca8386f076", null ],
     [ "m_sinks", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a071715f0067662dffa122cae81c8c10f", null ],
+    [ "m_sliceIndices", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a94399d3d52082621fa104200f98792b3", null ],
     [ "m_slices", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a6ab59ea0464021f32dea3712e9811f31", null ],
     [ "m_slicingFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a3a5055c8dc13d21413ce464ee45ebc5c", null ]
 ];

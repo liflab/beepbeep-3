@@ -26,6 +26,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor =
     [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a404ae6a3f7609afe816d0ccbe01bb6cf", null ],
     [ "setContext", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#ae1792b54f351ef8c852f7595e6a9b86e", null ],
     [ "setContext", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#abd21277ca89956419a6c90bd9a6cfb2b", null ],
+    [ "setEventTracker", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a23c8de2fc7f3a35e011e7efd8b6fbe9f", null ],
     [ "setPullableInput", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a1be2d1a71a7a0f4b8e205a5f5634855a", null ],
     [ "setPullableInputAssociation", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a183c0346f95b61aa8c3112a719249db9", null ],
     [ "setPullableOutput", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a9238e5e349eedcb998c0d7c5a491e75c", null ],
@@ -33,5 +34,6 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor =
     [ "setPushableOutput", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a590b83b5bac02f2ce692385504568840", null ],
     [ "setPushableOutputAssociation", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a6866439350d49eb0d3856f5e2a5b9948", null ],
     [ "start", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a0d4f0ba0250a6386f929f206a54816a9", null ],
-    [ "stop", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#af7e44b198015575387e2e7ad507ddcf8", null ]
+    [ "stop", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#af7e44b198015575387e2e7ad507ddcf8", null ],
+    [ "m_innerTracker", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a0a5e2ceff2f207509bb807b49d83b500", null ]
 ];

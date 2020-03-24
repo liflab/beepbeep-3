@@ -12,6 +12,7 @@ var namespaceca_1_1uqac_1_1lif_1_1cep =
     [ "Doubler", "classca_1_1uqac_1_1lif_1_1cep_1_1_doubler.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_doubler" ],
     [ "Duplicable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable" ],
     [ "DuplicableProcessor", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_duplicable_processor" ],
+    [ "EventNodeFunction", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_node_function.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_node_function" ],
     [ "EventTracker", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker" ],
     [ "FutureDone", "classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_future_done" ],
     [ "GroupProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor" ],

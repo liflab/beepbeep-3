@@ -23,13 +23,18 @@ var dir_6d07caa9358766d193336e9c645c4c5e =
       [ "And", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_and.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_and" ],
       [ "Implies", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_implies.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_implies" ],
       [ "Or", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_or.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_or" ],
-      [ "Not", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_not.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_not" ]
+      [ "Not", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_not.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_not" ],
+      [ "BagAnd", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_bag_and.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_bag_and" ],
+      [ "BagOr", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_bag_or.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_bag_or" ]
     ] ],
     [ "Equals.java", "_equals_8java.html", [
       [ "Equals", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals" ]
     ] ],
     [ "FindPattern.java", "_find_pattern_8java.html", [
       [ "FindPattern", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern" ]
+    ] ],
+    [ "InstanceOf.java", "_instance_of_8java.html", [
+      [ "InstanceOf", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_instance_of.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_instance_of" ]
     ] ],
     [ "Lists.java", "_lists_8java.html", [
       [ "Lists", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists" ],
@@ -53,6 +58,7 @@ var dir_6d07caa9358766d193336e9c645c4c5e =
     ] ],
     [ "Multiset.java", "_multiset_8java.html", [
       [ "Multiset", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset" ],
+      [ "Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_insert.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_insert" ],
       [ "PutInto", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_put_into.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_put_into" ]
     ] ],
     [ "NthElement.java", "_nth_element_8java.html", [

@@ -4,6 +4,7 @@ var hierarchy =
     [ "ca.uqac.lif.cep.functions.BinaryFunction< Boolean, Boolean, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.BinaryFunction< Collection, Collection, Collection >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.BinaryFunction< Collection, Object, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
+    [ "ca.uqac.lif.cep.functions.BinaryFunction< Multiset, Object, Multiset >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.BinaryFunction< Number, Number, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.BinaryFunction< Number, Number, Number >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.BinaryFunction< Object, Collection, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
@@ -12,6 +13,8 @@ var hierarchy =
     [ "ca.uqac.lif.cep.functions.BinaryFunction< Set, Set, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.BinaryFunction< String, String, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.BinaryFunction< T, T, T >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html", null ],
+    [ "ca.uqac.lif.cep.functions.FunctionLambda.BinaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda_1_1_binary_lambda_evaluable.html", null ],
+    [ "ca.uqac.lif.cep.functions.ApplyFunctionLambda.BinaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_binary_lambda_evaluable.html", null ],
     [ "ca.uqac.lif.cep.util.Booleans", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans.html", null ],
     [ "ca.uqac.lif.cep.Contextualizable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_contextualizable.html", [
       [ "ca.uqac.lif.cep.Processor", "classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html", [
@@ -34,6 +37,7 @@ var hierarchy =
             [ "ca.uqac.lif.cep.tmf.TimeDecimate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_time_decimate.html", null ]
           ] ],
           [ "ca.uqac.lif.cep.tmf.Filter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter.html", null ],
+          [ "ca.uqac.lif.cep.tmf.FilterOn", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter_on.html", null ],
           [ "ca.uqac.lif.cep.tmf.Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html", null ],
           [ "ca.uqac.lif.cep.tmf.KeepLast", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_keep_last.html", null ],
           [ "ca.uqac.lif.cep.tmf.Pad", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pad.html", null ],
@@ -68,6 +72,7 @@ var hierarchy =
             [ "ca.uqac.lif.cep.functions.ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", [
               [ "ca.uqac.lif.cep.functions.Cumulate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html", null ]
             ] ],
+            [ "ca.uqac.lif.cep.functions.ApplyFunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda.html", null ],
             [ "ca.uqac.lif.cep.functions.TurnInto", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_turn_into.html", null ],
             [ "ca.uqac.lif.cep.io.Call", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_call.html", null ],
             [ "ca.uqac.lif.cep.tmf.Fork", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_fork.html", null ],
@@ -119,6 +124,7 @@ var hierarchy =
             [ "ca.uqac.lif.cep.util.Booleans.Implies", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_implies.html", null ],
             [ "ca.uqac.lif.cep.util.Booleans.Or", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_or.html", null ],
             [ "ca.uqac.lif.cep.util.Equals", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals.html", null ],
+            [ "ca.uqac.lif.cep.util.Multiset.Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_insert.html", null ],
             [ "ca.uqac.lif.cep.util.Numbers.Addition", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_addition.html", null ],
             [ "ca.uqac.lif.cep.util.Numbers.Division", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_division.html", null ],
             [ "ca.uqac.lif.cep.util.Numbers.IsGreaterOrEqual", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_is_greater_or_equal.html", null ],
@@ -139,6 +145,7 @@ var hierarchy =
             [ "ca.uqac.lif.cep.util.Strings.StartsWith", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_strings_1_1_starts_with.html", null ]
           ] ],
           [ "ca.uqac.lif.cep.functions.Constant", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_constant.html", null ],
+          [ "ca.uqac.lif.cep.functions.FunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda.html", null ],
           [ "ca.uqac.lif.cep.functions.FunctionTree", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html", null ],
           [ "ca.uqac.lif.cep.functions.IdentityFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_identity_function.html", null ],
           [ "ca.uqac.lif.cep.functions.IfThenElse", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_if_then_else.html", null ],
@@ -151,7 +158,10 @@ var hierarchy =
             [ "ca.uqac.lif.cep.util.Bags.GetSize", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_get_size.html", null ],
             [ "ca.uqac.lif.cep.util.Bags.MaximumValue", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_maximum_value.html", null ],
             [ "ca.uqac.lif.cep.util.Bags.MinimumValue", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_bags_1_1_minimum_value.html", null ],
+            [ "ca.uqac.lif.cep.util.Booleans.BagAnd", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_bag_and.html", null ],
+            [ "ca.uqac.lif.cep.util.Booleans.BagOr", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_bag_or.html", null ],
             [ "ca.uqac.lif.cep.util.Booleans.Not", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans_1_1_not.html", null ],
+            [ "ca.uqac.lif.cep.util.InstanceOf", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_instance_of.html", null ],
             [ "ca.uqac.lif.cep.util.Maps.ApplyAll", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_apply_all.html", null ],
             [ "ca.uqac.lif.cep.util.Maps.Get", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_get.html", null ],
             [ "ca.uqac.lif.cep.util.Maps.Values", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_values.html", null ],
@@ -181,8 +191,10 @@ var hierarchy =
         ] ]
       ] ]
     ] ],
+    [ "ca.uqac.lif.cep.EventNodeFunction", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_node_function.html", null ],
     [ "ca.uqac.lif.cep.EventTracker", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html", [
-      [ "ca.uqac.lif.cep.EventTracker.NoOpEventTracker", "classca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker_1_1_no_op_event_tracker.html", null ]
+      [ "ca.uqac.lif.cep.EventTracker.NoOpEventTracker", "classca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker_1_1_no_op_event_tracker.html", null ],
+      [ "ca.uqac.lif.cep.functions.ApplyFunction.ShiftTracker", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html", null ]
     ] ],
     [ "ca.uqac.lif.cep.FutureDone< ca.uqac.lif.cep.Pushable >", "classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html", null ],
     [ "Iterable", null, [
@@ -199,6 +211,7 @@ var hierarchy =
         [ "ca.uqac.lif.cep.UniformProcessor.UnaryPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pullable.html", null ]
       ] ]
     ] ],
+    [ "ca.uqac.lif.cep.functions.ApplyFunctionLambda.LambdaEvaluable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_lambda_evaluable.html", null ],
     [ "ca.uqac.lif.cep.util.Lists", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists.html", null ],
     [ "ca.uqac.lif.cep.Main", "classca_1_1uqac_1_1lif_1_1cep_1_1_main.html", null ],
     [ "ca.uqac.lif.cep.util.Maps", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps.html", null ],
@@ -247,6 +260,7 @@ var hierarchy =
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Map, Object >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Number, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Number, Number >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
+    [ "ca.uqac.lif.cep.functions.UnaryFunction< Object, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Object, Integer >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Object, Number >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Object, Object >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
@@ -257,6 +271,8 @@ var hierarchy =
       [ "ca.uqac.lif.cep.functions.CumulativeFunction< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulative_function.html", null ]
     ] ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction<?, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
+    [ "ca.uqac.lif.cep.functions.FunctionLambda.UnaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda_1_1_unary_lambda_evaluable.html", null ],
+    [ "ca.uqac.lif.cep.functions.ApplyFunctionLambda.UnaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_unary_lambda_evaluable.html", null ],
     [ "Future", null, [
       [ "ca.uqac.lif.cep.CompoundFuture< T, U >", "classca_1_1uqac_1_1lif_1_1cep_1_1_compound_future.html", null ],
       [ "ca.uqac.lif.cep.FutureDone< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html", null ]

@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_binary_function.html" title="ca.uqac.lif.cep.functions.\lBinaryFunction\&lt; Boolean,\l Boolean, Boolean \&gt;" alt="" coords="5,5,177,61"/>
+<area shape="rect" id="node1" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html" title="Tracks the relationship between output events produced by processors, and the input events that were ..." alt="" coords="5,46,195,73"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker_1_1_no_op_event_tracker.html" title="Dummy event tracker that does nothing. " alt="" coords="243,5,436,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html" title="Simple tracker proxy that records associations from the underlying function, and shifts its input/out..." alt="" coords="249,71,429,112"/>
 </map>

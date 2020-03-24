@@ -1,7 +1,9 @@
 var classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset =
 [
+    [ "Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_insert.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_insert" ],
     [ "PutInto", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_put_into.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_put_into" ],
     [ "Multiset", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#ac32454d806155cf7a960a4cbf7b7bbc5", null ],
+    [ "Multiset", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#aaf7198285eb0abf124fb9e10390377d3", null ],
     [ "add", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a75ee8a014071ca630d9eac352bc2480a", null ],
     [ "addAll", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a36d06202115cfd64412587abe4f0d5fa", null ],
     [ "addAll", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#ac8c190d30b86e8ef6a07c1bdb165e1d5", null ],

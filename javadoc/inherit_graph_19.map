@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html" title="ca.uqac.lif.cep.functions.\lUnaryFunction\&lt; Map, Collection \&gt;" alt="" coords="5,5,228,47"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate_1_1_start_value.html" title="Node function representing the start value defined for a particular function. " alt="" coords="158,5,326,47"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_1_1_queue_function.html" title="Provenance function that links an output event to an element of the processor&#39;s queue. " alt="" coords="156,71,328,112"/>
 </map>

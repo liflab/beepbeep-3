@@ -4,6 +4,7 @@ var namespaceca_1_1uqac_1_1lif_1_1cep_1_1util =
     [ "Booleans", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_booleans" ],
     [ "Equals", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals" ],
     [ "FindPattern", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_find_pattern" ],
+    [ "InstanceOf", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_instance_of.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_instance_of" ],
     [ "Lists", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists" ],
     [ "Maps", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps" ],
     [ "Multiset", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset" ],
