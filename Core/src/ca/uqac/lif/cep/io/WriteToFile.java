@@ -79,6 +79,10 @@ public class WriteToFile extends Sink
       {
         bos.write((byte[]) inputs[0]);
       }
+      else 
+      {
+        bos.write(inputs[0].toString().getBytes());
+      }
       bos.close();
     }
     catch (FileNotFoundException e)

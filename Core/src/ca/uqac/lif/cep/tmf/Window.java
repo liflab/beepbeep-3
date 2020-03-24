@@ -91,6 +91,7 @@ public class Window extends AbstractWindow
   protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
   {
     // Add the inputs to each window
+    m_inputCount++;
     boolean windows_ok = true;
     int arity = inputs.length;
     for (int i = 0; i < arity; i++)
@@ -150,6 +151,17 @@ public class Window extends AbstractWindow
       // Don't return false, otherwise it would signal that no
       // event will every be produced in the future
       return true;
+    }
+    else
+    {
+      m_outputCount++;
+      if (m_eventTracker != null)
+      {
+        for (int i = 1 - m_width; i <= 0; i++)
+        {
+          associateToInput(0, m_inputCount + i, 0, m_outputCount);
+        }
+      }
     }
     outputs.add(out);
     return true;

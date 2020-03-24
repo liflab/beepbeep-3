@@ -172,5 +172,11 @@ public class ProvenanceTest
 				this.out_pos = out_pos;
 			}
 		}
+
+    @Override
+    public EventTracker getCopy()
+    {
+      return new DummyTracker();
+    }
 	}
 }

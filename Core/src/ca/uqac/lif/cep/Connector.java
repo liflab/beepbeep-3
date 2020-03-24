@@ -96,7 +96,7 @@ public class Connector
    * input or output
    */
   public static final int BOTTOM = 1;
-
+  
   /**
    * Utility classes should not have public constructors
    */

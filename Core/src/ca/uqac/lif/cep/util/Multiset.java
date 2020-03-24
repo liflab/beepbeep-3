@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.SynchronousProcessor;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,6 +46,17 @@ public class Multiset implements Set<Object>
   {
     super();
     m_map = new HashMap<Object, Integer>();
+  }
+  
+  /**
+   * Creates a multiset from the contents of another one
+   * @param m The other multiset
+   */
+  public Multiset(/*@ non_null @*/ Multiset m)
+  {
+    super();
+    m_map = new HashMap<Object, Integer>();
+    m_map.putAll(m.m_map);
   }
 
   /**
@@ -363,6 +375,29 @@ public class Multiset implements Set<Object>
   {
     // TODO Auto-generated method stub
     return null;
+  }
+  
+  /**
+   * Given a multiset and an element, returns a new multiset with this element
+   * added to it.
+   * @since 0.10.3
+   */
+  public static class Insert extends BinaryFunction<Multiset,Object,Multiset>
+  {
+    public static final transient Insert instance = new Insert();
+    
+    protected Insert()
+    {
+      super(Multiset.class, Object.class, Multiset.class);
+    }
+
+    @Override
+    public Multiset getValue(Multiset x, Object y)
+    {
+      Multiset m = new Multiset(x);
+      m.add(y);
+      return m;
+    }
   }
 
   /**

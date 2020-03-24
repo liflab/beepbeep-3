@@ -17,8 +17,12 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.cep.EventTracker;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.petitpoucet.NodeFunction;
+import ca.uqac.lif.petitpoucet.ProvenanceNode;
 import java.util.Set;
 
 /**
@@ -42,6 +46,12 @@ public class ApplyFunction extends UniformProcessor
   protected Function m_function;
 
   /**
+   * A shift tracker
+   * @since 0.10.3
+   */
+  protected ShiftTracker m_shiftTracker;
+
+  /**
    * Instantiates a new function processor
    * 
    * @param comp
@@ -51,6 +61,7 @@ public class ApplyFunction extends UniformProcessor
   {
     super(comp.getInputArity(), comp.getOutputArity());
     m_function = comp;
+    m_shiftTracker = new ShiftTracker();
   }
 
   @Override
@@ -65,7 +76,7 @@ public class ApplyFunction extends UniformProcessor
   {
     try
     {
-      m_function.evaluate(inputs, outputs, m_context);
+      m_function.evaluate(inputs, outputs, m_context, m_shiftTracker);
       if (m_eventTracker != null)
       {
         for (int i = 0; i < inputs.length; i++)
@@ -75,15 +86,14 @@ public class ApplyFunction extends UniformProcessor
             associateToInput(i, m_inputCount, j, m_outputCount);
           }
         }
-        m_inputCount++;
-        m_outputCount++;
       }
+      m_inputCount++;
+      m_outputCount++;
     }
     catch (FunctionException e)
     {
       throw new ProcessorException(e);
     }
-
     return true;
   }
 
@@ -130,7 +140,7 @@ public class ApplyFunction extends UniformProcessor
     super.duplicateInto(af);
     af.m_function = m_function.duplicate(with_state);
   }
-  
+
   /**
    * @since 0.10.2
    */
@@ -139,7 +149,7 @@ public class ApplyFunction extends UniformProcessor
   {
     return m_function;
   }
-  
+
   /**
    * @since 0.10.2
    */
@@ -148,5 +158,70 @@ public class ApplyFunction extends UniformProcessor
   {
     Function f = (Function) o;
     return new ApplyFunction(f);
+  }
+
+  /**
+   * Simple tracker proxy that records associations from the underlying function,
+   * and shifts its input/output by the current position in the input/output stream
+   * @since 0.10.3
+   */
+  protected class ShiftTracker implements EventTracker
+  {
+    @Override
+    public void associateTo(int id, NodeFunction f, int out_stream_index, int out_stream_pos)
+    {
+      if (m_eventTracker != null)
+      {
+        m_eventTracker.associateTo(getId(), f, out_stream_index, m_outputCount);
+      }
+    }
+
+    @Override
+    public void associateToInput(int id, int in_stream_index, int in_stream_pos,
+        int out_stream_index, int out_stream_pos)
+    {
+      if (m_eventTracker != null)
+      {
+        m_eventTracker.associateToInput(getId(), in_stream_index, m_inputCount,
+            out_stream_index, m_outputCount);
+      }
+    }
+
+    @Override
+    public void associateToOutput(int id, int in_stream_index, int in_stream_pos,
+        int out_stream_index, int out_stream_pos)
+    {
+      if (m_eventTracker != null)
+      {
+        m_eventTracker.associateToOutput(getId(), in_stream_index, m_inputCount, 
+            out_stream_index, m_outputCount);
+      }
+
+    }
+
+    @Override
+    public ProvenanceNode getProvenanceTree(int proc_id, int stream_index, int stream_pos)
+    {
+      return null;
+    }
+
+    @Override
+    public void setConnection(int output_proc_id, int output_stream_index, int input_proc_id,
+        int input_stream_index)
+    {
+      // Do nothing
+    }
+
+    @Override
+    public void setTo(Processor ... processors)
+    {
+      // Do nothing
+    }
+
+    @Override
+    public EventTracker getCopy()
+    {
+      return new ShiftTracker();
+    }
   }
 }

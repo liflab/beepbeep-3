@@ -79,6 +79,11 @@ public class GroupProcessor extends Processor
   private HashMap<Integer, ProcessorAssociation> m_outputPushableAssociations;
 
   /**
+   * An inner event tracker for the group
+   */
+  protected EventTracker m_innerTracker;
+
+  /**
    * Crate a group processor
    * 
    * @param in_arity
@@ -95,8 +100,9 @@ public class GroupProcessor extends Processor
     m_outputPullables = new ArrayList<Pullable>();
     m_inputPullableAssociations = new HashMap<Integer, ProcessorAssociation>();
     m_outputPushableAssociations = new HashMap<Integer, ProcessorAssociation>();
+    m_innerTracker = null;
   }
-  
+
   /**
    * No-args constructor. Used only for serialization and deserialization.
    */
@@ -150,7 +156,7 @@ public class GroupProcessor extends Processor
       m_ioNumber = number;
       m_processor = p;
     }
-    
+
     /**
      * No-args constructor. Used only for serialization and deserialization.
      */
@@ -672,7 +678,7 @@ public class GroupProcessor extends Processor
       {
         ((ProxyPushable) p).m_pushable.notifyEndOfTrace();
       }
-      
+
       // Collect from processor the events to generate for the end
       Queue<Object[]> temp_queue = new ArrayDeque<Object[]>();
       boolean outs;
@@ -785,7 +791,7 @@ public class GroupProcessor extends Processor
   {
     return false;
   }
-  
+
   /**
    * @since 0.10.2
    */
@@ -828,7 +834,7 @@ public class GroupProcessor extends Processor
     contents.put("connections", connections);
     return contents;
   }
-  
+
   /**
    * @since 0.10.2
    */
@@ -896,7 +902,7 @@ public class GroupProcessor extends Processor
     gp.m_notifySources = (Boolean) contents.get("notify-sources");
     return gp;
   }
-  
+
   @Override
   public void reset()
   {
@@ -909,6 +915,20 @@ public class GroupProcessor extends Processor
     {
       p.reset();
     }
+  }
 
+  @Override
+  public final Processor setEventTracker(/* @Null */ EventTracker tracker)
+  {
+    super.setEventTracker(tracker);
+    if (tracker != null)
+    {
+      m_innerTracker = tracker.getCopy();
+      for (Processor p : m_processors)
+      {
+        p.setEventTracker(m_innerTracker);
+      }
+    }
+    return this;
   }
 }

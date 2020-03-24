@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import java.util.Set;
 
 /**
@@ -61,10 +62,14 @@ public abstract class UnaryFunction<T, U> extends Function
   @Override
   /* @ requires inputs.length == 1 */
   public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs, 
-      /*@ null @*/ Context context)
+      /*@ null @*/ Context context, /*@ null @*/ EventTracker tracker)
   {
     T in = (T) inputs[0];
     outputs[0] = getValue(in);
+    if (tracker != null)
+    {
+      tracker.associateToOutput(-1, 0, 0, 0, 0);
+    }
   }
 
   /**

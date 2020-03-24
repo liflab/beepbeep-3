@@ -39,6 +39,11 @@ public class Fork extends UniformProcessor
   {
     super(1, out_arity);
   }
+  
+  public Fork()
+  {
+    this(2);
+  }
 
   @Override
   public Fork duplicate(boolean with_state)

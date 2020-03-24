@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -102,7 +103,7 @@ public class FunctionTree extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
   {
     Object[] values = new Object[m_children.length];
     for (int i = 0; i < values.length; i++)

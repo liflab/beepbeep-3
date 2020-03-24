@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import java.util.Set;
 
 /**
@@ -56,9 +57,13 @@ public class Constant extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
   {
     outputs[0] = m_value;
+    if (tracker != null)
+    {
+      tracker.associateToOutput(-1, 0, 0, 0, 0);
+    }
   }
 
   @Override

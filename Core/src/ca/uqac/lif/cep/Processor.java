@@ -25,6 +25,7 @@ import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.petitpoucet.NodeFunction;
+import ca.uqac.lif.petitpoucet.ProvenanceNode;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -650,7 +651,7 @@ public abstract class Processor implements DuplicableProcessor,
    *          existing tracker
    * @return This processor
    */
-  public final Processor setEventTracker(/* @Null */ EventTracker tracker)
+  public Processor setEventTracker(/* @Null */ EventTracker tracker)
   {
     m_eventTracker = tracker;
     return this;
@@ -873,4 +874,41 @@ public abstract class Processor implements DuplicableProcessor,
 
   @Override
   /*@ non_null @*/ public abstract Processor duplicate(boolean with_state);
+  
+  /**
+   * Gets the leaves of a provenance tree
+   * @param root The root of the tree
+   * @return A list of nodes that correspond to the leaves
+   */
+  public static List<ProvenanceNode> getLeaves(ProvenanceNode root)
+  {
+    List<ProvenanceNode> leaves = new ArrayList<ProvenanceNode>();
+    getLeaves(root, leaves);
+    return leaves;
+  }
+  
+  /**
+   * Accumulates the leaves of a provenance tree in a list
+   * @param root The current node in the tree
+   * @param leaves The list of leaves
+   */
+  protected static void getLeaves(ProvenanceNode root, List<ProvenanceNode> leaves)
+  {
+    if (root == null)
+    {
+      return;
+    }
+    List<ProvenanceNode> children = root.getChildren();
+    if (children.isEmpty())
+    {
+      leaves.add(root);
+    }
+    else
+    {
+      for (ProvenanceNode child : children)
+      {
+        getLeaves(child, leaves);
+      }
+    }
+  }
 }

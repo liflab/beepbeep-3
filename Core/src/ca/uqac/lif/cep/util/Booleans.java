@@ -18,8 +18,10 @@
 package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
+import java.util.Collection;
 
 /**
  * A container object for Boolean functions.
@@ -41,10 +43,14 @@ public class Booleans
   public static final transient Implies implies = Implies.instance;
 
   public static final transient Not not = Not.instance;
+  
+  public static final transient BagAnd bagAnd = BagAnd.instance;
+  
+  public static final transient BagOr bagOr = BagOr.instance;
 
   /**
    * Implementation of the logical conjunction
-   * 
+   * @since 0.7
    * @author Sylvain Hallé
    */
   public static class And extends BinaryFunction<Boolean, Boolean, Boolean>
@@ -60,6 +66,24 @@ public class Booleans
     public Boolean getValue(Boolean x, Boolean y)
     {
       return x.booleanValue() && y.booleanValue();
+    }
+    
+    @Override
+    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
+    {
+      if (!x)
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+      }
+      else if (!y)
+      {
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+      else
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
     }
 
     @Override
@@ -92,7 +116,7 @@ public class Booleans
 
   /**
    * Implementation of the logical implication
-   * 
+   * @since 0.7
    * @author Sylvain Hallé
    */
   public static class Implies extends BinaryFunction<Boolean, Boolean, Boolean>
@@ -130,6 +154,24 @@ public class Booleans
       }
       return false;
     }
+    
+    @Override
+    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
+    {
+      if (!x)
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+      }
+      else if (y)
+      {
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+      else
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+    }
 
     @Override
     public String toString()
@@ -140,7 +182,7 @@ public class Booleans
 
   /**
    * Implementation of the logical disjunction
-   * 
+   * @since 0.7
    * @author Sylvain Hallé
    */
   public static class Or extends BinaryFunction<Boolean, Boolean, Boolean>
@@ -156,6 +198,24 @@ public class Booleans
     public Boolean getValue(Boolean x, Boolean y)
     {
       return x.booleanValue() || y.booleanValue();
+    }
+    
+    @Override
+    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
+    {
+      if (x)
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+      }
+      else if (y)
+      {
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
+      else
+      {
+        tracker.associateToOutput(-1, 0, 0, 0, 0);
+        tracker.associateToOutput(-1, 1, 0, 0, 0);
+      }
     }
 
     @Override
@@ -188,7 +248,7 @@ public class Booleans
 
   /**
    * Implementation of the logical negation
-   * 
+   * @since 0.7
    * @author Sylvain Hallé
    */
   public static class Not extends UnaryFunction<Boolean, Boolean>
@@ -212,6 +272,96 @@ public class Booleans
       return "¬";
     }
   }
+  
+  /**
+   * Implementation of the logical conjunction over a collection
+   * @since 0.10.3
+   * @author Sylvain Hallé
+   */
+  public static class BagAnd extends UnaryFunction<Object,Boolean>
+  {
+    public static final transient BagAnd instance = new BagAnd();
+    
+    protected BagAnd()
+    {
+      super(Object.class, Boolean.class);
+    }
+    
+    @Override
+    public Boolean getValue(Object o)
+    {
+      if (o.getClass().isArray())
+      {
+        Object[] a = (Object[]) o;
+        for (Object e : a)
+        {
+          if (!parseBoolValue(e))
+          {
+            return false;
+          }
+        }
+        return true;
+      }
+      if (o instanceof Collection)
+      {
+        Collection<?> a = (Collection<?>) o;
+        for (Object e : a)
+        {
+          if (!parseBoolValue(e))
+          {
+            return false;
+          }
+        }
+        return true;
+      }
+      return false;
+    }
+  }
+  
+  /**
+   * Implementation of the logical disjunction over a collection
+   * @since 0.10.3
+   * @author Sylvain Hallé
+   */
+  public static class BagOr extends UnaryFunction<Object,Boolean>
+  {
+    public static final transient BagOr instance = new BagOr();
+    
+    protected BagOr()
+    {
+      super(Object.class, Boolean.class);
+    }
+    
+    @Override
+    public Boolean getValue(Object o)
+    {
+      if (o.getClass().isArray())
+      {
+        Object[] a = (Object[]) o;
+        for (Object e : a)
+        {
+          if (parseBoolValue(e))
+          {
+            return true;
+          }
+        }
+        return false;
+      }
+      if (o instanceof Collection)
+      {
+        Collection<?> a = (Collection<?>) o;
+        for (Object e : a)
+        {
+          if (parseBoolValue(e))
+          {
+            return true;
+          }
+        }
+        return false;
+      }
+      return true;
+    }
+  }
 
   /**
    * Attempts to convert an object into a Boolean
@@ -219,6 +369,7 @@ public class Booleans
    * @param o
    *          The object
    * @return The Boolean value
+   * @since 0.7
    */
   public static boolean parseBoolValue(Object o)
   {

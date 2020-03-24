@@ -24,6 +24,7 @@ import ca.uqac.lif.azrael.Printable;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.FutureDone;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,8 +60,33 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          corresponding object fetched from this map before evaluating the
    *          function
    */
+  /*@ pure @*/ public void evaluate(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
+  {
+    evaluate(inputs, outputs, context, null);
+  }
+  
+  /**
+   * Evaluates the outputs of the function, given some inputs
+   * 
+   * @param inputs
+   *          The arguments of the function. The size of the array should be equal
+   *          to the function's declared input arity.
+   * @param outputs
+   *          The outputs of the function. The size of the array returned should
+   *          be equal to the function's declared output arity.
+   * @param context
+   *          The context in which the evaluation is done. If the function's
+   *          arguments contains placeholders, they will be replaced by the
+   *          corresponding object fetched from this map before evaluating the
+   *          function
+   * @param tracker
+   *          An event tracker to record associations between inputs and outputs.
+   *          This argument is optional and may be null.
+   */
   /*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
-      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context);
+      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context,
+      /*@ null@ */ EventTracker tracker);
 
   /**
    * Evaluates the outputs of the function, given some inputs
