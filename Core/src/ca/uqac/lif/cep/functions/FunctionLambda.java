@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.functions;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 
 /**
  * A function defined based on a lambda expression
@@ -74,7 +75,7 @@ public class FunctionLambda extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
   {
     if (m_unary != null)
     {

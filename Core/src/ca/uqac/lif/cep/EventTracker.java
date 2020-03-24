@@ -183,7 +183,7 @@ public interface EventTracker
   
   /**
    * Gets a copy of the event tracker
-   * @return
+   * @return A copy of this event tracker
    */
   public EventTracker getCopy();
 }
