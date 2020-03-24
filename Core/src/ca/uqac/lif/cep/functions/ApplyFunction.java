@@ -44,7 +44,7 @@ public class ApplyFunction extends UniformProcessor
    * The object responsible for the computation
    */
   protected Function m_function;
-  
+
   /**
    * A shift tracker
    * @since 0.10.3
@@ -140,7 +140,7 @@ public class ApplyFunction extends UniformProcessor
     super.duplicateInto(af);
     af.m_function = m_function.duplicate(with_state);
   }
-  
+
   /**
    * @since 0.10.2
    */
@@ -149,7 +149,7 @@ public class ApplyFunction extends UniformProcessor
   {
     return m_function;
   }
-  
+
   /**
    * @since 0.10.2
    */
@@ -159,7 +159,7 @@ public class ApplyFunction extends UniformProcessor
     Function f = (Function) o;
     return new ApplyFunction(f);
   }
-  
+
   /**
    * Simple tracker proxy that records associations from the underlying function,
    * and shifts its input/output by the current position in the input/output stream
@@ -170,24 +170,33 @@ public class ApplyFunction extends UniformProcessor
     @Override
     public void associateTo(int id, NodeFunction f, int out_stream_index, int out_stream_pos)
     {
-      m_eventTracker.associateTo(getId(), f, out_stream_index, m_outputCount);
+      if (m_eventTracker != null)
+      {
+        m_eventTracker.associateTo(getId(), f, out_stream_index, m_outputCount);
+      }
     }
 
     @Override
     public void associateToInput(int id, int in_stream_index, int in_stream_pos,
         int out_stream_index, int out_stream_pos)
     {
-      m_eventTracker.associateToInput(getId(), in_stream_index, m_inputCount,
-          out_stream_index, m_outputCount);
+      if (m_eventTracker != null)
+      {
+        m_eventTracker.associateToInput(getId(), in_stream_index, m_inputCount,
+            out_stream_index, m_outputCount);
+      }
     }
 
     @Override
     public void associateToOutput(int id, int in_stream_index, int in_stream_pos,
         int out_stream_index, int out_stream_pos)
     {
-      m_eventTracker.associateToOutput(getId(), in_stream_index, m_inputCount, 
-          out_stream_index, m_outputCount);
-      
+      if (m_eventTracker != null)
+      {
+        m_eventTracker.associateToOutput(getId(), in_stream_index, m_inputCount, 
+            out_stream_index, m_outputCount);
+      }
+
     }
 
     @Override
