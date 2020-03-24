@@ -52,7 +52,7 @@
     <filename>beepbeep-3.jar</filename>
     <withdoc>false</withdoc>
     <withdeps>true</withdeps>
-    <withsrc>true</withsrc>
+    <withsrc>false</withsrc>
   </jar>
   
   <!--
