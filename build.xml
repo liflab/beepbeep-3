@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
     AntRun, a general-purpose Ant build script
-    Copyright (C) 2015-2019  Sylvain Hallé
+    Copyright (C) 2015-2020  Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.5.1"/>
+  <property name="antrun.version" value="1.5.3"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -39,6 +39,9 @@
   
   <!-- The project's version number -->
   <property name="build.version" value="1.0"/>
+  
+  <!-- The target JDK version for the build -->
+  <property name="build.targetjdk" value="1.6"/>
   
   <!-- The folder where libraries (ant-contrib, etc.) will be downloaded
        if necessary -->
@@ -94,7 +97,7 @@
   <!-- The filename pattern to recognize test files -->
   <property name="build.test.filenamepattern" value="**/*.java"/>
   
-  <!-- Location of the Java 6 boot classpath. If this is not set, the compiler
+  <!-- Location of the Java boot classpath. If this is not set, the compiler
        will resort to the default boot classpath. -->
   <property environment="env"/>
   <property name="java6.boot.classpath" value="${env.JAVA6_BOOTCLASSES}"/>
@@ -105,7 +108,7 @@
   <!-- Target: initialization
        All other targets should ultimately
        depend on this one (except perhaps very simple ones such as
-       "clean".
+       "clean" and "wipe".
   -->
   <target name="init" depends="ant-contrib,xmltask"
     description="Initialize the project">
@@ -183,10 +186,10 @@
   <!-- Target: compile
        Compiles the main project
   -->
-  <target name="compile" depends="init,junit,check-rt" description="Compile the sources">
+  <target name="compile" depends="init,junit,check-rt,download-deps" description="Compile the sources">
     <mkdir dir="${build.bindir}"/>
     <javac
-      target="1.6" source="1.6"
+      target="${build.targetjdk}" source="${build.targetjdk}"
       bootclasspath="${java6.boot.classpath}"
       srcdir="${build.srcdir}"
       destdir="${build.bindir}"
@@ -331,6 +334,12 @@
     <fail if="test.failed"/>
   </target>
   
+  <!-- Target: all
+       Downloads deps, compiles, runs tests, creates JAR
+  -->
+  <target name="all" depends="init,test,jar" description="Setup, compile, run tests, create JAR">
+  </target>
+  
   <!-- Target: install-deps
        Copies whatever was fetched by the download-deps task into the
        system's extension folder. This task should probably be run as
@@ -345,14 +354,27 @@
   <!-- Target: clean
        Wipes any temporary files or directories
   -->
-  <target name="clean" description="Clean the project">
+  <target name="wipe" description="Wipes the project: deletes everything but sources">
     <delete>
-      <fileset dir="." includes="**/*.xml~"/>
+      <fileset dir="." includes="**/*~"/>
     </delete>
     <delete dir="${build.libdir}"/>
     <delete dir="${build.bindir}"/>
     <delete dir="${build.docdir}"/>
     <delete dir="${build.depdir}"/>
+    <delete dir="${test.reportdir}"/>
+    <delete dir="${coverage.reportdir}"/>
+    <delete file="jacoco.exec"/>
+  </target>
+  
+  <!-- Target: clean
+       Deletes compiled files and test reports
+  -->
+  <target name="clean" description="Cleans compiled files and test reports">
+    <delete>
+      <fileset dir="." includes="**/*~"/>
+    </delete>
+    <delete dir="${build.bindir}"/>
     <delete dir="${test.reportdir}"/>
     <delete dir="${coverage.reportdir}"/>
     <delete file="jacoco.exec"/>
@@ -461,7 +483,7 @@
   </condition>
   <target name="jacoco" if="${jacoco.absent}" description="Install JaCoCo if not present">
     <mkdir dir="${build.libdir}"/>
-    <get src="http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.8.1/jacoco-0.8.1.zip" dest="${build.libdir}/jacoco.zip"/>
+    <get src="http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.8.5/jacoco-0.8.5.zip" dest="${build.libdir}/jacoco.zip"/>
     <unzip src="${build.libdir}/jacoco.zip" dest="${build.libdir}">
       <patternset>
         <include name="**/*.jar"/>
