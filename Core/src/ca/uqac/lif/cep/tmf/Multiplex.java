@@ -149,10 +149,13 @@ public class Multiplex extends Processor
       }
       for (Pullable p : m_inputPullables)
       {
-        Object o = p.pull();
-        if (o != null)
+        if (p.hasNext())
         {
-          m_outputQueues[0].add(o);
+          Object o = p.pull();
+          if (o != null)
+          {
+            m_outputQueues[0].add(o);
+          }
         }
       }
       // The next instruction may throw a NoSuchElementException.
