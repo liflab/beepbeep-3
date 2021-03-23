@@ -26,7 +26,7 @@ file `beepbeep-3.jar`, which is the minimal file you need to run BeepBeep on
 your system.
 
 BeepBeep tries to have as few dependencies as possible. However, the
-following companion library needs to be installed for BeepBeep to
+following companion libraries need to be installed for BeepBeep to
 compile and run:
 
 - [Azrael](https://github.com/sylvainhalle/Azrael), a library for
@@ -111,9 +111,10 @@ by `ant download-deps`.)
 Developing BeepBeep using Eclipse                                {#eclipse}
 ---------------------------------
 
-If you wish to develop BeepBeep in Eclipse, please follow the
-[detailed instructions](https://liflab.github.io/beepbeep-3/guide/building-eclipse.html)
-(with screenshots and all) found in the online user guide.
+If you are using Eclipse to develop with BeepBeep, please refer to
+the dedicated tutorial [Installing and Configuring in
+Eclipse](https://docs.google.com/document/d/1o8dPn-1eEWmOzwdeAr_7eqa88iKrYmL63-rGtkloU6k/edit?usp=sharing),
+written by Jalves Nicacio.
 
 In short:
 
@@ -129,7 +130,7 @@ Then, setup the build path for each project:
 - `Core` requires the Bullwinkle library (see above)
 - `CoreTest` depends on `Core` and requires the JUnit 4 library
 - Each of the palette folders depend on `Core` and require the JUnit
-  4 library
+  *4* library
 - In addition, some of the palette projects may have other
   dependencies; please refer to their individual documentation
 
@@ -142,7 +143,7 @@ restructured, the API may change, and so on. This is R&D!
 About the author                                                   {#about}
 ----------------
 
-BeepBeep 3 was written by [Sylvain Hallé](http://leduotang.ca/sylvain),
+BeepBeep 3 was written by [Sylvain Hallé](https://leduotang.ca/sylvain),
 full professor at Université du Québec à Chicoutimi, Canada. Part of
 this work has been funded by the Canada Research Chair in Software
 Specification, Testing and Verification and the
