@@ -25,15 +25,6 @@ Compiling the project contained in the present repository generates the
 file `beepbeep-3.jar`, which is the minimal file you need to run BeepBeep on
 your system.
 
-BeepBeep tries to have as few dependencies as possible. However, the
-following companion libraries need to be installed for BeepBeep to
-compile and run:
-
-- [Azrael](https://github.com/sylvainhalle/Azrael), a library for
-  serializing objects in various formats
-- [Petit Poucet](https://github.com/liflab/petitpoucet), a library for
-  managing data traceability
-
 ### Extensions
 
 BeepBeep's engine contains very few processors. In typical use cases,
