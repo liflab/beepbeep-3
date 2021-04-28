@@ -53,7 +53,7 @@ public class Main
   public static void main(String[] args)
   {
     System.out.println("BeepBeep 3 v" + formatVersion() + " - An event stream processing engine");
-    System.out.println("(C) 2008-2020 Laboratoire d'informatique formelle");
+    System.out.println("(C) 2008-2021 Laboratoire d'informatique formelle");
     System.out.println("Université du Québec à Chicoutimi, Canada");
     System.exit(0);
   }
