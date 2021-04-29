@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2021 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -65,7 +65,7 @@ public class Cumulate extends ApplyFunction
             // ...and to the previous output event
             // -1 and -2 since the count has already been incremented by the
             // call to super.compute() above
-            associateToOutput(j, m_outputCount - 2, k, m_outputCount - 1);
+            associateToInput(j, m_outputCount - 2, k, m_outputCount - 1);
 
           }
         }

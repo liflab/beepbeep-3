@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2021 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -77,16 +77,6 @@ public class ApplyFunction extends UniformProcessor
     try
     {
       m_function.evaluate(inputs, outputs, m_context, m_shiftTracker);
-      if (m_eventTracker != null)
-      {
-        for (int i = 0; i < inputs.length; i++)
-        {
-          for (int j = 0; j < outputs.length; j++)
-          {
-            associateToInput(i, m_inputCount, j, m_outputCount);
-          }
-        }
-      }
       m_inputCount++;
       m_outputCount++;
     }
@@ -191,12 +181,7 @@ public class ApplyFunction extends UniformProcessor
     public void associateToOutput(int id, int in_stream_index, int in_stream_pos,
         int out_stream_index, int out_stream_pos)
     {
-      if (m_eventTracker != null)
-      {
-        m_eventTracker.associateToOutput(getId(), in_stream_index, m_inputCount, 
-            out_stream_index, m_outputCount);
-      }
-
+      // Nothing to do
     }
 
     @Override

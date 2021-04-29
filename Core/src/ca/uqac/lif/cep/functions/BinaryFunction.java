@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2021 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -106,8 +106,8 @@ public abstract class BinaryFunction<T, V, U> extends Function
    */
   protected void trackAssociations(T x, V y, U z, EventTracker tracker)
   {
-    tracker.associateToOutput(-1, 0, 0, 0, 0);
-    tracker.associateToOutput(-1, 1, 0, 0, 0);
+    tracker.associateToInput(-1, 0, 0, 0, 0);
+    tracker.associateToInput(-1, 1, 0, 0, 0);
   }
 
   @Override
