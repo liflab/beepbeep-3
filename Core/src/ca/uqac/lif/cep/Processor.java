@@ -78,7 +78,7 @@ public abstract class Processor implements DuplicableProcessor,
   /**
    * A string used to identify the program's version
    */
-  public static final transient String s_versionString = "0.7";
+  public static final transient String s_versionString = "0.10.5";
 
   /**
    * An array of input event queues. This is where the input events will be stored
