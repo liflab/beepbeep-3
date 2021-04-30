@@ -8,6 +8,8 @@ addons:
     organization: "liflab"
     token:
       secure: "sx4FZ5hR8wR5xtF1HWKwr50LB1dXBFLcU1Bmj6AGhYFHUTS+07V6u0PEVRtE1pUV42S5JhvmwAkOMTN0t2Jk4Kx5X0C8ZTVQnBZ/z9C8PxPFVWdo77v46zC+iXTm4FzToYN6kNz523uzpjjMN89C8NefuE0kdMpCyMbc/O6xJ5qciM9GbimbPY/6QBTXp5LLh+zb/rmGbj1V6P/BVfGtOVEGoANi6K6XGRKnIPIhgRv/bvI8sZMdF9OpTuOcdvArmPPTXw+smvhXwpohKei7jkUQZm9t+XvA5kBr3hPtM4XhxAhzr5vv82+DoQlW0h8/jZ8230bRl4p8eJUZXrSdx5oDg1PccSDGpisuauQQG/MjiyszWhZU5IVGRVY54a0K8FUxcn7PX0AxKwLd/a7iF/WXlV07g2c0z8B6cCC0t7CSZ6JAaT92E31F1w8Nn4kodBPkQ5imkJuxOTEMtIzPUB4Tr54991DEeHPRbyF4lC8+oxJVmCBcIAtwWQEIYKSyJMkvpDZ+kQEOIRGP+NH5K2+5bLDAo89oxRYkVgBa/Td1DkuzZ9BKWNnfocbd9WcXzSCnkOb5d85HQZDT8QZg8mjzL2qafo2hN3M8T+wwAFEtv3dct0t6nIp10y4E8qMi9h4c1+ZHoEbdhUuqewBoeyqlh5n23wTENrgI0etNe94="
+before_install:
+   - sudo apt-get install ant-optional
 script:
 - ant
 - ant test
