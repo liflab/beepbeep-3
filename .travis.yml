@@ -13,4 +13,4 @@ before_install:
 script:
 - ant
 - ant test
-- sonar-scanner -X
+- sonar-scanner
