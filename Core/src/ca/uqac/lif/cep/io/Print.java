@@ -105,7 +105,7 @@ public class Print extends Sink
    *          The prefix; can be any string and include ANSI escape sequences
    * @return This print processor
    */
-  public /* @NotNull */ Print setPrefix(/* @NotNull */ String prefix)
+  public /*@ non_null @*/ Print setPrefix(/*@ non_null @*/ String prefix)
   {
     m_prefix = prefix;
     return this;
@@ -121,7 +121,7 @@ public class Print extends Sink
    *          The suffix; can be any string and include ANSI escape sequences
    * @return This print processor
    */
-  public /* @NotNull */ Print setSuffix(/* @NotNull */ String suffix)
+  public /*@ non_null @*/ Print setSuffix(/*@ non_null @*/ String suffix)
   {
     m_suffix = suffix;
     return this;
@@ -136,7 +136,7 @@ public class Print extends Sink
    *          The separator; can be any string and include ANSI escape sequences
    * @return This print processor
    */
-  public /* @NotNull */ Print setSeparator(/* @NotNull */ String separator)
+  public /*@ non_null @*/ Print setSeparator(/*@ non_null @*/ String separator)
   {
     m_separator = separator;
     return this;
@@ -148,7 +148,7 @@ public class Print extends Sink
    * 
    * @return The print stream
    */
-  public /* @NotNull */ PrintStream getPrintStream()
+  public /*@ non_null @*/ PrintStream getPrintStream()
   {
     return m_out;
   }
@@ -160,7 +160,7 @@ public class Print extends Sink
    *          The print stream
    * @return This Print processor
    */
-  public Print setPrintStream(/* @NotNull */ PrintStream printer)
+  public Print setPrintStream(/*@ non_null @*/ PrintStream printer)
   {
     m_out = printer;
     return this;
@@ -240,7 +240,7 @@ public class Print extends Sink
    * @param ps The print stream to print into
    * @param o The object to print
    */
-  protected void prettyPrint(/* @NotNull */ PrintStream ps, /* @NotNull */ Object o)
+  protected void prettyPrint(/*@ non_null @*/ PrintStream ps, /*@ non_null @*/ Object o)
   {
     if (o instanceof Number)
     {
@@ -259,7 +259,7 @@ public class Print extends Sink
    * @param n
    *          The number
    */
-  protected void prettyPrint(/* @NotNull */ Number n)
+  protected void prettyPrint(/*@ non_null @*/ Number n)
   {
     if (n.floatValue() == Math.round(n.floatValue()))
     {
@@ -280,7 +280,7 @@ public class Print extends Sink
   }
 
   @Override
-  public /* @NotNull */ Print duplicate(boolean with_state)
+  public /*@ non_null @*/ Print duplicate(boolean with_state)
   {
     Print print = new Print(getInputArity(), m_out);
     print.m_prefix = m_prefix;

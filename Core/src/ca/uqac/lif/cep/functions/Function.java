@@ -86,7 +86,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    */
   /*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context,
-      /*@ null@ */ EventTracker tracker);
+      /*@ null @*/ EventTracker tracker);
 
   /**
    * Evaluates the outputs of the function, given some inputs
@@ -191,7 +191,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    * @param index
    *          The index of the input to query
    */
-  /*@ pure @*/ public abstract void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, 
+  /*@ pure @*/ public abstract void getInputTypesFor(/*@ non_null @*/ Set<Class<?>> classes, 
       int index);
 
   /**

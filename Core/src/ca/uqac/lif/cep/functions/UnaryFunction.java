@@ -61,7 +61,7 @@ public abstract class UnaryFunction<T, U> extends Function
   @SuppressWarnings("unchecked")
   @Override
   /* @ requires inputs.length == 1 */
-  public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs, 
+  public void evaluate(/*@ non_null @*/ Object[] inputs, Object[] outputs, 
       /*@ null @*/ Context context, /*@ null @*/ EventTracker tracker)
   {
     T in = (T) inputs[0];
@@ -107,7 +107,7 @@ public abstract class UnaryFunction<T, U> extends Function
   }
 
   @Override
-  public final void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, int index)
+  public final void getInputTypesFor(/*@ non_null @*/ Set<Class<?>> classes, int index)
   {
     classes.add(m_inputType);
   }

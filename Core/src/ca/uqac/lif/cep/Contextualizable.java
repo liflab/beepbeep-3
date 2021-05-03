@@ -31,7 +31,7 @@ public interface Contextualizable
    * @param context
    *          The context to add
    */
-  public void setContext(/* @Null */ Context context);
+  public void setContext(/*@ null @*/ Context context);
 
   /**
    * Adds an object to the object's context
@@ -41,12 +41,12 @@ public interface Contextualizable
    * @param value
    *          The object
    */
-  public void setContext(/* @NotNull */ String key, /* @Null */ Object value);
+  public void setContext(/*@ non_null @*/ String key, /*@ null @*/ Object value);
 
   /**
    * Gets the context associated to this object
    * 
    * @return The context
    */
-  public /* @NotNull */ Context getContext();
+  public /*@ non_null @*/ Context getContext();
 }

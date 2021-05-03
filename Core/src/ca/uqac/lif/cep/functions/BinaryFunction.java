@@ -72,7 +72,7 @@ public abstract class BinaryFunction<T, V, U> extends Function
   @SuppressWarnings("unchecked")
   @Override
   /* @ requires inputs.length == 2 */
-  public void evaluate(/* @NonNull */ Object[] inputs, Object[] outputs,
+  public void evaluate(/*@ non_null @*/ Object[] inputs, Object[] outputs,
       /*@ null @*/ Context context, EventTracker tracker)
   {
     outputs[0] = getValue((T) inputs[0], (V) inputs[1]);
@@ -158,7 +158,7 @@ public abstract class BinaryFunction<T, V, U> extends Function
   }
 
   @Override
-  public final void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, int index)
+  public final void getInputTypesFor(/*@ non_null @*/ Set<Class<?>> classes, int index)
   {
     if (index == 0)
     {

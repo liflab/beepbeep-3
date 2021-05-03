@@ -295,7 +295,7 @@ public class Connector
         // Skip type checking
         return;
       }
-      /* @NotNull */ Set<Class<?>> in_classes = p2.getInputType(j);
+      /*@ non_null @*/ Set<Class<?>> in_classes = p2.getInputType(j);
       if (in_classes.isEmpty())
       {
         if (s_checkForBounds)
