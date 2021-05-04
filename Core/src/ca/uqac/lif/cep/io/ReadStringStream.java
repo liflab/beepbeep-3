@@ -49,7 +49,7 @@ public class ReadStringStream extends ReadInputStream
    * @param is
    *          The input stream to read from
    */
-  public ReadStringStream(/* @NotNull */ InputStream is)
+  public ReadStringStream(/*@ non_null @*/ InputStream is)
   {
     super(is);
     m_inputStreamReader = new InputStreamReader(is);

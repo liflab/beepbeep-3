@@ -65,7 +65,7 @@ public class TurnInto extends UniformProcessor
   }
 
   @Override
-  public final void getInputTypesFor(/* @NotNull */ Set<Class<?>> classes, int index)
+  public final void getInputTypesFor(/*@ non_null @*/ Set<Class<?>> classes, int index)
   {
     classes.add(Object.class);
   }

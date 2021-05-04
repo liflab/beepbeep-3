@@ -106,7 +106,7 @@ public interface EventTracker
    *          The position in the stream corresponding to this event
    * @return The provenance tree
    */
-  public /* @NotNull */ ProvenanceNode getProvenanceTree(int proc_id, int stream_index,
+  public /*@ non_null @*/ ProvenanceNode getProvenanceTree(int proc_id, int stream_index,
       int stream_pos);
 
   public void setConnection(int output_proc_id, int output_stream_index, int input_proc_id,

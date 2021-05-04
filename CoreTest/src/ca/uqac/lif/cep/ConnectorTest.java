@@ -302,7 +302,7 @@ public class ConnectorTest
     }
 
     @Override
-    public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+    public void getInputTypesFor(/*@ non_null @*/ Set<Class<?>> classes, int index)
     {
       classes.add(Number.class);
     }
@@ -348,7 +348,7 @@ public class ConnectorTest
     }
 
     @Override
-    public void getInputTypesFor(/*@NotNull*/ Set<Class<?>> classes, int index)
+    public void getInputTypesFor(/*@ non_null @*/ Set<Class<?>> classes, int index)
     {
       classes.add(String.class);
     }

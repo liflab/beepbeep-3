@@ -254,7 +254,7 @@ public abstract class Processor implements DuplicableProcessor,
   }
 
   @Override
-  public synchronized void setContext(/* @Null */ Context context)
+  public synchronized void setContext(/*@ null @*/ Context context)
   {
     // As the context map is created only on demand, we must first
     // check if a map already exists and create it if not
@@ -638,7 +638,7 @@ public abstract class Processor implements DuplicableProcessor,
    * @return The event tracker, or <tt>null</tt> of no event tracker is associated
    *         to this processor
    */
-  public final /* @Null */ EventTracker getEventTracker()
+  public final /*@ null @*/ EventTracker getEventTracker()
   {
     return m_eventTracker;
   }
@@ -651,7 +651,7 @@ public abstract class Processor implements DuplicableProcessor,
    *          existing tracker
    * @return This processor
    */
-  public Processor setEventTracker(/* @Null */ EventTracker tracker)
+  public Processor setEventTracker(/*@ null @*/ EventTracker tracker)
   {
     m_eventTracker = tracker;
     return this;

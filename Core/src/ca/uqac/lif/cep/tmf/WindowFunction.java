@@ -69,7 +69,7 @@ public class WindowFunction extends SynchronousProcessor
    * @param f
    *          The function. Its output arity must be exactly 1.
    */
-  public WindowFunction(/* @NonNull */ Function f)
+  public WindowFunction(/*@ non_null @*/ Function f)
   {
     this(f.getInputArity());
     m_function = f;
