@@ -29,8 +29,8 @@ import java.util.concurrent.Future;
  * {@link SynchronousProcessor}, can bring performance improvements when the
  * processor has an input/output arity of exactly 1. In such a case, the
  * {@link UnaryPullable} and {@link UnaryPushable} objects work about twice
- * as fast as <tt>SynchronousProcessor</tt>'s {@link OutputPullable} and
- * {@link InputPushable} objects.
+ * as fast as {@link SynchronousProcessor.OutputPullable} and
+ * {@link SynchronousProcessor.InputPushable} objects.
  * 
  * @author Sylvain Hallé
  * @since 0.6
@@ -160,12 +160,12 @@ public abstract class UniformProcessor extends SynchronousProcessor
   /**
    * A special type of Pushable for uniform processors with an input and output
    * arity of exactly 1. In such a case, the pushable object can operate in a much
-   * simpler way than the generic {@link InputPushable} defined by
+   * simpler way than the generic {@link SynchronousProcessor.InputPushable} defined by
    * {@link SynchronousProcessor}, by foregoing the use of input and output queues
    * completely.
    * <p>
    * Simple experiments with a {@link Passthrough} processor have shown a speed
-   * boost of about 3&times; compared to {@link InputPushable}.
+   * boost of about 3&times; compared to {@link SynchronousProcessor.InputPushable}.
    */
   public class UnaryPushable implements Pushable
   {
@@ -237,12 +237,12 @@ public abstract class UniformProcessor extends SynchronousProcessor
   /**
    * A special type of Pushable for uniform processors with an input and output
    * arity of exactly 1. In such a case, the pullable object can operate in a much
-   * simpler way than the generic {@link OutputPullable} defined by
+   * simpler way than the generic {@link SynchronousProcessor.OutputPullable} defined by
    * {@link SynchronousProcessor}, by foregoing the use of input and output queues
    * (almost) completely.
    * <p>
    * Simple experiments with a {@link Passthrough} processor have shown a speed
-   * boost of about 2.5&times; compared to {@link OutputPullable}.
+   * boost of about 2.5&times; compared to {@link SynchronousProcessor.OutputPullable}.
    */
   public class UnaryPullable implements Pullable
   {
