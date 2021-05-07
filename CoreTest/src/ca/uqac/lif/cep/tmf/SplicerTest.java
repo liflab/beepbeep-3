@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tmf;
 
 import static org.junit.Assert.*;
 
+import java.util.NoSuchElementException;
+
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Context;
@@ -64,10 +66,18 @@ public class SplicerTest
 		assertEquals(4, ((Integer) o).intValue());
 		o = p.pull();
 		assertEquals(5, ((Integer) o).intValue());
-		o = p.pull();
-		assertNull(o);
-		o = p.pull();
-		assertNull(o);
+                try {
+                        o = p.pull();
+                        throw new Error("expected NoSuchElementException");
+                } catch (NoSuchElementException e) {
+                        // expected behavior
+                }
+                try {
+                        o = p.pull();
+                        throw new Error("expected NoSuchElementException");
+                } catch (NoSuchElementException e) {
+                        // expected behavior
+                }
 		s.reset();
 		o = p.pull();
 		assertNotNull(o);
@@ -82,9 +92,17 @@ public class SplicerTest
 		assertEquals(4, ((Integer) o).intValue());
 		o = p.pull();
 		assertEquals(5, ((Integer) o).intValue());
-		o = p.pull();
-		assertNull(o);
-		o = p.pull();
-		assertNull(o);
+                try {
+                        o = p.pull();
+                        throw new Error("expected NoSuchElementException");
+                } catch (NoSuchElementException e) {
+                        // expected behavior
+                }
+                try {
+                        o = p.pull();
+                        throw new Error("expected NoSuchElementException");
+                } catch (NoSuchElementException e) {
+                        // expected behavior
+                }
 	}
 }

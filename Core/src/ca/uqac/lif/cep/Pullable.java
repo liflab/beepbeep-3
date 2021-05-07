@@ -44,8 +44,8 @@ import java.util.Iterator;
  * necessary to produce something. This means that one call to, e.g.
  * {@link #pull()} may consume more than one event from a processor's input.
  * Therefore, calls to {@link #hasNext()} never return <code>MAYBE</code> (only
- * <code>YES</code> or <code>NO</code>), and {@link #pull()} returns
- * <code>null</code> only if no event will ever be output in the future (this
+ * <code>YES</code> or <code>NO</code>), and {@link #pull()} throws
+ *  {@code NoSuchElementException} only if no event will ever be output in the future (this
  * occurs, for example, when pulling events from a file, and the end of the file
  * has been reached).</li>
  * </ul>
@@ -98,14 +98,16 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
    * {@link #hasNext()} returns <code>YES</code>, and <code>null</code> is
    * returned otherwise.
    * 
-   * @return An event, or <code>null</code> if none could be retrieved
+   * @return An event
+   * @throws NoSuchElementException if the iteration has no more elements
    */
   public Object pull();
 
   /**
    * Synonym of {@link #pull()}.
    * 
-   * @return An event, or <code>null</code> if none could be retrieved
+   * @return An event
+   * @throws NoSuchElementException if the iteration has no more elements
    */
   @Override
   public Object next();
