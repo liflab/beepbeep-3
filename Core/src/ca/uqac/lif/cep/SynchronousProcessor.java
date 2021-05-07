@@ -332,7 +332,7 @@ public abstract class SynchronousProcessor extends Processor
     {
       if (!hasNext())
       {
-        return null;
+        throw new NoSuchElementException();
       }
       synchronized (m_outputQueues)
       {

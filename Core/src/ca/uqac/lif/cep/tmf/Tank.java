@@ -21,6 +21,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.concurrent.Future;
 
 /**
@@ -118,6 +119,10 @@ public class Tank extends Processor
     {
       synchronized (m_inputQueues[0])
       {
+        if (m_inputQueues[0].isEmpty())
+        {
+          throw new NoSuchElementException();
+        }
         return m_inputQueues[0].poll();
       }
     }
