@@ -103,11 +103,6 @@ public class Bags
      */
     protected UnaryFunction<?, Boolean> m_condition;
 
-    protected FilterElements()
-    {
-      super(Object.class, Object.class);
-    }
-
     /**
      * Gets a new instance of the function
      * 
@@ -116,7 +111,7 @@ public class Bags
      */
     public FilterElements(UnaryFunction<?, Boolean> condition)
     {
-      this();
+      super(Object.class, Object.class);
       m_condition = condition;
     }
 
@@ -454,14 +449,9 @@ public class Bags
      */
     protected Function m_function;
 
-    public ApplyToAll()
-    {
-      super(Object.class, Object.class);
-    }
-
     public ApplyToAll(Function function)
     {
-      this();
+      super(Object.class, Object.class);
       m_function = function;
     }
 
