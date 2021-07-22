@@ -187,7 +187,7 @@ public class ApplyFunction extends UniformProcessor
     @Override
     public ProvenanceNode getProvenanceTree(int proc_id, int stream_index, int stream_pos)
     {
-      return null;
+      throw new Error("ShiftTracker.getProvenanceTree should not be called");
     }
 
     @Override
