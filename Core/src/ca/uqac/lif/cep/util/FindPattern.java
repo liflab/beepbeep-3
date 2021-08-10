@@ -102,28 +102,22 @@ public class FindPattern extends SynchronousProcessor
     int last_end = 0;
     while (mat.find())
     {
+      String matched;
       if (mat.groupCount() > 0)
       {
-        if (m_trim)
+        matched = mat.group(1);
+        if (matched == null)
         {
-          outputs.add(new Object[] { mat.group(1).trim() });
+          throw new Error("Capturing group 1 of " + m_pattern + "did not match in " + m_contents);
         }
-        else
-        {
-          outputs.add(new Object[] { mat.group(1) });
-        }
+      } else {
+        matched = mat.group();
       }
-      else
+      if (m_trim)
       {
-        if (m_trim)
-        {
-          outputs.add(new Object[] { mat.group(0).trim() });
-        }
-        else
-        {
-          outputs.add(new Object[] { mat.group(0) });
-        }
+        matched = matched.trim();
       }
+      outputs.add(new Object[] { matched });
       last_end = mat.end();
     }
     m_contents = m_contents.substring(last_end);
