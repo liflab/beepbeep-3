@@ -35,6 +35,12 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  */
 public class Cumulate extends ApplyFunction
 {
+  // This constructor is used for deserialization.
+  private Cumulate()
+  {
+    super(null);
+  }
+
   public Cumulate(CumulativeFunction<?> f)
   {
     super(f);
