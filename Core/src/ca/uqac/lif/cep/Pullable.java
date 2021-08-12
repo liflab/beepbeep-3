@@ -99,7 +99,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
    * returned otherwise.
    * 
    * @return An event
-   * @throws NoSuchElementException if the iteration has no more elements
+   * @throws java.util.NoSuchElementException if the iteration has no more elements
    */
   public Object pull();
 
@@ -107,7 +107,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
    * Synonym of {@link #pull()}.
    * 
    * @return An event
-   * @throws NoSuchElementException if the iteration has no more elements
+   * @throws java.util.NoSuchElementException if the iteration has no more elements
    */
   @Override
   public Object next();

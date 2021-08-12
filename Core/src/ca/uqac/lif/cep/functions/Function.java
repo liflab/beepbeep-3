@@ -52,7 +52,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          The arguments of the function. The size of the array should be equal
    *          to the function's declared input arity.
    * @param outputs
-   *          The outputs of the function. The size of the array returned should
+   *          The outputs of the function. The size of the array should
    *          be equal to the function's declared output arity.
    * @param context
    *          The context in which the evaluation is done. If the function's
@@ -73,7 +73,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          The arguments of the function. The size of the array should be equal
    *          to the function's declared input arity.
    * @param outputs
-   *          The outputs of the function. The size of the array returned should
+   *          The outputs of the function. The size of the array should
    *          be equal to the function's declared output arity.
    * @param context
    *          The context in which the evaluation is done. If the function's
@@ -95,7 +95,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          The arguments of the function. The size of the array should be equal
    *          to the function's declared input arity.
    * @param outputs
-   *          The outputs of the function. The size of the array returned should
+   *          The outputs of the function. The size of the array should
    *          be equal to the function's declared output arity. @ Any exception
    *          that may occur during the evaluation of a function
    */
@@ -112,7 +112,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          The arguments of the function. The size of the array should be equal
    *          to the function's declared input arity.
    * @param outputs
-   *          The outputs of the function. The size of the array returned should
+   *          The outputs of the function. The size of the array should
    *          be equal to the function's declared output arity.
    * @param context
    *          The context in which the evaluation is done. If the function's
@@ -125,7 +125,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
   /*@ pure @*/ public boolean evaluatePartial(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
   {
-    // Defer the call to evaluate if all the inputs are non-null
+    // Defer the call to evaluate if any input is null
     for (int i = 0; i < inputs.length; i++)
     {
       if (inputs[i] == null)
@@ -144,7 +144,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          The arguments of the function. The size of the array should be equal
    *          to the function's declared input arity.
    * @param outputs
-   *          The outputs of the function. The size of the array returned should
+   *          The outputs of the function. The size of the array should
    *          be equal to the function's declared output arity. @ Any exception
    *          that may occur during the evaluation of a function
    * @return <tt>true</tt> if the function succeeded in producing an output
