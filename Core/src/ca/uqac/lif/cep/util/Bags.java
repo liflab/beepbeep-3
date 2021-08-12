@@ -103,6 +103,7 @@ public class Bags
      */
     protected UnaryFunction<?, Boolean> m_condition;
 
+    // This constructor is used for deserialization.
     protected FilterElements()
     {
       super(Object.class, Object.class);
@@ -454,6 +455,7 @@ public class Bags
      */
     protected Function m_function;
 
+    // This constructor is used for deserialization.
     public ApplyToAll()
     {
       super(Object.class, Object.class);
