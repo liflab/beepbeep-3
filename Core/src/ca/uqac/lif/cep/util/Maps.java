@@ -130,7 +130,7 @@ public class Maps
      * @param key
      *          The key to get from the map
      */
-    protected Get(String key)
+    public Get(String key)
     {
       super(Map.class, Object.class);
       m_key = key;
