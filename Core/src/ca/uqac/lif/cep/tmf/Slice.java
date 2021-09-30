@@ -133,12 +133,10 @@ public class Slice extends AbstractSlice
       s = new Slice(m_slicingFunction.duplicate(with_state), m_processor.duplicate(with_state),
           m_cleaningFunction.duplicate(with_state));
     }
-    s.setContext(m_context);
-    s.m_explodeArrays = m_explodeArrays;
+    super.copyInto(s, with_state);
     if (with_state)
     {
-      throw new UnsupportedOperationException(
-          "Duplication with state not supported yet on this processor");
+    	s.m_lastValues.putAll(m_lastValues);
     }
     return s;
   }

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2020 Sylvain Hallé
+    Copyright (C) 2008-2021 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -342,7 +343,36 @@ public abstract class AbstractSlice extends SynchronousProcessor
   {
     return m_slices.size();
   }
-
+  
+  /**
+   * Copies the content of the current abstract slice processor into another
+   * instance.
+   * @param as The other instance of abstract slice
+   * @param with_state Whether the duplication is stateful or not
+   * @since 0.10.6
+   */
+  protected void copyInto(AbstractSlice as, boolean with_state)
+  {
+  	// We do not duplicate cleaning function as it is taken care of by the children's constructor
+  	as.m_explodeArrays = m_explodeArrays;
+  	as.m_processor = m_processor.duplicate(with_state);
+  	as.m_slicingFunction = m_slicingFunction.duplicate(with_state);
+    as.setContext(m_context);
+    for (Map.Entry<Object,Processor> e : m_slices.entrySet())
+    {
+    	Processor p_dup = e.getValue().duplicate(with_state);
+    	QueueSink qs = new QueueSink();
+    	Connector.connect(p_dup, qs);
+    	as.m_slices.put(e.getKey(), p_dup);
+    	as.m_sinks.put(e.getKey(), qs);
+    }
+    for (Map.Entry<Object,List<Integer>> e : m_sliceIndices.entrySet())
+    {
+    	List<Integer> list = new ArrayList<Integer>();
+    	list.addAll(e.getValue());
+    	as.m_sliceIndices.put(e.getKey(), list);
+    }
+  }
 
   /**
    * Dummy object telling the slicer that an event must be sent to all slices
@@ -355,13 +385,6 @@ public abstract class AbstractSlice extends SynchronousProcessor
     {
       super();
     }
-  }
-
-  @Override
-  public Processor duplicate(boolean with_state)
-  {
-    // TODO Auto-generated method stub
-    return null;
   }
   
   /**

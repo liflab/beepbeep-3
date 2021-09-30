@@ -67,6 +67,27 @@ public class SliceLast extends AbstractSlice
   {
     this(func, proc, null);
   }
+  
+  @Override
+  public SliceLast duplicate(boolean with_state)
+  {
+    SliceLast s = null;
+    if (m_cleaningFunction == null)
+    {
+      s = new SliceLast(m_slicingFunction.duplicate(with_state), m_processor.duplicate(with_state));
+    }
+    else
+    {
+      s = new SliceLast(m_slicingFunction.duplicate(with_state), m_processor.duplicate(with_state),
+          m_cleaningFunction.duplicate(with_state));
+    }
+    super.copyInto(s, with_state);
+    if (with_state)
+    {
+    	s.m_currentList.addAll(m_currentList);
+    }
+    return s;
+  }
 
   @Override
   protected boolean produceReturn(Queue<Object[]> outputs)

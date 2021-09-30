@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2021 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -82,7 +82,7 @@ public class SliceTest
 		assertEquals(0, in.getPosition());
 		assertEquals(sli, in.getProcessor());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSlicerPull() 
@@ -131,7 +131,7 @@ public class SliceTest
 		}
 		assertTrue(got_exception);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSlicerDuplicate() 
@@ -186,6 +186,63 @@ public class SliceTest
 
 	@SuppressWarnings("unchecked")
 	@Test
+	public void testSlicerDuplicateStateful() 
+	{
+		Slice sli = new Slice(Numbers.isEven, new Sum());
+		QueueSource source = new QueueSource().setEvents(1, 1, 6, 2, 3);
+		Connector.connect(source, sli);
+		Pullable p = sli.getPullableOutput();
+		Map<Object,Object> map;
+		assertEquals(0, sli.getActiveSliceCount());
+		map = (Map<Object,Object>) p.pull();
+		assertEquals(1.0f, map.get(false));
+		assertEquals(1, sli.getActiveSliceCount());
+		map = (Map<Object,Object>) p.pull();
+		assertEquals(2.0f, map.get(false));
+		assertEquals(1, sli.getActiveSliceCount());
+		map = (Map<Object,Object>) p.pull();
+		assertEquals(2.0f, map.get(false));
+		assertEquals(6.0f, map.get(true));
+		assertEquals(2, sli.getActiveSliceCount());
+		map = (Map<Object,Object>) p.pull();
+		assertEquals(2.0f, map.get(false));
+		assertEquals(8.0f, map.get(true));
+		assertEquals(2, sli.getActiveSliceCount());
+		map = (Map<Object,Object>) p.pull();
+		assertEquals(5.0f, map.get(false));
+		assertEquals(8.0f, map.get(true));
+		assertEquals(2, sli.getActiveSliceCount());
+		Slice sli2 = (Slice) sli.duplicate(true);
+		QueueSource source2 = new QueueSource().setEvents(0, 3, 1, 4);
+		Connector.connect(source2, sli2);
+		Pullable p2 = sli2.getPullableOutput();
+		map = (Map<Object,Object>) p2.pull();
+		assertEquals(5.0f, map.get(false));
+		assertEquals(8.0f, map.get(true));
+		assertEquals(2, sli.getActiveSliceCount());
+		map = (Map<Object,Object>) p2.pull();
+		assertEquals(8.0f, map.get(false));
+		assertEquals(8.0f, map.get(true));
+		assertEquals(2, sli.getActiveSliceCount());
+		// Check that the original slice is not impacted
+		map = (Map<Object,Object>) p.pull();
+		assertEquals(6.0f, map.get(false));
+		assertEquals(8.0f, map.get(true));
+		assertEquals(2, sli.getActiveSliceCount());
+		map = (Map<Object,Object>) p.pull();
+		assertEquals(7.0f, map.get(false));
+		assertEquals(8.0f, map.get(true));
+		assertEquals(2, sli.getActiveSliceCount());
+		// These methods should not do anything
+		p.start();
+		p.stop();
+		p.dispose();
+		assertEquals(0, p2.getPosition());
+		assertEquals(sli2, p2.getProcessor());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
 	public void testSlicerAll()
 	{
 		Slice sli = new Slice(EvenAll.instance, new Sum());
@@ -209,7 +266,7 @@ public class SliceTest
 		assertEquals(5.0f, map.get(false));
 		assertEquals(8.0f, map.get(true));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSlicerClean() 
@@ -258,7 +315,7 @@ public class SliceTest
 		}
 		assertTrue(got_exception);
 	}
-	
+
 	@Test(expected=PullableException.class)
 	public void testSlicerException() 
 	{
@@ -268,29 +325,29 @@ public class SliceTest
 		Pullable p = sli.getPullableOutput();
 		p.pull();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSliceLastPush()
 	{
-	  SliceLast sl = new SliceLast(EvenAll.instance, new Passthrough());
-	  QueueSink sink = new QueueSink();
-	  Connector.connect(sl, sink);
-	  Queue<Object> q = sink.getQueue();
-	  Pushable p = sl.getPushableInput();
-	  p.push(3);
-    List<Object> ol = (List<Object>) q.remove();
-	  assertEquals(1, ol.size());
-	  q.clear();
-	  p.push(1);
-	  assertNull(q.poll());
-	  p.push(6);
-	  ol = (List<Object>) q.remove();
-	  assertEquals(1, ol.size());
-    q.clear();
-    p.push(2);
-    ol = (List<Object>) q.remove();
-    assertEquals(2, ol.size());
+		SliceLast sl = new SliceLast(EvenAll.instance, new Passthrough());
+		QueueSink sink = new QueueSink();
+		Connector.connect(sl, sink);
+		Queue<Object> q = sink.getQueue();
+		Pushable p = sl.getPushableInput();
+		p.push(3);
+		List<Object> ol = (List<Object>) q.remove();
+		assertEquals(1, ol.size());
+		q.clear();
+		p.push(1);
+		assertNull(q.poll());
+		p.push(6);
+		ol = (List<Object>) q.remove();
+		assertEquals(1, ol.size());
+		q.clear();
+		p.push(2);
+		ol = (List<Object>) q.remove();
+		assertEquals(2, ol.size());
 	}
 
 	public static class Sum extends Cumulate
@@ -330,14 +387,14 @@ public class SliceTest
 			}
 			return x.intValue() % 2 == 0;
 		}
-		
+
 		@Override
 		public EvenAll duplicate(boolean with_state)
 		{
 			return instance;
 		}
 	}
-	
+
 	public static class ThrowException extends UnaryFunction<Number,Object>
 	{
 		public static final ThrowException instance = new ThrowException();
