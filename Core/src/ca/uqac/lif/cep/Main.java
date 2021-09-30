@@ -37,7 +37,7 @@ public class Main
   /**
    * Revision version number
    */
-  public static final int s_revisionVersion = 5;
+  public static final int s_revisionVersion = 6;
 
   private Main()
   {
