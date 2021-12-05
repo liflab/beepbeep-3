@@ -666,13 +666,11 @@ public class GroupProcessor extends Processor
     @Override
     public void notifyEndOfTrace() throws PushableException
     {
-      // Nothing to do if the Pushable has already been notified
-      if (m_hasBeenNotifiedOfEndOfTrace)
+      m_hasBeenNotifiedOfEndOfTrace[m_position] = true;
+      if (!allNotifiedEndOfTrace())
       {
         return;
       }
-      m_hasBeenNotifiedOfEndOfTrace = true;
-
       // Notify the end of trace on all the inner Pushables
       for (Pushable p : m_inputPushables)
       {

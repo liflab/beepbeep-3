@@ -329,6 +329,27 @@ public class UtilTest
 	}
 	
 	@Test
+	public void testPack1()
+	{
+	  Lists.Pack pack = new Lists.Pack();
+	  Pushable p1 = pack.getPushableInput(0);
+	  Pushable p2 = pack.getPushableInput(1);
+	  QueueSink sink = new QueueSink();
+	  Connector.connect(pack, sink);
+	  Queue<Object> q = sink.getQueue();
+	  p1.push(1);
+	  p2.push(false);
+	  assertTrue(q.isEmpty());
+	  p1.push(2);
+    p2.push(false);
+    assertTrue(q.isEmpty());
+    p1.notifyEndOfTrace();
+    assertTrue(q.isEmpty());
+    p2.notifyEndOfTrace();
+    assertFalse(q.isEmpty());
+	}
+	
+	@Test
 	public void testStrings()
 	{
 		assertEquals("foobar", FunctionsTest.evaluate(Strings.concat, "foo", "bar"));

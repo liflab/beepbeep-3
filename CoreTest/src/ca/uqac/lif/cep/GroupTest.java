@@ -29,6 +29,7 @@ import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.clone.ClonePrinter;
 import ca.uqac.lif.azrael.clone.CloneReader;
+import ca.uqac.lif.cep.SynchronousProcessor.InputPushable;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
@@ -717,6 +718,104 @@ public class GroupTest
     p2_2.push(3);
     assertFalse(q.isEmpty());
     assertEquals(11, q.remove());
+  }
+  
+  @Test
+  public void testEndOfTrace1()
+  {
+    GroupProcessor g = new GroupProcessor(1, 2);
+    Fork f = new Fork(2);
+    g.associateInput(0, f, 0);
+    Passthrough pt1 = new Passthrough();
+    Passthrough pt2 = new Passthrough();
+    Connector.connect(f, 0, pt1, 0);
+    Connector.connect(f, 1, pt2, 0);
+    g.associateOutput(0, pt1, 0);
+    g.associateOutput(1, pt2, 0);
+    QueueSink qs1 = new QueueSink();
+    Connector.connect(g, 0, qs1, 0);
+    QueueSink qs2 = new QueueSink();
+    Connector.connect(g, 1, qs2, 0);
+    g.addProcessors(f, pt1, pt2);
+    Pushable p = g.getPushableInput(0);
+    assertFalse(f.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertFalse(pt1.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertFalse(pt2.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertFalse(qs1.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertFalse(qs2.m_hasBeenNotifiedOfEndOfTrace[0]);
+    p.notifyEndOfTrace();
+    assertTrue(f.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertTrue(pt1.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertTrue(pt2.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertTrue(qs1.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertTrue(qs2.m_hasBeenNotifiedOfEndOfTrace[0]);
+  }
+  
+  public static class ProcessorWrap extends SynchronousProcessor
+  {
+    protected Processor m_processor;
+    
+    protected Pushable[] m_pushables;
+    
+    protected QueueSink m_sink;
+    
+    public ProcessorWrap(Processor p)
+    {
+      super(p.getInputArity(), p.getOutputArity());
+      m_processor = p;
+      m_pushables = new Pushable[p.getInputArity()];
+      for (int i = 0; i < m_pushables.length; i++)
+      {
+        Pushable pu = m_processor.getPushableInput(i);
+        m_pushables[i] = pu;
+      }
+      m_sink = new QueueSink(p.getOutputArity());
+      for (int i = 0; i < p.getOutputArity(); i++)
+      {
+        Connector.connect(m_processor, i, m_sink, i);
+      }
+    }
+
+    @Override
+    protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+    {
+      for (int i = 0; i < inputs.length; i++)
+      {
+        m_pushables[i].push(inputs[i]);
+      }
+      while (!m_sink.getQueue().isEmpty())
+      {
+        Object[] front = new Object[m_sink.getOutputArity()];
+        for (int i = 0; i < m_sink.getOutputArity(); i++)
+        {
+          front[i] = m_sink.getQueue(i).remove();
+        }
+        outputs.add(front);
+      }
+      return true;
+    }
+    
+    @Override
+    protected boolean onEndOfTrace(Queue<Object[]> queue)
+    {
+      return false;
+    }
+    
+    public Pushable getPushableInput(int index)
+    {
+      if (m_inputPushables[index] == null)
+      {
+        m_inputPushables[index] = new InputPushable(index);
+      }
+      return m_inputPushables[index];
+    }
+
+    @Override
+    public Processor duplicate(boolean with_state)
+    {
+      // TODO Auto-generated method stub
+      return null;
+    }
   }
 	
 	public static class Incrementer extends ApplyFunction

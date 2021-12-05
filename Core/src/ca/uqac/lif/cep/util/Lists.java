@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
@@ -177,6 +178,17 @@ public class Lists
     protected List<Object> newList()
     {
       return new LinkedList<Object>();
+    }
+    
+    @Override
+    protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
+    {
+      if (m_packedEvents.isEmpty())
+      {
+        return false;
+      }
+      outputs.add(new Object[] {m_packedEvents});
+      return true;
     }
   }
 

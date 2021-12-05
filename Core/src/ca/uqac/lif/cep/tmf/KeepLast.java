@@ -16,9 +16,9 @@ public class KeepLast extends SynchronousProcessor
   public KeepLast(int in_arity)
   {
     super(in_arity, in_arity);
-    m_lasts = new Object[in_arity];
+    m_lasts = null;
   }
-  
+
   public KeepLast()
   {
     this(1);
@@ -33,6 +33,10 @@ public class KeepLast extends SynchronousProcessor
   @Override
   protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
   {
+    if (m_lasts == null)
+    {
+      m_lasts = new Object[m_inputArity];
+    }
     // Keep the last front of events
     for (int i = 0; i < inputs.length; i++)
     {
@@ -45,7 +49,11 @@ public class KeepLast extends SynchronousProcessor
   @Override
   protected boolean onEndOfTrace(Queue<Object[]> outputs)
   {
-    outputs.add(m_lasts);
-    return true;
+    if (m_lasts != null)
+    {
+      outputs.add(m_lasts);
+      return true;
+    }
+    return false;
   }
 }
