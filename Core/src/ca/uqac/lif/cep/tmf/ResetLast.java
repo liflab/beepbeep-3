@@ -72,7 +72,7 @@ public class ResetLast extends SynchronousProcessor
       Object[] last = m_sink.getLast();
       if (last != null)
       {
-        outputs.add(new Object[] {m_sink.getLast()[0]});
+        outputs.add(new Object[] {last[0]});
       }
       m_sink.reset();
       m_processor.reset();
