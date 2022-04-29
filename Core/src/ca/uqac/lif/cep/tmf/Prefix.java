@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -28,27 +28,32 @@ import java.util.Queue;
 @SuppressWarnings("squid:S2160")
 public class Prefix extends Trim
 {
-  public Prefix(int k)
-  {
-    super(k);
-  }
+	public Prefix(int k)
+	{
+		super(k);
+	}
 
-  @Override
-  @SuppressWarnings("squid:S1168")
-  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
-  {
-    m_inputCount++;
-    if (m_inputCount <= getDelay())
-    {
-      outputs.add(inputs);
-      return true;
-    }
-    return false;
-  }
+	@Override
+	@SuppressWarnings("squid:S1168")
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	{
+		if (m_inputCount <= getDelay())
+		{
+			outputs.add(inputs);
+			return true;
+		}
+		return false;
+	}
 
-  @Override
-  public void reset()
-  {
-    super.reset();
-  }
+	@Override
+	public void reset()
+	{
+		super.reset();
+	}
+	
+	@Override
+	public Object getState()
+	{
+		return Math.min(m_delay, m_inputCount);
+	}
 }

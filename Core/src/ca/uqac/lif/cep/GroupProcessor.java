@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -36,12 +36,12 @@ import java.util.concurrent.Future;
  * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
-public class GroupProcessor extends Processor
+public class GroupProcessor extends Processor implements PubliclyStateful
 {
   /**
    * The set of processors included in the group
    */
-  private HashSet<Processor> m_processors = null;
+  private List<Processor> m_processors = null;
 
   /**
    * The set of sources included in the group
@@ -94,7 +94,7 @@ public class GroupProcessor extends Processor
   public GroupProcessor(int in_arity, int out_arity)
   {
     super(in_arity, out_arity);
-    m_processors = new HashSet<Processor>();
+    m_processors = new ArrayList<Processor>();
     m_sources = new HashSet<Source>();
     m_inputPushables = new ArrayList<Pushable>();
     m_outputPullables = new ArrayList<Pullable>();
@@ -928,5 +928,97 @@ public class GroupProcessor extends Processor
       }
     }
     return this;
+  }
+  
+  @Override
+  public Object getState()
+  {
+  	return new GroupState(m_processors);
+  }
+
+  protected static class GroupState
+  {
+  	/**
+  	 * The list of states of each processor within the group.
+  	 */
+  	/*@ non_null @*/ protected final List<Object> m_states;
+  	
+  	public GroupState(List<Processor> processors)
+  	{
+  		super();
+  		m_states = new ArrayList<Object>(processors.size());
+  		for (Processor p : processors)
+  		{
+  			if ((p instanceof PubliclyStateful))
+  			{
+  				m_states.add(((PubliclyStateful) p).getState());
+  			}
+  			else
+  			{
+  				m_states.add(0);
+  			}
+  		}
+  	}
+  	
+  	/**
+  	 * Gets the number of processors in this group state.
+  	 * @return The number of processors
+  	 */
+  	public int getSize()
+  	{
+  		return m_states.size();
+  	}
+  	
+  	/**
+  	 * Gets the state of one of the processors in this group state.
+  	 * @param index The index of the processor
+  	 * @return The state of that processor, or 0 if the processor does not
+  	 * implements {@link PubliclyStateful}
+  	 */
+  	public Object getState(int index)
+  	{
+  		return m_states.get(index);
+  	}
+  	
+  	@Override
+  	public int hashCode()
+  	{
+  		int h = 0;
+  		for (Object o : m_states)
+  		{
+  			h += o.hashCode();
+  		}
+  		return h;
+  	}
+  	
+  	@Override
+  	public boolean equals(Object o)
+  	{
+  		if (!(o instanceof GroupState))
+  		{
+  			return false;
+  		}
+  		GroupState gs = (GroupState) o;
+  		if (gs.getSize() != getSize())
+  		{
+  			return false;
+  		}
+  		for (int i = 0; i < m_states.size(); i++)
+  		{
+  			Object s1 = getState(i);
+  			Object s2 = gs.getState(i);
+  			if (!s1.equals(s2))
+  			{
+  				return false;
+  			}
+  		}
+  		return true;
+  	}
+  	
+  	@Override
+  	public String toString()
+  	{
+  		return m_states.toString();
+  	}
   }
 }

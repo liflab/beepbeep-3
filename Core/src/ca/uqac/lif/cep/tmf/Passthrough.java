@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.PubliclyStateful;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
@@ -32,7 +33,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
-public class Passthrough extends UniformProcessor
+public class Passthrough extends UniformProcessor implements PubliclyStateful
 {
   public Passthrough(int arity)
   {
@@ -82,4 +83,10 @@ public class Passthrough extends UniformProcessor
   {
     return new Passthrough(((Number) o).intValue());
   }
+
+	@Override
+	public Object getState()
+	{
+		return 0;
+	}
 }

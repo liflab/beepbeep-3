@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.cep.PubliclyStateful;
 import ca.uqac.lif.cep.UniformProcessor;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ import java.util.Set;
  * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
-public class TurnInto extends UniformProcessor
+public class TurnInto extends UniformProcessor implements PubliclyStateful
 {
   /**
    * The event to turn everything into
@@ -99,4 +100,10 @@ public class TurnInto extends UniformProcessor
   {
     return new TurnInto(o);
   }
+
+	@Override
+	public Object getState()
+	{
+		return 0;
+	}
 }

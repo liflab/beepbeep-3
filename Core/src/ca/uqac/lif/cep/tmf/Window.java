@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.PubliclyStateful;
 import ca.uqac.lif.cep.Pushable;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,9 +44,8 @@ import java.util.concurrent.Future;
  *
  */
 @SuppressWarnings("squid:S2160")
-public class Window extends AbstractWindow
+public class Window extends AbstractWindow implements PubliclyStateful
 {
-
   /**
    * The internal processor's input pushables
    */
@@ -206,7 +206,7 @@ public class Window extends AbstractWindow
   }
 
   /**
-   * Gets the width of the window
+   * Gets the width of the window.
    * 
    * @return The width
    */
@@ -216,7 +216,7 @@ public class Window extends AbstractWindow
   }
 
   /**
-   * Sets the width of the window
+   * Sets the width of the window.
    * 
    * @param m_width
    *          The width
@@ -225,4 +225,11 @@ public class Window extends AbstractWindow
   {
     this.m_width = m_width;
   }
+
+	@Override
+	public Object getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
