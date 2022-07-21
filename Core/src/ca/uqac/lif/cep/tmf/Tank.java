@@ -119,11 +119,7 @@ public class Tank extends Processor
     {
       synchronized (m_inputQueues[0])
       {
-        if (m_inputQueues[0].isEmpty())
-        {
-          throw new NoSuchElementException();
-        }
-        return m_inputQueues[0].poll();
+        return m_inputQueues[0].remove();
       }
     }
 
