@@ -71,10 +71,8 @@ public class WriteToFile extends Sink
   {
     String new_filename = createFilename();
     m_outputCount++;
-    try
-    {
-      FileOutputStream fos = new FileOutputStream(new File(new_filename));
-      BufferedOutputStream bos = new BufferedOutputStream(fos);
+    try (FileOutputStream fos = new FileOutputStream(new File(new_filename));
+         BufferedOutputStream bos = new BufferedOutputStream(fos)) {
       if (inputs[0] instanceof byte[])
       {
         bos.write((byte[]) inputs[0]);
@@ -83,7 +81,6 @@ public class WriteToFile extends Sink
       {
         bos.write(inputs[0].toString().getBytes());
       }
-      bos.close();
     }
     catch (FileNotFoundException e)
     {
