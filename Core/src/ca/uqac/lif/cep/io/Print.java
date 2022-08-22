@@ -246,6 +246,10 @@ public class Print extends Sink
     {
       prettyPrint((Number) o);
     }
+    else if (o != null && o.getClass().isArray())
+    {
+    	prettyPrint((Object[]) o);
+    }
     else
     {
       ps.print(o);
@@ -269,6 +273,27 @@ public class Print extends Sink
     {
       m_out.print(n);
     }
+  }
+  
+  /**
+   * Prints an array in an eye-pleasing way. In this case, the printer
+   * pretty-prints each element of the array.
+   * 
+   * @param array
+   *          The array
+   */
+  protected void prettyPrint(/*@ non_null @*/ Object[] array)
+  {
+  	m_out.print("[");
+  	for (int i = 0; i < array.length; i++)
+  	{
+  		if (i > 0)
+  		{
+  			m_out.print(",");
+  		}
+  		prettyPrint(m_out, array[i]);
+  	}
+  	m_out.print("]");
   }
   
   /**

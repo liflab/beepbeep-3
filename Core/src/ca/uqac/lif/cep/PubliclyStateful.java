@@ -20,7 +20,7 @@ package ca.uqac.lif.cep;
 /**
  * Interface implemented by processors that can publicly expose a token
  * equivalent to their internal state. This token can be an arbitrary
- * object, except <tt>null</tt>. However, it must follow this condition:
+ * object, including <tt>null</tt>. However, it must follow this condition:
  * if two processor instances &pi;<sub>1</sub> and &pi;<sub>2</sub> (of
  * the same class) respectively return two state tokens <i>s</i><sub>1</sub>
  * and <i>s</i><sub>2</sub> such that 
@@ -36,6 +36,8 @@ public interface PubliclyStateful
 	/**
 	 * Gets the token corresponding to the processor's internal state.
 	 * @return The token
+	 * @throws UnsupportedOperationException Thrown if the internal state cannot
+	 * be provided for some reason
 	 */
-	/*@ non_null @*/ public Object getState();
+	/*@ null @*/ public Object getState() throws UnsupportedOperationException;
 }

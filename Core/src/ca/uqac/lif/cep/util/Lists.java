@@ -435,4 +435,80 @@ public class Lists
       return up;
     }
   }
+  
+  /**
+   * A list that implements equality. Two math lists are considered equal if
+   * they have equal size and elements at corresponding indices are equal.
+   * @param <T> The type of elements in the list
+   */
+  public static class MathList<T> extends ArrayList<T>
+  {
+		/**
+		 * Dummy UID.
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		/**
+		 * Creates a new math list and adds elements from an array.
+		 * @param elements The elements to add
+		 */
+		public MathList(T[] elements)
+		{
+			super(elements.length);
+			for (T t : elements)
+			{
+				add(t);
+			}
+		}
+  	
+		@Override
+		public int hashCode()
+		{
+			int h = 0;
+			for (T t : this)
+			{
+				if (t != null)
+				{
+					h += t.hashCode();
+				}
+			}
+			return h;
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public boolean equals(Object o)
+		{
+			if (!(o instanceof MathList))
+			{
+				return false;
+			}
+			MathList<T> l = (MathList<T>) o;
+			if (l.size() != size())
+			{
+				return false;
+			}
+			for (int i = 0; i < size(); i++)
+			{
+				if (!same(get(i), l.get(i)))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		public static boolean same(Object o1, Object o2)
+		{
+			if ((o1 == null) != (o2 == null))
+			{
+				return false;
+			}
+			if (o1 == null)
+			{
+				return true;
+			}
+			return o1.equals(o2);
+		}
+  }
 }

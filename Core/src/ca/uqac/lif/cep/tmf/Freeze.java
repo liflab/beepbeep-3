@@ -17,7 +17,10 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.PubliclyStateful;
 import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.util.Lists.MathList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +35,7 @@ import java.util.List;
  * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
-public class Freeze extends UniformProcessor
+public class Freeze extends UniformProcessor implements PubliclyStateful
 {
   /**
    * The event front to freeze
@@ -108,4 +111,14 @@ public class Freeze extends UniformProcessor
     }
     return f;
   }
+  
+  @Override
+  public Object getState()
+  {
+  	if (m_output == null)
+  	{
+  		return null;
+  	}
+  	return new MathList<Object>(m_output);
+  }  
 }
