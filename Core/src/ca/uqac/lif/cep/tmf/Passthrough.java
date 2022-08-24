@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.PubliclyStateful;
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
@@ -33,7 +33,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
-public class Passthrough extends UniformProcessor implements PubliclyStateful
+public class Passthrough extends UniformProcessor implements Stateful
 {
   public Passthrough(int arity)
   {
@@ -84,9 +84,12 @@ public class Passthrough extends UniformProcessor implements PubliclyStateful
     return new Passthrough(((Number) o).intValue());
   }
 
+  /**
+   * @since 0.11
+   */
 	@Override
 	public Object getState()
 	{
-		return 0;
+		return null;
 	}
 }

@@ -31,7 +31,7 @@ package ca.uqac.lif.cep;
  * @author Sylvain Hallé
  * @since 0.11
  */
-public interface PubliclyStateful
+public interface Stateful
 {
 	/**
 	 * Gets the token corresponding to the processor's internal state.

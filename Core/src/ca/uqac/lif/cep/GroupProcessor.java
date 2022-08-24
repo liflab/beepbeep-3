@@ -36,7 +36,7 @@ import java.util.concurrent.Future;
  * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
-public class GroupProcessor extends Processor implements PubliclyStateful
+public class GroupProcessor extends Processor implements Stateful
 {
   /**
    * The set of processors included in the group
@@ -949,9 +949,9 @@ public class GroupProcessor extends Processor implements PubliclyStateful
   		m_states = new ArrayList<Object>(processors.size());
   		for (Processor p : processors)
   		{
-  			if ((p instanceof PubliclyStateful))
+  			if ((p instanceof Stateful))
   			{
-  				m_states.add(((PubliclyStateful) p).getState());
+  				m_states.add(((Stateful) p).getState());
   			}
   			else
   			{
@@ -973,7 +973,7 @@ public class GroupProcessor extends Processor implements PubliclyStateful
   	 * Gets the state of one of the processors in this group state.
   	 * @param index The index of the processor
   	 * @return The state of that processor, or 0 if the processor does not
-  	 * implements {@link PubliclyStateful}
+  	 * implements {@link Stateful}
   	 */
   	public Object getState(int index)
   	{

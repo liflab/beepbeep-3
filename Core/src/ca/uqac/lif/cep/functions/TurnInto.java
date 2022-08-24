@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import ca.uqac.lif.cep.PubliclyStateful;
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.UniformProcessor;
 import java.util.Set;
 
@@ -31,7 +31,7 @@ import java.util.Set;
  * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
-public class TurnInto extends UniformProcessor implements PubliclyStateful
+public class TurnInto extends UniformProcessor implements Stateful
 {
   /**
    * The event to turn everything into
@@ -101,6 +101,9 @@ public class TurnInto extends UniformProcessor implements PubliclyStateful
     return new TurnInto(o);
   }
 
+  /**
+   * @since 0.11
+   */
 	@Override
 	public Object getState()
 	{

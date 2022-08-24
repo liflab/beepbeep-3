@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
 
@@ -29,7 +30,7 @@ import java.util.Queue;
  * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
-public class Insert extends SynchronousProcessor
+public class Insert extends SynchronousProcessor implements Stateful
 {
   /**
    * The event to be added at the beginning of the input trace
@@ -90,5 +91,14 @@ public class Insert extends SynchronousProcessor
   public Insert duplicate(boolean with_state)
   {
     return new Insert(m_times, m_pad);
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object getState()
+  {
+  	return m_sentPad;
   }
 }

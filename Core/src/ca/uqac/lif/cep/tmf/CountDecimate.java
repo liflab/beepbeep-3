@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.tmf;
 import java.util.HashMap;
 import java.util.Map;
 
+import ca.uqac.lif.cep.Stateful;
+
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i> is called
  * the <strong>decimation interval</strong>. However, a mode can be specified in order to
@@ -34,7 +36,7 @@ import java.util.Map;
  * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
-public class CountDecimate extends Decimate
+public class CountDecimate extends Decimate implements Stateful
 {
   /**
    * The decimation interval
@@ -142,5 +144,14 @@ public class CountDecimate extends Decimate
         (Boolean) map.get("process-last"));
     cd.m_current = ((Number) map.get("current")).intValue();
     return cd;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object getState()
+  {
+  	return m_current;
   }
 }

@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.functions;
 import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.PubliclyStateful;
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
@@ -39,7 +39,7 @@ import java.util.Set;
  * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
-public class ApplyFunction extends UniformProcessor implements PubliclyStateful
+public class ApplyFunction extends UniformProcessor implements Stateful
 {
   /**
    * The object responsible for the computation
@@ -214,6 +214,6 @@ public class ApplyFunction extends UniformProcessor implements PubliclyStateful
 	@Override
 	public Object getState()
 	{
-		return 0;
+		return null;
 	}
 }

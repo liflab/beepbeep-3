@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
@@ -37,7 +38,7 @@ import java.util.Queue;
  * @since 0.6
  */
 @SuppressWarnings("squid:S2160")
-public class SimpleFilter extends SynchronousProcessor
+public class SimpleFilter extends SynchronousProcessor implements Stateful
 {
   /**
    * The condition to evaluate
@@ -106,5 +107,14 @@ public class SimpleFilter extends SynchronousProcessor
   public Function getCondition()
   {
     return m_condition;
+  }
+  
+  /**
+   * @since 0.11
+   */
+  @Override
+  public Object getState()
+  {
+  	return null;
   }
 }

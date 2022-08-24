@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -242,15 +242,15 @@ public class ProcessorTest
 		QueueSource src_right = new QueueSource();
 		{
 			Vector<Object> input_events = new Vector<Object>();
-			input_events.add(new Integer(1));
-			input_events.add(new Integer(2));
+			input_events.add(1);
+			input_events.add(2);
 			src_left.setEvents(input_events);
 		}
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(null);
-			input_events.add(new Integer(10));
-			input_events.add(new Integer(11));
+			input_events.add(10);
+			input_events.add(11);
 			src_right.setEvents(input_events);
 		}
 		ApplyFunction add = new ApplyFunction(Numbers.addition);
