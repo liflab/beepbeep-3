@@ -85,7 +85,7 @@ public class ContextAssignment implements Printable, Readable
    * @param inputs
    *          The inputs to evaluate the assignment function
   * @param outputs
-   *          An array in which the outputs the the assignment function
+   *          An array in which the outputs the assignment function
    *          are placed
    * @param context
    *          The context to update @ Any exception occurring when assigning a
@@ -104,7 +104,7 @@ public class ContextAssignment implements Printable, Readable
    * @param inputs
    *          The inputs to evaluate the assignment function
   * @param outputs
-   *          An array in which the outputs the the assignment function
+   *          An array in which the outputs the assignment function
    *          are placed
    * @param c
    *          The object
