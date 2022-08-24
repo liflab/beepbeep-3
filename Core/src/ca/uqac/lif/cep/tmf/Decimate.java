@@ -131,7 +131,7 @@ public abstract class Decimate extends SynchronousProcessor
   /**
    * Indicates if the inputs should be processed and output.
    *
-   * @return true if the the inputs should be processed and output, false
+   * @return true if the inputs should be processed and output, false
    *         otherwise
    */
   protected abstract boolean shouldOutput();
