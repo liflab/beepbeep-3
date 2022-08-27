@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import java.util.HashSet;
@@ -55,7 +56,7 @@ public class Sets
   /**
    * Processor that updates a set
    */
-  protected abstract static class SetUpdateProcessor extends UniformProcessor
+  protected abstract static class SetUpdateProcessor extends UniformProcessor implements Stateful
   {
     /**
      * The underlying set
@@ -82,6 +83,14 @@ public class Sets
     public Class<?> getOutputType(int index)
     {
       return Set.class;
+    }
+    
+    @Override
+    public Object getState()
+    {
+    	MathSet<Object> set = new MathSet<Object>();
+    	set.addAll(m_set);
+    	return set;
     }
   }
 
@@ -191,5 +200,49 @@ public class Sets
     {
       return x.containsAll(y);
     }
+  }
+  
+  public static class MathSet<T> extends HashSet<T>
+  {
+		/**
+		 * Dummy UID.
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+		public int hashCode()
+		{
+			int h = 0;
+			for (T t : this)
+			{
+				if (t !=  null)
+				{
+					h += t.hashCode();
+				}
+			}
+			return h;
+		}
+  	
+		@Override
+		public boolean equals(Object o)
+		{
+			if (!(o instanceof MathSet))
+			{
+				return false;
+			}
+			MathSet<?> set = (MathSet<?>) o;
+			if (set.size() != size())
+			{
+				return false;
+			}
+			for (T t : this)
+			{
+				if (!set.contains(t))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
   }
 }
