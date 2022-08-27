@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2021 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -24,10 +24,13 @@ import ca.uqac.lif.azrael.Printable;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.cep.util.Equals;
+import ca.uqac.lif.cep.util.Maps.MathMap;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -895,9 +898,31 @@ public abstract class Processor implements DuplicableProcessor,
   }
 
   @Override
-  /*@ non_null @*/ public final Processor duplicate()
+  /*@ pure non_null @*/ public final Processor duplicate()
   {
     return duplicate(false);
+  }
+  
+  /**
+   * Copies the content of one of the processor's input queue to a collection.
+   * @param index The index of the input queue
+   * @param to The collection where queue contents are copied to
+   * @since 0.11
+   */
+  /*@ pure @*/ public void copyInputQueue(int index, Collection<Object> to)
+  {
+  	to.addAll(m_inputQueues[index]);
+  }
+  
+  /**
+   * Copies the content of one of the processor's output queue to a collection.
+   * @param index The index of the output queue
+   * @param to The collection where queue contents are copied to
+   * @since 0.11
+   */
+  /*@ pure @*/ public void copyOutputQueue(int index, Collection<Object> to)
+  {
+  	to.addAll(m_outputQueues[index]);
   }
 
   @Override
@@ -938,5 +963,78 @@ public abstract class Processor implements DuplicableProcessor,
         getLeaves(child, leaves);
       }
     }
+  }
+  
+  /**
+   * An object capturing the internal state of a processor,
+   * including the current contents of its input and output queues.
+   */
+  public static class InternalProcessorState
+  {
+  	/**
+  	 * A map between input pipe indices and the contents of the processor's
+  	 * corresponding input queue.
+  	 */
+  	/*@ non_null @*/ protected final MathMap<Integer,Queue<Object>> m_inputQueues;
+  	
+  	/**
+  	 * A map between output pipe indices and the contents of the processor's
+  	 * corresponding output queue.
+  	 */
+  	/*@ non_null @*/ protected final MathMap<Integer,Queue<Object>> m_outputQueues;
+  	
+  	/**
+  	 * The internal state of the processor itself.
+  	 */
+  	/*@ null @*/ protected Object m_processorState = null;
+  	
+  	public InternalProcessorState(Processor p)
+  	{
+  		super();
+  		m_inputQueues = new MathMap<Integer,Queue<Object>>();
+  		m_outputQueues = new MathMap<Integer,Queue<Object>>();
+  		if (p instanceof Stateful)
+  		{
+  			m_processorState = ((Stateful) p).getState();
+  		}
+  		for (int i = 0; i < p.getInputArity(); i++)
+  		{
+  			Queue<Object> q = new ArrayDeque<Object>();
+  			p.copyInputQueue(i, q);
+  			m_inputQueues.put(i, q);
+  		}
+  		for (int i = 0; i < p.getOutputArity(); i++)
+  		{
+  			Queue<Object> q = new ArrayDeque<Object>();
+  			p.copyOutputQueue(i, q);
+  			m_inputQueues.put(i, q);
+  		}
+  	}
+  	
+  	@Override
+  	public boolean equals(Object o)
+  	{
+  		if (!(o instanceof InternalProcessorState))
+  		{
+  			return false;
+  		}
+  		InternalProcessorState ips = (InternalProcessorState) o;
+  		return Equals.isEqualTo(m_processorState, ips.m_processorState) &&
+  				Equals.isEqualTo(m_inputQueues, ips.m_inputQueues) &&
+  				Equals.isEqualTo(m_outputQueues, ips.m_outputQueues);
+  	}
+  	
+  	@Override
+  	public int hashCode()
+  	{
+  		int h = 0;
+  		if (m_processorState != null)
+  		{
+  			h += m_processorState.hashCode();
+  		}
+  		h += m_inputQueues.hashCode();
+  		h += m_outputQueues.hashCode();
+  		return h;
+  	}
   }
 }

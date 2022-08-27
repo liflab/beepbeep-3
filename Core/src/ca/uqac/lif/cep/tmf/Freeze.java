@@ -122,6 +122,11 @@ public class Freeze extends UniformProcessor implements Stateful
   	{
   		return null;
   	}
-  	return new MathList<Object>(m_output);
+  	MathList<Object> list = new MathList<Object>();
+  	for (Object o : m_output)
+  	{
+  		list.add(o);
+  	}
+  	return list;
   }
 }

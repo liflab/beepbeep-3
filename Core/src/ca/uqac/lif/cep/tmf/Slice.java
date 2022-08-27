@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -21,6 +21,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.functions.Function;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
@@ -164,5 +165,4 @@ public class Slice extends AbstractSlice
       m_lastValues.put(slice_id, value);
     }
   }
-
 }

@@ -452,7 +452,8 @@ public class Lists
 		 * Creates a new math list and adds elements from an array.
 		 * @param elements The elements to add
 		 */
-		public MathList(T[] elements)
+		@SafeVarargs
+		public MathList(T ... elements)
 		{
 			super(elements.length);
 			for (T t : elements)
@@ -490,25 +491,12 @@ public class Lists
 			}
 			for (int i = 0; i < size(); i++)
 			{
-				if (!same(get(i), l.get(i)))
+				if (!Equals.isEqualTo(get(i), l.get(i)))
 				{
 					return false;
 				}
 			}
 			return true;
-		}
-		
-		public static boolean same(Object o1, Object o2)
-		{
-			if ((o1 == null) != (o2 == null))
-			{
-				return false;
-			}
-			if (o1 == null)
-			{
-				return true;
-			}
-			return o1.equals(o2);
 		}
   }
 }

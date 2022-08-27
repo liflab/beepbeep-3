@@ -18,6 +18,8 @@
 package ca.uqac.lif.cep;
 
 import ca.uqac.lif.cep.tmf.Source;
+import ca.uqac.lif.cep.util.Lists.MathList;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -933,92 +935,11 @@ public class GroupProcessor extends Processor implements Stateful
   @Override
   public Object getState()
   {
-  	return new GroupState(m_processors);
-  }
-
-  protected static class GroupState
-  {
-  	/**
-  	 * The list of states of each processor within the group.
-  	 */
-  	/*@ non_null @*/ protected final List<Object> m_states;
-  	
-  	public GroupState(List<Processor> processors)
+  	MathList<InternalProcessorState> group_state = new MathList<InternalProcessorState>();
+  	for (Processor p : m_processors)
   	{
-  		super();
-  		m_states = new ArrayList<Object>(processors.size());
-  		for (Processor p : processors)
-  		{
-  			if ((p instanceof Stateful))
-  			{
-  				m_states.add(((Stateful) p).getState());
-  			}
-  			else
-  			{
-  				m_states.add(0);
-  			}
-  		}
+  		group_state.add(new InternalProcessorState(p));
   	}
-  	
-  	/**
-  	 * Gets the number of processors in this group state.
-  	 * @return The number of processors
-  	 */
-  	public int getSize()
-  	{
-  		return m_states.size();
-  	}
-  	
-  	/**
-  	 * Gets the state of one of the processors in this group state.
-  	 * @param index The index of the processor
-  	 * @return The state of that processor, or 0 if the processor does not
-  	 * implements {@link Stateful}
-  	 */
-  	public Object getState(int index)
-  	{
-  		return m_states.get(index);
-  	}
-  	
-  	@Override
-  	public int hashCode()
-  	{
-  		int h = 0;
-  		for (Object o : m_states)
-  		{
-  			h += o.hashCode();
-  		}
-  		return h;
-  	}
-  	
-  	@Override
-  	public boolean equals(Object o)
-  	{
-  		if (!(o instanceof GroupState))
-  		{
-  			return false;
-  		}
-  		GroupState gs = (GroupState) o;
-  		if (gs.getSize() != getSize())
-  		{
-  			return false;
-  		}
-  		for (int i = 0; i < m_states.size(); i++)
-  		{
-  			Object s1 = getState(i);
-  			Object s2 = gs.getState(i);
-  			if (!s1.equals(s2))
-  			{
-  				return false;
-  			}
-  		}
-  		return true;
-  	}
-  	
-  	@Override
-  	public String toString()
-  	{
-  		return m_states.toString();
-  	}
+  	return group_state;
   }
 }

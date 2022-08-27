@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -35,6 +35,7 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.BlackHole;
+import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -749,6 +750,45 @@ public class GroupTest
     assertTrue(pt2.m_hasBeenNotifiedOfEndOfTrace[0]);
     assertTrue(qs1.m_hasBeenNotifiedOfEndOfTrace[0]);
     assertTrue(qs2.m_hasBeenNotifiedOfEndOfTrace[0]);
+  }
+  
+  @Test
+  public void testGetState1()
+  {
+  	GroupProcessor gp = new GroupProcessor(1, 1);
+  	Passthrough pt = new Passthrough();
+  	gp.addProcessor(pt);
+  	gp.associateInput(0, pt, 0);
+  	gp.associateOutput(0, pt, 0);
+  	BlackHole h = new BlackHole();
+  	Connector.connect(gp, h);
+  	Pushable p = gp.getPushableInput();
+  	Object s1 = gp.getState();
+  	p.push(0);
+  	Object s2 = gp.getState();
+  	assertEquals(s1, s2);
+  }
+  
+  @Test
+  public void testGetState2()
+  {
+  	GroupProcessor gp = new GroupProcessor(1, 1);
+  	Fork f = new Fork(2);
+  	CountDecimate dec = new CountDecimate(2);
+  	ApplyFunction add = new ApplyFunction(Numbers.addition);
+  	Connector.connect(f, 0, dec, 0);
+  	Connector.connect(dec, 0, add, 0);
+  	Connector.connect(f, 1, add, 1);
+  	gp.addProcessors(f, dec, add);
+  	gp.associateInput(0, f, 0);
+  	gp.associateOutput(0, add, 0);
+  	BlackHole h = new BlackHole();
+  	Connector.connect(gp, h);
+  	Pushable p = gp.getPushableInput();
+  	Object s1 = gp.getState();
+  	p.push(0);
+  	Object s2 = gp.getState();
+  	assertNotEquals(s1, s2);
   }
   
   public static class ProcessorWrap extends SynchronousProcessor

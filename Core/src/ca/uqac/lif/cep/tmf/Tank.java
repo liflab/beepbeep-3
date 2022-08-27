@@ -21,7 +21,6 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.concurrent.Future;
 
 /**

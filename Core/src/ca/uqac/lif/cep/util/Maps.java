@@ -365,4 +365,54 @@ public class Maps
       return mm;
     }
   }
+  
+  /**
+   * A map that implements equality based on its contents. Two mathmaps are
+   * equal if they have equal keys, and for each key, the associated value is
+   * equal.
+   *
+   * @param <K> The type of the keys
+   * @param <V> The type of the values
+   */
+  public static class MathMap<K,V> extends HashMap<K,V>
+  {
+		/**
+		 * Dummy UID.
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+		public boolean equals(Object o)
+		{
+			if (!(o instanceof MathMap))
+			{
+				return false;
+			}
+			MathMap<?,?> map = (MathMap<?,?>) o;
+			if (map.size() != size())
+			{
+				return false;
+			}
+			for (Map.Entry<K,V> e : entrySet())
+			{
+				if (!map.containsKey(e.getKey()))
+				{
+					return false;
+				}
+				Object v = map.get(e.getKey());
+				if (!Equals.isEqualTo(e.getValue(), v))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		@Override
+		public int hashCode()
+		{
+			return size();
+		}
+  	
+  }
 }
