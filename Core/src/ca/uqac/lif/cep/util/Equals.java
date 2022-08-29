@@ -21,6 +21,7 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.util.Lists.MathList;
 import ca.uqac.lif.cep.util.Maps.MathMap;
+import ca.uqac.lif.cep.util.Sets.MathSet;
 
 import java.util.Collection;
 
@@ -88,7 +89,7 @@ public class Equals extends BinaryFunction<Object, Object, Boolean>
     {
       y = ((Constant) y).getValue();
     }
-    if (x instanceof MathList || x instanceof MathMap)
+    if (x instanceof MathList || x instanceof MathMap || x instanceof MathSet)
     {
     	return x.equals(y);
     }

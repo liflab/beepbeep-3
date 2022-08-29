@@ -25,6 +25,7 @@ import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.util.Equals;
+import ca.uqac.lif.cep.util.Lists.MathList;
 import ca.uqac.lif.cep.util.Maps.MathMap;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
@@ -975,13 +976,13 @@ public abstract class Processor implements DuplicableProcessor,
   	 * A map between input pipe indices and the contents of the processor's
   	 * corresponding input queue.
   	 */
-  	/*@ non_null @*/ protected final MathMap<Integer,Queue<Object>> m_inputQueues;
+  	/*@ non_null @*/ protected final MathMap<Integer,MathList<Object>> m_inputQueues;
   	
   	/**
   	 * A map between output pipe indices and the contents of the processor's
   	 * corresponding output queue.
   	 */
-  	/*@ non_null @*/ protected final MathMap<Integer,Queue<Object>> m_outputQueues;
+  	/*@ non_null @*/ protected final MathMap<Integer,MathList<Object>> m_outputQueues;
   	
   	/**
   	 * The internal state of the processor itself.
@@ -991,23 +992,23 @@ public abstract class Processor implements DuplicableProcessor,
   	public InternalProcessorState(Processor p)
   	{
   		super();
-  		m_inputQueues = new MathMap<Integer,Queue<Object>>();
-  		m_outputQueues = new MathMap<Integer,Queue<Object>>();
+  		m_inputQueues = new MathMap<Integer,MathList<Object>>();
+  		m_outputQueues = new MathMap<Integer,MathList<Object>>();
   		if (p instanceof Stateful)
   		{
   			m_processorState = ((Stateful) p).getState();
   		}
   		for (int i = 0; i < p.getInputArity(); i++)
   		{
-  			Queue<Object> q = new ArrayDeque<Object>();
+  			MathList<Object> q = new MathList<Object>();
   			p.copyInputQueue(i, q);
   			m_inputQueues.put(i, q);
   		}
   		for (int i = 0; i < p.getOutputArity(); i++)
   		{
-  			Queue<Object> q = new ArrayDeque<Object>();
+  			MathList<Object> q = new MathList<Object>();
   			p.copyOutputQueue(i, q);
-  			m_inputQueues.put(i, q);
+  			m_outputQueues.put(i, q);
   		}
   	}
   	

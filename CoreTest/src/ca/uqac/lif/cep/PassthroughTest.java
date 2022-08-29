@@ -26,6 +26,7 @@ import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.clone.ClonePrinter;
 import ca.uqac.lif.azrael.clone.CloneReader;
+import ca.uqac.lif.cep.Processor.InternalProcessorState;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import org.junit.Test;
 
@@ -51,4 +52,14 @@ public class PassthroughTest
     assertEquals(0, proc2.getInputCount());
     assertEquals(0, proc2.getOutputCount());
   }
+  
+	@Test
+	public void testInternalState1()
+	{
+		Passthrough p1 = new Passthrough();
+		Passthrough p2 = new Passthrough();
+		InternalProcessorState s1 = new InternalProcessorState(p1);
+		InternalProcessorState s2 = new InternalProcessorState(p2);
+		assertEquals(s1, s2);
+	}
 }
