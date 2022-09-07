@@ -48,7 +48,12 @@ public class Fork extends UniformProcessor
   @Override
   public Fork duplicate(boolean with_state)
   {
-    return new Fork(getOutputArity());
+  	Fork f = new Fork(getOutputArity());
+  	if (with_state)
+  	{
+  		f.m_inputCount = m_inputCount;
+  	}
+    return f;
   }
 
   @Override
@@ -58,7 +63,12 @@ public class Fork extends UniformProcessor
     for (int i = 0; i < arity; i++)
     {
       outputs[i] = inputs[0];
+      if (m_eventTracker != null)
+      {
+      	m_eventTracker.associateToInput(getId(), 0, m_inputCount, i, m_inputCount);
+      }
     }
+    m_inputCount++;
     return true;
   }
 

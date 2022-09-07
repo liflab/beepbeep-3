@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.EventTracker;
+import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Stateful;
@@ -209,6 +210,13 @@ public class ApplyFunction extends UniformProcessor implements Stateful
     {
       return new ShiftTracker();
     }
+
+		@Override
+		public void add(GroupProcessor g)
+		{
+			// TODO Auto-generated method stub
+			
+		}
   }
 
 	@Override

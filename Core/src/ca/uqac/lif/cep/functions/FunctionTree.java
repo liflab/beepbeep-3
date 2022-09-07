@@ -112,7 +112,7 @@ public class FunctionTree extends Function
       m_children[i].evaluate(inputs, val, context);
       values[i] = val[0];
     }
-    m_function.evaluate(values, outputs, context);
+    m_function.evaluate(values, outputs, context, tracker);
   }
   
   @Override

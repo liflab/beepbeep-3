@@ -126,6 +126,16 @@ public class GroupProcessor extends Processor implements Stateful
     m_notifySources = b;
     return this;
   }
+  
+  /**
+   * Gets the tracker instance for the processors contained in this group.
+   * @return The tracker instance, or <tt>null</tt> if no inner tracker is set.
+   * @since 0.11
+   */
+  /*@ pure null @*/ public EventTracker getInnerTracker()
+  {
+  	return m_innerTracker;
+  }
 
   /**
    * Tuple made of a number and a processor.
@@ -178,6 +188,10 @@ public class GroupProcessor extends Processor implements Stateful
   public synchronized GroupProcessor addProcessor(Processor p)
   {
     m_processors.add(p);
+    if (m_innerTracker != null)
+    {
+    	p.setEventTracker(m_innerTracker);
+    }
     if (p instanceof Source)
     {
       m_sources.add((Source) p);
@@ -197,6 +211,10 @@ public class GroupProcessor extends Processor implements Stateful
     for (Processor p : procs)
     {
       m_processors.add(p);
+      if (m_innerTracker != null)
+      {
+      	p.setEventTracker(m_innerTracker);
+      }
       if (p instanceof Source)
       {
         m_sources.add((Source) p);
@@ -343,8 +361,18 @@ public class GroupProcessor extends Processor implements Stateful
   public synchronized Map<Integer, Processor> cloneInto(GroupProcessor group, boolean with_state)
   {
     super.duplicateInto(group);
+    if (group.m_eventTracker != null)
+    {
+    	group.m_eventTracker.add(group);
+    }
     group.m_notifySources = m_notifySources;
     Map<Integer, Processor> new_procs = new HashMap<Integer, Processor>();
+    EventTracker new_tracker = null;
+    if (m_innerTracker != null)
+    {
+    	new_tracker = m_innerTracker.getCopy();
+    }
+    group.m_innerTracker = new_tracker;
     Processor start = null;
     // Clone every processor of the original group
     for (Processor p : m_processors)
@@ -360,7 +388,7 @@ public class GroupProcessor extends Processor implements Stateful
     // Re-pipe the inputs and outputs like in the original group
     associateEndpoints(group, new_procs);
     // Re-pipe the internal processors like in the original group
-    CopyCrawler cc = new CopyCrawler(new_procs);
+    CopyCrawler cc = new CopyCrawler(new_procs, new_tracker);
     cc.crawl(start);
     return new_procs;
   }
@@ -446,12 +474,15 @@ public class GroupProcessor extends Processor implements Stateful
   protected static class CopyCrawler extends PipeCrawler
   {
     private final Map<Integer, Processor> m_correspondences;
+    
+    private final EventTracker m_tracker;
 
-    public CopyCrawler(Map<Integer, Processor> correspondences)
+    public CopyCrawler(Map<Integer, Processor> correspondences, EventTracker tracker)
     {
       super();
       m_correspondences = new HashMap<Integer, Processor>();
       m_correspondences.putAll(correspondences);
+      m_tracker = tracker;
     }
 
     @Override
@@ -487,7 +518,7 @@ public class GroupProcessor extends Processor implements Stateful
           {
             // new_p and new_target may be null if they refer to a processor
             // outside of the group
-            Connector.connect(new_p, i, new_target, j);
+          	Connector.connect(m_tracker, new_p, i, new_target, j);
           }
         }
       }
@@ -785,6 +816,80 @@ public class GroupProcessor extends Processor implements Stateful
     }
     return m_inputPullableAssociations.get(index).m_processor;
   }
+  
+  /**
+   * Gets the index of the group's input pipe associated to the inner processor
+   * with given ID and pipe index.
+   * @param id The ID of the inner processor
+   * @param pipe_index The input pipe index of the inner processor
+   * @return The index of the group's input pipe, or -1 if no such association
+   * exists
+   */
+  public int getGroupInputIndex(int id, int pipe_index)
+  {
+  	for (Map.Entry<Integer,ProcessorAssociation> e : m_inputPullableAssociations.entrySet())
+  	{
+  		ProcessorAssociation pa = e.getValue();
+  		if (pa.m_processor.getId() == id && pa.m_ioNumber == pipe_index)
+  		{
+  			return e.getKey();
+  		}
+  	}
+  	return -1;
+  }
+  
+  /**
+   * Gets the input stream index of the processor associated to the i-th
+   * input of the group.
+   * 
+   * @param index
+   *          The index
+   * @return The index, or <tt>-1</tt> if no processor is associated to this
+   *         index
+   */
+  public int getAssociatedInputIndex(int index)
+  {
+    if (!m_inputPullableAssociations.containsKey(index))
+    {
+      return -1;
+    }
+    return m_inputPullableAssociations.get(index).m_ioNumber;
+  }
+  
+  /**
+   * Gets the processor associated to the i-th output of the group
+   * 
+   * @param index
+   *          The index
+   * @return The processor, or <tt>null</tt> if no processor is associated to this
+   *         index
+   */
+  public Processor getAssociatedOutput(int index)
+  {
+    if (!m_outputPushableAssociations.containsKey(index))
+    {
+      return null;
+    }
+    return m_outputPushableAssociations.get(index).m_processor;
+  }
+  
+  /**
+   * Gets the output stream index of the processor associated to the i-th
+   * output of the group.
+   * 
+   * @param index
+   *          The index
+   * @return The index, or <tt>-1</tt> if no processor is associated to this
+   *         index
+   */
+  public int getAssociatedOutputIndex(int index)
+  {
+    if (!m_outputPushableAssociations.containsKey(index))
+    {
+      return -1;
+    }
+    return m_outputPushableAssociations.get(index).m_ioNumber;
+  }
 
   @Override
   public boolean onEndOfTrace(Queue<Object[]> outputs)
@@ -921,6 +1026,7 @@ public class GroupProcessor extends Processor implements Stateful
   public final Processor setEventTracker(/*@ null @*/ EventTracker tracker)
   {
     super.setEventTracker(tracker);
+    tracker.add(this);
     if (tracker != null)
     {
       m_innerTracker = tracker.getCopy();
