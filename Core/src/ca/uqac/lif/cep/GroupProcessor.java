@@ -370,7 +370,7 @@ public class GroupProcessor extends Processor implements Stateful
     EventTracker new_tracker = null;
     if (m_innerTracker != null)
     {
-    	new_tracker = m_innerTracker.getCopy();
+    	new_tracker = m_innerTracker.getCopy(false);
     }
     group.m_innerTracker = new_tracker;
     Processor start = null;
@@ -1029,7 +1029,7 @@ public class GroupProcessor extends Processor implements Stateful
     tracker.add(this);
     if (tracker != null)
     {
-      m_innerTracker = tracker.getCopy();
+      m_innerTracker = tracker.getCopy(false);
       for (Processor p : m_processors)
       {
         p.setEventTracker(m_innerTracker);

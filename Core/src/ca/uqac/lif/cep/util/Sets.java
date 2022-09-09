@@ -244,5 +244,27 @@ public class Sets
 			}
 			return true;
 		}
+		
+		@Override
+		public String toString()
+		{
+			StringBuilder out = new StringBuilder();
+			out.append("{");
+			boolean first = true;
+			for (T t : this)
+			{
+				if (first)
+				{
+					first = false;
+				}
+				else
+				{
+					out.append(",");
+				}
+				out.append(t);
+			}
+			out.append("}");
+			return out.toString();
+		}
   }
 }

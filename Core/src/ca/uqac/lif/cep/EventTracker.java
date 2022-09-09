@@ -143,7 +143,7 @@ public interface EventTracker
     }
     
     @Override
-    public NoOpEventTracker getCopy()
+    public NoOpEventTracker getCopy(boolean with_state)
     {
       return instance;
     }
@@ -195,8 +195,10 @@ public interface EventTracker
   }
   
   /**
-   * Gets a copy of the event tracker
+   * Gets a copy of the event tracker.
+   * @param with_state A flag indicating if the track should be copied with
+   * its existing associations.
    * @return A copy of this event tracker
    */
-  public EventTracker getCopy();
+  public EventTracker getCopy(boolean with_state);
 }

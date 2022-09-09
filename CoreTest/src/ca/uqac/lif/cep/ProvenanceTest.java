@@ -174,9 +174,16 @@ public class ProvenanceTest
 		}
 
     @Override
-    public EventTracker getCopy()
+    public EventTracker getCopy(boolean with_state)
     {
       return new DummyTracker();
     }
+
+		@Override
+		public void add(GroupProcessor g)
+		{
+			// TODO Auto-generated method stub
+			
+		}
 	}
 }
