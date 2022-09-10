@@ -335,6 +335,10 @@ public class GroupProcessor extends Processor implements Stateful
   public final synchronized Pushable getPushableOutput(int index)
   {
     ProcessorAssociation a = m_outputPushableAssociations.get(index);
+    if (a == null)
+    {
+    	return null;
+    }
     return a.m_processor.getPushableOutput(a.m_ioNumber);
   }
 
@@ -342,6 +346,10 @@ public class GroupProcessor extends Processor implements Stateful
   public final synchronized Pullable getPullableInput(int index)
   {
     ProcessorAssociation a = m_inputPullableAssociations.get(index);
+    if (a == null)
+    {
+    	return null;
+    }
     return a.m_processor.getPullableInput(a.m_ioNumber);
   }
 

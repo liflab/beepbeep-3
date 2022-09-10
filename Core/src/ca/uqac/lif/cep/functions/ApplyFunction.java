@@ -206,7 +206,7 @@ public class ApplyFunction extends UniformProcessor implements Stateful
     }
 
     @Override
-    public EventTracker getCopy()
+    public EventTracker getCopy(boolean with_state)
     {
       return new ShiftTracker();
     }

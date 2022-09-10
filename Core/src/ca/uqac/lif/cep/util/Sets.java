@@ -114,6 +114,7 @@ public class Sets
       if (with_state)
       {
         pi.m_set.addAll(m_set);
+        pi.m_inputCount = m_inputCount;
       }
       return pi;
     }
@@ -121,8 +122,21 @@ public class Sets
     @Override
     protected boolean compute(Object[] inputs, Object[] outputs)
     {
+    	boolean added = !m_set.contains(inputs[0]);
       m_set.add(inputs[0]);
       outputs[0] = m_set;
+      if (m_eventTracker != null)
+      {
+      	if (added)
+      	{
+      		m_eventTracker.associateToInput(getId(), 0, m_inputCount, 0, m_inputCount);
+      	}
+      	if (m_inputCount > 0)
+      	{
+      		m_eventTracker.associateToOutput(getId(), 0, m_inputCount - 1, 0, m_inputCount);
+      	}
+      }
+      m_inputCount++;
       return true;
     }
   }
@@ -154,10 +168,23 @@ public class Sets
     @Override
     protected boolean compute(Object[] inputs, Object[] outputs)
     {
+    	boolean added = !m_set.contains(inputs[0]);
       m_set.add(inputs[0]);
       HashSet<Object> new_set = new HashSet<Object>();
       new_set.addAll(m_set);
       outputs[0] = new_set;
+      if (m_eventTracker != null)
+      {
+      	if (added)
+      	{
+      		m_eventTracker.associateToInput(getId(), 0, m_inputCount, 0, m_inputCount);
+      	}
+      	if (m_inputCount > 0)
+      	{
+      		m_eventTracker.associateToOutput(getId(), 0, m_inputCount - 1, 0, m_inputCount);
+      	}
+      }
+      m_inputCount++;
       return true;
     }
   }

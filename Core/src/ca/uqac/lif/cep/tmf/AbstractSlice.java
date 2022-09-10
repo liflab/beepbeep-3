@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2021 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -216,7 +216,7 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
           m_sinks.put(slice_id, sink);
           if (m_eventTracker != null)
           {
-            p.setEventTracker(m_eventTracker.getCopy());
+            //p.setEventTracker(m_eventTracker.getCopy(false));
             m_sliceIndices.put(slice_id, new ArrayList<Integer>());
           }
         }
