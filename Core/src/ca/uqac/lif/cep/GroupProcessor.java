@@ -1035,7 +1035,7 @@ public class GroupProcessor extends Processor implements Stateful
   {
     super.setEventTracker(tracker);
     tracker.add(this);
-    if (tracker != null)
+    if (tracker != null && m_innerTracker == null)
     {
       m_innerTracker = tracker.getCopy(false);
       for (Processor p : m_processors)
