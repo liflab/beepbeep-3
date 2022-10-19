@@ -54,7 +54,7 @@ public class Window extends AbstractWindow implements Stateful
   /**
    * The sink that will receive the events produced by the inner processor
    */
-  protected SinkLast m_sink = null;
+  protected SinkLast m_sink;
 
   /**
    * Creates a new window processor

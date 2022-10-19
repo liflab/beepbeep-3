@@ -54,7 +54,7 @@ public abstract class AbstractWindow extends SynchronousProcessor
   /**
    * The internal processor
    */
-  protected Processor m_processor = null;
+  protected Processor m_processor;
 
   /**
    * Creates a new abstract window processor
