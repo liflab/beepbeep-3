@@ -43,22 +43,22 @@ public class GroupProcessor extends Processor implements Stateful
   /**
    * The set of processors included in the group
    */
-  private List<Processor> m_processors = null;
+  private List<Processor> m_processors;
 
   /**
    * The set of sources included in the group
    */
-  private HashSet<Source> m_sources = null;
+  private HashSet<Source> m_sources;
 
   /**
    * The {@link Pushable}s associated to each of the processor's input traces
    */
-  private transient List<Pushable> m_inputPushables = null;
+  private transient List<Pushable> m_inputPushables;
 
   /**
    * The {@link Pullable}s associated to each of the processor's output traces
    */
-  private transient List<Pullable> m_outputPullables = null;
+  private transient List<Pullable> m_outputPullables;
 
   /**
    * Whether to notify the QueueSource objects in the group to push an event when
