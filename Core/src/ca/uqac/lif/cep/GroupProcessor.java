@@ -1034,7 +1034,10 @@ public class GroupProcessor extends Processor implements Stateful
   public final Processor setEventTracker(/*@ null @*/ EventTracker tracker)
   {
     super.setEventTracker(tracker);
-    tracker.add(this);
+    if (tracker != null)
+    {
+      tracker.add(this);
+    }
     if (tracker != null && m_innerTracker == null)
     {
       m_innerTracker = tracker.getCopy(false);
