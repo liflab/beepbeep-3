@@ -321,7 +321,7 @@ public class Strings
   }
 
   /**
-   * Finds all substrings that match a regular expression.
+   * Finds all substrings that match capturing group 1 of a regular expression.
    * @author Sylvain Hallé
    */
   @SuppressWarnings("rawtypes")

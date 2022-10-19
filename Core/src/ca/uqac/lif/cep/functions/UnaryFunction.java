@@ -77,8 +77,8 @@ public abstract class UnaryFunction<T, U> extends Function
    * 
    * @param x
    *          The argument
-   * @return The return value of the function @ Any exception occurring during the
-   *         evaluation of the underlying function
+   * @return The return value of the function
+   * @throws Any exception occurring during the evaluation of the underlying function
    */
   public abstract U getValue(T x);
 

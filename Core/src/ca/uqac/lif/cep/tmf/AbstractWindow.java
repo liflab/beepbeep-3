@@ -43,6 +43,7 @@ public abstract class AbstractWindow extends SynchronousProcessor
   /**
    * The event windows
    */
+  // Initialized by reset(), used by compute().
   protected LinkedList<Object>[] m_window;
 
   /**
