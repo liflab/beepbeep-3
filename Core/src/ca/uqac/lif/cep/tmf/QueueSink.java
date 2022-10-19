@@ -102,7 +102,7 @@ public class QueueSink extends Sink
   /**
    * Removes the first event of all queues
    * 
-   * @return A vector containing the first event of all queues, or null
+   * @return A vector containing the first event of all queues, or containing null for empty queues
    */
   public Object[] remove()
   {
