@@ -59,7 +59,7 @@
   </jar>
   
   <!--
-    Write JAR dependencies here.
+    Write JAR dependencies here.l
   -->
   <dependencies>
    <dependency>
@@ -75,7 +75,7 @@
     </dependency>
     <dependency>
       <!--
-      Petit Poucet. Used to store provenance information.
+      Azrael. Used to serialize processors.
       -->
       <name>Azrael Core</name>
       <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
