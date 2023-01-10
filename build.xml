@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
     AntRun, a general-purpose Ant build script
-    Copyright (C) 2015-2021  Sylvain Hallé
+    Copyright (C) 2015-2023  Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.7.3"/>
+  <property name="antrun.version" value="1.8"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -41,7 +41,7 @@
   <property name="build.version" value="1.0"/>
   
   <!-- The target JDK version for the build -->
-  <property name="build.targetjdk" value="1.8"/>
+  <property name="build.targetjdk" value="11"/>
   
   <!-- The folder where libraries (ant-contrib, etc.) will be downloaded
        if necessary -->
@@ -94,16 +94,11 @@
   <!-- Base name of the jar to produce (used by the "zip" target) -->
   <basename property="build.jar.basename" file="${build.jar.filename}" suffix=".jar"/>
   
-  <!-- The filename pattern to recognize test files -->
-  <property name="build.test.filenamepattern" value="**/*.java"/>
+  <!-- The filename pattern to recognize test source files -->
+  <property name="build.test.filenamepattern.src" value="**/*Test.java"/>
   
-  <!-- Location of the Java boot classpath. If this is not set, the compiler
-       will resort to the default boot classpath. -->
-  <property environment="env"/>
-  <property name="java8.boot.classpath" value="${env.JAVA8_BOOTCLASSES}"/>
-  
-  <!-- The location of rt.jar, if it is there -->
-  <property name="build.rtlocation">rt.jar</property>
+  <!-- The filename pattern to recognize test binary files -->
+  <property name="build.test.filenamepattern.bin" value="**/*Test.class"/>
   
   <!-- Target: initialization
        All other targets should ultimately
@@ -152,24 +147,6 @@
     <mkdir dir="${build.docdir}"/>
     <mkdir dir="${build.docdir}/doc-files"/>
   </target>
-
-  <!-- Check if a local rt.jar is present. If so, it will override the
-       default rt.jar present in the system. The "compile" task should
-       depend on this. -->
-  <target name="check-rt" depends="init">
-    <available file="${build.rtlocation}" property="localrt.present"/>
-    <if>
-      <available file="${build.rtlocation}"/>
-      <then>
-        <echo message="Local bootstrap JAR is present"/>
-      </then>
-      <else>
-        <echo message="Local bootstrap JAR is not present"/>
-      </else>
-    </if>
-    <var name="java8.boot.classpath" unset="true"/>
-    <property name="java8.boot.classpath" value="${build.rtlocation}"/>
-  </target>
   
   <!-- Target: zip
        Zips the jar
@@ -189,11 +166,10 @@
   <!-- Target: compile
        Compiles the main project
   -->
-  <target name="compile" depends="init,junit,check-rt,download-deps" description="Compile the sources">
+  <target name="compile" depends="init,junit,download-deps" description="Compile the sources">
     <mkdir dir="${build.bindir}"/>
     <javac
-      target="${build.targetjdk}" source="${build.targetjdk}"
-      bootclasspath="${java8.boot.classpath}"
+      release="${build.targetjdk}"
       srcdir="${build.srcdir}"
       destdir="${build.bindir}"
       debug="${build.debug}"
@@ -201,10 +177,7 @@
       <classpath refid="build.classpath"/>
     </javac>
     <copy todir="${build.bindir}" includeemptydirs="false">
-      <fileset dir="${build.srcdir}">
-        <exclude name="**/*.java"/>
-        <exclude name="**/doc-files/**"/>
-      </fileset>
+      <fileset dir="${build.srcdir}" excludes="**/*.java,doc-files/**"/>
     </copy>
   </target>
   
@@ -214,8 +187,7 @@
   <target name="compile-tests" depends="init,compile,junit" description="Compile the test sources">
     <mkdir dir="${build.test.bindir}"/>
     <javac
-      target="${build.targetjdk}" source="${build.targetjdk}"
-      bootclasspath="${java8.boot.classpath}"
+      release="${build.targetjdk}"
       srcdir="${build.test.srcdir}"
       destdir="${build.test.bindir}"
       debug="${build.debug}"
@@ -223,8 +195,7 @@
       <classpath refid="build.classpath"/>
     </javac>
     <copy todir="${build.test.bindir}" includeemptydirs="false">
-      <fileset dir="${build.test.srcdir}" excludes="**/*.java"/>
-      <fileset dir="${build.test.srcdir}" excludes="**/doc-files/*.*"/>
+      <fileset dir="${build.test.srcdir}" excludes="**/*.java,doc-files/**"/>
     </copy>
   </target>
   
@@ -276,7 +247,12 @@
 	      <attribute name="Built-Date" value="${TODAY}"/>
           <attribute name="Implementation-Version" value="${build.version}"/>
 	  </manifest>
-	  <fileset dir="${build.bindir}" />
+	  <fileset dir="${build.bindir}">
+	    <filename name="**/*"/>
+        <not>
+          <filename name="${build.test.filenamepattern.bin}"/>
+        </not>
+	  </fileset>
 	  <zipgroupfileset dir="${build.depdir}">
 	    <include name="**/*.jar" if="${build.jar.withdeps}"/>
 	  </zipgroupfileset>
@@ -447,27 +423,7 @@
     <mkdir dir="${build.libdir}"/>
     <get src="http://sylvainhalle.github.io/AntRun/dependencies/xmltask.jar" dest="${build.libdir}/${xmltask.jarname}"/>
   </target>
-  
-  <!-- Target: download-rt6
-       Download boot classpath for Java 1.6 and put it in the root folder
-  -->
-  <condition property="rt6.absent" value="false" else="true">
-    <available file="${build.rtlocation}"/>
-  </condition>
-  <target name="download-rt6" if="${rt6.absent}">
-    <get src="http://sylvainhalle.github.io/AntRun/dependencies/1.6.0_45/rt.jar" dest="${build.rtlocation}"/>
-  </target>
 
-  <!-- Target: download-rt8
-       Download boot classpath for Java 1.8 and put it in the root folder
-  -->
-  <condition property="rt8.absent" value="false" else="true">
-    <available file="${build.rtlocation}"/>
-  </condition>
-  <target name="download-rt8" if="${rt8.absent}">
-    <get src="http://sylvainhalle.github.io/AntRun/dependencies/1.8.0_201/rt.jar" dest="${build.rtlocation}"/>
-  </target>
-  
   <!-- Target: junit
        Download jUnit JARs if not present, and puts them in the lib folder
   -->
