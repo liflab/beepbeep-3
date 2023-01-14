@@ -108,7 +108,7 @@ public class StreamVariable extends Variable
     outputs[0] = inputs[m_index];
     if (tracker != null)
     {
-      tracker.associateToOutput(-1, m_index, 0, 0, 0);
+      tracker.associateToInput(-1, m_index, 0, 0, 0);
     }
   }
   

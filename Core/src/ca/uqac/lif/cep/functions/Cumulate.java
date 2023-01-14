@@ -67,7 +67,7 @@ public class Cumulate extends ApplyFunction implements Stateful
             // ...and to the previous output event
             // -1 and -2 since the count has already been incremented by the
             // call to super.compute() above
-            associateToInput(j, m_outputCount - 2, k, m_outputCount - 1);
+            associateToOutput(j, m_outputCount - 2, k, m_outputCount - 1);
 
           }
         }
