@@ -33,15 +33,6 @@ import ca.uqac.lif.cep.functions.TurnInto;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.tmf.Filter;
-import ca.uqac.lif.cep.tmf.Freeze;
-import ca.uqac.lif.cep.tmf.Insert;
-import ca.uqac.lif.cep.tmf.Passthrough;
-import ca.uqac.lif.cep.tmf.Prefix;
-import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tmf.SinkLast;
-import ca.uqac.lif.cep.tmf.Window;
 import ca.uqac.lif.cep.util.Numbers;
 
 /**
