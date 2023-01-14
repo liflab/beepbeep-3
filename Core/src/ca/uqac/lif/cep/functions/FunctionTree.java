@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -109,7 +109,7 @@ public class FunctionTree extends Function
     for (int i = 0; i < values.length; i++)
     {
       Object[] val = new Object[1];
-      m_children[i].evaluate(inputs, val, context);
+      m_children[i].evaluate(inputs, val, context, tracker);
       values[i] = val[0];
     }
     m_function.evaluate(values, outputs, context, tracker);
