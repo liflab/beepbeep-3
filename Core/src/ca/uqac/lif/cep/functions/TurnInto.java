@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -54,6 +54,10 @@ public class TurnInto extends UniformProcessor implements Stateful
   protected boolean compute(Object[] inputs, Object[] outputs)
   {
     outputs[0] = m_event;
+    if (m_eventTracker != null)
+    {
+    	m_eventTracker.associateToInput(getId(), 0, m_inputCount, 0, m_inputCount);
+    }
     return true;
   }
 
