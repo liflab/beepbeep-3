@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -1020,9 +1020,24 @@ public abstract class Processor implements DuplicableProcessor,
   			return false;
   		}
   		InternalProcessorState ips = (InternalProcessorState) o;
-  		return Equals.isEqualTo(m_processorState, ips.m_processorState) &&
-  				Equals.isEqualTo(m_inputQueues, ips.m_inputQueues) &&
-  				Equals.isEqualTo(m_outputQueues, ips.m_outputQueues);
+  		boolean c1 = Equals.isEqualTo(m_processorState, ips.m_processorState);
+  		boolean c2 = Equals.isEqualTo(m_inputQueues, ips.m_inputQueues);
+  		boolean c3 = Equals.isEqualTo(m_outputQueues, ips.m_outputQueues);
+  		// Three conditions separated to facilitate debugging
+  		return c1 && c2 && c3;
+  	}
+  	
+  	@Override
+  	public String toString()
+  	{
+  		StringBuilder out = new StringBuilder();
+  		out.append("[").append(m_inputQueues).append(",").append(m_outputQueues);
+  		if (m_processorState != null)
+  		{
+  			out.append(",").append(m_processorState);
+  		}
+  		out.append("]");
+  		return out.toString();
   	}
   	
   	@Override
