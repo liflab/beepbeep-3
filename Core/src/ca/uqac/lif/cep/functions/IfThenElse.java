@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -54,8 +54,8 @@ public class IfThenElse extends Function
         outputs[0] = inputs[1];
         if (tracker != null)
         {
-          tracker.associateToOutput(-1, 0, 0, 0, 0);
-          tracker.associateToOutput(-1, 1, 0, 0, 0);
+          tracker.associateToInput(-1, 0, 0, 0, 0);
+          tracker.associateToInput(-1, 1, 0, 0, 0);
         }
       }
       else
@@ -63,8 +63,8 @@ public class IfThenElse extends Function
         outputs[0] = inputs[2];
         if (tracker != null)
         {
-          tracker.associateToOutput(-1, 0, 0, 0, 0);
-          tracker.associateToOutput(-1, 2, 0, 0, 0);
+          tracker.associateToInput(-1, 0, 0, 0, 0);
+          tracker.associateToInput(-1, 2, 0, 0, 0);
         }
       }
     }
