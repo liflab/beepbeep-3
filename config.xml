@@ -80,7 +80,7 @@
       <name>Azrael Core</name>
       <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
       <files>
-        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.0.3/azrael-core.jar</jar>
+        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.1/azrael-core.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>
