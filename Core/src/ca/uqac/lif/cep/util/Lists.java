@@ -452,7 +452,8 @@ public class Lists
 		 * Creates a new math list and adds elements from an array.
 		 * @param elements The elements to add
 		 */
-		public MathList(T ... elements)
+		@SafeVarargs
+    public MathList(T ... elements)
 		{
 			super(elements.length);
 			for (T t : elements)
