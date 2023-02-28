@@ -28,11 +28,6 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
-import ca.uqac.lif.cep.tmf.Fork;
-import ca.uqac.lif.cep.tmf.Passthrough;
-import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tmf.QueueSourceBatch;
 
 /**
  * Unit tests for {@link Fork}

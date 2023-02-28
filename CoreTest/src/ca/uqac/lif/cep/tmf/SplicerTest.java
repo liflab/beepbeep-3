@@ -25,8 +25,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tmf.Splice;
 
 /**
  * Unit tests for the {@link Splice} processor.

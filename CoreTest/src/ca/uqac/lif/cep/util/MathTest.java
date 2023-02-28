@@ -37,7 +37,6 @@ import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;
-import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**

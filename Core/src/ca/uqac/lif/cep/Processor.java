@@ -868,7 +868,7 @@ public abstract class Processor implements DuplicableProcessor,
     p.m_outputCount = ((Number) contents.get("output-count")).intValue();
     try
     {
-      reader.setField(p, "m_uniqueId", ((Number) contents.get("id")).intValue());
+      ObjectReader.setField(p, "m_uniqueId", ((Number) contents.get("id")).intValue());
     }
     catch (ReadException e)
     {

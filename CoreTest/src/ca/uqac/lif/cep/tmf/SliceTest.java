@@ -37,8 +37,6 @@ import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
-import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tmf.Slice;
 
 /**
  * Unit tests for the {@link Slice} processor.

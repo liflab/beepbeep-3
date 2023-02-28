@@ -26,8 +26,6 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.io.ReadStringStream;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.util.FindPattern;
-import ca.uqac.lif.cep.util.Strings;
 
 public class InputTest
 {

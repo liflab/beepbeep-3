@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.functions.BinaryFunction;
-import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tmf.WindowFunction;
 import ca.uqac.lif.cep.Pushable;
 
 /**
