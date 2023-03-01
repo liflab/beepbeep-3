@@ -287,7 +287,7 @@
     <taskdef name="junitlauncher" classname="org.apache.tools.ant.taskdefs.optional.junitlauncher.confined.JUnitLauncherTask"
       classpath="${build.libdir}/ant-junitlauncher-${antversion.running}.jar"/>
     <jacoco:agent property="jacocoagent" destfile="${test.reportdir}/jacoco.exec" />
-    <junitlauncher printsummary="true">
+    <junitlauncher printsummary="true" failureProperty="test.failed">
       <classpath refid="build.test.classpath"/>
       <testclasses outputdir="${test.reportdir}">
         <fileset dir="${build.test.bindir}">
@@ -322,6 +322,7 @@
       <html destdir="${coverage.reportdir}"/>
       <xml destfile="${test.reportdir}/report.xml"/>
     </jacoco:report>
+    <fail if="test.failed"/>
   </target>
   
   <!-- Target: all
