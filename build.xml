@@ -22,11 +22,23 @@
   basedir="."
   xmlns:jacoco="antlib:org.jacoco.ant">
   
+  <!-- The version of Ant -->
+  <antversion property="antversion.running" />
+  
+  <!-- Some features require Ant 1.10.6 -->
+  <fail message="Ant 1.10.6+ is required!">
+    <condition><not><antversion atleast="1.10.6"/></not></condition>
+  </fail>
+  
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.8"/>
+  <property name="antrun.version" value="1.9"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
+  
+  <!-- Versions of various dependencies -->
+  <property name="versions.jacoco" value="0.8.8"/>
+  <property name="versions.junit" value="1.9.2"/>
   
   <!--
     Default values. Note that Ant's properties cannot be overwritten once
@@ -113,12 +125,6 @@
     <!-- Load xmltask -->
     <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"
       classpath="${build.libdir}/${xmltask.jarname}"/>
-    <!-- Set the extension dir -->
-    <propertyregex property="build.extdir" 
-               input="${java.ext.dirs}" 
-               regexp="[${path.separator}]([^${path.separator}]+)$" 
-               select="\1"/>
-    <echo level="info">Your extension folder is ${build.extdir}</echo>
     <!-- Create depdir -->
     <mkdir dir="${build.depdir}"/>
     <!-- Create a global classpath that other tasks will refer to -->
@@ -177,7 +183,7 @@
       <classpath refid="build.classpath"/>
     </javac>
     <copy todir="${build.bindir}" includeemptydirs="false">
-      <fileset dir="${build.srcdir}" excludes="**/*.java,doc-files/**"/>
+      <fileset dir="${build.srcdir}" excludes="**/*.java,doc-files/**/*"/>
     </copy>
   </target>
   
@@ -194,8 +200,8 @@
       includeantruntime="false">
       <classpath refid="build.classpath"/>
     </javac>
-    <copy todir="${build.test.bindir}" includeemptydirs="false">
-      <fileset dir="${build.test.srcdir}" excludes="**/*.java,doc-files/**"/>
+    <copy todir="${build.test.bindir}" includeemptydirs="false">  
+      <fileset dir="${build.test.srcdir}" excludes="**/*.java,doc-files/**/*"/>
     </copy>
   </target>
   
@@ -275,16 +281,25 @@
     <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
       <classpath path="${build.libdir}/jacocoant.jar"/>
     </taskdef>
-    <!-- Run jUnit. Since the jacoco task does not support the nested
-         junitlauncher task (required by jUnit5), we run jUnit manually and
-         pass the JaCoCo agent as a parameter to the JVM. -->
-    <jacoco:agent property="agentvmparam" enabled="true" destfile="${test.reportdir}/jacoco.exec" />
-    <java classpathref="build.test.classpath" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
-      <jvmarg value="${agentvmparam}" />
-      <arg line="--scan-classpath" />
-      <arg line="--reports-dir ${test.reportdir}" />
-    </java>
-    <!-- jUnit report -->
+    <!-- Defines junitlauncher as the task from the local JAR file. This
+         overcomes a bug in some Debian distributions that are missing this file
+         in the ant-optional package. -->
+    <taskdef name="junitlauncher" classname="org.apache.tools.ant.taskdefs.optional.junitlauncher.confined.JUnitLauncherTask"
+      classpath="${build.libdir}/ant-junitlauncher-${antversion.running}.jar"/>
+    <jacoco:agent property="jacocoagent" destfile="${test.reportdir}/jacoco.exec" />
+    <junitlauncher printsummary="true">
+      <classpath refid="build.test.classpath"/>
+      <testclasses outputdir="${test.reportdir}">
+        <fileset dir="${build.test.bindir}">
+          <include name="${build.test.filenamepattern.bin}"/>
+        </fileset>
+        <listener type="legacy-xml" sendSysErr="true" sendSysOut="true"/>
+        <fork>
+          <jvmarg value="${jacocoagent}"/>
+        </fork>
+      </testclasses>
+    </junitlauncher>
+    <!-- JUnit report -->
     <junitreport todir="${test.reportdir}">
         <fileset dir="${test.reportdir}">
             <include name="TEST-*.xml"/>
@@ -307,25 +322,12 @@
       <html destdir="${coverage.reportdir}"/>
       <xml destfile="${test.reportdir}/report.xml"/>
     </jacoco:report>
-    <!-- Fail if some test has failed -->
-    <fail if="test.failed"/>
   </target>
   
   <!-- Target: all
        Downloads deps, compiles, runs tests, creates JAR
   -->
   <target name="all" depends="init,test,jar" description="Setup, compile, run tests, create JAR">
-  </target>
-  
-  <!-- Target: install-deps
-       Copies whatever was fetched by the download-deps task into the
-       system's extension folder. This task should probably be run as
-       administrator to work.
-  -->
-  <target name="install-deps" depends="init">
-    <copy todir="${build.extdir}" includeemptydirs="false">
-      <fileset dir="${build.depdir}" includes="*.jar" />
-    </copy>
   </target>
   
   <!-- Target: wipe
@@ -429,22 +431,14 @@
   -->
   <condition property="junit.absent" value="false" else="true">
     <and>
-      <available file="${build.libdir}/junit-jupiter-api-5.7.2.jar"/>
-      <available file="${build.libdir}/junit-jupiter-engine-5.7.2.jar"/>
-      <available file="${build.libdir}/junit-jupiter-params-5.7.2.jar"/>
-      <available file="${build.libdir}/junit-platform-console-standalone-1.7.2.jar"/>
-      <available file="${build.libdir}/junit-vintage-engine-5.7.2.jar"/>
-      <available file="${build.libdir}/apiguardian-api-1.1.2.jar"/>
+      <available file="${build.libdir}/junit-platform-console-standalone-${versions.junit}.jar"/>
+      <!-- <available file="${build.libdir}/ant-junitlauncher-${antversion.running}.jar"/> -->
     </and>
   </condition>
   <target name="junit" if="${junit.absent}" description="Install jUnit if not present">
     <mkdir dir="${build.libdir}"/>
-    <get src="https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.7.2/junit-jupiter-api-5.7.2.jar" dest="${build.libdir}/junit-jupiter-api-5.7.2.jar"/>
-    <get src="https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.7.2/junit-jupiter-engine-5.7.2.jar" dest="${build.libdir}/junit-jupiter-engine-5.7.2.jar"/>
-    <get src="https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-params/5.7.2/junit-jupiter-params-5.7.2.jar" dest="${build.libdir}/junit-jupiter-params-5.7.2.jar"/>
-    <get src="https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.7.2/junit-platform-console-standalone-1.7.2.jar" dest="${build.libdir}/junit-platform-console-standalone-1.7.2.jar"/>
-    <get src="https://repo1.maven.org/maven2/org/junit/vintage/junit-vintage-engine/5.7.2/junit-vintage-engine-5.7.2.jar" dest="${build.libdir}/junit-vintage-engine-5.7.2.jar"/>
-    <get src="https://repo1.maven.org/maven2/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar" dest="${build.libdir}/apiguardian-api-1.1.2.jar"/>
+    <get src="https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/${versions.junit}/junit-platform-console-standalone-${versions.junit}.jar" dest="${build.libdir}/junit-platform-console-standalone-${versions.junit}.jar"/>
+    <get src="https://repo1.maven.org/maven2/org/apache/ant/ant-junitlauncher/${antversion.running}/ant-junitlauncher-${antversion.running}.jar" dest="${build.libdir}/ant-junitlauncher-${antversion.running}.jar"/>
   </target>
   
   <!-- Target: jacoco
@@ -456,7 +450,7 @@
   </condition>
   <target name="jacoco" if="${jacoco.absent}" description="Install JaCoCo if not present">
     <mkdir dir="${build.libdir}"/>
-    <get src="http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.8.6/jacoco-0.8.6.zip" dest="${build.libdir}/jacoco.zip"/>
+    <get src="https://github.com/jacoco/jacoco/releases/download/v${versions.jacoco}/jacoco-${versions.jacoco}.zip" dest="${build.libdir}/jacoco.zip"/>
     <unzip src="${build.libdir}/jacoco.zip" dest="${build.libdir}">
       <patternset>
         <include name="**/*.jar"/>
