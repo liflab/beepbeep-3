@@ -31,7 +31,7 @@
   </fail>
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.9"/>
+  <property name="antrun.version" value="1.10"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -78,10 +78,10 @@
   <property name="build.docdir" value="doc"/>
   
   <!-- The folder where the jUnit test reports should go -->
-  <property name="test.reportdir" value="tests/junit"/>
+  <property name="build.report.junitdir" value="tests/junit"/>
   
-    <!-- The folder where the coverage test reports should go -->
-  <property name="coverage.reportdir" value="tests/coverage"/>
+  <!-- The folder where the coverage test reports should go -->
+  <property name="build.report.jacocodir" value="tests/coverage"/>
   
   <!-- The project's main class. This is used for the generation of the
        runable JAR file in the "jar" target -->
@@ -225,7 +225,7 @@
              windowtitle="${build.name} Documentation">
       <doctitle><![CDATA[<h1>]]>${build.name}<![CDATA[ Documentation</h1>]]></doctitle>
       <bottom><![CDATA[<i>Copyright&nbsp;&#169; ]]>${build.author}<![CDATA[. All Rights Reserved.</i>]]></bottom>
-      <link href="http://docs.oracle.com/javase/6/docs/api/"/>
+      <link href="http://docs.oracle.com/javase/8/docs/api/"/>
       <classpath refid="build.classpath"/>
     </javadoc>
     <if>
@@ -272,24 +272,24 @@
   </target>
   
   <!-- Target: test
-       Performs tests with jUnit and generates code coverage report
-       with JaCoCo
+       Performs tests with jUnit.
   -->
-  <target name="test" depends="junit,jacoco,compile,compile-tests" description="Perform unit tests and generate coverage report">
-    <mkdir dir="${test.reportdir}"/>
-    <mkdir dir="${coverage.reportdir}"/>
-    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-      <classpath path="${build.libdir}/jacocoant.jar"/>
-    </taskdef>
+  <target name="test" depends="junit,jacoco,compile,compile-tests" description="Perform unit tests">
+    <mkdir dir="${basedir}/${build.report.junitdir}"/>
+    <mkdir dir="${build.report.jacocodir}"/>
     <!-- Defines junitlauncher as the task from the local JAR file. This
          overcomes a bug in some Debian distributions that are missing this file
          in the ant-optional package. -->
     <taskdef name="junitlauncher" classname="org.apache.tools.ant.taskdefs.optional.junitlauncher.confined.JUnitLauncherTask"
       classpath="${build.libdir}/ant-junitlauncher-${antversion.running}.jar"/>
-    <jacoco:agent property="jacocoagent" destfile="${test.reportdir}/jacoco.exec" />
+    <!-- Load JaCoCo -->
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+      <classpath path="${build.libdir}/jacocoant.jar"/>
+    </taskdef>
+    <jacoco:agent property="jacocoagent" destfile="${build.report.jacocodir}/jacoco.exec" />
     <junitlauncher printsummary="true" failureProperty="test.failed">
       <classpath refid="build.test.classpath"/>
-      <testclasses outputdir="${test.reportdir}">
+      <testclasses outputdir="${basedir}/${build.report.junitdir}">
         <fileset dir="${build.test.bindir}">
           <include name="${build.test.filenamepattern.bin}"/>
         </fileset>
@@ -299,17 +299,56 @@
         </fork>
       </testclasses>
     </junitlauncher>
-    <!-- JUnit report -->
-    <junitreport todir="${test.reportdir}">
-        <fileset dir="${test.reportdir}">
+    <fail if="test.failed"/>
+  </target>
+  
+   
+  <!-- Target: report
+       Generates JUnit HTML report and code coverage report with JaCoCo
+  -->
+  <target name="report" depends="junit-report,jacoco-report" description="Generate test and coverage reports">
+    <!-- Just call the dependencies -->
+  </target>
+  
+  <!-- Target: junit-report
+       Generates JUnit HTML report and code coverage report with JaCoCo
+  -->
+  <target name="junit-report" depends="init" description="Generate unit test reports">
+    <!-- Don't run if no report fiels are present -->
+    <fail message="No test report files seem to be present. Run ant test first.">
+      <condition>
+        <resourcecount count="0">
+          <filelist dir="${build.report.junitdir}" files="TEST*.xml"/>
+        </resourcecount>
+      </condition>
+    </fail>
+    <junitreport todir="${basedir}/${build.report.junitdir}">
+        <fileset dir="${basedir}/${build.report.junitdir}">
             <include name="TEST-*.xml"/>
         </fileset>
-        <report format="frames" todir="${test.reportdir}"/>
+        <report format="frames" todir="${basedir}/${build.report.junitdir}"/>
     </junitreport>
-    <!-- JaCoCo report -->
+  </target>
+  
+  <!-- Target: jacoco-report
+       Generates JUnit code coverage report with JaCoCo
+  -->
+  <target name="jacoco-report" depends="init,jacoco" description="Generate coverage reports">
+    <!-- Don't run if no report fiels are present -->
+    <fail message="No test report files seem to be present. Run ant test first.">
+      <condition>
+        <not>
+          <available file="${build.report.jacocodir}/jacoco.exec" type="file"/>
+        </not>
+      </condition>
+    </fail>
+    <!-- Load JaCoCo -->
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+      <classpath path="${build.libdir}/jacocoant.jar"/>
+    </taskdef>
     <jacoco:report>
       <executiondata>
-        <file file="${test.reportdir}/jacoco.exec"/>
+        <file file="${build.report.jacocodir}/jacoco.exec"/>
       </executiondata>
       <structure name="${build.name}">
         <classfiles>
@@ -319,10 +358,9 @@
             <fileset dir="${build.srcdir}"/>
         </sourcefiles>
       </structure>
-      <html destdir="${coverage.reportdir}"/>
-      <xml destfile="${test.reportdir}/report.xml"/>
+      <html destdir="${build.report.jacocodir}"/>
+      <xml destfile="${basedir}/${build.report.junitdir}/report.xml"/>
     </jacoco:report>
-    <fail if="test.failed"/>
   </target>
   
   <!-- Target: all
@@ -334,32 +372,32 @@
   <!-- Target: wipe
        Wipes any temporary files or directories
   -->
-  <target name="wipe" description="Wipes the project: deletes everything but sources">
+  <target name="wipe" depends="clean" description="Wipes the project: deletes everything but sources">
     <delete>
       <fileset dir="." includes="**/*~"/>
     </delete>
     <delete dir="${build.libdir}"/>
-    <delete dir="${build.bindir}"/>
-    <delete dir="${build.test.bindir}"/>
     <delete dir="${build.docdir}"/>
     <delete dir="${build.depdir}"/>
-    <delete dir="${test.reportdir}"/>
-    <delete dir="${coverage.reportdir}"/>
-    <delete file="jacoco.exec"/>
   </target>
   
   <!-- Target: clean
        Deletes compiled files and test reports
   -->
-  <target name="clean" description="Cleans compiled files and test reports">
+  <target name="clean" depends="clean-reports" description="Cleans compiled files and test reports">
     <delete>
       <fileset dir="." includes="**/*~"/>
     </delete>
     <delete dir="${build.bindir}"/>
     <delete dir="${build.test.bindir}"/>
-    <delete dir="${test.reportdir}"/>
-    <delete dir="${coverage.reportdir}"/>
-    <delete file="jacoco.exec"/>
+  </target>
+  
+  <!-- Target: clean-reports
+       Deletes test reports
+  -->
+  <target name="clean-reports" description="Cleans compiled test reports">
+    <delete dir="${basedir}/${build.report.junitdir}"/>
+    <delete dir="${build.report.jacocodir}"/>
   </target>
   
   <!-- Target: show-properties
@@ -557,7 +595,6 @@
               </xmltask>
             </else>
           </if>
-          
         </actions>
       </call>
     </xmltask>
