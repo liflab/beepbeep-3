@@ -316,7 +316,7 @@ public class FunctionsTest
 		assertTrue(tracker.containsInputAssociation(sum.getId(), stream_index, 0, stream_index, 0));
 		p.push(3);
 		assertTrue(tracker.containsInputAssociation(sum.getId(), stream_index, 1, stream_index, 1));
-		assertTrue(tracker.containsInputAssociation(sum.getId(), stream_index, 0, stream_index, 1));
+		assertTrue(tracker.containsOutputAssociation(sum.getId(), stream_index, 0, stream_index, 1));
 	}
 	
 	@Test
