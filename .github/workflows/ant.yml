@@ -24,6 +24,8 @@ jobs:
       run: ant -noinput -buildfile build.xml
     - name: Test with JUnit
       run: ant -noinput -buildfile build.xml test
+    - name: Test with JUnit
+      run: ant -noinput -buildfile build.xml report
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
       env:
