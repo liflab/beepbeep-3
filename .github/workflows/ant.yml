@@ -21,9 +21,9 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Build with Ant
-      run: ant -noinput -buildfile Source/build.xml
+      run: ant -noinput -buildfile build.xml
     - name: Test with JUnit
-      run: ant -noinput -buildfile Source/build.xml test
+      run: ant -noinput -buildfile build.xml test
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
       env:
