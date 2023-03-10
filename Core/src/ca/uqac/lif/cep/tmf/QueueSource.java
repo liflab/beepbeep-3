@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -71,7 +71,7 @@ public class QueueSource extends Source implements Stateful
   }
 
   /**
-   * Creates a new queue source of output arity 1
+   * Creates a new queue source of output arity 1.
    */
   public QueueSource()
   {
@@ -79,9 +79,26 @@ public class QueueSource extends Source implements Stateful
     m_events = new ArrayList<Object>();
     m_index = 0;
   }
+  
+  /**
+   * Creates a new queue source of output arity 1, and populates it with a list
+   * of objects.
+   * @param queue A collection of events that the queue source will output. If the
+   *          collection is ordered, the events will be output in the order they
+   *          appear in the collection.
+   * @since 0.10.9
+   */
+  public QueueSource(Collection<? extends Object> queue)
+  {
+  	this(1);
+  	for (Object o : queue)
+  	{
+  		m_events.add(o);
+  	}
+  }
 
   /**
-   * Sets the events that the queue will output
+   * Sets the events that the queue will output.
    * 
    * @param queue
    *          A collection of events that the queue source will output. If the

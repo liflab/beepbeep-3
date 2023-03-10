@@ -967,6 +967,81 @@ public abstract class Processor implements DuplicableProcessor,
   }
   
   /**
+   * Connects the first output pipe of this processor to the first input pipe
+   * of another processor.
+   * <p>
+   * Java programmers probably won't use this method, but users of the Groovy
+   * language can benefit from its operator overloading conventions, which map
+   * the construct <tt>p | q</tt> to <tt>p.or(q)</tt>. This can be used to
+   * easily pipe two processors together:
+   * <pre><code>
+   * def p = (some processor)
+   * def q = (some other processor)
+   * p | q // Connects p to q
+   * </code></pre>
+   * @param p The other processor
+   * @return The other processor
+   * @since 0.10.9
+   */
+  public Processor or(Processor p)
+  {
+  	Connector.connect(this, p);
+  	return p;
+  }
+  
+  /**
+   * Connects the output at index 0 of the current processor to the input
+   * of another processor.
+   * <p>
+   * Java programmers probably won't use this method. However, combined with
+   * the definition of {@link #getAt(int)}, users of the Groovy language
+   * can benefit from its operator overloading conventions, which map
+   * the construct <tt>p | q</tt> to <tt>p.or(q)</tt>. This can be used to
+   * easily pipe two processors together:
+   * <pre><code>
+   * def p = (some processor)
+   * def q = (some other processor)
+   * p | q[1] // Connects p to pipe index 1 of q
+   * </code></pre>
+   * The above example works because <tt>q[1]</tt> returns <tt>q</tt>'s
+   * input pushable for pipe index 1.
+   * @param p The pushable object representing the input of the other processor
+   * to which the current output should be connected.
+   * @return The other processor
+   * @since 0.10.9
+   */
+  public Processor or(Pushable p)
+  {
+  	int index = p.getPosition();
+  	Processor proc = p.getProcessor();
+  	Connector.connect(this, 0, proc, index);
+  	return proc;
+  }
+  
+  /**
+   * Gets the {@link Pushable} object corresponding to the processor's input
+   * pipe for a given index.
+   * <p>
+   * Java programmers probably won't use this method, but users of the Groovy
+   * language can benefit from its operator overloading conventions, which map
+   * the construct <tt>p[x]</tt> to <tt>p.getAt(x)</tt>. Combined with the
+   * definition of {@link #or(Pushable)}, this can be used to easily pipe two
+   * processors together:
+   * <pre><code>
+   * def p = (some processor)
+   * def q = (some other processor)
+   * p | q[1] // Connects p to pipe index 1 of q
+   * </code></pre>
+   * @param index The input pipe index
+   * @return The pushable object
+   * @since 0.10.9
+   */
+  public Pushable getAt(int index)
+  {
+  	return getPushableInput(index);
+  }
+  
+  /**
    * An object capturing the internal state of a processor,
    * including the current contents of its input and output queues.
    */
