@@ -12,7 +12,36 @@ various kinds of output streams from them. For more information about
 what is BeepBeep (including documentation, examples, etc.), please visit
 [BeepBeep's website](http://liflab.github.io/beepbeep-3).
 
-Repository structure                                           {#structure}
+Using BeepBeep in a project
+---------------------------
+
+You can [download the latest JAR file](https://github.com/liflab/beepbeep-3/releases/latest)
+and place it in your classpath. Otherwise, you can declare BeepBeep as a
+dependency in your project.
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>io.github.liflab</groupId>
+  <artifactId>beepbeep-3</artifactId>
+  <version>0.10.8-alpha</version>
+</dependency>
+```
+
+### Ivy
+
+```xml
+<dependency org="io.github.liflab" name="beepbeep-3" rev="0.10.8"/>
+```
+
+### Gradle
+
+```
+compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.10.8-alpha'
+```
+
+Repository structure
 --------------------
 
 The repository is separated across the following folders.
@@ -32,14 +61,18 @@ these basic functionalities are extended by using one or more extra
 *palettes*, such as those found in the
 [BeepBeep palette repository](https://github.com/liflab/beepbeep-3-palettes).
 
-Compiling and Installing BeepBeep 3                              {#install}
+Compiling and Installing BeepBeep 3
 -----------------------------------
 
 First make sure you have the following installed:
 
 - The Java Development Kit (JDK) to compile. BeepBeep is developed to comply
-  with Java version 6; it is probably safe to use any later version.
+  with Java version 8; it is probably safe to use any later version.
 - [Ant](http://ant.apache.org) to automate the compilation and build process
+
+Although the project contains a file named `pom.xml`, it does not contain
+enough information to build from the sources (it only declares the project's
+name and dependencies). You must use Ant.
 
 Download the sources for BeepBeep from
 [GitHub](https://github.com/liflab/beepbeep-3) or clone the
@@ -99,7 +132,7 @@ a nutshell, if Coverity Scan is installed, type the following:
 (Make sure to clean up the directory first by launching `ant clean`, followed
 by `ant download-deps`.)
 
-Developing BeepBeep using Eclipse                                {#eclipse}
+Developing BeepBeep using Eclipse
 ---------------------------------
 
 If you are using Eclipse to develop with BeepBeep, please refer to
@@ -125,13 +158,13 @@ Then, setup the build path for each project:
 - In addition, some of the palette projects may have other
   dependencies; please refer to their individual documentation
 
-Warning                                                          {#warning}
+Warning
 -------
 
 The BeepBeep project is under heavy development. The repository may be
 restructured, the API may change, and so on. This is R&D!
 
-About the author                                                   {#about}
+About the author
 ----------------
 
 BeepBeep 3 was written by [Sylvain Hallé](https://leduotang.ca/sylvain),
