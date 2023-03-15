@@ -52,10 +52,8 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>beepbeep-3.jar</filename>
-    <withdoc>false</withdoc>
+    <filename>beepbeep-3</filename>
     <withdeps>true</withdeps>
-    <withsrc>false</withsrc>
   </jar>
   
   <!--

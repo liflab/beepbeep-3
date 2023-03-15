@@ -25,13 +25,8 @@
   <!-- The version of Ant -->
   <antversion property="antversion.running" />
   
-  <!-- Some features require Ant 1.10.6 -->
-  <fail message="Ant 1.10.6+ is required!">
-    <condition><not><antversion atleast="1.10.6"/></not></condition>
-  </fail>
-  
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.10"/>
+  <property name="antrun.version" value="1.10.2"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -84,7 +79,7 @@
   <property name="build.report.jacocodir" value="tests/coverage"/>
   
   <!-- The project's main class. This is used for the generation of the
-       runable JAR file in the "jar" target -->
+       runnable JAR file in the "jar" target -->
   <property name="build.mainclass" value="ca.uqac.lif.antrun.Main"/>
   
   <!-- Debug level. If set to true, will produce more detailed reports
@@ -92,7 +87,7 @@
   <property name="build.debug" value="true"/>
   
   <!-- Target jar file -->
-  <property name="build.jar.filename" value="AntRun.jar"/>
+  <property name="build.jar.filename" value="antrun"/>
   
   <!-- Generate a jar with the documentation -->
   <property name="build.jar.withdoc" value="false"/>
@@ -239,13 +234,14 @@
   </target>
   
   <!-- Target: jar
-       Generates a JAR file with the compiled files and javadoc
+       Generates three JAR files with with the compiled files, source files and
+       Javadoc
   -->
-  <target name="jar" depends="compile" description="Create the runnable JAR">
-      <tstamp>
-         <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
-      </tstamp>
-      <jar destfile="${build.jar.filename}" filesetmanifest="skip">
+  <target name="jar" depends="compile,javadoc" description="Create the runnable JAR">
+    <tstamp>
+       <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+    </tstamp>
+    <jar destfile="${build.jar.filename}-${build.version}.jar" filesetmanifest="skip">
 	  <manifest>
 	      <attribute name="Main-Class" value="${build.mainclass}"/>
 	      <attribute name="Class-Path" value="."/>
@@ -262,19 +258,27 @@
 	  <zipgroupfileset dir="${build.depdir}">
 	    <include name="**/*.jar" if="${build.jar.withdeps}"/>
 	  </zipgroupfileset>
+	</jar>
+	<jar destfile="${build.jar.filename}-${build.version}-sources.jar" filesetmanifest="skip">
 	  <fileset dir="${build.srcdir}">
-	     <include name="**/*" if="${build.jar.withsrc}"/>
+	     <include name="**/*"/>
 	  </fileset>
+	</jar>
+	<jar destfile="${build.jar.filename}-${build.version}-javadoc.jar" filesetmanifest="skip">
 	  <fileset dir="${build.docdir}">
-	    <include name="**/*" if="${build.jar.withdoc}"/>
+	    <include name="**/*"/>
 	  </fileset>
-      </jar>
+    </jar>
   </target>
   
   <!-- Target: test
-       Performs tests with jUnit.
+       Performs tests with jUnit
   -->
   <target name="test" depends="junit,jacoco,compile,compile-tests" description="Perform unit tests">
+    <!-- JaCoCo coverage srequires Ant 1.10.6 -->
+    <fail message="Ant 1.10.6+ is required. Consider using test-legacy as a workaround.">
+      <condition><not><antversion atleast="1.10.6"/></not></condition>
+    </fail>
     <mkdir dir="${basedir}/${build.report.junitdir}"/>
     <mkdir dir="${build.report.jacocodir}"/>
     <!-- Defines junitlauncher as the task from the local JAR file. This
@@ -302,7 +306,30 @@
     <fail if="test.failed"/>
   </target>
   
-   
+  <!-- Target: test-legacy
+       Performs tests with jUnit, but without using the junitlauncher task that
+       is supported only in Ant 1.10.6 onwards. This results in less detailed
+       reports. It is recommended to use only on versions of Ant prior
+       to 1.10.6.
+  -->
+  <target name="test-legacy" depends="junit,jacoco,compile,compile-tests" description="Perform unit tests (legacy)">
+    <mkdir dir="${basedir}/${build.report.junitdir}"/>
+    <mkdir dir="${build.report.jacocodir}"/>
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+      <classpath path="${build.libdir}/jacocoant.jar"/>
+    </taskdef>
+    <!-- Run jUnit. Since the jacoco task does not support the nested
+         junitlauncher task (required by jUnit5), we run jUnit manually and
+         pass the JaCoCo agent as a parameter to the JVM. -->
+    <jacoco:agent property="agentvmparam" enabled="true" destfile="${build.report.jacocodir}/jacoco.exec" />
+    <java classpathref="build.test.classpath" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
+      <jvmarg value="${agentvmparam}" />
+      <arg line="--scan-classpath" />
+      <arg line="--reports-dir ${build.report.junitdir}" />
+    </java>
+    <fail if="test.failed"/>
+  </target>
+  
   <!-- Target: report
        Generates JUnit HTML report and code coverage report with JaCoCo
   -->
@@ -471,7 +498,7 @@
   <condition property="junit.absent" value="false" else="true">
     <and>
       <available file="${build.libdir}/junit-platform-console-standalone-${versions.junit}.jar"/>
-      <!-- <available file="${build.libdir}/ant-junitlauncher-${antversion.running}.jar"/> -->
+      <available file="${build.libdir}/ant-junitlauncher-${antversion.running}.jar"/>
     </and>
   </condition>
   <target name="junit" if="${junit.absent}" description="Install jUnit if not present">
