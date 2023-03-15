@@ -1,7 +1,7 @@
 BeepBeep 3: an expressive query processor for event streams
 ===========================================================
 
-[![Java CI](https://github.com/liflab/beepbeep-3/actions/workflows/ant-push.yml/badge.svg)](https://github.com/liflab/beepbeep-3/actions/workflows/ant.yml)
+[![Java CI](https://github.com/liflab/beepbeep-3/actions/workflows/ant-push.yml/badge.svg)](https://github.com/liflab/beepbeep-3/actions/workflows/ant-push.yml)
 [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/15149.svg?style=flat-square)](https://scan.coverity.com/projects/liflab-beepbeep-3)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=liflab_beepbeep-3&metric=coverage)](https://sonarcloud.io/summary/new_code?id=liflab_beepbeep-3)
 <img src="http://leduotang.ca/beepbeep-3.svg" height="20" alt="Downloads"/>
