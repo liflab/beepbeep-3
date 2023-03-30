@@ -22,7 +22,9 @@ var namespaceca_1_1uqac_1_1lif_1_1cep =
     [ "ProcessorException", "classca_1_1uqac_1_1lif_1_1cep_1_1_processor_exception.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_processor_exception" ],
     [ "Pullable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable" ],
     [ "Pushable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable" ],
+    [ "Stateful", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_stateful.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_stateful" ],
     [ "SynchronousProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor" ],
     [ "TypedPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable" ],
-    [ "UniformProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor" ]
+    [ "UniformProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor" ],
+    [ "UtilityMethods", "classca_1_1uqac_1_1lif_1_1cep_1_1_utility_methods.html", "classca_1_1uqac_1_1lif_1_1cep_1_1_utility_methods" ]
 ];

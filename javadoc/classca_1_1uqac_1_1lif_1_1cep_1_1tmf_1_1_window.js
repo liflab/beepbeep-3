@@ -3,6 +3,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window =
     [ "Window", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#a77cd7b3eeca92f54696ef77dbbae920b", null ],
     [ "compute", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#a84c4baab18d4e4b50e890839f635d38d", null ],
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#a64dd483b944357c635c89d14ae692095", null ],
+    [ "getState", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#a03616b46e3b27a8ee13ef9d22373f33d", null ],
     [ "getWidth", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#aadd748c972d494e5c209f29cf73e84b5", null ],
     [ "leftTrim", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#a5c946446cb62a281fdf583b0473a4f8e", null ],
     [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html#ab40b3014ccce4842d14d5c91a667bf75", null ],

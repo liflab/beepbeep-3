@@ -1,5 +1,6 @@
 var classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset =
 [
+    [ "GetCardinalities", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_get_cardinalities.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_get_cardinalities" ],
     [ "Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_insert.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_insert" ],
     [ "PutInto", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_put_into.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_put_into" ],
     [ "Multiset", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#ac32454d806155cf7a960a4cbf7b7bbc5", null ],
@@ -23,5 +24,6 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset =
     [ "retainAll", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a461f5bc1d2fc9e2c5bc03037af56ac39", null ],
     [ "size", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#aadfda52ee8cf82a87091786b3de71160", null ],
     [ "toArray", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#a778cc9512a15e8b0ad74088fba935b0b", null ],
-    [ "toString", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#ab73b66d119e1f195723c5048743864ab", null ]
+    [ "toString", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#ab73b66d119e1f195723c5048743864ab", null ],
+    [ "getCardinalities", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset.html#ac642112ad1aa3a11c4f0e68e2c7d21da", null ]
 ];

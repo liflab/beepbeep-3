@@ -164,7 +164,9 @@ var hierarchy =
             [ "ca.uqac.lif.cep.util.InstanceOf", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_instance_of.html", null ],
             [ "ca.uqac.lif.cep.util.Maps.ApplyAll", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_apply_all.html", null ],
             [ "ca.uqac.lif.cep.util.Maps.Get", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_get.html", null ],
+            [ "ca.uqac.lif.cep.util.Maps.MultiValues", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_multi_values.html", null ],
             [ "ca.uqac.lif.cep.util.Maps.Values", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_values.html", null ],
+            [ "ca.uqac.lif.cep.util.Multiset.GetCardinalities", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_multiset_1_1_get_cardinalities.html", null ],
             [ "ca.uqac.lif.cep.util.NthElement", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_nth_element.html", null ],
             [ "ca.uqac.lif.cep.util.Numbers.AbsoluteValue", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_absolute_value.html", null ],
             [ "ca.uqac.lif.cep.util.Numbers.Ceiling", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_ceiling.html", null ],
@@ -197,6 +199,7 @@ var hierarchy =
       [ "ca.uqac.lif.cep.functions.ApplyFunction.ShiftTracker", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html", null ]
     ] ],
     [ "ca.uqac.lif.cep.FutureDone< ca.uqac.lif.cep.Pushable >", "classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html", null ],
+    [ "ca.uqac.lif.cep.Processor.InternalProcessorState", "classca_1_1uqac_1_1lif_1_1cep_1_1_processor_1_1_internal_processor_state.html", null ],
     [ "Iterable", null, [
       [ "ca.uqac.lif.cep.Pullable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html", [
         [ "ca.uqac.lif.cep.AsynchronousProcessor.OutputPullable", "classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_output_pullable.html", null ],
@@ -215,6 +218,7 @@ var hierarchy =
     [ "ca.uqac.lif.cep.util.Lists", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists.html", null ],
     [ "ca.uqac.lif.cep.Main", "classca_1_1uqac_1_1lif_1_1cep_1_1_main.html", null ],
     [ "ca.uqac.lif.cep.util.Maps", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps.html", null ],
+    [ "ca.uqac.lif.cep.util.Maps.MathMap< Integer, ca.uqac.lif.cep.util.Lists.MathList< Object > >", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_math_map.html", null ],
     [ "ca.uqac.lif.cep.Pullable.NextStatus", "enumca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_next_status.html", null ],
     [ "ca.uqac.lif.cep.util.Numbers", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html", null ],
     [ "ca.uqac.lif.cep.PipeCrawler", "classca_1_1uqac_1_1lif_1_1cep_1_1_pipe_crawler.html", [
@@ -246,6 +250,25 @@ var hierarchy =
       [ "ca.uqac.lif.cep.Pushable.PushableException", "classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_pushable_exception.html", null ]
     ] ],
     [ "ca.uqac.lif.cep.util.Sets", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets.html", null ],
+    [ "ca.uqac.lif.cep.Stateful", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_stateful.html", [
+      [ "ca.uqac.lif.cep.functions.ApplyFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html", null ],
+      [ "ca.uqac.lif.cep.functions.Cumulate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate.html", null ],
+      [ "ca.uqac.lif.cep.functions.TurnInto", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_turn_into.html", null ],
+      [ "ca.uqac.lif.cep.GroupProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html", null ],
+      [ "ca.uqac.lif.cep.tmf.AbstractSlice", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html", null ],
+      [ "ca.uqac.lif.cep.tmf.CountDecimate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_count_decimate.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Filter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_filter.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Freeze", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_freeze.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Insert", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Passthrough", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_passthrough.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Pump", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html", null ],
+      [ "ca.uqac.lif.cep.tmf.QueueSource", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source.html", null ],
+      [ "ca.uqac.lif.cep.tmf.SimpleFilter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_simple_filter.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Stutter", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_stutter.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Trim", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_trim.html", null ],
+      [ "ca.uqac.lif.cep.tmf.Window", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_window.html", null ],
+      [ "ca.uqac.lif.cep.util.Sets.SetUpdateProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets_1_1_set_update_processor.html", null ]
+    ] ],
     [ "ca.uqac.lif.cep.util.Strings", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_strings.html", null ],
     [ "Thread", null, [
       [ "ca.uqac.lif.cep.io.CommandRunner", "classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html", null ],
@@ -258,6 +281,7 @@ var hierarchy =
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Map, Collection >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Map, Map >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Map, Object >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
+    [ "ca.uqac.lif.cep.functions.UnaryFunction< Multiset, Map >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Number, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Number, Number >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.UnaryFunction< Object, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
@@ -270,15 +294,22 @@ var hierarchy =
     [ "ca.uqac.lif.cep.functions.UnaryFunction< T, T >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", [
       [ "ca.uqac.lif.cep.functions.CumulativeFunction< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulative_function.html", null ]
     ] ],
-    [ "ca.uqac.lif.cep.functions.UnaryFunction<?, Boolean >", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html", null ],
     [ "ca.uqac.lif.cep.functions.FunctionLambda.UnaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda_1_1_unary_lambda_evaluable.html", null ],
     [ "ca.uqac.lif.cep.functions.ApplyFunctionLambda.UnaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_unary_lambda_evaluable.html", null ],
+    [ "ca.uqac.lif.cep.UtilityMethods", "classca_1_1uqac_1_1lif_1_1cep_1_1_utility_methods.html", null ],
+    [ "ArrayList", null, [
+      [ "ca.uqac.lif.cep.util.Lists.MathList< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_lists_1_1_math_list.html", null ]
+    ] ],
     [ "Future", null, [
       [ "ca.uqac.lif.cep.CompoundFuture< T, U >", "classca_1_1uqac_1_1lif_1_1cep_1_1_compound_future.html", null ],
       [ "ca.uqac.lif.cep.FutureDone< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1_future_done.html", null ]
     ] ],
     [ "HashMap", null, [
-      [ "ca.uqac.lif.cep.Context", "classca_1_1uqac_1_1lif_1_1cep_1_1_context.html", null ]
+      [ "ca.uqac.lif.cep.Context", "classca_1_1uqac_1_1lif_1_1cep_1_1_context.html", null ],
+      [ "ca.uqac.lif.cep.util.Maps.MathMap< K, V >", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_math_map.html", null ]
+    ] ],
+    [ "HashSet", null, [
+      [ "ca.uqac.lif.cep.util.Sets.MathSet< T >", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_sets_1_1_math_set.html", null ]
     ] ],
     [ "Iterator", null, [
       [ "ca.uqac.lif.cep.Pullable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html", null ]

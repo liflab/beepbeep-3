@@ -26,8 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.10.3-alpha</span>
+   <div id="projectname"><span id="projectnumber">0.10.8-alpha</span>
    </div>
   </td>
  </tr>
@@ -90,16 +89,50 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0b9a2d8e49e279293a07bf07aed2704d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html#a0b9a2d8e49e279293a07bf07aed2704d">setTo</a> (<a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> ... processors)</td></tr>
 <tr class="memdesc:a0b9a2d8e49e279293a07bf07aed2704d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associates this tracker to multiple processors at the same time.  <a href="#a0b9a2d8e49e279293a07bf07aed2704d">More...</a><br /></td></tr>
 <tr class="separator:a0b9a2d8e49e279293a07bf07aed2704d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a3242c4fb4d59eaf5514007d9ac7bf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html">EventTracker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html#a8a3242c4fb4d59eaf5514007d9ac7bf8">getCopy</a> ()</td></tr>
-<tr class="memdesc:a8a3242c4fb4d59eaf5514007d9ac7bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a copy of the event tracker.  <a href="#a8a3242c4fb4d59eaf5514007d9ac7bf8">More...</a><br /></td></tr>
-<tr class="separator:a8a3242c4fb4d59eaf5514007d9ac7bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c8e0210d4975c93bf1079e3ee4e1d91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html">EventTracker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html#a4c8e0210d4975c93bf1079e3ee4e1d91">getCopy</a> (boolean with_state)</td></tr>
+<tr class="memdesc:a4c8e0210d4975c93bf1079e3ee4e1d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a copy of the event tracker.  <a href="#a4c8e0210d4975c93bf1079e3ee4e1d91">More...</a><br /></td></tr>
+<tr class="separator:a4c8e0210d4975c93bf1079e3ee4e1d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4826a2b28ab451140221c4f81497de18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html#a4826a2b28ab451140221c4f81497de18">add</a> (<a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html">GroupProcessor</a> g)</td></tr>
+<tr class="memdesc:a4826a2b28ab451140221c4f81497de18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a group to be managed by this tracker.  <a href="#a4826a2b28ab451140221c4f81497de18">More...</a><br /></td></tr>
+<tr class="separator:a4826a2b28ab451140221c4f81497de18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple tracker proxy that records associations from the underlying function, and shifts its input/output by the current position in the input/output stream. </p>
 <dl class="section since"><dt>Since</dt><dd>0.10.3 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00168">168</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00160">160</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a4826a2b28ab451140221c4f81497de18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4826a2b28ab451140221c4f81497de18">&#9670;&nbsp;</a></span>add()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ca.uqac.lif.cep.functions.ApplyFunction.ShiftTracker.add </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html">GroupProcessor</a>&#160;</td>
+          <td class="paramname"><em>g</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a group to be managed by this tracker. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">g</td><td>The group </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.11 </dd></dl>
+
+<p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#a2c777784abb2e3e7d57ed14f59922d4d">ca.uqac.lif.cep.EventTracker</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00223">223</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+
+</div>
+</div>
 <a id="a14293b2fb7ab994ead02e9906b344f50"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14293b2fb7ab994ead02e9906b344f50">&#9670;&nbsp;</a></span>associateTo()</h2>
 
@@ -151,7 +184,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#ad6ddffa9340b77ddb206ef2afd753abf">ca.uqac.lif.cep.EventTracker</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00171">171</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00163">163</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
 
 </div>
 </div>
@@ -213,7 +246,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#a59983637f1ef2ac69eb12242e7cd18f6">ca.uqac.lif.cep.EventTracker</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00180">180</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00172">172</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
 
 </div>
 </div>
@@ -275,12 +308,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#a9c892d94c4eea496a11fec6f17dcd212">ca.uqac.lif.cep.EventTracker</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00191">191</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00187">187</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
 
 </div>
 </div>
-<a id="a8a3242c4fb4d59eaf5514007d9ac7bf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a3242c4fb4d59eaf5514007d9ac7bf8">&#9670;&nbsp;</a></span>getCopy()</h2>
+<a id="a4c8e0210d4975c93bf1079e3ee4e1d91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c8e0210d4975c93bf1079e3ee4e1d91">&#9670;&nbsp;</a></span>getCopy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -288,18 +321,25 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html">EventTracker</a> ca.uqac.lif.cep.functions.ApplyFunction.ShiftTracker.getCopy </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>with_state</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Gets a copy of the event tracker. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">with_state</td><td>A flag indicating if the track should be copied with its existing associations. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>A copy of this event tracker </dd></dl>
 
-<p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#aafb6d1e06097b3ffa9bbda65b417b790">ca.uqac.lif.cep.EventTracker</a>.</p>
+<p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#a420bd2b78cdf70b4186857090967607f">ca.uqac.lif.cep.EventTracker</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00222">222</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00217">217</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
 
 </div>
 </div>
@@ -348,7 +388,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#ad47960941665d80610b920f904ba7cf4">ca.uqac.lif.cep.EventTracker</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00203">203</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00198">198</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
 
 </div>
 </div>
@@ -392,7 +432,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#abfce795c6ac85a74bec0256d6cec1896">ca.uqac.lif.cep.EventTracker</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00209">209</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00204">204</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
 
 </div>
 </div>
@@ -422,12 +462,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html#a6cfa9c85dcd90cf1a44f534a5ecbf861">ca.uqac.lif.cep.EventTracker</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00216">216</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_apply_function_8java_source.html#l00211">211</a> of file <a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/sylvain/Workspaces/beepbeep/core/Core/src/ca/uqac/lif/cep/functions/<a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a></li>
+<li>/home/sylvain/Workspaces/BeepBeep/beepbeep-3/Core/src/ca/uqac/lif/cep/functions/<a class="el" href="_apply_function_8java_source.html">ApplyFunction.java</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -435,7 +475,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1functions.html">functions</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function.html">ApplyFunction</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_1_1_shift_tracker.html">ShiftTracker</a></li>
-    <li class="footer">Generated on Tue Mar 24 2020 17:55:10 for BeepBeep 3 by
+    <li class="footer">Generated on Thu Mar 30 2023 15:18:52 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

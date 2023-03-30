@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_context.html" title="Associative map used by processors to store persistent data. " alt="" coords="132,5,289,32"/>
+<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_context.html" title="Associative map used by processors to store persistent data. " alt="" coords="137,5,295,32"/>
+<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_math_map.html" title="A map that implements equality based on its contents. " alt="" coords="132,57,300,98"/>
 </map>

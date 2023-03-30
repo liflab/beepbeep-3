@@ -26,8 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.10.3-alpha</span>
+   <div id="projectname"><span id="projectnumber">0.10.8-alpha</span>
    </div>
   </td>
  </tr>
@@ -190,7 +189,7 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.1 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00030">30</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00034">34</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af81fe9cfbb80c597207b1268b38a1fda"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af81fe9cfbb80c597207b1268b38a1fda">&#9670;&nbsp;</a></span>getValue()</h2>
@@ -218,7 +217,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00040">40</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00044">44</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
 
 </div>
 </div>
@@ -259,11 +258,13 @@ Additional Inherited Members</h2></td></tr>
 <p>Determines if two objects <em>x</em> and <em>y</em> are equal. </p>
 <p>The method uses the following rules to determine equality: </p><ul>
 <li>
-If any of <em>x</em> and <em>y</em> is null, the answer is false </li>
+null is equal to null, but not to any other value </li>
 <li>
 <a class="el" href="">Constant</a> objects are compared according to the value they contain </li>
 <li>
-Collections are equal if they have the same size and the same elements </li>
+<a class="el" href="">MathList</a>s and <a class="el" href="">MathMap</a>s are compared using their own method </li>
+<li>
+Other collections are equal if they have the same size and the same elements </li>
 <li>
 <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_strings.html" title="A container object for string functions. ">Strings</a> and numbers are compared according to their value </li>
 <li>
@@ -278,7 +279,7 @@ Any other objects are compared by calling their <a class="el" href="">equals(Obj
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if they are equal, <code>false</code> otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00068">68</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00074">74</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
 
 </div>
 </div>
@@ -297,7 +298,7 @@ Any other objects are compared by calling their <a class="el" href="">equals(Obj
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00046">46</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00050">50</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
 
 </div>
 </div>
@@ -322,12 +323,12 @@ Any other objects are compared by calling their <a class="el" href="">equals(Obj
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00032">32</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_equals_8java_source.html#l00036">36</a> of file <a class="el" href="_equals_8java_source.html">Equals.java</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/sylvain/Workspaces/beepbeep/core/Core/src/ca/uqac/lif/cep/util/<a class="el" href="_equals_8java_source.html">Equals.java</a></li>
+<li>/home/sylvain/Workspaces/BeepBeep/beepbeep-3/Core/src/ca/uqac/lif/cep/util/<a class="el" href="_equals_8java_source.html">Equals.java</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -335,7 +336,7 @@ Any other objects are compared by calling their <a class="el" href="">equals(Obj
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep_1_1util.html">util</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_equals.html">Equals</a></li>
-    <li class="footer">Generated on Tue Mar 24 2020 17:55:10 for BeepBeep 3 by
+    <li class="footer">Generated on Thu Mar 30 2023 15:18:53 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

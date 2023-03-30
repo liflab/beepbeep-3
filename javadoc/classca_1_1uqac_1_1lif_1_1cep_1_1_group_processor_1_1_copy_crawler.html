@@ -26,8 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">BeepBeep 3
-   &#160;<span id="projectnumber">0.10.3-alpha</span>
+   <div id="projectname"><span id="projectnumber">0.10.8-alpha</span>
    </div>
   </td>
  </tr>
@@ -73,8 +72,8 @@ $(document).ready(function(){initNavTree('classca_1_1uqac_1_1lif_1_1cep_1_1_grou
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aac40c17823e4015f39aa32e07d4fc149"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html#aac40c17823e4015f39aa32e07d4fc149">CopyCrawler</a> (Map&lt; Integer, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> &gt; correspondences)</td></tr>
-<tr class="separator:aac40c17823e4015f39aa32e07d4fc149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ac99b7301ed31a73b2b08e7bd4a0e93"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html#a0ac99b7301ed31a73b2b08e7bd4a0e93">CopyCrawler</a> (Map&lt; Integer, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> &gt; correspondences, <a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html">EventTracker</a> tracker)</td></tr>
+<tr class="separator:a0ac99b7301ed31a73b2b08e7bd4a0e93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87908592b2ef4cee2c0c726529913ca1"><td class="memItemLeft" align="right" valign="top">synchronized void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html#a87908592b2ef4cee2c0c726529913ca1">crawl</a> (<a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html#a0d4f0ba0250a6386f929f206a54816a9">start</a>)</td></tr>
 <tr class="separator:a87908592b2ef4cee2c0c726529913ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa297827e1f38d3be0f58068687f9035"><td class="memItemLeft" align="right" valign="top">synchronized void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html#aaa297827e1f38d3be0f58068687f9035">visit</a> (<a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> p)</td></tr>
@@ -99,10 +98,10 @@ Additional Inherited Members</h2></td></tr>
 <p><b>Caveat emptor</b>: the starting point of the crawl cannot be a processor with output arity of 0. Otherwise, none of the processors in the new group will be piped together.</p>
 <dl class="section author"><dt>Author</dt><dd>Sylvain Hallé </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00444">444</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00482">482</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aac40c17823e4015f39aa32e07d4fc149"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac40c17823e4015f39aa32e07d4fc149">&#9670;&nbsp;</a></span>CopyCrawler()</h2>
+<a id="a0ac99b7301ed31a73b2b08e7bd4a0e93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ac99b7301ed31a73b2b08e7bd4a0e93">&#9670;&nbsp;</a></span>CopyCrawler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -111,13 +110,23 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">ca.uqac.lif.cep.GroupProcessor.CopyCrawler.CopyCrawler </td>
           <td>(</td>
           <td class="paramtype">Map&lt; Integer, <a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_processor.html">Processor</a> &gt;&#160;</td>
-          <td class="paramname"><em>correspondences</em></td><td>)</td>
+          <td class="paramname"><em>correspondences</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="interfaceca_1_1uqac_1_1lif_1_1cep_1_1_event_tracker.html">EventTracker</a>&#160;</td>
+          <td class="paramname"><em>tracker</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00448">448</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00488">488</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -138,7 +147,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00456">456</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00497">497</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
@@ -158,12 +167,12 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00467">467</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_processor_8java_source.html#l00508">508</a> of file <a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/sylvain/Workspaces/beepbeep/core/Core/src/ca/uqac/lif/cep/<a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a></li>
+<li>/home/sylvain/Workspaces/BeepBeep/beepbeep-3/Core/src/ca/uqac/lif/cep/<a class="el" href="_group_processor_8java_source.html">GroupProcessor.java</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -171,7 +180,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceca.html">ca</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac.html">uqac</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif.html">lif</a></li><li class="navelem"><a class="el" href="namespaceca_1_1uqac_1_1lif_1_1cep.html">cep</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor.html">GroupProcessor</a></li><li class="navelem"><a class="el" href="classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html">CopyCrawler</a></li>
-    <li class="footer">Generated on Tue Mar 24 2020 17:55:10 for BeepBeep 3 by
+    <li class="footer">Generated on Thu Mar 30 2023 15:18:52 for BeepBeep 3 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

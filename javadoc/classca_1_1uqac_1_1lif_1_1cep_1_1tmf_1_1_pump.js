@@ -5,6 +5,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump =
     [ "duplicate", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#a42655856c56c1bf5700decaa4620d26e", null ],
     [ "getPullableOutput", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#a4698d1f3c69b360e69e324454ac3ad32", null ],
     [ "getPushableInput", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#ad079b815aa63f26756ef3cb9b0adbb78", null ],
+    [ "getState", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#a6334669ffa9aebb58c0bf3c502363c6d", null ],
     [ "run", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#ac295189c2b1353e2157f3566b8efe143", null ],
     [ "start", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#a0f004a50bad0605fcfb6686172cddb78", null ],
     [ "stop", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_pump.html#adb566459794f77a316896e0aa5f1d0d3", null ],
