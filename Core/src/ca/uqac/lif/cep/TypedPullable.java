@@ -32,7 +32,7 @@ import java.util.Iterator;
  * <strong>Caveat emptor:</strong> This pullable simply <em>casts</em> what it
  * receives from its underlying pullable to the type it was created with. It is
  * up to the user to make sure that this cast makes sense; otherwise, a
- * <tt>ClassCastException</tt> will be thrown at runtime.
+ * {@code ClassCastException} will be thrown at runtime.
  * 
  * @author Sylvain Hallé
  * @since 0.2.1

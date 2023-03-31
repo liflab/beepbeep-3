@@ -88,7 +88,7 @@ public class Bags
   /**
    * Gets all the elements of the collection that satisfy some condition. This
    * condition is specified as an unary function that is successively applied to
-   * each element of the collection; if the function returns <tt>true</tt>, the
+   * each element of the collection; if the function returns {@code true}, the
    * element is added to the output result, otherwise it is discarded.
    * <p>
    * This function preserves the type of the input. That is, if the input is a
@@ -559,7 +559,7 @@ public class Bags
 
   /**
    * Returns any element of a collection. If the collection is empty, returns
-   * <tt>null</tt>.
+   * {@code null}.
    */
   @SuppressWarnings("rawtypes")
   public static class AnyElement extends UnaryFunction<Collection, Object>
@@ -583,10 +583,10 @@ public class Bags
   }
 
   /**
-   * A 1:<i>m</i> function provided by the <tt>Bags</tt> utility class. 
+   * A 1:<i>m</i> function provided by the {@code Bags} utility class. 
    * Given a collection of size *m*, it returns as its <i>m</i> outputs 
    * the elements of the collection. It can be seen as the oppsite of 
-   * <tt>ToArray</tt>, <tt>ToList</tt> and <tt>ToSet</tt>.
+   * {@code ToArray}, {@code ToList} and {@code ToSet}.
    * The ordering of the arguments is 
    * ensured when the input collection is itself ordered. 
    */
@@ -650,7 +650,7 @@ public class Bags
    * 
    * @param o
    *          The object
-   * @return An array, or <tt>null</tt> if the object could not be converted into
+   * @return An array, or {@code null} if the object could not be converted into
    *         an array.
    */
   public static Object[] toObjectArray(Object o)

@@ -30,7 +30,7 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * <img src="{@docRoot}/doc-files/functions/Cumulate.png" alt="Cumulate">
  * <p>
  * In earlier versions of the library, this class was called
- * <tt>CumulativeProcessor</tt>.
+ * {@code CumulativeProcessor}.
  * @author Sylvain Hallé
  * @since 0.1
  */

@@ -27,7 +27,7 @@ import java.util.Map;
  * <li>For a string, the length</li>
  * <li>For a number, the integer value</li>
  * <li>For a collection, a map or an array, the cardinality</li>
- * <li>For anything else (including <tt>null</tt>), 0</li>
+ * <li>For anything else (including {@code null}), 0</li>
  * </ul>
  * 
  * @author Sylvain Hallé

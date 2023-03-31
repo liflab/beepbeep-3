@@ -21,7 +21,7 @@ package ca.uqac.lif.cep.tmf;
  * After returning an input event, discards all others for the next *n* seconds.
  * This processor therefore acts as a rate limiter.
  * 
- * Note that this processor uses <code>System.currentTimeMillis()</code> as its
+ * Note that this processor uses {@code System.currentTimeMillis()} as its
  * clock. Moreover, a mode can be specified in order to output the last input
  * event of the trace if it has not been output already.
  *

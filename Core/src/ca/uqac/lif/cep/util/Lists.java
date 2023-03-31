@@ -195,7 +195,7 @@ public class Lists
   /**
    * Accumulates events from a first input pipe, and sends them in a burst into a
    * list based on the Boolean value received on its second input pipe. A value of
-   * <tt>true</tt> triggers the output of a list, while a value of <tt>false</tt>
+   * {@code true} triggers the output of a list, while a value of {@code false}
    * accumulates the event into the existing list.
    * <p>
    * This processor is represented graphically as follows:
@@ -328,8 +328,8 @@ public class Lists
     }
 
     /**
-     * Timer that pushes the contents of <code>m_packedEvents</code> every
-     * <code>m_outputInterval</code> milliseconds.
+     * Timer that pushes the contents of {@code m_packedEvents} every
+     * {@code m_outputInterval} milliseconds.
      */
     protected class Timer implements Runnable
     {

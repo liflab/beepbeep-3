@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * A {@link Function} that raises the arity of another function.
  * Given an <i>m</i>:<i>n</i> function <i>f</i>, an instance of
- * <tt>RaiseArity</tt> <i>r</i> makes <i>f</i> behave like an
+ * {@code RaiseArity} <i>r</i> makes <i>f</i> behave like an
  * <i>m</i>':<i>n</i> function, with <i>m</i>' &gt; <i>m</i>.
  * The extra arguments given to <i>r</i> are simply ignored.
  *  

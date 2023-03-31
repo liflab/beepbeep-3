@@ -27,8 +27,8 @@ import java.util.Set;
  * <p>
  * The main purpose of this class is to allow one to create a class out of a
  * {@link FunctionTree} instance created programmatically. The code creating the
- * <code>FunctionTree</code> is written in the {@link #getFunction()} method
- * (which, as a matter of fact, can return any other <code>Function</code>
+ * {@code FunctionTree} is written in the {@link #getFunction()} method
+ * (which, as a matter of fact, can return any other {@code Function}
  * object).
  * 
  * @author Sylvain Hallé

@@ -253,7 +253,7 @@ public class Maps
     protected Function m_function;
 
     /**
-     * Creates a new <tt>ApplyAll</tt> function
+     * Creates a new {@code ApplyAll} function
      * @param f The function to apply to all the values. Must be
      * a 1:1 function.
      */

@@ -33,8 +33,8 @@ import java.util.Set;
  * QueueSource(2, 1), Connector.connect(new QueueSource(1, 1), new Addition(),
  * 0, 0), 0, 1); ```
  * 
- * In the previous example, the inner call to <code>connect()</code> links
- * output 0 of a <code>QueueSource</code> to input 0 of an `Addition` processor;
+ * In the previous example, the inner call to {@code connect()} links
+ * output 0 of a {@code QueueSource} to input 0 of an `Addition` processor;
  * this partially-connected `Addition` is the return value of this method. It is
  * then used in the outer call, where another `QueueSource` is linked to its
  * input 1. This fully-connected `Addition` is what is put into variable `p`.
@@ -106,8 +106,8 @@ public class Connector
   }
 
   /**
-   * Connects the <i>i</i>-th output of <tt>p1</tt> to the <i>j</i>-th input of
-   * <tt>p2</tt>
+   * Connects the <i>i</i>-th output of {@code p1} to the <i>j</i>-th input of
+   * {@code p2}
    * 
    * @param tracker
    *          An event tracker (optional)
@@ -172,8 +172,8 @@ public class Connector
   }
 
   /**
-   * Connects the <i>i</i>-th output of <tt>p1</tt> to the <i>j</i>-th input of
-   * <tt>p2</tt>
+   * Connects the <i>i</i>-th output of {@code p1} to the <i>j</i>-th input of
+   * {@code p2}
    * 
    * @param p1
    *          The first processor
@@ -238,8 +238,8 @@ public class Connector
   }
 
   /**
-   * Checks if the <i>i</i>-th output of processor <code>p1</code> has a declared
-   * type compatible with the <i>j</i>-th input of processor <code>p2</code>
+   * Checks if the <i>i</i>-th output of processor {@code p1} has a declared
+   * type compatible with the <i>j</i>-th input of processor {@code p2}
    * 
    * @param p1
    *          The first processor
@@ -266,8 +266,8 @@ public class Connector
   }
 
   /**
-   * Checks if the <i>i</i>-th output of processor <code>p1</code> has a declared
-   * type compatible with the <i>j</i>-th input of processor <code>p2</code>, and
+   * Checks if the <i>i</i>-th output of processor {@code p1} has a declared
+   * type compatible with the <i>j</i>-th input of processor {@code p2}, and
    * throws an appropriate exception if not
    * 
    * @param p1

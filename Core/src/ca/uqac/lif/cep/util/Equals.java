@@ -69,7 +69,7 @@ public class Equals extends BinaryFunction<Object, Object, Boolean>
    * </ul>
    * @param x The first object
    * @param y The second object
-   * @return <tt>true</tt> if they are equal, <tt>false</tt> otherwise
+   * @return {@code true} if they are equal, {@code false} otherwise
    */
   public static boolean isEqualTo(Object x, Object y)
   {

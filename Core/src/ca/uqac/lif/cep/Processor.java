@@ -247,7 +247,7 @@ public abstract class Processor implements DuplicableProcessor,
    * 
    * @param key
    *          The key associated to that object
-   * @return The object, or <code>null</code> if no object exists with such key
+   * @return The object, or {@code null} if no object exists with such key
    */
   public final synchronized /*@ null @*/ Object getContext(/*@ non_null @*/ String key)
   {
@@ -397,7 +397,7 @@ public abstract class Processor implements DuplicableProcessor,
    *          The index. Should be between 0 and the processor's output arity - 1
    *          (since indices start at 0).
    * @return The pullable if the index is within the appropriate range,
-   *         <code>null</code> otherwise.
+   *         {@code null} otherwise.
    */
   public abstract /*@ non_null @*/ Pullable getPullableOutput(int index);
 
@@ -500,8 +500,8 @@ public abstract class Processor implements DuplicableProcessor,
    * 
    * @param v
    *          The array
-   * @return <code>true</code> if all elements in the array are null,
-   *         <code>false</code> otherwise
+   * @return {@code true} if all elements in the array are null,
+   *         {@code false} otherwise
    */
   public static boolean allNull(Object[] v)
   {
@@ -539,12 +539,12 @@ public abstract class Processor implements DuplicableProcessor,
    * Gets the type of events the processor accepts for its <i>i</i>-th input
    * trace. Note that this method returns a <em>set</em>, in the case where the
    * processor accepts various types of objects (for example, a processor
-   * accepting <code>Number</code>s, but also <code>String</code>s it converts
+   * accepting {@code Number}s, but also {@code String}s it converts
    * into numbers internally).
    * 
    * @param index
    *          The index of the input to query
-   * @return A set of classes. If <code>index</code> it less than 0 or greater
+   * @return A set of classes. If {@code index} is less than 0 or greater
    *         than the processor's declared input arity, the set will be empty.
    */
   //@ requires index >= 0
@@ -590,7 +590,7 @@ public abstract class Processor implements DuplicableProcessor,
    * 
    * @param index
    *          The index of the output to query
-   * @return The type of the output. If <code>index</code> it less than 0 or
+   * @return The type of the output. If {@code index} it less than 0 or
    *         greater than the processor's declared output arity, this method
    *         <em>may</em> throw an IndexOutOfBoundsException.
    */
@@ -667,7 +667,7 @@ public abstract class Processor implements DuplicableProcessor,
   /**
    * Gets the instance of event tracker associated to this processor
    * 
-   * @return The event tracker, or <tt>null</tt> of no event tracker is associated
+   * @return The event tracker, or {@code null} of no event tracker is associated
    *         to this processor
    */
   public final /*@ null @*/ EventTracker getEventTracker()
@@ -679,7 +679,7 @@ public abstract class Processor implements DuplicableProcessor,
    * Associates an event tracker to this processor
    * 
    * @param tracker
-   *          The event tracker, or <tt>null</tt> to remove the association to an
+   *          The event tracker, or {@code null} to remove the association to an
    *          existing tracker
    * @return This processor
    */
@@ -819,7 +819,7 @@ public abstract class Processor implements DuplicableProcessor,
    * A concrete processor should override this method to add whatever state
    * information that needs to be preserved in the serialization process.
    * @return Any object representing the processor's state 
-   * (including <tt>null</tt>)
+   * (including {@code null})
    * @since 0.10.2
    */
   protected Object printState()
@@ -972,13 +972,13 @@ public abstract class Processor implements DuplicableProcessor,
    * <p>
    * Java programmers probably won't use this method, but users of the Groovy
    * language can benefit from its operator overloading conventions, which map
-   * the construct <tt>p | q</tt> to <tt>p.or(q)</tt>. This can be used to
+   * the construct {@code p | q} to {@code p.or(q)}. This can be used to
    * easily pipe two processors together:
-   * <pre><code>
+   * <pre>{@code 
    * def p = (some processor)
    * def q = (some other processor)
    * p | q // Connects p to q
-   * </code></pre>
+   * }</pre>
    * @param p The other processor
    * @return The other processor
    * @since 0.10.9
@@ -996,14 +996,14 @@ public abstract class Processor implements DuplicableProcessor,
    * Java programmers probably won't use this method. However, combined with
    * the definition of {@link #getAt(int)}, users of the Groovy language
    * can benefit from its operator overloading conventions, which map
-   * the construct <tt>p | q</tt> to <tt>p.or(q)</tt>. This can be used to
+   * the construct {@code p | q} to {@code p.or(q)}. This can be used to
    * easily pipe two processors together:
-   * <pre><code>
+   * <pre>{@code 
    * def p = (some processor)
    * def q = (some other processor)
    * p | q[1] // Connects p to pipe index 1 of q
-   * </code></pre>
-   * The above example works because <tt>q[1]</tt> returns <tt>q</tt>'s
+   * }</pre>
+   * The above example works because {@code q[1]} returns {@code q}'s
    * input pushable for pipe index 1.
    * @param p The pushable object representing the input of the other processor
    * to which the current output should be connected.
@@ -1024,14 +1024,14 @@ public abstract class Processor implements DuplicableProcessor,
    * <p>
    * Java programmers probably won't use this method, but users of the Groovy
    * language can benefit from its operator overloading conventions, which map
-   * the construct <tt>p[x]</tt> to <tt>p.getAt(x)</tt>. Combined with the
+   * the construct {@code p[x]} to {@code p.getAt(x)}. Combined with the
    * definition of {@link #or(Pushable)}, this can be used to easily pipe two
    * processors together:
-   * <pre><code>
+   * <pre>{@code 
    * def p = (some processor)
    * def q = (some other processor)
    * p | q[1] // Connects p to pipe index 1 of q
-   * </code></pre>
+   * }</pre>
    * @param index The input pipe index
    * @return The pushable object
    * @since 0.10.9

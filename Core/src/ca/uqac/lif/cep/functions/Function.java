@@ -119,8 +119,8 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          arguments contains placeholders, they will be replaced by the
    *          corresponding object fetched from this map before evaluating the
    *          function
-   * @return <tt>true</tt> if the function succeeded in producing an output
-   *          value, <tt>false</tt> otherwise
+   * @return {@code true} if the function succeeded in producing an output
+   *          value, {@code false} otherwise
    */
   /*@ pure @*/ public boolean evaluatePartial(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
@@ -147,8 +147,8 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          The outputs of the function. The size of the array should
    *          be equal to the function's declared output arity. @ Any exception
    *          that may occur during the evaluation of a function
-   * @return <tt>true</tt> if the function succeeded in producing an output
-   *          value, <tt>false</tt> otherwise 
+   * @return {@code true} if the function succeeded in producing an output
+   *          value, {@code false} otherwise 
    */
   /*@ pure @*/ public boolean evaluateLazy(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs)
@@ -255,7 +255,7 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    * A concrete function should override this method to add whatever state
    * information that needs to be preserved in the serialization process.
    * @return Any object representing the function's state 
-   * (including <tt>null</tt>)
+   * (including {@code null})
    * @since 0.10.2
    */
   protected Object printState()
