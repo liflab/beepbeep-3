@@ -101,7 +101,7 @@ public class ApplyFunctionLambda extends UniformProcessor
       {
         return new Object[] {m_binary.evaluate(inputs[0], inputs[1])};
       }
-      return null;
+      throw new Error("not unary or binary");
     }
   }
 }
