@@ -277,6 +277,10 @@ public class GroupProcessor extends Processor implements Stateful
   public final synchronized void setPullableInput(int i, Pullable p)
   {
     ProcessorAssociation a = m_inputPullableAssociations.get(i);
+    if (a == null) {
+      throw new IndexOutOfBoundsException(
+          String.format("setPullableInput(%s): %s", i, m_inputPullableAssociations.keySet()));
+    }
     a.m_processor.setPullableInput(a.m_ioNumber, p);
   }
 
@@ -289,6 +293,10 @@ public class GroupProcessor extends Processor implements Stateful
   public final synchronized void setPushableOutput(int i, Pushable p)
   {
     ProcessorAssociation a = m_outputPushableAssociations.get(i);
+    if (a == null) {
+      throw new IndexOutOfBoundsException(
+          String.format("setPullableInput(%s): %s", i, m_inputPullableAssociations.keySet()));
+    }
     a.m_processor.setPushableOutput(a.m_ioNumber, p);
   }
 
