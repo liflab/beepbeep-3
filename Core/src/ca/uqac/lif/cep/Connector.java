@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -24,24 +24,30 @@ import java.util.Set;
 /**
  * Provides a number of convenient methods for connecting the outputs of
  * processors to the inputs of other processors.
+ * <p>
+ * Methods provided by the <tt>Connector</tt> class are called
+ * <tt>connect()</tt> and have various signatures. Their return value typically
+ * consists of the <em>last</em> processor of the chain given as an argument.
+ * This means that nested calls to <tt>connect()</tt> are possible to form a
+ * complex chain of processors in one pass, e.g.:
  * 
- * Methods provided by the `Connector` class are called `connect()` and have
- * various signatures. Their return value typically consists of the
- * <em>last</em> processor of the chain given as an argument. This means that
- * nested calls to `connect()` are possible to form a complex chain of
- * processors in one pass, e.g. ``` java Processor p = Connector.connect( new
- * QueueSource(2, 1), Connector.connect(new QueueSource(1, 1), new Addition(),
- * 0, 0), 0, 1); ```
+ * <pre>
+ * Processor p = Connector.connect(new QueueSource(2, 1),
+ *     Connector.connect(new QueueSource(1, 1), new Addition(), 0, 0), 0, 1);
+ * </pre>
  * 
  * In the previous example, the inner call to {@code connect()} links
  * output 0 of a {@code QueueSource} to input 0 of an `Addition` processor;
- * this partially-connected `Addition` is the return value of this method. It is
- * then used in the outer call, where another `QueueSource` is linked to its
- * input 1. This fully-connected `Addition` is what is put into variable `p`.
  * 
- * If you use lots of calls to `Connector.connect`, you may consider writing:
- * ``` java static import Connector.connect; ``` in the beginning of your file,
- * so you can simply write `connect` instead of `Connector.connect` every time.
+ * If you use lots of calls to <tt>Connector.connect</tt>, you may consider
+ * writing:
+ * 
+ * <pre>
+ * static import Connector.connect;
+ * </pre>
+ * 
+ * in the beginning of your file, so you can simply write <tt>connect</tt>
+ * instead of <tt>Connector.connect</tt> every time.
  * 
  * @author Sylvain Hallé
  * @since 0.1
@@ -367,11 +373,43 @@ public class Connector
     }
     return connections;
   }
-
+  
   /**
-   * Exception thrown when a problem occurs when connecting two processors
+   * Exception thrown when a problem occurs when attempting to connect
+   * two objects.
    */
   public static class ConnectorException extends RuntimeException
+  {
+    /**
+     * Dummy UID
+     */
+    private static final long serialVersionUID = 1L;
+    
+    /**
+     * Creates a new connector exception with an empty message.
+     */
+    ConnectorException()
+    {
+      super("");
+    }
+    
+    /**
+     * Creates a new connector exception with a specific message.
+     * @param message The message
+     */
+    ConnectorException(String message)
+    {
+      super(message);
+    }
+  }
+
+  /**
+   * Exception thrown when a problem occurs when connecting the output pipe of
+   * a processor to the input pipe of another one. This exception is more
+   * specific than a {@link ConnectorException}, since it is related to two
+   * particular pipes of two processor instances.
+   */
+  public static class ConnectionException extends ConnectorException
   {
     /**
      * Dummy UID
@@ -398,7 +436,7 @@ public class Connector
      */
     protected final int m_destinationIndex;
 
-    ConnectorException(Processor source, Processor destination, int i, int j)
+    ConnectionException(Processor source, Processor destination, int i, int j)
     {
       super();
       m_source = source;
@@ -412,7 +450,7 @@ public class Connector
    * Exception thrown when two processors with incompatible input/output types are
    * attempted to be connected
    */
-  public static class IncompatibleTypesException extends ConnectorException
+  public static class IncompatibleTypesException extends ConnectionException
   {
     /**
      * Dummy UID
@@ -439,7 +477,7 @@ public class Connector
    * Exception thrown when the connector is asked to pipe something to a
    * nonexistent input or output
    */
-  public static class IndexOutOfBoundsException extends ConnectorException
+  public static class IndexOutOfBoundsException extends ConnectionException
   {
     /**
      * Dummy UID
@@ -466,7 +504,7 @@ public class Connector
    * Exception thrown when trying to connect the output of a processor to its own
    * input
    */
-  public static class SelfLoopException extends ConnectorException
+  public static class SelfLoopException extends ConnectionException
   {
     /**
      * Dummy UID
@@ -583,6 +621,166 @@ public class Connector
           && c.m_destinationPipeNumber == m_destinationPipeNumber
           && c.m_sourceProcessorId == m_sourceProcessorId
           && c.m_destinationProcessorId == m_destinationProcessorId;
+    }
+  }
+  
+  /**
+   * An object that holds a reference to a processor, and which can produce a
+   * {@link SelectedPipe} for a given index.
+   * 
+   * @since 0.11
+   * @author Sylvain Hallé
+   *
+   */
+  public static class PipeSelector
+  {
+    /**
+     * The processor for which to produce selected pipes.
+     */
+    /*@ non_null @*/ protected final Processor m_processor;
+    
+    /**
+     * The pipe index.
+     */
+    protected final int m_index;
+    
+    /**
+     * Creates a new pipe selector.
+     * @param p The processor for which to produce selected pipes
+     * @param index The pipe index
+     */
+    public PipeSelector(/*@ non_null @*/ Processor p, int index)
+    {
+      super();
+      m_processor = p;
+      m_index = index;
+    }
+    
+    public SelectedInputPipe positive()
+    {
+      return new SelectedInputPipe(m_processor, m_index);
+    }
+    
+    public SelectedOutputPipe negative()
+    {
+      return new SelectedOutputPipe(m_processor, m_index);
+    }
+  }
+  
+  /**
+   * An object that designates a specific input or output pipe for a specific
+   * processor. Concrete instances of selected pipes designate either an input
+   * or an output pipe.
+   */
+  public static abstract class SelectedPipe
+  {
+    /**
+     * The processor whose pipes are designated.
+     */
+    /*@ non_null @*/ protected final Processor m_processor;
+    
+    /**
+     * The index of the pipe for that processor.
+     */
+    protected final int m_index;
+    
+    /**
+     * Creates a new selected pipe.
+     * @param p The processor whose pipes are designated
+     * @param index The index of the pipe for that processor
+     */
+    public SelectedPipe(/*@ non_null @*/ Processor p, int index)
+    {
+      super();
+      m_processor = p;
+      m_index = index;
+    }
+    
+    /**
+     * Gets the processor whose pipes are designated.
+     * @return The processor
+     */
+    /*@ pure non_null @*/ public Processor getProcessor()
+    {
+      return m_processor;
+    }
+    
+    /**
+     * Gets the index of the designated pipe.
+     * @return The index
+     */
+    /*@ pure @*/ public int getIndex()
+    {
+      return m_index;
+    }
+  }
+  
+  public static class SelectedInputPipe extends SelectedPipe
+  {
+    public SelectedInputPipe(Processor p, int index)
+    {
+      super(p, index);
+    }
+    
+    public void push(Object o)
+    {
+      m_processor.getPushableInput(m_index).push(o);
+    }
+    
+    public void leftShift(Object o)
+    {
+      push(o);
+    }
+  }
+  
+  public static class SelectedOutputPipe extends SelectedPipe
+  {
+    public SelectedOutputPipe(Processor p, int index)
+    {
+      super(p, index);
+    }
+    
+    public Object pull()
+    {
+      return m_processor.getPullableInput(m_index).pull();
+    }
+    
+    public Processor or(Object o) throws Connector.ConnectorException
+    {
+      if (o instanceof Processor)
+      {
+        Processor p = (Processor) o;
+        Connector.connect(m_processor, m_index, p, 0);
+        return p;
+      }
+      if (o instanceof SelectedInputPipe)
+      {
+        SelectedInputPipe sip = (SelectedInputPipe) o;
+        Processor p = sip.getProcessor();
+        Connector.connect(m_processor, m_index, p, sip.getIndex());
+        return p;
+      }
+      throw new Connector.ConnectorException("Cannot connect selected input pipe to object " + o);
+    }
+    
+    public void putAt(int index, Processor p)
+    {
+      if (!(m_processor instanceof GroupProcessor))
+      {
+        throw new UnsupportedOperationException("Cannot use putAt when subject is not a group");
+      }
+      GroupProcessor gp = (GroupProcessor) m_processor;
+      gp.associateOutput(index, p, 0);
+    }
+    
+    public void putAt(int index, SelectedInputPipe p)
+    {
+      if (!(m_processor instanceof GroupProcessor))
+      {
+        throw new UnsupportedOperationException("Cannot use putAt when subject is not a group");
+      }
+      GroupProcessor gp = (GroupProcessor) m_processor;
+      gp.associateOutput(index, p.getProcessor(), p.getIndex());
     }
   }
 }

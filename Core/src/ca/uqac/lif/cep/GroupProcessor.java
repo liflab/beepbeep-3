@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import ca.uqac.lif.cep.Connector.SelectedInputPipe;
+import ca.uqac.lif.cep.Connector.SelectedOutputPipe;
 import ca.uqac.lif.cep.tmf.Source;
 import ca.uqac.lif.cep.util.Lists.MathList;
 
@@ -86,7 +88,7 @@ public class GroupProcessor extends Processor implements Stateful
   protected EventTracker m_innerTracker;
 
   /**
-   * Crate a group processor
+   * Creates a group processor.
    * 
    * @param in_arity
    *          The input arity
@@ -135,6 +137,45 @@ public class GroupProcessor extends Processor implements Stateful
   /*@ pure null @*/ public EventTracker getInnerTracker()
   {
   	return m_innerTracker;
+  }
+  
+  public void putAt(int index, SelectedInputPipe p)
+  {
+    associateInput(index, p.getProcessor(), p.getIndex());
+  }
+  
+  public void putAt(int index, SelectedOutputPipe p)
+  {
+    associateOutput(index, p.getProcessor(), p.getIndex());
+  }
+  
+  protected class InputOutputAssociation
+  {
+    /*@ non_null @*/ protected final Processor m_processor;
+    
+    /*@ non_null @*/ protected final int m_innerIndex;
+    
+    /*@ non_null @*/ protected final int m_outerIndex;
+    
+    public InputOutputAssociation(int outer_index, Processor p, int inner_index)
+    {
+      super();
+      m_innerIndex = inner_index;
+      m_outerIndex = outer_index;
+      m_processor = p;
+    }
+    
+    public void positive()
+    {
+      associateInput(m_outerIndex, m_processor, m_innerIndex);
+    }
+    
+    public void negative()
+    {
+      associateOutput(m_outerIndex, m_processor, m_innerIndex);
+    }
+    
+    
   }
 
   /**

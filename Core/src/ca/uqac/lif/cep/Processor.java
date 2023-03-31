@@ -23,6 +23,8 @@ import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.azrael.Printable;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.Readable;
+import ca.uqac.lif.cep.Connector.PipeSelector;
+import ca.uqac.lif.cep.Connector.SelectedInputPipe;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Lists.MathList;
@@ -1010,17 +1012,17 @@ public abstract class Processor implements DuplicableProcessor,
    * @return The other processor
    * @since 0.10.9
    */
-  public Processor or(Pushable p)
+  public Processor or(SelectedInputPipe p)
   {
-  	int index = p.getPosition();
+  	int index = p.getIndex();
   	Processor proc = p.getProcessor();
   	Connector.connect(this, 0, proc, index);
   	return proc;
   }
   
   /**
-   * Gets the {@link Pushable} object corresponding to the processor's input
-   * pipe for a given index.
+   * Gets the {@link PipeSelector} object corresponding to the processor's
+   * input or output pipe for a given index.
    * <p>
    * Java programmers probably won't use this method, but users of the Groovy
    * language can benefit from its operator overloading conventions, which map
@@ -1034,16 +1036,29 @@ public abstract class Processor implements DuplicableProcessor,
    * }</pre>
    * @param index The input pipe index
    * @return The pushable object
-   * @since 0.10.9
+   * @since 0.11
+   * @see #positive()
+   * @see #negative()
    */
-  public Pushable getAt(int index)
+  /*@ pure non_null @*/ public PipeSelector getAt(int index)
   {
-  	return getPushableInput(index);
+  	return new PipeSelector(this, index);
+  }
+  
+  public Pushable rightShift(int index)
+  {
+    return getPushableInput(index);
+  }
+  
+  public Pullable leftShift(int index)
+  {
+    return getPullableInput(index);
   }
   
   /**
    * An object capturing the internal state of a processor,
    * including the current contents of its input and output queues.
+   * @since 0.10.8
    */
   public static class InternalProcessorState
   {
