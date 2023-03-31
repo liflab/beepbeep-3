@@ -106,9 +106,9 @@ public class GroupProcessor extends Processor implements Stateful
   }
 
   /**
-   * No-args constructor. Used only for serialization and deserialization.
+   * No-args constructor assuming an input and output arity of 1.
    */
-  protected GroupProcessor()
+  public GroupProcessor()
   {
     this(1, 1);
   }
