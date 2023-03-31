@@ -21,7 +21,7 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.EventTracker;
 
 /**
- * Placeholder for the value of a context element. A <tt>ContextVariable</tt>
+ * Placeholder for the value of a context element. A {@code ContextVariable}
  * can be given as an argument to a {@link FunctionTree}.
  * 
  * @author Sylvain Hallé

@@ -23,7 +23,7 @@ import java.util.Queue;
 
 /**
  * Sends its input to a PrintStream (such as the standard output). This
- * processor takes whatever event it receives (i.e. any Java <tt>Object</tt>),
+ * processor takes whatever event it receives (i.e. any Java {@code Object}),
  * calls its {@link Object#toString() toString()} method, and pushes the
  * resulting output to a print stream. Graphically, it is represented as:
  * <p>

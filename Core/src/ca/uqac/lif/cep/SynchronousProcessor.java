@@ -41,7 +41,7 @@ import java.util.concurrent.Future;
  * implement.
  * <p>
  * In early versions of the library, this class was called
- * <tt>SingleProcessor</tt>.
+ * {@code SingleProcessor}.
  * 
  * @author Sylvain Hallé
  * @since 0.1
@@ -113,8 +113,8 @@ public abstract class SynchronousProcessor extends Processor
    *          this queue for every output front it produces. The size of each
    *          array should be equal to the processor's output arity, although this
    *          is not enforced.
-   * @return <tt>true</tt> if this processor may output other events in the
-   * future, <tt>false</tt> otherwise
+   * @return {@code true} if this processor may output other events in the
+   * future, {@code false} otherwise
    */
   protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs);
 
@@ -238,8 +238,8 @@ public abstract class SynchronousProcessor extends Processor
     /**
      * Pushes output event (if any) to the corresponding output {@link Pushable}s.
      *
-     * @param outs Set to <tt>true</tt> to enable the output of an event,
-     * <tt>false</tt> otherwise.
+     * @param outs Set to {@code true} to enable the output of an event,
+     * {@code false} otherwise.
      */
     private final void outputEvent(boolean outs)
     {

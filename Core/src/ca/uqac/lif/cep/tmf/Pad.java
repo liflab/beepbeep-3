@@ -47,7 +47,7 @@ public class Pad extends SynchronousProcessor
    * Creates a Pad processor
    * @param p The processor whose output is to be padded
    * @param times The number of times to pad
-   * @param front The event front to pad before the output of <tt>p</tt>
+   * @param front The event front to pad before the output of {@code p}
    */
   public Pad(Processor p, int times, Object ... front)
   {

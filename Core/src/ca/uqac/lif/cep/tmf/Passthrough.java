@@ -22,7 +22,7 @@ import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Returns its input as its output. Although it seems useless,
- * <tt>Passthrough</tt> is used internally by interpreters as a
+ * {@code Passthrough} is used internally by interpreters as a
  * placeholder when building processor chains from an expression.
  * <p>
  * Graphically, this processor is represented as:

@@ -168,7 +168,7 @@ public class Window extends AbstractWindow implements Stateful
   }
 
   /**
-   * Trims <i>n</i> events from the beginning of <tt>q</tt>
+   * Trims <i>n</i> events from the beginning of {@code q}
    * 
    * @param n
    *          The number of events to trim. If <i>n</i>&nbsp;&lt;1, trims nothing.

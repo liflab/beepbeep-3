@@ -82,10 +82,10 @@ public class FindPattern extends SynchronousProcessor
   }
 
   /**
-   * Sets whether to apply <tt>trim()</tt> to each output event
+   * Sets whether to apply {@code trim()} to each output event
    * 
    * @param b
-   *          Set to <tt>true</tt> to trim (default), <tt>false</tt> otherwise
+   *          Set to {@code true} to trim (default), {@code false} otherwise
    * @return This scanner
    */
   public FindPattern trim(boolean b)

@@ -34,8 +34,8 @@ import ca.uqac.lif.cep.Pushable;
  * <p>
  * The repeated pulling of events from its input is started by calling this
  * processor's {@link #start()} method. In the background, this will instantiate
- * a new thread, which will endlessly call <tt>pull()</tt> on whatever input is
- * connected to the pump, and then call <tt>push()</tt> on whatever input is
+ * a new thread, which will endlessly call {@code pull()} on whatever input is
+ * connected to the pump, and then call {@code push()} on whatever input is
  * connected to it.
  * <p>
  * The opposite of the Pump is the {@link ca.uqac.lif.cep.tmf.Tank Tank}.

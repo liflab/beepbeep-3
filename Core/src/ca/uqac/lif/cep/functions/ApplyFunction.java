@@ -34,7 +34,7 @@ import java.util.Set;
  * to produce the outputs.
  * <p>
  * In earlier versions of the library, this class was called
- * <tt>FunctionProcessor</tt>.
+ * {@code FunctionProcessor}.
  * 
  * @author Sylvain Hallé
  * @since 0.2.1

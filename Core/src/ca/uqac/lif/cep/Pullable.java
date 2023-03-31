@@ -22,11 +22,11 @@ import java.util.Iterator;
 /**
  * Queries events on one of a processor's outputs. For a processor with an
  * output arity <i>n</i>, there exists <i>n</i> distinct pullables, namely one for
- * each output pipe. Every pullable works roughly like a classical <tt>Iterator</tt>:
+ * each output pipe. Every pullable works roughly like a classical {@code Iterator}:
  * it is possible to check whether new output events are available, and get one
  * new output event.
  * <p>
- * However, contrarily to iterators, <tt>Pullable</tt>s have two versions of each
+ * However, contrarily to iterators, {@code Pullable}s have two versions of each
  * method: a <em>soft</em> and a <em>hard</em> version.
  * 
  * <ul>
@@ -35,22 +35,22 @@ import java.util.Iterator;
  * processors are connected in a chain, this generally means pulling events from
  * the input in order to produce the output. However, if pulling the input
  * produces no event, no output event can be produced. In such a case,
- * {@link #hasNextSoft()} will return a special value (<code>MAYBE</code>), and
- * {@link #pullSoft()} will return <code>null</code>. Soft methods can be seen a
+ * {@link #hasNextSoft()} will return a special value ({@code MAYBE}), and
+ * {@link #pullSoft()} will return {@code null}. Soft methods can be seen a
  * doing "one turn of the crank" on the whole chain of processors --whether or
  * not this outputs something.</li>
  * <li><strong>Hard</strong> methods are actually calls to soft
  * methods until an output event is produced: the "crank" is turned as long as
  * necessary to produce something. This means that one call to, e.g.
  * {@link #pull()} may consume more than one event from a processor's input.
- * Therefore, calls to {@link #hasNext()} never return <code>MAYBE</code> (only
- * <code>YES</code> or <code>NO</code>), and {@link #pull()} throws
+ * Therefore, calls to {@link #hasNext()} never return {@code MAYBE} (only
+ * {@code YES} or {@code NO}), and {@link #pull()} throws
  *  {@code NoSuchElementException} only if no event will ever be output in the future (this
  * occurs, for example, when pulling events from a file, and the end of the file
  * has been reached).</li>
  * </ul>
  * <p>
- * The lifecycle of a <tt>Pullable</tt> object is as follows:
+ * The lifecycle of a {@code Pullable} object is as follows:
  * 
  * <ul>
  * <li>One obtains a reference to one of a processor's pullables. This can be done
@@ -63,8 +63,8 @@ import java.util.Iterator;
  * next available output event.</li>
  * </ul>
  * 
- * The Pullable interface extends the <tt>Iterator</tt> and <tt>Iterable</tt>
- * interfaces. This means that an instance of <tt>Pullable</tt> can also be iterated over like this:
+ * The Pullable interface extends the {@code Iterator} and {@code Iterable}
+ * interfaces. This means that an instance of {@code Pullable} can also be iterated over like this:
  * <pre>
  * Pullable p = ...; 
  * for (Object o : p) {
@@ -72,11 +72,11 @@ import java.util.Iterator;
  * }
  * </pre>
  * <p>
- * Note however that if <code>p</code> refers to a processor producing an
+ * Note however that if {@code p} refers to a processor producing an
  * infinite number of events, this loop will never terminate by itself.
  * <p>
  * For the same processor, mixing calls to soft and hard methods is discouraged.
- * As a matter of fact, the <tt>Pullable</tt>'s behaviour in such a situation is left
+ * As a matter of fact, the {@code Pullable}'s behaviour in such a situation is left
  * undefined.
  * 
  * @author Sylvain Hallé
@@ -86,17 +86,17 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 {
   /**
    * Attempts to pull an event from the source. An event is returned if
-   * {@link #hasNextSoft()} returns <code>YES</code>, and <code>null</code> is
+   * {@link #hasNextSoft()} returns {@code YES}, and {@code null} is
    * returned otherwise.
    * 
-   * @return An event, or <code>null</code> if none could be retrieved
+   * @return An event, or {@code null} if none could be retrieved
    */
   public Object pullSoft();
 
   /**
    * Attempts to pull an event from the source. An event is returned if
-   * {@link #hasNext()} returns <code>YES</code>, and
-   * <code>java.util.NoSuchElementException</code> is thrown otherwise.
+   * {@link #hasNext()} returns {@code YES}, and
+   * {@code java.util.NoSuchElementException} is thrown otherwise.
    * 
    * @return An event
    * @throws java.util.NoSuchElementException if the iteration has no more elements
@@ -105,8 +105,8 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
 
   /**
    * Attempts to obtain an event from the source. An event is returned if
-   * {@link #hasNext()} returns <code>YES</code>, and
-   * <code>java.util.NoSuchElementException</code> is thrown otherwise.
+   * {@link #hasNext()} returns {@code YES}, and
+   * {@code java.util.NoSuchElementException} is thrown otherwise.
    * 
    * @return An event
    * @throws java.util.NoSuchElementException if the iteration has no more elements
@@ -185,7 +185,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
    * {@link #hasNext()} and {@link #hasNextSoft()} will not be called anymore. For
    * some types of pullables, this can be used as a cue to free some resources
    * (such as threads). The behaviour of these four methods after
-   * <code>dispose()</code> has been called is undefined. In future versions, it
+   * {@code dispose()} has been called is undefined. In future versions, it
    * is possible that an exception will be thrown in such a case.
    */
   public void dispose();
@@ -194,7 +194,7 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
    * A runtime exception indicating that something went wrong when attempting to
    * check if a next event exists. This happens, for example, if one of a
    * processor's inputs it not connected to anything. Rather than throwing a
-   * <tt>NullPointerException</tt>, the issue will be wrapped within a
+   * {@code NullPointerException}, the issue will be wrapped within a
    * PullableException with a better error message.
    */
   public static class PullableException extends RuntimeException
@@ -334,12 +334,12 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
    * The "next" status of a {@link Pullable} object. Indicates whether a new
    * output event is available (i.e. can be "pulled").
    * <ul>
-   * <li><code>YES</code> indicates that a new event can be pulled right now,
+   * <li>{@code YES} indicates that a new event can be pulled right now,
    * using either {@link #pullSoft()} or {@link #pull()}</li>
-   * <li><code>NO</code> indicates that no event is available, and will ever be.
-   * Receiving <code>NO</code> generally indicates that the end of the (output)
+   * <li>{@code NO} indicates that no event is available, and will ever be.
+   * Receiving {@code NO} generally indicates that the end of the (output)
    * trace has been reached</li>
-   * <li><code>MAYBE</code> indicates that no event is available, but that keeping
+   * <li>{@code MAYBE} indicates that no event is available, but that keeping
    * on pulling <em>may </em>produce an event in the future. This value is only
    * returned by {@link #hasNextSoft()}.</li>
    * </ul>

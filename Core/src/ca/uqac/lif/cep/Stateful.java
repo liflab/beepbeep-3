@@ -20,12 +20,12 @@ package ca.uqac.lif.cep;
 /**
  * Interface implemented by processors that can publicly expose a token
  * equivalent to their internal state. This token can be an arbitrary
- * object, including <tt>null</tt>. However, it must follow this condition:
+ * object, including {@code null}. However, it must follow this condition:
  * if two processor instances &pi;<sub>1</sub> and &pi;<sub>2</sub> (of
  * the same class) respectively return two state tokens <i>s</i><sub>1</sub>
  * and <i>s</i><sub>2</sub> such that 
- * <i>s</i><sub>1</sub><tt>.equals(</tt><i>s</i><sub>2</sub><tt>) ==
- * true</tt>, then for any sequence of inputs, &pi;<sub>1</sub>
+ * <i>s</i><sub>1</sub>{@code .equals(}<i>s</i><sub>2</sub>{@code ) ==
+ * true}, then for any sequence of inputs, &pi;<sub>1</sub>
  * and &pi;<sub>2</sub> must generate the same output.
  * 
  * @author Sylvain Hallé

@@ -257,7 +257,7 @@ public class GroupTest
 	/**
 	 * Try to clone a group processor that is already connected
 	 * to something else. The goal of this test is only to check
-	 * that the call to <code>duplicate()</code> does not throw an exception.
+	 * that the call to {@code duplicate()} does not throw an exception.
 	 * @
 	 */
 	@Test

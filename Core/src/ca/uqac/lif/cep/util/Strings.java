@@ -239,10 +239,10 @@ public class Strings
     }
 
     /**
-     * Sets whether to apply <tt>trim()</tt> to each substring
+     * Sets whether to apply {@code trim()} to each substring
      * 
      * @param b
-     *          Set to <tt>true</tt> to trim, <tt>false</tt> otherwise
+     *          Set to {@code true} to trim, {@code false} otherwise
      * @return This function
      */
     public SplitString trim(boolean b)

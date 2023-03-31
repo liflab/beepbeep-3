@@ -263,8 +263,8 @@ public abstract class AsynchronousProcessor extends Processor
    *          this queue for every output front it produces. The size of each
    *          array should be equal to the processor's output arity, although this
    *          is not enforced.
-   * @return <tt>true</tt> if this processor may output other events in the
-   * future, <tt>false</tt> otherwise
+   * @return {@code true} if this processor may output other events in the
+   * future, {@code false} otherwise
    */
   protected abstract boolean compute(Object[] inputs, Queue<Object[]> outputs);
 

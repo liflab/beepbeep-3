@@ -57,7 +57,7 @@ import java.util.concurrent.Future;
  * immediately
  * </ul>
  * <p>
- * The function <i>f</i> may return <code>null</code>, or the special object
+ * The function <i>f</i> may return {@code null}, or the special object
  * {@link ToAllSlices}. This indicates that no new slice must be created, but
  * that the incoming event must be dispatched to <em>all</em> slices one by one.
  * 
@@ -300,8 +300,8 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
    * handled as individual slice IDs.
    * 
    * @param b
-   *          Set to <tt>true</tt> to handle collections as multiple IDs. The
-   *          default is <tt>false</tt>
+   *          Set to {@code true} to handle collections as multiple IDs. The
+   *          default is {@code false}
    * @return This slicer
    */
   public AbstractSlice explodeCollections(boolean b)
@@ -396,8 +396,8 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
    * and {@link #handleNewSliceValue(Object, Object, Queue)} has been called
    * for all slices that produced an output event. 
    * @param outputs The processor's output queue
-   * @return <tt>true</tt> if the processor is expected to output new events
-   * in the future, <tt>false</tt> otherwise.
+   * @return {@code true} if the processor is expected to output new events
+   * in the future, {@code false} otherwise.
    */
   protected abstract boolean produceReturn(Queue<Object[]> outputs);
   

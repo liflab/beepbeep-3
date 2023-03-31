@@ -69,14 +69,14 @@ public class GroupProcessor extends Processor implements Stateful
   /**
    * A map between numbers and processor associations. An element (m,(n,p)) of
    * this map means that the <i>m</i>-th input of the group processor is in fact
-   * the <i>n</i>-th input of processor <code>p</code>
+   * the <i>n</i>-th input of processor {@code p}
    */
   private HashMap<Integer, ProcessorAssociation> m_inputPullableAssociations;
 
   /**
    * A map between numbers and processor associations. An element (m,(n,p)) of
    * this map means that the <i>m</i>-th output of the group processor is in fact
-   * the <i>n</i>-th output of processor <code>p</code>
+   * the <i>n</i>-th output of processor {@code p}
    */
   private HashMap<Integer, ProcessorAssociation> m_outputPushableAssociations;
 
@@ -118,7 +118,7 @@ public class GroupProcessor extends Processor implements Stateful
    * event when a call to push is made on the group.
    * 
    * @param b
-   *          Set to <tt>true</tt> to notify the sources
+   *          Set to {@code true} to notify the sources
    * @return This group processor
    */
   public GroupProcessor notifySources(boolean b)
@@ -129,7 +129,7 @@ public class GroupProcessor extends Processor implements Stateful
   
   /**
    * Gets the tracker instance for the processors contained in this group.
-   * @return The tracker instance, or <tt>null</tt> if no inner tracker is set.
+   * @return The tracker instance, or {@code null} if no inner tracker is set.
    * @since 0.11
    */
   /*@ pure null @*/ public EventTracker getInnerTracker()
@@ -225,14 +225,14 @@ public class GroupProcessor extends Processor implements Stateful
 
   /**
    * Declares that the <i>i</i>-th input of the group is linked to the <i>j</i>-th
-   * input of processor <code>p</code>
+   * input of processor {@code p}
    * 
    * @param i
    *          The number of the input of the group
    * @param p
    *          The processor to connect to
    * @param j
-   *          The number of the input of processor <code>p</code>
+   *          The number of the input of processor {@code p}
    * @return A reference to the current group processor
    */
   public synchronized GroupProcessor associateInput(int i, Processor p, int j)
@@ -251,7 +251,7 @@ public class GroupProcessor extends Processor implements Stateful
    * @param p
    *          The processor to connect to
    * @param j
-   *          The number of the output of processor <code>p</code>
+   *          The number of the output of processor {@code p}
    * @return A reference to the current group processor
    */
   public synchronized GroupProcessor associateOutput(int i, Processor p, int j)
@@ -360,7 +360,7 @@ public class GroupProcessor extends Processor implements Stateful
    *          The {@link GroupProcessor} to clone into. When the method is called,
    *          it is expected to be empty.
    * @param with_state
-   *          It set to <tt>true</tt>, each processor in the new group has the same
+   *          It set to {@code true}, each processor in the new group has the same
    *          events in its input/output buffers as in the original. Otherwise,
    *          the queues are empty.
    * @return An association between IDs and the new processors that have been put
@@ -437,7 +437,7 @@ public class GroupProcessor extends Processor implements Stateful
    * @param p
    *          The processor to copy. Nothing is changed on this processor.
    * @param with_state
-   *          If set to <tt>true</tt>, the new copy has the same events in its
+   *          If set to {@code true}, the new copy has the same events in its
    *          input/output buffers as the original. Otherwise, the queues are
    *          empty.
    * @return The new processor
@@ -749,8 +749,8 @@ public class GroupProcessor extends Processor implements Stateful
      * Pushes output event (if any) to the corresponding output {@link Pushable}s.
      *
      * @param temp_queue The queue of object fronts to push
-     * @param outs Set to <tt>true</tt> to enable the output of an event,
-     * <tt>false</tt> otherwise.
+     * @param outs Set to {@code true} to enable the output of an event,
+     * {@code false} otherwise.
      */
     private final void outputEvent(Queue<Object[]> temp_queue, boolean outs)
     {
@@ -813,7 +813,7 @@ public class GroupProcessor extends Processor implements Stateful
    * 
    * @param index
    *          The index
-   * @return The processor, or <tt>null</tt> if no processor is associated to this
+   * @return The processor, or {@code null} if no processor is associated to this
    *         index
    */
   public Processor getAssociatedInput(int index)
@@ -852,7 +852,7 @@ public class GroupProcessor extends Processor implements Stateful
    * 
    * @param index
    *          The index
-   * @return The index, or <tt>-1</tt> if no processor is associated to this
+   * @return The index, or {@code -1} if no processor is associated to this
    *         index
    */
   public int getAssociatedInputIndex(int index)
@@ -869,7 +869,7 @@ public class GroupProcessor extends Processor implements Stateful
    * 
    * @param index
    *          The index
-   * @return The processor, or <tt>null</tt> if no processor is associated to this
+   * @return The processor, or {@code null} if no processor is associated to this
    *         index
    */
   public Processor getAssociatedOutput(int index)
@@ -887,7 +887,7 @@ public class GroupProcessor extends Processor implements Stateful
    * 
    * @param index
    *          The index
-   * @return The index, or <tt>-1</tt> if no processor is associated to this
+   * @return The index, or {@code -1} if no processor is associated to this
    *         index
    */
   public int getAssociatedOutputIndex(int index)

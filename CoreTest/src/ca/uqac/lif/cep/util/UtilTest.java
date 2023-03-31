@@ -48,7 +48,7 @@ import ca.uqac.lif.cep.util.Bags.ToList;
 import ca.uqac.lif.cep.util.Bags.ToSet;
 
 /**
- * Unit tests for functions and processors of the <tt>util</tt> package.
+ * Unit tests for functions and processors of the {@code util} package.
  */
 public class UtilTest 
 {
