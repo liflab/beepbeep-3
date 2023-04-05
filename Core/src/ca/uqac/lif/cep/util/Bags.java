@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2021 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -199,6 +199,8 @@ public class Bags
     protected transient SinkLast m_sink;
 
     protected transient Pushable m_pushable;
+    
+    protected final Object[] m_default;
 
     /**
      * Creates a new RunOn processor
@@ -213,14 +215,33 @@ public class Bags
       m_pushable = m_processor.getPushableInput();
       m_sink = new SinkLast(out_arity);
       Connector.connect(m_processor, m_sink);
+      m_default = null;
+    }
+    
+    /**
+     * Creates a new RunOn processor
+     * @param processor The processor on which to run the elements
+     * of each collection
+     */
+    public RunOn(Processor processor, Object[] default_values)
+    {
+      super(1, processor.getOutputArity());
+      int out_arity = processor.getOutputArity();
+      m_processor = processor;
+      m_pushable = m_processor.getPushableInput();
+      m_sink = new SinkLast(out_arity);
+      Connector.connect(m_processor, m_sink);
+      m_default = default_values;
     }
 
     @Override
     protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
     {
+    	boolean empty_input = false;
       m_processor.reset();
       if (inputs[0].getClass().isArray())
       {
+      	empty_input = ((Object[]) inputs[0]).length == 0;
         for (Object o : (Object[]) inputs[0])
         {
           m_pushable.push(o);
@@ -228,6 +249,7 @@ public class Bags
       }
       else
       {
+      	empty_input = ((Collection<?>) inputs[0]).size() == 0;
         for (Object o : (Collection<?>) inputs[0])
         {
           m_pushable.push(o);
@@ -243,13 +265,17 @@ public class Bags
         }
         outputs.add(outs);
       }
+      else if (empty_input && m_default != null)
+      {
+      	outputs.add(m_default);
+      }
       return true;
     }
 
     @Override
     public RunOn duplicate(boolean with_state)
     {
-      return new RunOn(m_processor.duplicate(with_state));
+      return new RunOn(m_processor.duplicate(with_state), m_default);
     }
   }
 
