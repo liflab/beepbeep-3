@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This POM file is only used to describe the package for deployment
+     on the Central Repository. It cannot (and should not) be used to build
+     the project. Please use the Ant script for this. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <!-- Project coordinates -->
+  <groupId>io.github.liflab</groupId>  
+  <artifactId>beepbeep-3</artifactId>  
+  <version>0.10.8-alpha</version>
+  <packaging>jar</packaging>
+  
+  <!-- Project description -->
+  <name>BeepBeep 3</name>
+  <description>A simple and versatile event stream processing library.</description>
+  <url>https://liflab.github.io/${project.artifactId}</url>
+  
+  <!-- License information -->
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License (LGPL), Version 3.0</name>
+      <url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
+    </license>
+  </licenses>
+  
+  <!-- Contact information -->
+  <developers>
+    <developer>
+      <name>Sylvain Hallé</name>
+      <email>shalle@acm.org</email>
+      <organization>Université du Québec à Chicoutimi</organization>
+      <organizationUrl>https://www.uqac.ca</organizationUrl>
+    </developer>
+  </developers>
+  
+  <!-- Version control -->
+  <scm>
+    <connection>scm:git:git://github.com/liflab/${project.artifactId}.git</connection>
+    <developerConnection>scm:git:ssh://github.com:liflab/${project.artifactId}.git</developerConnection>
+    <url>http://github.com/liflab/${project.artifactId}/tree/master</url>
+  </scm>
+  
+  <!-- Dependencies -->
+  
+</project>
