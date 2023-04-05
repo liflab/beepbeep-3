@@ -239,6 +239,7 @@ public class Bags
     {
     	boolean empty_input = false;
       m_processor.reset();
+      m_sink.reset();
       if (inputs[0].getClass().isArray())
       {
       	empty_input = ((Object[]) inputs[0]).length == 0;
