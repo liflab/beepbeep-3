@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -27,13 +27,14 @@ import ca.uqac.lif.cep.Pullable.PullableException;
 import ca.uqac.lif.cep.Pushable.PushableException;
 import ca.uqac.lif.cep.tmf.BlackHole;
 import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.QueueSourceBatch;
 
 /**
- * Unit tests for the {@link SingleProcessor} class.
+ * Unit tests for the {@link SynchronousProcessor} class.
  */
-public class SingleProcessorTest 
+public class SynchronousProcessorTest 
 {
 	@Test(expected=PullableException.class)
 	public void testPullException1() 
@@ -154,6 +155,94 @@ public class SingleProcessorTest
 		assertEquals(Pullable.NextStatus.YES, p.hasNextSoft());
 		p.next();
 		assertEquals(Pullable.NextStatus.NO, p.hasNextSoft());
+	}
+	
+	@Test
+	public void testPushFalse1()
+	{
+		ChooseToStop cts = new ChooseToStop();
+		QueueSink sink = new QueueSink();
+		Connector.connect(cts, sink);
+		Pushable p = cts.getPushableInput();
+		Queue<?> q = sink.getQueue();
+		p.push("a");
+		assertEquals(1, q.size());
+		assertEquals("a", q.remove());
+		cts.setState(1);
+		p.push("b");
+		assertEquals(1, q.size());
+		assertEquals("b", q.remove());
+		p.push("c");
+		assertEquals(0, q.size());
+	}
+	
+	@Test
+	public void testPullFalse1()
+	{
+		QueueSource source =  new QueueSource().setEvents("a", "b", "c");
+		ChooseToStop cts = new ChooseToStop();
+		Connector.connect(source, cts);
+		Pullable p = cts.getPullableOutput();
+		assertTrue(p.hasNext());
+		assertEquals("a", p.pull());
+		cts.setState(1);
+		assertTrue(p.hasNext());
+		assertEquals("b", p.pull());
+		assertFalse(p.hasNext());
+		
+	}
+	
+	/**
+	 * Processor used to test the behavior of {@link Pushable} in the case where
+	 * a synchronous processor returns {@code false} on a call to
+	 * {@link SynchronousProcessor#compute(Object[], Queue)}.
+	 * <p>
+	 * The processor has a state variable that can be set from the outside
+	 * (using {@link #setState(int)} and that controls its behavior:
+	 * <ul>
+	 * <li>0: next call to compute will output an event and return true</li>
+	 * <li>1: next call to compute will output an event and return false</li>
+	 * <li>2: next call to compute will not produce an event and return false</li>
+	 * </ul>
+	 */
+	protected static class ChooseToStop extends SynchronousProcessor
+	{
+		protected int m_state = 0;
+		
+		public ChooseToStop()
+		{
+			super(1, 1);
+		}
+		
+		public void setState(int n)
+		{
+			m_state = n;
+		}
+
+		@Override
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+		{
+			if (m_state == 2)
+			{
+				return false;
+			}
+			if (m_state == 1)
+			{
+				outputs.add(new Object[] {inputs[0]});
+				m_state = 2;
+				return false;
+			}
+			outputs.add(new Object[] {inputs[0]});
+			return true;
+		}
+
+		@Override
+		public Processor duplicate(boolean with_state)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
 	}
 	
 	public static class ThrowException extends SynchronousProcessor

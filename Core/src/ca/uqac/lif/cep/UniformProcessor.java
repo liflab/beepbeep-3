@@ -172,9 +172,10 @@ public abstract class UniformProcessor extends SynchronousProcessor
     @Override
     public synchronized Pushable push(Object o)
     {
+    	boolean b = true;
       try
       {
-        compute(new Object[] { o }, m_outputArray);
+        b = compute(new Object[] { o }, m_outputArray);
       }
       catch (ProcessorException e)
       {
@@ -186,6 +187,10 @@ public abstract class UniformProcessor extends SynchronousProcessor
             "Output 0 of processor " + getProcessor() + " is connected to nothing");
       }
       m_outputPushables[0].push(m_outputArray[0]);
+      if (!b)
+      {
+      	m_outputPushables[0].notifyEndOfTrace();	
+      }
       return this;
     }
 

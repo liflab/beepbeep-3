@@ -31,6 +31,9 @@ import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.functions.TurnInto;
 import ca.uqac.lif.cep.tmf.Pump;
 
+/**
+ * Unit tests for {@link Pushable}.
+ */
 public class PushableTest
 {
 	@Test(expected=PushableException.class)

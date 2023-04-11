@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -243,7 +243,7 @@ public abstract class SynchronousProcessor extends Processor
      */
     private final void outputEvent(boolean outs)
     {
-      if (outs && !m_tempQueue.isEmpty())
+      if (!m_tempQueue.isEmpty())
       {
         for (Object[] evt : m_tempQueue)
         {
@@ -263,6 +263,13 @@ public abstract class SynchronousProcessor extends Processor
           }
         }
         m_tempQueue.clear();
+      }
+      if (!outs)
+      {
+      	for (int i = 0; i < m_outputPushables.length; i++)
+      	{
+      		m_outputPushables[i].notifyEndOfTrace();
+      	}
       }
     }
 
@@ -419,7 +426,7 @@ public abstract class SynchronousProcessor extends Processor
           throw new PullableException(e);
         }
         NextStatus status_to_return = NextStatus.NO;
-        if (!computed)
+        if (!computed && m_tempQueue.isEmpty())
         {
           // No output will ever be returned: stop there
           return false;
