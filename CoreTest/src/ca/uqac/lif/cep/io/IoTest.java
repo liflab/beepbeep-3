@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -153,10 +153,10 @@ public class IoTest
 		Pushable p = print.getPushableInput();
 		p.push("foo");
 		s = new String(baos.toByteArray());
-		assertEquals("AfooB,", s);
+		assertEquals("AfooB", s);
 		p.push("bar");
 		s = new String(baos.toByteArray());
-		assertEquals("AfooB,AbarB,", s);
+		assertEquals("AfooB,AbarB", s);
 	}
 	
 	@Test
@@ -172,10 +172,10 @@ public class IoTest
 		Pushable p = print.getPushableInput();
 		p.push(3.5f);
 		s = new String(baos.toByteArray());
-		assertEquals("3.5 ", s);
+		assertEquals("3.5", s);
 		p.push(3f);
 		s = new String(baos.toByteArray());
-		assertEquals("3.5 3 ", s);
+		assertEquals("3.5 3", s);
 	}
 	
 	@Test

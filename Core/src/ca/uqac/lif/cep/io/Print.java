@@ -366,9 +366,9 @@ public class Print extends Sink
 		public Println(PrintStream out)
 		{
 			super(out);
-			setSeparator(System.getProperty("line.separator"));
+			setSeparator("");
 		}
-		
+				
 		/**
 		 * Creates a new print processor that prints to the standard output.
 		 */
@@ -376,6 +376,13 @@ public class Print extends Sink
 		{
 			this(System.out);
 		}
+		
+		@Override
+		protected void afterEvent(PrintStream out)
+		{
+			out.println();
+		}
+
 		
 		@Override
 		public Println duplicate(boolean with_state)
