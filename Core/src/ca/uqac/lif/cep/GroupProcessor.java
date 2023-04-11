@@ -265,8 +265,8 @@ public class GroupProcessor extends Processor implements Stateful
   }
 
   /**
-   * Declares that the <i>i</i>-th input of the group is linked to the <i>j</i>-th
-   * input of processor {@code p}
+   * Declares that the <i>i</i>-th input of the group is linked to the
+   * <i>j</i>-th input of processor {@code p}.
    * 
    * @param i
    *          The number of the input of the group
@@ -281,6 +281,17 @@ public class GroupProcessor extends Processor implements Stateful
     setPushableInput(i, p.getPushableInput(j));
     setPullableInputAssociation(i, p, j);
     return this;
+  }
+  
+  /**
+   * Declares that the first (i.e. 0-th) input of the group is linked to the
+   * first (i.e. 0-th) input of processor {@code p}.
+   * @param p The processor to connect to
+   * @return A reference to the current group processor
+   */
+  public synchronized GroupProcessor associateInput(Processor p)
+  {
+  	return associateInput(0, p, 0);
   }
 
   /**
@@ -300,6 +311,17 @@ public class GroupProcessor extends Processor implements Stateful
     setPullableOutput(i, p.getPullableOutput(j));
     setPushableOutputAssociation(i, p, j);
     return this;
+  }
+  
+  /**
+   * Declares that the first (i.e. 0-th) output of the group is linked to the
+   * first (i.e. 0-th) output of processor {@code p}.
+   * @param p The processor to connect to
+   * @return A reference to the current group processor
+   */
+  public synchronized GroupProcessor associateOutput(Processor p)
+  {
+  	return associateOutput(0, p, 0);
   }
 
   @Override

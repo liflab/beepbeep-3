@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -48,6 +48,14 @@ public final class IdentityFunction extends Function
   {
     super();
     m_inArity = arity;
+  }
+  
+  /**
+   * Creates a new identity function of arity 1.
+   */
+  public IdentityFunction()
+  {
+    this(1);
   }
 
   @Override
