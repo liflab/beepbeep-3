@@ -189,6 +189,52 @@ public class SynchronousProcessorTest
 		assertTrue(p.hasNext());
 		assertEquals("b", p.pull());
 		assertFalse(p.hasNext());
+	}
+	
+	@Test
+	public void testEndOfTrace1()
+	{
+		NotifyPassthrough np = new NotifyPassthrough();
+		QueueSink sink = new QueueSink();
+		Queue<?> q = sink.getQueue();
+		Connector.connect(np, sink);
+		Pushable p0 = np.getPushableInput(0);
+		Pushable p1 = np.getPushableInput(1);
+		p0.notifyEndOfTrace();
+		assertEquals(0, q.size());
+		p1.notifyEndOfTrace();
+		assertEquals(1, q.size());
+		p0.notifyEndOfTrace();
+		assertEquals(1, q.size());
+	}
+	
+	protected static class NotifyPassthrough extends SynchronousProcessor
+	{
+
+		public NotifyPassthrough()
+		{
+			super(2, 1);
+		}
+
+		@Override
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+		{
+			return true;
+		}
+
+		@Override
+		public Processor duplicate(boolean with_state)
+		{
+			// Don't care
+			return null;
+		}
+		
+		@Override
+		protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
+		{
+			outputs.add(new Object[] {0});
+			return true;
+		}
 		
 	}
 	

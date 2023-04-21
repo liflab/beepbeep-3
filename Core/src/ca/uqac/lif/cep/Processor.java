@@ -165,6 +165,13 @@ public abstract class Processor implements DuplicableProcessor,
    * notification.
    */
   protected boolean[] m_hasBeenNotifiedOfEndOfTrace;
+  
+  /**
+   * Indicates whether the processor has notified the end of the trace to the
+   * downstream processors it is connected to. The end of trace signal should
+   * be sent at most once.
+   */
+  protected boolean m_notifiedEndOfTraceDownstream;
 
   /**
    * Initializes a processor. This has for effect of executing the basic
@@ -214,6 +221,7 @@ public abstract class Processor implements DuplicableProcessor,
     {
       m_hasBeenNotifiedOfEndOfTrace[i] = false; 
     }
+    m_notifiedEndOfTraceDownstream = false;
   }
   
   /**
@@ -361,6 +369,7 @@ public abstract class Processor implements DuplicableProcessor,
     {
       m_hasBeenNotifiedOfEndOfTrace[i] = false; 
     }
+    m_notifiedEndOfTraceDownstream = false;
     m_inputCount = 0;
     m_outputCount = 0;
   }

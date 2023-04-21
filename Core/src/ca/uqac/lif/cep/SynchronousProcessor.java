@@ -206,10 +206,11 @@ public abstract class SynchronousProcessor extends Processor
     public void notifyEndOfTrace()
     {
       m_hasBeenNotifiedOfEndOfTrace[m_index] = true;
-      if (!allNotifiedEndOfTrace())
+      if (m_notifiedEndOfTraceDownstream || !allNotifiedEndOfTrace())
       {
         return;
       }
+      m_notifiedEndOfTraceDownstream = true;
       m_tempQueue.clear();
       boolean outs;
       try
