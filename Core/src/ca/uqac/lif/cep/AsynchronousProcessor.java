@@ -89,7 +89,7 @@ public abstract class AsynchronousProcessor extends Processor
   }
 
   @Override
-  public synchronized Pushable getPushableInput(int index)
+  public Pushable getPushableInput(int index)
   {
     if (m_inputPushables[index] == null)
     {
@@ -99,7 +99,7 @@ public abstract class AsynchronousProcessor extends Processor
   }
 
   @Override
-  public synchronized Pullable getPullableOutput(int index)
+  public Pullable getPullableOutput(int index)
   {
     if (m_outputPullables[index] == null)
     {

@@ -44,7 +44,7 @@ public abstract class PipeCrawler
    * 
    * @param start The processor to start fromS
    */
-  public synchronized void crawl(Processor start)
+  public void crawl(Processor start)
   {
     Queue<Processor> to_visit = new LinkedList<Processor>();
     Set<Processor> visited = new HashSet<Processor>();

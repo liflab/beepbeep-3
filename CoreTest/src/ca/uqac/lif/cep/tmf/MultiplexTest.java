@@ -97,7 +97,7 @@ public class MultiplexTest
     }
     
     @Override
-    public synchronized Pullable getPullableOutput(int index)
+    public Pullable getPullableOutput(int index)
     {
       if (m_outputPullables[index] == null)
       {
@@ -114,7 +114,7 @@ public class MultiplexTest
       }
       
       @Override
-      public synchronized Object pull()
+      public Object pull()
       {
         Object o = super.pull();
         if (o == null)

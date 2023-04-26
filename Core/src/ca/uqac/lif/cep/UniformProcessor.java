@@ -169,7 +169,7 @@ public abstract class UniformProcessor extends SynchronousProcessor
   public class UnaryPushable implements Pushable
   {
     @Override
-    public synchronized Pushable push(Object o)
+    public Pushable push(Object o)
     {
     	boolean b = true;
       try
@@ -194,7 +194,7 @@ public abstract class UniformProcessor extends SynchronousProcessor
     }
 
     @Override
-    public synchronized void notifyEndOfTrace() throws PushableException
+    public void notifyEndOfTrace() throws PushableException
     {
       m_hasBeenNotifiedOfEndOfTrace[getPosition()] = true;
       if (!allNotifiedEndOfTrace())
