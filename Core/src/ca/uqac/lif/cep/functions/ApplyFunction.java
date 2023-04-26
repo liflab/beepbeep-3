@@ -172,10 +172,6 @@ public class ApplyFunction extends UniformProcessor implements Stateful
     public void associateToInput(int id, int in_stream_index, int in_stream_pos,
         int out_stream_index, int out_stream_pos)
     {
-    	if (in_stream_index > getInputArity())
-    	{
-    		System.out.println("EILLE");
-    	}
       if (m_eventTracker != null)
       {
         m_eventTracker.associateToInput(getId(), in_stream_index, m_inputCount,
