@@ -89,7 +89,7 @@ public class SynchronousProcessorTest
 		Connector.connect(te, pt);
 		BlackHole bh = new BlackHole();
 		Connector.connect(pt, bh);
-		te.getPushableInput().pushFast(0);
+		te.getPushableInput().push(0);
 	}
 	
 	@Test

@@ -31,6 +31,8 @@ import java.util.concurrent.TimeoutException;
  * @param <T> The output type of this future
  * @param <U> The output type of the multiple "sub-futures" this Future
  * depends on
+ * @deprecated No BeepBeep processor from version 0.11 onwards should use this
+ * object, which will be removed in future versions.
  */
 public abstract class CompoundFuture<T,U> implements Future<T> 
 {

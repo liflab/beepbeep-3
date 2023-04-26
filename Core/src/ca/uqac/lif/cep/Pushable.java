@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -62,7 +62,7 @@ public interface Pushable
    * @return A {@link Future} object that can be used to wait until the call to
    *         {@code pushFast} is finished.
    */
-  public Future<Pushable> pushFast(Object o);
+  //public Future<Pushable> pushFast(Object o);
 
   /**
    * Notifies the pushable that there is no more event to be pushed, i.e. the
@@ -160,7 +160,7 @@ public interface Pushable
       throw new UnsupportedOperationException();
     }
 
-    @Override
+    //@Override
     public Future<Pushable> pushFast(Object o)
     {
       throw new UnsupportedOperationException();

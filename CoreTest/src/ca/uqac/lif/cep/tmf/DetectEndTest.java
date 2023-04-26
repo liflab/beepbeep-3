@@ -28,8 +28,6 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.StreamVariable;
-import ca.uqac.lif.cep.tmf.DetectEnd;
-import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.util.Equals;
 
 /**

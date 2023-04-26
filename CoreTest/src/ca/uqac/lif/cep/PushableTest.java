@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -69,15 +69,7 @@ public class PushableTest
 		{
 			cnt++;
 		}
-		try
-		{
-			p.pushFast(0);
-		}
-		catch (UnsupportedOperationException e)
-		{
-			cnt++;
-		}
-		assertEquals(2, cnt);
+		assertEquals(1, cnt);
 		assertEquals(0, p.getPosition());
 		assertEquals(pump.getId(), p.getProcessor().getId());
 	}

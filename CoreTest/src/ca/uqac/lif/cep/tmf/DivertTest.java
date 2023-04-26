@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -23,7 +23,6 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import java.util.Queue;
-import java.util.concurrent.Future;
 import org.junit.Test;
 
 /**
@@ -80,8 +79,7 @@ public class DivertTest
     div.divertTo(1);
     p.push("bar");
     assertEquals("bar", (String) q2.remove());
-    Future<Pushable> fut = p.pushFast("baz");
-    assertNotNull(fut);
+    p.push("baz");
     assertTrue(q1.isEmpty());
     assertEquals(div, p.getProcessor());
     assertEquals(0, p.getPosition());

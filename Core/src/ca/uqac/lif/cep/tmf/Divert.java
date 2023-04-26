@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -23,7 +23,6 @@ import ca.uqac.lif.cep.Pushable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Future;
 
 /**
  * Diverts an input stream to one of many downstream processor
@@ -152,12 +151,6 @@ public class Divert extends Processor
     {
       m_downstreamPushables.get(m_flowIndex).push(o);
       return this;
-    }
-
-    @Override
-    public Future<Pushable> pushFast(Object o)
-    {
-      return m_downstreamPushables.get(m_flowIndex).pushFast(o);
     }
 
     @Override

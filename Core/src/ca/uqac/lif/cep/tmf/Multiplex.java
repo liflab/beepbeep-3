@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -22,7 +22,6 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.concurrent.Future;
 
 /**
  * Merges the contents of multiple traces into a single trace. The multiplexer
@@ -283,12 +282,6 @@ public class Multiplex extends Processor
     {
       m_outputPushables[0].push(o);
       return this;
-    }
-
-    @Override
-    public Future<Pushable> pushFast(Object o)
-    {
-      return m_outputPushables[0].pushFast(o);
     }
 
     @Override

@@ -19,14 +19,11 @@ package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.Pushable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  * Simulates the application of a "sliding window" to a trace. It is represented
@@ -112,8 +109,6 @@ public class Window extends AbstractWindow implements Stateful
       m_processor.reset();
       m_sink.reset();
       int input_arity = getInputArity();
-      @SuppressWarnings("unchecked")
-      Future<Pushable>[] futures = new Future[m_width * input_arity];
       for (int i = 0; i < m_width; i++)
       {
         for (int j = 0; j < input_arity; j++)
@@ -122,26 +117,8 @@ public class Window extends AbstractWindow implements Stateful
           LinkedList<Object> q = m_window[j];
           Object o = q.get(i);
           Pushable p = m_innerInputs[j];
-          futures[i * input_arity + j] = p.pushFast(o);
+          p.push(o);
           p.notifyEndOfTrace();
-        }
-        for (Future<?> f : futures)
-        {
-          if (f != null)
-          {
-            try
-            {
-              f.get();
-            }
-            catch (InterruptedException e)
-            {
-              throw new ProcessorException(e);
-            }
-            catch (ExecutionException e)
-            {
-              throw new ProcessorException(e);
-            }
-          }
         }
         out = m_sink.getLast();
       }

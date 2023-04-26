@@ -21,7 +21,6 @@ import ca.uqac.lif.cep.tmf.Passthrough;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Queue;
-import java.util.concurrent.Future;
 
 /**
  * Processor that produces exactly one output front for each input front
@@ -192,13 +191,6 @@ public abstract class UniformProcessor extends SynchronousProcessor
       	m_outputPushables[0].notifyEndOfTrace();	
       }
       return this;
-    }
-
-    @Override
-    public synchronized Future<Pushable> pushFast(Object o)
-    {
-      push(o);
-      return Pushable.NULL_FUTURE;
     }
 
     @Override

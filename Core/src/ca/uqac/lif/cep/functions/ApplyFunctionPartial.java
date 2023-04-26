@@ -178,7 +178,7 @@ public class ApplyFunctionPartial extends Processor
       return this;
     }
 
-    @Override
+    //@Override
     public Future<Pushable> pushFast(Object o)
     {
       push(o);

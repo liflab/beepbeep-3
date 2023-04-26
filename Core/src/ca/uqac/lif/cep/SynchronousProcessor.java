@@ -21,7 +21,6 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Queue;
-import java.util.concurrent.Future;
 
 /**
  * Performs a computation on input events to produce output events.
@@ -141,13 +140,6 @@ public abstract class SynchronousProcessor extends Processor
     {
       super();
       m_index = index;
-    }
-
-    @Override
-    public final synchronized Future<Pushable> pushFast(Object o)
-    {
-      push(o);
-      return Pushable.NULL_FUTURE;
     }
 
     @Override

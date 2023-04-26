@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.Future;
 
 /**
  * Encapsulates a chain of processors as if it were a single one.
@@ -752,13 +751,6 @@ public class GroupProcessor extends Processor implements Stateful
       m_pushable.push(o);
       notifySources();
       return m_pushable;
-    }
-
-    @Override
-    public synchronized Future<Pushable> pushFast(Object o)
-    {
-      push(o);
-      return Pushable.NULL_FUTURE;
     }
 
     /**
