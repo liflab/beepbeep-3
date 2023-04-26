@@ -160,12 +160,6 @@ public interface Pushable
       throw new UnsupportedOperationException();
     }
 
-    //@Override
-    public Future<Pushable> pushFast(Object o)
-    {
-      throw new UnsupportedOperationException();
-    }
-
     @Override
     public void notifyEndOfTrace() throws PushableException
     {
