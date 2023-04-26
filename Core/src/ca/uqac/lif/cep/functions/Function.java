@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,12 +25,9 @@ import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.EventTracker;
-import ca.uqac.lif.cep.FutureDone;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 /**
  * Represents a stateless <i>m</i>-to-<i>n</i> function.
@@ -203,25 +200,6 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    * @return The type of the output
    */
   /*@ pure @*/ public abstract Class<?> getOutputTypeFor(int index);
-
-  /**
-   * Utility method that delegates the call to evaluate()
-   * 
-   * @param inputs
-   *          Input arguments
-   * @param outputs
-   *          Output values
-   * @param context
-   *          Context object
-   * @param service The service responsible for assigning threads
-   * @return A {@link Future} object for this function call
-   */
-  /*@ pure @*/ public Future<Object[]> evaluateFast(Object[] inputs, Object[] outputs, 
-      Context context, ExecutorService service)
-  {
-    evaluate(inputs, outputs, context);
-    return new FutureDone<Object[]>(outputs);
-  }
 
   @Override
   /*@ pure non_null @*/ public final Function duplicate()

@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 /**
  * Evaluates a function on each event front in a <em>lazy</em> manner.
@@ -176,13 +175,6 @@ public class ApplyFunctionPartial extends Processor
         }
       }
       return this;
-    }
-
-    //@Override
-    public Future<Pushable> pushFast(Object o)
-    {
-      push(o);
-      return Pushable.NULL_FUTURE;
     }
 
     @Override

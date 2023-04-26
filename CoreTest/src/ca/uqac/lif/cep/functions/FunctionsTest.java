@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -298,12 +298,6 @@ public class FunctionsTest
 	}
 	
 	@Test
-	public void testEvaluateFast() 
-	{
-		assertEquals(evaluateFast(Booleans.and, true, false), evaluate(Booleans.and, true, false));
-	}
-	
-	@Test
 	public void testCumulative1() 
 	{
 		Cumulate sum = new Cumulate(new CumulativeFunction<Number>(Numbers.multiplication));
@@ -369,14 +363,6 @@ public class FunctionsTest
 		Object[] ins = inputs;
 		Object[] out = new Object[1];
 		f.evaluate(ins, out);
-		return out[0];
-	}
-	
-	public static Object evaluateFast(Function f, Object ... inputs) 
-	{
-		Object[] ins = inputs;
-		Object[] out = new Object[1];
-		f.evaluateFast(ins, out, null, null);
 		return out[0];
 	}
 	

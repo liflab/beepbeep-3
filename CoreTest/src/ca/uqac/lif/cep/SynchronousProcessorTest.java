@@ -81,17 +81,6 @@ public class SynchronousProcessorTest
 		assertTrue(got_exception);
 	}
 	
-	@Test(expected=PushableException.class)
-	public void testPushFastException1() 
-	{
-		ThrowException te = new ThrowException();
-		Passthrough pt = new Passthrough();
-		Connector.connect(te, pt);
-		BlackHole bh = new BlackHole();
-		Connector.connect(pt, bh);
-		te.getPushableInput().push(0);
-	}
-	
 	@Test
 	public void testSamePullable()
 	{

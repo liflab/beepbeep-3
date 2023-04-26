@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.concurrent.Future;
-
 /**
  * Gives events to some of a processor's input. Interface {@link Pushable} is
  * the opposite of {@link Pullable}: rather than querying events form a
@@ -35,8 +33,8 @@ import java.util.concurrent.Future;
 public interface Pushable
 {
   /**
-   * Pushes an event into one of the processor's input trace. Contrarily to
-   * {@link #pushFast(Object)}, this method <em>must</em> return only when the
+   * Pushes an event into one of the processor's input trace. This 
+   * method <em>must</em> return only when the
    * push operation is completely done.
    * 
    * @param o
@@ -47,22 +45,6 @@ public interface Pushable
    *         {@link Pushable} objects, e.g. {@code p.push(o1).push(o2)}.
    */
   public Pushable push(Object o);
-
-  /**
-   * Pushes an event into one of the processor's input trace, but does not wait
-   * for the push operation to terminate. In other words, this is a non-blocking
-   * call to {@code push()} that returns control to the caller immediately.
-   * In order to resynchronize the caller with the result of the push operation,
-   * one must use the {@code Future} object that the method returns.
-   * 
-   * @param o
-   *          The event. Although you can technically push {@code null}, the
-   *          behaviour in this case is undefined. It <em>may</em> be
-   *          interpreted as if you are passing no event.
-   * @return A {@link Future} object that can be used to wait until the call to
-   *         {@code pushFast} is finished.
-   */
-  //public Future<Pushable> pushFast(Object o);
 
   /**
    * Notifies the pushable that there is no more event to be pushed, i.e. the
@@ -178,11 +160,4 @@ public interface Pushable
       return m_position;
     }
   }
-
-  /**
-   * A dummy {@link Future} object that will be returned on all calls to
-   * {@link Pushable#pushFast(Object)}.
-   */
-  public static final FutureDone<Pushable> NULL_FUTURE = new FutureDone<Pushable>(
-      new PushNotSupported(null, 0));
 }
