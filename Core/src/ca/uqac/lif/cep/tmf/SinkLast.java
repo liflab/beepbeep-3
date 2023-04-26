@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,6 +18,8 @@
 package ca.uqac.lif.cep.tmf;
 
 import java.util.Queue;
+
+import ca.uqac.lif.cep.ProcessorException;
 
 /**
  * Sink that remembers only the last event sent to it. This event can be queried
@@ -38,6 +40,11 @@ public class SinkLast extends Sink
    * The number of events received so far
    */
   protected int m_eventCounter = 0;
+  
+  /**
+	 * A flag that remembers if the end of trace has been seen.
+	 */
+	protected boolean m_seenEndOfTrace;
 
   /**
    * Creates a new sink last processor
@@ -54,6 +61,25 @@ public class SinkLast extends Sink
   public SinkLast(int in_arity)
   {
     super(in_arity);
+  }
+  
+  /**
+   * Queries if the processor has seen the end of the input trace.
+   * @return {@code true} if the end of trace signal has been received,
+   * {@code false} otherwise
+   * @since 0.11
+   */
+  /*@ pure @*/ public boolean seenEndOfTrace()
+  {
+  	return m_seenEndOfTrace;
+  }
+  
+  @Override
+  protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
+  {
+  	super.onEndOfTrace(outputs);
+  	m_seenEndOfTrace = true;
+  	return false;
   }
 
   @Override
@@ -79,7 +105,16 @@ public class SinkLast extends Sink
   @Override
   public SinkLast duplicate(boolean with_state)
   {
-    return new SinkLast(getInputArity());
+  	SinkLast s = new SinkLast(getInputArity());
+  	if (with_state)
+  	{
+  		s.m_seenEndOfTrace = m_seenEndOfTrace;
+  		for (int i = 0; i < m_last.length; i++)
+    	{
+    		s.m_last[i] = m_last[i];
+    	}
+  	}
+  	return s;
   }
   
   /**

@@ -30,7 +30,7 @@ import java.util.Queue;
 /**
  * Concrete version of {@link AbstractSlice} whose output is a stream of
  * lists, where each list contains all the events produced by inner slices
- * from a given input even. When multiple slices produce an output
+ * from a given input event. When multiple slices produce an output
  * event for the same input event, the order in which these events are
  * put into the list is undefined.
  * 
