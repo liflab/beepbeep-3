@@ -291,18 +291,36 @@ public class Bags
     /**
      * An array that keeps the types of each input stream
      */
-    protected Class<?>[] m_types;
+    protected final Class<?>[] m_types;
 
     /**
-     * Creates a new ToList function
+     * Creates a new instance of the function by specifying the type of each
+     * input argument.
      * 
      * @param types
-     *          The types of each input stream
+     *          The types of each input argument
      */
     public ToCollection(Class<?> ... types)
     {
       super();
       m_types = types;
+    }
+    
+    /**
+     * Creates a new instance of the function by specifying its input arity.
+     * This constructor assumes that each input argument is of type
+     * {@link Variant}.
+     * @param arity The input arity
+     * @since 0.11
+     */
+    public ToCollection(int arity)
+    {
+    	super();
+    	m_types = new Class<?>[arity];
+    	for (int i = 0; i < arity; i++)
+    	{
+    		m_types[i] = Variant.class;
+    	}
     }
 
     @Override
@@ -340,6 +358,11 @@ public class Bags
     public ToArray(Class<?> ... types)
     {
       super(types);
+    }
+    
+    public ToArray(int arity)
+    {
+    	super(arity);
     }
 
     @Override
@@ -381,6 +404,11 @@ public class Bags
     {
       super(types);
     }
+    
+    public ToList(int arity)
+    {
+    	super(arity);
+    }
 
     @Override
     public ToList duplicate(boolean with_state)
@@ -418,6 +446,11 @@ public class Bags
     public ToSet(Class<?> ... types)
     {
       super(types);
+    }
+    
+    public ToSet(int arity)
+    {
+    	super(arity);
     }
 
     @Override
