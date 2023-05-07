@@ -26,7 +26,7 @@
   <antversion property="antversion.running" />
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.10.2"/>
+  <property name="antrun.version" value="1.10.4"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -46,6 +46,9 @@
   
   <!-- The project's version number -->
   <property name="build.version" value="1.0"/>
+  
+  <!-- The project's package -->
+  <property name="build.package" value="antrun/"/>
   
   <!-- The target JDK version for the build -->
   <property name="build.targetjdk" value="11"/>
@@ -241,13 +244,19 @@
     <tstamp>
        <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
     </tstamp>
-    <jar destfile="${build.jar.filename}-${build.version}.jar" filesetmanifest="skip">
+    <jar destfile="${build.jar.filename}-${build.version}.jar" filesetmanifest="mergewithoutmain" duplicate="preserve" level="9">
 	  <manifest>
 	      <attribute name="Main-Class" value="${build.mainclass}"/>
-	      <attribute name="Class-Path" value="."/>
 	      <attribute name="Built-By" value="${user.name}"/>
 	      <attribute name="Built-Date" value="${TODAY}"/>
           <attribute name="Implementation-Version" value="${build.version}"/>
+	      <section name="${build.package}">
+	        <attribute name="Main-Class" value="${build.mainclass}"/>
+	        <attribute name="Class-Path" value="."/>
+	        <attribute name="Built-By" value="${user.name}"/>
+	        <attribute name="Built-Date" value="${TODAY}"/>
+            <attribute name="Implementation-Version" value="${build.version}"/>
+          </section>
 	  </manifest>
 	  <fileset dir="${build.bindir}">
 	    <filename name="**/*"/>
@@ -379,7 +388,9 @@
       </executiondata>
       <structure name="${build.name}">
         <classfiles>
-            <fileset dir="${build.bindir}"/>
+            <fileset dir="${build.bindir}">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
         </classfiles>
         <sourcefiles encoding="UTF-8">
             <fileset dir="${build.srcdir}"/>
@@ -628,4 +639,4 @@
     </sequential>
   </target>
 </project>
-<!-- :tabWidth=2: -->
+<!-- :tabWidth=2:mode=ant: -->
