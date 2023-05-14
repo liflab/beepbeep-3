@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,9 +17,12 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
+
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,7 +57,8 @@ public class Sets
   public static final IsSupersetOrEqual isSupersetOrEqual = new IsSupersetOrEqual();
 
   /**
-   * Processor that updates a set
+   * Processor that updates a set.
+   * @since 0.7
    */
   protected abstract static class SetUpdateProcessor extends UniformProcessor implements Stateful
   {
@@ -96,6 +100,7 @@ public class Sets
 
   /**
    * Updates a set.
+   * @since 0.7
    */
   public static class PutInto extends SetUpdateProcessor
   {
@@ -140,9 +145,60 @@ public class Sets
       return true;
     }
   }
+  
+  /**
+   * Calculates the successive intersection of a stream of sets.
+   * @since 0.11
+   */
+  public static class Intersect extends SetUpdateProcessor
+  {
+  	/**
+     * Create a new instance of the processor
+     */
+  	public Intersect()
+  	{
+  		super();
+  	}
+
+		@Override
+		protected boolean compute(Object[] inputs, Object[] outputs)
+		{
+			if (m_inputCount == 0)
+			{
+				m_set.addAll((Collection<?>) inputs[0]);
+			}
+			else
+			{
+				m_set.retainAll((Collection<?>) inputs[0]);
+			}
+			outputs[0] = m_set;
+			m_inputCount++;
+			return true;
+		}
+
+		@Override
+		public Processor duplicate(boolean with_state)
+		{
+			Intersect inter = new Intersect();
+			if (with_state)
+			{
+				inter.m_inputCount = m_inputCount;
+				inter.m_outputCount = m_outputCount;
+				inter.m_set.addAll(m_set);
+			}
+			return inter;
+		}
+  	
+		@Override
+		public String toString()
+		{
+			return "Intersect";
+		}
+  }
 
   /**
    * Updates a set.
+   * @since 0.7
    */
   public static class PutIntoNew extends SetUpdateProcessor
   {
@@ -192,6 +248,7 @@ public class Sets
   /**
    * Checks if a set is a subset of another. The first argument is the set to
    * check, and the second argument is the reference set.
+   * @since 0.7
    */
   @SuppressWarnings("rawtypes")
   public static class IsSubsetOrEqual extends BinaryFunction<Set, Set, Boolean>
@@ -212,6 +269,7 @@ public class Sets
   /**
    * Checks if a set is a superset of another. The first argument is the set to
    * check, and the second argument is the reference set.
+   * @since 0.7
    */
   @SuppressWarnings("rawtypes")
   public static class IsSupersetOrEqual extends BinaryFunction<Set, Set, Boolean>
@@ -229,6 +287,12 @@ public class Sets
     }
   }
   
+  /**
+   * Implementation of a set with "mathematical" equality. Two {@link MathSet}s
+   * are considered equal if they have the same elements.
+   *
+   * @param <T> The type of the elements in the set
+   */
   public static class MathSet<T> extends HashSet<T>
   {
 		/**

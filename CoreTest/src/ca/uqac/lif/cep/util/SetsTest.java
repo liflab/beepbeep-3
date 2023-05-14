@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,6 +25,8 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.FunctionsTest;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
@@ -107,5 +109,28 @@ public class SetsTest
     assertEquals(1, set2.size());
     assertTrue(set1.contains("bar"));
     assertFalse(set1.contains("foo"));
+  }
+  
+  @Test
+  public void testIntersect1()
+  {
+  	Set<?> set1;
+  	Sets.Intersect inter = new Sets.Intersect();
+  	QueueSink qs = new QueueSink();
+    Connector.connect(inter, qs);
+    Pushable p = inter.getPushableInput();
+    Queue<Object> q = qs.getQueue();
+    p.push(Arrays.asList("foo", "bar", "baz"));
+    set1 = (Set<?>) q.remove();
+    assertEquals(3, set1.size());
+    p.push(Arrays.asList("foo", "bar", "baz", "biz"));
+    set1 = (Set<?>) q.remove();
+    assertEquals(3, set1.size());
+    p.push(Arrays.asList("foo", "baz"));
+    set1 = (Set<?>) q.remove();
+    assertEquals(2, set1.size());
+    p.push(Arrays.asList("foo", "buzz"));
+    set1 = (Set<?>) q.remove();
+    assertEquals(1, set1.size());
   }
 }
