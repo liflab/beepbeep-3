@@ -32,12 +32,12 @@ public class Main
   /**
    * Minor version number
    */
-  public static final int s_minorVersion = 10;
+  public static final int s_minorVersion = 11;
 
   /**
    * Revision version number
    */
-  public static final int s_revisionVersion = 6;
+  public static final int s_revisionVersion = 0;
 
   private Main()
   {
@@ -53,7 +53,7 @@ public class Main
   public static void main(String[] args)
   {
     System.out.println("BeepBeep 3 v" + formatVersion() + " - An event stream processing engine");
-    System.out.println("(C) 2008-2021 Laboratoire d'informatique formelle");
+    System.out.println("(C) 2008-2023 Laboratoire d'informatique formelle");
     System.out.println("Université du Québec à Chicoutimi, Canada");
     System.exit(0);
   }
