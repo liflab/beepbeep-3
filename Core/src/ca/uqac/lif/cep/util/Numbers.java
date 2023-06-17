@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -82,6 +82,8 @@ public class Numbers
   public static final Power power = new Power();
 
   public static final Signum signum = new Signum();
+  
+  public static final Square square = new Square();
 
   public static final SquareRoot squareRoot = new SquareRoot();
 
@@ -178,6 +180,32 @@ public class Numbers
     public String toString()
     {
       return "÷";
+    }
+  }
+  
+  /**
+   * Computes the square of a number.
+   * 
+   * @author Sylvain Hallé
+   * @since 0.11
+   */
+  public static final class Square extends UnaryFunction<Number, Number>
+  {
+    protected Square()
+    {
+      super(Number.class, Number.class);
+    }
+
+    @Override
+    public Number getValue(Number x)
+    {
+      return Math.pow(x.floatValue(), 2);
+    }
+
+    @Override
+    public String toString()
+    {
+      return "²";
     }
   }
 
