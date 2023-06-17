@@ -25,20 +25,20 @@ dependency in your project.
 <dependency>
   <groupId>io.github.liflab</groupId>
   <artifactId>beepbeep-3</artifactId>
-  <version>0.10.8-alpha</version>
+  <version>0.11</version>
 </dependency>
 ```
 
 ### Ivy
 
 ```xml
-<dependency org="io.github.liflab" name="beepbeep-3" rev="0.10.8"/>
+<dependency org="io.github.liflab" name="beepbeep-3" rev="0.11"/>
 ```
 
 ### Gradle
 
 ```
-compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.10.8-alpha'
+compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.11'
 ```
 
 Repository structure
@@ -152,7 +152,7 @@ In short:
 Then, setup the build path for each project:
 
 - `Core` requires the Bullwinkle library (see above)
-- `CoreTest` depends on `Core` and requires the JUnit 4 library
+- `CoreTest` depends on `Core` and requires the JUnit *4* library
 - Each of the palette folders depend on `Core` and require the JUnit
   *4* library
 - In addition, some of the palette projects may have other
