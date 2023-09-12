@@ -317,9 +317,15 @@ public class Print extends Sink
 		}
 		m_out.print("]");
 	}
+	
+	@Override
+	public void stop()
+	{
+		m_out.close();
+	}
 
 	/**
-	 * Closes the underlying PrintStream
+	 * Closes the underlying PrintStream.
 	 */
 	public void close()
 	{

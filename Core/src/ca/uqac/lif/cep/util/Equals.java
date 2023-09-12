@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Constant;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.util.Lists.MathList;
 import ca.uqac.lif.cep.util.Maps.MathMap;
 import ca.uqac.lif.cep.util.Sets.MathSet;
@@ -34,6 +36,11 @@ import java.util.Collection;
 public class Equals extends BinaryFunction<Object, Object, Boolean>
 {
   public static final transient Equals instance = new Equals();
+  
+  public static FunctionTree eq(Function f1, Function f2)
+  {
+  	return new FunctionTree(instance, f1, f2);
+  }
 
   private Equals()
   {

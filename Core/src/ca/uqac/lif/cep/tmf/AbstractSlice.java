@@ -151,6 +151,7 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
   @Override
   protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
   {
+  	//System.out.println(inputs[0]);
     int output_arity = getOutputArity();
     Object[] f_value = new Object[1];
     try

@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.util;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
 
@@ -47,6 +49,16 @@ public class Booleans
   public static final transient BagAnd bagAnd = BagAnd.instance;
   
   public static final transient BagOr bagOr = BagOr.instance;
+  
+  public static FunctionTree land(Function f1, Function f2)
+  {
+  	return new FunctionTree(and, f1, f2);
+  }
+  
+  public static FunctionTree lor(Function f1, Function f2)
+  {
+  	return new FunctionTree(or, f1, f2);
+  }
 
   /**
    * Implementation of the logical conjunction
