@@ -20,8 +20,8 @@ package ca.uqac.lif.cep.io;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayDeque;
-import java.util.Queue;
+
+import ca.uqac.lif.cep.functions.ReadTokens;
 
 /**
  * Source that reads text lines from a Java {@link InputStream}. It is represented
@@ -33,28 +33,8 @@ import java.util.Queue;
  * @since 0.3
  */
 @SuppressWarnings("squid:S2160")
-public class ReadLines extends ReadStringStream
+public class ReadLines extends ReadTokens
 {
-	/**
-	 * The line chunk that awaits for its line separator.
-	 */
-	protected String m_lastChunk = "";
-
-	/**
-	 * Whether to add a carriage return at the end of each line
-	 */
-	protected boolean m_addCrlf = false;
-
-	/**
-	 * Whether to trim each text line from leading and trailing spaces
-	 */
-	protected boolean m_trim = false;
-
-	/**
-	 * The character used as the CRLF on this system
-	 */
-	public static final transient String CRLF = System.getProperty("line.separator");
-
 	/**
 	 * Creates a new file reader from an input stream
 	 * 
@@ -63,7 +43,7 @@ public class ReadLines extends ReadStringStream
 	 */
 	public ReadLines(InputStream is)
 	{
-		super(is);
+		super(is, CRLF);
 	}
 
 	/**
@@ -74,75 +54,20 @@ public class ReadLines extends ReadStringStream
 	 */
 	public ReadLines(File f) throws FileNotFoundException
 	{
-		super(f);
+		super(f, CRLF);
 	}
 
-	/**
-	 * Tells the reader to add a carriage return at the end of each output event
-	 * 
-	 * @param b
-	 *          true to add a CRLF, false otherwise
-	 * @return This reader
-	 */
+	@Override
 	public ReadLines addCrlf(boolean b)
 	{
-		m_addCrlf = b;
-		return this;
-	}
-
-	/**
-	 * Tells the reader to trim each text line
-	 * 
-	 * @param b
-	 *          true to trim, false otherwise
-	 * @return This reader
-	 */
-	public ReadLines trim(boolean b)
-	{
-		m_trim = b;
+		super.addCrlf(b);
 		return this;
 	}
 
 	@Override
-	@SuppressWarnings("squid:S1168")
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	public ReadLines trim(boolean b)
 	{
-		Queue<Object[]> q = new ArrayDeque<Object[]>(1);
-		boolean b = super.compute(inputs, q);
-		if (!b && !m_lastChunk.isEmpty())
-		{
-			prepareChunk(m_lastChunk, outputs);
-			m_lastChunk = "";
-			return false;
-		}
-		if (!q.isEmpty())
-		{
-			String s = (String) ((Object[]) q.poll())[0];
-			m_lastChunk += s;
-			if (m_lastChunk.contains(CRLF))
-			{
-				String[] parts = s.split(CRLF);
-				for (int i = 0; i < parts.length - 1; i++)
-				{
-					prepareChunk(parts[i], outputs);
-					
-				}
-				m_lastChunk = parts[parts.length - 1];
-			}
-		}
-		return b;
-	}
-	
-	protected void prepareChunk(String line, Queue<Object[]> outputs)
-	{
-		if (m_trim)
-		{
-			line = line.trim();
-		}
-		if (m_addCrlf)
-		{
-			line += CRLF;
-		}
-		outputs.add(new Object[] { line });
+		super.trim(b);
+		return this;
 	}
 }
