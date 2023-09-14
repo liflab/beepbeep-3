@@ -197,7 +197,14 @@ public class Print extends Sink
 		}
 		beforeEvent(m_out);
 		m_out.print(m_prefix);
-		prettyPrint(m_out, inputs[0]);
+		if (inputs[0] instanceof byte[])
+		{
+		  m_out.print(new String((byte[]) inputs[0]));
+		}
+		else
+		{
+		  prettyPrint(m_out, inputs[0]);
+		}
 		m_out.print(m_suffix);
 		afterEvent(m_out);
 		return true;
