@@ -31,7 +31,7 @@ import ca.uqac.lif.cep.UniformProcessor;
  * internal object (0), and returns the result. Pushing <i>f</i><sub>1</sub>
  * once more will produce the output event 2.
  * @author Sylvain Hallé
- * @since 0.12
+ * @since 0.11.1
  */
 public class Integrate extends UniformProcessor
 {

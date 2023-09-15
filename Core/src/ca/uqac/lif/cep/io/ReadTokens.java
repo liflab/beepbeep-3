@@ -28,7 +28,7 @@ import java.util.Queue;
  * separator.
  * 
  * @author Sylvain Hallé
- * @since 0.12
+ * @since 0.11.1
  */
 @SuppressWarnings("squid:S2160")
 public class ReadTokens extends ReadStringStream

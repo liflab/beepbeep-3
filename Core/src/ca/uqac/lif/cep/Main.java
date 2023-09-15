@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2021 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -37,7 +37,7 @@ public class Main
   /**
    * Revision version number
    */
-  public static final int s_revisionVersion = 0;
+  public static final int s_revisionVersion = 1;
 
   private Main()
   {
