@@ -15,15 +15,13 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.functions;
+package ca.uqac.lif.cep.io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayDeque;
 import java.util.Queue;
-
-import ca.uqac.lif.cep.io.ReadStringStream;
 
 /**
  * Separates a stream of string chunks into tokens according to a user-defined

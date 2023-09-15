@@ -21,8 +21,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import ca.uqac.lif.cep.functions.ReadTokens;
-
 /**
  * Source that reads text lines from a Java {@link InputStream}. It is represented
  * graphically as:
