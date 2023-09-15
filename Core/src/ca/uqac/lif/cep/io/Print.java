@@ -351,7 +351,7 @@ public class Print extends Sink
 	 * Copies the member fields of the current processor into that of another
 	 * {@link Print} processor.
 	 * @param print The other print processor
-	 * @param with_state {@code true} to make a stateful copy, {@link false}
+	 * @param with_state {@code true} to make a stateful copy, {@code false}
 	 * otherwise
 	 */
 	protected void copyInto(Print print, boolean with_state)

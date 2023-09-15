@@ -1027,8 +1027,8 @@ public abstract class Processor implements DuplicableProcessor,
    * Java programmers probably won't use this method, but users of the Groovy
    * language can benefit from its operator overloading conventions, which map
    * the construct {@code p[x]} to {@code p.getAt(x)}. Combined with the
-   * definition of {@link #or(Pushable)}, this can be used to easily pipe two
-   * processors together:
+   * definition of {@link #or(Connector.SelectedInputPipe)}, this can be used
+   * to easily pipe two processors together:
    * <pre>{@code 
    * def p = (some processor)
    * def q = (some other processor)
@@ -1037,8 +1037,6 @@ public abstract class Processor implements DuplicableProcessor,
    * @param index The input pipe index
    * @return The pushable object
    * @since 0.11
-   * @see #positive()
-   * @see #negative()
    */
   /*@ pure non_null @*/ public PipeSelector getAt(int index)
   {
