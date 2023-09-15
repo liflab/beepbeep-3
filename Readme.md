@@ -25,20 +25,20 @@ dependency in your project.
 <dependency>
   <groupId>io.github.liflab</groupId>
   <artifactId>beepbeep-3</artifactId>
-  <version>0.11</version>
+  <version>0.11.1</version>
 </dependency>
 ```
 
 ### Ivy
 
 ```xml
-<dependency org="io.github.liflab" name="beepbeep-3" rev="0.11"/>
+<dependency org="io.github.liflab" name="beepbeep-3" rev="0.11.1"/>
 ```
 
 ### Gradle
 
 ```
-compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.11'
+compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.11.1'
 ```
 
 Repository structure
