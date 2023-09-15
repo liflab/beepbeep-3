@@ -33,7 +33,7 @@ import java.util.Collection;
  */
 public class Booleans
 {
-  private Booleans()
+  protected Booleans()
   {
     // Utility class
   }
