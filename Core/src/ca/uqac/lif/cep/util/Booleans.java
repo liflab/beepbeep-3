@@ -38,26 +38,49 @@ public class Booleans
     // Utility class
   }
 
+  /**
+   * Static reference to the {@link And} function.
+   */
   public static final transient And and = And.instance;
 
+  /**
+   * Static reference to the {@link Or} function.
+   */
   public static final transient Or or = Or.instance;
 
+  /**
+   * Static reference to the {@link Implies} function.
+   */
   public static final transient Implies implies = Implies.instance;
 
+  /**
+   * Static reference to the {@link Not} function.
+   */
   public static final transient Not not = Not.instance;
-  
+
+  /**
+   * Static reference to the {@link BagAnd} function.
+   */
   public static final transient BagAnd bagAnd = BagAnd.instance;
-  
+
+  /**
+   * Static reference to the {@link BagOr} function.
+   */
   public static final transient BagOr bagOr = BagOr.instance;
-  
+
+  /**
+   * Static reference to the {@link BooleanCast} function.
+   */
+  public static final transient BooleanCast booleanCast = BooleanCast.instance;
+
   public static FunctionTree land(Function f1, Function f2)
   {
-  	return new FunctionTree(and, f1, f2);
+    return new FunctionTree(and, f1, f2);
   }
-  
+
   public static FunctionTree lor(Function f1, Function f2)
   {
-  	return new FunctionTree(or, f1, f2);
+    return new FunctionTree(or, f1, f2);
   }
 
   /**
@@ -69,7 +92,7 @@ public class Booleans
   {
     public static final transient And instance = new And();
 
-    private And()
+    protected And()
     {
       super(Boolean.class, Boolean.class, Boolean.class);
     }
@@ -79,13 +102,13 @@ public class Booleans
     {
       return x.booleanValue() && y.booleanValue();
     }
-    
+
     @Override
     public Boolean getStartValue()
     {
-    	return Boolean.TRUE;
+      return Boolean.TRUE;
     }
-    
+
     @Override
     protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
     {
@@ -141,7 +164,7 @@ public class Booleans
   {
     public static final transient Implies instance = new Implies();
 
-    private Implies()
+    protected Implies()
     {
       super(Boolean.class, Boolean.class, Boolean.class);
     }
@@ -172,7 +195,7 @@ public class Booleans
       }
       return false;
     }
-    
+
     @Override
     protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
     {
@@ -207,7 +230,7 @@ public class Booleans
   {
     public static final transient Or instance = new Or();
 
-    private Or()
+    protected Or()
     {
       super(Boolean.class, Boolean.class, Boolean.class);
     }
@@ -217,13 +240,13 @@ public class Booleans
     {
       return x.booleanValue() || y.booleanValue();
     }
-    
+
     @Override
     public Boolean getStartValue()
     {
-    	return Boolean.FALSE;
+      return Boolean.FALSE;
     }
-    
+
     @Override
     protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
     {
@@ -279,7 +302,7 @@ public class Booleans
   {
     public static final transient Not instance = new Not();
 
-    private Not()
+    protected Not()
     {
       super(Boolean.class, Boolean.class);
     }
@@ -296,7 +319,7 @@ public class Booleans
       return "¬";
     }
   }
-  
+
   /**
    * Implementation of the logical conjunction over a collection
    * @since 0.10.3
@@ -305,12 +328,12 @@ public class Booleans
   public static class BagAnd extends UnaryFunction<Object,Boolean>
   {
     public static final transient BagAnd instance = new BagAnd();
-    
+
     protected BagAnd()
     {
       super(Object.class, Boolean.class);
     }
-    
+
     @Override
     public Boolean getValue(Object o)
     {
@@ -341,7 +364,7 @@ public class Booleans
       return false;
     }
   }
-  
+
   /**
    * Implementation of the logical disjunction over a collection
    * @since 0.10.3
@@ -350,12 +373,12 @@ public class Booleans
   public static class BagOr extends UnaryFunction<Object,Boolean>
   {
     public static final transient BagOr instance = new BagOr();
-    
+
     protected BagOr()
     {
       super(Object.class, Boolean.class);
     }
-    
+
     @Override
     public Boolean getValue(Object o)
     {
@@ -384,6 +407,26 @@ public class Booleans
         return false;
       }
       return true;
+    }
+  }
+
+  /**
+   * Function that attempts to convert an object into a Boolean.
+   * @since 0.11.2
+   */
+  public static class BooleanCast extends UnaryFunction<Object,Boolean>
+  {
+    public static final BooleanCast instance = new BooleanCast();
+    
+    protected BooleanCast()
+    {
+      super(Object.class, Boolean.class);
+    }
+
+    @Override
+    public Boolean getValue(Object x)
+    {
+      return parseBoolValue(x);
     }
   }
 
