@@ -74,6 +74,8 @@ public class Numbers
   public static final Maximum maximum = new Maximum();
 
   public static final Minimum minimum = new Minimum();
+  
+  public static final Modulo mod = new Modulo();
 
   public static final Multiplication multiplication = new Multiplication();
 
@@ -725,6 +727,31 @@ public class Numbers
     public String toString()
     {
       return "FLOOR";
+    }
+  }
+  
+  /**
+   * Evaluates the remainder of modulus division.
+   * @author Sylvain Hallé
+   * @since 0.11.2
+   */
+  public static final class Modulo extends BinaryFunction<Number,Number,Number>
+  {
+    private Modulo()
+    {
+      super(Number.class, Number.class, Number.class);
+    }
+
+    @Override
+    public Number getValue(Number x, Number y)
+    {
+      return x.floatValue() % y.floatValue();
+    }
+    
+    @Override
+    public String toString()
+    {
+      return "mod";
     }
   }
 }
