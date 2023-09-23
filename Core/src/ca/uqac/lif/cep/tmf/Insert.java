@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,8 +17,10 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.SynchronousProcessor;
+
 import java.util.Queue;
 
 /**
@@ -100,5 +102,49 @@ public class Insert extends SynchronousProcessor implements Stateful
   public Object getState()
   {
   	return m_sentPad;
+  }
+  
+  @Override
+  public Pullable getPullableOutput(int index)
+  {
+  	if (m_outputPullables[index] == null)
+  	{
+  		m_outputPullables[index] = new InsertPullable(index);
+  	}
+  	return m_outputPullables[index];
+  }
+  
+  /**
+   * A {@link Pullable} object that does not pull events from upstream before
+   * the events to insert have been emitted. This makes it possible to connect
+   * the output of a processor to a path that leads back to one of its inputs,
+   * provided that an {@link Insert} processor lies somewhere on that path.
+   * 
+   * @since 0.11.2
+   */
+  protected class InsertPullable extends OutputPullable
+  {
+		public InsertPullable(int index)
+		{
+			super(index);
+		}
+		
+		@Override
+		public boolean hasNext()
+		{
+			if (!m_sentPad)
+			{
+				for (int i = 0; i < m_times; i++)
+				{
+					for (int j = 0; j < m_pad.length; j++)
+					{
+						m_outputQueues[j].add(m_pad[j]);
+					}
+				}
+				m_sentPad = true;
+				return true;
+			}
+			return super.hasNext();
+		}
   }
 }
