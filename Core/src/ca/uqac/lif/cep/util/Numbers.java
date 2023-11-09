@@ -137,6 +137,10 @@ public class Numbers
     @Override
     public Number getValue(Number x, Number y)
     {
+    	if (x instanceof Long && y instanceof Long)
+    	{
+    		return x.longValue() + y.longValue();
+    	}
       return x.floatValue() + y.floatValue();
     }
 
@@ -169,6 +173,10 @@ public class Numbers
     @Override
     public Number getValue(Number x, Number y)
     {
+    	if (x instanceof Long && y instanceof Long)
+    	{
+    		return x.longValue() / y.longValue();
+    	}
       return x.floatValue() / y.floatValue();
     }
 
@@ -664,6 +672,10 @@ public class Numbers
     @Override
     public Number getValue(Number x, Number y)
     {
+    	if (x instanceof Long && y instanceof Long)
+    	{
+    		return x.longValue() - y.longValue();
+    	}
       return x.floatValue() - y.floatValue();
     }
 

@@ -67,7 +67,7 @@ public class Lists
     public void reset()
     {
       super.reset();
-      m_list.clear();
+      m_list = new ArrayList<Object>();
     }
 
     @Override

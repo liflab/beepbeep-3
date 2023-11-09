@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.util;
 
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.UnaryFunction;
@@ -31,9 +32,11 @@ import java.util.Set;
  * two flavors:
  * <ul>
  * <li>The "plain" function takes as input a map object and returns the
- * <em>same</em> object, to which a modification has been applied
+ * <em>same</em> object, to which a modification has been applied. Note
+ * however that in this case, a call to {@link Processor#reset() reset()}
+ * still results in the instantiation of a <em>new</em> map instance.</li>
  * <li>The "new" function takes as input a map object, and returns a <em>new
- * copy</em> of the object with the modification made to it</li>
+ * copy</em> of the object with the modification made to it.</li>
  * </ul>
  * 
  * @author Sylvain Hallé
@@ -216,7 +219,7 @@ public class Maps
     public void reset()
     {
       super.reset();
-      m_map.clear();
+      m_map = new HashMap<Object, Object>();
     }
 
     @Override
