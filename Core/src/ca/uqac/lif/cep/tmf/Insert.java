@@ -104,63 +104,6 @@ public class Insert extends SynchronousProcessor implements Stateful
     return m_sentPad;
   }
 
-  public Pullable getPullableOutput(int index)
-  {
-    if (m_outputPullables[index] == null)
-    {
-      m_outputPullables[index] = new InsertPullable(index);
-    }
-    return m_outputPullables[index];
-  }
-
-  /**
-   * A {@link Pullable} object specific to the behavior of {@link Insert}.
-   * It overrides the default behavior of {@link SynchronousProcessor}'s
-   * pullable object, which first pulls an input event from each input pipe
-   * before calling {@code compute}. In the case of {@link Insert}, input
-   * pipes are not pulled if the pad has not been emitted yet.
-   */
-  protected class InsertPullable extends OutputPullable
-  {
-    /**
-     * Creates a new instance of the pullable object.
-     * @param index The index of the output pipe this pullable is associated
-     * with
-     */
-    public InsertPullable(int index)
-    {
-      super(index);
-    }
-
-    @Override
-    public boolean hasNext()
-    {
-      if (m_sentPad)
-      {
-        return super.hasNext();
-      }
-      for (int i = 0; i < m_times; i++)
-      {
-        for (int j = 0; j < m_pad.length; j++)
-        {
-          m_outputQueues[j].add(m_pad[j]);
-        }
-        m_sentPad = true;
-      }
-      return true;
-    }
-  }
-  
-  @Override
-  public Pullable getPullableOutput(int index)
-  {
-  	if (m_outputPullables[index] == null)
-  	{
-  		m_outputPullables[index] = new InsertPullable(index);
-  	}
-  	return m_outputPullables[index];
-  }
-  
   /**
    * A {@link Pullable} object that does not pull events from upstream before
    * the events to insert have been emitted. This makes it possible to connect
@@ -171,27 +114,27 @@ public class Insert extends SynchronousProcessor implements Stateful
    */
   protected class InsertPullable extends OutputPullable
   {
-		public InsertPullable(int index)
-		{
-			super(index);
-		}
-		
-		@Override
-		public boolean hasNext()
-		{
-			if (!m_sentPad)
-			{
-				for (int i = 0; i < m_times; i++)
-				{
-					for (int j = 0; j < m_pad.length; j++)
-					{
-						m_outputQueues[j].add(m_pad[j]);
-					}
-				}
-				m_sentPad = true;
-				return true;
-			}
-			return super.hasNext();
-		}
+    public InsertPullable(int index)
+    {
+      super(index);
+    }
+
+    @Override
+    public boolean hasNext()
+    {
+      if (!m_sentPad)
+      {
+        for (int i = 0; i < m_times; i++)
+        {
+          for (int j = 0; j < m_pad.length; j++)
+          {
+            m_outputQueues[j].add(m_pad[j]);
+          }
+        }
+        m_sentPad = true;
+        return true;
+      }
+      return super.hasNext();
+    }
   }
 }
