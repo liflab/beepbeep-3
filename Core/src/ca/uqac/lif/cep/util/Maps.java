@@ -60,7 +60,8 @@ public class Maps
   }
 
   /**
-   * Gets the set of values in a map
+   * Gets the set of values in a map.
+   * @since 0.7
    */
   @SuppressWarnings("rawtypes")
   public static class Values extends UnaryFunction<Map, Collection>
@@ -118,37 +119,65 @@ public class Maps
 
   /**
    * Gets a value in the map, based on the name of a key.
+   * @since 0.7
    */
   @SuppressWarnings("rawtypes")
   public static class Get extends UnaryFunction<Map, Object>
   {
     /**
-     * The key to get from the map
+     * The key to get from the map.
      */
-    protected String m_key;
+    protected final String m_key;
+    
+    /**
+     * The default value to return if the key is not defined in the map.
+     */
+    protected final Object m_default;
 
     /**
-     * Creates a new get function
+     * Creates a new get function.
+     * 
+     * @param key
+     *          The key to get from the map
+     * @param default_value
+     *          The default value to return if the
+     *          key is not defined in the map
+     * @since 0.11.2
+     */
+    public Get(String key, Object default_value)
+    {
+      super(Map.class, Object.class);
+      m_key = key;
+      m_default = default_value;
+    }
+    
+    /**
+     * Creates a new get function.
      * 
      * @param key
      *          The key to get from the map
      */
     public Get(String key)
     {
-      super(Map.class, Object.class);
-      m_key = key;
+    	this(key, null);
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+		@Override
     public Object getValue(Map x)
     {
-      return x.get(m_key);
+    	if (x.containsKey(m_key))
+    	{
+    		return x.get(m_key);
+    	}
+    	return m_default;
     }
   }
 
   /**
    * Updates a map by putting key-value pairs into it. The processor takes two
    * input streams; the first contains the key, and the second contains the value.
+   * @since 0.7
    */
   public static class PutInto extends UniformProcessor
   {
@@ -170,7 +199,7 @@ public class Maps
     public void reset()
     {
       super.reset();
-      m_map.clear();
+      m_map = new HashMap<Object, Object>();
     }
 
     @Override
