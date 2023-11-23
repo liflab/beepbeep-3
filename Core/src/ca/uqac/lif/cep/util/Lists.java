@@ -22,8 +22,13 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.UnaryFunction;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -497,6 +502,81 @@ public class Lists
 				}
 			}
 			return true;
+		}
+  }
+  
+  @SuppressWarnings("rawtypes")
+	public static class Sort<T extends Comparable<T>> extends UnaryFunction<Collection,List>
+  {
+  	public Sort()
+  	{
+  		super(Collection.class, List.class);
+  	}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public List getValue(Collection c)
+		{
+			List<T> list = new ArrayList<T>();
+			list.addAll(c);
+			Collections.sort(list);
+			return list;
+		}
+  }
+  
+  @SuppressWarnings("rawtypes")
+	public static class SortOn<T> extends UnaryFunction<Collection,List>
+  {
+  	protected final Comparator<T> m_comparator;
+  	
+  	public SortOn(Function f)
+  	{
+  		super(Collection.class, List.class);
+  		m_comparator = new Comparator<T>() {{
+  		}
+
+			@Override
+			public int compare(T arg0, T arg1)
+			{
+				Object[] out1 = new Object[1];
+				Object[] out2 = new Object[1];
+				f.evaluate(new Object[] {arg0}, out1);
+				f.evaluate(new Object[] {arg1}, out2);
+				return attemptComparison(out1[0], out2[0]);
+			}};
+  	}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public List getValue(Collection c)
+		{
+			List<T> list = new ArrayList<T>();
+			list.addAll(c);
+			Collections.sort(list, m_comparator);
+			return list;
+		}
+		
+		protected static int attemptComparison(Object o1, Object o2)
+		{
+			if (o1 instanceof Number && o2 instanceof Number)
+			{
+				double d1 = ((Number) o1).doubleValue();
+				double d2 = ((Number) o2).doubleValue();
+				if (d1 == d2)
+				{
+					return 0;
+				}
+				if (d1 < d2)
+				{
+					return -1;
+				}
+				return 1;
+			}
+			if (o1 instanceof String && o2 instanceof String)
+			{
+				return ((String) o1).compareTo((String) o2);
+			}
+			return 0;
 		}
   }
 }
