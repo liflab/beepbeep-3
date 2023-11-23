@@ -18,8 +18,11 @@
 package ca.uqac.lif.cep.io;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Queue;
+import java.util.Scanner;
 
 /**
  * Source that reads text lines from a Java {@link InputStream}. It is represented
@@ -34,6 +37,21 @@ import java.io.InputStream;
 public class ReadLines extends ReadTokens
 {
 	/**
+	 * The scanner used to read lines from the file.
+	 */
+	protected final Scanner m_scanner;
+	
+	/**
+   * Whether to add a carriage return at the end of each line
+   */
+  protected boolean m_addCrlf = false;
+
+  /**
+   * Whether to trim each text line from leading and trailing spaces
+   */
+  protected boolean m_trim = false;
+	
+	/**
 	 * Creates a new file reader from an input stream
 	 * 
 	 * @param is
@@ -41,7 +59,8 @@ public class ReadLines extends ReadTokens
 	 */
 	public ReadLines(InputStream is)
 	{
-		super(is, CRLF);
+		super(is, null);
+		m_scanner = new Scanner(is);
 	}
 
 	/**
@@ -52,20 +71,26 @@ public class ReadLines extends ReadTokens
 	 */
 	public ReadLines(File f) throws FileNotFoundException
 	{
-		super(f, CRLF);
+		this(new FileInputStream(f));
 	}
 
 	@Override
-	public ReadLines addCrlf(boolean b)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		super.addCrlf(b);
-		return this;
-	}
-
-	@Override
-	public ReadLines trim(boolean b)
-	{
-		super.trim(b);
-		return this;
+		if (m_scanner.hasNextLine())
+		{
+			String line = m_scanner.nextLine();
+			if (m_trim)
+			{
+				line = line.trim();
+			}
+			if (m_addCrlf)
+			{
+				line += ReadTokens.CRLF;
+			}
+			outputs.add(new Object[] {line});
+			return true;
+		}
+		return false;
 	}
 }
