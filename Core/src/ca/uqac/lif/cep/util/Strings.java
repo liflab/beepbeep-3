@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A container object for string functions
+ * A container object for string functions.
  * 
  * @author Sylvain Hallé
  * @since 0.7
@@ -330,12 +330,12 @@ public class Strings
     /**
      * The regular expression to look for
      */
-    protected String m_regex;
+    protected final String m_regex;
 
     /**
      * The pattern object compiled from this regular expression
      */
-    protected transient Pattern m_pattern;
+    protected final transient Pattern m_pattern;
 
     /**
      * Creates a new FindRegex function
@@ -359,5 +359,132 @@ public class Strings
       }
       return set;
     }
+  }
+  
+  /**
+   * Finds the first substring that matches capturing group 1 of a regular
+   * expression. It returns the empty string if no match is found.
+   * @author Sylvain Hallé
+   * @since 0.11.2
+   */
+  public static class FindRegexOnce extends UnaryFunction<String,String>
+  {
+  	/**
+     * The regular expression to look for
+     */
+    protected final String m_regex;
+
+    /**
+     * The pattern object compiled from this regular expression
+     */
+    protected final transient Pattern m_pattern;
+    
+    /**
+     * Creates a new FindRegexOnce function
+     * @param regex The regular expression this function is expected to find
+     */
+    public FindRegexOnce(String regex)
+    {
+      super(String.class, String.class);
+      m_regex = regex;
+      m_pattern = Pattern.compile(regex);
+    }
+
+    @Override
+    public String getValue(String s)
+    {
+      Matcher mat = m_pattern.matcher(s);
+      while (mat.find())
+      {
+        return mat.group(1);
+      }
+      return "";
+    }
+  }
+  
+  /**
+   * Extracts a sub-string out of another string.
+   * @since 0.11.2
+   */
+  public static class Substring extends UnaryFunction<String,String>
+  {
+  	/**
+  	 * The start index of the sub-string.
+  	 */
+  	protected final int m_startIndex;
+  	
+  	/**
+  	 * The end index of the sub-string.
+  	 */
+  	protected final int m_endIndex;
+  	
+  	/**
+  	 * Creates a new instance of the function.
+  	 * @param start The start index of the sub-string
+  	 * @param end The end index of the sub-string
+  	 */
+  	public Substring(int start, int end)
+  	{
+  		super(String.class, String.class);
+  		m_startIndex = start;
+  		m_endIndex = end;
+  	}
+
+		@Override
+		public String getValue(String s)
+		{
+			return s.substring(m_startIndex, m_endIndex);
+		}
+  }
+  
+  /**
+   * Replaces all matches of a regular expression by another regular
+   * expression.
+   * @author Sylvain Hallé
+   * @since 0.11.2
+   */
+  public static class ReplaceAll extends UnaryFunction<String,String>
+  {
+  	/**
+  	 * An array containing all the patterns to match.
+  	 */
+  	protected final String[] m_from;
+  	
+  	/**
+  	 * An array containing all the corresponding replacements.
+  	 */
+  	protected final String[] m_to;
+  	
+  	/**
+  	 * Creates a new instance of the function.
+  	 * @param from An array containing all the patterns to match
+  	 * @param to An array containing all the corresponding replacement patterns
+  	 */
+  	public ReplaceAll(String[] from, String[] to)
+  	{
+  		super(String.class, String.class);
+  		m_from = from;
+  		m_to = to;
+  	}
+  	
+  	/**
+  	 * Creates a new instance of the function.
+  	 * @param from The pattern to match
+  	 * @param to The corresponding replacement pattern
+  	 */
+  	public ReplaceAll(String from, String to)
+  	{
+  		this(new String[] {from}, new String[] {to});
+  	}
+
+		@Override
+		public String getValue(String s)
+		{
+			for (int i = 0; i < Math.min(m_from.length, m_to.length); i++)
+			{
+				s = s.replaceAll(m_from[i], m_to[i]);
+			}
+			return s;
+		}
   }
 }
