@@ -22,6 +22,7 @@ import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -466,6 +467,20 @@ public class Strings
   		m_from = from;
   		m_to = to;
   	}
+  	
+  	/**
+     * Creates a new instance of the function.
+     * @param from An array containing all the patterns to match
+     * @param to An array containing all the corresponding replacement patterns
+     */
+    public ReplaceAll(List<String> from, List<String> to)
+    {
+      super(String.class, String.class);
+      m_from = new String[from.size()];
+      from.toArray(m_from);
+      m_to = new String[to.size()];
+      to.toArray(m_to);
+    }
   	
   	/**
   	 * Creates a new instance of the function.
