@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2024 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -408,7 +408,8 @@ public class UtilTest
 		assertTrue(m1 == m2);
 		assertEquals(2, m1.size());
 		pi.reset();
-		assertEquals(0, m1.size());
+		// A new set has been created, so m1 is unchanged
+		assertEquals(2, m1.size());
 	}
 	
 	@Test
@@ -427,7 +428,8 @@ public class UtilTest
 		assertTrue(m1 == m2);
 		assertEquals(2, m1.size());
 		pi.reset();
-		assertEquals(0, m1.size());
+	// A new set has been created, so m1 is unchanged
+		assertEquals(2, m1.size());
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2024 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -40,16 +40,6 @@ public class ReadLines extends ReadTokens
 	 * The scanner used to read lines from the file.
 	 */
 	protected final Scanner m_scanner;
-	
-	/**
-   * Whether to add a carriage return at the end of each line
-   */
-  protected boolean m_addCrlf = false;
-
-  /**
-   * Whether to trim each text line from leading and trailing spaces
-   */
-  protected boolean m_trim = false;
 	
 	/**
 	 * Creates a new file reader from an input stream

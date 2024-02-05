@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2024 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -53,7 +53,8 @@ public class SetsTest
     assertTrue(m1 == m2);
     assertEquals(2, m1.size());
     pi.reset();
-    assertEquals(0, m1.size());
+    // A new set has been created, so m1 is unchanged
+    assertEquals(2, m1.size());
   }
   
   @Test
@@ -105,10 +106,11 @@ public class SetsTest
     pi.reset();
     p.push("bar");
     Set<?> set2 = (Set<?>) q.remove();
-    assertTrue(set1 == set2); // Both refer to the same collection
+    assertFalse(set1 == set2); // A new set has been created
     assertEquals(1, set2.size());
-    assertTrue(set1.contains("bar"));
-    assertFalse(set1.contains("foo"));
+    assertFalse(set1.contains("bar"));
+    assertTrue(set2.contains("bar"));
+    assertTrue(set1.contains("foo")); // set1 is unchanged
   }
   
   @Test
