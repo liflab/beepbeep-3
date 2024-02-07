@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * A function with memory.
- * 
+ *
  * @author Sylvain Hallé
  * @since 0.1
  */
@@ -32,6 +32,12 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
    * The last value returned by the function
    */
   private T m_lastValue;
+
+  /**
+   * The start value of the function
+   */
+
+  private T m_startValue;
 
   /**
    * The stateless binary function to apply on each call
@@ -44,9 +50,19 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
    */
   public CumulativeFunction(BinaryFunction<T, T, T> function)
   {
+    this(function, function.getStartValue());
+  }
+
+  /**
+   * Instantiates a new cumulative function with a start value
+   * @param function the function to cumulate
+   * @param startValue the start value of the function
+   */
+  public CumulativeFunction(BinaryFunction<T, T, T> function, T startValue) {
     super(function.getInputTypeLeft(), function.getOutputType());
     m_function = function;
-    m_lastValue = m_function.getStartValue();
+    m_startValue = startValue;
+    m_lastValue = startValue;
   }
 
   @Override
@@ -67,7 +83,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
   @Override
   public void reset()
   {
-    m_lastValue = m_function.getStartValue();
+    m_lastValue = this.m_startValue;
   }
 
   @Override
@@ -80,7 +96,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
     }
     return cf;
   }
-  
+
   /**
    * @since 0.10.2
    */
@@ -92,7 +108,7 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
     list.add(m_lastValue);
     return list;
   }
-  
+
   /**
    * @since 0.10.2
    */
@@ -105,14 +121,14 @@ public class CumulativeFunction<T> extends UnaryFunction<T, T>
     cf.m_lastValue = (T) list.get(1);
     return cf;
   }
-  
+
   /**
    * @since 0.11
    * @return The last value
    */
   /*@ pure @*/ public T getLastValue()
   {
-  	return m_lastValue;
+    return m_lastValue;
   }
 
 }
