@@ -25,20 +25,26 @@ dependency in your project.
 <dependency>
   <groupId>io.github.liflab</groupId>
   <artifactId>beepbeep-3</artifactId>
-  <version>0.11.1</version>
+  <version>0.11.2</version>
 </dependency>
 ```
 
 ### Ivy
 
 ```xml
-<dependency org="io.github.liflab" name="beepbeep-3" rev="0.11.1"/>
+<dependency org="io.github.liflab" name="beepbeep-3" rev="0.11.2"/>
 ```
 
 ### Gradle
 
 ```
-compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.11.1'
+compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.11.2'
+```
+
+### Groovy
+
+```
+@Grab(group='io.github.liflab', module='beepbeep-3', version='0.11.2')
 ```
 
 Repository structure
@@ -99,10 +105,10 @@ Compile the sources by simply typing:
 
     ant
 
-This will produce a file called `beepbeep-3.jar` (or another library,
-depending on what you are compiling) in the folder. This file
-is runnable and stand-alone, or can be used as a library, so it can be moved
-around to the location of your choice.
+This will produce a file called `beepbeep-3-xxx.jar` (where `xxx` is
+the version number) in the folder. This file is runnable and stand-alone,
+or can be used as a library, so it can be moved around to the location of your
+choice.
 
 In addition, the script generates in the `doc` folder the Javadoc
 documentation for using BeepBeep. To show documentation in Eclipse,
@@ -114,9 +120,12 @@ BeepBeep can test itself by running:
 
     ant test
 
-Unit tests are run with [jUnit](http://junit.org); a detailed report of
-these tests in HTML format is availble in the folder `tests/junit`, which
-is automatically created. Code coverage is also computed with
+Unit tests are run with [jUnit](http://junit.org). By running:
+
+    ant report
+
+afterwards, a detailed report of these tests in HTML format is availble in the
+folder `tests/junit`. Code coverage is also computed with
 [JaCoCo](http://www.eclemma.org/jacoco/); a detailed report is available
 in the folder `tests/coverage`.
 
