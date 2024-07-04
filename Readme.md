@@ -44,7 +44,7 @@ compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.11.2'
 ### Groovy
 
 ```
-@Grab(group='io.github.liflab', module='beepbeep-3', version='0.11.2')
+@Grab('io.github.liflab:beepbeep-3:0.11.2')
 ```
 
 Repository structure
