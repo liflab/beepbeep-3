@@ -26,14 +26,14 @@
   <antversion property="antversion.running" />
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.10.4"/>
+  <property name="antrun.version" value="1.10.5"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
   
   <!-- Versions of various dependencies -->
-  <property name="versions.jacoco" value="0.8.8"/>
-  <property name="versions.junit" value="1.9.2"/>
+  <property name="versions.jacoco" value="0.8.12"/>
+  <property name="versions.junit" value="1.11.0"/>
   
   <!--
     Default values. Note that Ant's properties cannot be overwritten once
