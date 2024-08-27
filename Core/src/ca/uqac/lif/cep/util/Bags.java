@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2024 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -558,10 +558,10 @@ public class Bags
         }
         return out;
       }
-      if (x instanceof Set)
+      if (x instanceof Collection)
       {
         Set<Object> out = new HashSet<Object>();
-        for (Object o : (Set<?>) x)
+        for (Object o : (Collection<?>) x)
         {
           Object[] in = new Object[1];
           in[0] = o;
