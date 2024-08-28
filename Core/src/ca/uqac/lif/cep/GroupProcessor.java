@@ -500,6 +500,31 @@ public class GroupProcessor extends Processor implements Stateful
 			group.associateOutput(output_number, clone_p, pa.m_ioNumber);
 		}
 	}
+	
+	public Processor in(Processor p)
+	{
+		addProcessor(p);
+		associateInput(p);
+		return p;
+	}
+	
+	public Processor out(Processor p)
+	{
+		addProcessor(p);
+		associateOutput(p);
+		collectProcessors(p);
+		return p;
+	}
+	
+	/**
+	 * Crawls the network of processors and adds to {@link #m_processors} any
+	 * processor that is not already present in the list.
+	 * @param start The starting point of the collection
+	 */
+	protected void collectProcessors(Processor start)
+	{
+		new CollectCrawler().crawl(start);;
+	}
 
 	/**
 	 * Creates a copy of a processor.
@@ -596,6 +621,21 @@ public class GroupProcessor extends Processor implements Stateful
 						Connector.connect(m_tracker, new_p, i, new_target, j);
 					}
 				}
+			}
+		}
+	}
+	
+	/**
+	 * A crawler that adds to the group any processor it encounters.
+	 */
+	protected class CollectCrawler extends PipeCrawler
+	{
+		@Override
+		public void visit(Processor p)
+		{
+			if (!m_processors.contains(p))
+			{
+				m_processors.add(p);
 			}
 		}
 	}
