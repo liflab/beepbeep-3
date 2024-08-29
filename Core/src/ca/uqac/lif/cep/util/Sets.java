@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2024 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -101,7 +101,7 @@ public class Sets
   }
 
   /**
-   * Updates a set.
+   * Updates a set by putting the elements it receives into the set.
    * @since 0.7
    */
   public static class PutInto extends SetUpdateProcessor
@@ -179,7 +179,7 @@ public class Sets
 		}
 
 		@Override
-		public Processor duplicate(boolean with_state)
+		public Intersect duplicate(boolean with_state)
 		{
 			Intersect inter = new Intersect();
 			if (with_state)
@@ -195,6 +195,49 @@ public class Sets
 		public String toString()
 		{
 			return "Intersect";
+		}
+  }
+  
+  /**
+   * Calculates the successive union of a stream of sets.
+   * @since 0.11.3
+   */
+  public static class Union extends SetUpdateProcessor
+  {
+  	/**
+     * Create a new instance of the processor
+     */
+  	public Union()
+  	{
+  		super();
+  	}
+
+		@Override
+		protected boolean compute(Object[] inputs, Object[] outputs)
+		{
+			m_set.addAll((Collection<?>) inputs[0]);
+			outputs[0] = m_set;
+			m_inputCount++;
+			return true;
+		}
+
+		@Override
+		public Union duplicate(boolean with_state)
+		{
+			Union inter = new Union();
+			if (with_state)
+			{
+				inter.m_inputCount = m_inputCount;
+				inter.m_outputCount = m_outputCount;
+				inter.m_set.addAll(m_set);
+			}
+			return inter;
+		}
+  	
+		@Override
+		public String toString()
+		{
+			return "Union";
 		}
   }
 

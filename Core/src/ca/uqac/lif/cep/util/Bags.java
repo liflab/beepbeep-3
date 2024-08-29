@@ -590,7 +590,8 @@ public class Bags
   }
 
   /**
-   * Computes the Cartesian product of two collections.
+   * Computes the Cartesian product of two collections, returning pairs as
+   * arrays.
    * 
    * @author Sylvain Hallé
    */
