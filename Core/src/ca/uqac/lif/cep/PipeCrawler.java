@@ -42,7 +42,7 @@ public abstract class PipeCrawler
   /**
    * Crawls a graph from some starting point
    * 
-   * @param start The processor to start fromS
+   * @param start The processor to start from
    */
   public void crawl(Processor start)
   {

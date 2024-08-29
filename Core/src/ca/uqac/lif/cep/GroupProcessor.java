@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2024 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -501,6 +501,31 @@ public class GroupProcessor extends Processor implements Stateful
 		}
 	}
 	
+	/**
+	 * Sets a processor as the input 0 of the group. This method is similar to
+	 * {@link #associateInput(Processor)}, except that it also automatically adds
+	 * the argument to the group (something that the other method does not do).
+	 * <p>
+	 * This method has little interest when using BeepBeep from Java. However,
+	 * in Groovy, it makes it possible to create a pipeline in a group by
+	 * sparing the user from calling
+	 * {@link #addProcessor(Processor) addProcessor()} and
+	 * {@link #associateInput(Processor) associateInput()} separately. For
+	 * instance, one could write (assuming that P1, P2 and P3 are processor
+	 * instances):
+	 * <pre>
+	 * g = new GroupProcessor() {{
+	 *   in(P1) | P2 | out(P3)
+	 * }}
+	 * </pre>
+	 * The single line creates the pipeline, associates P1 as the input of the
+	 * group, P3 as its output, and automatically adds P1, P2 and P3 to the
+	 * group (that later task is taken care of by {@link #out(Processor)}.
+	 * 
+	 * @param p The processor to set as the input of the group
+	 * @return That processor
+	 * @since 0.11.3
+	 */
 	public Processor in(Processor p)
 	{
 		addProcessor(p);
@@ -508,6 +533,30 @@ public class GroupProcessor extends Processor implements Stateful
 		return p;
 	}
 	
+	/**
+	 * Sets a processor as the output 0 of the group, and crawls the pipeline
+	 * backwards from that processor to add all other processors encountered
+	 * along the way.
+	 * <p>
+	 * This method has little interest when using BeepBeep from Java. However,
+	 * in Groovy, it makes it possible to create a pipeline in a group by
+	 * sparing the user from calling
+	 * {@link #addProcessor(Processor) addProcessor()} and
+	 * {@link #associateInput(Processor) associateOutput()} separately. For
+	 * instance, one could write (assuming that P1, P2 and P3 are processor
+	 * instances):
+	 * <pre>
+	 * g = new GroupProcessor() {{
+	 *   in(P1) | P2 | out(P3)
+	 * }}
+	 * </pre>
+	 * The single line creates the pipeline, associates P1 as the input of the
+	 * group, P3 as its output, and automatically adds P1, P2 and P3 to the
+	 * group.
+	 * @param p The processor to set as the output of the group
+	 * @return That processor
+	 * @since 0.11.3
+	 */
 	public Processor out(Processor p)
 	{
 		addProcessor(p);
