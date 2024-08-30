@@ -429,7 +429,7 @@ public class Maps
 	 * @since 0.11.3
 	 */
 	@SuppressWarnings("rawtypes")
-	public class FilterMap extends UnaryFunction<Map,Map>
+	public static class FilterMap extends UnaryFunction<Map,Map>
 	{
 		/**
 		 * The function that is called to determine if a key-value pair should be
