@@ -42,7 +42,7 @@ public class Equals extends BinaryFunction<Object, Object, Boolean>
   	return new FunctionTree(instance, f1, f2);
   }
 
-  private Equals()
+  protected Equals()
   {
     super(Object.class, Object.class, Boolean.class);
   }
