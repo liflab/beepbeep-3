@@ -313,8 +313,8 @@ public class GroupProcessor extends Processor implements Stateful
 	}
 
 	/**
-	 * Declares that the first (i.e. 0-th) output of the group is linked to the
-	 * first (i.e. 0-th) output of processor {@code p}.
+	 * Declares that the first (i.e.<!-- --> 0-th) output of the group is linked
+	 * to the first (i.e. 0-th) output of processor {@code p}.
 	 * @param p The processor to connect to
 	 * @return A reference to the current group processor
 	 */
