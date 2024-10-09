@@ -990,6 +990,24 @@ Contextualizable, Printable, Readable
 		Connector.connect(this, p);
 		return p;
 	}
+	
+	/**
+	 * Operates similar to {@link #or(Processor)}, but also calls a method
+	 * after the connection has been established. Currently there is a single use
+	 * for this method, which is when {@link GroupProcessor#or(Processor)} is
+	 * called &mdash;which, again, typically only occurs in the context of a
+	 * Groovy script.
+	 * @param c The object that contains the method to call
+	 * @return The processor encapsulated in {@code c}
+	 * @since 0.11.4
+	 */
+	public Processor or(CallAfterConnect c)
+	{
+		Processor p = c.getProcessor();
+		Connector.connect(this, p);
+		c.call();
+		return p;
+	}
 
 	/**
 	 * Connects the output at index 0 of the current processor to the input

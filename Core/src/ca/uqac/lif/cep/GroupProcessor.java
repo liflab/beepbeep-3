@@ -553,16 +553,31 @@ public class GroupProcessor extends Processor implements Stateful
 	 * The single line creates the pipeline, associates P1 as the input of the
 	 * group, P3 as its output, and automatically adds P1, P2 and P3 to the
 	 * group.
+	 * <p>
+	 * The reason why this method returns a {@link CallAfterConnect} object,
+	 * instead of just a processor, comes from the fact that in the context of a
+	 * Groovy script, method {@code out} is called <em>before</em> the processor
+	 * is connected upstream to the rest of the chain (hence in the previous
+	 * example, before P3 is connected to P2). Therefore, trying to
+	 * harvest other processors in the group by working up the chain from
+	 * {@code p}, in the context of this method, would not return anything.
+	 * <p>
+	 * The workaround is therefore to pass this object, which will allow the
+	 * processor to be connected, and then for upstream processors to be
+	 * harvested by {@link #collectProcessors(Processor)} through the call to
+	 * {@link CallAfterConnect#call()}.
+	 * 
 	 * @param p The processor to set as the output of the group
-	 * @return That processor
+	 * @return A {@link CallAfterConnect} object, which allows the underlying
+	 * processor to be connected, and <em>then</em> for upstream processors to be
+	 * harvested by {@link #collectProcessors(Processor)}.
 	 * @since 0.11.3
 	 */
-	public Processor out(Processor p)
+	public CallAfterConnect out(Processor p)
 	{
 		addProcessor(p);
 		associateOutput(p);
-		collectProcessors(p);
-		return p;
+		return new OutputCallAfterConnect(p);
 	}
 	
 	/**
@@ -1201,5 +1216,44 @@ public class GroupProcessor extends Processor implements Stateful
 			group_state.add(new InternalProcessorState(p));
 		}
 		return group_state;
+	}
+	
+	/**
+	 * A {@link CallAfterConnect} object that can be used to connect the
+	 * underlying processor of a {@link GroupProcessor}, and then to collect all
+	 * processors that are part of the group. Currently the only use of this
+	 * class is to be returned by the {@link #out(Processor)} method. (And in
+	 * turn, the only real use of this method is in Groovy scripts to save
+	 * a few keystrokes when creating a group.)
+	 * @since 0.11.4
+	 */
+	protected class OutputCallAfterConnect implements CallAfterConnect
+	{
+		/**
+		 * The processor to be connected.
+		 */
+		private final Processor m_processor;
+		
+		/**
+		 * Creates a new {@link OutputCallAfterConnect} object.
+		 * @param p The processor to be connected
+		 */
+		public OutputCallAfterConnect(Processor p)
+		{
+			super();
+			m_processor = p;
+		}
+
+		@Override
+		public Processor getProcessor()
+		{
+			return m_processor;
+		}
+
+		@Override
+		public void call()
+		{
+			collectProcessors(m_processor);
+		}
 	}
 }
