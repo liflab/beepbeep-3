@@ -351,6 +351,32 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
     	as.m_sliceIndices.put(e.getKey(), list);
     }
   }
+  
+  @Override
+  protected boolean onEndOfTrace(Queue<Object[]> outputs) throws ProcessorException
+	{
+  	boolean new_events = false;
+		// Send the message to all slices
+		for (Map.Entry<Object, Processor> e : m_slices.entrySet())
+		{
+			Processor p = e.getValue();
+			Pushable pp = p.getPushableInput(0);
+			QueueSink sink = m_sinks.get(e.getKey());
+			int size_before = sink.getQueue().size();
+			pp.notifyEndOfTrace();
+			int size_after = sink.getQueue().size();
+			if (size_after > size_before)
+			{
+				new_events = true;
+				handleNewSliceValue(e.getKey(), sink.getQueue().peek(), outputs);
+			}
+		}
+		if (new_events)
+		{
+			return produceReturn(outputs);
+		}
+		return false;
+	}
 
   /**
    * Dummy object telling the slicer that an event must be sent to all slices
