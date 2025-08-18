@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.functions;
 
+import ca.uqac.lif.cep.Duplicable;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
@@ -39,7 +40,7 @@ public class Integrate extends UniformProcessor
 	 * The start value of the internal object. It is retained in case the
 	 * processor needs to be duplicated.
 	 */
-	/*@ non_null @*/ protected final Object m_start;
+	/*@ non_null @*/ protected final Duplicable m_start;
 	
 	/**
 	 * The current value of the internal object. This object is replaced by a
@@ -52,7 +53,7 @@ public class Integrate extends UniformProcessor
 	 * Creates a new instance of the integrate processor.
 	 * @param start The start value of the internal object
 	 */
-	public Integrate(Object start)
+	public Integrate(Duplicable start)
 	{
 		super(1, 1);
 		m_start = start;
@@ -72,7 +73,7 @@ public class Integrate extends UniformProcessor
 	@Override
 	public Integrate duplicate(boolean with_state)
 	{
-		Integrate in = new Integrate(m_start);
+		Integrate in = new Integrate((Duplicable) m_start.duplicate(with_state));
 		if (with_state)
 		{
 			in.m_current = m_current;
