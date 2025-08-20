@@ -543,7 +543,11 @@
 
   <!-- Generate Eclipse .classpath from config.xml -->
   <target name="gen-classpath" depends="init">
+<<<<<<< HEAD
     <xslt in="config.xml" out="${eclipse.classpath}" style="${xslt.dir}/classpath.xsl">
+=======
+    <xslt in="config.xml" out="${eclipse.classpath}" style="classpath.xsl">
+>>>>>>> de2461ac (Modification to build script)
       <!-- You can pass parameters if needed -->
     </xslt>
     <echo>.classpath generated</echo>
@@ -551,7 +555,11 @@
 
   <!-- Generate Eclipse .project from config.xml -->
   <target name="gen-project" depends="init">
+<<<<<<< HEAD
     <xslt in="config.xml" out="${eclipse.project}" style="${xslt.dir}/project.xsl"/>
+=======
+    <xslt in="config.xml" out="${eclipse.project}" style="project.xsl"/>
+>>>>>>> de2461ac (Modification to build script)
     <echo>.project generated</echo>
   </target>
 
