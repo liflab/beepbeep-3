@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
     AntRun, a general-purpose Ant build script
-    Copyright (C) 2015-2023  Sylvain Hallé
+    Copyright (C) 2015-2025  Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
   <antversion property="antversion.running" />
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.10.5"/>
+  <property name="antrun.version" value="1.11"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -109,6 +109,11 @@
   
   <!-- The filename pattern to recognize test binary files -->
   <property name="build.test.filenamepattern.bin" value="**/*Test.class"/>
+  
+  <!-- The location of XSLT files (only required by the eclipse target) -->
+  <property name="xslt.dir" value="lib/xslt"/>
+  <property name="eclipse.project" value=".project"/>
+  <property name="eclipse.classpath" value=".classpath"/>
   
   <!-- Target: initialization
        All other targets should ultimately
@@ -535,6 +540,31 @@
       <mapper type="flatten"/>
     </unzip>
   </target>
+
+  <!-- Generate Eclipse .classpath from config.xml -->
+  <target name="gen-classpath" depends="init">
+    <xslt in="config.xml" out="${eclipse.classpath}" style="${xslt.dir}/classpath.xsl">
+      <!-- You can pass parameters if needed -->
+    </xslt>
+    <echo>.classpath generated</echo>
+  </target>
+
+  <!-- Generate Eclipse .project from config.xml -->
+  <target name="gen-project" depends="init">
+    <xslt in="config.xml" out="${eclipse.project}" style="${xslt.dir}/project.xsl"/>
+    <echo>.project generated</echo>
+  </target>
+
+  <!-- Remove generated Eclipse metadata -->
+  <target name="clean-eclipse">
+    <delete file="${eclipse.project}"/>
+    <delete file="${eclipse.classpath}"/>
+  </target>
+
+  <!-- Target: eclipse
+       Generates boilerplate .classpath and .project files to import in Eclipse
+  -->
+  <target name="eclipse" depends="gen-classpath,gen-project"/>
   
   <!-- Task: check-deps
        Loops through all dependencies specified in config.xml; checks if
