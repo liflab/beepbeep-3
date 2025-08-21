@@ -42,15 +42,15 @@
   <targetjdk>8</targetjdk>
   
   <!-- Installation folders -->
-  <srcdir>Core/src</srcdir>
-  <bindir>Core/bin</bindir>
+  <srcdir>src</srcdir>
+  <bindir>bin</bindir>
   <libdir>lib</libdir>
   <docdir>doc</docdir>
-  <depdir>Core/dep</depdir>
+  <depdir>dep</depdir>
   <test>
-    <srcdir>CoreTest/src</srcdir>
-    <bindir>CoreTest/bin</bindir>
-    <depdir>CoreTest/dep</depdir>
+    <srcdir>srctest</srcdir>
+    <bindir>bin</bindir>
+    <depdir>dep</depdir>
   </test>
   
   <!-- Output jar -->
@@ -70,7 +70,7 @@
       <name>Petit Poucet</name>
       <classname>ca.uqac.lif.petitpoucet.ProvenanceNode</classname>
       <files>
-        <zip>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.zip</zip>
+        <jar>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>

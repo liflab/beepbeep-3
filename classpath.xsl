@@ -19,7 +19,7 @@
     <xsl:when test="/build/depdir">
       <xsl:value-of select="/build/depdir/text()"/>
     </xsl:when>
-    <xsl:otherwise>Source/Core/dep</xsl:otherwise>
+    <xsl:otherwise>Source/dep</xsl:otherwise>
   </xsl:choose>
   </xsl:param>
   
@@ -29,7 +29,17 @@
     <xsl:when test="/build/srcdir">
       <xsl:value-of select="/build/srcdir/text()"/>
     </xsl:when>
-    <xsl:otherwise>Source/Core/src</xsl:otherwise>
+    <xsl:otherwise>Source/src</xsl:otherwise>
+  </xsl:choose>
+  </xsl:param>
+  
+  <!-- Discover testdir -->
+  <xsl:param name="testdir">
+  <xsl:choose>
+    <xsl:when test="/build/test/srcdir">
+      <xsl:value-of select="/build/test/srcdir/text()"/>
+    </xsl:when>
+    <xsl:otherwise>Source/srctest</xsl:otherwise>
   </xsl:choose>
   </xsl:param>
 
@@ -64,11 +74,12 @@
 
   <xsl:template match="/build">
     <classpath>
-
-      <!-- Project-to-project deps -->
-      <xsl:for-each select="dependencies/project">
-        <classpathentry kind="src" path="/{normalize-space(.)}"/>
-      </xsl:for-each>
+      
+      <!-- Source folders -->
+      <classpathentry kind="src" path="{$srcdir}"/>
+      <xsl:if test="srcdir != testdir">
+        <classpathentry kind="src" path="{$testdir}"/>
+      </xsl:if>
 
       <!-- External JARs (URL -> depdir/basename.jar) -->
       <xsl:for-each select="dependencies/dependency[bundle='true']/files/jar">
@@ -84,19 +95,6 @@
         </xsl:variable>
         <classpathentry kind="lib" path="{$depdir}/{$file}" exported="true"/>
       </xsl:for-each>
-      <xsl:for-each select="dependencies/dependency[bundle='false']/files/jar">
-        <xsl:variable name="clean">
-          <xsl:call-template name="strip-query">
-            <xsl:with-param name="s" select="text()"/>
-          </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="file">
-          <xsl:call-template name="basename">
-            <xsl:with-param name="path" select="$clean"/>
-          </xsl:call-template>
-        </xsl:variable>
-        <classpathentry kind="lib" path="{$depdir}/{$file}"/>
-      </xsl:for-each>
       <xsl:for-each select="dependencies/dependency[bundle='true']/files/zip">
         <xsl:variable name="clean">
           <xsl:call-template name="strip-query">
@@ -110,19 +108,6 @@
         </xsl:variable>
         <classpathentry kind="lib" path="{$depdir}/{$file}" exported="true"/>
       </xsl:for-each>
-      <xsl:for-each select="dependencies/dependency[bundle='false']/files/zip">
-        <xsl:variable name="clean">
-          <xsl:call-template name="strip-query">
-            <xsl:with-param name="s" select="text()"/>
-          </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="file">
-          <xsl:call-template name="basename">
-            <xsl:with-param name="path" select="concat(substring($clean, 1, string-length($clean) - 4), '.jar')"/>
-          </xsl:call-template>
-        </xsl:variable>
-        <classpathentry kind="lib" path="{$depdir}/{$file}"/>
-      </xsl:for-each>
 
       <!-- Project dependencies: reference sibling projects by /Name -->
       <xsl:for-each select="dependencies/project">
@@ -132,15 +117,16 @@
           </xsl:attribute>
         </classpathentry>
       </xsl:for-each>
+      
+      <!-- JUnit 4 -->
+      <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 
       <!-- JRE container -->
-      <classpathentry kind="con">
-        <xsl:attribute name="path">
-          <xsl:call-template name="jre-container">
-            <xsl:with-param name="jdk" select="normalize-space(targetjdk)"/>
-          </xsl:call-template>
-        </xsl:attribute>
-      </classpathentry>
+      <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	  </classpathentry>
 
       <!-- Output -->
       <classpathentry kind="output">
