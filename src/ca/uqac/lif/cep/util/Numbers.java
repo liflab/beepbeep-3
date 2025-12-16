@@ -757,7 +757,7 @@ public class Numbers
     @Override
     public Number getValue(Number x, Number y)
     {
-      return x.floatValue() % y.floatValue();
+      return x.intValue() % y.intValue();
     }
     
     @Override
