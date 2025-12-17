@@ -39,7 +39,7 @@
   <mainclass>ca.uqac.lif.cep.Main</mainclass>
   
   <!-- The target JDK -->
-  <targetjdk>8</targetjdk>
+  <targetjdk>11</targetjdk>
   
   <!-- Installation folders -->
   <srcdir>src</srcdir>
