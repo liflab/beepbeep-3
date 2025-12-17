@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -73,17 +73,6 @@ public class ConnectorTest
       got_exception = true;
     }
     assertTrue(got_exception);
-  }
-
-  @Test
-  public void testConnectWithTracker() 
-  {
-    Apples a1 = new Apples();
-    Apples a2 = new Apples();
-    ProvenanceTest.DummyTracker tracker = new ProvenanceTest.DummyTracker();
-    Connector.connect(tracker, a1, a2);
-    assertTrue(tracker.containsConnection(a1.getId(), 0, a2.getId(), 0));
-    assertFalse(tracker.containsConnection(a2.getId(), 0, a1.getId(), 0));
   }
 
   @Test

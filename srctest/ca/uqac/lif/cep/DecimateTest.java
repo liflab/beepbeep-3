@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -23,7 +23,6 @@ import ca.uqac.lif.cep.tmf.TimeDecimate;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.ProcessorTest.Sum;
-import ca.uqac.lif.cep.ProvenanceTest.DummyTracker;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -131,20 +130,5 @@ public class DecimateTest
 		{
 			fail("Expected 5 on push " + op_num + ", got " + recv);
 		}
-	}
-	
-	@Test
-	public void testDecimateTracker()
-	{
-		QueueSource qs = new QueueSource().setEvents(0, 1, 2, 3, 4);
-		CountDecimate cd = new CountDecimate(2);
-		Connector.connect(qs, cd);
-		DummyTracker dt = new DummyTracker();
-		dt.setTo(qs, cd);
-		Pullable p = cd.getPullableOutput();
-		p.pull();
-		assertTrue(dt.containsInputAssociation(cd.getId(), 0, 0, 0, 0));
-		p.pull();
-		assertTrue(dt.containsInputAssociation(cd.getId(), 0, 2, 0, 1));
 	}
 }

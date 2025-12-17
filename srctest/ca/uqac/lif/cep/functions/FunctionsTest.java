@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -27,7 +27,6 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.ProvenanceTest.DummyTracker;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Pushable.PushableException;
 import ca.uqac.lif.cep.util.Booleans;
@@ -250,21 +249,6 @@ public class FunctionsTest
 		assertEquals("null", ct2.toString());
 	}
 	
-	@Test
-	public void testProvenance() 
-	{
-		IdentityFunction id = new IdentityFunction(1);
-		ApplyFunction fp = new ApplyFunction(id);
-		DummyTracker tracker = new DummyTracker();
-		fp.setEventTracker(tracker);
-		Connector.connect(fp, new BlackHole());
-		Pushable p = fp.getPushableInput();
-		p.push(6);
-		tracker.containsInputAssociation(fp.getId(), 0, 0, 0, 0);
-		p.push(7);
-		tracker.containsInputAssociation(fp.getId(), 1, 1, 1, 1);
-	}
-	
 	@Test(expected=PushableException.class)
 	public void testFunctionProcessorException() 
 	{
@@ -295,22 +279,6 @@ public class FunctionsTest
 		assertEquals(false, (Boolean) evaluate(Equals.instance, s1, 0));
 		s1.add(2);
 		assertEquals(false, (Boolean) evaluate(Equals.instance, s1, s2));
-	}
-	
-	@Test
-	public void testCumulative1() 
-	{
-		Cumulate sum = new Cumulate(new CumulativeFunction<Number>(Numbers.multiplication));
-		DummyTracker tracker = new DummyTracker();
-		sum.setEventTracker(tracker);
-		Connector.connect(sum, new BlackHole());
-		Pushable p = sum.getPushableInput();
-		int stream_index = 0;
-		p.push(2);
-		assertTrue(tracker.containsInputAssociation(sum.getId(), stream_index, 0, stream_index, 0));
-		p.push(3);
-		assertTrue(tracker.containsInputAssociation(sum.getId(), stream_index, 1, stream_index, 1));
-		assertTrue(tracker.containsOutputAssociation(sum.getId(), stream_index, 0, stream_index, 1));
 	}
 	
 	@Test

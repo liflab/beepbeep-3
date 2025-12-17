@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 
 /**
  * Symbol standing for the <i>i</i>-th trace given as input. A `StreamVariable`
@@ -103,13 +102,9 @@ public class StreamVariable extends Variable
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     outputs[0] = inputs[m_index];
-    if (tracker != null)
-    {
-      tracker.associateToInput(-1, m_index, 0, 0, 0);
-    }
   }
   
   @Override

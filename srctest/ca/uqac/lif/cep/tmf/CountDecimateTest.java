@@ -126,7 +126,7 @@ public class CountDecimateTest
     CountDecimate proc2 = (CountDecimate) o;
     assertEquals(4, proc2.getInterval());
     assertEquals(2, proc2.getInputCount());
-    assertEquals(1, proc2.getOutputCount());
+    assertEquals(0, proc2.getOutputCount());
     QueueSink sink2 = new QueueSink();
     Connector.connect(proc2, sink2);
     Pushable p2 = proc2.getPushableInput();

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -128,6 +128,8 @@ public class CountDecimate extends Decimate implements Stateful
     Map<String,Object> map = new HashMap<String,Object>();
     map.put("interval", m_interval);
     map.put("current", m_current);
+    map.put("incount", m_inputCount);
+    map.put("outcount", m_outputCount);
     map.put("process-last", m_shouldProcessLastInputs);
     return map;
   }
@@ -143,6 +145,8 @@ public class CountDecimate extends Decimate implements Stateful
     CountDecimate cd = new CountDecimate(((Number) map.get("interval")).intValue(), 
         (Boolean) map.get("process-last"));
     cd.m_current = ((Number) map.get("current")).intValue();
+    cd.m_inputCount = ((Number) map.get("incount")).intValue();
+    cd.m_outputCount = ((Number) map.get("outcount")).intValue();
     return cd;
   }
   

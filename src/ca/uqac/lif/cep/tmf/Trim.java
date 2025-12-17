@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -62,13 +62,6 @@ public class Trim extends SynchronousProcessor implements Stateful
     if (m_inputCount >= getDelay())
     {
       outputs.add(inputs);
-      if (m_eventTracker != null)
-      {
-        for (int i = 0; i < inputs.length; i++)
-        {
-          m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
-        }
-      }
       m_outputCount++;
     }
     m_inputCount++;

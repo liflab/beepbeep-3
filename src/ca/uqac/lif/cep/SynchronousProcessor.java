@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -577,12 +577,5 @@ public abstract class SynchronousProcessor extends Processor
 		{
 			// Do nothing
 		}
-	}
-
-	@Override
-	public final SynchronousProcessor setEventTracker(EventTracker tracker)
-	{
-		super.setEventTracker(tracker);
-		return this;
 	}
 }

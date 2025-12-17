@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2024 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
@@ -115,24 +114,6 @@ public class Booleans
     }
 
     @Override
-    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
-    {
-      if (!x)
-      {
-        tracker.associateToOutput(-1, 0, 0, 0, 0);
-      }
-      else if (!y)
-      {
-        tracker.associateToOutput(-1, 1, 0, 0, 0);
-      }
-      else
-      {
-        tracker.associateToOutput(-1, 0, 0, 0, 0);
-        tracker.associateToOutput(-1, 1, 0, 0, 0);
-      }
-    }
-
-    @Override
     public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
     {
       if (inputs[0] != null && ((Boolean) inputs[0]) == false)
@@ -202,24 +183,6 @@ public class Booleans
     }
 
     @Override
-    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
-    {
-      if (!x)
-      {
-        tracker.associateToOutput(-1, 0, 0, 0, 0);
-      }
-      else if (y)
-      {
-        tracker.associateToOutput(-1, 1, 0, 0, 0);
-      }
-      else
-      {
-        tracker.associateToOutput(-1, 0, 0, 0, 0);
-        tracker.associateToOutput(-1, 1, 0, 0, 0);
-      }
-    }
-
-    @Override
     public String toString()
     {
       return "→";
@@ -250,24 +213,6 @@ public class Booleans
     public Boolean getStartValue()
     {
       return Boolean.FALSE;
-    }
-
-    @Override
-    protected void trackAssociations(Boolean x, Boolean y, Boolean z, EventTracker tracker)
-    {
-      if (x)
-      {
-        tracker.associateToOutput(-1, 0, 0, 0, 0);
-      }
-      else if (y)
-      {
-        tracker.associateToOutput(-1, 1, 0, 0, 0);
-      }
-      else
-      {
-        tracker.associateToOutput(-1, 0, 0, 0, 0);
-        tracker.associateToOutput(-1, 1, 0, 0, 0);
-      }
     }
 
     @Override

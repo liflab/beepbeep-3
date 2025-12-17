@@ -84,7 +84,7 @@ public class Maps
 			return col;
 		}
 	}
-	
+
 	/**
 	 * Gets the set of keys in a map.
 	 * @since 0.11.3
@@ -188,7 +188,6 @@ public class Maps
 			this(key, null);
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public Object getValue(Map x)
 		{

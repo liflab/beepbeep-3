@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2021 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,14 +17,9 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import ca.uqac.lif.cep.EventTracker;
-import ca.uqac.lif.cep.GroupProcessor;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.UniformProcessor;
-import ca.uqac.lif.petitpoucet.NodeFunction;
-import ca.uqac.lif.petitpoucet.ProvenanceNode;
 import java.util.Set;
 
 /**
@@ -48,12 +43,6 @@ public class ApplyFunction extends UniformProcessor implements Stateful
   protected Function m_function;
 
   /**
-   * A shift tracker
-   * @since 0.10.3
-   */
-  protected ShiftTracker m_shiftTracker;
-
-  /**
    * Instantiates a new function processor
    * 
    * @param comp
@@ -63,7 +52,6 @@ public class ApplyFunction extends UniformProcessor implements Stateful
   {
     super(comp.getInputArity(), comp.getOutputArity());
     m_function = comp;
-    m_shiftTracker = new ShiftTracker();
   }
 
   @Override
@@ -78,7 +66,7 @@ public class ApplyFunction extends UniformProcessor implements Stateful
   {
     try
     {
-      m_function.evaluate(inputs, outputs, m_context, m_shiftTracker);
+      m_function.evaluate(inputs, outputs, m_context);
       m_inputCount++;
       m_outputCount++;
     }
@@ -150,77 +138,6 @@ public class ApplyFunction extends UniformProcessor implements Stateful
   {
     Function f = (Function) o;
     return new ApplyFunction(f);
-  }
-
-  /**
-   * Simple tracker proxy that records associations from the underlying function,
-   * and shifts its input/output by the current position in the input/output stream
-   * @since 0.10.3
-   */
-  protected class ShiftTracker implements EventTracker
-  {
-    @Override
-    public void associateTo(int id, NodeFunction f, int out_stream_index, int out_stream_pos)
-    {
-      if (m_eventTracker != null)
-      {
-        m_eventTracker.associateTo(getId(), f, out_stream_index, m_outputCount);
-      }
-    }
-
-    @Override
-    public void associateToInput(int id, int in_stream_index, int in_stream_pos,
-        int out_stream_index, int out_stream_pos)
-    {
-      if (m_eventTracker != null)
-      {
-        m_eventTracker.associateToInput(getId(), in_stream_index, m_inputCount,
-            out_stream_index, m_outputCount);
-      }
-    }
-
-    @Override
-    public void associateToOutput(int id, int in_stream_index, int in_stream_pos,
-        int out_stream_index, int out_stream_pos)
-    {
-    	if (m_eventTracker != null)
-      {
-        m_eventTracker.associateToOutput(getId(), in_stream_index, m_inputCount,
-            out_stream_index, m_outputCount);
-      }
-    }
-
-    @Override
-    public ProvenanceNode getProvenanceTree(int proc_id, int stream_index, int stream_pos)
-    {
-      throw new Error("ShiftTracker.getProvenanceTree should not be called");
-    }
-
-    @Override
-    public void setConnection(int output_proc_id, int output_stream_index, int input_proc_id,
-        int input_stream_index)
-    {
-      // Do nothing
-    }
-
-    @Override
-    public void setTo(Processor ... processors)
-    {
-      // Do nothing
-    }
-
-    @Override
-    public EventTracker getCopy(boolean with_state)
-    {
-      return new ShiftTracker();
-    }
-
-		@Override
-		public void add(GroupProcessor g)
-		{
-			// TODO Auto-generated method stub
-			
-		}
   }
 
 	@Override

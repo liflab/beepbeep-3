@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.util;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
@@ -378,16 +377,12 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context)
     {
       Object[] out = new Object[inputs.length];
       for (int i = 0; i < inputs.length; i++)
       {
         out[i] = inputs[i];
-        if (tracker != null)
-        {
-          tracker.associateToOutput(-1, i, 0, 0, 0);
-        }
       }
       outputs[0] = out;
     }
@@ -417,16 +412,12 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context)
     {
       List<Object> out = new ArrayList<Object>(inputs.length);
       for (int i = 0; i < inputs.length; i++)
       {
         out.add(inputs[i]);
-        if (tracker != null)
-        {
-          tracker.associateToOutput(-1, i, 0, 0, 0);
-        }
       }
       outputs[0] = out;
     }
@@ -460,16 +451,12 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context)
     {
       Set<Object> out = new HashSet<Object>(inputs.length);
       for (int i = 0; i < inputs.length; i++)
       {
         out.add(inputs[i]);
-        if (tracker != null)
-        {
-          tracker.associateToOutput(-1, i, 0, 0, 0);
-        }
       }
       outputs[0] = out;
     }
@@ -668,16 +655,12 @@ public class Bags
     }
 
     @Override
-    public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+    public void evaluate(Object[] inputs, Object[] outputs, Context context)
     {
       Object[] ins = (Object[]) inputs[0];
       for (int i = 0; i < ins.length; i++)
       {
         outputs[i] = ins[i];
-        if (tracker != null)
-        {
-          tracker.associateToOutput(-1, 0, 0, i, 0);
-        }
       }
     }
 

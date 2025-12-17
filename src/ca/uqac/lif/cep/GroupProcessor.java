@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2024 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -82,11 +82,6 @@ public class GroupProcessor extends Processor implements Stateful
 	private HashMap<Integer, ProcessorAssociation> m_outputPushableAssociations;
 
 	/**
-	 * An inner event tracker for the group
-	 */
-	protected EventTracker m_innerTracker;
-
-	/**
 	 * Creates a group processor.
 	 * 
 	 * @param in_arity
@@ -103,7 +98,6 @@ public class GroupProcessor extends Processor implements Stateful
 		m_outputPullables = new ArrayList<Pullable>();
 		m_inputPullableAssociations = new HashMap<Integer, ProcessorAssociation>();
 		m_outputPushableAssociations = new HashMap<Integer, ProcessorAssociation>();
-		m_innerTracker = null;
 	}
 
 	/**
@@ -126,16 +120,6 @@ public class GroupProcessor extends Processor implements Stateful
 	{
 		m_notifySources = b;
 		return this;
-	}
-
-	/**
-	 * Gets the tracker instance for the processors contained in this group.
-	 * @return The tracker instance, or {@code null} if no inner tracker is set.
-	 * @since 0.11
-	 */
-	/*@ pure null @*/ public EventTracker getInnerTracker()
-	{
-		return m_innerTracker;
 	}
 
 	public void putAt(int index, SelectedInputPipe p)
@@ -228,10 +212,6 @@ public class GroupProcessor extends Processor implements Stateful
 	public GroupProcessor addProcessor(Processor p)
 	{
 		m_processors.add(p);
-		if (m_innerTracker != null)
-		{
-			p.setEventTracker(m_innerTracker);
-		}
 		if (p instanceof Source)
 		{
 			m_sources.add((Source) p);
@@ -251,10 +231,6 @@ public class GroupProcessor extends Processor implements Stateful
 		for (Processor p : procs)
 		{
 			m_processors.add(p);
-			if (m_innerTracker != null)
-			{
-				p.setEventTracker(m_innerTracker);
-			}
 			if (p instanceof Source)
 			{
 				m_sources.add((Source) p);
@@ -439,18 +415,8 @@ public class GroupProcessor extends Processor implements Stateful
 	public Map<Integer, Processor> cloneInto(GroupProcessor group, boolean with_state)
 	{
 		super.duplicateInto(group);
-		if (group.m_eventTracker != null)
-		{
-			group.m_eventTracker.add(group);
-		}
 		group.m_notifySources = m_notifySources;
 		Map<Integer, Processor> new_procs = new HashMap<Integer, Processor>();
-		EventTracker new_tracker = null;
-		if (m_innerTracker != null)
-		{
-			new_tracker = m_innerTracker.getCopy(false);
-		}
-		group.m_innerTracker = new_tracker;
 		Processor start = null;
 		// Clone every processor of the original group
 		for (Processor p : m_processors)
@@ -466,7 +432,7 @@ public class GroupProcessor extends Processor implements Stateful
 		// Re-pipe the inputs and outputs like in the original group
 		associateEndpoints(group, new_procs);
 		// Re-pipe the internal processors like in the original group
-		CopyCrawler cc = new CopyCrawler(new_procs, new_tracker);
+		CopyCrawler cc = new CopyCrawler(new_procs);
 		cc.crawl(start);
 		return new_procs;
 	}
@@ -642,14 +608,11 @@ public class GroupProcessor extends Processor implements Stateful
 	{
 		private final Map<Integer, Processor> m_correspondences;
 
-		private final EventTracker m_tracker;
-
-		public CopyCrawler(Map<Integer, Processor> correspondences, EventTracker tracker)
+		public CopyCrawler(Map<Integer, Processor> correspondences)
 		{
 			super();
 			m_correspondences = new HashMap<Integer, Processor>();
 			m_correspondences.putAll(correspondences);
-			m_tracker = tracker;
 		}
 
 		@Override
@@ -682,7 +645,7 @@ public class GroupProcessor extends Processor implements Stateful
 					{
 						// new_p and new_target may be null if they refer to a processor
 						// outside of the group
-						Connector.connect(m_tracker, new_p, i, new_target, j);
+						Connector.connect(new_p, i, new_target, j);
 					}
 				}
 			}
@@ -1186,25 +1149,6 @@ public class GroupProcessor extends Processor implements Stateful
 		{
 			p.reset();
 		}
-	}
-
-	@Override
-	public final Processor setEventTracker(/*@ null @*/ EventTracker tracker)
-	{
-		super.setEventTracker(tracker);
-		if (tracker != null)
-		{
-			tracker.add(this);
-		}
-		if (tracker != null && m_innerTracker == null)
-		{
-			m_innerTracker = tracker.getCopy(false);
-			for (Processor p : m_processors)
-			{
-				p.setEventTracker(m_innerTracker);
-			}
-		}
-		return this;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -132,13 +132,6 @@ public class Window extends AbstractWindow implements Stateful
     else
     {
       m_outputCount++;
-      if (m_eventTracker != null)
-      {
-        for (int i = 1 - m_width; i <= 0; i++)
-        {
-          associateToInput(0, m_inputCount + i, 0, m_outputCount);
-        }
-      }
     }
     outputs.add(out);
     return true;

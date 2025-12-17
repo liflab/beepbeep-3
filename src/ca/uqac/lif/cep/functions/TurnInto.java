@@ -54,10 +54,6 @@ public class TurnInto extends UniformProcessor implements Stateful
   protected boolean compute(Object[] inputs, Object[] outputs)
   {
     outputs[0] = m_event;
-    if (m_eventTracker != null)
-    {
-    	m_eventTracker.associateToInput(getId(), 0, m_inputCount, 0, m_inputCount);
-    }
     return true;
   }
 

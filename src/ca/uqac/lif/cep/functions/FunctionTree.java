@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -103,16 +102,16 @@ public class FunctionTree extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     Object[] values = new Object[m_children.length];
     for (int i = 0; i < values.length; i++)
     {
       Object[] val = new Object[1];
-      m_children[i].evaluate(inputs, val, context, tracker);
+      m_children[i].evaluate(inputs, val, context);
       values[i] = val[0];
     }
-    m_function.evaluate(values, outputs, context, tracker);
+    m_function.evaluate(values, outputs, context);
   }
   
   @Override

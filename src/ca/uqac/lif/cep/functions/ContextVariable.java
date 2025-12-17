@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 
 /**
  * Placeholder for the value of a context element. A {@code ContextVariable}
@@ -74,7 +73,7 @@ public class ContextVariable extends Variable
 
   @Override
   @SuppressWarnings("squid:S1168")
-  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     if (context == null || !context.containsKey(m_name))
     {

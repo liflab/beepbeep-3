@@ -23,6 +23,8 @@ import ca.uqac.lif.cep.tmf.Source;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Queue;
 import java.util.Scanner;
@@ -87,6 +89,10 @@ public class HttpGet extends Source
     {
       throw new ProcessorException(e);
     }
+		catch (URISyntaxException e)
+		{
+			throw new ProcessorException(e);
+		}
     return true;
   }
 
@@ -97,10 +103,11 @@ public class HttpGet extends Source
    * @param url The URL to send the HTTP request
    * @return An input stream, where the HTTP response can be read from
    * @throws IOException Thrown if sending the request fails
+   * @throws URISyntaxException Thrown if the URL is malformed
    */
-  protected static InputStream sendGet(String url) throws IOException
+  protected static InputStream sendGet(String url) throws IOException, URISyntaxException
   {
-    URL obj = new URL(url);
+  	URL obj = new URI(url).toURL();
     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
     con.setRequestMethod("GET");
     con.setRequestProperty("User-Agent", s_userAgent);

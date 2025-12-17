@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import java.util.Set;
 
 /**
@@ -73,13 +72,9 @@ public abstract class BinaryFunction<T, V, U> extends Function
   @Override
   /* @ requires inputs.length == 2 */
   public void evaluate(/*@ non_null @*/ Object[] inputs, Object[] outputs,
-      /*@ null @*/ Context context, EventTracker tracker)
+      /*@ null @*/ Context context)
   {
     outputs[0] = getValue((T) inputs[0], (V) inputs[1]);
-    if (tracker != null)
-    {
-      trackAssociations((T) inputs[0], (V) inputs[1], (U) outputs[0], tracker);
-    }
   }
 
   /**
@@ -92,23 +87,6 @@ public abstract class BinaryFunction<T, V, U> extends Function
    * @return The return value of the function
    */
   public abstract U getValue(T x, V y);
-  
-  /**
-   * Tracks the input/output associations for the evaluation of this function
-   * @param x
-   *          The first argument
-   * @param y
-   *          The second argument
-   * @param z
-   *          The return value of the function
-   * @param tracker
-   *          The tracker
-   */
-  protected void trackAssociations(T x, V y, U z, EventTracker tracker)
-  {
-    tracker.associateToInput(-1, 0, 0, 0, 0);
-    tracker.associateToInput(-1, 1, 0, 0, 0);
-  }
 
   @Override
   public final int getInputArity()

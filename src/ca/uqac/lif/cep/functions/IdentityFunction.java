@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import java.util.Set;
 
 /**
@@ -59,15 +58,11 @@ public final class IdentityFunction extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     for (int i = 0; i < inputs.length; i++)
     {
       outputs[i] = inputs[i];
-      if (tracker != null)
-      {
-        tracker.associateToOutput(-1, i, 0, i, 0);
-      }
     }
   }
 

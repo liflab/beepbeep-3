@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2024 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -129,20 +129,8 @@ public class Sets
     @Override
     protected boolean compute(Object[] inputs, Object[] outputs)
     {
-    	boolean added = !m_set.contains(inputs[0]);
       m_set.add(inputs[0]);
       outputs[0] = m_set;
-      if (m_eventTracker != null)
-      {
-      	if (added)
-      	{
-      		m_eventTracker.associateToInput(getId(), 0, m_inputCount, 0, m_inputCount);
-      	}
-      	if (m_inputCount > 0)
-      	{
-      		m_eventTracker.associateToOutput(getId(), 0, m_inputCount - 1, 0, m_inputCount);
-      	}
-      }
       m_inputCount++;
       return true;
     }
@@ -269,22 +257,10 @@ public class Sets
     @Override
     protected boolean compute(Object[] inputs, Object[] outputs)
     {
-    	boolean added = !m_set.contains(inputs[0]);
       m_set.add(inputs[0]);
       HashSet<Object> new_set = new HashSet<Object>();
       new_set.addAll(m_set);
       outputs[0] = new_set;
-      if (m_eventTracker != null)
-      {
-      	if (added)
-      	{
-      		m_eventTracker.associateToInput(getId(), 0, m_inputCount, 0, m_inputCount);
-      	}
-      	if (m_inputCount > 0)
-      	{
-      		m_eventTracker.associateToOutput(getId(), 0, m_inputCount - 1, 0, m_inputCount);
-      	}
-      }
       m_inputCount++;
       return true;
     }

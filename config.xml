@@ -26,7 +26,7 @@
   <name>BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.11.4</version>
+  <version>0.12</version>
 
   <!-- The project's package (with a trailing slash) -->
   <package>ca/uqac/lif/cep/</package>  
@@ -63,17 +63,6 @@
     Write JAR dependencies here.
   -->
   <dependencies>
-   <dependency>
-      <!--
-      Petit Poucet. Used to store provenance information.
-      -->
-      <name>Petit Poucet</name>
-      <classname>ca.uqac.lif.petitpoucet.ProvenanceNode</classname>
-      <files>
-        <jar>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.jar</jar>
-      </files>
-      <bundle>true</bundle>
-    </dependency>
     <dependency>
       <!--
       Azrael. Used to serialize processors.
@@ -81,7 +70,7 @@
       <name>Azrael Core</name>
       <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
       <files>
-        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.2/azrael-core-2.1.2.jar</jar>
+        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.2/azrael-core-2.2.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -115,21 +115,19 @@ public class Connector
    * Connects the <i>i</i>-th output of {@code p1} to the <i>j</i>-th input of
    * {@code p2}
    * 
-   * @param tracker
-   *          An event tracker (optional)
    * @param p1
    *          The first processor
-   * @param i
-   *          The output number of the first processor
    * @param p2
    *          The second processor
+   * @param i
+   *          The output number of the first processor
    * @param j
    *          The input number of the second processor
    * @return A reference to processor p2
    */
-  public static Processor connect(EventTracker tracker, Processor p1, int i, Processor p2, int j)
+  public static Processor connect(Processor p1, int i, Processor p2, int j)
   {
-    // First check for type compatibility
+ // First check for type compatibility
     if (s_checkForTypes)
     {
       // This will throw an exception if the connection is impossible
@@ -170,30 +168,7 @@ public class Connector
     {
       // Same as above
     }
-    if (tracker != null)
-    {
-      tracker.setConnection(p1.getId(), i, p2.getId(), j);
-    }
     return p2;
-  }
-
-  /**
-   * Connects the <i>i</i>-th output of {@code p1} to the <i>j</i>-th input of
-   * {@code p2}
-   * 
-   * @param p1
-   *          The first processor
-   * @param p2
-   *          The second processor
-   * @param i
-   *          The output number of the first processor
-   * @param j
-   *          The input number of the second processor
-   * @return A reference to processor p2
-   */
-  public static Processor connect(Processor p1, int i, Processor p2, int j)
-  {
-    return connect(null, p1, i, p2, j);
   }
 
   /**
@@ -208,23 +183,6 @@ public class Connector
    */
   public static Processor connect(Processor ... procs)
   {
-    return connect(null, procs);
-  }
-
-  /**
-   * Connects a chain of processors, by associating the outputs of one to the
-   * inputs of the next. The output arity of the first must match that input arity
-   * of the next one. In the case the arity is greater than 1, the <i>i</i>-th
-   * output is linked to the <i>i</i>-th input.
-   * 
-   * @param tracker
-   *          The EventTracker
-   * @param procs
-   *          The list of processors
-   * @return The last processor of the chain
-   */
-  public static Processor connect(EventTracker tracker, Processor ... procs)
-  {
     if (procs.length == 1)
     {
       // If given only one processor, do nothing
@@ -237,7 +195,7 @@ public class Connector
       int arity = p1.getOutputArity();
       for (int i = 0; i < arity; i++)
       {
-        connect(tracker, p1, i, p2, i);
+        connect(p1, i, p2, i);
       }
     }
     return procs[procs.length - 1];

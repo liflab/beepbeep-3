@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -57,11 +57,8 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    *          corresponding object fetched from this map before evaluating the
    *          function
    */
-  /*@ pure @*/ public void evaluate(/*@ non_null @*/ Object[] inputs, 
-      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context)
-  {
-    evaluate(inputs, outputs, context, null);
-  }
+  /*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
+      /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context);
   
   /**
    * Evaluates the outputs of the function, given some inputs
@@ -80,10 +77,15 @@ public abstract class Function implements DuplicableFunction, Printable, Readabl
    * @param tracker
    *          An event tracker to record associations between inputs and outputs.
    *          This argument is optional and may be null.
+   * @deprecated Use {@link #evaluate(Object[], Object[], Context)} instead
    */
-  /*@ pure @*/ public abstract void evaluate(/*@ non_null @*/ Object[] inputs, 
+  @Deprecated
+  /*@ pure @*/ public final void evaluate(/*@ non_null @*/ Object[] inputs, 
       /*@ non_null @*/ Object[] outputs, /*@ null @*/ Context context,
-      /*@ null @*/ EventTracker tracker);
+      /*@ null @*/ EventTracker tracker)
+  {
+  	    evaluate(inputs, outputs, context);
+  }
 
   /**
    * Evaluates the outputs of the function, given some inputs

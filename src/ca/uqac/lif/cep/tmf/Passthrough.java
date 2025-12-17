@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -51,10 +51,6 @@ public class Passthrough extends UniformProcessor implements Stateful
     for (int i = 0; i < inputs.length; i++)
     {
       outputs[i] = inputs[i];
-      if (m_eventTracker != null)
-      {
-        m_eventTracker.associateToInput(getId(), i, m_inputCount, i, m_outputCount);
-      }
     }
     m_inputCount++;
     m_outputCount++;

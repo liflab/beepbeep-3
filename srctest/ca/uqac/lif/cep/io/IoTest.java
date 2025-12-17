@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -124,7 +124,7 @@ public class IoTest
 	public void testUrlFeeder1() 
 	{
 		Assume.assumeTrue(s_hasConnection);
-		HttpGet hr = new HttpGet("https://raw.githubusercontent.com/liflab/beepbeep-3/master/CoreTest/tuples1.csv");
+		HttpGet hr = new HttpGet("https://raw.githubusercontent.com/liflab/beepbeep-3/refs/heads/master/Readme.md");
 		Pullable p = hr.getPullableOutput(0);
 		assertNotNull(p);
 		Object o = p.pullSoft();

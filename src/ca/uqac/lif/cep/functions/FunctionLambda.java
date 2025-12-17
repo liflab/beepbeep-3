@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.functions;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 
 /**
  * A function defined based on a lambda expression
@@ -75,7 +74,7 @@ public class FunctionLambda extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     if (m_unary != null)
     {

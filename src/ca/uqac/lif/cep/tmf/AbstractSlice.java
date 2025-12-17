@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -27,11 +27,9 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.util.Maps.MathMap;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -92,12 +90,6 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
   protected HashMap<Object, QueueSink> m_sinks;
   
   /**
-   * A map associating slice IDs to the event positions in the input stream that
-   * have been given to each slice's processor
-   */
-  protected HashMap<Object, List<Integer>> m_sliceIndices;
-  
-  /**
    * If the slicing function returns a collection, treat each element of the
    * collection as a slice id.
    */
@@ -132,7 +124,6 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
     m_cleaningFunction = clean_func;
     m_slices = new HashMap<Object, Processor>();
     m_sinks = new HashMap<Object, QueueSink>();
-    m_sliceIndices = new HashMap<Object, List<Integer>>();
   }
   
   /**
@@ -213,11 +204,6 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
           QueueSink sink = new QueueSink(output_arity);
           Connector.connect(p, sink);
           m_sinks.put(slice_id, sink);
-          if (m_eventTracker != null)
-          {
-            //p.setEventTracker(m_eventTracker.getCopy(false));
-            m_sliceIndices.put(slice_id, new ArrayList<Integer>());
-          }
         }
         slices_to_process.add(slice_id);
       }
@@ -229,10 +215,6 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
         if (slice_p != null)
         {
           QueueSink sink_p = m_sinks.get(s_id);
-          if (m_eventTracker != null)
-          {
-            m_sliceIndices.get(s_id).add(m_inputCount);
-          }
           // Push the input into the processor
           for (int i = 0; i < inputs.length; i++)
           {
@@ -343,12 +325,6 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
     	Connector.connect(p_dup, qs);
     	as.m_slices.put(e.getKey(), p_dup);
     	as.m_sinks.put(e.getKey(), qs);
-    }
-    for (Map.Entry<Object,List<Integer>> e : m_sliceIndices.entrySet())
-    {
-    	List<Integer> list = new ArrayList<Integer>();
-    	list.addAll(e.getValue());
-    	as.m_sliceIndices.put(e.getKey(), list);
     }
   }
   

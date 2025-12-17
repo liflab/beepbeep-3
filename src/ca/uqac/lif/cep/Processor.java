@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2024 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -29,8 +29,6 @@ import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Lists.MathList;
 import ca.uqac.lif.cep.util.Maps.MathMap;
-import ca.uqac.lif.petitpoucet.NodeFunction;
-import ca.uqac.lif.petitpoucet.ProvenanceNode;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -90,12 +88,6 @@ Contextualizable, Printable, Readable
 	 * input arity of the processor.
 	 */
 	protected transient Queue<Object>[] m_inputQueues;
-
-	/**
-	 * An object that keeps track of the relationship between input and output
-	 * events.
-	 */
-	protected transient EventTracker m_eventTracker = null;
 
 	/**
 	 * An array of output event queues. This is where the output events will be
@@ -525,7 +517,6 @@ Contextualizable, Printable, Readable
 	 */
 	public void duplicateInto(Processor p)
 	{
-		p.m_eventTracker = m_eventTracker;
 		p.setContext(m_context);
 		for (int i = 0; i < m_inputQueues.length; i++)
 		{
@@ -663,80 +654,6 @@ Contextualizable, Printable, Readable
 			{
 				p.stop();
 			}
-		}
-	}
-
-	/**
-	 * Gets the instance of event tracker associated to this processor
-	 * 
-	 * @return The event tracker, or {@code null} of no event tracker is associated
-	 *         to this processor
-	 */
-	public final /*@ null @*/ EventTracker getEventTracker()
-	{
-		return m_eventTracker;
-	}
-
-	/**
-	 * Associates an event tracker to this processor
-	 * 
-	 * @param tracker
-	 *          The event tracker, or {@code null} to remove the association to an
-	 *          existing tracker
-	 * @return This processor
-	 */
-	public Processor setEventTracker(/*@ null @*/ EventTracker tracker)
-	{
-		m_eventTracker = tracker;
-		return this;
-	}
-
-	/**
-	 * Associates an input event to an output event.
-	 * @param in_stream_index The index of the processor's input stream 
-	 * @param in_stream_pos The position of the event in the input stream
-	 * @param out_stream_index The index of the processor's output stream 
-	 * @param out_stream_pos The position of the event in the output stream
-	 */
-	public void associateToInput(int in_stream_index, int in_stream_pos, int out_stream_index,
-			int out_stream_pos)
-	{
-		if (m_eventTracker != null)
-		{
-			m_eventTracker.associateToInput(m_uniqueId, in_stream_index, in_stream_pos, out_stream_index,
-					out_stream_pos);
-		}
-	}
-
-	/**
-	 * Associates a node function to a particular event of processor's
-	 * output stream. 
-	 * @param f The node function
-	 * @param out_stream_index The index of the processor's output stream 
-	 * @param out_stream_pos The position of the event in the output stream
-	 */
-	public void associateTo(NodeFunction f, int out_stream_index, int out_stream_pos)
-	{
-		if (m_eventTracker != null)
-		{
-			m_eventTracker.associateTo(m_uniqueId, f, out_stream_index, out_stream_pos);
-		}
-	}
-
-	/**
-	 * Associates an input event to an output event.
-	 * @param in_stream_index The index of the processor's input stream 
-	 * @param in_stream_pos The position of the event in the input stream
-	 * @param out_stream_index The index of the processor's output stream 
-	 * @param out_stream_pos The position of the event in the output stream
-	 */
-	public void associateToOutput(int in_stream_index, int in_stream_pos, int out_stream_index,
-			int out_stream_pos)
-	{
-		if (m_eventTracker != null)
-		{
-			m_eventTracker.associateToOutput(m_uniqueId, in_stream_index, in_stream_pos, out_stream_index,
-					out_stream_pos);
 		}
 	}
 
@@ -930,43 +847,6 @@ Contextualizable, Printable, Readable
 
 	@Override
 	/*@ non_null @*/ public abstract Processor duplicate(boolean with_state);
-
-	/**
-	 * Gets the leaves of a provenance tree
-	 * @param root The root of the tree
-	 * @return A list of nodes that correspond to the leaves
-	 */
-	public static List<ProvenanceNode> getLeaves(ProvenanceNode root)
-	{
-		List<ProvenanceNode> leaves = new ArrayList<ProvenanceNode>();
-		getLeaves(root, leaves);
-		return leaves;
-	}
-
-	/**
-	 * Accumulates the leaves of a provenance tree in a list
-	 * @param root The current node in the tree
-	 * @param leaves The list of leaves
-	 */
-	protected static void getLeaves(ProvenanceNode root, List<ProvenanceNode> leaves)
-	{
-		if (root == null)
-		{
-			return;
-		}
-		List<ProvenanceNode> children = root.getChildren();
-		if (children.isEmpty())
-		{
-			leaves.add(root);
-		}
-		else
-		{
-			for (ProvenanceNode child : children)
-			{
-				getLeaves(child, leaves);
-			}
-		}
-	}
 
 	/**
 	 * Connects the first output pipe of this processor to the first input pipe

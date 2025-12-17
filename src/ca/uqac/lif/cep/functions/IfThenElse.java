@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.functions;
 
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import java.util.Set;
 
 /**
@@ -45,27 +44,17 @@ public class IfThenElse extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     try
     {
       if ((Boolean) inputs[0])
       {
         outputs[0] = inputs[1];
-        if (tracker != null)
-        {
-          tracker.associateToInput(-1, 0, 0, 0, 0);
-          tracker.associateToInput(-1, 1, 0, 0, 0);
-        }
       }
       else
       {
         outputs[0] = inputs[2];
-        if (tracker != null)
-        {
-          tracker.associateToInput(-1, 0, 0, 0, 0);
-          tracker.associateToInput(-1, 2, 0, 0, 0);
-        }
       }
     }
     catch (ClassCastException e)
