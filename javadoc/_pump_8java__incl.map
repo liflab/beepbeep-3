@@ -1,0 +1,11 @@
+<map id="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/Pump.java" name="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/Pump.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="278,5,461,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,176,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="285,63,141,107,140,102,283,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="201,108,357,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="343,62,303,100,299,96,340,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="381,108,539,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="399,58,440,96,436,100,395,62"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="563,108,728,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="454,58,596,101,595,106,453,63"/>
+</map>

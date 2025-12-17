@@ -17,6 +17,7 @@ var namespaceca_1_1uqac_1_1lif_1_1cep_1_1functions =
     [ "FunctionTree", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_tree" ],
     [ "IdentityFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_identity_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_identity_function" ],
     [ "IfThenElse", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_if_then_else.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_if_then_else" ],
+    [ "Integrate", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_integrate.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_integrate" ],
     [ "InvalidArgumentException", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_invalid_argument_exception.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_invalid_argument_exception" ],
     [ "NothingToReturnException", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_nothing_to_return_exception.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_nothing_to_return_exception" ],
     [ "PassthroughFunction", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_passthrough_function.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_passthrough_function" ],

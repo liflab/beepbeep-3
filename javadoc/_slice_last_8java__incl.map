@@ -1,0 +1,21 @@
+<map id="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/SliceLast.java" name="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/SliceLast.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="751,5,934,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,176,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="752,45,497,71,188,111,160,115,159,110,188,105,497,65,751,39"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="200,115,371,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="752,51,383,111,357,115,356,110,382,105,751,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="395,108,565,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="752,60,567,107,566,102,750,55"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="589,108,757,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="796,62,721,104,718,99,794,58"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="781,115,904,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="845,60,845,101,840,101,840,60"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="929,115,1055,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="886,58,964,106,961,111,883,62"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1079,115,1171,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="923,58,1079,109,1077,114,921,63"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1196,115,1292,141"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="935,49,1054,74,1185,105,1197,109,1196,114,1183,111,1053,79,934,54"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1316,115,1425,141"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="935,43,1107,68,1305,105,1320,109,1319,114,1303,111,1106,74,934,48"/>
+</map>

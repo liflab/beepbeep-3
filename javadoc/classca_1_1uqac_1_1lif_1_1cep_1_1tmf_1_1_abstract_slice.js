@@ -10,6 +10,7 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice =
     [ "getActiveSliceCount", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#ab8c37fd73dc0f9dccd0f093555c455ef", null ],
     [ "getState", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a7cb394fbb5327c22f18700280f1b25a3", null ],
     [ "handleNewSliceValue", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#ad9c22fac423620179f34888964399f2f", null ],
+    [ "onEndOfTrace", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a7890a558c303d9466b0c4fbade47d745", null ],
     [ "produceReturn", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a6290e13052fda44839c87e59654ad16e", null ],
     [ "reset", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#ac0c530d61ba23c3ceda6caa49d777494", null ],
     [ "setProcessor", "classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_abstract_slice.html#a036cb0b4226e54102465f083f3086a6b", null ],

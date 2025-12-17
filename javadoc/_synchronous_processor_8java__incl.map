@@ -1,0 +1,11 @@
+<map id="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/SynchronousProcessor.java" name="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/SynchronousProcessor.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="209,5,435,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,145,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,63,122,106,120,101,246,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="170,108,282,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="294,62,251,101,247,97,291,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="306,108,530,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="353,58,397,97,393,101,350,62"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="554,108,663,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="410,58,558,102,557,107,409,63"/>
+</map>

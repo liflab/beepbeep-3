@@ -1,3 +1,21 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_lambda_1_1_unary_lambda_evaluable.html" title="ca.uqac.lif.cep.functions.\lFunctionLambda.UnaryLambdaEvaluable" alt="" coords="5,5,265,47"/>
+<area shape="rect" id="Node000000" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pushable.html" title="Gives events to some of a processor&#39;s input." alt="" coords="5,269,171,294"/>
+<area shape="rect" id="Node000001" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_input_pushable.html" title=" " alt="" coords="236,5,431,45"/>
+<area shape="poly" id="edge207_Node000000_Node000001" title=" " alt="" coords="95,254,111,211,136,157,171,102,193,77,217,55,236,43,239,48,220,59,197,81,176,105,141,160,116,213,100,256"/>
+<area shape="rect" id="Node000002" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pushable.html" title=" " alt="" coords="229,69,437,109"/>
+<area shape="poly" id="edge208_Node000000_Node000002" title=" " alt="" coords="101,255,146,187,179,150,217,119,240,107,243,112,220,124,183,154,150,190,105,258"/>
+<area shape="rect" id="Node000003" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_push_not_supported.html" title="Pushable object that throws an UnsupportedOperationException upon every call to each of its methods (..." alt="" coords="249,133,418,173"/>
+<area shape="poly" id="edge209_Node000000_Node000003" title=" " alt="" coords="111,257,159,220,217,183,247,171,249,176,220,188,162,224,115,262"/>
+<area shape="rect" id="Node000004" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_input_pushable.html" title="Implementation of a Pushable for a single processor." alt="" coords="240,197,427,237"/>
+<area shape="poly" id="edge210_Node000000_Node000004" title=" " alt="" coords="150,262,255,235,257,240,152,268"/>
+<area shape="rect" id="Node000005" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pushable.html" title="A special type of Pushable for uniform processors with an input and output arity of exactly 1." alt="" coords="224,261,443,301"/>
+<area shape="poly" id="edge211_Node000000_Node000005" title=" " alt="" coords="185,279,224,279,224,284,185,284"/>
+<area shape="rect" id="Node000006" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_input_pushable.html" title=" " alt="" coords="219,325,448,365"/>
+<area shape="poly" id="edge212_Node000000_Node000006" title=" " alt="" coords="152,295,257,323,255,328,150,300"/>
+<area shape="rect" id="Node000007" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert_1_1_divert_pushable.html" title="Implementation of the Pushable interface for the Divert processor." alt="" coords="247,389,420,429"/>
+<area shape="poly" id="edge213_Node000000_Node000007" title=" " alt="" coords="115,301,162,339,220,375,249,387,247,392,217,380,159,343,111,305"/>
+<area shape="rect" id="Node000008" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pushable.html" title=" " alt="" coords="238,453,429,493"/>
+<area shape="poly" id="edge214_Node000000_Node000008" title=" " alt="" coords="105,305,150,372,183,408,220,439,243,451,240,456,217,444,179,412,146,376,101,308"/>
+<area shape="rect" id="Node000009" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pushable.html" title=" " alt="" coords="250,517,417,557"/>
+<area shape="poly" id="edge215_Node000000_Node000009" title=" " alt="" coords="100,307,116,350,141,403,176,457,197,482,220,503,251,520,248,525,217,508,193,486,171,460,136,406,111,352,95,309"/>
 </map>

@@ -1,4 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html" title="ca.uqac.lif.cep.functions.\lUnaryFunction\&lt; T, T \&gt;" alt="" coords="5,5,173,47"/>
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulative_function.html" title="A function with memory. " alt="" coords="221,5,392,47"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,45,68,70"/>
+<area shape="rect" id="Node000001" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner.html" title="Utility class to run commands on the command line and fetch their output." alt="" coords="116,5,301,45"/>
+<area shape="poly" id="edge247_Node000000_Node000001" title=" " alt="" coords="81,46,115,40,116,45,82,52"/>
+<area shape="rect" id="Node000002" href="$classca_1_1uqac_1_1lif_1_1cep_1_1io_1_1_command_runner_1_1_stream_gobbler.html" title="Constantly reads an input stream and captures its content." alt="" coords="116,69,301,109"/>
+<area shape="poly" id="edge248_Node000000_Node000002" title=" " alt="" coords="82,63,116,69,115,75,81,68"/>
 </map>

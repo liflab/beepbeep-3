@@ -1,0 +1,13 @@
+<map id="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/Fork.java" name="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/Fork.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="393,5,575,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,163,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="393,56,151,108,150,103,392,51"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="187,108,352,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="419,63,312,105,310,100,417,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="376,108,592,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="487,60,487,94,481,94,481,60"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="617,108,757,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="547,58,648,100,646,105,545,63"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="781,108,891,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="576,54,777,102,775,107,575,59"/>
+</map>

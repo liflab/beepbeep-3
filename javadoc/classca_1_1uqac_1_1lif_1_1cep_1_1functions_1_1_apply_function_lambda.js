@@ -1,8 +1,8 @@
 var classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda =
 [
+    [ "UnaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_unary_lambda_evaluable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_unary_lambda_evaluable" ],
     [ "BinaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_binary_lambda_evaluable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_binary_lambda_evaluable" ],
     [ "LambdaEvaluable", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_lambda_evaluable.html", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_lambda_evaluable" ],
-    [ "UnaryLambdaEvaluable", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_unary_lambda_evaluable.html", "interfaceca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda_1_1_unary_lambda_evaluable" ],
     [ "ApplyFunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda.html#a44f3d0650921bbc81e8ec030bcdea940", null ],
     [ "ApplyFunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda.html#aaccc522df42d228c3ae9250cb1b4e61c", null ],
     [ "ApplyFunctionLambda", "classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_lambda.html#ac559e4c4f314271650a86827b813e6c1", null ],

@@ -1,4 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_cumulate_1_1_start_value.html" title="Node function representing the start value defined for a particular function. " alt="" coords="158,5,326,47"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_queue_source_1_1_queue_function.html" title="Provenance function that links an output event to an element of the processor&#39;s queue. " alt="" coords="156,71,328,112"/>
+<area shape="rect" id="Node000000" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_pipe_crawler.html" title="An object that visits every processor in a chain, from a processor used as a starting point." alt="" coords="5,45,188,70"/>
+<area shape="rect" id="Node000001" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_collect_crawler.html" title="A crawler that adds to the group any processor it encounters." alt="" coords="236,5,444,45"/>
+<area shape="poly" id="edge205_Node000000_Node000001" title=" " alt="" coords="202,41,235,36,236,42,202,46"/>
+<area shape="rect" id="Node000002" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_copy_crawler.html" title="Crawler that creates copies (clones) of whatever it encounters on its way and re&#45;pipes processors as ..." alt="" coords="236,69,444,109"/>
+<area shape="poly" id="edge206_Node000000_Node000002" title=" " alt="" coords="202,69,236,73,235,78,202,74"/>
 </map>

@@ -1,0 +1,23 @@
+<map id="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/functions/ContextAssignment.java" name="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/functions/ContextAssignment.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="841,5,1106,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,168,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="841,45,543,69,364,87,182,111,181,105,363,82,542,63,840,39"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="192,108,355,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="841,50,623,75,368,111,368,105,623,70,840,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="379,108,531,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="841,58,545,110,544,105,840,53"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="555,115,731,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="881,63,697,114,696,109,880,57"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="755,115,970,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="944,62,889,108,885,104,940,58"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="994,115,1174,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1006,58,1061,104,1058,108,1003,62"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1199,115,1356,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1060,58,1228,109,1227,114,1058,63"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1380,115,1588,141"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1107,55,1409,110,1408,116,1106,61"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1612,115,1735,141"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1106,42,1338,66,1470,84,1600,105,1620,109,1619,115,1600,111,1469,89,1337,71,1106,47"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1759,115,1851,141"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="1106,35,1241,43,1402,56,1575,76,1747,105,1761,109,1760,114,1746,111,1574,82,1401,61,1240,48,1106,41"/>
+</map>

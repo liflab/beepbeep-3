@@ -1,3 +1,25 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html" title="ca.uqac.lif.cep.functions.\lUnaryFunction\&lt; String,\l Object \&gt;" alt="" coords="5,5,173,61"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,205,135,230"/>
+<area shape="rect" id="Node000001" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_connector_1_1_connector_exception.html" title="Exception thrown when a problem occurs when attempting to connect two objects." alt="" coords="183,69,357,109"/>
+<area shape="poly" id="edge235_Node000000_Node000001" title=" " alt="" coords="91,192,131,155,181,119,205,107,208,112,184,124,135,160,95,196"/>
+<area shape="rect" id="Node000006" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_processor_exception.html" title="Generic class for any exception thrown in the lifecycle of a processor." alt="" coords="185,133,355,173"/>
+<area shape="poly" id="edge240_Node000000_Node000006" title=" " alt="" coords="123,198,206,171,208,176,124,203"/>
+<area shape="rect" id="Node000007" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pullable_exception.html" title="A runtime exception indicating that something went wrong when attempting to check if a next event exi..." alt="" coords="189,197,351,237"/>
+<area shape="poly" id="edge241_Node000000_Node000007" title=" " alt="" coords="148,215,189,215,189,220,148,220"/>
+<area shape="rect" id="Node000008" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_pushable_1_1_pushable_exception.html" title="A runtime exception indicating that something went wrong when attempting to check if a next event exi..." alt="" coords="185,261,355,301"/>
+<area shape="poly" id="edge242_Node000000_Node000008" title=" " alt="" coords="124,232,208,259,206,264,123,237"/>
+<area shape="rect" id="Node000009" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_function_exception.html" title="Generic class for any exception thrown during the evaluation of a function." alt="" coords="186,325,354,365"/>
+<area shape="poly" id="edge243_Node000000_Node000009" title=" " alt="" coords="95,238,135,275,184,311,208,323,205,328,181,316,131,279,91,242"/>
+<area shape="rect" id="Node000002" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_connector_1_1_connection_exception.html" title="Exception thrown when a problem occurs when connecting the output pipe of a processor to the input pi..." alt="" coords="407,69,582,109"/>
+<area shape="poly" id="edge236_Node000001_Node000002" title=" " alt="" coords="371,87,407,87,407,92,371,92"/>
+<area shape="rect" id="Node000003" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_connector_1_1_incompatible_types_exception.html" title="Exception thrown when two processors with incompatible input/output types are attempted to be connect..." alt="" coords="633,5,822,45"/>
+<area shape="poly" id="edge237_Node000002_Node000003" title=" " alt="" coords="581,63,653,43,655,48,582,68"/>
+<area shape="rect" id="Node000004" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_connector_1_1_index_out_of_bounds_exception.html" title="Exception thrown when the connector is asked to pipe something to a nonexistent input or output." alt="" coords="632,69,823,109"/>
+<area shape="poly" id="edge238_Node000002_Node000004" title=" " alt="" coords="596,87,632,87,632,92,596,92"/>
+<area shape="rect" id="Node000005" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_connector_1_1_self_loop_exception.html" title="Exception thrown when trying to connect the output of a processor to its own input." alt="" coords="640,133,815,173"/>
+<area shape="poly" id="edge239_Node000002_Node000005" title=" " alt="" coords="582,110,655,131,653,136,581,116"/>
+<area shape="rect" id="Node000010" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_invalid_argument_exception.html" title="Exception thrown when a function is given an argument that is invalid." alt="" coords="407,293,582,333"/>
+<area shape="poly" id="edge244_Node000009_Node000010" title=" " alt="" coords="368,329,407,323,407,328,368,334"/>
+<area shape="rect" id="Node000011" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_nothing_to_return_exception.html" title="Exception thrown when a function cannot produce a return value." alt="" coords="405,357,584,397"/>
+<area shape="poly" id="edge245_Node000009_Node000011" title=" " alt="" coords="368,357,405,362,405,367,368,362"/>
 </map>

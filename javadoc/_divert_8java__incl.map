@@ -1,0 +1,15 @@
+<map id="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/Divert.java" name="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/Divert.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="457,5,639,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,176,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="457,54,165,108,164,103,456,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="200,108,357,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="467,63,328,106,327,101,465,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="381,108,547,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="524,62,487,100,483,96,520,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="571,108,693,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="576,58,613,96,609,100,572,62"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="717,108,829,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="618,58,732,101,730,106,616,63"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="854,108,946,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="640,54,841,102,840,108,639,59"/>
+</map>

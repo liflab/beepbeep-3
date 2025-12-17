@@ -1,3 +1,29 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_unary_function.html" title="ca.uqac.lif.cep.functions.\lUnaryFunction\&lt; Object,\l Number \&gt;" alt="" coords="5,5,173,61"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,266,71,291"/>
+<area shape="rect" id="Node000001" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_pullable.html" title="Queries events on one of a processor&#39;s outputs." alt="" coords="119,291,276,317"/>
+<area shape="poly" id="edge219_Node000000_Node000001" title=" " alt="" coords="85,283,119,289,118,294,84,289"/>
+<area shape="rect" id="Node000002" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_asynchronous_processor_1_1_output_pullable.html" title=" " alt="" coords="342,5,537,45"/>
+<area shape="poly" id="edge220_Node000001_Node000002" title=" " alt="" coords="202,277,216,230,240,170,275,108,297,80,322,55,341,43,344,48,326,59,301,83,279,111,244,172,221,231,207,279"/>
+<area shape="rect" id="Node000003" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_proxy_pullable.html" title=" " alt="" coords="335,69,543,109"/>
+<area shape="poly" id="edge221_Node000001_Node000003" title=" " alt="" coords="207,278,224,242,249,199,282,156,322,119,343,107,346,112,326,123,286,160,254,202,229,244,211,280"/>
+<area shape="rect" id="Node000004" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_pullable_1_1_pull_not_supported.html" title="Pullable object that throws an UnsupportedOperationException upon every call to each of its methods (..." alt="" coords="359,133,520,173"/>
+<area shape="poly" id="edge222_Node000001_Node000004" title=" " alt="" coords="215,279,261,230,290,205,323,183,357,168,359,173,325,188,293,209,264,234,219,283"/>
+<area shape="rect" id="Node000005" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_synchronous_processor_1_1_output_pullable.html" title="Implementation of a Pullable for a single processor." alt="" coords="346,197,533,237"/>
+<area shape="poly" id="edge223_Node000001_Node000005" title=" " alt="" coords="238,283,323,248,364,235,365,240,325,253,240,288"/>
+<area shape="rect" id="Node000007" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_typed_pullable.html" title="A Pullable object that casts all its output to a given type." alt="" coords="327,262,551,287"/>
+<area shape="poly" id="edge225_Node000001_Node000007" title=" " alt="" coords="289,290,334,285,335,290,290,295"/>
+<area shape="rect" id="Node000008" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_uniform_processor_1_1_unary_pullable.html" title="A special type of Pushable for uniform processors with an input and output arity of exactly 1." alt="" coords="330,312,549,352"/>
+<area shape="poly" id="edge226_Node000001_Node000008" title=" " alt="" coords="290,312,330,317,330,322,289,317"/>
+<area shape="rect" id="Node000009" href="$classca_1_1uqac_1_1lif_1_1cep_1_1functions_1_1_apply_function_partial_1_1_output_pullable.html" title=" " alt="" coords="324,376,555,416"/>
+<area shape="poly" id="edge227_Node000001_Node000009" title=" " alt="" coords="235,321,325,362,360,373,359,378,323,366,233,325"/>
+<area shape="rect" id="Node000010" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_divert_1_1_divert_pullable.html" title="Implementation of the Pullable interface for the Divert processor." alt="" coords="353,440,526,480"/>
+<area shape="poly" id="edge228_Node000001_Node000010" title=" " alt="" coords="218,326,264,377,293,403,325,426,354,439,351,444,323,430,290,407,260,381,214,330"/>
+<area shape="rect" id="Node000011" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_multiplex_1_1_mux_pullable.html" title=" " alt="" coords="344,504,535,544"/>
+<area shape="poly" id="edge229_Node000001_Node000011" title=" " alt="" coords="211,328,228,365,253,408,286,453,326,490,346,502,343,506,322,494,282,456,249,411,223,367,206,331"/>
+<area shape="rect" id="Node000012" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_tank_1_1_queue_pullable.html" title=" " alt="" coords="356,568,523,608"/>
+<area shape="poly" id="edge230_Node000001_Node000012" title=" " alt="" coords="207,329,220,377,244,438,278,501,300,529,326,554,357,572,355,576,322,558,296,533,274,504,239,441,215,379,202,331"/>
+<area shape="rect" id="Node000006" href="$classca_1_1uqac_1_1lif_1_1cep_1_1tmf_1_1_insert_1_1_insert_pullable.html" title="A Pullable object that does not pull events from upstream before the events to insert have been emitt..." alt="" coords="603,197,773,237"/>
+<area shape="poly" id="edge224_Node000005_Node000006" title=" " alt="" coords="546,215,602,215,602,220,546,220"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="7,315,69,341"/>
+<area shape="poly" id="edge231_Node000013_Node000001" title=" " alt="" coords="82,319,118,313,119,319,83,324"/>
 </map>

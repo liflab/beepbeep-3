@@ -1,4 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_context.html" title="Associative map used by processors to store persistent data. " alt="" coords="137,5,295,32"/>
-<area shape="rect" id="node3" href="$classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_maps_1_1_math_map.html" title="A map that implements equality based on its contents. " alt="" coords="132,57,300,98"/>
+<area shape="rect" id="Node000000" href="$interfaceca_1_1uqac_1_1lif_1_1cep_1_1_call_after_connect.html" title="An object carrying a Processor to be connected, and which expects a call to its call() method after t..." alt="" coords="5,5,168,45"/>
+<area shape="rect" id="Node000001" href="$classca_1_1uqac_1_1lif_1_1cep_1_1_group_processor_1_1_output_call_after_connect.html" title="A CallAfterConnect object that can be used to connect the underlying processor of a GroupProcessor,..." alt="" coords="216,5,424,45"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="182,23,216,23,216,28,182,28"/>
 </map>

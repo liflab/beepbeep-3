@@ -1,0 +1,9 @@
+<map id="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/DetectEnd.java" name="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/tmf/DetectEnd.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="141,5,323,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,115,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,62,94,111,92,106,182,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="139,108,325,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="235,60,235,94,229,94,229,60"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="349,108,517,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="290,58,381,100,379,105,288,62"/>
+</map>

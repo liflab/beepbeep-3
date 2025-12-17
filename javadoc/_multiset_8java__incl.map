@@ -1,0 +1,21 @@
+<map id="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/util/Multiset.java" name="/home/sylvain/Workspaces/beepbeep/core/src/ca/uqac/lif/cep/util/Multiset.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="726,5,909,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,192,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="726,46,494,72,206,110,205,105,494,67,725,41"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="216,108,384,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="726,52,398,110,397,105,725,47"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="408,108,576,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="727,63,571,107,570,102,725,57"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="601,115,730,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="776,62,697,111,694,106,773,58"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="754,115,881,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="820,60,820,101,815,101,815,60"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="905,115,1017,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="859,58,934,106,931,110,856,62"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1041,115,1137,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="895,58,1044,108,1042,113,893,63"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1161,115,1271,141"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="909,50,1150,105,1164,109,1163,114,1149,111,908,56"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1295,115,1385,141"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="909,42,1083,66,1184,84,1283,105,1296,109,1294,114,1282,111,1183,89,1083,72,908,47"/>
+</map>

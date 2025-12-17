@@ -2,9 +2,8 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers =
 [
     [ "AbsoluteValue", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_absolute_value.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_absolute_value" ],
     [ "Addition", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_addition.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_addition" ],
-    [ "Ceiling", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_ceiling.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_ceiling" ],
     [ "Division", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_division.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_division" ],
-    [ "Floor", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_floor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_floor" ],
+    [ "Square", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_square.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_square" ],
     [ "IsEven", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_is_even.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_is_even" ],
     [ "IsGreaterOrEqual", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_is_greater_or_equal.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_is_greater_or_equal" ],
     [ "IsGreaterThan", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_is_greater_than.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_is_greater_than" ],
@@ -18,6 +17,9 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers =
     [ "Signum", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_signum.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_signum" ],
     [ "SquareRoot", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_square_root.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_square_root" ],
     [ "Subtraction", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_subtraction.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_subtraction" ],
+    [ "Ceiling", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_ceiling.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_ceiling" ],
+    [ "Floor", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_floor.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_floor" ],
+    [ "Modulo", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_modulo.html", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers_1_1_modulo" ],
     [ "Numbers", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a0d99436a3a74c77adb6deb73a419740f", null ],
     [ "absoluteValue", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a46e16f0ba7d61ab69b6c5cf2c0b12499", null ],
     [ "addition", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#afb8337d159d3a637bf880657f97ed272", null ],
@@ -31,10 +33,12 @@ var classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers =
     [ "isLessThan", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a5d1d47363efb0e4847553dc01e7379e6", null ],
     [ "maximum", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a716e9a8dc4d7be178ae8eae5f9288895", null ],
     [ "minimum", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#ada7238274675b9b0fe05165baa282bf5", null ],
+    [ "mod", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a74430eebc5e6eecd5ff8ef17bf4bfa09", null ],
     [ "multiplication", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a1c457f4985a0d8d077c04b02c1e92347", null ],
     [ "numberCast", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a3ef01055704a405bf278bfc0cfce6f6b", null ],
     [ "power", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a2b91f8cf49e8889420d06dd4b626422a", null ],
     [ "signum", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#aae6abc0916b183d58bf15eae6e0c869d", null ],
+    [ "square", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a10f4cfe846397f18daa9f345ec5d5654", null ],
     [ "squareRoot", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a6524cb2c6fbe06f0e1d870f8f2e926be", null ],
     [ "subtraction", "classca_1_1uqac_1_1lif_1_1cep_1_1util_1_1_numbers.html#a44acccf31c9c5d01243eae7982498de4", null ]
 ];
