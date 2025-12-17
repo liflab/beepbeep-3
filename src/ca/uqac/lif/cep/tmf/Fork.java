@@ -49,10 +49,6 @@ public class Fork extends UniformProcessor
   public Fork duplicate(boolean with_state)
   {
   	Fork f = new Fork(getOutputArity());
-  	if (with_state)
-  	{
-  		f.m_inputCount = m_inputCount;
-  	}
     return f;
   }
 
@@ -64,7 +60,6 @@ public class Fork extends UniformProcessor
     {
       outputs[i] = inputs[0];
     }
-    m_inputCount++;
     return true;
   }
 

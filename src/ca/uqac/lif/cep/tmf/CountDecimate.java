@@ -128,8 +128,6 @@ public class CountDecimate extends Decimate implements Stateful
     Map<String,Object> map = new HashMap<String,Object>();
     map.put("interval", m_interval);
     map.put("current", m_current);
-    map.put("incount", m_inputCount);
-    map.put("outcount", m_outputCount);
     map.put("process-last", m_shouldProcessLastInputs);
     return map;
   }
@@ -145,8 +143,6 @@ public class CountDecimate extends Decimate implements Stateful
     CountDecimate cd = new CountDecimate(((Number) map.get("interval")).intValue(), 
         (Boolean) map.get("process-last"));
     cd.m_current = ((Number) map.get("current")).intValue();
-    cd.m_inputCount = ((Number) map.get("incount")).intValue();
-    cd.m_outputCount = ((Number) map.get("outcount")).intValue();
     return cd;
   }
   

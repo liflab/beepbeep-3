@@ -43,112 +43,112 @@ import java.util.Set;
  */
 public class Sets
 {
-  protected Sets()
-  {
-    // Utility class
-  }
-  
-  /**
-   * Single visible instance of the function {@link IsSubsetOrEqual}
-   */
-  public static final IsSubsetOrEqual isSubsetOrEqual = new IsSubsetOrEqual();
+	protected Sets()
+	{
+		// Utility class
+	}
 
-  /**
-   * Single visible instance of the function {@link IsSupersetOrEqual}
-   */
-  public static final IsSupersetOrEqual isSupersetOrEqual = new IsSupersetOrEqual();
+	/**
+	 * Single visible instance of the function {@link IsSubsetOrEqual}
+	 */
+	public static final IsSubsetOrEqual isSubsetOrEqual = new IsSubsetOrEqual();
 
-  /**
-   * Processor that updates a set.
-   * @since 0.7
-   */
-  protected abstract static class SetUpdateProcessor extends UniformProcessor implements Stateful
-  {
-    /**
-     * The underlying set
-     */
-    protected Set<Object> m_set;
+	/**
+	 * Single visible instance of the function {@link IsSupersetOrEqual}
+	 */
+	public static final IsSupersetOrEqual isSupersetOrEqual = new IsSupersetOrEqual();
 
-    /**
-     * Create a new instance of the processor
-     */
-    public SetUpdateProcessor()
-    {
-      super(1, 1);
-      m_set = new HashSet<Object>();
-    }
+	/**
+	 * Processor that updates a set.
+	 * @since 0.7
+	 */
+	protected abstract static class SetUpdateProcessor extends UniformProcessor implements Stateful
+	{
+		/**
+		 * The underlying set
+		 */
+		protected Set<Object> m_set;
 
-    @Override
-    public void reset()
-    {
-      super.reset();
-      m_set = new HashSet<Object>();
-    }
+		/**
+		 * Create a new instance of the processor
+		 */
+		public SetUpdateProcessor()
+		{
+			super(1, 1);
+			m_set = new HashSet<Object>();
+		}
 
-    @Override
-    public Class<?> getOutputType(int index)
-    {
-      return Set.class;
-    }
-    
-    @Override
-    public Object getState()
-    {
-    	MathSet<Object> set = new MathSet<Object>();
-    	set.addAll(m_set);
-    	return set;
-    }
-  }
+		@Override
+		public void reset()
+		{
+			super.reset();
+			m_set = new HashSet<Object>();
+		}
 
-  /**
-   * Updates a set by putting the elements it receives into the set.
-   * @since 0.7
-   */
-  public static class PutInto extends SetUpdateProcessor
-  {
-    /**
-     * Create a new instance of the processor
-     */
-    public PutInto()
-    {
-      super();
-    }
+		@Override
+		public Class<?> getOutputType(int index)
+		{
+			return Set.class;
+		}
 
-    @Override
-    public PutInto duplicate(boolean with_state)
-    {
-      PutInto pi = new PutInto();
-      if (with_state)
-      {
-        pi.m_set.addAll(m_set);
-        pi.m_inputCount = m_inputCount;
-      }
-      return pi;
-    }
+		@Override
+		public Object getState()
+		{
+			MathSet<Object> set = new MathSet<Object>();
+			set.addAll(m_set);
+			return set;
+		}
+	}
 
-    @Override
-    protected boolean compute(Object[] inputs, Object[] outputs)
-    {
-      m_set.add(inputs[0]);
-      outputs[0] = m_set;
-      m_inputCount++;
-      return true;
-    }
-  }
-  
-  /**
-   * Calculates the successive intersection of a stream of sets.
-   * @since 0.11
-   */
-  public static class Intersect extends SetUpdateProcessor
-  {
-  	/**
-     * Create a new instance of the processor
-     */
-  	public Intersect()
-  	{
-  		super();
-  	}
+	/**
+	 * Updates a set by putting the elements it receives into the set.
+	 * @since 0.7
+	 */
+	public static class PutInto extends SetUpdateProcessor
+	{
+		/**
+		 * Create a new instance of the processor
+		 */
+		public PutInto()
+		{
+			super();
+		}
+
+		@Override
+		public PutInto duplicate(boolean with_state)
+		{
+			PutInto pi = new PutInto();
+			if (with_state)
+			{
+				pi.m_set.addAll(m_set);
+			}
+			return pi;
+		}
+
+		@Override
+		protected boolean compute(Object[] inputs, Object[] outputs)
+		{
+			m_set.add(inputs[0]);
+			outputs[0] = m_set;
+			return true;
+		}
+	}
+
+	/**
+	 * Calculates the successive intersection of a stream of sets.
+	 * @since 0.11
+	 */
+	public static class Intersect extends SetUpdateProcessor
+	{
+		protected int m_inputCount = 0;
+
+		/**
+		 * Create a new instance of the processor
+		 */
+		public Intersect()
+		{
+			super();
+		}
 
 		@Override
 		protected boolean compute(Object[] inputs, Object[] outputs)
@@ -161,8 +161,8 @@ public class Sets
 			{
 				m_set.retainAll((Collection<?>) inputs[0]);
 			}
-			outputs[0] = m_set;
 			m_inputCount++;
+			outputs[0] = m_set;
 			return true;
 		}
 
@@ -172,40 +172,37 @@ public class Sets
 			Intersect inter = new Intersect();
 			if (with_state)
 			{
-				inter.m_inputCount = m_inputCount;
-				inter.m_outputCount = m_outputCount;
 				inter.m_set.addAll(m_set);
 			}
 			return inter;
 		}
-  	
+
 		@Override
 		public String toString()
 		{
 			return "Intersect";
 		}
-  }
-  
-  /**
-   * Calculates the successive union of a stream of sets.
-   * @since 0.11.3
-   */
-  public static class Union extends SetUpdateProcessor
-  {
-  	/**
-     * Create a new instance of the processor
-     */
-  	public Union()
-  	{
-  		super();
-  	}
+	}
+
+	/**
+	 * Calculates the successive union of a stream of sets.
+	 * @since 0.11.3
+	 */
+	public static class Union extends SetUpdateProcessor
+	{
+		/**
+		 * Create a new instance of the processor
+		 */
+		public Union()
+		{
+			super();
+		}
 
 		@Override
 		protected boolean compute(Object[] inputs, Object[] outputs)
 		{
 			m_set.addAll((Collection<?>) inputs[0]);
 			outputs[0] = m_set;
-			m_inputCount++;
 			return true;
 		}
 
@@ -215,112 +212,109 @@ public class Sets
 			Union inter = new Union();
 			if (with_state)
 			{
-				inter.m_inputCount = m_inputCount;
-				inter.m_outputCount = m_outputCount;
 				inter.m_set.addAll(m_set);
 			}
 			return inter;
 		}
-  	
+
 		@Override
 		public String toString()
 		{
 			return "Union";
 		}
-  }
+	}
 
-  /**
-   * Updates a set.
-   * @since 0.7
-   */
-  public static class PutIntoNew extends SetUpdateProcessor
-  {
-    /**
-     * Create a new instance of the processor
-     */
-    public PutIntoNew()
-    {
-      super();
-    }
+	/**
+	 * Updates a set.
+	 * @since 0.7
+	 */
+	public static class PutIntoNew extends SetUpdateProcessor
+	{
+		/**
+		 * Create a new instance of the processor
+		 */
+		public PutIntoNew()
+		{
+			super();
+		}
 
-    @Override
-    public PutIntoNew duplicate(boolean with_state)
-    {
-      PutIntoNew pi = new PutIntoNew();
-      if (with_state)
-      {
-        pi.m_set.addAll(m_set);
-      }
-      return pi;
-    }
+		@Override
+		public PutIntoNew duplicate(boolean with_state)
+		{
+			PutIntoNew pi = new PutIntoNew();
+			if (with_state)
+			{
+				pi.m_set.addAll(m_set);
+			}
+			return pi;
+		}
 
-    @Override
-    protected boolean compute(Object[] inputs, Object[] outputs)
-    {
-      m_set.add(inputs[0]);
-      HashSet<Object> new_set = new HashSet<Object>();
-      new_set.addAll(m_set);
-      outputs[0] = new_set;
-      m_inputCount++;
-      return true;
-    }
-  }
+		@Override
+		protected boolean compute(Object[] inputs, Object[] outputs)
+		{
+			m_set.add(inputs[0]);
+			HashSet<Object> new_set = new HashSet<Object>();
+			new_set.addAll(m_set);
+			outputs[0] = new_set;
+			return true;
+		}
+	}
 
-  /**
-   * Checks if a set is a subset of another. The first argument is the set to
-   * check, and the second argument is the reference set.
-   * @since 0.7
-   */
-  @SuppressWarnings("rawtypes")
-  public static class IsSubsetOrEqual extends BinaryFunction<Set, Set, Boolean>
-  {
-    protected IsSubsetOrEqual()
-    {
-      super(Set.class, Set.class, Boolean.class);
-    }
+	/**
+	 * Checks if a set is a subset of another. The first argument is the set to
+	 * check, and the second argument is the reference set.
+	 * @since 0.7
+	 */
+	@SuppressWarnings("rawtypes")
+	public static class IsSubsetOrEqual extends BinaryFunction<Set, Set, Boolean>
+	{
+		protected IsSubsetOrEqual()
+		{
+			super(Set.class, Set.class, Boolean.class);
+		}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Boolean getValue(Set x, Set y)
-    {
-      return y.containsAll(x);
-    }
-  }
+		@SuppressWarnings("unchecked")
+		@Override
+		public Boolean getValue(Set x, Set y)
+		{
+			return y.containsAll(x);
+		}
+	}
 
-  /**
-   * Checks if a set is a superset of another. The first argument is the set to
-   * check, and the second argument is the reference set.
-   * @since 0.7
-   */
-  @SuppressWarnings("rawtypes")
-  public static class IsSupersetOrEqual extends BinaryFunction<Set, Set, Boolean>
-  {
-    protected IsSupersetOrEqual()
-    {
-      super(Set.class, Set.class, Boolean.class);
-    }
+	/**
+	 * Checks if a set is a superset of another. The first argument is the set to
+	 * check, and the second argument is the reference set.
+	 * @since 0.7
+	 */
+	@SuppressWarnings("rawtypes")
+	public static class IsSupersetOrEqual extends BinaryFunction<Set, Set, Boolean>
+	{
+		protected IsSupersetOrEqual()
+		{
+			super(Set.class, Set.class, Boolean.class);
+		}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Boolean getValue(Set x, Set y)
-    {
-      return x.containsAll(y);
-    }
-  }
-  
-  /**
-   * Implementation of a set with "mathematical" equality. Two {@link MathSet}s
-   * are considered equal if they have the same elements.
-   *
-   * @param <T> The type of the elements in the set
-   */
-  public static class MathSet<T> extends HashSet<T>
-  {
+		@SuppressWarnings("unchecked")
+		@Override
+		public Boolean getValue(Set x, Set y)
+		{
+			return x.containsAll(y);
+		}
+	}
+
+	/**
+	 * Implementation of a set with "mathematical" equality. Two {@link MathSet}s
+	 * are considered equal if they have the same elements.
+	 *
+	 * @param <T> The type of the elements in the set
+	 */
+	public static class MathSet<T> extends HashSet<T>
+	{
 		/**
 		 * Dummy UID.
 		 */
 		private static final long serialVersionUID = 1L;
-		
+
 		@Override
 		public int hashCode()
 		{
@@ -334,7 +328,7 @@ public class Sets
 			}
 			return h;
 		}
-  	
+
 		@Override
 		public boolean equals(Object o)
 		{
@@ -356,7 +350,7 @@ public class Sets
 			}
 			return true;
 		}
-		
+
 		@Override
 		public String toString()
 		{
@@ -378,5 +372,5 @@ public class Sets
 			out.append("}");
 			return out.toString();
 		}
-  }
+	}
 }

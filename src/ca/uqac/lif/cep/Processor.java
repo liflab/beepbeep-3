@@ -80,7 +80,7 @@ Contextualizable, Printable, Readable
 	/**
 	 * A string used to identify the program's version
 	 */
-	public static final transient String s_versionString = "0.11.2";
+	public static final transient String s_versionString = "0.12";
 
 	/**
 	 * An array of input event queues. This is where the input events will be stored
@@ -107,16 +107,6 @@ Contextualizable, Printable, Readable
 	 * produces
 	 */
 	protected transient Pushable[] m_outputPushables;
-
-	/**
-	 * A counter incremented upon each input front processed
-	 */
-	protected int m_inputCount = 0;
-
-	/**
-	 * A counter incremented upon each output front processed
-	 */
-	protected int m_outputCount = 0;
 
 	/**
 	 * A static counter, to be incremented every time a new {@link Processor} is
@@ -353,8 +343,6 @@ Contextualizable, Printable, Readable
 			m_hasBeenNotifiedOfEndOfTrace[i] = false; 
 		}
 		m_notifiedEndOfTraceDownstream = false;
-		m_inputCount = 0;
-		m_outputCount = 0;
 	}
 
 	/**
@@ -679,24 +667,6 @@ Contextualizable, Printable, Readable
 	}
 
 	/**
-	 * Gets the number of event fronts received so far by this processor
-	 * @return The number of fronts
-	 */
-	public final int getInputCount()
-	{
-		return m_inputCount;
-	}
-
-	/**
-	 * Gets the number of event fronts produced so far by this processor
-	 * @return The number of fronts
-	 */
-	public final int getOutputCount()
-	{
-		return m_outputCount;
-	}
-
-	/**
 	 * Prints the contents of this processor into an object printer.
 	 * @param printer The printer to print this processor to
 	 * @return The printed processor
@@ -707,8 +677,6 @@ Contextualizable, Printable, Readable
 	{
 		Map<String,Object> contents = new HashMap<String,Object>();
 		contents.put("id", m_uniqueId);
-		contents.put("input-count", m_inputCount);
-		contents.put("output-count", m_outputCount);
 		contents.put("context", m_context);
 		List<Queue<Object>> in_queues = new ArrayList<Queue<Object>>(m_inputQueues.length);
 		for (Queue<Object> q : m_inputQueues)
@@ -783,8 +751,6 @@ Contextualizable, Printable, Readable
 		{
 			throw new ProcessorException("The processor returned null with being deserialized");
 		}
-		p.m_inputCount = ((Number) contents.get("input-count")).intValue();
-		p.m_outputCount = ((Number) contents.get("output-count")).intValue();
 		try
 		{
 			reader.setField(p, "m_uniqueId", ((Number) contents.get("id")).intValue());

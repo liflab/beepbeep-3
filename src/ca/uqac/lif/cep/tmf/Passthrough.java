@@ -52,8 +52,6 @@ public class Passthrough extends UniformProcessor implements Stateful
     {
       outputs[i] = inputs[i];
     }
-    m_inputCount++;
-    m_outputCount++;
     return true;
   }
 

@@ -49,8 +49,6 @@ public class PassthroughTest
     assertTrue(o instanceof Passthrough);
     Passthrough proc2 = (Passthrough) o;
     assertFalse(proc == proc2);
-    assertEquals(0, proc2.getInputCount());
-    assertEquals(0, proc2.getOutputCount());
   }
   
 	@Test

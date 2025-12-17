@@ -192,8 +192,6 @@ public class QueueSource extends Source implements Stateful
 			output[i] = event;
 		}
 		outputs.add(output);
-
-		m_outputCount++;
 		return true;
 	}
 

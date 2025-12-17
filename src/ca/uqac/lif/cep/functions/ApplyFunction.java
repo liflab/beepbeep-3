@@ -67,8 +67,6 @@ public class ApplyFunction extends UniformProcessor implements Stateful
     try
     {
       m_function.evaluate(inputs, outputs, m_context);
-      m_inputCount++;
-      m_outputCount++;
     }
     catch (FunctionException e)
     {

@@ -59,8 +59,6 @@ public class TrimTest
     Trim proc2 = (Trim) o;
     assertFalse(proc == proc2);
     assertEquals(1, proc2.getDelay());
-    assertEquals(0, proc2.getInputCount());
-    assertEquals(0, proc2.getOutputCount());
   }
   
   @Test
@@ -80,8 +78,6 @@ public class TrimTest
     assertTrue(o instanceof Trim);
     Trim proc2 = (Trim) o;
     assertFalse(proc1 == proc2);
-    assertEquals(1, proc2.getInputCount());
-    assertEquals(0, proc2.getOutputCount());
     QueueSink sink2 = new QueueSink();
     Connector.connect(proc2, sink2);
     Pushable p2 = proc2.getPushableInput();

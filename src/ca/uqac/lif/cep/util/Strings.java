@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -66,6 +66,11 @@ public class Strings
      * An optional separator to insert after each string
      */
     protected String m_separator;
+    
+    /**
+		 * Whether this is the first input string.
+		 */
+    protected boolean m_first = true;
 
     /**
      * Creates a new build string processor
@@ -88,19 +93,22 @@ public class Strings
     {
       super.reset();
       m_builder = new StringBuilder();
-      m_inputCount = 0;
+      m_first = true;
     }
 
     @Override
     protected boolean compute(Object[] inputs, Object[] outputs)
     {
-      if (m_inputCount > 0)
+      if (!m_first)
       {
         m_builder.append(m_separator);
       }
+      else
+      {
+      	m_first = false;
+      }
       m_builder.append(inputs[0].toString());
       outputs[0] = m_builder.toString();
-      m_inputCount++;
       return true;
     }
 
@@ -112,7 +120,6 @@ public class Strings
       if (with_state)
       {
         bs.m_builder.append(m_builder.toString());
-        bs.m_inputCount = m_inputCount;
       }
       return bs;
     }

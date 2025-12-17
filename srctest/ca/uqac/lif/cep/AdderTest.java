@@ -69,8 +69,6 @@ public class AdderTest
     assertTrue(o instanceof Adder);
     Adder proc2 = (Adder) o;
     assertFalse(proc == proc2);
-    assertEquals(0, proc2.getInputCount());
-    assertEquals(0, proc2.getOutputCount());
     QueueSink sink = new QueueSink();
     Queue<Object> q = sink.getQueue();
     Connector.connect(proc2, sink);

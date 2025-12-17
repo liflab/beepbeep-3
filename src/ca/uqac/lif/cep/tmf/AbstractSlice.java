@@ -248,7 +248,6 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
         }
       }
     }
-    m_inputCount++;
     return produceReturn(outputs);
   }
 
