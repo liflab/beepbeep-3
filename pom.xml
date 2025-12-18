@@ -8,15 +8,15 @@
   <modelVersion>4.0.0</modelVersion>
   
   <!-- Project coordinates -->
-  <groupId>io.github.liflab</groupId>  
-  <artifactId>beepbeep-3</artifactId>  
-  <version>0.12</version>
+  <groupId>io.github.liflab</groupId>
+  <artifactId>beepbeep</artifactId>
+  <version>3.13</version>
   <packaging>jar</packaging>
   
   <!-- Project description -->
   <name>BeepBeep 3</name>
   <description>A simple and versatile event stream processing library.</description>
-  <url>https://liflab.github.io/${project.artifactId}</url>
+  <url>https://liflab.github.io/${project.artifactId}-3</url>
   
   <!-- License information -->
   <licenses>
@@ -38,9 +38,9 @@
   
   <!-- Version control -->
   <scm>
-    <connection>scm:git:git://github.com/liflab/${project.artifactId}.git</connection>
-    <developerConnection>scm:git:ssh://github.com:liflab/${project.artifactId}.git</developerConnection>
-    <url>http://github.com/liflab/${project.artifactId}/tree/master</url>
+    <connection>scm:git:git://github.com/liflab/${project.artifactId}-3.git</connection>
+    <developerConnection>scm:git:ssh://github.com:liflab/${project.artifactId}-3.git</developerConnection>
+    <url>http://github.com/liflab/${project.artifactId}-3/tree/master</url>
   </scm>
   
   <!-- Dependencies -->

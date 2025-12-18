@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,24 +18,17 @@
 package ca.uqac.lif.cep.tmf;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import ca.uqac.lif.azrael.PrintException;
-import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
 import java.util.Queue;
 import org.junit.Test;
 
-import ca.uqac.lif.azrael.clone.ClonePrinter;
-import ca.uqac.lif.azrael.clone.CloneReader;
-
 /**
  * Unit tests for the {@link CountDecimate} processor.
+ * @author Sylvain Hallé
  */
 public class CountDecimateTest
 {
@@ -87,51 +80,5 @@ public class CountDecimateTest
       Utilities.queueContains(2, queue);
       f.reset();
     }
-  }
-
-  @Test
-  public void testSerialization1() throws ProcessorException, PrintException, ReadException
-  {
-    ClonePrinter printer = new ClonePrinter();
-    CloneReader reader = new CloneReader();
-    CountDecimate proc = new CountDecimate(5);
-    Object e = printer.print(proc);
-    assertNotNull(e);
-    Object o = reader.read(e);
-    assertNotNull(o);
-    assertTrue(o instanceof CountDecimate);
-    CountDecimate proc2 = (CountDecimate) o;
-    assertFalse(proc == proc2);
-    assertEquals(5, proc2.getInterval());
-  }
-
-  @Test
-  public void testSerialization2() throws ProcessorException, PrintException, ReadException
-  {
-    ClonePrinter printer = new ClonePrinter();
-    CloneReader reader = new CloneReader();
-    CountDecimate proc1 = new CountDecimate(4);
-    BlackHole hole = new BlackHole();
-    Connector.connect(proc1, hole);
-    Pushable p1 = proc1.getPushableInput();
-    p1.push("0");
-    p1.push("1");
-    Object e = printer.print(proc1);
-    assertNotNull(e);
-    Object o = reader.read(e);
-    assertNotNull(o);
-    assertTrue(o instanceof CountDecimate);
-    CountDecimate proc2 = (CountDecimate) o;
-    assertEquals(4, proc2.getInterval());
-    QueueSink sink2 = new QueueSink();
-    Connector.connect(proc2, sink2);
-    Pushable p2 = proc2.getPushableInput();
-    Queue<Object> q2 = sink2.getQueue();
-    p2.push("2");
-    assertTrue(q2.isEmpty());
-    p2.push("3");
-    assertTrue(q2.isEmpty());
-    p2.push("4");
-    assertFalse(q2.isEmpty());
   }
 }

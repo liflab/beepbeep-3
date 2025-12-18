@@ -26,7 +26,7 @@
   <name>BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.12</version>
+  <version>3.13</version>
 
   <!-- The project's package (with a trailing slash) -->
   <package>ca/uqac/lif/cep/</package>  
@@ -55,24 +55,13 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>beepbeep-3</filename>
-    <withdeps>true</withdeps>
+    <filename>beepbeep</filename>
+    <withdeps>true</withdeps> <!-- No longer matters -->
   </jar>
   
   <!--
     Write JAR dependencies here.
   -->
   <dependencies>
-    <dependency>
-      <!--
-      Azrael. Used to serialize processors.
-      -->
-      <name>Azrael Core</name>
-      <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
-      <files>
-        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.2/azrael-core-2.2.jar</jar>
-      </files>
-      <bundle>true</bundle>
-    </dependency>
   </dependencies>
 </build>

@@ -17,12 +17,6 @@
  */
 package ca.uqac.lif.cep;
 
-import ca.uqac.lif.azrael.ObjectPrinter;
-import ca.uqac.lif.azrael.ObjectReader;
-import ca.uqac.lif.azrael.PrintException;
-import ca.uqac.lif.azrael.Printable;
-import ca.uqac.lif.azrael.ReadException;
-import ca.uqac.lif.azrael.Readable;
 import ca.uqac.lif.cep.Connector.PipeSelector;
 import ca.uqac.lif.cep.Connector.SelectedInputPipe;
 import ca.uqac.lif.cep.Connector.Variant;
@@ -30,12 +24,8 @@ import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Lists.MathList;
 import ca.uqac.lif.cep.util.Maps.MathMap;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -63,8 +53,7 @@ import java.util.Set;
  * @since 0.1
  *
  */
-public abstract class Processor implements DuplicableProcessor, 
-Contextualizable, Printable, Readable
+public abstract class Processor implements DuplicableProcessor, Contextualizable
 {
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires to
@@ -80,7 +69,7 @@ Contextualizable, Printable, Readable
 	/**
 	 * A string used to identify the program's version
 	 */
-	public static final transient String s_versionString = "0.12";
+	public static final transient String s_versionString = "3.13";
 
 	/**
 	 * An array of input event queues. This is where the input events will be stored
@@ -667,41 +656,6 @@ Contextualizable, Printable, Readable
 	}
 
 	/**
-	 * Prints the contents of this processor into an object printer.
-	 * @param printer The printer to print this processor to
-	 * @return The printed processor
-	 * @since 0.10.2
-	 */
-	@Override
-	public final Object print(ObjectPrinter<?> printer) throws ProcessorException
-	{
-		Map<String,Object> contents = new HashMap<String,Object>();
-		contents.put("id", m_uniqueId);
-		contents.put("context", m_context);
-		List<Queue<Object>> in_queues = new ArrayList<Queue<Object>>(m_inputQueues.length);
-		for (Queue<Object> q : m_inputQueues)
-		{
-			in_queues.add(q);
-		}
-		contents.put("input-queues", in_queues);
-		List<Queue<Object>> out_queues = new ArrayList<Queue<Object>>(m_outputQueues.length);
-		for (Queue<Object> q : m_outputQueues)
-		{
-			out_queues.add(q);
-		}
-		contents.put("output-queues", out_queues);
-		contents.put("contents", printState());
-		try
-		{
-			return printer.print(contents);
-		}
-		catch (PrintException e)
-		{
-			throw new ProcessorException(e);
-		}
-	}
-
-	/**
 	 * Produces an object that represents the state of the current processor.
 	 * A concrete processor should override this method to add whatever state
 	 * information that needs to be preserved in the serialization process.
@@ -712,64 +666,6 @@ Contextualizable, Printable, Readable
 	protected Object printState()
 	{
 		return null;
-	}
-
-	/**
-	 * Reads the content of a processor from a serialized object.
-	 * @param reader An object reader
-	 * @param o The object to read from
-	 * @return The serialized processor
-	 * @throws ProcessorException If the read operation failed for some reason
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public final Processor read(ObjectReader<?> reader, Object o) throws ProcessorException
-	{
-		Map<String, Object> contents = null;
-		try
-		{
-			contents = (Map<String,Object>) reader.read(o);
-		}
-		catch (ReadException e)
-		{
-			throw new ProcessorException(e);
-		}
-		Processor p = null;
-		if (contents.containsKey("contents"))
-		{
-			Object o_contents = contents.get("contents");
-			try
-			{
-				p = readState(o_contents);
-			}
-			catch (UnsupportedOperationException e)
-			{
-				throw new ProcessorException(e);
-			}
-		}
-		if (p == null)
-		{
-			throw new ProcessorException("The processor returned null with being deserialized");
-		}
-		try
-		{
-			reader.setField(p, "m_uniqueId", ((Number) contents.get("id")).intValue());
-		}
-		catch (ReadException e)
-		{
-			throw new ProcessorException(e);
-		}
-		List<Queue<Object>> in_queues = (List<Queue<Object>>) contents.get("input-queues");
-		for (int i = 0; i < in_queues.size(); i++)
-		{
-			p.m_inputQueues[i] = in_queues.get(i);
-		}
-		List<Queue<Object>> out_queues = (List<Queue<Object>>) contents.get("output-queues");
-		for (int i = 0; i < out_queues.size(); i++)
-		{
-			p.m_outputQueues[i] = in_queues.get(i);
-		}
-		return p;
 	}
 
 	/**

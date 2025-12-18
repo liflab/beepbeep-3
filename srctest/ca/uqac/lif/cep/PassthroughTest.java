@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,15 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import ca.uqac.lif.azrael.PrintException;
-import ca.uqac.lif.azrael.ReadException;
-import ca.uqac.lif.azrael.clone.ClonePrinter;
-import ca.uqac.lif.azrael.clone.CloneReader;
 import ca.uqac.lif.cep.Processor.InternalProcessorState;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import org.junit.Test;
@@ -36,21 +29,7 @@ import org.junit.Test;
  */
 public class PassthroughTest
 {
-  @Test
-  public void testPassthrough1() throws ProcessorException, PrintException, ReadException
-  {
-    ClonePrinter printer = new ClonePrinter();
-    CloneReader reader = new CloneReader();
-    Passthrough proc = new Passthrough();
-    Object e = printer.print(proc);
-    assertNotNull(e);
-    Object o = reader.read(e);
-    assertNotNull(o);
-    assertTrue(o instanceof Passthrough);
-    Passthrough proc2 = (Passthrough) o;
-    assertFalse(proc == proc2);
-  }
-  
+ 
 	@Test
 	public void testInternalState1()
 	{
