@@ -105,7 +105,7 @@ Compile the sources by simply typing:
 
     ant
 
-This will produce a file called `beepbeep-3-xxx.jar` (where `xxx` is
+This will produce a file called `beepbeep-xxx.jar` (where `xxx` is
 the version number) in the folder. This file is runnable and stand-alone,
 or can be used as a library, so it can be moved around to the location of your
 choice.
@@ -166,6 +166,14 @@ Then, setup the build path for each project:
   *4* library
 - In addition, some of the palette projects may have other
   dependencies; please refer to their individual documentation
+
+Release signing
+---------------
+
+All artifacts published by this project are signed using OpenPGP. The
+signing key was rotated in 2025. Artifacts published before that date
+may be signed with a different (now expired) key; this does not affect
+their integrity or usability.
 
 Warning
 -------
