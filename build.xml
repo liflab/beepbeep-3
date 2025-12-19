@@ -26,14 +26,14 @@
   <antversion property="antversion.running" />
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.11"/>
+  <property name="antrun.version" value="1.12"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
   
   <!-- Versions of various dependencies -->
-  <property name="versions.jacoco" value="0.8.12"/>
-  <property name="versions.junit" value="1.11.0"/>
+  <property name="versions.jacoco" value="0.8.14"/>
+  <property name="versions.junit" value="1.14.1"/>
   
   <!--
     Default values. Note that Ant's properties cannot be overwritten once
@@ -157,6 +157,42 @@
     <mkdir dir="${build.docdir}/doc-files"/>
   </target>
   
+  <!-- Target: check-javadoc
+       Sets the property javadoc.uptodate if the generated documentation
+       is newer than any source file -->
+  <target name="check-javadoc" depends="init">
+    <uptodate property="javadoc.uptodate"
+              targetfile="${build.docdir}/.javadoc.stamp">
+      <srcfiles dir="${build.srcdir}"
+                includes="**/*.java"
+                excludes="${build.test.filenamepattern.src}"/>
+    </uptodate>
+  </target>
+  
+  <!-- Target: check-test
+       Sets the property test.uptodate if the generated test reports are
+       newer than any source file -->
+  <target name="check-test" depends="init">
+    <!-- Only claim uptodate if the stamp exists -->
+    <available file="${basedir}/${build.report.junitdir}/.test.stamp"
+             property="test.stamp.present"/>
+
+    <uptodate property="test.uptodate"
+            targetfile="${basedir}/${build.report.junitdir}/.test.stamp">
+      <!-- Rerun tests if any Java source changes (including *Test.java, since
+           tests and prod sources are co-located in your project) -->
+      <srcfiles dir="${build.srcdir}" includes="**/*.java"/>
+    </uptodate>
+
+    <!-- If no stamp, force test.uptodate to be false (by clearing it) -->
+    <condition property="test.uptodate.effective">
+      <and>
+        <isset property="test.stamp.present"/>
+        <isset property="test.uptodate"/>
+      </and>
+    </condition>
+  </target>
+  
   <!-- Target: zip
        Zips the jar
   -->
@@ -211,13 +247,10 @@
   <!-- Target: javadoc
        Generates the javadoc associated to the project
   -->
-  <target name="javadoc" depends="init" description="Generate the documentation">
+  <target name="javadoc" depends="check-javadoc" description="Generate the documentation" unless="javadoc.uptodate">
     <mkdir dir="${build.docdir}"/>
     <mkdir dir="${build.docdir}/doc-files"/>
-    <javadoc sourcepath="${build.srcdir}"
-             destdir="${build.docdir}"
-             packagenames="*"
-             excludepackagenames=""
+    <javadoc destdir="${build.docdir}"
              defaultexcludes="yes"
              author="true"
              version="true"
@@ -226,9 +259,11 @@
              docencoding="utf8"
              charset="utf8"
              windowtitle="${build.name} Documentation">
+      <fileset dir="${build.srcdir}" includes="**/*.java"
+           excludes="${build.test.filenamepattern.src}"/>
       <doctitle><![CDATA[<h1>]]>${build.name}<![CDATA[ Documentation</h1>]]></doctitle>
       <bottom><![CDATA[<i>Copyright&nbsp;&#169; ]]>${build.author}<![CDATA[. All Rights Reserved.</i>]]></bottom>
-      <link href="http://docs.oracle.com/javase/8/docs/api/"/>
+      <link href="http://docs.oracle.com/javase/${build.targetjdk}/docs/api/"/>
       <classpath refid="build.classpath"/>
     </javadoc>
     <if>
@@ -239,6 +274,7 @@
       	</copy>
       </then>
     </if>
+    <touch file="${build.docdir}/.javadoc.stamp"/>
   </target>
   
   <!-- Target: jar
@@ -288,7 +324,7 @@
   <!-- Target: test
        Performs tests with jUnit
   -->
-  <target name="test" depends="junit,jacoco,compile,compile-tests" description="Perform unit tests">
+  <target name="test" depends="junit,jacoco,compile,compile-tests,check-test" description="Perform unit tests" unless="test.uptodate.effective">
     <!-- JaCoCo coverage srequires Ant 1.10.6 -->
     <fail message="Ant 1.10.6+ is required. Consider using test-legacy as a workaround.">
       <condition><not><antversion atleast="1.10.6"/></not></condition>
@@ -317,6 +353,7 @@
         </fork>
       </testclasses>
     </junitlauncher>
+    <touch file="${basedir}/${build.report.junitdir}/.test.stamp"/>
     <fail if="test.failed"/>
   </target>
   
@@ -341,6 +378,7 @@
       <arg line="--scan-classpath" />
       <arg line="--reports-dir ${build.report.junitdir}" />
     </java>
+    <touch file="${basedir}/${build.report.junitdir}/.test.stamp"/>
     <fail if="test.failed"/>
   </target>
   
@@ -354,7 +392,7 @@
   <!-- Target: junit-report
        Generates JUnit HTML report and code coverage report with JaCoCo
   -->
-  <target name="junit-report" depends="init" description="Generate unit test reports">
+  <target name="junit-report" depends="test,junit,check-test" description="Generate unit test reports">
     <!-- Don't run if no report fiels are present -->
     <fail message="No test report files seem to be present. Run ant test first.">
       <condition>
@@ -374,7 +412,7 @@
   <!-- Target: jacoco-report
        Generates JUnit code coverage report with JaCoCo
   -->
-  <target name="jacoco-report" depends="init,jacoco" description="Generate coverage reports">
+  <target name="jacoco-report" depends="test,jacoco,check-test" description="Generate coverage reports">
     <!-- Don't run if no report fiels are present -->
     <fail message="No test report files seem to be present. Run ant test first.">
       <condition>

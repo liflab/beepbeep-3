@@ -57,6 +57,7 @@
   <jar>
     <filename>beepbeep</filename>
     <withdeps>true</withdeps> <!-- No longer matters -->
+    <withsrc>true</withsrc>
   </jar>
   
   <!--
