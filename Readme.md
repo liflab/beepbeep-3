@@ -24,27 +24,27 @@ dependency in your project.
 ```xml
 <dependency>
   <groupId>io.github.liflab</groupId>
-  <artifactId>beepbeep-3</artifactId>
-  <version>0.11.2</version>
+  <artifactId>beepbeep</artifactId>
+  <version>3.13</version>
 </dependency>
 ```
 
 ### Ivy
 
 ```xml
-<dependency org="io.github.liflab" name="beepbeep-3" rev="0.11.2"/>
+<dependency org="io.github.liflab" name="beepbeep" rev="3.13"/>
 ```
 
 ### Gradle
 
 ```
-compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.11.2'
+compileOnly group: 'io.github.liflab', name: 'beepbeep', version: '3.13'
 ```
 
 ### Groovy
 
 ```
-@Grab('io.github.liflab:beepbeep-3:0.11.2')
+@Grab('io.github.liflab:beepbeep:3.13')
 ```
 
 Repository structure
