@@ -32,132 +32,162 @@ package ca.uqac.lif.cep;
  */
 public interface Pushable
 {
-  /**
-   * Pushes an event into one of the processor's input trace. This 
-   * method <em>must</em> return only when the
-   * push operation is completely done.
-   * 
-   * @param o
-   *          The event. Although you can technically push {@code null}, the
-   *          behaviour in this case is undefined. It <em>may</em> be
-   *          interpreted as if you are passing no event.
-   * @return The same instance of pushable. This is done to allow chain calls to
-   *         {@link Pushable} objects, e.g. {@code p.push(o1).push(o2)}.
-   */
-  public Pushable push(Object o);
+	/**
+	 * Pushes an event into one of the processor's input trace. This 
+	 * method <em>must</em> return only when the
+	 * push operation is completely done.
+	 * 
+	 * @param o
+	 *          The event. Although you can technically push {@code null}, the
+	 *          behaviour in this case is undefined. It <em>may</em> be
+	 *          interpreted as if you are passing no event.
+	 * @return The same instance of pushable. This is done to allow chain calls to
+	 *         {@link Pushable} objects, e.g. {@code p.push(o1).push(o2)}.
+	 */
+	public Pushable push(Object o);
 
-  /**
-   * Notifies the pushable that there is no more event to be pushed, i.e. the
-   * trace of events has ended at this point.
-   * 
-   * @throws PushableException Exception thrown when the push operation fails
-   * for some reason
-   */
-  public void notifyEndOfTrace() throws PushableException;
+	/**
+	 * Notifies the pushable that there is no more event to be pushed, i.e. the
+	 * trace of events has ended at this point.
+	 * 
+	 * @throws PushableException Exception thrown when the push operation fails
+	 * for some reason
+	 */
+	public void notifyEndOfTrace() throws PushableException;
 
-  /**
-   * Gets the processor instance this Pushable is linked to
-   * 
-   * @return The processor
-   */
-  public Processor getProcessor();
+	/**
+	 * Gets the processor instance this Pushable is linked to
+	 * 
+	 * @return The processor
+	 */
+	public Processor getProcessor();
 
-  /**
-   * Gets the position this Pushable is associated to: 0 is the first input (or
-   * output), 1 the second, etc.
-   * 
-   * @return The position
-   */
-  public int getPosition();
+	/**
+	 * Gets the position this Pushable is associated to: 0 is the first input (or
+	 * output), 1 the second, etc.
+	 * 
+	 * @return The position
+	 */
+	public int getPosition();
 
-  /**
-   * A runtime exception indicating that something went wrong when attempting to
-   * check if a next event exists. This happens, for example, if one of a
-   * processor's inputs it not connected to anything. Rather than throwing a
-   * {@code NullPointerException}, the issue will be wrapped within a
-   * PullableException with a better error message.
-   */
-  public static class PushableException extends RuntimeException
-  {
-    /**
-     * Dummy UID
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * An alternative to {@link #push(Object)} using the right-shift operator.
+	 * This allows writing code such as {@code p >> o} instead of
+	 * {@code p.push(o)} in Groovy.
+	 * @param o The object to push
+	 * @return The same pushable
+	 */
+	public default Pushable rightShift(Object o)
+	{
+		return push(o);
+	}
 
-    /**
-     * The processor to which the exception is associated (if any)
-     */
-    protected final transient Processor m_processor;
+	/**
+	 * A runtime exception indicating that something went wrong when attempting to
+	 * check if a next event exists. This happens, for example, if one of a
+	 * processor's inputs it not connected to anything. Rather than throwing a
+	 * {@code NullPointerException}, the issue will be wrapped within a
+	 * PullableException with a better error message.
+	 */
+	public static class PushableException extends RuntimeException
+	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 1L;
 
-    public PushableException(Throwable t)
-    {
-      this(t, null);
-    }
+		/**
+		 * The processor to which the exception is associated (if any)
+		 */
+		protected final transient Processor m_processor;
 
-    public PushableException(String message)
-    {
-      this(message, null);
-    }
+		/**
+		 * Creates a new exception.
+		 * @param t The cause
+		 */
+		public PushableException(Throwable t)
+		{
+			this(t, null);
+		}
 
-    public PushableException(String message, Processor p)
-    {
-      super(message);
-      m_processor = p;
-    }
+		/**
+		 * Creates a new exception.
+		 * @param message The message
+		 */
+		public PushableException(String message)
+		{
+			this(message, null);
+		}
 
-    public PushableException(Throwable t, Processor p)
-    {
-      super(t);
-      m_processor = p;
-    }
-  }
+		/**
+		 * Creates a new exception.
+		 * @param message The message
+		 * @param p The processor to which the exception is associated
+		 */
+		public PushableException(String message, Processor p)
+		{
+			super(message);
+			m_processor = p;
+		}
 
-  /**
-   * Pushable object that throws an {@link UnsupportedOperationException} upon
-   * every call to each of its methods (except {@link #getProcessor()}). This
-   * object can be returned by processors to signal that they cannot be pushed.
-   */
-  public static class PushNotSupported implements Pushable
-  {
-    protected Processor m_processor;
+		/**
+		 * Creates a new exception.
+		 * @param t The cause
+		 * @param p The processor to which the exception is associated
+		 */
+		public PushableException(Throwable t, Processor p)
+		{
+			super(t);
+			m_processor = p;
+		}
+	}
 
-    protected int m_position;
+	/**
+	 * Pushable object that throws an {@link UnsupportedOperationException} upon
+	 * every call to each of its methods (except {@link #getProcessor()}). This
+	 * object can be returned by processors to signal that they cannot be pushed.
+	 */
+	public static class PushNotSupported implements Pushable
+	{
+		protected Processor m_processor;
 
-    /**
-     * Creates a new exception
-     * @param p The processor that throws the exception
-     * @param position The index of the input stream for which the push
-     * operation is not supported
-     */
-    public PushNotSupported(Processor p, int position)
-    {
-      super();
-      m_processor = p;
-      m_position = position;
-    }
+		protected int m_position;
 
-    @Override
-    public Pushable push(Object o)
-    {
-      throw new UnsupportedOperationException();
-    }
+		/**
+		 * Creates a new exception
+		 * @param p The processor that throws the exception
+		 * @param position The index of the input stream for which the push
+		 * operation is not supported
+		 */
+		public PushNotSupported(Processor p, int position)
+		{
+			super();
+			m_processor = p;
+			m_position = position;
+		}
 
-    @Override
-    public void notifyEndOfTrace() throws PushableException
-    {
-      throw new UnsupportedOperationException();
-    }
+		@Override
+		public Pushable push(Object o)
+		{
+			throw new UnsupportedOperationException();
+		}
 
-    @Override
-    public Processor getProcessor()
-    {
-      return m_processor;
-    }
+		@Override
+		public void notifyEndOfTrace() throws PushableException
+		{
+			throw new UnsupportedOperationException();
+		}
 
-    @Override
-    public int getPosition()
-    {
-      return m_position;
-    }
-  }
+		@Override
+		public Processor getProcessor()
+		{
+			return m_processor;
+		}
+
+		@Override
+		public int getPosition()
+		{
+			return m_position;
+		}
+	}
 }

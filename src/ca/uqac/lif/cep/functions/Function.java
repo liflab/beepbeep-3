@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2025 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -228,4 +228,21 @@ public abstract class Function implements DuplicableFunction
 	{
 		throw new UnsupportedOperationException("This function does not support deserialization");
 	}
+	
+  /**
+   * Creates a new function that is the composition of this function and another
+   * function. This method overrides the "getAt" operation defined in Groovy,
+   * which makes it possible to write code such as:
+   * <pre>
+   * Function f3 = f1[f2]
+   * </pre>
+   * @param f The function to compose with
+   * @return A new function representing the composition of this function and
+   * {@code f}
+   * @since 3.14
+   */
+  public Function getAt(Function f)
+  {
+  	return new FunctionTree(this, f);
+  }
 }

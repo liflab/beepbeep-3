@@ -10,7 +10,7 @@
   <!-- Project coordinates -->
   <groupId>io.github.liflab</groupId>
   <artifactId>beepbeep</artifactId>
-  <version>3.13</version>
+  <version>3.14</version>
   <packaging>jar</packaging>
   
   <!-- Project description -->

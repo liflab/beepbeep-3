@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2024 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.util;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
@@ -47,13 +48,16 @@ public class Maps
 	/**
 	 * Extracts the set of values of a map
 	 */
-	public static final transient Values values = new Values();
+	public static final Values values = new Values();
 
 	/**
 	 * Extracts the multi-set of values of a map
 	 */
-	public static final transient MultiValues multiValues = new MultiValues();
+	public static final MultiValues multiValues = new MultiValues();
 
+	/**
+	 * Unreachable constructor.
+	 */
 	protected Maps()
 	{
 		// Utility class
@@ -294,6 +298,67 @@ public class Maps
 		public Class<?> getOutputType(int index)
 		{
 			return Map.class;
+		}
+	}
+	
+	/**
+	 * Creates a new map that is the union of two input maps. If both maps
+	 * contain the same key, the associated values are combined using a
+	 * provided function.
+	 * @since 3.14
+	 */
+	@SuppressWarnings("rawtypes")
+	public static class MapUnion extends BinaryFunction<Map,Map,Map>
+	{
+		/**
+		 * The function to use to combine values with the same key.
+		 */
+		protected final BinaryFunction<?,?,?> m_function;
+		
+		/**
+		 * Creates a new {@code MapUnion} function.
+		 * @param f The function to use to combine values with the same key
+		 */
+		public MapUnion(BinaryFunction<?,?,?> f)
+		{
+			super(Map.class, Map.class, Map.class);
+			m_function = f;
+		}
+		
+		@Override
+		public Map getStartValue()
+		{
+			return new HashMap<Object,Object>();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public Map getValue(Map m1, Map m2)
+		{
+			Map<Object,Object> out = new HashMap<Object,Object>();
+			for (Object o  : m1.entrySet())
+			{
+				Map.Entry<Object,Object> e = (Map.Entry<Object,Object>) o;
+				out.put(e.getKey(), e.getValue());
+			}
+			for (Object o  : m2.entrySet())
+			{
+				Map.Entry<Object,Object> e = (Map.Entry<Object,Object>) o;
+				if (out.containsKey(e.getKey()))
+				{
+					Object v1 = out.get(e.getKey());
+					Object v2 = e.getValue();
+					Object[] in = new Object[] {v1, v2};
+					Object[] out_arr = new Object[1];
+					m_function.evaluate(in, out_arr);
+					out.put(e.getKey(), out_arr[0]);
+				}
+				else
+				{
+					out.put(e.getKey(), e.getValue());
+				}
+			}
+			return out;
 		}
 	}
 

@@ -99,6 +99,7 @@ public class Pump extends Processor implements Runnable, Stateful
         }
       }
     }
+    m_run = false;
     pushable.notifyEndOfTrace();
   }
 

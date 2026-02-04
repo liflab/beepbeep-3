@@ -396,6 +396,12 @@ public class Multiset implements Set<Object>
     {
       super(Multiset.class, Object.class, Multiset.class);
     }
+    
+    @Override
+    public Multiset getStartValue()
+    {
+    	return new Multiset();
+    }
 
     @Override
     public Multiset getValue(Multiset x, Object y)

@@ -547,6 +547,34 @@ public class GroupProcessor extends Processor implements Stateful
 	}
 	
 	/**
+	 * Sets a selected output pipe as the output 0 of the group, and crawls the pipeline
+	 * backwards from that processor to add all other processors encountered
+	 * along the way.
+	 * @param p The selected output pipe to set as the output of the group
+	 * @return A {@link CallAfterConnect} object, which allows the underlying
+	 * processor to be connected, and <em>then</em> for upstream processors to be
+	 * harvested by {@link #collectProcessors(Processor)}.
+	 */
+	public CallAfterConnect out(SelectedOutputPipe p)
+	{
+		addProcessor(p.getProcessor());
+		associateOutput(0, p.getProcessor(), p.getIndex());
+		return new OutputCallAfterConnect(p.getProcessor());
+	}
+	
+	/**
+	 * Sets a selected input pipe as the input 0 of the group.
+	 * @param p The selected input pipe to set as the input of the group
+	 * @return A {@link CallAfterConnect} object, which allows the underlying
+	 * processor to be connected, and <em>then</em> for upstream processors to be
+	 * harvested by {@link #collectProcessors(Processor)}.
+	 */
+	public CallAfterConnect out(SelectedInputPipe p)
+	{
+		return out(p.getProcessor());
+	}
+	
+	/**
 	 * Crawls the network of processors and adds to {@link #m_processors} any
 	 * processor that is not already present in the list.
 	 * @param start The starting point of the collection
@@ -1023,6 +1051,13 @@ public class GroupProcessor extends Processor implements Stateful
 	@Override
 	public boolean onEndOfTrace(Queue<Object[]> outputs)
 	{
+		/*
+		for (int i = 0; i < getInputArity(); i++)
+		{
+			ProcessorAssociation pa = m_inputPullableAssociations.get(i);
+			pa.m_processor.
+		}
+		*/
 		return false;
 	}
 

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2025 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,7 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
-import ca.uqac.lif.cep.Connector.PipeSelector;
+import ca.uqac.lif.cep.Connector.InputPorts;
+import ca.uqac.lif.cep.Connector.OutputPorts;
 import ca.uqac.lif.cep.Connector.SelectedInputPipe;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.util.Equals;
@@ -781,36 +782,42 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	}
 
 	/**
-	 * Gets the {@link PipeSelector} object corresponding to the processor's
-	 * input or output pipe for a given index.
-	 * <p>
-	 * Java programmers probably won't use this method, but users of the Groovy
-	 * language can benefit from its operator overloading conventions, which map
-	 * the construct {@code p[x]} to {@code p.getAt(x)}. Combined with the
-	 * definition of {@link #or(Connector.SelectedInputPipe)}, this can be used
-	 * to easily pipe two processors together:
-	 * <pre>{@code 
-	 * def p = (some processor)
-	 * def q = (some other processor)
-	 * p | q[1] // Connects p to pipe index 1 of q
-	 * }</pre>
-	 * @param index The input pipe index
+   * Groovy helper: allows p.out[i] to designate output i of p.
+   */
+  public final OutputPorts getOut()
+  {
+    return new OutputPorts(this);
+  }
+
+  /**
+   * Groovy helper: allows p.in[i] to designate input i of p.
+   */
+  public final InputPorts getIn()
+  {
+    return new InputPorts(this);
+  }
+
+	/**
+	 * Gets the {@link Pushable} corresponding to the processor's first input
+	 * pipe. This method is provided to facilitate Groovy's operator overloading,
+	 * which maps the construct {@code p >>} to {@code p.rightShift()}.
 	 * @return The pushable object
-	 * @since 0.11
 	 */
-	/*@ pure non_null @*/ public PipeSelector getAt(int index)
+	public Pushable rightShift()
 	{
-		return new PipeSelector(this, index);
+		return getPushableInput();
 	}
 
-	public Pushable rightShift(int index)
+	/**
+	 * Gets the {@link Pullable} corresponding to the processor's first output
+	 * pipe. This method is provided to facilitate Groovy's operator overloading,
+	 * which maps the construct {@code p <<} to {@code p.leftShift()}.
+	 * @return The pullable object
+	 */
+	public Processor leftShift(Object o)
 	{
-		return getPushableInput(index);
-	}
-
-	public Pullable leftShift(int index)
-	{
-		return getPullableInput(index);
+		getPushableInput().push(o);
+		return this;
 	}
 
 	/**

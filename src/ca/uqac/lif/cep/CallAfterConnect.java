@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2024 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -38,4 +38,75 @@ public interface CallAfterConnect
 	 * Performs whatever action is needed after the connection is established.
 	 */
 	public void call();
+	
+	/**
+	 * A {@link CallAfterConnect} object that starts a processor after it has
+	 * been connected to its input. In a Groovy script, this object spares the
+	 * user from manually calling the {@link Processor#start()} method after
+	 * connecting the last processor in the chain, in order for it to start
+	 * processing events.
+	 */
+	public static class StartAfterConnect implements CallAfterConnect
+	{
+		/**
+		 * The processor to connect.
+		 */
+		private final Processor m_processor;
+		
+		/**
+		 * Creates a new instance of the call.
+		 * @param p The processor to connect
+		 */
+		public StartAfterConnect(Processor p)
+		{
+			super();
+			m_processor = p;
+		}
+		
+		@Override
+		public Processor getProcessor()
+		{
+			return m_processor;
+		}
+
+		@Override
+		public void call()
+		{
+			m_processor.start();
+		}
+	}
+	
+	/**
+	 * A {@link RunAfterConnect} object that starts a {@link Runnable}
+	 * processor after it has been connected to its input.
+	 */
+	public static class RunAfterConnect implements CallAfterConnect
+	{
+		/**
+		 * The processor to connect.
+		 */
+		private final Processor m_processor;
+		
+		/**
+		 * Creates a new instance of the call.
+		 * @param p The processor to connect
+		 */
+		public RunAfterConnect(Processor p)
+		{
+			super();
+			m_processor = p;
+		}
+		
+		@Override
+		public Processor getProcessor()
+		{
+			return m_processor;
+		}
+
+		@Override
+		public void call()
+		{
+			((Runnable) m_processor).run();
+		}
+	}
 }

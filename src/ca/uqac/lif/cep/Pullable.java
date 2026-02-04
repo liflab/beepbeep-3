@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -209,22 +209,40 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
      */
     protected final transient Processor m_processor;
 
+    /**
+     * Creates a new exception.
+     * @param t The cause of the exception
+     */
     public PullableException(Throwable t)
     {
       this(t, null);
     }
 
+    /**
+     * Creates a new exception.
+     * @param message The message of the exception
+     */
     public PullableException(String message)
     {
       this(message, null);
     }
 
+    /**
+     * Creates a new exception, associated to a processor.
+     * @param message The message of the exception
+     * @param p The processor that caused the exception
+     */
     public PullableException(String message, Processor p)
     {
       super(message);
       m_processor = p;
     }
 
+    /**
+		 * Creates a new exception, associated to a processor.
+		 * @param t The cause of the exception
+		 * @param p The processor that caused the exception
+		 */
     public PullableException(Throwable t, Processor p)
     {
       super(t);
