@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -21,11 +21,11 @@ import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * A set where each element can be present more than once.
@@ -37,7 +37,17 @@ public class Multiset implements Set<Object>
   /**
    * A single visible instance of the {@link GetCardinalities} function
    */
-  public static final transient GetCardinalities getCardinalities = new GetCardinalities();
+  public static final GetCardinalities getCardinalities = new GetCardinalities();
+  
+  /**
+	 * A single visible instance of the {@link Insert} function.
+	 */
+  public static final Insert insert = Insert.instance;
+  
+  /**
+	 * A single visible instance of the {@link Union} function.
+	 */
+  public static final Union union = Union.instance;
   
   /**
    * The map used to store the relation between each element and its
@@ -51,7 +61,7 @@ public class Multiset implements Set<Object>
   public Multiset()
   {
     super();
-    m_map = new HashMap<Object, Integer>();
+    m_map = new TreeMap<Object, Integer>();
   }
   
   /**
@@ -61,7 +71,7 @@ public class Multiset implements Set<Object>
   public Multiset(/*@ non_null @*/ Multiset m)
   {
     super();
-    m_map = new HashMap<Object, Integer>();
+    m_map = new TreeMap<Object, Integer>();
     m_map.putAll(m.m_map);
   }
 
@@ -416,6 +426,32 @@ public class Multiset implements Set<Object>
     {
       return this;
     }
+  }
+  
+  /**
+   * Calculates the union of two multisets.
+   * @since 3.14
+   */
+  public static class Union extends BinaryFunction<Multiset,Multiset,Multiset>
+  {
+  	public static final Union instance = new Union();
+  	
+  	protected Union()
+  	{
+  		super(Multiset.class, Multiset.class, Multiset.class);
+  	}
+
+		@Override
+		public Multiset getValue(Multiset x, Multiset y)
+		{
+			return x.addAll(y);
+		}
+		
+		@Override
+		public Multiset getStartValue()
+		{
+			return new Multiset();
+		}
   }
   
   /**
