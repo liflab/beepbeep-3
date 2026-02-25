@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2025 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -32,380 +32,386 @@ import java.util.Collection;
  */
 public class Booleans
 {
-  protected Booleans()
-  {
-    // Utility class
-  }
+	protected Booleans()
+	{
+		// Utility class
+	}
 
-  /**
-   * Static reference to the {@link And} function.
-   */
-  public static final transient And and = And.instance;
+	/**
+	 * Static reference to the {@link And} function.
+	 */
+	public static final transient And and = And.instance;
 
-  /**
-   * Static reference to the {@link Or} function.
-   */
-  public static final transient Or or = Or.instance;
+	/**
+	 * Static reference to the {@link Or} function.
+	 */
+	public static final transient Or or = Or.instance;
 
-  /**
-   * Static reference to the {@link Implies} function.
-   */
-  public static final transient Implies implies = Implies.instance;
+	/**
+	 * Static reference to the {@link Implies} function.
+	 */
+	public static final transient Implies implies = Implies.instance;
 
-  /**
-   * Static reference to the {@link Not} function.
-   */
-  public static final transient Not not = Not.instance;
+	/**
+	 * Static reference to the {@link Not} function.
+	 */
+	public static final transient Not not = Not.instance;
 
-  /**
-   * Static reference to the {@link BagAnd} function.
-   */
-  public static final transient BagAnd bagAnd = BagAnd.instance;
+	/**
+	 * Static reference to the {@link BagAnd} function.
+	 */
+	public static final transient BagAnd bagAnd = BagAnd.instance;
 
-  /**
-   * Static reference to the {@link BagOr} function.
-   */
-  public static final transient BagOr bagOr = BagOr.instance;
+	/**
+	 * Static reference to the {@link BagOr} function.
+	 */
+	public static final transient BagOr bagOr = BagOr.instance;
 
-  /**
-   * Static reference to the {@link BooleanCast} function.
-   */
-  public static final transient BooleanCast booleanCast = BooleanCast.instance;
+	/**
+	 * Static reference to the {@link BooleanCast} function.
+	 */
+	public static final transient BooleanCast booleanCast = BooleanCast.instance;
 
-  public static FunctionTree land(Function f1, Function f2)
-  {
-    return new FunctionTree(and, f1, f2);
-  }
+	public static FunctionTree land(Function f1, Function f2)
+	{
+		return new FunctionTree(and, f1, f2);
+	}
 
-  public static FunctionTree lor(Function f1, Function f2)
-  {
-    return new FunctionTree(or, f1, f2);
-  }
-  
-  public static FunctionTree lnot(Function f1)
-  {
-    return new FunctionTree(not, f1);
-  }
+	public static FunctionTree lor(Function f1, Function f2)
+	{
+		return new FunctionTree(or, f1, f2);
+	}
 
-  /**
-   * Implementation of the logical conjunction
-   * @since 0.7
-   * @author Sylvain Hallé
-   */
-  public static class And extends BinaryFunction<Boolean, Boolean, Boolean>
-  {
-    public static final transient And instance = new And();
+	public static FunctionTree lnot(Function f1)
+	{
+		return new FunctionTree(not, f1);
+	}
 
-    protected And()
-    {
-      super(Boolean.class, Boolean.class, Boolean.class);
-    }
+	/**
+	 * Implementation of the logical conjunction
+	 * @since 0.7
+	 * @author Sylvain Hallé
+	 */
+	public static class And extends BinaryFunction<Boolean, Boolean, Boolean>
+	{
+		public static final transient And instance = new And();
 
-    @Override
-    public Boolean getValue(Boolean x, Boolean y)
-    {
-      return x.booleanValue() && y.booleanValue();
-    }
+		protected And()
+		{
+			super(Boolean.class, Boolean.class, Boolean.class);
+		}
 
-    @Override
-    public Boolean getStartValue()
-    {
-      return Boolean.TRUE;
-    }
+		@Override
+		public Boolean getValue(Boolean x, Boolean y)
+		{
+			return x.booleanValue() && y.booleanValue();
+		}
 
-    @Override
-    public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
-    {
-      if (inputs[0] != null && ((Boolean) inputs[0]) == false)
-      {
-        outputs[0] = false;
-        return true;
-      }
-      if (inputs[1] != null && ((Boolean) inputs[1]) == false)
-      {
-        outputs[0] = false;
-        return true;
-      }
-      if (inputs[0] != null && inputs[1] != null)
-      {
-        outputs[0] = ((Boolean) inputs[0]) && ((Boolean) inputs[1]);
-        return true;
-      }
-      return false;
-    }
+		@Override
+		public Boolean getStartValue()
+		{
+			return Boolean.TRUE;
+		}
 
-    @Override
-    public String toString()
-    {
-      return "∧";
-    }
-  }
+		@Override
+		public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
+		{
+			if (inputs[0] != null && ((Boolean) inputs[0]) == false)
+			{
+				outputs[0] = false;
+				return true;
+			}
+			if (inputs[1] != null && ((Boolean) inputs[1]) == false)
+			{
+				outputs[0] = false;
+				return true;
+			}
+			if (inputs[0] != null && inputs[1] != null)
+			{
+				outputs[0] = ((Boolean) inputs[0]) && ((Boolean) inputs[1]);
+				return true;
+			}
+			return false;
+		}
 
-  /**
-   * Implementation of the logical implication
-   * @since 0.7
-   * @author Sylvain Hallé
-   */
-  public static class Implies extends BinaryFunction<Boolean, Boolean, Boolean>
-  {
-    public static final transient Implies instance = new Implies();
+		@Override
+		public String toString()
+		{
+			return "∧";
+		}
+	}
 
-    protected Implies()
-    {
-      super(Boolean.class, Boolean.class, Boolean.class);
-    }
+	/**
+	 * Implementation of the logical implication
+	 * @since 0.7
+	 * @author Sylvain Hallé
+	 */
+	public static class Implies extends BinaryFunction<Boolean, Boolean, Boolean>
+	{
+		public static final transient Implies instance = new Implies();
 
-    @Override
-    public Boolean getValue(Boolean x, Boolean y)
-    {
-      return !x.booleanValue() || y.booleanValue();
-    }
+		protected Implies()
+		{
+			super(Boolean.class, Boolean.class, Boolean.class);
+		}
 
-    @Override
-    public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
-    {
-      if (inputs[0] != null && ((Boolean) inputs[0]) == false)
-      {
-        outputs[0] = true;
-        return true;
-      }
-      if (inputs[1] != null && ((Boolean) inputs[1]) == true)
-      {
-        outputs[0] = true;
-        return true;
-      }
-      if (inputs[0] != null && inputs[1] != null)
-      {
-        outputs[0] = !((Boolean) inputs[0]) || ((Boolean) inputs[1]);
-        return true;
-      }
-      return false;
-    }
+		@Override
+		public Boolean getValue(Boolean x, Boolean y)
+		{
+			return !x.booleanValue() || y.booleanValue();
+		}
 
-    @Override
-    public String toString()
-    {
-      return "→";
-    }
-  }
+		@Override
+		public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
+		{
+			if (inputs[0] != null && ((Boolean) inputs[0]) == false)
+			{
+				outputs[0] = true;
+				return true;
+			}
+			if (inputs[1] != null && ((Boolean) inputs[1]) == true)
+			{
+				outputs[0] = true;
+				return true;
+			}
+			if (inputs[0] != null && inputs[1] != null)
+			{
+				outputs[0] = !((Boolean) inputs[0]) || ((Boolean) inputs[1]);
+				return true;
+			}
+			return false;
+		}
 
-  /**
-   * Implementation of the logical disjunction
-   * @since 0.7
-   * @author Sylvain Hallé
-   */
-  public static class Or extends BinaryFunction<Boolean, Boolean, Boolean>
-  {
-    public static final transient Or instance = new Or();
+		@Override
+		public String toString()
+		{
+			return "→";
+		}
+	}
 
-    protected Or()
-    {
-      super(Boolean.class, Boolean.class, Boolean.class);
-    }
+	/**
+	 * Implementation of the logical disjunction
+	 * @since 0.7
+	 * @author Sylvain Hallé
+	 */
+	public static class Or extends BinaryFunction<Boolean, Boolean, Boolean>
+	{
+		public static final transient Or instance = new Or();
 
-    @Override
-    public Boolean getValue(Boolean x, Boolean y)
-    {
-      return x.booleanValue() || y.booleanValue();
-    }
+		protected Or()
+		{
+			super(Boolean.class, Boolean.class, Boolean.class);
+		}
 
-    @Override
-    public Boolean getStartValue()
-    {
-      return Boolean.FALSE;
-    }
+		@Override
+		public Boolean getValue(Boolean x, Boolean y)
+		{
+			return x.booleanValue() || y.booleanValue();
+		}
 
-    @Override
-    public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
-    {
-      if (inputs[0] != null && ((Boolean) inputs[0]) == true)
-      {
-        outputs[0] = true;
-        return true;
-      }
-      if (inputs[1] != null && ((Boolean) inputs[1]) == true)
-      {
-        outputs[0] = true;
-        return true;
-      }
-      if (inputs[0] != null && inputs[1] != null)
-      {
-        outputs[0] = ((Boolean) inputs[0]) || ((Boolean) inputs[1]);
-        return true;
-      }
-      return false;
-    }
+		@Override
+		public Boolean getStartValue()
+		{
+			return Boolean.FALSE;
+		}
 
-    @Override
-    public String toString()
-    {
-      return "∨";
-    }
-  }
+		@Override
+		public boolean evaluatePartial(Object[] inputs, Object[] outputs, Context context)
+		{
+			if (inputs[0] != null && ((Boolean) inputs[0]) == true)
+			{
+				outputs[0] = true;
+				return true;
+			}
+			if (inputs[1] != null && ((Boolean) inputs[1]) == true)
+			{
+				outputs[0] = true;
+				return true;
+			}
+			if (inputs[0] != null && inputs[1] != null)
+			{
+				outputs[0] = ((Boolean) inputs[0]) || ((Boolean) inputs[1]);
+				return true;
+			}
+			return false;
+		}
 
-  /**
-   * Implementation of the logical negation
-   * @since 0.7
-   * @author Sylvain Hallé
-   */
-  public static class Not extends UnaryFunction<Boolean, Boolean>
-  {
-    public static final transient Not instance = new Not();
+		@Override
+		public String toString()
+		{
+			return "∨";
+		}
+	}
 
-    protected Not()
-    {
-      super(Boolean.class, Boolean.class);
-    }
+	/**
+	 * Implementation of the logical negation
+	 * @since 0.7
+	 * @author Sylvain Hallé
+	 */
+	public static class Not extends UnaryFunction<Boolean, Boolean>
+	{
+		public static final transient Not instance = new Not();
 
-    @Override
-    public Boolean getValue(Boolean x)
-    {
-      return !x.booleanValue();
-    }
+		protected Not()
+		{
+			super(Boolean.class, Boolean.class);
+		}
 
-    @Override
-    public String toString()
-    {
-      return "¬";
-    }
-  }
+		@Override
+		public Boolean getValue(Boolean x)
+		{
+			return !x.booleanValue();
+		}
 
-  /**
-   * Implementation of the logical conjunction over a collection
-   * @since 0.10.3
-   * @author Sylvain Hallé
-   */
-  public static class BagAnd extends UnaryFunction<Object,Boolean>
-  {
-    public static final transient BagAnd instance = new BagAnd();
+		@Override
+		public String toString()
+		{
+			return "¬";
+		}
+	}
 
-    protected BagAnd()
-    {
-      super(Object.class, Boolean.class);
-    }
+	/**
+	 * Implementation of the logical conjunction over a collection
+	 * @since 0.10.3
+	 * @author Sylvain Hallé
+	 */
+	public static class BagAnd extends UnaryFunction<Object,Boolean>
+	{
+		public static final transient BagAnd instance = new BagAnd();
 
-    @Override
-    public Boolean getValue(Object o)
-    {
-      if (o.getClass().isArray())
-      {
-        Object[] a = (Object[]) o;
-        for (Object e : a)
-        {
-          if (!parseBoolValue(e))
-          {
-            return false;
-          }
-        }
-        return true;
-      }
-      if (o instanceof Collection)
-      {
-        Collection<?> a = (Collection<?>) o;
-        for (Object e : a)
-        {
-          if (!parseBoolValue(e))
-          {
-            return false;
-          }
-        }
-        return true;
-      }
-      return false;
-    }
-  }
+		protected BagAnd()
+		{
+			super(Object.class, Boolean.class);
+		}
 
-  /**
-   * Implementation of the logical disjunction over a collection
-   * @since 0.10.3
-   * @author Sylvain Hallé
-   */
-  public static class BagOr extends UnaryFunction<Object,Boolean>
-  {
-    public static final transient BagOr instance = new BagOr();
+		@Override
+		public Boolean getValue(Object o)
+		{
+			if (o.getClass().isArray())
+			{
+				Object[] a = (Object[]) o;
+				for (Object e : a)
+				{
+					if (!parseBoolValue(e))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			if (o instanceof Collection)
+			{
+				Collection<?> a = (Collection<?>) o;
+				for (Object e : a)
+				{
+					if (!parseBoolValue(e))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+	}
 
-    protected BagOr()
-    {
-      super(Object.class, Boolean.class);
-    }
+	/**
+	 * Implementation of the logical disjunction over a collection
+	 * @since 0.10.3
+	 * @author Sylvain Hallé
+	 */
+	public static class BagOr extends UnaryFunction<Object,Boolean>
+	{
+		public static final transient BagOr instance = new BagOr();
 
-    @Override
-    public Boolean getValue(Object o)
-    {
-      if (o.getClass().isArray())
-      {
-        Object[] a = (Object[]) o;
-        for (Object e : a)
-        {
-          if (parseBoolValue(e))
-          {
-            return true;
-          }
-        }
-        return false;
-      }
-      if (o instanceof Collection)
-      {
-        Collection<?> a = (Collection<?>) o;
-        for (Object e : a)
-        {
-          if (parseBoolValue(e))
-          {
-            return true;
-          }
-        }
-        return false;
-      }
-      return true;
-    }
-  }
+		protected BagOr()
+		{
+			super(Object.class, Boolean.class);
+		}
 
-  /**
-   * Function that attempts to convert an object into a Boolean.
-   * @since 0.11.2
-   */
-  public static class BooleanCast extends UnaryFunction<Object,Boolean>
-  {
-    public static final BooleanCast instance = new BooleanCast();
-    
-    protected BooleanCast()
-    {
-      super(Object.class, Boolean.class);
-    }
+		@Override
+		public Boolean getValue(Object o)
+		{
+			if (o.getClass().isArray())
+			{
+				Object[] a = (Object[]) o;
+				for (Object e : a)
+				{
+					if (parseBoolValue(e))
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+			if (o instanceof Collection)
+			{
+				Collection<?> a = (Collection<?>) o;
+				for (Object e : a)
+				{
+					if (parseBoolValue(e))
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+			return true;
+		}
+	}
 
-    @Override
-    public Boolean getValue(Object x)
-    {
-      return parseBoolValue(x);
-    }
-  }
+	/**
+	 * Function that attempts to convert an object into a Boolean.
+	 * @since 0.11.2
+	 */
+	public static class BooleanCast extends UnaryFunction<Object,Boolean>
+	{
+		public static final BooleanCast instance = new BooleanCast();
 
-  /**
-   * Attempts to convert an object into a Boolean
-   * 
-   * @param o
-   *          The object
-   * @return The Boolean value
-   * @since 0.7
-   */
-  public static boolean parseBoolValue(Object o)
-  {
-    if (o instanceof Boolean)
-    {
-      return (Boolean) o;
-    }
-    else if (o instanceof String)
-    {
-      String s = (String) o;
-      return s.compareToIgnoreCase("true") == 0 || s.compareToIgnoreCase("T") == 0
-          || s.compareToIgnoreCase("1") == 0;
-    }
-    if (o instanceof Number)
-    {
-      Number n = (Number) o;
-      return Math.abs(n.doubleValue()) >= 0.00001;
-    }
-    // When in doubt, return false
-    return false;
-  }
+		protected BooleanCast()
+		{
+			super(Object.class, Boolean.class);
+		}
+
+		@Override
+		public Boolean getValue(Object x)
+		{
+			return parseBoolValue(x);
+		}
+	}
+
+	/**
+	 * Attempts to convert an object into a Boolean
+	 * 
+	 * @param o
+	 *          The object
+	 * @return The Boolean value
+	 * @since 0.7
+	 */
+	public static boolean parseBoolValue(Object o)
+	{
+		if (o instanceof Boolean)
+		{
+			return (Boolean) o;
+		}
+		else if (o instanceof String)
+		{
+			String s = (String) o;
+			return s.compareToIgnoreCase("true") == 0 || s.compareToIgnoreCase("T") == 0
+					|| s.compareToIgnoreCase("1") == 0 || s.compareToIgnoreCase("\u22a4") == 0;
+		}
+		else if (o instanceof Number)
+		{
+			Number n = (Number) o;
+			return Math.abs(n.doubleValue()) >= 0.00001;
+		}
+		if (o == null)
+		{
+			// When in doubt, return false
+			return false;
+		}
+		String s = o.toString();
+		return s.compareToIgnoreCase("true") == 0 || s.compareToIgnoreCase("T") == 0
+				|| s.compareToIgnoreCase("1") == 0 || s.compareToIgnoreCase("\u22a4") == 0;
+	}
 }
