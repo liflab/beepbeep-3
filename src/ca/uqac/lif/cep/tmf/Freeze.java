@@ -17,9 +17,15 @@
  */
 package ca.uqac.lif.cep.tmf;
 
+import ca.uqac.lif.cep.EventAt;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.util.Lists.MathList;
+import ca.uqac.lif.petitpoucet.CompositePart;
+import ca.uqac.lif.petitpoucet.Part;
+import ca.uqac.lif.petitpoucet.Vertex;
+import ca.uqac.lif.petitpoucet.VertexFactory;
+import ca.uqac.lif.petitpoucet.Connectable.InputPart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,4 +135,12 @@ public class Freeze extends UniformProcessor implements Stateful
   	}
   	return list;
   }
+  
+  @Override
+	public Vertex explain(Part p, VertexFactory f) throws ExplanationException
+	{
+		checkPart(p);
+		Part stem = CompositePart.tail(CompositePart.tail(p));
+		return f.getPart(CompositePart.compose(stem, new EventAt(0), new InputPart(0)), this);
+	}
 }

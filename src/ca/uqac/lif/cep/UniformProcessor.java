@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2019 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,6 +18,14 @@
 package ca.uqac.lif.cep;
 
 import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.petitpoucet.CompositePart;
+import ca.uqac.lif.petitpoucet.Connectable.InputPart;
+import ca.uqac.lif.petitpoucet.Explainable;
+import ca.uqac.lif.petitpoucet.Part;
+import ca.uqac.lif.petitpoucet.Vertex;
+import ca.uqac.lif.petitpoucet.Vertex.AndVertex;
+import ca.uqac.lif.petitpoucet.VertexFactory;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -35,12 +43,12 @@ import java.util.Queue;
  * @since 0.6
  */
 @SuppressWarnings("squid:S2160")
-public abstract class UniformProcessor extends SynchronousProcessor
+public abstract class UniformProcessor extends SynchronousProcessor implements Explainable
 {
   /**
    * An array that will be used by the processor to compute its output
    */
-  protected transient Object[] m_outputArray;
+  protected Object[] m_outputArray;
 
   /**
    * Creates a new uniform processor
@@ -78,6 +86,35 @@ public abstract class UniformProcessor extends SynchronousProcessor
     boolean b = compute(inputs, m_outputArray);
     outputs.add(m_outputArray);
     return b;
+  }
+  
+  @Override
+  public void hint(Part p)
+  {
+  	// Do nothing
+  }
+  
+  /**
+   * Default implementation of the explanation for a synchronous processor.
+   * It is assumed that whatever part of the output depends on all the inputs.
+   * @param p The part to explain
+   * @param f The factory to obtain new vertices
+   * @since 3.14
+   */
+  @Override
+  public Vertex explain(Part p, VertexFactory f) throws ExplanationException
+  {
+  	long pos = checkPart(p);
+  	if (getInputArity() == 1)
+  	{
+  		return f.getPart(CompositePart.compose(new EventAt(pos), new InputPart(0)), this);
+  	}
+  	AndVertex a = f.getAnd();
+  	for (int i = 0; i < getInputArity(); i++)
+  	{
+  		a.addChild(f.getPart(CompositePart.compose(new EventAt(pos), new InputPart(i)), this));
+  	}
+  	return a;
   }
 
   /**

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,9 +18,9 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Duplicable;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.petitpoucet.Duplicable;
 
 /**
  * The encapsulation of a 1:1 processor connected to a sink.

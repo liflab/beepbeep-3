@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,6 +25,7 @@ import java.util.Vector;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.EventAt;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
@@ -34,6 +35,13 @@ import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.util.Numbers;
+import ca.uqac.lif.petitpoucet.Assertions;
+import ca.uqac.lif.petitpoucet.CompositePart;
+import ca.uqac.lif.petitpoucet.Vertex;
+import ca.uqac.lif.petitpoucet.VertexFactory;
+import ca.uqac.lif.petitpoucet.Connectable.InputPart;
+import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
+import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
 
 /**
  * Unit tests for classes of the TMF package.
@@ -98,6 +106,24 @@ public class TmfTest
 			f.reset();
 		}
 	}
+	
+	@Test
+  public void testFreezeExplain1() throws ExplanationException
+  {
+  	Freeze d = new Freeze();
+  	Vertex e = d.explain(CompositePart.compose(new EventAt(0), new OutputPart(0)));
+  	VertexFactory f = new VertexFactory();
+  	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(0), new InputPart(0)), d));
+  }
+	
+	@Test
+  public void testFreezeExplain2() throws ExplanationException
+  {
+  	Freeze d = new Freeze();
+  	Vertex e = d.explain(CompositePart.compose(new EventAt(4), new OutputPart(0)));
+  	VertexFactory f = new VertexFactory();
+  	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(0), new InputPart(0)), d));
+  }
 
 	@Test
 	public void testPrefix1() 

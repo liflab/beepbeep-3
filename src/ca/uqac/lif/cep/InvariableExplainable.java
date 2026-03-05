@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,14 +17,15 @@
  */
 package ca.uqac.lif.cep;
 
+import ca.uqac.lif.petitpoucet.Explainable;
+
 /**
- * An override on the return type of {@link Duplicable} that enforces the
- * return of a processor.
+ * Extension of the {@link Explainable} interface signaling that the
+ * explanation is always the same, regardless of the input given to the object.
+ * @since 3.14
  * @author Sylvain Hallé
- * @since 0.7
  */
-public interface DuplicableProcessor extends Duplicable
+public interface InvariableExplainable extends Explainable
 {
-  @Override
-  public /*@ non_null @*/ Processor duplicate();
+
 }

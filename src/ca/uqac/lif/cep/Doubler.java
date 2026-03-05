@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep;
 
-import java.util.Queue;
-
 /**
  * A processor that doubles every number it is given.
  * <p>
@@ -43,7 +41,7 @@ import java.util.Queue;
  * @author Sylvain Hallé
  * @since 0.10.1
  */
-public class Doubler extends SynchronousProcessor
+public class Doubler extends UniformProcessor
 {
   /**
    * Creates a new adder processor. Since this processor is stateless, it would
@@ -60,9 +58,9 @@ public class Doubler extends SynchronousProcessor
   }
 
   @Override
-  protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+  protected boolean compute(Object[] inputs, Object[] outputs)
   {
-    outputs.add(new Object[] {2 * ((Number) inputs[0]).intValue()});
+    outputs[0] = 2 * ((Number) inputs[0]).intValue();
     return true;
   }
 

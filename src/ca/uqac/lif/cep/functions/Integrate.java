@@ -17,8 +17,8 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import ca.uqac.lif.cep.Duplicable;
 import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.petitpoucet.Duplicable;
 
 /**
  * Receives a stream of {@link Function} objects and applies these functions to

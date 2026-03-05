@@ -20,6 +20,14 @@ package ca.uqac.lif.cep;
 import static org.junit.Assert.assertEquals;
 
 import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.petitpoucet.Assertions;
+import ca.uqac.lif.petitpoucet.CompositePart;
+import ca.uqac.lif.petitpoucet.Connectable.InputPart;
+import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
+import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+import ca.uqac.lif.petitpoucet.Vertex;
+import ca.uqac.lif.petitpoucet.VertexFactory;
+
 import org.junit.Test;
 
 /**
@@ -39,5 +47,14 @@ public class DoublerTest
     assertEquals(2, ((Integer) p.pull()).intValue());
     assertEquals(8, ((Integer) p.pull()).intValue());
     assertEquals(2, ((Integer) p.pull()).intValue());
+  }
+  
+  @Test
+  public void testExplain1() throws ExplanationException
+  {
+  	Doubler d = new Doubler();
+  	Vertex e = d.explain(CompositePart.compose(new EventAt(2), new OutputPart(0)));
+  	VertexFactory f = new VertexFactory();
+  	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(2), new InputPart(0)), d));
   }
 }

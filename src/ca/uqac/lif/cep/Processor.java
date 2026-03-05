@@ -24,6 +24,12 @@ import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Lists.MathList;
 import ca.uqac.lif.cep.util.Maps.MathMap;
+import ca.uqac.lif.petitpoucet.CompositePart;
+import ca.uqac.lif.petitpoucet.Duplicable;
+import ca.uqac.lif.petitpoucet.Part;
+import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
+import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.HashSet;
@@ -54,7 +60,7 @@ import java.util.Set;
  * @since 0.1
  *
  */
-public abstract class Processor implements DuplicableProcessor, Contextualizable
+public abstract class Processor implements Duplicable, Contextualizable
 {
 	/**
 	 * The processor's input arity, i.e. the number of input events it requires to
@@ -309,6 +315,32 @@ public abstract class Processor implements DuplicableProcessor, Contextualizable
 	{
 		return m_uniqueId;
 	}
+	
+  /**
+   * Checks that an output part is valid for that processor.
+   * @param p The part
+   * @throws ExplanationException Thrown if the part is not valid
+   */
+  protected long checkPart(Part p) throws ExplanationException
+  {
+  	Part head = CompositePart.head(p);
+  	if (!(head instanceof OutputPart))
+  	{
+  		throw new ExplanationException("Expected an output part");
+  	}
+  	OutputPart op = (OutputPart) head;
+  	if (op.getIndex() < 0 || op.getIndex() >= getOutputArity())
+  	{
+  		throw new ExplanationException("Output index out of bounds");
+  	}
+  	Part pos = CompositePart.head(CompositePart.tail(p));
+  	if (!(pos instanceof EventAt))
+  	{
+  		throw new ExplanationException("Expected an event index");
+  	}
+  	EventAt ea = (EventAt) pos;
+  	return ea.getPosition();
+  }
 
 	/**
 	 * Resets the processor. This has for effect of flushing the contents of all

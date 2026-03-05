@@ -21,8 +21,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.EventAt;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Utilities;
+import ca.uqac.lif.petitpoucet.Assertions;
+import ca.uqac.lif.petitpoucet.CompositePart;
+import ca.uqac.lif.petitpoucet.Vertex;
+import ca.uqac.lif.petitpoucet.VertexFactory;
+import ca.uqac.lif.petitpoucet.Connectable.InputPart;
+import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
+import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+
 import java.util.Queue;
 import org.junit.Test;
 
@@ -80,5 +89,23 @@ public class CountDecimateTest
       Utilities.queueContains(2, queue);
       f.reset();
     }
+  }
+  
+  @Test
+  public void testExplain1() throws ExplanationException
+  {
+  	CountDecimate d = new CountDecimate(3);
+  	Vertex e = d.explain(CompositePart.compose(new EventAt(0), new OutputPart(0)));
+  	VertexFactory f = new VertexFactory();
+  	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(0), new InputPart(0)), d));
+  }
+  
+  @Test
+  public void testExplain2() throws ExplanationException
+  {
+  	CountDecimate d = new CountDecimate(3);
+  	Vertex e = d.explain(CompositePart.compose(new EventAt(1), new OutputPart(0)));
+  	VertexFactory f = new VertexFactory();
+  	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(3), new InputPart(0)), d));
   }
 }
