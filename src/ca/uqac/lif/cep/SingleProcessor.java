@@ -24,7 +24,6 @@ import ca.uqac.lif.cep.util.Maps.MathMap;
 import ca.uqac.lif.petitpoucet.CompositePart;
 import ca.uqac.lif.petitpoucet.Duplicable;
 import ca.uqac.lif.petitpoucet.Part;
-import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
 import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
 
 import java.util.ArrayDeque;
@@ -352,9 +351,23 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	}
 
 	@Override
-	public void setPullableInput(int i, /*@ non_null @*/ Pullable p)
+	public void assignInput(int i, /*@ non_null @*/ Connection c)
 	{
-		m_inputPullables[i] = p;
+		if (!(c instanceof Pullable))
+		{
+			throw new IllegalArgumentException("Expected a pullable");
+		}
+		m_inputPullables[i] = (Pullable) c;
+	}
+	
+	@Override
+	public void assignOutput(int i, /*@ non_null @*/ Connection c)
+	{
+		if (!(c instanceof Pushable))
+		{
+			throw new IllegalArgumentException("Expected a pushable");
+		}
+		m_outputPushables[i] = (Pushable) c;
 	}
 
 	@Override
@@ -469,6 +482,18 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	/*@ non_null @*/ public static Queue<Object[]> getEmptyQueue()
 	{
 		return new ArrayDeque<Object[]>();
+	}
+	
+	@Override
+	public Pullable getUpstream(int index)
+	{
+		return m_inputPullables[index];
+	}
+	
+	@Override
+	public Pushable getDownstream(int index)
+	{
+		return m_outputPushables[index];
 	}
 	
 	/**

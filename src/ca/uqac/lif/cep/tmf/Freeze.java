@@ -25,8 +25,6 @@ import ca.uqac.lif.petitpoucet.CompositePart;
 import ca.uqac.lif.petitpoucet.Part;
 import ca.uqac.lif.petitpoucet.Vertex;
 import ca.uqac.lif.petitpoucet.VertexFactory;
-import ca.uqac.lif.petitpoucet.Connectable.InputPart;
-
 import java.util.ArrayList;
 import java.util.List;
 

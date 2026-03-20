@@ -19,7 +19,6 @@ package ca.uqac.lif.cep;
 
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.petitpoucet.CompositePart;
-import ca.uqac.lif.petitpoucet.Connectable.InputPart;
 import ca.uqac.lif.petitpoucet.Explainable;
 import ca.uqac.lif.petitpoucet.Part;
 import ca.uqac.lif.petitpoucet.Vertex;

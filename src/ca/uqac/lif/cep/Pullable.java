@@ -19,6 +19,8 @@ package ca.uqac.lif.cep;
 
 import java.util.Iterator;
 
+import ca.uqac.lif.petitpoucet.Connectable;
+
 /**
  * Queries events on one of a processor's outputs. For a processor with an
  * output arity <i>n</i>, there exists <i>n</i> distinct pullables, namely one for
@@ -82,7 +84,7 @@ import java.util.Iterator;
  * @author Sylvain Hallé
  * @since 0.1
  */
-public interface Pullable extends Iterator<Object>, Iterable<Object>
+public interface Pullable extends Iterator<Object>, Iterable<Object>, Connectable.Connection
 {
   /**
    * Attempts to pull an event from the source. An event is returned if
@@ -161,6 +163,18 @@ public interface Pullable extends Iterator<Object>, Iterable<Object>
    * @return The processor
    */
   public Processor getProcessor();
+  
+  @Override
+  public default Processor getObject()
+  {
+  	return getProcessor();
+  }
+  
+  @Override
+  public default int getIndex()
+  {
+  	return getPosition();
+  }
 
   /**
    * Gets the position this Pullable is associated to: 0 is the first input (or

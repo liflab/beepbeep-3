@@ -27,7 +27,6 @@ import ca.uqac.lif.petitpoucet.Explainable;
 import ca.uqac.lif.petitpoucet.Part;
 import ca.uqac.lif.petitpoucet.Vertex;
 import ca.uqac.lif.petitpoucet.VertexFactory;
-import ca.uqac.lif.petitpoucet.Connectable.InputPart;
 
 /**
  * Returns one input event and discards the next <i>n</i>-1. The value <i>n</i> is called

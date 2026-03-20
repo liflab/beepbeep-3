@@ -25,15 +25,15 @@ import ca.uqac.lif.cep.Connector.InputPorts;
 import ca.uqac.lif.cep.Connector.OutputPorts;
 import ca.uqac.lif.cep.Connector.SelectedInputPipe;
 import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.petitpoucet.Connectable;
 import ca.uqac.lif.petitpoucet.Duplicable;
 
-public interface Processor extends Contextualizable, Duplicable
+public interface Processor extends Contextualizable, Duplicable, Connectable
 {
 	/**
 	 * A string used to identify the program's version
 	 */
-	public final String s_versionString = "3.13";
-	
+	public final String s_versionString = "3.14";
 	
 	/**
 	 * Creates a new empty context map.
@@ -120,7 +120,10 @@ public interface Processor extends Contextualizable, Duplicable
 	 * @param p
 	 *          The pullable to assign it to
 	 */
-	public void setPullableInput(int i, /*@ non_null @*/ Pullable p);
+	public default void setPullableInput(int i, /*@ non_null @*/ Pullable p)
+	{
+		assignInput(i, p);
+	}
 	
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's <i>i</i>-th
@@ -144,7 +147,10 @@ public interface Processor extends Contextualizable, Duplicable
 	 * @param p
 	 *          The pushable to assign it to
 	 */
-	public void setPushableOutput(int i, /*@ non_null @*/ Pushable p);
+	public default void setPushableOutput(int i, /*@ non_null @*/ Pushable p)
+	{
+		assignOutput(i, p);
+	}
 	
 	/**
 	 * Retrieves the {@link Pushable} associated to the processor's <i>i</i>-th
@@ -157,20 +163,6 @@ public interface Processor extends Contextualizable, Duplicable
 	 * @return The pushable
 	 */
 	public /*@ non_null @*/ Pushable getPushableOutput(int i);
-	
-	/**
-	 * Returns the processor's input arity.
-	 * 
-	 * @return The arity
-	 */
-	public int getInputArity();
-	
-	/**
-	 * Returns the processor's output arity
-	 * 
-	 * @return The arity
-	 */
-	public int getOutputArity();
 	
 	/**
 	 * Gets the type of events the processor accepts for its <i>i</i>-th input

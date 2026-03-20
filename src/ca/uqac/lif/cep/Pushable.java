@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep;
 
+import ca.uqac.lif.petitpoucet.Connectable;
+
 /**
  * Gives events to some of a processor's input. Interface {@link Pushable} is
  * the opposite of {@link Pullable}: rather than querying events form a
@@ -30,7 +32,7 @@ package ca.uqac.lif.cep;
  * @author Sylvain Hallé
  * @since 0.1
  */
-public interface Pushable
+public interface Pushable extends Connectable.Connection
 {
 	/**
 	 * Pushes an event into one of the processor's input trace. This 
@@ -61,6 +63,12 @@ public interface Pushable
 	 * @return The processor
 	 */
 	public Processor getProcessor();
+	
+	@Override
+	public default Processor getObject()
+	{
+		return getProcessor();
+	}
 
 	/**
 	 * Gets the position this Pushable is associated to: 0 is the first input (or
@@ -69,6 +77,12 @@ public interface Pushable
 	 * @return The position
 	 */
 	public int getPosition();
+	
+	@Override
+	public default int getIndex()
+	{
+		return getPosition();
+	}
 
 	/**
 	 * An alternative to {@link #push(Object)} using the right-shift operator.
