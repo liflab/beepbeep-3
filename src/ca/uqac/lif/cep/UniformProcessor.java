@@ -163,7 +163,7 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
   {
     if (m_outputPullables[index] == null)
     {
-      if (m_inputArity == 1 && m_outputArity == 1)
+      if (m_ins.length == 1 && m_outs.length == 1)
       {
         m_outputPullables[index] = new UnaryPullable();
       }
@@ -180,7 +180,7 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
   {
     if (m_inputPushables[index] == null)
     {
-      if (m_inputArity == 1 && m_outputArity == 1)
+      if (m_ins.length == 1 && m_outs.length == 1)
       {
         m_inputPushables[index] = new UnaryPushable();
       }
@@ -216,15 +216,15 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       {
         throw new PushableException(e);
       }
-      if (m_outputPushables[0] == null)
+      if (((Pushable) m_outs[0]) == null)
       {
         throw new PushableException(
             "Output 0 of processor " + getProcessor() + " is connected to nothing");
       }
-      m_outputPushables[0].push(m_outputArray[0]);
+      ((Pushable) m_outs[0]).push(m_outputArray[0]);
       if (!b)
       {
-      	m_outputPushables[0].notifyEndOfTrace();	
+      	((Pushable) m_outs[0]).notifyEndOfTrace();	
       }
       return this;
     }
@@ -248,11 +248,11 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       }
       if (b)
       {
-        m_outputPushables[0].push(m_outputArray[0]);
+        ((Pushable) m_outs[0]).push(m_outputArray[0]);
       }
-      for (int i = 0; i < m_outputArity; i++)
+      for (int i = 0; i < m_outs.length; i++)
       {
-        m_outputPushables[i].notifyEndOfTrace();
+        ((Pushable) m_outs[i]).notifyEndOfTrace();
       }
     }
 
@@ -301,7 +301,7 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       {
         return m_inputQueues[0].remove();
       }
-      Object o = m_inputPullables[0].pullSoft();
+      Object o = ((Pullable) m_ins[0]).pullSoft();
       try
       {
         if (o == null || !compute(new Object[] { o }, m_outputArray))
@@ -323,12 +323,12 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       {
         return m_inputQueues[0].remove();
       }
-      if (m_inputPullables[0] == null)
+      if (((Pullable) m_ins[0]) == null)
       {
         throw new PullableException("Input 0 of this processor is connected to nothing",
             getProcessor());
       }
-      Object o = m_inputPullables[0].pull();
+      Object o = ((Pullable) m_ins[0]).pull();
       try
       {
         if (o == null || !compute(new Object[] { o }, m_outputArray))
@@ -361,12 +361,12 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       }
       else
       {
-        if (m_inputPullables[0] == null)
+        if (((Pullable) m_ins[0]) == null)
         {
           throw new PullableException("Input 0 of this processor is connected to nothing",
               getProcessor());
         }
-        return m_inputPullables[0].hasNextSoft();
+        return ((Pullable) m_ins[0]).hasNextSoft();
       }
     }
 
@@ -381,12 +381,12 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       }
       else
       {
-        if (m_inputPullables[0] == null)
+        if (((Pullable) m_ins[0]) == null)
         {
           throw new PullableException("Input 0 of this processor is connected to nothing",
               getProcessor());
         }
-        return m_inputPullables[0].hasNext();
+        return ((Pullable) m_ins[0]).hasNext();
       }
     }
 

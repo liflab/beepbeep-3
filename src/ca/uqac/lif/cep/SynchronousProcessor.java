@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2025 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -161,7 +161,7 @@ public abstract class SynchronousProcessor extends SingleProcessor
 				throw new PushableException(e);
 			}
 			// Check if each input queue has an event ready
-			for (int i = 0; i < m_inputArity; i++)
+			for (int i = 0; i < m_ins.length; i++)
 			{
 				Queue<Object> queue = m_inputQueues[i];
 				if (queue.isEmpty())
@@ -171,8 +171,8 @@ public abstract class SynchronousProcessor extends SingleProcessor
 				}
 			}
 			// Pick an event from each input queue
-			Object[] inputs = new Object[m_inputArity];
-			for (int i = 0; i < m_inputArity; i++)
+			Object[] inputs = new Object[m_ins.length];
+			for (int i = 0; i < m_ins.length; i++)
 			{
 				Queue<Object> queue = m_inputQueues[i];
 				Object ob = queue.remove();
@@ -216,9 +216,9 @@ public abstract class SynchronousProcessor extends SingleProcessor
 			outputEvent(outs);
 
 			// Notifies the output pushables of the end of the trace
-			for (int i = 0; i < m_outputPushables.length; i++)
+			for (int i = 0; i < m_outs.length; i++)
 			{
-				Pushable p = m_outputPushables[i];
+				Pushable p = (Pushable) m_outs[i];
 				if (p == null)
 				{
 					throw new PushableException("Output " + i
@@ -242,9 +242,9 @@ public abstract class SynchronousProcessor extends SingleProcessor
 				{
 					if (evt != null)
 					{
-						for (int i = 0; i < m_outputPushables.length; i++)
+						for (int i = 0; i < m_outs.length; i++)
 						{
-							Pushable p = m_outputPushables[i];
+							Pushable p = (Pushable) m_outs[i];
 							if (p == null)
 							{
 								throw new PushableException(
@@ -259,9 +259,9 @@ public abstract class SynchronousProcessor extends SingleProcessor
 			}
 			if (!outs)
 			{
-				for (int i = 0; i < m_outputPushables.length; i++)
+				for (int i = 0; i < m_outs.length; i++)
 				{
-					m_outputPushables[i].notifyEndOfTrace();
+					((Pushable) m_outs[i]).notifyEndOfTrace();
 				}
 			}
 		}
@@ -359,9 +359,9 @@ public abstract class SynchronousProcessor extends SingleProcessor
 			// Check if each pullable has an event ready
 			for (int tries = 0; tries < MAX_PULL_RETRIES; tries++)
 			{
-				for (int i = 0; i < m_inputArity; i++)
+				for (int i = 0; i < m_ins.length; i++)
 				{
-					Pullable p = m_inputPullables[i];
+					Pullable p = (Pullable) m_ins[i];
 					if (p == null)
 					{
 						throw new PullableException("Input " + i + " of processor " + SynchronousProcessor.this
@@ -383,7 +383,7 @@ public abstract class SynchronousProcessor extends SingleProcessor
 						}
 						for (Object[] front : last_queue)
 						{
-							for (int j = 0; j < m_outputArity; j++)
+							for (int j = 0; j < m_outs.length; j++)
 							{
 								m_outputQueues[j].add(front[j]);
 							}
@@ -393,10 +393,10 @@ public abstract class SynchronousProcessor extends SingleProcessor
 				}
 				// We are here only if every input pullable has answered YES
 				// Pull an event from each
-				Object[] inputs = new Object[m_inputArity];
-				for (int i = 0; i < m_inputArity; i++)
+				Object[] inputs = new Object[m_ins.length];
+				for (int i = 0; i < m_ins.length; i++)
 				{
-					Pullable p = m_inputPullables[i];
+					Pullable p = (Pullable) m_ins[i];
 					// Don't check for p == null, we did it above
 					Object o = p.pull();
 					inputs[i] = o;
@@ -426,7 +426,7 @@ public abstract class SynchronousProcessor extends SingleProcessor
 					{
 						if (evt != null)
 						{
-							for (int i = 0; i < m_outputArity; i++)
+							for (int i = 0; i < m_outs.length; i++)
 							{
 								Queue<Object> queue = m_outputQueues[i];
 								queue.add(evt[i]);
@@ -463,9 +463,9 @@ public abstract class SynchronousProcessor extends SingleProcessor
 				return NextStatus.YES;
 			}
 			// Check if each pullable has an event ready
-			for (int i = 0; i < m_inputArity; i++)
+			for (int i = 0; i < m_ins.length; i++)
 			{
-				Pullable p = m_inputPullables[i];
+				Pullable p = (Pullable) m_ins[i];
 				NextStatus status = p.hasNextSoft();
 				if (status == NextStatus.NO)
 				{
@@ -482,7 +482,7 @@ public abstract class SynchronousProcessor extends SingleProcessor
 					}
 					for (Object[] front : last_queue)
 					{
-						for (int j = 0; j < m_outputArity; j++)
+						for (int j = 0; j < m_outs.length; j++)
 						{
 							m_outputQueues[j].add(front[j]);
 						}
@@ -496,12 +496,13 @@ public abstract class SynchronousProcessor extends SingleProcessor
 			}
 			// We are here only if every input pullable has answered YES
 			// Pull an event from each
-			Object[] inputs = new Object[m_inputArity];
+			Object[] inputs = new Object[m_ins.length];
 			{
 				int i = 0;
-				for (Pullable p : m_inputPullables)
+				for (UpstreamConnection p : m_ins)
 				{
-					inputs[i] = p.pullSoft();
+					Pullable pp = (Pullable) p;
+					inputs[i] = pp.pullSoft();
 					i++;
 				}
 			}

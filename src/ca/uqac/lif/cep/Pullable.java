@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Iterator;
 
-import ca.uqac.lif.petitpoucet.Connectable;
+import ca.uqac.lif.petitpoucet.circuit.Node.UpstreamConnection;
 
 /**
  * Queries events on one of a processor's outputs. For a processor with an
@@ -84,7 +84,7 @@ import ca.uqac.lif.petitpoucet.Connectable;
  * @author Sylvain Hallé
  * @since 0.1
  */
-public interface Pullable extends Iterator<Object>, Iterable<Object>, Connectable.Connection
+public interface Pullable extends Iterator<Object>, Iterable<Object>, UpstreamConnection
 {
   /**
    * Attempts to pull an event from the source. An event is returned if

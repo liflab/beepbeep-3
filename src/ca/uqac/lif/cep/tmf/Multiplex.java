@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -126,9 +126,9 @@ public class Multiplex extends SingleProcessor
       {
         return m_outputQueues[0].remove();
       }
-      for (Pullable p : m_inputPullables)
+      for (UpstreamConnection p : m_ins)
       {
-        Object o = p.pullSoft();
+        Object o = ((Pullable) p).pullSoft();
         if (o != null)
         {
           m_outputQueues[0].add(o);
@@ -148,8 +148,9 @@ public class Multiplex extends SingleProcessor
       {
         return m_outputQueues[0].remove();
       }
-      for (Pullable p : m_inputPullables)
+      for (UpstreamConnection uc : m_ins)
       {
+      	Pullable p = (Pullable) uc;
         if (p.hasNext())
         {
           Object o = p.pull();
@@ -180,8 +181,9 @@ public class Multiplex extends SingleProcessor
       }
       boolean all_no = true;
       NextStatus out = NextStatus.MAYBE;
-      for (Pullable p : m_inputPullables)
+      for (UpstreamConnection uc : m_ins)
       {
+      	Pullable p = (Pullable) uc;
         NextStatus ns = p.hasNextSoft();
         if (ns != NextStatus.NO)
         {
@@ -214,8 +216,9 @@ public class Multiplex extends SingleProcessor
       NextStatus out = NextStatus.MAYBE;
       for (int i = 0; i < MAX_PULL_RETRIES; i++)
       {
-        for (Pullable p : m_inputPullables)
+        for (UpstreamConnection uc : m_ins)
         {
+        	Pullable p = (Pullable) uc;
           boolean ns = p.hasNext();
           if (ns)
           {
@@ -282,7 +285,7 @@ public class Multiplex extends SingleProcessor
     @Override
     public Pushable push(Object o)
     {
-      m_outputPushables[0].push(o);
+      ((Pushable) m_outs[0]).push(o);
       return this;
     }
 
@@ -299,7 +302,7 @@ public class Multiplex extends SingleProcessor
         }
       }
 
-      m_outputPushables[0].notifyEndOfTrace();
+      ((Pushable) m_outs[0]).notifyEndOfTrace();
     }
 
     @Override

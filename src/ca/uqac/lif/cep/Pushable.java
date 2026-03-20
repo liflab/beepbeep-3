@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
-import ca.uqac.lif.petitpoucet.Connectable;
+import ca.uqac.lif.petitpoucet.circuit.Node.DownstreamConnection;
 
 /**
  * Gives events to some of a processor's input. Interface {@link Pushable} is
@@ -32,7 +32,7 @@ import ca.uqac.lif.petitpoucet.Connectable;
  * @author Sylvain Hallé
  * @since 0.1
  */
-public interface Pushable extends Connectable.Connection
+public interface Pushable extends DownstreamConnection
 {
 	/**
 	 * Pushes an event into one of the processor's input trace. This 

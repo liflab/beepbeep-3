@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.util.Maps.MathMap;
 import ca.uqac.lif.petitpoucet.CompositePart;
 import ca.uqac.lif.petitpoucet.Duplicable;
 import ca.uqac.lif.petitpoucet.Part;
-import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+import ca.uqac.lif.petitpoucet.circuit.Node;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -56,19 +56,8 @@ import java.util.Set;
  * @since 0.1
  *
  */
-public abstract class SingleProcessor implements Processor, Duplicable, Contextualizable
+public abstract class SingleProcessor extends Node implements Processor, Duplicable, Contextualizable
 {
-	/**
-	 * The processor's input arity, i.e. the number of input events it requires to
-	 * produce an output
-	 */
-	protected int m_inputArity;
-
-	/**
-	 * The processor's output arity, i.e. the number of output events it produces
-	 */
-	protected int m_outputArity;
-
 	/**
 	 * A string used to identify the program's version
 	 */
@@ -87,18 +76,6 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	 * queues as the output arity of the processor.
 	 */
 	protected Queue<Object>[] m_outputQueues;
-
-	/**
-	 * An array of {@link Pullable}s, one for each input trace this processor
-	 * receives
-	 */
-	protected Pullable[] m_inputPullables;
-
-	/**
-	 * An array of {@link Pushable}s, one for each output trace this processor
-	 * produces
-	 */
-	protected Pushable[] m_outputPushables;
 
 	/**
 	 * A static counter, to be incremented every time a new {@link Processor} is
@@ -165,24 +142,20 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	//@ requires out_arity >= 0
 	public SingleProcessor(int in_arity, int out_arity)
 	{
-		super();
-		m_inputArity = in_arity;
-		m_outputArity = out_arity;
+		super(in_arity, out_arity);
 		m_uniqueId = s_uniqueIdCounter++;
-		m_inputQueues = new Queue[m_inputArity];
-		for (int i = 0; i < m_inputArity; i++)
+		m_inputQueues = new Queue[m_ins.length];
+		for (int i = 0; i < m_ins.length; i++)
 		{
 			m_inputQueues[i] = new ArrayDeque<Object>();
 		}
-		m_outputQueues = new Queue[m_outputArity];
-		for (int i = 0; i < m_outputArity; i++)
+		m_outputQueues = new Queue[m_outs.length];
+		for (int i = 0; i < m_outs.length; i++)
 		{
 			m_outputQueues[i] = new ArrayDeque<Object>();
 		}
-		m_inputPullables = new Pullable[m_inputArity];
-		m_outputPushables = new Pushable[m_outputArity];
-		m_hasBeenNotifiedOfEndOfTrace = new boolean[m_inputArity];
-		for (int i = 0; i < m_inputArity; i++)
+		m_hasBeenNotifiedOfEndOfTrace = new boolean[m_ins.length];
+		for (int i = 0; i < m_ins.length; i++)
 		{
 			m_hasBeenNotifiedOfEndOfTrace[i] = false; 
 		}
@@ -209,7 +182,7 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	 */
 	protected boolean allNotifiedEndOfTrace()
 	{
-		for (int i = 0; i < m_inputArity; i++)
+		for (int i = 0; i < m_ins.length; i++)
 		{
 			if (!m_hasBeenNotifiedOfEndOfTrace[i])
 			{
@@ -333,71 +306,22 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	@Override
 	public void reset()
 	{
+		super.reset();
 		// Reset input
-		for (int i = 0; i < m_inputArity; i++)
+		for (int i = 0; i < m_ins.length; i++)
 		{
 			m_inputQueues[i].clear();
 		}
 		// Reset output
-		for (int i = 0; i < m_outputArity; i++)
+		for (int i = 0; i < m_outs.length; i++)
 		{
 			m_outputQueues[i].clear();
 		}
-		for (int i = 0; i < m_inputArity; i++)
+		for (int i = 0; i < m_ins.length; i++)
 		{
 			m_hasBeenNotifiedOfEndOfTrace[i] = false; 
 		}
 		m_notifiedEndOfTraceDownstream = false;
-	}
-
-	@Override
-	public void assignInput(int i, /*@ non_null @*/ Connection c)
-	{
-		if (!(c instanceof Pullable))
-		{
-			throw new IllegalArgumentException("Expected a pullable");
-		}
-		m_inputPullables[i] = (Pullable) c;
-	}
-	
-	@Override
-	public void assignOutput(int i, /*@ non_null @*/ Connection c)
-	{
-		if (!(c instanceof Pushable))
-		{
-			throw new IllegalArgumentException("Expected a pushable");
-		}
-		m_outputPushables[i] = (Pushable) c;
-	}
-
-	@Override
-	public Pullable getPullableInput(int i)
-	{
-		return m_inputPullables[i];
-	}
-
-	@Override
-	public void setPushableOutput(int i, /*@ non_null @*/ Pushable p)
-	{
-		m_outputPushables[i] = p;
-	}
-
-	@Override
-	public /*@ non_null @*/ Pushable getPushableOutput(int i)
-	{
-		return m_outputPushables[i];
-	}
-
-	@Override
-	/*@ pure @*/ public final int getInputArity()
-	{
-		return m_inputArity;
-	}
-
-	@Override
-	/*@ pure @*/ public final int getOutputArity()
-	{
-		return m_outputArity;
 	}
 
 	/**
@@ -420,6 +344,14 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 			}
 		}
 		return true;
+	}
+	
+	@Override
+	public void evaluate(Object[] inputs, Object[] outputs) throws ProcessorException
+	{
+		// By default, a processor does not do anything with its input and output
+		// queues. It is the responsibility of the descendant classes to implement
+		// the logic of consuming input events and producing output events.
 	}
 
 	/**
@@ -445,7 +377,7 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	/*@ non_null @*/ public final Set<Class<?>> getInputType(int index)
 	{
 		Set<Class<?>> classes = new HashSet<Class<?>>();
-		if (index >= 0 && index < m_inputArity)
+		if (index >= 0 && index < m_ins.length)
 		{
 			getInputTypesFor(classes, index);
 		}
@@ -485,15 +417,15 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	}
 	
 	@Override
-	public Pullable getUpstream(int index)
+	public Pullable getPullableInput(int index)
 	{
-		return m_inputPullables[index];
+		return (Pullable) m_ins[index];
 	}
 	
 	@Override
-	public Pushable getDownstream(int index)
+	public Pushable getPushableOutput(int index)
 	{
-		return m_outputPushables[index];
+		return (Pushable) m_outs[index];
 	}
 	
 	/**
@@ -552,7 +484,7 @@ public abstract class SingleProcessor implements Processor, Duplicable, Contextu
 	}
 
 	@Override
-	/*@ pure non_null @*/ public final Processor duplicate()
+	/*@ pure non_null @*/ public final SingleProcessor duplicate()
 	{
 		return duplicate(false);
 	}

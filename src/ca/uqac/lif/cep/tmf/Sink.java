@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -57,7 +57,7 @@ public abstract class Sink extends SynchronousProcessor
     Object[] inputs = new Object[getInputArity()];
     for (int i = 0; i < getInputArity(); i++)
     {
-      Pullable p = m_inputPullables[i];
+      Pullable p = (Pullable) m_ins[i];
       inputs[i] = p.pullSoft();
     }
     try
@@ -78,7 +78,7 @@ public abstract class Sink extends SynchronousProcessor
     Object[] inputs = new Object[getInputArity()];
     for (int i = 0; i < getInputArity(); i++)
     {
-      Pullable p = m_inputPullables[i];
+      Pullable p = (Pullable) m_ins[i];
       inputs[i] = p.pull();
     }
     try

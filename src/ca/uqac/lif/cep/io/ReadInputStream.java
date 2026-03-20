@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -262,9 +262,9 @@ public class ReadInputStream extends Source
 			// Next line is different from OutputPullable, which has a bounded for loop
 			while (true)
 			{
-				for (int i = 0; i < m_inputArity; i++)
+				for (int i = 0; i < m_ins.length; i++)
 				{
-					Pullable p = m_inputPullables[i];
+					Pullable p = (Pullable) m_ins[i];
 					if (p == null)
 					{
 						throw new PullableException("Input " + i + " of processor " + ReadInputStream.this
@@ -286,7 +286,7 @@ public class ReadInputStream extends Source
 						}
 						for (Object[] front : last_queue)
 						{
-							for (int j = 0; j < m_outputArity; j++)
+							for (int j = 0; j < m_outs.length; j++)
 							{
 								m_outputQueues[j].add(front[j]);
 							}
@@ -296,10 +296,10 @@ public class ReadInputStream extends Source
 				}
 				// We are here only if every input pullable has answered YES
 				// Pull an event from each
-				Object[] inputs = new Object[m_inputArity];
-				for (int i = 0; i < m_inputArity; i++)
+				Object[] inputs = new Object[m_ins.length];
+				for (int i = 0; i < m_ins.length; i++)
 				{
-					Pullable p = m_inputPullables[i];
+					Pullable p = (Pullable) m_ins[i];
 					// Don't check for p == null, we did it above
 					Object o = p.pull();
 					inputs[i] = o;
@@ -329,7 +329,7 @@ public class ReadInputStream extends Source
 					{
 						if (evt != null)
 						{
-							for (int i = 0; i < m_outputArity; i++)
+							for (int i = 0; i < m_outs.length; i++)
 							{
 								Queue<Object> queue = m_outputQueues[i];
 								queue.add(evt[i]);

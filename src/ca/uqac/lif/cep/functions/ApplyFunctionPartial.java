@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -42,16 +42,6 @@ public class ApplyFunctionPartial extends SingleProcessor
   protected Function m_function;
 
   /**
-   * An array of input pushables
-   */
-  protected final transient Pushable[] m_inputPushables;
-
-  /**
-   * An array of output pullables
-   */
-  protected transient Pullable[] m_outputPullables;
-
-  /**
    * An array containing the number of the front corresponding to
    * the head of the input queue for each pipe
    */
@@ -77,31 +67,9 @@ public class ApplyFunctionPartial extends SingleProcessor
   {
     super(f.getInputArity(), f.getOutputArity());
     m_function = f;
-    m_inputPushables = new Pushable[f.getInputArity()];
-    m_outputPullables = new Pullable[f.getOutputArity()];
     m_frontNumber = new int[f.getInputArity()];
     m_inputFront = new Object[f.getInputArity()];
     m_numCurrentFront = 0;
-  }
-
-  @Override
-  public synchronized Pushable getPushableInput(int index)
-  {
-    if (m_inputPushables[index] == null)
-    {
-      m_inputPushables[index] = new InputPushable(index);
-    }
-    return m_inputPushables[index];
-  }
-
-  @Override
-  public synchronized Pullable getPullableOutput(int index)
-  {
-    if (m_outputPullables[index] == null)
-    {
-      m_outputPullables[index] = new OutputPullable(index);
-    }
-    return m_outputPullables[index];
   }
 
   @Override
@@ -132,7 +100,7 @@ public class ApplyFunctionPartial extends SingleProcessor
     @Override
     public Pushable push(Object o)
     {
-      Object[] out_front = new Object[m_outputPullables.length];
+      Object[] out_front = new Object[getOutputArity()];
       if (m_frontNumber[m_index] < m_numCurrentFront)
       {
         // This is an event from a front that has already
@@ -147,7 +115,7 @@ public class ApplyFunctionPartial extends SingleProcessor
       // the following is actually a bounded while(evaluated)
       for (int loop_count = 0; loop_count < MAX_LOOPS && evaluated; loop_count++)
       {
-        for (int i = 0; i < m_inputPullables.length; i++)
+        for (int i = 0; i < m_ins.length; i++)
         {
           if (m_frontNumber[i] == m_numCurrentFront)
           {
@@ -167,7 +135,7 @@ public class ApplyFunctionPartial extends SingleProcessor
         {
           for (int i = 0; i < out_front.length; i++)
           {
-            m_outputPushables[i].push(out_front[i]);
+            ((Pushable) m_ins[i]).push(out_front[i]);
           }
           for (int i = 0; i < m_inputFront.length; i++)
           {
@@ -328,4 +296,16 @@ public class ApplyFunctionPartial extends SingleProcessor
     }
     return afp;
   }
+
+	@Override
+	public Pushable getPushableInput(int index)
+	{
+		return new InputPushable(index);
+	}
+
+	@Override
+	public Pullable getPullableOutput(int index)
+	{
+		return new OutputPullable(index);
+	}
 }

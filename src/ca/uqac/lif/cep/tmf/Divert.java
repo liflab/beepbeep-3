@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -190,31 +190,31 @@ public class Divert extends SingleProcessor
     @Override
     public Object pullSoft()
     {
-      return m_inputPullables[0].pullSoft();
+      return ((Pullable) m_ins[0]).pullSoft();
     }
 
     @Override
     public Object pull()
     {
-      return m_inputPullables[0].pull();
+      return ((Pullable) m_ins[0]).pull();
     }
 
     @Override
     public Object next()
     {
-      return m_inputPullables[0].next();
+      return ((Pullable) m_ins[0]).next();
     }
 
     @Override
     public NextStatus hasNextSoft()
     {
-      return m_inputPullables[0].hasNextSoft();
+      return ((Pullable) m_ins[0]).hasNextSoft();
     }
 
     @Override
     public boolean hasNext()
     {
-      return m_inputPullables[0].hasNext();
+      return ((Pullable) m_ins[0]).hasNext();
     }
 
     @Override

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2016 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -75,22 +75,21 @@ public class Fork extends UniformProcessor
     m_outputArray = new Object[out_arity];
     m_outputQueues = new Queue[out_arity];
     Pullable[] new_out_pullables = new Pullable[out_arity];
-    for (int i = 0; i < m_outputArity; i++)
+    for (int i = 0; i < m_outs.length; i++)
     {
       new_out_pullables[i] = m_outputPullables[i];
     }
     m_outputPullables = new_out_pullables;
-    m_outputArity = out_arity;
-    for (int i = 0; i < m_outputArity; i++)
+    for (int i = 0; i < m_outs.length; i++)
     {
       m_outputQueues[i] = new ArrayDeque<Object>();
     }
-    Pushable[] out_pushables = new Pushable[out_arity];
-    for (int i = 0; i < m_outputPushables.length; i++)
+    DownstreamConnection[] out_pushables = new Pushable[out_arity];
+    for (int i = 0; i < m_outs.length; i++)
     {
-      out_pushables[i] = m_outputPushables[i];
+      out_pushables[i] = m_outs[i];
     }
-    m_outputPushables = out_pushables;
+    m_outs = out_pushables;
   }
   
   /**

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2025 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -881,7 +881,7 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 			outputEvent(temp_queue, outs);
 
 			// Notify the output pushables of the end of the trace
-			for (int i = 0; i < m_outputPushables.length; i++)
+			for (int i = 0; i < m_outs.length; i++)
 			{
 				ProcessorAssociation pa = m_outputPushableAssociations.get(i);
 				Pushable p = pa.m_processor.getPushableOutput(pa.m_ioNumber);
@@ -909,9 +909,9 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 				{
 					if (evt != null)
 					{
-						for (int i = 0; i < m_outputPushables.length; i++)
+						for (int i = 0; i < m_outs.length; i++)
 						{
-							Pushable p = m_outputPushables[i];
+							Pushable p = (Pushable) m_outs[i];
 							if (p == null)
 							{
 								throw new PushableException(

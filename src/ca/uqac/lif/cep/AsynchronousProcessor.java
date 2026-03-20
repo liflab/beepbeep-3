@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -82,9 +82,9 @@ public abstract class AsynchronousProcessor extends SingleProcessor
   public void reset()
   {
     super.reset();
-    m_outputPullables = new Pullable[m_outputArity];
+    m_outputPullables = new Pullable[m_outs.length];
     m_inFrontsProcessed = 0;
-    m_inputEventsReceived = new int[m_inputArity];
+    m_inputEventsReceived = new int[m_ins.length];
     m_hasBeenNotifiedOfEndOfTrace = false;
   }
 
