@@ -19,8 +19,6 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.assertEquals;
 
-import static ca.uqac.lif.petitpoucet.Vertex.and;
-
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.petitpoucet.Assertions;
 import ca.uqac.lif.petitpoucet.CompositePart;
@@ -29,6 +27,7 @@ import ca.uqac.lif.petitpoucet.VertexFactory;
 import ca.uqac.lif.petitpoucet.Connectable.InputPart;
 import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
 import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+import ca.uqac.lif.petitpoucet.IdentityVertexFactory;
 
 import org.junit.Test;
 
@@ -58,8 +57,8 @@ public class AdderTest
   {
   	Adder add = new Adder();
   	Vertex e = add.explain(CompositePart.compose(new EventAt(2), new OutputPart(0)));
-  	VertexFactory f = new VertexFactory();
-  	Assertions.assertEqualGraphs(e, and(
+  	VertexFactory f = new IdentityVertexFactory();
+  	Assertions.assertEqualGraphs(e, f.and(
   			f.getPart(CompositePart.compose(new EventAt(2), new InputPart(0)), add),
   			f.getPart(CompositePart.compose(new EventAt(2), new InputPart(1)), add)));
   }

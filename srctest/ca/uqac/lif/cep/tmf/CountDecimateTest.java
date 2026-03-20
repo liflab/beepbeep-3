@@ -31,6 +31,7 @@ import ca.uqac.lif.petitpoucet.VertexFactory;
 import ca.uqac.lif.petitpoucet.Connectable.InputPart;
 import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
 import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+import ca.uqac.lif.petitpoucet.IdentityVertexFactory;
 
 import java.util.Queue;
 import org.junit.Test;
@@ -96,7 +97,7 @@ public class CountDecimateTest
   {
   	CountDecimate d = new CountDecimate(3);
   	Vertex e = d.explain(CompositePart.compose(new EventAt(0), new OutputPart(0)));
-  	VertexFactory f = new VertexFactory();
+  	VertexFactory f = new IdentityVertexFactory();
   	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(0), new InputPart(0)), d));
   }
   
@@ -105,7 +106,7 @@ public class CountDecimateTest
   {
   	CountDecimate d = new CountDecimate(3);
   	Vertex e = d.explain(CompositePart.compose(new EventAt(1), new OutputPart(0)));
-  	VertexFactory f = new VertexFactory();
+  	VertexFactory f = new IdentityVertexFactory();
   	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(3), new InputPart(0)), d));
   }
 }

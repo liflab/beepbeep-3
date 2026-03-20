@@ -42,6 +42,7 @@ import ca.uqac.lif.petitpoucet.VertexFactory;
 import ca.uqac.lif.petitpoucet.Connectable.InputPart;
 import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
 import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+import ca.uqac.lif.petitpoucet.IdentityVertexFactory;
 
 /**
  * Unit tests for classes of the TMF package.
@@ -112,7 +113,7 @@ public class TmfTest
   {
   	Freeze d = new Freeze();
   	Vertex e = d.explain(CompositePart.compose(new EventAt(0), new OutputPart(0)));
-  	VertexFactory f = new VertexFactory();
+  	VertexFactory f = new IdentityVertexFactory();
   	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(0), new InputPart(0)), d));
   }
 	
@@ -121,7 +122,7 @@ public class TmfTest
   {
   	Freeze d = new Freeze();
   	Vertex e = d.explain(CompositePart.compose(new EventAt(4), new OutputPart(0)));
-  	VertexFactory f = new VertexFactory();
+  	VertexFactory f = new IdentityVertexFactory();
   	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(0), new InputPart(0)), d));
   }
 

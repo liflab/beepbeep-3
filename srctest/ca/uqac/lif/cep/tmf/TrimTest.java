@@ -28,6 +28,7 @@ import ca.uqac.lif.petitpoucet.CompositePart;
 import ca.uqac.lif.petitpoucet.Connectable.InputPart;
 import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
 import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+import ca.uqac.lif.petitpoucet.IdentityVertexFactory;
 import ca.uqac.lif.petitpoucet.Vertex;
 import ca.uqac.lif.petitpoucet.VertexFactory;
 
@@ -69,7 +70,7 @@ public class TrimTest
   {
   	Trim d = new Trim(3);
   	Vertex e = d.explain(CompositePart.compose(new EventAt(0), new OutputPart(0)));
-  	VertexFactory f = new VertexFactory();
+  	VertexFactory f = new IdentityVertexFactory();
   	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(3), new InputPart(0)), d));
   }
   
@@ -79,7 +80,7 @@ public class TrimTest
   	// The idea of this test is to make sure that the tail of p is preserved
   	Trim d = new Trim(3);
   	Vertex e = d.explain(CompositePart.compose(new EventAt(10), new EventAt(0), new OutputPart(0)));
-  	VertexFactory f = new VertexFactory();
+  	VertexFactory f = new IdentityVertexFactory();
   	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(10), new EventAt(3), new InputPart(0)), d));
   }
 }

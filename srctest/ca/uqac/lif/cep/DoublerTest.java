@@ -25,6 +25,7 @@ import ca.uqac.lif.petitpoucet.CompositePart;
 import ca.uqac.lif.petitpoucet.Connectable.InputPart;
 import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
 import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
+import ca.uqac.lif.petitpoucet.IdentityVertexFactory;
 import ca.uqac.lif.petitpoucet.Vertex;
 import ca.uqac.lif.petitpoucet.VertexFactory;
 
@@ -54,7 +55,7 @@ public class DoublerTest
   {
   	Doubler d = new Doubler();
   	Vertex e = d.explain(CompositePart.compose(new EventAt(2), new OutputPart(0)));
-  	VertexFactory f = new VertexFactory();
+  	VertexFactory f = new IdentityVertexFactory();
   	Assertions.assertEqualGraphs(e, f.getPart(CompositePart.compose(new EventAt(2), new InputPart(0)), d));
   }
 }
