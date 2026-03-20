@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.SynchronousProcessor;
 import java.util.Queue;
@@ -57,7 +56,7 @@ public class Stutter extends SynchronousProcessor implements Stateful
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public Stutter duplicate(boolean with_state)
   {
     return new Stutter(m_numReps);
   }

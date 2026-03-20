@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import static org.junit.Assert.*;
 
-import ca.uqac.lif.cep.Processor.InternalProcessorState;
+import ca.uqac.lif.cep.SingleProcessor.InternalProcessorState;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import org.junit.Test;
 

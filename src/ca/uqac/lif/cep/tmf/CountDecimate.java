@@ -130,7 +130,7 @@ public class CountDecimate extends Decimate implements Stateful, Explainable
    * @since 0.10.2
    */
   @Override
-  protected Object printState()
+  public Object printState()
   {
     Map<String,Object> map = new HashMap<String,Object>();
     map.put("interval", m_interval);
@@ -144,7 +144,7 @@ public class CountDecimate extends Decimate implements Stateful, Explainable
    */
   @SuppressWarnings("unchecked")
   @Override
-  protected CountDecimate readState(Object o)
+  public CountDecimate readState(Object o)
   {
     Map<String,Object> map = (Map<String,Object>) o;
     CountDecimate cd = new CountDecimate(((Number) map.get("interval")).intValue(), 

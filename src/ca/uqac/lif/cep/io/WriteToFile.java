@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.io;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.tmf.Sink;
 import java.io.BufferedOutputStream;
@@ -114,7 +113,7 @@ public class WriteToFile extends Sink
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public WriteToFile duplicate(boolean with_state)
   {
     throw new UnsupportedOperationException();
   }

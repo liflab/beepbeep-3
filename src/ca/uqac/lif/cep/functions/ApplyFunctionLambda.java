@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.functions;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.UniformProcessor;
 
 public class ApplyFunctionLambda extends UniformProcessor
@@ -58,7 +57,7 @@ public class ApplyFunctionLambda extends UniformProcessor
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public ApplyFunctionLambda duplicate(boolean with_state)
   {
     return this;
   }

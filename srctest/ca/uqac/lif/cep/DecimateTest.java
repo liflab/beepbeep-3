@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 import ca.uqac.lif.cep.tmf.TimeDecimate;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.ProcessorTest.Sum;
+import ca.uqac.lif.cep.SingleProcessorTest.Sum;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;

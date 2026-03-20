@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.functions;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SingleProcessor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,7 +34,7 @@ import java.util.Map;
  * @author Sylvain Hallé
  * @since 0.9
  */
-public class ApplyFunctionPartial extends Processor 
+public class ApplyFunctionPartial extends SingleProcessor 
 {
   /**
    * The function to apply on input events

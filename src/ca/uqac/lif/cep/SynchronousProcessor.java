@@ -47,7 +47,7 @@ import java.util.Queue;
  *
  */
 @SuppressWarnings("squid:S2160")
-public abstract class SynchronousProcessor extends Processor
+public abstract class SynchronousProcessor extends SingleProcessor
 {
 	/**
 	 * A queue object that will be passed to the {@link #compute(Object[], Queue)}
@@ -357,7 +357,7 @@ public abstract class SynchronousProcessor extends Processor
 				return true;
 			}
 			// Check if each pullable has an event ready
-			for (int tries = 0; tries < Processor.MAX_PULL_RETRIES; tries++)
+			for (int tries = 0; tries < MAX_PULL_RETRIES; tries++)
 			{
 				for (int i = 0; i < m_inputArity; i++)
 				{

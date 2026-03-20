@@ -34,7 +34,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 /**
  * Unit tests for the basic {@link Processor} functionalities.
  */
-public class ProcessorTest
+public class SingleProcessorTest
 {
 
 	@Test
@@ -97,14 +97,14 @@ public class ProcessorTest
 	public void testAllNull1()
 	{
 		Object[] os = new Object[3];
-		assertTrue(Processor.allNull(os));
+		assertTrue(SingleProcessor.allNull(os));
 	}
 	
 	@Test
 	public void testAllNull2()
 	{
 		Object[] os = new Object[]{null, 0, null};
-		assertFalse(Processor.allNull(os));
+		assertFalse(SingleProcessor.allNull(os));
 	}
 	
 	@Test
@@ -135,12 +135,12 @@ public class ProcessorTest
 	@Test
 	public void testStartStop() throws ProcessorException
 	{
-		Processor.startAll();
+		SingleProcessor.startAll();
 		ConnectorTest.Oranges o1 = new ConnectorTest.Oranges();
 		ConnectorTest.Oranges o2 = new ConnectorTest.Oranges();
-		Processor.startAll(o1, null, o2);
+		SingleProcessor.startAll(o1, null, o2);
 		assertTrue(o1.started && o2.started);
-		Processor.stopAll(o1, o2, null);
+		SingleProcessor.stopAll(o1, o2, null);
 		assertTrue(!o1.started && !o2.started);
 	}
 	

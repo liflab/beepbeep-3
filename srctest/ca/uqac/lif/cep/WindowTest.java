@@ -24,7 +24,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.ProcessorTest.Sum;
+import ca.uqac.lif.cep.SingleProcessorTest.Sum;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.Window;

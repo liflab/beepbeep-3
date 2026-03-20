@@ -26,7 +26,7 @@ import java.util.Queue;
  * @author Sylvain Hallé
  * @since 0.9
  */
-public abstract class AsynchronousProcessor extends Processor 
+public abstract class AsynchronousProcessor extends SingleProcessor 
 {
   /**
    * A queue object that will be passed to the {@link #compute(Object[], Queue)}

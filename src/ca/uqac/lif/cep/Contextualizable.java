@@ -49,4 +49,18 @@ public interface Contextualizable
    * @return The context
    */
   public /*@ non_null @*/ Context getContext();
+
+  /**
+   * Gets the value associated to a key in the processor's current
+   * context.
+   * @param key The key
+   * @return The value, or {@code null} if key not found
+   */
+	public Object getContext(String key);
+	
+	/**
+	 * Creates a new {@link Context} instance.
+	 * @return The context
+	 */
+	public /*@ non_null @*/ Context newContext();
 }

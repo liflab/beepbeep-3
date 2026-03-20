@@ -65,7 +65,7 @@ public class Doubler extends UniformProcessor
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public Doubler duplicate(boolean with_state)
   {
     return new Doubler();
   }

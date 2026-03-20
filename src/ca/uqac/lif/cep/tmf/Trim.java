@@ -107,7 +107,7 @@ public class Trim extends SynchronousProcessor implements Stateful, Explainable
    * @since 0.10.2
    */
   @Override
-  protected Object printState()
+  public Object printState()
   {
     Map<String, Integer> state = new HashMap<>();
     state.put("delay", m_delay);
@@ -120,7 +120,7 @@ public class Trim extends SynchronousProcessor implements Stateful, Explainable
    */
   @SuppressWarnings("unchecked")
 	@Override
-  protected Trim readState(Object o)
+  public Trim readState(Object o)
   {
   	Map<String, Number> state = (Map<String, Number>) o;
   	int delay = state.get("delay").intValue();

@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SingleProcessor;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +54,7 @@ import java.util.List;
  * @author Sylvain Hallé
  * @since 0.10
  */
-public class Divert extends Processor
+public class Divert extends SingleProcessor
 {
   /**
    * The list of downstream {@link Pushable}s connected to this processor 

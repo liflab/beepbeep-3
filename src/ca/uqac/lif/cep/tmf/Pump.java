@@ -17,10 +17,10 @@
  */
 package ca.uqac.lif.cep.tmf;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Processor that repeatedly pulls its input, and pushes the resulting events to
@@ -44,7 +44,7 @@ import ca.uqac.lif.cep.Pushable;
  * @since 0.6
  */
 @SuppressWarnings("squid:S2160")
-public class Pump extends Processor implements Runnable, Stateful
+public class Pump extends SingleProcessor implements Runnable, Stateful
 {
   /**
    * Semaphore used to stop the pump

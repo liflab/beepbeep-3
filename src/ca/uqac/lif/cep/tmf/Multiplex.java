@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SingleProcessor;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -47,7 +49,7 @@ import java.util.Iterator;
  * @since 0.2.1
  */
 @SuppressWarnings("squid:S2160")
-public class Multiplex extends Processor
+public class Multiplex extends SingleProcessor
 {
   /**
    * Array containing for each PushableInput of the processor if it has been
@@ -210,7 +212,7 @@ public class Multiplex extends Processor
       }
       boolean all_no = true;
       NextStatus out = NextStatus.MAYBE;
-      for (int i = 0; i < Processor.MAX_PULL_RETRIES; i++)
+      for (int i = 0; i < MAX_PULL_RETRIES; i++)
       {
         for (Pullable p : m_inputPullables)
         {

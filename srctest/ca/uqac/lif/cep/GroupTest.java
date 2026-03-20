@@ -785,7 +785,7 @@ public class GroupTest
     }
 
     @Override
-    public Processor duplicate(boolean with_state)
+    public SingleProcessor duplicate(boolean with_state)
     {
       // TODO Auto-generated method stub
       return null;

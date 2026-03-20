@@ -20,6 +20,8 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SingleProcessor;
+
 import java.util.Iterator;
 
 /**
@@ -37,7 +39,7 @@ import java.util.Iterator;
  * @since 0.7
  */
 @SuppressWarnings("squid:S2160")
-public class Tank extends Processor
+public class Tank extends SingleProcessor
 {
   /**
    * A pushable

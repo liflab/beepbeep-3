@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.util;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
@@ -113,7 +112,7 @@ public class Strings
     }
 
     @Override
-    public Processor duplicate(boolean with_state)
+    public BuildString duplicate(boolean with_state)
     {
       BuildString bs = new BuildString();
       bs.m_separator = m_separator;

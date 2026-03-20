@@ -73,7 +73,7 @@ public abstract class SpliceSource extends Source
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public SpliceSource duplicate(boolean with_state)
   {
     throw new UnsupportedOperationException("This source cannot be duplicated");
   }

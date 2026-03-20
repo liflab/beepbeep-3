@@ -39,7 +39,7 @@ import java.util.Set;
  * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
-public class GroupProcessor extends Processor implements Stateful
+public class GroupProcessor extends SingleProcessor implements Stateful
 {
 	/**
 	 * The set of processors included in the group
@@ -598,17 +598,17 @@ public class GroupProcessor extends Processor implements Stateful
 	protected static Processor copyProcessor(Processor p, boolean with_state)
 	{
 		Processor clone_p = p.duplicate(with_state);
-		clone_p.setContext(p.m_context);
+		clone_p.setContext(p.getContext());
 		if (with_state)
 		{
 			// Put same content in input and output queues
-			for (int i = 0; i < p.m_inputQueues.length; i++)
+			for (int i = 0; i < p.getInputArity(); i++)
 			{
-				clone_p.m_inputQueues[i].addAll(p.m_inputQueues[i]);
+				clone_p.addToInputQueue(i, p.getInputQueue(i));
 			}
-			for (int i = 0; i < p.m_outputQueues.length; i++)
+			for (int i = 0; i < p.getOutputArity(); i++)
 			{
-				clone_p.m_outputQueues[i].addAll(p.m_outputQueues[i]);
+				clone_p.addToOutputQueue(i, p.getOutputQueue(i));
 			}
 		}
 		return clone_p;

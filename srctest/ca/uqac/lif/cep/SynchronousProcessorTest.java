@@ -212,7 +212,7 @@ public class SynchronousProcessorTest
 		}
 
 		@Override
-		public Processor duplicate(boolean with_state)
+		public SingleProcessor duplicate(boolean with_state)
 		{
 			// Don't care
 			return null;
@@ -272,7 +272,7 @@ public class SynchronousProcessorTest
 		}
 
 		@Override
-		public Processor duplicate(boolean with_state)
+		public SingleProcessor duplicate(boolean with_state)
 		{
 			// TODO Auto-generated method stub
 			return null;
