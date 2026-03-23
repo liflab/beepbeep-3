@@ -122,21 +122,21 @@ public class Multiplex extends SingleProcessor
     @Override
     public Object pullSoft()
     {
-      if (!m_outputQueues[0].isEmpty())
+      if (!m_delegate.getOutputQueue(0).isEmpty())
       {
-        return m_outputQueues[0].remove();
+        return m_delegate.getOutputQueue(0).remove();
       }
       for (UpstreamConnection p : m_ins)
       {
         Object o = ((Pullable) p).pullSoft();
         if (o != null)
         {
-          m_outputQueues[0].add(o);
+          m_delegate.getOutputQueue(0).add(o);
         }
       }
-      if (!m_outputQueues[0].isEmpty())
+      if (!m_delegate.getOutputQueue(0).isEmpty())
       {
-        return m_outputQueues[0].remove();
+        return m_delegate.getOutputQueue(0).remove();
       }
       return null;
     }
@@ -144,9 +144,9 @@ public class Multiplex extends SingleProcessor
     @Override
     public Object pull()
     {
-      if (!m_outputQueues[0].isEmpty())
+      if (!m_delegate.getOutputQueue(0).isEmpty())
       {
-        return m_outputQueues[0].remove();
+        return m_delegate.getOutputQueue(0).remove();
       }
       for (UpstreamConnection uc : m_ins)
       {
@@ -156,13 +156,13 @@ public class Multiplex extends SingleProcessor
           Object o = p.pull();
           if (o != null)
           {
-            m_outputQueues[0].add(o);
+            m_delegate.getOutputQueue(0).add(o);
           }
         }
       }
       // The next instruction may throw a NoSuchElementException.
       // That's OK
-      return m_outputQueues[0].remove();
+      return m_delegate.getOutputQueue(0).remove();
     }
 
     @Override
@@ -175,7 +175,7 @@ public class Multiplex extends SingleProcessor
     @Override
     public NextStatus hasNextSoft()
     {
-      if (!m_outputQueues[0].isEmpty())
+      if (!m_delegate.getOutputQueue(0).isEmpty())
       {
         return NextStatus.YES;
       }
@@ -208,7 +208,7 @@ public class Multiplex extends SingleProcessor
     @Override
     public boolean hasNext()
     {
-      if (!m_outputQueues[0].isEmpty())
+      if (!m_delegate.getOutputQueue(0).isEmpty())
       {
         return true;
       }
@@ -285,7 +285,7 @@ public class Multiplex extends SingleProcessor
     @Override
     public Pushable push(Object o)
     {
-      ((Pushable) m_outs[0]).push(o);
+      ((Pushable) m_outs.get(0)).push(o);
       return this;
     }
 
@@ -302,7 +302,7 @@ public class Multiplex extends SingleProcessor
         }
       }
 
-      ((Pushable) m_outs[0]).notifyEndOfTrace();
+      ((Pushable) m_outs.get(0)).notifyEndOfTrace();
     }
 
     @Override

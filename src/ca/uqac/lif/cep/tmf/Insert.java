@@ -128,7 +128,7 @@ public class Insert extends SynchronousProcessor implements Stateful
         {
           for (int j = 0; j < m_pad.length; j++)
           {
-            m_outputQueues[j].add(m_pad[j]);
+            m_delegate.getOutputQueue(j).add(m_pad[j]);
           }
         }
         m_sentPad = true;

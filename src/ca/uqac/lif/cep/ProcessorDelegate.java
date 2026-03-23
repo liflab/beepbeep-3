@@ -26,7 +26,7 @@ import ca.uqac.lif.petitpoucet.Part;
 import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
 import ca.uqac.lif.petitpoucet.circuit.Connectable.OutputPart;
 
-class ProcessorDelegate
+public class ProcessorDelegate
 {
 	protected final Processor m_pupil;
 	
@@ -108,6 +108,16 @@ class ProcessorDelegate
 		m_outputQueues[index].addAll(c);
 	}
 	
+  @SuppressWarnings("unchecked")
+	public void extendOutputArity(int out_arity)
+  {
+    m_outputQueues = new Queue[out_arity];
+    for (int i = 0; i < out_arity; i++)
+    {
+      m_outputQueues[i] = new ArrayDeque<Object>();
+    }
+  }
+	
 	protected boolean allNotifiedEndOfTrace()
 	{
 		for (int i = 0; i < m_hasBeenNotifiedOfEndOfTrace.length; i++)
@@ -149,6 +159,11 @@ class ProcessorDelegate
 			m_context = m_pupil.newContext();
 		}
 		m_context.put(key, value);
+	}
+	
+	public void notifyEndOfTrace(int index)
+	{
+		m_hasBeenNotifiedOfEndOfTrace[index] = true;
 	}
 	
 	public void setContext(/*@ null @*/ Context context)
@@ -196,12 +211,12 @@ class ProcessorDelegate
 		// Reset input
 		for (int i = 0; i < m_inputQueues.length; i++)
 		{
-			m_inputQueues[i].clear();
+			getInputQueue(i).clear();
 		}
 		// Reset output
 		for (int i = 0; i < m_outputQueues.length; i++)
 		{
-			m_outputQueues[i].clear();
+			getOutputQueue(i).clear();
 		}
 		for (int i = 0; i < m_hasBeenNotifiedOfEndOfTrace.length; i++)
 		{
@@ -227,16 +242,31 @@ class ProcessorDelegate
 	
 	public Queue<Object> getInputQueue(int index)
 	{
+		return m_inputQueues[index];
+	}
+	
+	public Queue<Object> getOutputQueue(int index)
+	{
+		return m_outputQueues[index];
+	}
+	
+	public Queue<Object> getInputQueueCopy(int index)
+	{
 		Queue<Object> q = new ArrayDeque<Object>();
 		q.addAll(m_inputQueues[index]);
 		return q;
 	}
 	
-	public Queue<Object> getOutputQueue(int index)
+	public Queue<Object> getOutputQueueCopy(int index)
 	{
 		Queue<Object> q = new ArrayDeque<Object>();
 		q.addAll(m_outputQueues[index]);
 		return q;
+	}
+	
+	public boolean hasBeenNotifiedEndOfTrace(int index)
+	{
+		return m_hasBeenNotifiedOfEndOfTrace[index];
 	}
 	
 	public void duplicate(SingleProcessor p, boolean with_state)
@@ -245,13 +275,12 @@ class ProcessorDelegate
 		ProcessorDelegate pd = p.delegate();
 		for (int i = 0; i < m_inputQueues.length; i++)
 		{
-			pd.m_inputQueues[i].addAll(m_inputQueues[i]);
+			pd.getInputQueue(i).addAll(getInputQueue(i));
 		}
 		for (int i = 0; i < m_outputQueues.length; i++)
 		{
-			pd.m_outputQueues[i].addAll(m_outputQueues[i]);
+			pd.getOutputQueue(i).addAll(getOutputQueue(i));
 		}
 	}
-	
-	
+
 }

@@ -673,17 +673,17 @@ public class GroupTest
     Connector.connect(g, 1, qs2, 0);
     g.addProcessors(f, pt1, pt2);
     Pushable p = g.getPushableInput(0);
-    assertFalse(f.m_hasBeenNotifiedOfEndOfTrace[0]);
-    assertFalse(pt1.m_hasBeenNotifiedOfEndOfTrace[0]);
-    assertFalse(pt2.m_hasBeenNotifiedOfEndOfTrace[0]);
-    assertFalse(qs1.m_hasBeenNotifiedOfEndOfTrace[0]);
-    assertFalse(qs2.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertFalse(f.m_delegate.hasBeenNotifiedEndOfTrace(0));
+    assertFalse(pt1.m_delegate.hasBeenNotifiedEndOfTrace(0));
+    assertFalse(pt2.m_delegate.hasBeenNotifiedEndOfTrace(0));
+    assertFalse(qs1.m_delegate.hasBeenNotifiedEndOfTrace(0));
+    assertFalse(qs2.m_delegate.hasBeenNotifiedEndOfTrace(0));
     p.notifyEndOfTrace();
-    assertTrue(f.m_hasBeenNotifiedOfEndOfTrace[0]);
-    assertTrue(pt1.m_hasBeenNotifiedOfEndOfTrace[0]);
-    assertTrue(pt2.m_hasBeenNotifiedOfEndOfTrace[0]);
-    assertTrue(qs1.m_hasBeenNotifiedOfEndOfTrace[0]);
-    assertTrue(qs2.m_hasBeenNotifiedOfEndOfTrace[0]);
+    assertTrue(f.m_delegate.hasBeenNotifiedEndOfTrace(0));
+    assertTrue(pt1.m_delegate.hasBeenNotifiedEndOfTrace(0));
+    assertTrue(pt2.m_delegate.hasBeenNotifiedEndOfTrace(0));
+    assertTrue(qs1.m_delegate.hasBeenNotifiedEndOfTrace(0));
+    assertTrue(qs2.m_delegate.hasBeenNotifiedEndOfTrace(0));
   }
   
   @Test
@@ -845,7 +845,7 @@ public class GroupTest
 		public GroupIn duplicate(boolean with_state)
 		{
 			GroupIn in = new GroupIn(getInputArity(), getOutputArity());
-			super.cloneInto(in, with_state);
+			duplicate(in, with_state);
 			return in;
 		}
 	}

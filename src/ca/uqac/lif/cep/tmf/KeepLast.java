@@ -44,7 +44,7 @@ public class KeepLast extends SynchronousProcessor
   @Override
   public KeepLast duplicate(boolean with_state)
   {
-    return new KeepLast(m_ins.length);
+    return new KeepLast(m_ins.size());
   }
 
   @Override
@@ -52,7 +52,7 @@ public class KeepLast extends SynchronousProcessor
   {
     if (m_lasts == null)
     {
-      m_lasts = new Object[m_ins.length];
+      m_lasts = new Object[m_ins.size()];
     }
     // Keep the last front of events
     for (int i = 0; i < inputs.length; i++)

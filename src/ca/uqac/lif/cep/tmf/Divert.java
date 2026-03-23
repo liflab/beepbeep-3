@@ -190,31 +190,31 @@ public class Divert extends SingleProcessor
     @Override
     public Object pullSoft()
     {
-      return ((Pullable) m_ins[0]).pullSoft();
+      return ((Pullable) m_ins.get(0)).pullSoft();
     }
 
     @Override
     public Object pull()
     {
-      return ((Pullable) m_ins[0]).pull();
+      return ((Pullable) m_ins.get(0)).pull();
     }
 
     @Override
     public Object next()
     {
-      return ((Pullable) m_ins[0]).next();
+      return ((Pullable) m_ins.get(0)).next();
     }
 
     @Override
     public NextStatus hasNextSoft()
     {
-      return ((Pullable) m_ins[0]).hasNextSoft();
+      return ((Pullable) m_ins.get(0)).hasNextSoft();
     }
 
     @Override
     public boolean hasNext()
     {
-      return ((Pullable) m_ins[0]).hasNext();
+      return ((Pullable) m_ins.get(0)).hasNext();
     }
 
     @Override

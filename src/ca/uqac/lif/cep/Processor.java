@@ -125,6 +125,18 @@ public interface Processor extends Contextualizable, Duplicable, Connectable
 		assignInput(i, p);
 	}
 	
+	@Override
+	public default Pushable getInputEndpoint(int index)
+	{
+		return getPushableInput(index);
+	}
+	
+	@Override
+	public default Pullable getOutputEndpoint(int index)
+	{
+		return getPullableOutput(index);
+	}
+	
 	/**
 	 * Returns the {@link Pullable} corresponding to the processor's <i>i</i>-th
 	 * input
@@ -253,6 +265,12 @@ public interface Processor extends Contextualizable, Duplicable, Connectable
 	public default Processor readState(Object o)
 	{
 		throw new UnsupportedOperationException("This processor does not support deserialization");
+	}
+	
+	@Override
+	public default Connector getConnector()
+	{
+		return Connector.instance;
 	}
 	
 	public ProcessorDelegate delegate();
@@ -393,7 +411,13 @@ public interface Processor extends Contextualizable, Duplicable, Connectable
 	 */
 	public Queue<Object> getOutputQueue(int index);
 	
-	void addToInputQueue(int index, Collection<?> c);
+	default void addToInputQueue(int index, Collection<?> c)
+	{
+		delegate().getInputQueue(index).addAll(c);
+	}
 	
-	void addToOutputQueue(int index, Collection<?> c);
+	default void addToOutputQueue(int index, Collection<?> c)
+	{
+		delegate().getOutputQueue(index).addAll(c);
+	}
 }

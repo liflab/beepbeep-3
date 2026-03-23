@@ -110,18 +110,18 @@ public class ApplyFunctionPartial extends SingleProcessor
         return this;
       }
       assert m_frontNumber[m_index] >= m_numCurrentFront;
-      m_inputQueues[m_index].add(o);
+      m_delegate.getInputQueue(m_index).add(o);
       boolean evaluated = true;
       // the following is actually a bounded while(evaluated)
       for (int loop_count = 0; loop_count < MAX_LOOPS && evaluated; loop_count++)
       {
-        for (int i = 0; i < m_ins.length; i++)
+        for (int i = 0; i < m_ins.size(); i++)
         {
           if (m_frontNumber[i] == m_numCurrentFront)
           {
-            if (!m_inputQueues[i].isEmpty())
+            if (!m_delegate.getInputQueue(i).isEmpty())
             {
-              m_inputFront[i] = m_inputQueues[i].remove();
+              m_inputFront[i] = m_delegate.getInputQueue(i).remove();
               m_frontNumber[i]++;
             }
             else
@@ -130,12 +130,12 @@ public class ApplyFunctionPartial extends SingleProcessor
             }
           }
         }
-        evaluated = m_function.evaluatePartial(m_inputFront, out_front, m_context);
+        evaluated = m_function.evaluatePartial(m_inputFront, out_front, getContext());
         if (evaluated)
         {
           for (int i = 0; i < out_front.length; i++)
           {
-            ((Pushable) m_ins[i]).push(out_front[i]);
+            ((Pushable) m_ins.get(i)).push(out_front[i]);
           }
           for (int i = 0; i < m_inputFront.length; i++)
           {

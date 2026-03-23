@@ -382,11 +382,17 @@ public class Lists
 		public TimePack duplicate(boolean with_state)
 		{
 			TimePack tp = new TimePack();
+			duplicate(tp, with_state);
+			return tp;
+		}
+		
+		protected void duplicate(TimePack tp, boolean with_state)
+		{
+			super.duplicate(tp, with_state);
 			if (with_state)
 			{
 				tp.m_packedEvents.addAll(m_packedEvents);
 			}
-			return tp;
 		}
 	}
 
@@ -436,10 +442,7 @@ public class Lists
 		public Unpack duplicate(boolean with_state)
 		{
 			Unpack up = new Unpack();
-			if (with_state)
-			{
-				up.m_outputQueues[0].addAll(m_outputQueues[0]);
-			}
+			duplicate(up, with_state);
 			return up;
 		}
 	}

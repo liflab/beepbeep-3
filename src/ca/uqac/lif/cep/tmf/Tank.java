@@ -66,7 +66,7 @@ public class Tank extends SingleProcessor
     if (with_state)
     {
       // Put in the tank what is in the current tank
-      t.m_inputQueues[0].addAll(m_inputQueues[0]);
+      t.m_delegate.getInputQueue(0).addAll(m_delegate.getInputQueue(0));
     }
     return t;
   }
@@ -108,18 +108,18 @@ public class Tank extends SingleProcessor
     @Override
     public Object pullSoft()
     {
-      synchronized (m_inputQueues[0])
+      synchronized (m_delegate.getInputQueue(0))
       {
-        return m_inputQueues[0].poll();
+        return m_delegate.getInputQueue(0).poll();
       }
     }
 
     @Override
     public Object pull()
     {
-      synchronized (m_inputQueues[0])
+      synchronized (m_delegate.getInputQueue(0))
       {
-        return m_inputQueues[0].remove();
+        return m_delegate.getInputQueue(0).remove();
       }
     }
 
@@ -133,9 +133,9 @@ public class Tank extends SingleProcessor
     @Override
     public NextStatus hasNextSoft()
     {
-      synchronized (m_inputQueues[0])
+      synchronized (m_delegate.getInputQueue(0))
       {
-        if (m_inputQueues[0].isEmpty())
+        if (m_delegate.getInputQueue(0).isEmpty())
         {
           return NextStatus.MAYBE;
         }
@@ -146,9 +146,9 @@ public class Tank extends SingleProcessor
     @Override
     public boolean hasNext()
     {
-      synchronized (m_inputQueues)
+      synchronized (m_delegate)
       {
-        return !m_inputQueues[0].isEmpty();
+        return !m_delegate.getInputQueue(0).isEmpty();
       }
     }
 
@@ -198,13 +198,13 @@ public class Tank extends SingleProcessor
     @Override
     public Pushable push(Object o)
     {
-      synchronized (m_inputQueues[0])
+      synchronized (m_delegate.getInputQueue(0))
       {
         if (m_singleObject)
         {
-          m_inputQueues[0].clear();
+          m_delegate.getInputQueue(0).clear();
         }
-        m_inputQueues[0].add(o);
+        m_delegate.getInputQueue(0).add(o);
       }
       return this;
     }
@@ -213,7 +213,7 @@ public class Tank extends SingleProcessor
     public void notifyEndOfTrace() throws PushableException
     {
       // TODO: to be verified
-      ((Pushable) m_outs[0]).notifyEndOfTrace();
+      ((Pushable) m_outs.get(0)).notifyEndOfTrace();
     }
 
     @Override
@@ -233,9 +233,9 @@ public class Tank extends SingleProcessor
   public void reset()
   {
     super.reset();
-    synchronized (m_inputQueues[0])
+    synchronized (m_delegate.getInputQueue(0))
     {
-      m_inputQueues[0].clear();
+      m_delegate.getInputQueue(0).clear();
     }
   }
 }

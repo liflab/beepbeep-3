@@ -158,40 +158,6 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
     return false;
   }
 
-  @Override
-  public Pullable getPullableOutput(int index)
-  {
-    if (m_outputPullables[index] == null)
-    {
-      if (m_ins.length == 1 && m_outs.length == 1)
-      {
-        m_outputPullables[index] = new UnaryPullable();
-      }
-      else
-      {
-        m_outputPullables[index] = new OutputPullable(index);
-      }
-    }
-    return m_outputPullables[index];
-  }
-
-  @Override
-  public Pushable getPushableInput(int index)
-  {
-    if (m_inputPushables[index] == null)
-    {
-      if (m_ins.length == 1 && m_outs.length == 1)
-      {
-        m_inputPushables[index] = new UnaryPushable();
-      }
-      else
-      {
-        m_inputPushables[index] = new InputPushable(index);
-      }
-    }
-    return m_inputPushables[index];
-  }
-
   /**
    * A special type of Pushable for uniform processors with an input and output
    * arity of exactly 1. In such a case, the pushable object can operate in a much
@@ -216,15 +182,15 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       {
         throw new PushableException(e);
       }
-      if (((Pushable) m_outs[0]) == null)
+      if (((Pushable) m_outs.get(0)) == null)
       {
         throw new PushableException(
             "Output 0 of processor " + getProcessor() + " is connected to nothing");
       }
-      ((Pushable) m_outs[0]).push(m_outputArray[0]);
+      ((Pushable) m_outs.get(0)).push(m_outputArray[0]);
       if (!b)
       {
-      	((Pushable) m_outs[0]).notifyEndOfTrace();	
+      	((Pushable) m_outs.get(0)).notifyEndOfTrace();	
       }
       return this;
     }
@@ -232,7 +198,7 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
     @Override
     public void notifyEndOfTrace() throws PushableException
     {
-      m_hasBeenNotifiedOfEndOfTrace[getPosition()] = true;
+    	m_delegate.notifyEndOfTrace(getPosition());
       if (!allNotifiedEndOfTrace())
       {
         return;
@@ -248,11 +214,11 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       }
       if (b)
       {
-        ((Pushable) m_outs[0]).push(m_outputArray[0]);
+        ((Pushable) m_outs.get(0)).push(m_outputArray[0]);
       }
-      for (int i = 0; i < m_outs.length; i++)
+      for (int i = 0; i < m_outs.size(); i++)
       {
-        ((Pushable) m_outs[i]).notifyEndOfTrace();
+        ((Pushable) m_outs.get(i)).notifyEndOfTrace();
       }
     }
 
@@ -297,11 +263,11 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
     @Override
     public Object pullSoft()
     {
-      if (!m_inputQueues[0].isEmpty())
+      if (!m_delegate.getInputQueue(0).isEmpty())
       {
-        return m_inputQueues[0].remove();
+        return m_delegate.getInputQueue(0).remove();
       }
-      Object o = ((Pullable) m_ins[0]).pullSoft();
+      Object o = ((Pullable) m_ins.get(0)).pullSoft();
       try
       {
         if (o == null || !compute(new Object[] { o }, m_outputArray))
@@ -319,16 +285,16 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
     @Override
     public Object pull()
     {
-      if (!m_inputQueues[0].isEmpty())
+      if (!m_delegate.getInputQueue(0).isEmpty())
       {
-        return m_inputQueues[0].remove();
+        return m_delegate.getInputQueue(0).remove();
       }
-      if (((Pullable) m_ins[0]) == null)
+      if (((Pullable) m_delegate.getInputQueue(0)) == null)
       {
         throw new PullableException("Input 0 of this processor is connected to nothing",
             getProcessor());
       }
-      Object o = ((Pullable) m_ins[0]).pull();
+      Object o = ((Pullable) m_delegate.getInputQueue(0)).pull();
       try
       {
         if (o == null || !compute(new Object[] { o }, m_outputArray))
@@ -353,7 +319,7 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
     @Override
     public NextStatus hasNextSoft()
     {
-      if (!m_inputQueues[0].isEmpty())
+      if (!m_delegate.getInputQueue(0).isEmpty())
       {
         // Since we are a uniform processor, we know that the
         // existence of an input will generate an output
@@ -361,19 +327,19 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       }
       else
       {
-        if (((Pullable) m_ins[0]) == null)
+        if (((Pullable) m_delegate.getInputQueue(0)) == null)
         {
           throw new PullableException("Input 0 of this processor is connected to nothing",
               getProcessor());
         }
-        return ((Pullable) m_ins[0]).hasNextSoft();
+        return ((Pullable) m_delegate.getInputQueue(0)).hasNextSoft();
       }
     }
 
     @Override
     public boolean hasNext()
     {
-      if (!m_inputQueues[0].isEmpty())
+      if (!m_delegate.getInputQueue(0).isEmpty())
       {
         // Since we are a uniform processor, we know that the
         // existence of an input will generate an output
@@ -381,12 +347,12 @@ public abstract class UniformProcessor extends SynchronousProcessor implements E
       }
       else
       {
-        if (((Pullable) m_ins[0]) == null)
+        if (((Pullable) m_delegate.getInputQueue(0)) == null)
         {
           throw new PullableException("Input 0 of this processor is connected to nothing",
               getProcessor());
         }
-        return ((Pullable) m_ins[0]).hasNext();
+        return ((Pullable) m_delegate.getInputQueue(0)).hasNext();
       }
     }
 

@@ -24,8 +24,8 @@ import ca.uqac.lif.petitpoucet.Assertions;
 import ca.uqac.lif.petitpoucet.CompositePart;
 import ca.uqac.lif.petitpoucet.Vertex;
 import ca.uqac.lif.petitpoucet.VertexFactory;
-import ca.uqac.lif.petitpoucet.Connectable.InputPart;
-import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
+import ca.uqac.lif.petitpoucet.circuit.Connectable.InputPart;
+import ca.uqac.lif.petitpoucet.circuit.Connectable.OutputPart;
 import ca.uqac.lif.petitpoucet.Explainable.ExplanationException;
 import ca.uqac.lif.petitpoucet.IdentityVertexFactory;
 

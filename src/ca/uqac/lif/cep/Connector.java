@@ -112,7 +112,7 @@ public class Connector implements ca.uqac.lif.petitpoucet.circuit.Connector
 	 */
 	private Connector()
 	{
-		throw new IllegalAccessError("Utility class");
+		// Do nothing
 	}
 
 	/**

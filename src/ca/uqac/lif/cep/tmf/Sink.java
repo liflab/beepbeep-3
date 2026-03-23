@@ -57,7 +57,7 @@ public abstract class Sink extends SynchronousProcessor
     Object[] inputs = new Object[getInputArity()];
     for (int i = 0; i < getInputArity(); i++)
     {
-      Pullable p = (Pullable) m_ins[i];
+      Pullable p = (Pullable) m_ins.get(i);
       inputs[i] = p.pullSoft();
     }
     try
@@ -78,7 +78,7 @@ public abstract class Sink extends SynchronousProcessor
     Object[] inputs = new Object[getInputArity()];
     for (int i = 0; i < getInputArity(); i++)
     {
-      Pullable p = (Pullable) m_ins[i];
+      Pullable p = (Pullable) m_ins.get(i);
       inputs[i] = p.pull();
     }
     try

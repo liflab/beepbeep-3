@@ -20,8 +20,6 @@ package ca.uqac.lif.cep.tmf;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
-import java.util.ArrayDeque;
-import java.util.Queue;
 
 /**
  * Duplicates an input trace into two or more output traces.
@@ -69,27 +67,21 @@ public class Fork extends UniformProcessor
    * @param out_arity
    *          The desired arity for the output fork
    */
-  @SuppressWarnings("unchecked")
   public void extendOutputArity(int out_arity)
   {
+  	m_delegate.extendOutputArity(out_arity);
     m_outputArray = new Object[out_arity];
-    m_outputQueues = new Queue[out_arity];
     Pullable[] new_out_pullables = new Pullable[out_arity];
-    for (int i = 0; i < m_outs.length; i++)
+    for (int i = 0; i < m_outs.size(); i++)
     {
       new_out_pullables[i] = m_outputPullables[i];
     }
     m_outputPullables = new_out_pullables;
-    for (int i = 0; i < m_outs.length; i++)
-    {
-      m_outputQueues[i] = new ArrayDeque<Object>();
-    }
     DownstreamConnection[] out_pushables = new Pushable[out_arity];
-    for (int i = 0; i < m_outs.length; i++)
+    for (int i = 0; i < m_outs.size(); i++)
     {
-      out_pushables[i] = m_outs[i];
+      out_pushables[i] = m_outs.get(i);
     }
-    m_outs = out_pushables;
   }
   
   /**

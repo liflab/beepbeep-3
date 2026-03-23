@@ -316,7 +316,7 @@ public abstract class AbstractSlice extends SynchronousProcessor implements Stat
   	as.m_explodeArrays = m_explodeArrays;
   	as.m_processor = m_processor.duplicate(with_state);
   	as.m_slicingFunction = m_slicingFunction.duplicate(with_state);
-    as.setContext(m_context);
+    as.setContext(getContext());
     for (Map.Entry<Object,Processor> e : m_slices.entrySet())
     {
     	Processor p_dup = e.getValue().duplicate(with_state);

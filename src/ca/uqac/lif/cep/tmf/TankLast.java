@@ -42,7 +42,7 @@ public class TankLast extends Tank
     if (with_state)
     {
       // Put in the tank what is in the current tank
-      t.m_inputQueues[0].addAll(m_inputQueues[0]);
+      t.m_delegate.getInputQueue(0).addAll(m_delegate.getInputQueue(0));
     }
     return t;
   }

@@ -69,7 +69,7 @@ public abstract class Source extends SynchronousProcessor
       {
         for (int i = 0; i < output.size(); i++)
         {
-          Pushable p = (Pushable) m_outs[i];
+          Pushable p = (Pushable) m_outs.get(i);
           p.push(evt[i]);
         }
       }

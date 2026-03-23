@@ -21,12 +21,9 @@ import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Lists.MathList;
 import ca.uqac.lif.cep.util.Maps.MathMap;
-import ca.uqac.lif.petitpoucet.CompositePart;
-import ca.uqac.lif.petitpoucet.Duplicable;
 import ca.uqac.lif.petitpoucet.Part;
 import ca.uqac.lif.petitpoucet.circuit.AtomicConnectable;
 
-import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Queue;
@@ -94,7 +91,6 @@ public abstract class SingleProcessor extends AtomicConnectable implements Proce
 	 * @param out_arity
 	 *          The processor's output arity
 	 */
-	@SuppressWarnings("unchecked")
 	//@ requires in_arity >= 0
 	//@ requires out_arity >= 0
 	public SingleProcessor(int in_arity, int out_arity)
@@ -222,14 +218,6 @@ public abstract class SingleProcessor extends AtomicConnectable implements Proce
 			}
 		}
 		return true;
-	}
-	
-	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) throws ProcessorException
-	{
-		// By default, a processor does not do anything with its input and output
-		// queues. It is the responsibility of the descendant classes to implement
-		// the logic of consuming input events and producing output events.
 	}
 
 	/**

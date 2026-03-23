@@ -82,9 +82,9 @@ public abstract class AsynchronousProcessor extends SingleProcessor
   public void reset()
   {
     super.reset();
-    m_outputPullables = new Pullable[m_outs.length];
+    m_outputPullables = new Pullable[m_outs.size()];
     m_inFrontsProcessed = 0;
-    m_inputEventsReceived = new int[m_ins.length];
+    m_inputEventsReceived = new int[m_ins.size()];
     m_hasBeenNotifiedOfEndOfTrace = false;
   }
 

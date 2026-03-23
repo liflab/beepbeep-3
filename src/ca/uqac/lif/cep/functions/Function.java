@@ -25,8 +25,8 @@ import ca.uqac.lif.petitpoucet.Explainable;
 import ca.uqac.lif.petitpoucet.Part;
 import ca.uqac.lif.petitpoucet.Vertex;
 import ca.uqac.lif.petitpoucet.VertexFactory;
-import ca.uqac.lif.petitpoucet.Connectable.InputPart;
-import ca.uqac.lif.petitpoucet.Connectable.OutputPart;
+import ca.uqac.lif.petitpoucet.circuit.Connectable.InputPart;
+import ca.uqac.lif.petitpoucet.circuit.Connectable.OutputPart;
 import ca.uqac.lif.petitpoucet.Vertex.AndVertex;
 
 import java.util.Set;

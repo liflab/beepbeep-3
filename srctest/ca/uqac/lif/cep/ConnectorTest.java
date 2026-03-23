@@ -56,23 +56,12 @@ public class ConnectorTest
     assertTrue(got_exception);
   }
 
-  @Test
+  @Test(expected = Connector.IndexOutOfBoundsException.class)
   public void testOutOfBounds2()
   {
     Apples a1 = new Apples();
     Apples a2 = new Apples();
-    boolean got_exception = false;
-    try
-    {
-      Connector.connect(a1, 0, a2, 10);
-    }
-    catch (ConnectorException ce)
-    {
-      Connector.IndexOutOfBoundsException ioobe = (Connector.IndexOutOfBoundsException) ce;
-      assertNotNull(ioobe.getMessage());
-      got_exception = true;
-    }
-    assertTrue(got_exception);
+    Connector.connect(a1, 0, a2, 10);
   }
 
   @Test

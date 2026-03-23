@@ -19,6 +19,8 @@ package ca.uqac.lif.cep;
 
 import ca.uqac.lif.cep.Connector.SelectedInputPipe;
 import ca.uqac.lif.cep.Connector.SelectedOutputPipe;
+import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.cep.SingleProcessor.InternalProcessorState;
 import ca.uqac.lif.cep.tmf.Source;
 import ca.uqac.lif.cep.util.Lists.MathList;
 import ca.uqac.lif.petitpoucet.circuit.CompositeConnectable;
@@ -43,7 +45,7 @@ import java.util.Set;
 public class GroupProcessor extends CompositeConnectable<Processor> implements Processor, Stateful
 {
 	protected final ProcessorDelegate m_delegate;
-	
+
 	/**
 	 * The set of sources included in the group
 	 */
@@ -101,6 +103,61 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	{
 		associateOutput(index, p.getProcessor(), p.getIndex());
 	}
+	
+	@Override
+	public ProcessorDelegate delegate()
+	{
+		return m_delegate;
+	}
+	
+	@Override
+	/*@ non_null @*/ public final Set<Class<?>> getInputType(int index)
+	{
+		Set<Class<?>> classes = new HashSet<Class<?>>();
+		if (index >= 0 && index < m_ins.size())
+		{
+			getInputTypesFor(classes, index);
+		}
+		return classes;
+	}
+	
+	/**
+	 * Populates the set of classes accepted by the processor for its <i>i</i>-th
+	 * input.
+	 * <p>
+	 * By default, a processor returns the {@link Connector.Variant} type for all
+	 * its inputs and all its outputs, meaning that the checking of types in
+	 * {@link Connector#connect(Processor...)} will be skipped. A descendant of this
+	 * class may choose to define specific types for its input and output, thereby
+	 * activating runtime type checking.
+	 * 
+	 * @param classes
+	 *          The set of to fill with classes
+	 * @param index
+	 *          The index of the input to query
+	 */
+	public void getInputTypesFor(/*@ non_null @*/ Set<Class<?>> classes, int index)
+	{
+		classes.add(Variant.class);
+	}
+	
+	@Override
+	public final int getId()
+	{
+		return m_delegate.getUniqueId();
+	}
+	
+	@Override
+	public Queue<Object> getInputQueue(int index)
+	{
+		return m_delegate.getInputQueue(index);
+	}
+
+	@Override
+	public Queue<Object> getOutputQueue(int index)
+	{
+		return m_delegate.getInputQueue(index);
+	}
 
 	protected class InputOutputAssociation
 	{
@@ -144,6 +201,18 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 			m_sources.add((Source) p);
 		}
 		return this;
+	}
+	
+	@Override
+	public final /*@ null @*/ Object getContext(/*@ non_null @*/ String key)
+	{
+		return m_delegate.getContext(key);
+	}
+
+	@Override
+	public /*@ non_null @*/ Context getContext()
+	{
+		return m_delegate.getContext();
 	}
 
 	/**
@@ -193,67 +262,15 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	@Override
 	public ProxyPushable getPushableInput(int index)
 	{
-		return (ProxyPushable) m_inputPushables.get(index);
+		return new ProxyPushable((Pushable) m_ins.get(index), index);
 	}
 
 	@Override
 	public Pullable getPullableOutput(int index)
 	{
-		return new ProxyPullable(m_outputPullables.get(index), index);
+		return new ProxyPullable((Pullable) m_outs.get(index), index);
 	}
 
-	/**
-	 * Sets an input pushable for this processor
-	 * @param i The position
-	 * @param p The pushable
-	 */
-	public final void setPushableInput(int i, Pushable p)
-	{
-		if (i == m_inputPushables.size())
-		{
-			m_inputPushables.add(new ProxyPushable(p, i));
-		}
-		else
-		{
-			m_inputPushables.set(i, new ProxyPushable(p, i));
-		}
-	}
-
-	/**
-	 * Sets an output pullable for this processor
-	 * @param i The index of the pullable
-	 * @param p The pullable
-	 */
-	public final void setPullableOutput(int i, Pullable p)
-	{
-		if (i == m_outputPullables.size())
-		{
-			m_outputPullables.add(p);
-		}
-		else
-		{
-			m_outputPullables.set(i, p);
-		}
-	}
-	/**
-	 * Clones the contents of the current {@link GroupProcessor} into a new group
-	 * 
-	 * @param group
-	 *          The {@link GroupProcessor} to clone into. When the method is called,
-	 *          it is expected to be empty.
-	 * @param with_state
-	 *          It set to {@code true}, each processor in the new group has the same
-	 *          events in its input/output buffers as in the original. Otherwise,
-	 *          the queues are empty.
-	 * @return An association between IDs and the new processors that have been put
-	 *         into the group
-	 */
-	public Map<Integer, Processor> cloneInto(GroupProcessor group, boolean with_state)
-	{
-		super.duplicate(group, false);
-		group.m_notifySources = m_notifySources;
-	}
-	
 	/**
 	 * Sets a processor as the input 0 of the group. This method is similar to
 	 * {@link #associateInput(Processor)}, except that it also automatically adds
@@ -285,7 +302,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		associateInput(p);
 		return p;
 	}
-	
+
 	/**
 	 * Sets a processor as the output 0 of the group, and crawls the pipeline
 	 * backwards from that processor to add all other processors encountered
@@ -332,7 +349,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		associateOutput(p);
 		return new OutputCallAfterConnect(p);
 	}
-	
+
 	/**
 	 * Sets a selected output pipe as the output 0 of the group, and crawls the pipeline
 	 * backwards from that processor to add all other processors encountered
@@ -348,7 +365,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		associateOutput(0, p.getProcessor(), p.getIndex());
 		return new OutputCallAfterConnect(p.getProcessor());
 	}
-	
+
 	/**
 	 * Sets a selected input pipe as the input 0 of the group.
 	 * @param p The selected input pipe to set as the input of the group
@@ -360,7 +377,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	{
 		return out(p.getProcessor());
 	}
-	
+
 	/**
 	 * Crawls the network of processors and adds to {@link #m_processors} any
 	 * processor that is not already present in the list.
@@ -408,7 +425,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		duplicate(group, with_state);
 		return group;
 	}
-	
+
 	protected void duplicate(GroupProcessor group, boolean with_state)
 	{
 		super.duplicate(group, with_state);
@@ -416,7 +433,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	}
 
 
-	
+
 	/**
 	 * A crawler that adds to the group any processor it encounters.
 	 */
@@ -593,15 +610,16 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		@Override
 		public void notifyEndOfTrace() throws PushableException
 		{
-			m_hasBeenNotifiedOfEndOfTrace[m_position] = true;
-			if (!allNotifiedEndOfTrace())
+			m_delegate.notifyEndOfTrace(m_position);
+			if (!m_delegate.allNotifiedEndOfTrace())
 			{
 				return;
 			}
 			// Notify the end of trace on all the inner Pushables
-			for (Pushable p : m_inputPushables)
+			for (UpstreamConnection c : m_ins)
 			{
-				((ProxyPushable) p).m_pushable.notifyEndOfTrace();
+				ProxyPushable p = (ProxyPushable) c;
+				p.m_pushable.notifyEndOfTrace();
 			}
 
 			// Collect from processor the events to generate for the end
@@ -618,10 +636,10 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 			outputEvent(temp_queue, outs);
 
 			// Notify the output pushables of the end of the trace
-			for (int i = 0; i < m_outs.length; i++)
+			for (int i = 0; i < m_outs.size(); i++)
 			{
-				ProcessorAssociation pa = m_outputPushableAssociations.get(i);
-				Pushable p = pa.m_processor.getPushableOutput(pa.m_ioNumber);
+				DownstreamConnection dc = m_outputAssociations.get(i);
+				Pushable p = ((Processor) dc.getObject()).getPushableOutput(dc.getIndex());
 				if (p == null)
 				{
 					throw new PushableException("Output " + i
@@ -646,9 +664,9 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 				{
 					if (evt != null)
 					{
-						for (int i = 0; i < m_outs.length; i++)
+						for (int i = 0; i < m_outs.size(); i++)
 						{
-							Pushable p = (Pushable) m_outs[i];
+							Pushable p = (Pushable) m_outs.get(i);
 							if (p == null)
 							{
 								throw new PushableException(
@@ -683,16 +701,6 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		}
 	}
 
-	@Override
-	public void stop()
-	{
-		super.stop();
-		for (Processor p : m_nodes)
-		{
-			p.stop();
-		}
-	}
-
 	/**
 	 * Gets the processor associated to the i-th input of the group
 	 * 
@@ -703,11 +711,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	 */
 	public Processor getAssociatedInput(int index)
 	{
-		if (!m_inputPullableAssociations.containsKey(index))
-		{
-			return null;
-		}
-		return m_inputPullableAssociations.get(index).m_processor;
+		return (Processor) m_inputAssociations.get(index).getObject();
 	}
 
 	/**
@@ -720,12 +724,12 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	 */
 	public int getGroupInputIndex(int id, int pipe_index)
 	{
-		for (Map.Entry<Integer,ProcessorAssociation> e : m_inputPullableAssociations.entrySet())
+		for (int i = 0; i < m_inputAssociations.size(); i++)
 		{
-			ProcessorAssociation pa = e.getValue();
-			if (pa.m_processor.getId() == id && pa.m_ioNumber == pipe_index)
+			UpstreamConnection uc = m_inputAssociations.get(i);
+			if (((Processor) uc.getObject()).getId() == id && uc.getIndex() == pipe_index)
 			{
-				return e.getKey();
+				return i;
 			}
 		}
 		return -1;
@@ -742,11 +746,12 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	 */
 	public int getAssociatedInputIndex(int index)
 	{
-		if (!m_inputPullableAssociations.containsKey(index))
+		
+		if (index < 0 || index >= m_inputAssociations.size())
 		{
 			return -1;
 		}
-		return m_inputPullableAssociations.get(index).m_ioNumber;
+		return m_inputAssociations.get(index).getIndex();
 	}
 
 	/**
@@ -759,11 +764,11 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	 */
 	public Processor getAssociatedOutput(int index)
 	{
-		if (!m_outputPushableAssociations.containsKey(index))
+		if (index < 0 || index >= m_outputAssociations.size())
 		{
 			return null;
 		}
-		return m_outputPushableAssociations.get(index).m_processor;
+		return (Processor) m_outputAssociations.get(index).getObject();
 	}
 
 	/**
@@ -777,15 +782,14 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	 */
 	public int getAssociatedOutputIndex(int index)
 	{
-		if (!m_outputPushableAssociations.containsKey(index))
+		if (index < 0 || index >= m_outputAssociations.size())
 		{
 			return -1;
 		}
-		return m_outputPushableAssociations.get(index).m_ioNumber;
+		return m_outputAssociations.get(index).getIndex();
 	}
 
-	@Override
-	public boolean onEndOfTrace(Queue<Object[]> outputs)
+	protected boolean onEndOfTrace(Queue<Object[]> outputs)
 	{
 		/*
 		for (int i = 0; i < getInputArity(); i++)
@@ -793,7 +797,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 			ProcessorAssociation pa = m_inputPullableAssociations.get(i);
 			pa.m_processor.
 		}
-		*/
+		 */
 		return false;
 	}
 
@@ -806,33 +810,33 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		Map<String,Object> contents = new HashMap<String,Object>();
 		contents.put("in-arity", getInputArity());
 		contents.put("out-arity", getOutputArity());
-		contents.put("processors", m_processors);
+		contents.put("processors", m_nodes);
 		contents.put("sources", m_sources);
 		contents.put("notify-sources", m_notifySources);
 		Set<List<Integer>> in_assocs = new HashSet<List<Integer>>();
-		for (Map.Entry<Integer,ProcessorAssociation> entry : m_inputPullableAssociations.entrySet())
+		for (int i = 0; i < m_inputAssociations.size(); i++)
 		{
 			List<Integer> list = new ArrayList<Integer>(3);
-			list.add(entry.getKey());
-			ProcessorAssociation pa = entry.getValue();
-			list.add(pa.m_ioNumber);
-			list.add(pa.m_processor.getId());
+			list.add(i);
+			UpstreamConnection uc = m_inputAssociations.get(i);
+			list.add(uc.getIndex());
+			list.add(((Processor) uc.getObject()).getId());
 			in_assocs.add(list);
 		}
 		contents.put("input-associations", in_assocs);
 		Set<List<Integer>> out_assocs = new HashSet<List<Integer>>();
-		for (Map.Entry<Integer,ProcessorAssociation> entry : m_outputPushableAssociations.entrySet())
+		for (int i = 0; i < m_inputAssociations.size(); i++)
 		{
 			List<Integer> list = new ArrayList<Integer>(3);
-			list.add(entry.getKey());
-			ProcessorAssociation pa = entry.getValue();
-			list.add(pa.m_ioNumber);
-			list.add(pa.m_processor.getId());
-			out_assocs.add(list);
+			list.add(i);
+			DownstreamConnection uc = m_outputAssociations.get(i);
+			list.add(uc.getIndex());
+			list.add(((Processor) uc.getObject()).getId());
+			in_assocs.add(list);
 		}
 		contents.put("output-associations", out_assocs);
 		Set<Connector.Connection> connections = new HashSet<Connector.Connection>();
-		for (Processor p : m_processors)
+		for (Processor p : m_nodes)
 		{
 			connections.addAll(Connector.getConnections(p));
 		}
@@ -911,8 +915,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	@Override
 	public void reset()
 	{
-		super.reset();
-		for (Processor p : m_processors)
+		for (Processor p : m_nodes)
 		{
 			p.reset();
 		}
@@ -926,13 +929,13 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 	public Object getState()
 	{
 		MathList<InternalProcessorState> group_state = new MathList<InternalProcessorState>();
-		for (Processor p : m_processors)
+		for (Processor p : m_nodes)
 		{
 			group_state.add(new InternalProcessorState(p));
 		}
 		return group_state;
 	}
-	
+
 	/**
 	 * A {@link CallAfterConnect} object that can be used to connect the
 	 * underlying processor of a {@link GroupProcessor}, and then to collect all
@@ -948,7 +951,7 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		 * The processor to be connected.
 		 */
 		private final Processor m_processor;
-		
+
 		/**
 		 * Creates a new {@link OutputCallAfterConnect} object.
 		 * @param p The processor to be connected
@@ -969,6 +972,104 @@ public class GroupProcessor extends CompositeConnectable<Processor> implements P
 		public void call()
 		{
 			collectProcessors(m_processor);
+		}
+	}
+
+	@Override
+	protected UpstreamConnection newInputAssociation(Processor p, int index)
+	{
+		return new InputAssociation(p, index);
+	}
+
+	@Override
+	protected DownstreamConnection newOutputAssociation(Processor p, int index)
+	{
+		return new OutputAssociation(p, index);
+	}
+	
+	protected static class OutputAssociation implements DownstreamConnection
+	{
+		protected final Processor m_object;
+		
+		protected final int m_index;
+		
+		public OutputAssociation(Processor p, int index)
+		{
+			super();
+			m_object = p;
+			m_index = index;
+		}
+		
+		@Override
+		public int getIndex()
+		{
+			return m_index;
+		}
+
+		@Override
+		public Processor getObject()
+		{
+			return m_object;
+		}
+		
+		@Override
+		public int hashCode()
+		{
+			return m_object.hashCode() + m_index;
+		}
+		
+		@Override
+		public boolean equals(Object o)
+		{
+			if (!(o instanceof OutputAssociation))
+			{
+				return false;
+			}
+			OutputAssociation a = (OutputAssociation) o;
+			return a.m_index == m_index && a.m_object.equals(m_object);
+		}
+	}
+	
+	protected static class InputAssociation implements UpstreamConnection
+	{
+		protected final Processor m_object;
+		
+		protected final int m_index;
+		
+		public InputAssociation(Processor p, int index)
+		{
+			super();
+			m_object = p;
+			m_index = index;
+		}
+		
+		@Override
+		public int getIndex()
+		{
+			return m_index;
+		}
+
+		@Override
+		public Processor getObject()
+		{
+			return m_object;
+		}
+		
+		@Override
+		public int hashCode()
+		{
+			return m_object.hashCode() + m_index;
+		}
+		
+		@Override
+		public boolean equals(Object o)
+		{
+			if (!(o instanceof InputAssociation))
+			{
+				return false;
+			}
+			InputAssociation a = (InputAssociation) o;
+			return a.m_index == m_index && a.m_object.equals(m_object);
 		}
 	}
 }
