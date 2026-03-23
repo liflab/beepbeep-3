@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import ca.uqac.lif.petitpoucet.circuit.Connectable;
+
 /**
  * Provides a number of convenient methods for connecting the outputs of
  * processors to the inputs of other processors.
@@ -53,7 +55,7 @@ import java.util.Set;
  * @since 0.1
  *
  */
-public class Connector
+public class Connector implements ca.uqac.lif.petitpoucet.circuit.Connector
 {
 	/**
 	 * Whether the connector checks that the input-output types of the processor it
@@ -102,6 +104,8 @@ public class Connector
 	 * input or output
 	 */
 	public static final int BOTTOM = 1;
+	
+	public static final Connector instance = new Connector();
 
 	/**
 	 * Utility classes should not have public constructors
@@ -758,5 +762,18 @@ public class Connector
 			GroupProcessor gp = (GroupProcessor) m_processor;
 			gp.associateOutput(index, p.getProcessor(), p.getIndex());
 		}
+	}
+
+	@Override
+	public void connectElements(Connectable c1, int i1, Connectable c2, int i2)
+	{
+		if (!(c1 instanceof Processor) || !(c2 instanceof Processor))
+		{
+			throw new IllegalArgumentException("Expected a processor");
+		}
+		Processor p1 = (Processor) c1;
+		Processor p2 = (Processor) c2;
+		connect(p1, i1, p2, i2);
+		
 	}
 }

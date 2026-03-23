@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep;
 
-import ca.uqac.lif.petitpoucet.circuit.Node.DownstreamConnection;
+import ca.uqac.lif.petitpoucet.circuit.Connectable.DownstreamConnection;
 
 /**
  * Gives events to some of a processor's input. Interface {@link Pushable} is

@@ -21,6 +21,7 @@ import ca.uqac.lif.cep.Connector.SelectedInputPipe;
 import ca.uqac.lif.cep.Connector.SelectedOutputPipe;
 import ca.uqac.lif.cep.tmf.Source;
 import ca.uqac.lif.cep.util.Lists.MathList;
+import ca.uqac.lif.petitpoucet.circuit.CompositeConnectable;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -39,47 +40,20 @@ import java.util.Set;
  * @since 0.1
  */
 @SuppressWarnings("squid:S2160")
-public class GroupProcessor extends SingleProcessor implements Stateful
+public class GroupProcessor extends CompositeConnectable<Processor> implements Processor, Stateful
 {
-	/**
-	 * The set of processors included in the group
-	 */
-	private List<Processor> m_processors;
-
+	protected final ProcessorDelegate m_delegate;
+	
 	/**
 	 * The set of sources included in the group
 	 */
 	private HashSet<Source> m_sources;
 
 	/**
-	 * The {@link Pushable}s associated to each of the processor's input traces
-	 */
-	private transient List<Pushable> m_inputPushables;
-
-	/**
-	 * The {@link Pullable}s associated to each of the processor's output traces
-	 */
-	private transient List<Pullable> m_outputPullables;
-
-	/**
 	 * Whether to notify the QueueSource objects in the group to push an event when
 	 * a call to push is made on the group
 	 */
 	private boolean m_notifySources = false;
-
-	/**
-	 * A map between numbers and processor associations. An element (m,(n,p)) of
-	 * this map means that the <i>m</i>-th input of the group processor is in fact
-	 * the <i>n</i>-th input of processor {@code p}
-	 */
-	private HashMap<Integer, ProcessorAssociation> m_inputPullableAssociations;
-
-	/**
-	 * A map between numbers and processor associations. An element (m,(n,p)) of
-	 * this map means that the <i>m</i>-th output of the group processor is in fact
-	 * the <i>n</i>-th output of processor {@code p}
-	 */
-	private HashMap<Integer, ProcessorAssociation> m_outputPushableAssociations;
 
 	/**
 	 * Creates a group processor.
@@ -92,12 +66,8 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	public GroupProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
-		m_processors = new ArrayList<Processor>();
 		m_sources = new HashSet<Source>();
-		m_inputPushables = new ArrayList<Pushable>();
-		m_outputPullables = new ArrayList<Pullable>();
-		m_inputPullableAssociations = new HashMap<Integer, ProcessorAssociation>();
-		m_outputPushableAssociations = new HashMap<Integer, ProcessorAssociation>();
+		m_delegate = new ProcessorDelegate(in_arity, out_arity, this);
 	}
 
 	/**
@@ -157,49 +127,6 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 		{
 			associateOutput(m_outerIndex, m_processor, m_innerIndex);
 		}
-
-
-	}
-
-	/**
-	 * Tuple made of a number and a processor.
-	 * 
-	 * @author Sylvain Hallé
-	 */
-	protected static class ProcessorAssociation
-	{
-		/**
-		 * The number
-		 */
-		int m_ioNumber;
-
-		/**
-		 * The processor
-		 */
-		Processor m_processor;
-
-		/**
-		 * Create a new processor association
-		 * 
-		 * @param number
-		 *          The number
-		 * @param p
-		 *          The processor associated to that number
-		 */
-		ProcessorAssociation(int number, Processor p)
-		{
-			super();
-			m_ioNumber = number;
-			m_processor = p;
-		}
-
-		/**
-		 * No-args constructor. Used only for serialization and deserialization.
-		 */
-		protected ProcessorAssociation()
-		{
-			super();
-		}
 	}
 
 	/**
@@ -211,7 +138,7 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	 */
 	public GroupProcessor addProcessor(Processor p)
 	{
-		m_processors.add(p);
+		super.add(p);
 		if (p instanceof Source)
 		{
 			m_sources.add((Source) p);
@@ -228,33 +155,14 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	 */
 	public GroupProcessor addProcessors(Processor ... procs)
 	{
+		super.add(procs);
 		for (Processor p : procs)
 		{
-			m_processors.add(p);
 			if (p instanceof Source)
 			{
 				m_sources.add((Source) p);
 			}
 		}
-		return this;
-	}
-
-	/**
-	 * Declares that the <i>i</i>-th input of the group is linked to the
-	 * <i>j</i>-th input of processor {@code p}.
-	 * 
-	 * @param i
-	 *          The number of the input of the group
-	 * @param p
-	 *          The processor to connect to
-	 * @param j
-	 *          The number of the input of processor {@code p}
-	 * @return A reference to the current group processor
-	 */
-	public GroupProcessor associateInput(int i, Processor p, int j)
-	{
-		setPushableInput(i, p.getPushableInput(j));
-		setPullableInputAssociation(i, p, j);
 		return this;
 	}
 
@@ -266,25 +174,7 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	 */
 	public GroupProcessor associateInput(Processor p)
 	{
-		return associateInput(0, p, 0);
-	}
-
-	/**
-	 * Declares that the <i>i</i>-th output of the group is linked to the
-	 * <i>j</i>-th output of processor p
-	 * 
-	 * @param i
-	 *          The number of the output of the group
-	 * @param p
-	 *          The processor to connect to
-	 * @param j
-	 *          The number of the output of processor {@code p}
-	 * @return A reference to the current group processor
-	 */
-	public GroupProcessor associateOutput(int i, Processor p, int j)
-	{
-		setPullableOutput(i, p.getPullableOutput(j));
-		setPushableOutputAssociation(i, p, j);
+		associateInput(0, p, 0);
 		return this;
 	}
 
@@ -296,7 +186,8 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	 */
 	public GroupProcessor associateOutput(Processor p)
 	{
-		return associateOutput(0, p, 0);
+		associateOutput(0, p, 0);
+		return this;
 	}
 
 	@Override
@@ -309,38 +200,6 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	public Pullable getPullableOutput(int index)
 	{
 		return new ProxyPullable(m_outputPullables.get(index), index);
-	}
-
-	@Override
-	public final void setPullableInput(int i, Pullable p)
-	{
-		ProcessorAssociation a = m_inputPullableAssociations.get(i);
-		if (a == null) {
-			throw new IndexOutOfBoundsException(
-					String.format("setPullableInput(%s): %s", i, m_inputPullableAssociations.keySet()));
-		}
-		a.m_processor.setPullableInput(a.m_ioNumber, p);
-	}
-
-	public final void setPushableOutputAssociation(int i, Processor p, int j)
-	{
-		m_outputPushableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
-	}
-
-	@Override
-	public final void setPushableOutput(int i, Pushable p)
-	{
-		ProcessorAssociation a = m_outputPushableAssociations.get(i);
-		if (a == null) {
-			throw new IndexOutOfBoundsException(
-					String.format("setPullableInput(%s): %s", i, m_inputPullableAssociations.keySet()));
-		}
-		a.m_processor.setPushableOutput(a.m_ioNumber, p);
-	}
-
-	public final void setPullableInputAssociation(int i, Processor p, int j)
-	{
-		m_inputPullableAssociations.put(i, new GroupProcessor.ProcessorAssociation(j, p));
 	}
 
 	/**
@@ -376,29 +235,6 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 			m_outputPullables.set(i, p);
 		}
 	}
-
-	@Override
-	public final Pushable getPushableOutput(int index)
-	{
-		ProcessorAssociation a = m_outputPushableAssociations.get(index);
-		if (a == null) {
-			throw new IndexOutOfBoundsException(
-					String.format("setPullableInput(%s): %s", index, m_inputPullableAssociations.keySet()));
-		}
-		return a.m_processor.getPushableOutput(a.m_ioNumber);
-	}
-
-	@Override
-	public final Pullable getPullableInput(int index)
-	{
-		ProcessorAssociation a = m_inputPullableAssociations.get(index);
-		if (a == null) {
-			throw new IndexOutOfBoundsException(
-					String.format("setPullableInput(%s): %s", index, m_inputPullableAssociations.keySet()));
-		}
-		return a.m_processor.getPullableInput(a.m_ioNumber);
-	}
-
 	/**
 	 * Clones the contents of the current {@link GroupProcessor} into a new group
 	 * 
@@ -414,57 +250,8 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	 */
 	public Map<Integer, Processor> cloneInto(GroupProcessor group, boolean with_state)
 	{
-		super.duplicateInto(group);
+		super.duplicate(group, false);
 		group.m_notifySources = m_notifySources;
-		Map<Integer, Processor> new_procs = new HashMap<Integer, Processor>();
-		Processor start = null;
-		// Clone every processor of the original group
-		for (Processor p : m_processors)
-		{
-			if (start == null && p.getOutputArity() > 0)
-			{
-				start = p;
-			}
-			Processor clone_p = copyProcessor(p, with_state);
-			new_procs.put(p.getId(), clone_p);
-			group.addProcessor(clone_p);
-		}
-		// Re-pipe the inputs and outputs like in the original group
-		associateEndpoints(group, new_procs);
-		// Re-pipe the internal processors like in the original group
-		CopyCrawler cc = new CopyCrawler(new_procs);
-		cc.crawl(start);
-		return new_procs;
-	}
-
-	/**
-	 * Associates the endpoints of a new {@link GroupProcessor} like the ones in the
-	 * current group
-	 * 
-	 * @param group
-	 *          The new group
-	 * @param new_procs
-	 *          An association between processor IDs and processors
-	 */
-	protected void associateEndpoints(GroupProcessor group,
-			Map<Integer, Processor> new_procs)
-	{
-		// Re-pipe the inputs like in the original group
-		for (Map.Entry<Integer, ProcessorAssociation> entry : m_inputPullableAssociations.entrySet())
-		{
-			int input_number = entry.getKey();
-			ProcessorAssociation pa = entry.getValue();
-			Processor clone_p = new_procs.get(pa.m_processor.getId());
-			group.associateInput(input_number, clone_p, pa.m_ioNumber);
-		}
-		// Re-pipe the outputs like in the original group
-		for (Map.Entry<Integer, ProcessorAssociation> entry : m_outputPushableAssociations.entrySet())
-		{
-			int output_number = entry.getKey();
-			ProcessorAssociation pa = entry.getValue();
-			Processor clone_p = new_procs.get(pa.m_processor.getId());
-			group.associateOutput(output_number, clone_p, pa.m_ioNumber);
-		}
 	}
 	
 	/**
@@ -618,67 +405,17 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	public GroupProcessor duplicate(boolean with_state)
 	{
 		GroupProcessor group = new GroupProcessor(getInputArity(), getOutputArity());
-		cloneInto(group, with_state);
+		duplicate(group, with_state);
 		return group;
 	}
-
-	/**
-	 * Crawler that creates copies (clones) of whatever it encounters on its way and
-	 * re-pipes processors as in the original group.
-	 * <p>
-	 * <strong>Caveat emptor</strong>: the starting point of the crawl cannot be a
-	 * processor with output arity of 0. Otherwise, none of the processors in the
-	 * new group will be piped together.
-	 * 
-	 * @author Sylvain Hallé
-	 */
-	protected static class CopyCrawler extends PipeCrawler
+	
+	protected void duplicate(GroupProcessor group, boolean with_state)
 	{
-		private final Map<Integer, Processor> m_correspondences;
-
-		public CopyCrawler(Map<Integer, Processor> correspondences)
-		{
-			super();
-			m_correspondences = new HashMap<Integer, Processor>();
-			m_correspondences.putAll(correspondences);
-		}
-
-		@Override
-		public void crawl(Processor start)
-		{
-			if (start.getOutputArity() == 0)
-			{
-				throw new UnsupportedOperationException(
-						"A copy crawl cannot start from a processor of output arity 0.");
-			}
-			super.crawl(start);
-		}
-
-		@Override
-		public void visit(Processor p)
-		{
-			int out_arity = p.getOutputArity();
-			for (int i = 0; i < out_arity; i++)
-			{
-				Pushable push = p.getPushableOutput(i);
-				if (push != null)
-				{
-					Processor target = push.getProcessor();
-					int j = push.getPosition();
-					Processor new_p;
-					Processor new_target;
-					new_p = m_correspondences.get(p.getId());
-					new_target = m_correspondences.get(target.getId());
-					if (new_p != null && new_target != null)
-					{
-						// new_p and new_target may be null if they refer to a processor
-						// outside of the group
-						Connector.connect(new_p, i, new_target, j);
-					}
-				}
-			}
-		}
+		super.duplicate(group, with_state);
+		group.m_notifySources = m_notifySources;
 	}
+
+
 	
 	/**
 	 * A crawler that adds to the group any processor it encounters.
@@ -688,9 +425,9 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 		@Override
 		public void visit(Processor p)
 		{
-			if (!m_processors.contains(p))
+			if (!m_nodes.contains(p))
 			{
-				m_processors.add(p);
+				m_nodes.add(p);
 			}
 		}
 	}
@@ -698,8 +435,8 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	@Override
 	public void setContext(Context context)
 	{
-		super.setContext(context);
-		for (Processor p : m_processors)
+		m_delegate.setContext(context);
+		for (Processor p : m_nodes)
 		{
 			p.setContext(context);
 		}
@@ -708,8 +445,8 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	@Override
 	public void setContext(String key, Object value)
 	{
-		super.setContext(key, value);
-		for (Processor p : m_processors)
+		m_delegate.setContext(key, value);
+		for (Processor p : m_nodes)
 		{
 			p.setContext(key, value);
 		}
@@ -940,8 +677,7 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	@Override
 	public void start()
 	{
-		super.start();
-		for (Processor p : m_processors)
+		for (Processor p : m_nodes)
 		{
 			p.start();
 		}
@@ -951,7 +687,7 @@ public class GroupProcessor extends SingleProcessor implements Stateful
 	public void stop()
 	{
 		super.stop();
-		for (Processor p : m_processors)
+		for (Processor p : m_nodes)
 		{
 			p.stop();
 		}

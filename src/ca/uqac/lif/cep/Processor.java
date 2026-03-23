@@ -25,7 +25,7 @@ import ca.uqac.lif.cep.Connector.InputPorts;
 import ca.uqac.lif.cep.Connector.OutputPorts;
 import ca.uqac.lif.cep.Connector.SelectedInputPipe;
 import ca.uqac.lif.cep.Connector.Variant;
-import ca.uqac.lif.petitpoucet.Connectable;
+import ca.uqac.lif.petitpoucet.circuit.Connectable;
 import ca.uqac.lif.petitpoucet.Duplicable;
 
 public interface Processor extends Contextualizable, Duplicable, Connectable
@@ -135,7 +135,10 @@ public interface Processor extends Contextualizable, Duplicable, Connectable
 	 *          ArrayIndexOutOfBounds will be thrown.
 	 * @return The pullable
 	 */
-	public Pullable getPullableInput(int i);
+	public default Pullable getPullableInput(int i)
+	{
+		return (Pullable) getAssignedInput(i);
+	}
 	
 	/**
 	 * Assigns a {@link Pushable} to the processor's <i>i</i>-th output.
@@ -162,7 +165,10 @@ public interface Processor extends Contextualizable, Duplicable, Connectable
 	 *          ArrayIndexOutOfBounds will be thrown.
 	 * @return The pushable
 	 */
-	public /*@ non_null @*/ Pushable getPushableOutput(int i);
+	public default /*@ non_null @*/ Pushable getPushableOutput(int i)
+	{
+		return (Pushable) getAssignedOutput(i);
+	}
 	
 	/**
 	 * Gets the type of events the processor accepts for its <i>i</i>-th input
@@ -248,6 +254,8 @@ public interface Processor extends Contextualizable, Duplicable, Connectable
 	{
 		throw new UnsupportedOperationException("This processor does not support deserialization");
 	}
+	
+	public ProcessorDelegate delegate();
 	
 	@Override
 	/*@ non_null @*/ public Processor duplicate(boolean with_state);

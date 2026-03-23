@@ -79,7 +79,7 @@ public class ApplyFunction extends UniformProcessor implements Stateful
   public synchronized ApplyFunction duplicate(boolean with_state)
   {
     ApplyFunction out = new ApplyFunction(m_function.duplicate(with_state));
-    duplicateInto(out);
+    duplicate(out, false);
     return out;
   }
 
@@ -115,7 +115,7 @@ public class ApplyFunction extends UniformProcessor implements Stateful
 
   public void cloneInto(ApplyFunction af, boolean with_state)
   {
-    super.duplicateInto(af);
+    super.duplicate(af, false);
     af.m_function = m_function.duplicate(with_state);
   }
 

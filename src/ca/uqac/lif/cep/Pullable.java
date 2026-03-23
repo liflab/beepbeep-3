@@ -19,7 +19,7 @@ package ca.uqac.lif.cep;
 
 import java.util.Iterator;
 
-import ca.uqac.lif.petitpoucet.circuit.Node.UpstreamConnection;
+import ca.uqac.lif.petitpoucet.circuit.Connectable.UpstreamConnection;
 
 /**
  * Queries events on one of a processor's outputs. For a processor with an

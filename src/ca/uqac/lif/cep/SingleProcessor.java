@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.util.Maps.MathMap;
 import ca.uqac.lif.petitpoucet.CompositePart;
 import ca.uqac.lif.petitpoucet.Duplicable;
 import ca.uqac.lif.petitpoucet.Part;
-import ca.uqac.lif.petitpoucet.circuit.Node;
+import ca.uqac.lif.petitpoucet.circuit.AtomicConnectable;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -56,43 +56,14 @@ import java.util.Set;
  * @since 0.1
  *
  */
-public abstract class SingleProcessor extends Node implements Processor, Duplicable, Contextualizable
+public abstract class SingleProcessor extends AtomicConnectable implements Processor, Contextualizable
 {
 	/**
 	 * A string used to identify the program's version
 	 */
 	public static final transient String s_versionString = "3.13";
-
-	/**
-	 * An array of input event queues. This is where the input events will be stored
-	 * before the processor consumes them. There are as many input queues as the
-	 * input arity of the processor.
-	 */
-	protected Queue<Object>[] m_inputQueues;
-
-	/**
-	 * An array of output event queues. This is where the output events will be
-	 * stored when the processor does its computation. There are as many output
-	 * queues as the output arity of the processor.
-	 */
-	protected Queue<Object>[] m_outputQueues;
-
-	/**
-	 * A static counter, to be incremented every time a new {@link Processor} is
-	 * instantiated. This is used to give a unique integer number to every
-	 * processor.
-	 */
-	private static int s_uniqueIdCounter = 0;
-
-	/**
-	 * The unique ID given to this processor instance
-	 */
-	private final int m_uniqueId;
-
-	/**
-	 * The context in which the processor is instantiated
-	 */
-	protected Context m_context = null;
+	
+	protected final ProcessorDelegate m_delegate;
 
 	/**
 	 * Number of times the {@link Pullable#hasNext()} method tries to produce an
@@ -102,20 +73,6 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	 */
 	public static final int MAX_PULL_RETRIES = 10000000;
 
-	/**
-	 * Indicates whether the processor has been notified of the end of trace or
-	 * not. Each input pushable has its own flag, and the end of trace signal
-	 * is propagated only once all upstream processors have sent the
-	 * notification.
-	 */
-	protected boolean[] m_hasBeenNotifiedOfEndOfTrace;
-
-	/**
-	 * Indicates whether the processor has notified the end of the trace to the
-	 * downstream processors it is connected to. The end of trace signal should
-	 * be sent at most once.
-	 */
-	protected boolean m_notifiedEndOfTraceDownstream;
 
 	/**
 	 * Initializes a processor. This has for effect of executing the basic
@@ -143,35 +100,19 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	public SingleProcessor(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
-		m_uniqueId = s_uniqueIdCounter++;
-		m_inputQueues = new Queue[m_ins.length];
-		for (int i = 0; i < m_ins.length; i++)
-		{
-			m_inputQueues[i] = new ArrayDeque<Object>();
-		}
-		m_outputQueues = new Queue[m_outs.length];
-		for (int i = 0; i < m_outs.length; i++)
-		{
-			m_outputQueues[i] = new ArrayDeque<Object>();
-		}
-		m_hasBeenNotifiedOfEndOfTrace = new boolean[m_ins.length];
-		for (int i = 0; i < m_ins.length; i++)
-		{
-			m_hasBeenNotifiedOfEndOfTrace[i] = false; 
-		}
-		m_notifiedEndOfTraceDownstream = false;
+		m_delegate = new ProcessorDelegate(in_arity, out_arity, this);
 	}
 	
 	@Override
 	public void addToInputQueue(int index, Collection<?> c)
 	{
-		m_inputQueues[index].addAll(c);
+		m_delegate.addToInputQueue(index, c);
 	}
 	
 	@Override
 	public void addToOutputQueue(int index, Collection<?> c)
 	{
-		m_outputQueues[index].addAll(c);
+		m_delegate.addToOutputQueue(index, c);
 	}
 
 	/**
@@ -182,63 +123,31 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	 */
 	protected boolean allNotifiedEndOfTrace()
 	{
-		for (int i = 0; i < m_ins.length; i++)
-		{
-			if (!m_hasBeenNotifiedOfEndOfTrace[i])
-			{
-				return false;
-			}
-		}
-		return true;
+		return m_delegate.allNotifiedEndOfTrace();
 	}
 
 	@Override
 	public final /*@ null @*/ Object getContext(/*@ non_null @*/ String key)
 	{
-		if (m_context == null || !m_context.containsKey(key))
-		{
-			return null;
-		}
-		return m_context.get(key);
+		return m_delegate.getContext(key);
 	}
 
 	@Override
 	public /*@ non_null @*/ Context getContext()
 	{
-		// As the context map is created only on demand, we must first
-		// check if a map already exists and create it if not
-		if (m_context == null)
-		{
-			m_context = newContext();
-		}
-		return m_context;
+		return m_delegate.getContext();
 	}
 
 	@Override
 	public void setContext(/*@ non_null @*/ String key, Object value)
 	{
-		// As the context map is created only on demand, we must first
-		// check if a map already exists and create it if not
-		if (m_context == null)
-		{
-			m_context = newContext();
-		}
-		m_context.put(key, value);
+		m_delegate.setContext(key, value);
 	}
 
 	@Override
 	public void setContext(/*@ null @*/ Context context)
 	{
-		// As the context map is created only on demand, we must first
-		// check if a map already exists and create it if not
-		if (context != null)
-		{
-			if (m_context == null)
-			{
-				m_context = newContext();
-			}
-			m_context.putAll(context);
-		}
+		m_delegate.setContext(context);
 	}
 
 	/**
@@ -251,7 +160,7 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	@Override
 	public final int hashCode()
 	{
-		return m_uniqueId;
+		return m_delegate.getUniqueId();
 	}
 
 	/**
@@ -268,13 +177,13 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 			return false;
 		}
 		Processor p = (Processor) o;
-		return m_uniqueId == p.getId();
+		return getId() == p.getId();
 	}
 
 	@Override
 	public final int getId()
 	{
-		return m_uniqueId;
+		return m_delegate.getUniqueId();
 	}
 	
   /**
@@ -284,44 +193,13 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
    */
   protected long checkPart(Part p) throws ExplanationException
   {
-  	Part head = CompositePart.head(p);
-  	if (!(head instanceof OutputPart))
-  	{
-  		throw new ExplanationException("Expected an output part");
-  	}
-  	OutputPart op = (OutputPart) head;
-  	if (op.getIndex() < 0 || op.getIndex() >= getOutputArity())
-  	{
-  		throw new ExplanationException("Output index out of bounds");
-  	}
-  	Part pos = CompositePart.head(CompositePart.tail(p));
-  	if (!(pos instanceof EventAt))
-  	{
-  		throw new ExplanationException("Expected an event index");
-  	}
-  	EventAt ea = (EventAt) pos;
-  	return ea.getPosition();
+  	return m_delegate.checkPart(p);
   }
 
 	@Override
 	public void reset()
 	{
-		super.reset();
-		// Reset input
-		for (int i = 0; i < m_ins.length; i++)
-		{
-			m_inputQueues[i].clear();
-		}
-		// Reset output
-		for (int i = 0; i < m_outs.length; i++)
-		{
-			m_outputQueues[i].clear();
-		}
-		for (int i = 0; i < m_ins.length; i++)
-		{
-			m_hasBeenNotifiedOfEndOfTrace[i] = false; 
-		}
-		m_notifiedEndOfTraceDownstream = false;
+		m_delegate.reset();
 	}
 
 	/**
@@ -359,25 +237,24 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	 * 
 	 * @param p
 	 *          The processor to copy contents into
+	 * @param with_state TODO
 	 */
-	public void duplicateInto(SingleProcessor p)
+	protected void duplicate(SingleProcessor p, boolean with_state)
 	{
-		p.setContext(m_context);
-		for (int i = 0; i < m_inputQueues.length; i++)
-		{
-			p.m_inputQueues[i].addAll(m_inputQueues[i]);
-		}
-		for (int i = 0; i < m_outputQueues.length; i++)
-		{
-			p.m_outputQueues[i].addAll(m_outputQueues[i]);
-		}
+		m_delegate.duplicate(p, with_state);
+	}
+	
+	@Override
+	public ProcessorDelegate delegate()
+	{
+		return m_delegate;
 	}
 
 	@Override
 	/*@ non_null @*/ public final Set<Class<?>> getInputType(int index)
 	{
 		Set<Class<?>> classes = new HashSet<Class<?>>();
-		if (index >= 0 && index < m_ins.length)
+		if (index >= 0 && index < m_ins.size())
 		{
 			getInputTypesFor(classes, index);
 		}
@@ -413,19 +290,7 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	 */
 	/*@ non_null @*/ public static Queue<Object[]> getEmptyQueue()
 	{
-		return new ArrayDeque<Object[]>();
-	}
-	
-	@Override
-	public Pullable getPullableInput(int index)
-	{
-		return (Pullable) m_ins[index];
-	}
-	
-	@Override
-	public Pushable getPushableOutput(int index)
-	{
-		return (Pushable) m_outs[index];
+		return ProcessorDelegate.getEmptyQueue();
 	}
 	
 	/**
@@ -497,7 +362,7 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	 */
 	/*@ pure @*/ public void copyInputQueue(int index, Collection<Object> to)
 	{
-		to.addAll(m_inputQueues[index]);
+		m_delegate.copyInputQueue(index, to);
 	}
 
 	/**
@@ -508,7 +373,7 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	 */
 	/*@ pure @*/ public void copyOutputQueue(int index, Collection<Object> to)
 	{
-		to.addAll(m_outputQueues[index]);
+		m_delegate.copyOutputQueue(index, to);
 	}
 
 	@Override
@@ -517,17 +382,13 @@ public abstract class SingleProcessor extends Node implements Processor, Duplica
 	@Override
 	public Queue<Object> getInputQueue(int index)
 	{
-		Queue<Object> q = new ArrayDeque<Object>();
-		q.addAll(m_inputQueues[index]);
-		return q;
+		return m_delegate.getInputQueue(index);
 	}
 
 	@Override
 	public Queue<Object> getOutputQueue(int index)
 	{
-		Queue<Object> q = new ArrayDeque<Object>();
-		q.addAll(m_outputQueues[index]);
-		return q;
+		return m_delegate.getInputQueue(index);
 	}
 
 	/**

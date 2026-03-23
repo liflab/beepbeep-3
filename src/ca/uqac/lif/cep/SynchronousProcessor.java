@@ -84,6 +84,7 @@ public abstract class SynchronousProcessor extends SingleProcessor
 	@Override
 	public Pushable getPushableInput(int index)
 	{
+		
 		if (m_inputPushables[index] == null)
 		{
 			m_inputPushables[index] = new InputPushable(index);

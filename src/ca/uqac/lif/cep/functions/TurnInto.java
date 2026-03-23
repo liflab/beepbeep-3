@@ -61,7 +61,7 @@ public class TurnInto extends UniformProcessor implements Stateful
   public synchronized TurnInto duplicate(boolean with_state)
   {
     TurnInto out = new TurnInto(m_event);
-    duplicateInto(out);
+    duplicate(out, false);
     return out;
   }
 
