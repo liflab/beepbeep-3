@@ -26,7 +26,7 @@
   <antversion property="antversion.running" />
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.12"/>
+  <property name="antrun.version" value="1.13"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -605,6 +605,47 @@
        Generates boilerplate .classpath and .project files to import in Eclipse
   -->
   <target name="eclipse" depends="gen-classpath,gen-project"/>
+  
+  <!-- Macro to call git -->
+    <macrodef name="git">
+		<attribute name="command" />
+		<attribute name="options" default="" />
+		<attribute name="dir" default="" />
+		<attribute name="failerror" default="false" />
+		<element name="args" optional="true" />
+		<sequential>
+			<echo message="git dir @{dir}" />
+			<echo message="git @{command}" />
+			<exec executable="git" dir="@{dir}" failonerror="@{failerror}">
+				<arg line="@{command} @{options}" />
+				<args />
+			</exec>
+		</sequential>
+	</macrodef>
+	
+	<!-- Macro to call git pull -->
+	<macrodef name="git-pull">
+		<attribute name="failerror" default="false" />
+		<git command="pull" failerror="@{failerror}" />
+	</macrodef>
+	
+	<!-- Macro to call git push -->
+	<macrodef name="git-push">
+		<attribute name="failerror" default="false" />
+		<git command="push" failerror="@{failerror}" />
+	</macrodef>
+	
+	<!-- Target: pull
+	     Pulls the current repository -->
+	<target name="pull" depends="init" description="Pulls the current repository">
+	  <git-pull />
+	</target>
+	
+    <!-- Target: push
+	     Pushes the current repository -->
+	<target name="push" depends="init" description="Pulls the current repository">
+	  <git-push />
+	</target>
   
   <!-- Task: check-deps
        Loops through all dependencies specified in config.xml; checks if
