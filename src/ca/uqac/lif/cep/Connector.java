@@ -145,8 +145,7 @@ public class Connector implements ca.uqac.lif.petitpoucet.circuit.Connector
 		// Pull
 		try
 		{
-			Pullable p1_out = p1.getPullableOutput(i);
-			p2.setPullableInput(j, p1_out);
+			ca.uqac.lif.petitpoucet.circuit.ConnectableConnector.connect(p1, i, p2, j);
 		}
 		catch (IndexOutOfBoundsException e)
 		{
@@ -161,20 +160,6 @@ public class Connector implements ca.uqac.lif.petitpoucet.circuit.Connector
 			// It's OK. Some processors deliberately throw this
 			// exception to warn an end user that they don't have a pushable
 			// or a pullable, but the connector does not care.
-		}
-		// Push
-		try
-		{
-			Pushable p2_in = p2.getPushableInput(j);
-			p1.setPushableOutput(i, p2_in);
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			throw new Connector.IndexOutOfBoundsException(p1, i, p2, j);
-		}
-		catch (UnsupportedOperationException e)
-		{
-			// Same as above
 		}
 		return p2;
 	}
