@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.tmf;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
@@ -77,10 +76,9 @@ public class Fork extends UniformProcessor
       new_out_pullables[i] = m_outputPullables[i];
     }
     m_outputPullables = new_out_pullables;
-    DownstreamConnection[] out_pushables = new Pushable[out_arity];
-    for (int i = 0; i < m_outs.size(); i++)
+    for (int i = m_outs.size(); i < out_arity; i++)
     {
-      out_pushables[i] = m_outs.get(i);
+      m_outs.add(null);
     }
   }
   

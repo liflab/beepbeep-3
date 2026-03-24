@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.Vector;
 
 import org.junit.Test;
+
+import ca.uqac.lif.cep.GroupProcessor.ProxyPullable;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Numbers;
@@ -604,6 +606,7 @@ public class GroupTest
 		QueueSource src = new QueueSource().setEvents(1);
 		Connector.connect(src, new_gp);
 		Pullable p = new_gp.getPullableOutput();
+		assertNotNull(p);
 		assertEquals(2f, p.pull());
 	}
 	
@@ -639,7 +642,9 @@ public class GroupTest
 		gp.associateInput(0, v, 0);
 		gp.associateOutput(0, v, 0);
 		Connector.connect(source, gp);
-		Pullable p = gp.getPullableOutput();
+		ProxyPullable p = (ProxyPullable) gp.getPullableOutput();
+		assertNotNull(p);
+		assertNotNull(p.m_pullable);
 		assertNotNull(p.pull());
 		boolean got_exception = false;
 		try

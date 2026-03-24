@@ -106,7 +106,7 @@ public class Divert extends SingleProcessor
   }
   
   @Override
-  public synchronized void setPushableOutput(int i, /*@ non_null @*/ Pushable p)
+  public void setPushableOutput(int i, /*@ non_null @*/ Pushable p)
   {
     m_downstreamPushables.add(p);
   }
