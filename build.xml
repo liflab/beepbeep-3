@@ -626,13 +626,13 @@
 	<!-- Macro to call git pull -->
 	<macrodef name="git-pull">
 		<attribute name="failerror" default="false" />
-		<git command="pull" failerror="@{failerror}" />
+		<sequential><git command="pull" failerror="@{failerror}" /></sequential>
 	</macrodef>
 	
 	<!-- Macro to call git push -->
 	<macrodef name="git-push">
 		<attribute name="failerror" default="false" />
-		<git command="push" failerror="@{failerror}" />
+		<sequential><git command="push" failerror="@{failerror}" /></sequential>
 	</macrodef>
 	
 	<!-- Target: pull
